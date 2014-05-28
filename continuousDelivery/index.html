@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Continuous Delivery</title>
+
+		<meta name="author" content="Viktor Farcic">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section id="cover">
+                    <h4>Continuous</h4>
+					<h3>Integration</h3>
+                    <h2>Deployment</h2>
+                    <h1>Delivery</h1>
+					<p>
+						<small>
+                            Created by <a href="http://technologyconversations.com/about/">Viktor Farcic</a>
+                            for <a href="http://technologyconversations.com">Technology Conversations</a> / <a href="http://twitter.com/vfarcic">@vfarcic</a>
+                        </small>
+					</p>
+				</section>
+                <section id="whatIsCd">
+                    <h2>What is continuous delivery?</h2>
+					<p>
+                        <blockquote>
+                            Continuous Delivery is a software development discipline where you build software in such a way that the software can be released to production at any time.
+                        </blockquote>
+                        Martin Fowler
+                    </p>
+                </section>
+                <section>
+					<section id="whenAreYouDoingCd">
+						<h2>You’re doing continuous delivery when...</h2>
+                        <div>
+                            <ul>
+                                <li class="fragment" data-fragment-index="0">Your software is deployable throughout its life-cycle</li>
+                                <li class="fragment" data-fragment-index="1">Your team prioritizes keeping the software deployable</li>
+                                <li class="fragment" data-fragment-index="2">Anybody can get fast, automated feedback on the production readiness</li>
+                                <li class="fragment" data-fragment-index="3">You can perform push-button deployments</li>
+                            </ul>
+                        </div>
+					</section>
+                </section>
+                <section>
+                    <section id="continuousWhat">
+                        <h2>Continuous...</h2>
+						<div>
+                            <ul>
+                                <li class="fragment" data-fragment-index="0">Continuous Deployment</li>
+                                <li class="fragment" data-fragment-index="1">Continuous Delivery</li>
+                                <li class="fragment" data-fragment-index="2">Continuous Integration</li>
+                            </ul>
+						</div>
+                    </section>
+                </section>
+                <section>
+                    <section id="tools">
+						<h2>Tools</h2>
+                        <div>
+                            <ul>
+                                <li class="fragment" data-fragment-index="0">Jenkins / Hudson</li>
+                                <li class="fragment" data-fragment-index="1">Bamboo</li>
+                                <li class="fragment" data-fragment-index="2">Travis</li>
+                                <li class="fragment" data-fragment-index="3">Circle</li>
+                                <li class="fragment" data-fragment-index="4">Drone.io</li>
+                                <li class="fragment" data-fragment-index="5">CludBees</li>
+                            </ul>
+                        </div>
+                    </section>
+                </section>
+                <section>
+                    <section id="environmentSetupTools">
+                        <h2>Environment Setup Tools</h2>
+                        <div>
+                            <ul>
+                                <li class="fragment" data-fragment-index="0">Vagrant</li>
+                                <li class="fragment" data-fragment-index="1">Puppet / Chef / Ansible / CfEngine</li>
+                                <li class="fragment" data-fragment-index="2">Docker</li>
+                            </ul>
+                        </div>
+                    </section>
+                </section>
+                <section>
+                    <section id="buildTools">
+                        <h2>Build Tools</h2>
+                        <div>
+                            <ul>
+                                <li class="fragment" data-fragment-index="0">Bash</li>
+                                <li class="fragment" data-fragment-index="1">Ant</li>
+                                <li class="fragment" data-fragment-index="2">Maven</li>
+                                <li class="fragment" data-fragment-index="3">Gradle</li>
+                            </ul>
+                        </div>
+                    </section>
+                </section>
+                <section>
+                    <section id="flow">
+                        <h2>Flow</h2>
+                        <div>
+                            <ul>
+                                <li class="fragment" data-fragment-index="0">Checkout the code</li>
+                                <li class="fragment" data-fragment-index="1">Static Analysis</li>
+                                <li class="fragment" data-fragment-index="2">Unit Tests</li>
+                                <li class="fragment" data-fragment-index="3">Packaging</li>
+                                <li class="fragment" data-fragment-index="4">Deployment to Test Environment</li>
+                                <li class="fragment" data-fragment-index="5">Functional / Integration Tests</li>
+                                <li class="fragment" data-fragment-index="6">Code Coverage</li>
+                                <li class="fragment" data-fragment-index="7">Deployment to Production</li>
+                            </ul>
+                        </div>
+                    </section>
+                </section>
+                <section>
+                    <section id="theEnd">
+                        <h1>THE END</h1>
+                        <h3>BY Viktor Farcic</h3>
+                        <h4>@vfarcic</h4>
+                        <h4><a href="http://technologyconversations.com">technologyconversations.com</a></h4>
+                    </section>
+                </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
+
