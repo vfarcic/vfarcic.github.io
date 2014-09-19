@@ -47,15 +47,18 @@
 				</section>
                 <section id="aboutMe">
                     <h2>Viktor Farcic</h2>
-                    <p>
-                        <img src="img/viktor.jpg" style="float: left"/>
-                        Software Architect at <a href="http://www.everis.com">everis</a>.
-                        <br />
-                    </p>
+                    <ul>
+                        <img src="img/viktor.jpg" style="float: right; width: 25%; height: 25%;"/>
+                        <li>Software Architect at <a href="http://www.everis.com">everis</a>.</li>
+                        <li>Never developed in Fortran.</li>
+                        <li>Passionate about TDD, BDD and Continuous Delivery.</li>
+                        <li>Major contributor to the open source project <a href="http://www.bddassistant.com">BDD Assistant</a>.</li>
+                        <li>Blogger in <a href="http://technologyconversations.com/">Technology Conversations</a> and speaker in conferences.</li>
+                    </ul>
                 </section>
                 <section id="warmingUp">
                     <h2>Warming up...</h2>
-                    <img src="img/viktor.jpg" style="width:40%; height:40%"/>
+                    <img src="img/star.png" style="width:40%; height:40%"/>
 					<p>
                         "The hardest part of building a software system is <br/> precisely deciding what to build." <b>Fred Brooks.</b>
                     </p>
@@ -165,29 +168,29 @@
                     </section>
                 </section>
                 <section>
-                    <h2>BDD Story</h2>
-                    <p>
-                        <ul>
-                            <li>Narrative</li>
-                            <li>One or more scenarios</li>
-                        </ul>
-                    </p>
-                </section>
-				<!-- Example of nested vertical slides -->
-				<section id="narrativeExample">
-                    <h2>BDD Narrative</h2>
-                    <p>
+                    <section id="bddStory">
+                        <h2>BDD Story</h2>
+                        <p>
+                            <ul>
+                                <li>Narrative</li>
+                                <li>One or more scenarios</li>
+                            </ul>
+                        </p>
+                    </section>
+                    <section id="narrativeExample">
+                        <h2>BDD Narrative</h2>
+                        <p>
                         <pre><code contenteditable>
                             Narrative:<br />
                             In Order to [benefit]<br />
                             As a [role]<br />
                             I Want to [feature]<br />
                         </code></pre>
-                    </p>
-				</section>
-                <section id="narrative">
-                    <h2>BDD Narrative</h2>
-                    <p>
+                        </p>
+                    </section>
+                    <section id="narrative">
+                        <h2>BDD Narrative</h2>
+                        <p>
                         <ul>
                             <li>NOT requirement statements</li>
                             <li>Everyone can write them</li>
@@ -203,18 +206,19 @@
                                 </ul>
                             </li>
                         </ul>
-                    </p>
-                </section>
-                <section id="scenario">
-                    <h2>BDD Scenario</h2>
-                    <p>
+                        </p>
+                    </section>
+                    <section id="scenario">
+                        <h2>BDD Scenario</h2>
+                        <p>
                         <pre><code contenteditable>
                             Scenario: [description]<br />
                             Given [context or precondition]<br />
                             When [event or action]<br />
                             Then [outcome validation]<br />
                         </code></pre>
-                    </p>
+                        </p>
+                    </section>
                 </section>
 				<section id="process">
 					<h2>Process</h2>
@@ -232,24 +236,23 @@
 					<p>
 						<ul>
                             <li>JBehave (Java)</li>
-                            <li>Cucumber (Ruby / Java)</li>
+                            <li>Cucumber (Ruby / Java / .Net / Flex)</li>
                             <li>RSpec (Ruby)</li>
                             <li>Spec Flow (.Net)</li>
                         </ul>
 					</p>
 				</section>
-
-				<section id="automationSteps">
-					<h2>Automation Steps</h2>
-					<p>
-						<ul>
-                            <li>Create library of normalized steps</li>
-                            <li>Combine steps into composites</li>
-                            <li>Empower scenarios with examples tables</li>
-                        </ul>
-					</p>
-				</section>
-                <section>
+				<section>
+                    <section id="automationSteps">
+                        <h2>Automation Steps</h2>
+                        <p>
+                            <ul>
+                                <li>Create library of normalized steps</li>
+                                <li>Combine steps into composites</li>
+                                <li>Empower scenarios with examples tables</li>
+                            </ul>
+                        </p>
+                    </section>
                     <section id="normalizedSteps">
                         <h2>Phase #1</h2>
                         <h3>Create library of normalized steps</h3>
@@ -331,8 +334,6 @@ public final void clickElement(final String id) {
     ...
 }</code></pre>
                     </section>
-                </section>
-                <section>
                     <section id="composites">
                         <h2>Phase #2</h2>
                         <h3>Combine steps into composites</h3>
@@ -363,8 +364,6 @@ Given user is logged in</pre>
     "Then confirmation screen is opened"
 }</code></pre>
                     </section>
-                </section>
-                <section>
                     <section id="examplesTable">
                         <h2>Phase #3</h2>
                         <h3>Empower scenarios with examples tables</h3>
@@ -391,6 +390,52 @@ Examples:
 |john.doe             |mysecret |Email is incorrect              |</pre>
                     </section>
                 </section>
+                <section>
+                    <section id="bddVsTdd">
+                        <h2>BDD vs TDD</h2>
+                        <ul>
+                            <li>Similar but not the same</li>
+                            <li>BDD eliminates issues that TDD might cause</li>
+                            <li>BDD works best when used together with TDD</li>
+                        </ul>
+                    </section>
+                    <section id="bddVsTddWhatIsTdd">
+                        <h2>BDD vs TDD</h2>
+                        <h3>What is TDD?</h3>
+                        <h4>Red-Green-Refactor</h4>
+                        <div>
+                            <ol>
+                                <li class="fragment highlight-red">Write a test</li>
+                                <li class="fragment highlight-red">Run the test</li>
+                                <li class="fragment highlight-green">Write the implementation code</li>
+                                <li class="fragment highlight-green">Run the test</li>
+                                <li class="fragment highlight-blue">Refactor</li>
+                            </ol>
+                        </div>
+                    </section>
+                    <section id="bddVsTddSimilar">
+                        <h2>BDD vs TDD</h2>
+                        <h3>Similarities</h3>
+                        <ul>
+                            <li>Both drive software development</li>
+                            <li>Both write specification before the implementation</li>
+                        </ul>
+                    </section>
+                    <section id="bddVsTddDifferent">
+                        <h2>BDD vs TDD</h2>
+                        <h3>Differences</h3>
+                        <ol>
+                            <li>BDD is readable by non-geeks</li>
+                            <li>Specification and behaviour vs code design and units</li>
+                            <li>Time span between specification and implementation</li>
+                            <li>Levels of abstraction</li>
+                            <li>Behavior of the system vs unit</li>
+                            <li>BDD is acceptance criteria</li>
+                            <li>BDD replaces part of existing documentation</li>
+                            <li>User vs developer</li>
+                        </ol>
+                    </section>
+                </section>
                 <section id="summary">
                     <h1>Summary</h1>
                 </section>
@@ -398,7 +443,7 @@ Examples:
 					<h1>THE END</h1>
 					<h3>BY Viktor Farcic & Jordi Falguera</h3>
 					<h4>@vfarcic @jordi_falguera</h4>
-					<h4>technologyconversations.com</h4>
+					<h4><a href="http://technologyconversations.com/about/">technologyconversations.com</a></h4>
 				</section>
 			</div>
 
@@ -435,6 +480,3 @@ Examples:
 
 	</body>
 </html>
-
-<!--Continuous Integration / Deployment / Delivery-->
-<!--BDD vs TDD-->
