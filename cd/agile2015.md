@@ -150,3 +150,21 @@ Presentation Sample
 http://vfarcic.github.io/cd/
 
 This is the last presentation I gave on a similar subject. The one planned for Agile 2015 will have similar content.
+
+Bio
+---
+
+Viktor Farcic is a Software Architect at everis.
+
+He coded using plethora of languages starting with Pascal (yes, he is old), Basic (before it got Visual prefix), ASP (before it got .Net suffix), C, C++, Perl, Python, ASP.Net, Visual Basic, C#, JavaScript, etc. He never worked with Fortran. His current favorites are **Scala** and **JavaScript** even though most of his office hours are spent with **Java**.
+
+His big passions are Behavior-Driven Development (BDD), Test-Driven Development (TDD) and Continuous Integration, Delivery and Deployment (CI/CD).
+
+He is major contributor to the open source project BDD Assistant and often speaks at community gatherings and conferences.
+
+
+Contact Details:
+
+* E-mail: viktor@farcic.com
+* Twitter: @vfarcic
+* Skype: vfarcic
