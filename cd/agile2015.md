@@ -1,43 +1,43 @@
 Title
------
+=====
 
 Continuous Deployment: The Ultimate Culmination of Software Craftsmanship
-=========================================================================
+-------------------------------------------------------------------------
 
 Often, automatic, fast, with zero-downtime and the ability to rollback
 
 
 Co-Presenter
-------------
+============
 
 Featured Participants
----------------------
+=====================
 
 Track
------
+=====
 
 Technical: DevOps
 
 Session Type
-------------
+============
 
 Audience Level
---------------
+==============
 
 Room Setup
-----------
+==========
 
 Duration
---------
+========
 
 Keywords
---------
+========
 
 Abstract
---------
+========
 
 Introduction
-============
+------------
 
 Continuous Deployment is the natural evolution of continuous integration and delivery. It is the ultimate culmination of software craftsmanship. Our skills need to be on such a high level that we have a confidence to continuously and automatically deploy our software to production.
 
@@ -74,7 +74,7 @@ We cannot deploy often without zero-downtime. If there is any downtime during de
 Unexpected happens sooner or later and the ability to rollback is a must. How can we accomplish automated, fast and reliable rollback? What are the major obstacles?  
 
 Deployment Strategies
-=====================
+---------------------
 
 We'll explore different strategies to deploy software. This session will in no way provide an exhaustive list of ways to deploy applications but will try to discuss few common ways that are in use today.
 
@@ -91,17 +91,17 @@ What are immutable servers? How can we deploy them? What is blue-green deploymen
 What are microservices? Why do they fit perfectly into the concept of immutable servers?
 
 Live Example
-============
+------------
 
 Once we are all familiar with Continuous Deployment and different strategies that can be employed, we'll got through one example of deploying fast, often, automatically, with zero-downtime and the ability to rollback. We'll use Docker, CoreOS, NGINX and few other tools to release and deploy an application. All examples will be run live.
 
 Summary
-=======
+-------
 
 Continuous deployment sounds to many as too risky or even impossible. Whether it's risky depends on the architecture of software we're building. As a general rule, splitting application into smaller independent elements helps a lot. Microservices is the way to go if possible. Risks aside, in many cases there is no business reason or willingness to adopt continuous delivery. Still, software can be continuously deployed to test servers thus becoming continuous delivery. No matter whether we are doing continuous deployment, delivery, integration or none of those, having automatic and fast deployment with zero downtime and the ability to rollback provides great benefits. If for no other reason, because it frees us to do more productive and beneficial tasks. We should design and code our software and let machines do the rest for us.
 
 Learning Outcomes
------------------
+=================
 
 In this session you will learn:
 
@@ -114,10 +114,10 @@ You will also see few case studies and "real world" examples.
 
 
 Prerequisite Knowledge
-----------------------
+======================
 
 Information for Review Team
----------------------------
+===========================
 
 The overall flow will be:
 
@@ -136,7 +136,7 @@ The session should be very interactive. I'll try to present my experiences and e
 Presentation will be a mix of prepared slides and live coding and demos. 
  
 Presentation History
---------------------
+====================
 
 Similar presentation has been given in Barcelona Software Craftsmanship 2014.
 
@@ -145,14 +145,14 @@ It was presented and was part of workshops that attended more than 300 employees
 I wrote many articles on the subject (http://technologyconversations.com/category/continuous-integration-delivery-and-deployment/) and am currently writing a book.
 
 Presentation Sample
--------------------
+===================
 
 http://vfarcic.github.io/cd/
 
 This is the last presentation I gave on a similar subject. The one planned for Agile 2015 will have similar content.
 
 Bio
----
+===
 
 Viktor Farcic is a Software Architect at everis.
 
