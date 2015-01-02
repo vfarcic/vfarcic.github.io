@@ -123,5 +123,3 @@ Summary
 =======
 
 Microservices are not an answer to all our problems. Nothing is. They are not the way all applications should be created. There is no one solution fits all. Microservices exist for a long time and recent years are seeing increase in their popularity. There are many factors that lead to this trend with scalability being probably the most important one. Emergence of new tools, especially Docker, are allowing us to see microservices in a new light and remove part of the problems their utilization was creating. Utilization of microservices by "big guys" like Amazon, NetFlix, eBay, etc provides enough confidence that this architectural style is ready to be evaluated (if not used) by developers of enterprise applications.
-
-Next article will deal with more technical aspects of microservices. Stay tuned!

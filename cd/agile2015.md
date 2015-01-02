@@ -21,17 +21,27 @@ Technical: DevOps
 Session Type
 ============
 
+Talk
+
 Audience Level
 ==============
+
+Learning
 
 Room Setup
 ==========
 
+Theater
+
 Duration
 ========
 
+75 minutes
+
 Keywords
 ========
+
+Continuous Delivery, Continuous Deployment, CD, Docker, CoreOS, DevOps
 
 Abstract
 ========
@@ -140,9 +150,11 @@ Presentation History
 
 Similar presentation has been given in Barcelona Software Craftsmanship 2014.
 
+Workshop on the same subject will be given in a 8 hour workshop in [Craft 2015](http://craft-conf.com/2015#workshops/ViktorFarcic).
+
 It was presented and was part of workshops that attended more than 300 employees of the company I worked for. Presentation and workshops had a success that resulted in requests to repeat the same for our clients in US, UK, Finland, Spain, Poland and Singapore. Since then I changed the company and am currently presenting, holding workshops and applying it in several big insurance and banking corporations.
 
-I wrote many articles on the subject (http://technologyconversations.com/category/continuous-integration-delivery-and-deployment/) and am currently writing a book.
+I wrote many articles on the subject of [Continuous Integration, Delivery and Deployment](http://technologyconversations.com/category/continuous-integration-delivery-and-deployment/) and am currently writing a book.
 
 Presentation Sample
 ===================
