@@ -88,7 +88,7 @@ Deployment Strategies
 
 We'll explore different strategies to deploy software. This session will in no way provide an exhaustive list of ways to deploy applications but will try to discuss few common ways that are in use today.
 
-Each of the strategies presented is based on practical experience and each of the created a different set of issues. We'll go through both concepts behind those strategies and specific issues we faced when implementing them.
+Each of the strategies presented is based on practical experience and each of them created a different set of issues. We'll go through both concepts behind those strategies and specific issues we faced when implementing them.
 
 **Mutable monster server**
 
