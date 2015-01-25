@@ -1,0 +1,13 @@
+- name: Directory is present
+  file:
+    path=/data/jenkins
+    state=directory
+  tags: [jenkins]
+
+- name: Container is running
+  docker:
+    name=jenkins
+    image=vfarcic/jenkins
+    ports=8080:8080
+    volumes=/data/jenkins:/jenkins
+  tags: [jenkins]
