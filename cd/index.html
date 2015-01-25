@@ -81,19 +81,19 @@
                         <h2>We should care because...</h2>
                         <div>
                             <ul>
-                                <li class="fragment" data-fragment-index="0">
+                                <li>
                                     Earlier feedback to business
                                 </li>
-                                <li class="fragment" data-fragment-index="1">
+                                <li>
                                     Faster development
                                 </li>
-                                <li class="fragment" data-fragment-index="2">
+                                <li>
                                     Fewer merge conflicts
                                 </li>
-                                <li class="fragment" data-fragment-index="3">
+                                <li>
                                     Lower deployment risk
                                 </li>
-                                <li class="fragment" data-fragment-index="4">
+                                <li>
                                     Changes done faster (no need to wait for release)
                                 </li>
                             </ul>
@@ -126,10 +126,18 @@
 						<h2>You’re doing continuous delivery when...</h2>
                         <div>
                             <ul>
-                                <li class="fragment" data-fragment-index="0">Your software is deployable throughout its life-cycle</li>
-                                <li class="fragment" data-fragment-index="1">Your team prioritizes keeping the software deployable</li>
-                                <li class="fragment" data-fragment-index="2">Anybody can get fast, automated feedback on the production readiness</li>
-                                <li class="fragment" data-fragment-index="3">You can perform push-button deployments</li>
+                                <li>
+                                    Your software is deployable throughout its life-cycle
+                                </li>
+                                <li>
+                                    Your team prioritizes keeping the software deployable
+                                </li>
+                                <li>
+                                    Anybody can get fast, automated feedback on the production readiness
+                                </li>
+                                <li>
+                                    You can perform push-button deployments
+                                </li>
                             </ul>
                         </div>
 					</section>
@@ -139,9 +147,9 @@
                         <h2>Continuous What?</h2>
 						<div>
                             <ul>
-                                <li class="fragment" data-fragment-index="0">Continuous Integration</li>
-                                <li class="fragment" data-fragment-index="1">Continuous Delivery</li>
-                                <li class="fragment" data-fragment-index="2">Continuous Deployment</li>
+                                <li>Continuous Integration</li>
+                                <li>Continuous Delivery</li>
+                                <li>Continuous Deployment</li>
                             </ul>
 						</div>
                     </section>
@@ -173,16 +181,16 @@
                         <h2>Environment Setup Tools</h2>
                         <div>
                             <ul style="list-style-type: none; text-align: center;">
-                                <li class="fragment" data-fragment-index="0">
+                                <li>
                                     <img src="img/vagrant.png" style="width: 50%; height: 50%; background-color: #ffffff; margin: 0;">
                                 </li>
-                                <li class="fragment" data-fragment-index="1">
+                                <li>
                                     <img src="img/puppet.png" style="width: 12.5%; height: 12.5%; background-color: #ffffff; margin: 0;">
                                     <img src="img/chef.png" style="width: 12.5%; height: 12.5%; background-color: #ffffff; margin: 0;">
                                     <img src="img/ansible.png" style="width: 12.5%; height: 12.5%; background-color: #ffffff; margin: 0;">
                                     <img src="img/cfengine.png" style="width: 12.5%; height: 12.5%; background-color: #ffffff; margin: 0;">
                                 </li>
-                                <li class="fragment" data-fragment-index="2">
+                                <li>
                                     <img src="img/docker.png" style="width: 50%; height: 50%; background-color: #ffffff; margin: 0;">
                                 </li>
                             </ul>
@@ -194,13 +202,13 @@
                         <h2>Methodologies</h2>
                         <div>
                             <ul>
-                                <li class="fragment" data-fragment-index="0">
+                                <li>
                                     Unit testing
                                 </li>
-                                <li class="fragment" data-fragment-index="1">
+                                <li>
                                     Test-driven development
                                 </li>
-                                <li class="fragment" data-fragment-index="2">
+                                <li>
                                     Behaviour-driven development
                                 </li>
                             </ul>
@@ -211,16 +219,35 @@
                     <section id="flow">
                         <h2>Flow</h2>
                         <div>
-                            <ul>
-                                <li class="fragment" data-fragment-index="0">Checkout the code</li>
-                                <li class="fragment" data-fragment-index="1">Static Analysis</li>
-                                <li class="fragment" data-fragment-index="2">Unit Tests</li>
-                                <li class="fragment" data-fragment-index="3">Packaging</li>
-                                <li class="fragment" data-fragment-index="4">Deployment to Test Environment</li>
-                                <li class="fragment" data-fragment-index="5">Functional / Integration Tests</li>
-                                <li class="fragment" data-fragment-index="6">Code Coverage</li>
-                                <li class="fragment" data-fragment-index="7">Deployment to Production</li>
-                            </ul>
+                            <ol>
+                                <li>
+                                    Checkout the code
+                                </li>
+                                <li>
+                                    Static Analysis
+                                </li>
+                                <li>
+                                    Unit Tests
+                                </li>
+                                <li>
+                                    Packaging
+                                </li>
+                                <li>
+                                    Deployment to Test Environment
+                                </li>
+                                <li>
+                                    Functional / Integration Tests
+                                </li>
+                                <li>
+                                    Code Coverage
+                                </li>
+                                <li>
+                                    Stress Tests
+                                </li>
+                                <li>
+                                    Deployment to Production
+                                </li>
+                            </ol>
                         </div>
                     </section>
                 </section>
@@ -229,11 +256,21 @@
                         <h2>Deployment</h2>
                         <img src="img/deployment.jpg" style="float: right; width: 50%; height: 50%;"/>
                         <ul>
-                            <li class="fragment" data-fragment-index="0">Often</li>
-                            <li class="fragment" data-fragment-index="1">Automatic</li>
-                            <li class="fragment" data-fragment-index="2">Fast</li>
-                            <li class="fragment" data-fragment-index="3">Zero downtime</li>
-                            <li class="fragment" data-fragment-index="4">Ability to roll back</li>
+                            <li>
+                                Often
+                            </li>
+                            <li>
+                                Automatic
+                            </li>
+                            <li>
+                                Fast
+                            </li>
+                            <li>
+                                Zero downtime
+                            </li>
+                            <li>
+                                Ability to roll back
+                            </li>
                         </ul>
                     </section>
                 </section>
@@ -376,9 +413,9 @@
                         <h2>Feature Toggles (Switches or Flags)</h2>
                         <h3>Feature toggles provide:</h3>
                         <ul>
-                            <li class="fragment">release flexibility</li>
-                            <li class="fragment">feature revert</li>
-                            <li class="fragment">testing ground</li>
+                            <li>release flexibility</li>
+                            <li>feature revert</li>
+                            <li>testing ground</li>
                         </ul>
                     </section>
                 </section>
@@ -407,11 +444,13 @@
                                     <li><a href="http://technologyconversations.com/2014/11/27/continuous-deployment-introduction/">Introduction</a></li>
                                     <li><a href="http://technologyconversations.com/2014/12/03/continuous-deployment-strategies/">Strategies</a></li>
                                     <li><a href="http://technologyconversations.com/2014/12/08/continuous-deployment-implementation/">Implementation</a></li>
+                                    <li><a href="http://technologyconversations.com/2014/12/29/continuous-deployment-implementation-with-ansible-and-docker/">Implementation with Ansible and Docker</a></li>
                                 </ul>
                             </small>
                         </li>
                         <li><a href="http://technologyconversations.com/2014/08/26/feature-toggles-feature-switches-or-feature-flags-vs-feature-branches/">Feature Toggles vs Feature Branches</a></li>
                         <li><a href="http://technologyconversations.com/2014/07/23/bdd-behavior-driven-development-missing-piece-in-the-continuous-integration-puzzle/">BDD: Missing Piece in the Continuous Integration Puzzle</a></li>
+                        <li><a href="http://technologyconversations.com/2015/01/07/monolithic-servers-vs-microservices/">Monolithic Servers vs Microservices</a></li>
                     </ul>
                 </section>
                 <section>
