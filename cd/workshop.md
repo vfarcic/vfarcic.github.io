@@ -23,11 +23,17 @@ Since we will have several microservices and applications, each of the should ha
 
 * Development environments for each microservice and/or application.
 * One CD environment
-* One testing environment
-* One production environment
+* Testing and production environments
 
 We'll skip the first set of development environments since they will be done for each microservice and application separately.
  
 CD Environment
 --------------
 
+We'll set up Jenkins environment using Vagrant and Ansible. Vagrant will create a VM with Ubuntu and run the bootstrap.sh script. The only purpose of that script is to install Ansible. Once that is done, Ansible will make sure that Docker is installed and Jenkins process is running. 
+
+```bash
+vagrant up cd
+```
+
+Now we can open [http://localhost:8080](http://localhost:8080) and use Jenkins.

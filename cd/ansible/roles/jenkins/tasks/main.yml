@@ -2,6 +2,7 @@
   file:
     path=/data/jenkins
     state=directory
+    mode=777
   tags: [jenkins]
 
 - name: Container is running

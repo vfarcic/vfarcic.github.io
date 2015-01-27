@@ -2,6 +2,5 @@
   remote_user: vagrant
   sudo: yes
   roles:
-    - scala
     - docker
-    - mongodb
+    - jenkins
