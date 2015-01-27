@@ -1,6 +1,0 @@
-- hosts: localhost
-  remote_user: vagrant
-  sudo: yes
-  roles:
-    - docker
-    - jenkins
