@@ -105,7 +105,7 @@ What are microservices? Why do they fit perfectly into the concept of immutable 
 Live Example
 ------------
 
-Once we are all familiar with Continuous Deployment and different strategies that can be employed, we'll got through one example of deploying fast, often, automatically, with zero-downtime and the ability to rollback. We'll use Docker, CoreOS, NGINX and few other tools to release and deploy an application. All examples will be run live.
+Once we are all familiar with Continuous Deployment and different strategies that can be employed, we'll got through one example of deploying fast, often, automatically, with zero-downtime and the ability to rollback. We'll use Docker, Ansible, nginx and few other tools together with microservices approach to architecture coupled with TDD to release and deploy an application. All examples will be run live.
 
 Summary
 -------
