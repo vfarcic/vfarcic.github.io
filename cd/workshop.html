@@ -59,7 +59,7 @@
                 <section>
                     <section id="requirements">
                         <h2>High Level Requirements</h2>
-                        <h3>Books Retailer application</h3>
+                        <h3>Books Shop application</h3>
                         <ul>
                             <li>Any Device (desktop, tables and mobiles)</li>
                             <li>Search, see details and purchase</li>
@@ -73,8 +73,71 @@
                         <h2>High Level Design</h2>
                         <ul>
                             <li>Microservices</li>
-                            <li>Front-end decoupled from back-end</li>
-                            <li>Packed and deployed as containers</li>
+                            <li>Front-end decoupled from back-end???</li>
+                            <li>Built, tested, deployed and tested again with containers???</li>
+                            <li>VMs with Vagrant???</li>
+                            <li>CD with Jenkins???</li>
+                            <li>CM with Ansible???</li>
+                            <li>Zero-downtime with nginx???</li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section id="env">
+                        <h2>VMs and CM</h2>
+                        <h4>Vagrant</h4>
+                        <h4>Ansible</h4>
+                        <img src="img/vagrant.png">
+                        <img src="img/ansible.png">
+                    </section>
+                    <section id="envCodeDev">
+                        <h2>VMs and CM</h2>
+                        <h4>Development (<a href="https://github.com/vfarcic/books-service">books-service repo</a>)</h4>
+                        <ul>
+                            <li>VM: <a href="https://github.com/vfarcic/books-service/blob/master/Vagrantfile">Vagrantfile</a></li>
+                            <li>CM: <a href="https://github.com/vfarcic/books-service/blob/master/bootstrap.sh">bootstrap.sh</a></li>
+                            <li>CM: <a href="https://github.com/vfarcic/books-service/blob/master/ansible/dev.yml">dev.yml</a></li>
+                            <li>CM: <a href="https://github.com/vfarcic/books-service/blob/master/ansible/roles/scala/tasks/main.yml">scala/tasks/main.yml</a></li>
+                            <li>Run: vagrant up dev</li>
+                        </ul>
+                    </section>
+                    <section id="envCodeDev">
+                        <h2>VMs and CM</h2>
+                        <h4>Production ???</h4>
+                    </section>
+                    <section id="envBenefits">
+                        <h2>VMs and CM</h2>
+                        <h4>Benefits</h4>
+                        <ul>
+                            <li>Version control</li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section id="microservicesAndFrontEnd">
+                        <h2>Microservices and front-end</h2>
+                        <img src="img/workshop_microservices.png">
+                    </section>
+                    <section id="microservicesCode">
+                        <h2>Microservices</h2>
+                        <h4><a href="https://github.com/vfarcic/books-service">books-service repo</a></h4>
+                        <ul>
+                            <li>Unit/Functional Tests: <a hre="https://github.com/vfarcic/books-service/blob/master/src/test/scala/com/technologyconversations/api/ServiceSpec.scala">ServiceSpec.scala</a></li>
+                            <li>Code: <a href="https://github.com/vfarcic/books-service/blob/master/src/main/scala/com/technologyconversations/api/ServiceActor.scala">ServiceActor.scala</a></li>
+                            <li>TDD: sbt ~test-quick</li>
+                        </ul>
+                    </section>
+                    <section id="microservicesBenefits">
+                        <h2>Microservices</h2>
+                        <h4>Benefits</h4>
+                        <ul>
+                            <li>Simple and easy to understand (up to hundreds of lines of code)</li>
+                            <li>Decoupled</li>
+                            <li>Easy to scale</li>
+                            <li>Easy to test</li>
+                            <li>No long-term commitment</li>
+                            <li>Frequent deployment</li>
+                            <li>Innovation</li>
                         </ul>
                     </section>
                 </section>
