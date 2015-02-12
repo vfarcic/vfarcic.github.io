@@ -72,44 +72,87 @@
                     <section id="design">
                         <h2>High Level Design</h2>
                         <ul>
+                            <li>VMs with Vagrant</li>
+                            <li>CM with Ansible</li>
                             <li>Microservices</li>
-                            <li>Front-end decoupled from back-end???</li>
-                            <li>Built, tested, deployed and tested again with containers???</li>
-                            <li>VMs with Vagrant???</li>
-                            <li>CD with Jenkins???</li>
-                            <li>CM with Ansible???</li>
-                            <li>Zero-downtime with nginx???</li>
+                            <li>Front-end decoupled from back-end</li>
+                            <li>TODO: Built, tested, deployed and tested again with containers???</li>
+                            <li>TODO: CD with Jenkins???</li>
+                            <li>TODO: Zero-downtime with nginx???</li>
                         </ul>
                     </section>
                 </section>
                 <section>
-                    <section id="env">
-                        <h2>VMs and CM</h2>
-                        <h4>Vagrant</h4>
-                        <h4>Ansible</h4>
-                        <img src="img/vagrant.png">
-                        <img src="img/ansible.png">
+                    <section id="envVm">
+                        <h2>Environments</h2>
+                        <h3>Virtual Machines</h3>
+                        <img src="img/vagrant.png" style="background-color: black;">
+                    </section>
+                    <section id="envCm">
+                        <h2>Environments</h2>
+                        <h3>Configuration Management</h3>
+                        <img src="img/ansible.png" style="background-color: white; width: 50%; height: 50%;">
                     </section>
                     <section id="envCodeDev">
-                        <h2>VMs and CM</h2>
-                        <h4>Development (<a href="https://github.com/vfarcic/books-service">books-service repo</a>)</h4>
+                        <h2>Environments</h2>
+                        <h3>Development (<a href="https://github.com/vfarcic/books-service">books-service repo</a>)</h3>
                         <ul>
                             <li>VM: <a href="https://github.com/vfarcic/books-service/blob/master/Vagrantfile">Vagrantfile</a></li>
                             <li>CM: <a href="https://github.com/vfarcic/books-service/blob/master/bootstrap.sh">bootstrap.sh</a></li>
                             <li>CM: <a href="https://github.com/vfarcic/books-service/blob/master/ansible/dev.yml">dev.yml</a></li>
                             <li>CM: <a href="https://github.com/vfarcic/books-service/blob/master/ansible/roles/scala/tasks/main.yml">scala/tasks/main.yml</a></li>
-                            <li>Run: vagrant up dev</li>
                         </ul>
+                        <pre><code data-trim>
+git clone https://github.com/vfarcic/books-service.git
+cd books-service
+vagrant up dev
+                        </code></pre>
                     </section>
-                    <section id="envCodeDev">
-                        <h2>VMs and CM</h2>
-                        <h4>Production ???</h4>
+                    <section id="envCodeProd">
+                        <h2>Environments</h2>
+                        <h3>Production (<a href="https://github.com/vfarcic/cd-workshop">cd-workshop repo</a>)</h3>
+                        <ul>
+                            <li>VM: <a href="https://github.com/vfarcic/cd-workshop/blob/master/Vagrantfile">Vagrantfile</a></li>
+                        </ul>
+                        <pre><code data-trim>
+git clone https://github.com/vfarcic/cd-workshop.git
+cd cd-workshop
+vagrant up prod
+vagrant ssh prod
+ssh-keygen # Simply press enter to all questions
+exit
+vagrant ssh cd
+ssh-keygen # Simply press enter to all questions
+ssh-copy-id 192.168.50.92 # Password is "vagrant"
+exit
+                        </code></pre>
+                    </section>
+                    <section id="envCodeCd">
+                        <h2>Environments</h2>
+                        <h3>Continuous Deployment (<a href="https://github.com/vfarcic/cd-workshop">cd-workshop repo</a>)</h3>
+                        <ul>
+                            <li>VM: <a href="https://github.com/vfarcic/cd-workshop/blob/master/Vagrantfile">Vagrantfile</a></li>
+                            <li>CM: <a href="https://github.com/vfarcic/cd-workshop/blob/master/bootstrap.sh">bootstrap.sh</a></li>
+                            <li>CM: <a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/cd.yml">cd.yml</a></li>
+                            <li>CM: <a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/tasks/main.yml">jenkins/tasks/main.yml</a></li>
+                            <li>CM: <a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/templates/build.xml.j2">jenkins/templates/build.xml.j2</a></li>
+                            <li>TODO: Move to Docker CM: <a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/defaults/main.yml">jenkins/defaults/main.yml</a></li>
+                        </ul>
+                        <pre><code data-trim>
+git clone https://github.com/vfarcic/cd-workshop.git
+cd cd-workshop
+vagrant up cd
+                        </code></pre>
                     </section>
                     <section id="envBenefits">
-                        <h2>VMs and CM</h2>
-                        <h4>Benefits</h4>
+                        <h2>VM and CM</h2>
+                        <h3>Benefits</h3>
                         <ul>
                             <li>Version control</li>
+                            <li>Repeatable</li>
+                            <li>Automated</li>
+                            <li>Fast</li>
+                            <li>Easy to integrate with CD servers</li>
                         </ul>
                     </section>
                 </section>
@@ -120,18 +163,20 @@
                     </section>
                     <section id="microservicesCode">
                         <h2>Microservices</h2>
-                        <h4><a href="https://github.com/vfarcic/books-service">books-service repo</a></h4>
+                        <h3><a href="https://github.com/vfarcic/books-service">books-service repo</a></h3>
                         <ul>
                             <li>Unit/Functional Tests: <a hre="https://github.com/vfarcic/books-service/blob/master/src/test/scala/com/technologyconversations/api/ServiceSpec.scala">ServiceSpec.scala</a></li>
                             <li>Code: <a href="https://github.com/vfarcic/books-service/blob/master/src/main/scala/com/technologyconversations/api/ServiceActor.scala">ServiceActor.scala</a></li>
-                            <li>TDD: sbt ~test-quick</li>
                         </ul>
+                        <pre><code>
+sbt ~test-quick
+                        </code></pre>
                     </section>
                     <section id="microservicesBenefits">
                         <h2>Microservices</h2>
-                        <h4>Benefits</h4>
+                        <h3>Benefits</h3>
                         <ul>
-                            <li>Simple and easy to understand (up to hundreds of lines of code)</li>
+                            <li>Simple and easy to understand</li>
                             <li>Decoupled</li>
                             <li>Easy to scale</li>
                             <li>Easy to test</li>
@@ -139,6 +184,47 @@
                             <li>Frequent deployment</li>
                             <li>Innovation</li>
                         </ul>
+                    </section>
+                </section>
+                <section>
+                    <section id="containers">
+                        <h2>Containers</h2>
+                        <img src="img/docker.png" style="background-color: white;">
+                    </section>
+                    <section id="containersCode">
+                        <h2>Containers</h2>
+                        <h3>Build Tests (<a href="https://github.com/vfarcic/books-service">books-service repo</a>)</h3>
+                        <ul>
+                            <li><a href="https://github.com/vfarcic/books-service/blob/master/docker/tests/Dockerfile">Dockerfile</a></li>
+                            <li><a href="https://github.com/vfarcic/books-service/blob/master/run_tests.sh">run_tests.sh</a></li>
+                        </ul>
+                        <pre><code>
+vagrant ssh cd
+git clone https://github.com/vfarcic/books-service.git
+cd books-service
+sudo docker build -t books-service-tests docker/tests/
+sudo docker run -t --rm \
+  -v $PWD:/source \
+  -v /data/.ivy2:/root/.ivy2/cache \
+  books-service-tests
+exit
+                        </code></pre>
+                    </section>
+                    <section id="containersCode">
+                        <h2>Containers</h2>
+                        <h3>App (<a href="https://github.com/vfarcic/books-service">books-service repo</a>)</h3>
+                        <ul>
+                            <li><a href="App: https://github.com/vfarcic/books-service/blob/master/Dockerfile">Dockerfile</a></li>
+                        </ul>
+                        <pre><code>
+vagrant ssh cd
+sudo docker build -t books-service .
+sudo docker run --name books-service \
+  -p 9001:8080 \
+  -v /data/books-service/db:/data/db \
+  books-service
+exit
+                        </code></pre>
                     </section>
                 </section>
                 <section id="qa">
