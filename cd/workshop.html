@@ -220,6 +220,7 @@ vagrant halt prod
                         <ul>
                             <li><a href="https://github.com/vfarcic/books-service/blob/master/docker/tests/Dockerfile">Dockerfile</a></li>
                             <li><a href="https://github.com/vfarcic/books-service/blob/master/run_tests.sh">run_tests.sh</a></li>
+                            <li>TODO: Unit/functional tests code</li>
                         </ul>
                         <pre><code>
 vagrant ssh cd
@@ -227,6 +228,7 @@ git clone https://github.com/vfarcic/books-service.git
 cd books-service
 sudo ./build_tests.sh
 sudo docker run -t --rm \
+  -v $PWD/target/scala-2.10:/source/target/scala-2.10 \
   -v /data/.ivy2:/root/.ivy2/cache \
   vfarcic/books-service-tests
                         </code></pre>
@@ -240,7 +242,7 @@ sudo docker run -t --rm \
                         </ul>
                         <pre><code>
 sudo docker build -t books-service .
-sudo docker run --name books-service \
+sudo docker run -d --name books-service \
   -p 9001:8080 \
   -v /data/books-service/db:/data/db \
   books-service
@@ -248,10 +250,15 @@ curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 1, "title": "My Firs
 curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 2, "title": "My Second Book", "author": "John Doe", "description": "Not a bad as the first book"}' http://localhost:9001/api/v1/books
 curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 3, "title": "My Third Book", "author": "John Doe", "description": "Failed writers club"}' http://localhost:9001/api/v1/books
 curl -H 'Content-Type: application/json' http://localhost:9001/api/v1/books
-exit
-vagrant halt cd
+curl -H 'Content-Type: application/json' http://localhost:9001/api/v1/books/_id/1
                         </code></pre>
                     </section>
+                    <section id="containersRegistry">
+                        <h2>Containers</h2>
+                        <h4>Registry</h4>
+                        TODO
+                    </section>
+                    TODO: nginx in prod
                     <section id="containersPostDeployment">
                         <h2>Containers</h2>
                         <h4>Post Deployment Integration Tests (<a href="https://github.com/vfarcic/books-service">books-service repo</a>)</h4>
@@ -259,26 +266,29 @@ vagrant halt cd
                             <li><a href="https://github.com/vfarcic/books-service/blob/master/Dockerfile.test">Dockerfile.test</a></li>
                             <li><a href="https://github.com/vfarcic/books-service/blob/master/build_tests.sh">build_tests.sh</a></li>
                             <li><a href="https://github.com/vfarcic/books-service/blob/master/run_tests.sh">run_tests.sh</a></li>
+                            <li>TODO: Integration tests code</li>
                         </ul>
                         <pre><code>
-git clone https://github.com/vfarcic/cd-workshop.git
-cd cd-workshop
-vagrant up cd
-vagrant ssh cd
-git clone https://github.com/vfarcic/books-service.git
-cd books-service
-sudo build_tests.sh
+TODO: Move to prod
 sudo docker run -it --rm \
-  -e "TEST_TYPE=integ"
-  books-service-tests
-exit
-vagrant halt cd
+  -e "TEST_TYPE=integ" \
+  -e "DOMAIN=http://172.17.42.1:9001" \
+  -v /data/.ivy2:/root/.ivy2/cache \
+  vfarcic/books-service-tests
                         </code></pre>
                     </section>
-                    <section id="containersRegistry">
+                    <section id="containersPostDeployment">
                         <h2>Containers</h2>
-                        <h4>Registry</h4>
-                        TODO
+                        <h4>Post Deployment Stress Tests (<a href="https://github.com/vfarcic/books-service">books-service repo</a>)</h4>
+                        <ul>
+                            <li><a href="https://github.com/vfarcic/books-service/blob/master/Dockerfile.test">Dockerfile.test</a></li>
+                            <li><a href="https://github.com/vfarcic/books-service/blob/master/build_tests.sh">build_tests.sh</a></li>
+                            <li><a href="https://github.com/vfarcic/books-service/blob/master/run_tests.sh">run_tests.sh</a></li>
+                            <li>TODO: Stress tests code</li>
+                        </ul>
+                        <pre><code>
+TODO
+                        </code></pre>
                     </section>
                 </section>
                 <section>
@@ -291,6 +301,12 @@ vagrant halt cd
                     <section id="cd">
                         <h2>Continuous Delivery</h2>
                         <h4>Jenkins</h4>
+                    </section>
+                </section>
+                <section>
+                    <section id="cd">
+                        <h2>Front-End</h2>
+                        <h4>AngularJS</h4>
                     </section>
                 </section>
                 <section id="qa">
