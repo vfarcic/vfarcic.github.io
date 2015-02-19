@@ -118,6 +118,8 @@
 git clone https://github.com/vfarcic/books-service.git
 cd books-service
 vagrant up dev
+vagrant halt dev
+cd ..
                         </code></pre>
                     </section>
                     <section id="envCodeCd">
@@ -136,6 +138,8 @@ vagrant up dev
 git clone https://github.com/vfarcic/cd-workshop.git
 cd cd-workshop
 vagrant up cd
+vagrant ssh cd
+vagrant halt cd
                         </code></pre>
                     </section>
                     <section id="envCodeProd">
@@ -146,8 +150,6 @@ vagrant up cd
                             <li>VM: <a href="https://github.com/vfarcic/cd-workshop/blob/master/Vagrantfile">Vagrantfile</a></li>
                         </ul>
                         <pre><code data-trim>
-git clone https://github.com/vfarcic/cd-workshop.git
-cd cd-workshop
 vagrant up prod
 vagrant ssh prod
 ssh-keygen # Simply press enter to all questions
@@ -156,6 +158,7 @@ vagrant ssh cd
 ssh-keygen # Simply press enter to all questions
 ssh-copy-id 192.168.50.92 # Password is "vagrant"
 exit
+vagrant halt prod
                         </code></pre>
                     </section>
                     <section id="envBenefits">
@@ -183,9 +186,6 @@ exit
                             <li>Unit/Functional Tests: <a href="https://github.com/vfarcic/books-service/blob/master/src/test/scala/com/technologyconversations/api/ServiceSpec.scala">ServiceSpec.scala</a></li>
                             <li>Code: <a href="https://github.com/vfarcic/books-service/blob/master/src/main/scala/com/technologyconversations/api/ServiceActor.scala">ServiceActor.scala</a></li>
                         </ul>
-                        <pre><code>
-sbt ~test-quick
-                        </code></pre>
                     </section>
                     <section id="microservicesBenefits">
                         <h2>Microservices</h2>
@@ -225,12 +225,10 @@ sbt ~test-quick
 vagrant ssh cd
 git clone https://github.com/vfarcic/books-service.git
 cd books-service
-sudo docker build -t books-service-tests docker/tests/
+sudo ./build_tests.sh
 sudo docker run -t --rm \
-  -v $PWD:/source \
   -v /data/.ivy2:/root/.ivy2/cache \
-  books-service-tests
-exit
+  vfarcic/books-service-tests
                         </code></pre>
                     </section>
                     <section id="containersApp">
@@ -241,8 +239,6 @@ exit
                             <li><a href="https://github.com/vfarcic/books-service/blob/master/run.sh">run.sh</a></li>
                         </ul>
                         <pre><code>
-vagrant ssh cd
-cd books-service
 sudo docker build -t books-service .
 sudo docker run --name books-service \
   -p 9001:8080 \
@@ -252,15 +248,32 @@ curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 1, "title": "My Firs
 curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 2, "title": "My Second Book", "author": "John Doe", "description": "Not a bad as the first book"}' http://localhost:9001/api/v1/books
 curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 3, "title": "My Third Book", "author": "John Doe", "description": "Failed writers club"}' http://localhost:9001/api/v1/books
 curl -H 'Content-Type: application/json' http://localhost:9001/api/v1/books
-sudo docker rm -f books-service
-curl -H 'Content-Type: application/json' http://localhost:9001/api/v1/books
 exit
+vagrant halt cd
                         </code></pre>
                     </section>
                     <section id="containersPostDeployment">
                         <h2>Containers</h2>
-                        <h4>Post Deployment Tests</h4>
-                        TODO
+                        <h4>Post Deployment Integration Tests (<a href="https://github.com/vfarcic/books-service">books-service repo</a>)</h4>
+                        <ul>
+                            <li><a href="https://github.com/vfarcic/books-service/blob/master/Dockerfile.test">Dockerfile.test</a></li>
+                            <li><a href="https://github.com/vfarcic/books-service/blob/master/build_tests.sh">build_tests.sh</a></li>
+                            <li><a href="https://github.com/vfarcic/books-service/blob/master/run_tests.sh">run_tests.sh</a></li>
+                        </ul>
+                        <pre><code>
+git clone https://github.com/vfarcic/cd-workshop.git
+cd cd-workshop
+vagrant up cd
+vagrant ssh cd
+git clone https://github.com/vfarcic/books-service.git
+cd books-service
+sudo build_tests.sh
+sudo docker run -it --rm \
+  -e "TEST_TYPE=integ"
+  books-service-tests
+exit
+vagrant halt cd
+                        </code></pre>
                     </section>
                     <section id="containersRegistry">
                         <h2>Containers</h2>
