@@ -76,9 +76,9 @@
                             <li>Provisioning with Ansible</li>
                             <li>Microservices</li>
                             <li>Front-end decoupled from back-end</li>
-                            <li>Built, tested, deployed and tested again with containers</li>
-                            <li>CD with Jenkins</li>
+                            <li>Tested, built, deployed and tested again with containers</li>
                             <li>Zero-downtime with nginx</li>
+                            <li>CD with Jenkins</li>
                         </ul>
                     </section>
                 </section>
@@ -272,7 +272,7 @@ curl -H 'Content-Type: application/json' http://localhost:9001/api/v1/books/_id/
 TODO: Move to prod
 sudo docker run -it --rm \
   -e "TEST_TYPE=integ" \
-  -e "DOMAIN=http://172.17.42.1:9001" \
+  -e "DOMAIN=http://172.17.42.1" \
   -v /data/.ivy2:/root/.ivy2/cache \
   vfarcic/books-service-tests
                         </code></pre>
