@@ -206,7 +206,7 @@ vagrant halt prod
                         <h2>Containers</h2>
                         <img src="img/docker.png" style="background-color: white; width: 50%; height: 50%; float: right;">
                         <ul>
-                            <li>Portabile</li>
+                            <li>Portable</li>
                             <li>Low resource usage</li>
                             <li>Scalable</li>
                             <li>Isolation</li>
@@ -296,7 +296,7 @@ exit
                         </code></pre>
                     </section>
                     <section id="containersApp">
-                        <h2>Reverse Proxy</h2>
+                        <h2>Containers</h2>
                         <h4>nginx (<a href="https://github.com/vfarcic/cd-workshop">cd-workshop repo</a>)</h4>
                         <ul>
                             <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/nginx/tasks/main.yml">nginx/tasks/main.yml</a></li>
@@ -305,9 +305,7 @@ exit
                         <pre><code>
 vagrant ssh cd
 ansible-playbook /vagrant/ansible/nginx.yml -i /vagrant/ansible/hosts/prod
-exit
-vagrant ssh prod
-curl -H 'Content-Type: application/json' http://localhost/api/v1/books | python -mjson.tool
+curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
                         </code></pre>
                     </section>
                     <section id="containersPostDeployment">
@@ -322,7 +320,7 @@ curl -H 'Content-Type: application/json' http://localhost/api/v1/books | python 
                         <pre><code>
 sudo docker run -it --rm \
   -e "TEST_TYPE=integ" \
-  -e "DOMAIN=http://172.17.42.1" \
+  -e "DOMAIN=http://192.168.50.92" \
   -v /data/.ivy2:/root/.ivy2/cache \
   192.168.50.91:5000/books-service-tests
                         </code></pre>
@@ -332,36 +330,122 @@ sudo docker run -it --rm \
                         <h4>Post Deployment Stress Tests (<a href="https://github.com/vfarcic/books-stress">books-stress repo</a>)</h4>
                         <ul>
                             <li><a href="https://github.com/vfarcic/books-stress/blob/master/user-files/simulations/technologyconversations/Books.scala">Books.scala</a></li>
-                            <li>TODO: Continue</li>
+                            <li><a href="https://github.com/vfarcic/books-stress/blob/master/Dockerfile">Dockerfile</a></li>
                         </ul>
                         <pre><code>
+cd ~
+git clone https://github.com/vfarcic/books-stress.git
+cd books-stress
+sudo docker build -t vfarcic/books-stress .
+sudo docker tag vfarcic/books-stress 192.168.50.91:5000/books-stress
+sudo docker push 192.168.50.91:5000/books-stress
+sudo docker run -t --rm \
+  -e "DOMAIN=http://192.168.50.92" \
+  -e "USERS=10" \
+  -e "USERS_OVER_SECONDS=20" \
+  -e "MAX_RESPONSE_TIME=1000" \
+  -e "DURATION=120" \
+  -v /data/stress/results:/stress/results \
+  192.168.50.91:5000/books-stress
+exit
                         </code></pre>
                     </section>
                 </section>
                 <section>
                     <section id="zd">
                         <h2>Zero-downtime</h2>
-                        <h4>nginx & etcd</h4>
+                        <ul>
+                            <li>No downtime</li>
+                            <li>Production testing</li>
+                            <li>nginx & etcd</li>
+                        </ul>
+                    </section>
+                    <section id="zdWithDowntime">
+                        <h2><strike>Zero-downtime</strike></h2>
+                        <h4>Traditional</h4>
+                        <code><pre>
+vagrant ssh prod
+curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
+sudo docker rm -f books-service
+sudo docker pull 192.168.50.91:5000/books-service
+curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
+sudo docker run -d --name books-service \
+  -p 9001:8080 \
+  -v /data/books-service/db:/data/db \
+  192.168.50.91:5000/books-service
+sudo docker logs -f books-service
+curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
+sudo docker rm -f books-service
+                        </pre></code>
+                    </section>
+                    <section id="zdBlueGreenParallel">
+                        <h2>Zero-downtime</h2>
+                        <h4>Blue-Green: Parallel Running</h4>
+                        <ul>
+                            <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/nginx/templates/services.conf.j2">nginx/templates/services.conf.j2</a></li>
+                        </ul>
+                        <code><pre>
+sudo docker run -d --name books-service-blue \
+  -p 9001:8080 \
+  -v /data/books-service/db:/data/db \
+  192.168.50.91:5000/books-service
+sudo docker logs -f books-service-blue
+curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
+sudo docker pull 192.168.50.91:5000/books-service
+sudo docker run -d --name books-service-green \
+  -p 9002:8080 \
+  -v /data/books-service/db:/data/db \
+  192.168.50.91:5000/books-service
+curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
+sudo docker ps -a | grep books-service
+cat /data/nginx/sites-enabled/services.conf | grep proxy | grep books
+exit
+                        </pre></code>
+                    </section>
+                    <section id="zdBlueGreenParallel">
+                        <h2>Zero-downtime</h2>
+                        <h4>Blue-Green: Tests</h4>
+                        <ul>
+                            <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/nginx/templates/services.conf.j2">nginx/templates/services.conf.j2</a></li>
+                        </ul>
+                        <code><pre>
+vagrant ssh cd
+sudo docker run -it --rm \
+  -e "TEST_TYPE=integ" \
+  -e "DOMAIN=http://192.168.50.92:9002" \
+  -v /data/.ivy2:/root/.ivy2/cache \
+  192.168.50.91:5000/books-service-tests
+                        </pre></code>
                     </section>
                 </section>
                 <section>
-                    <section id="cd">
+                    <section id="cdAnsible">
+                        <h2>Continuous Delivery</h2>
+                        <h4>Ansible</h4>
+                        TODO
+                    </section>
+                    <section id="cdJenkins">
                         <h2>Continuous Delivery</h2>
                         <h4>Jenkins</h4>
+                        TODO
                     </section>
                 </section>
                 <section>
-                    <section id="cd">
+                    <section id="fe">
                         <h2>Front-End</h2>
                         <h4>AngularJS</h4>
                     </section>
                 </section>
                 <section id="qa">
-                    <h1>Q&A</h1>
+                    <section>
+                        <h1>Q&A</h1>
+                    </section>
                 </section>
                 <section id="moreInfo">
-                    <h2>Additional Information</h2>
-                    <h1>TODO</h1>
+                    <section>
+                        <h2>Additional Information</h2>
+                        <h1>TODO</h1>
+                    </section>
                 </section>
                 <section>
                     <section id="theEnd">
