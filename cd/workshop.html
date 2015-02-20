@@ -218,9 +218,9 @@ vagrant halt prod
                         <h2>Containers</h2>
                         <h4>Tests (<a href="https://github.com/vfarcic/books-service">books-service repo</a>)</h4>
                         <ul>
+                            <li><a href="https://github.com/vfarcic/books-service/blob/master/src/test/scala/com/technologyconversations/api/ServiceSpec.scala">Unit/functional tests</a></li>
                             <li><a href="https://github.com/vfarcic/books-service/blob/master/docker/tests/Dockerfile">Dockerfile</a></li>
                             <li><a href="https://github.com/vfarcic/books-service/blob/master/run_tests.sh">run_tests.sh</a></li>
-                            <li>TODO: Unit/functional tests code</li>
                         </ul>
                         <pre><code>
 vagrant ssh cd
@@ -238,56 +238,103 @@ sudo docker run -t --rm \
                         <h4>Application (<a href="https://github.com/vfarcic/books-service">books-service repo</a>)</h4>
                         <ul>
                             <li><a href="https://github.com/vfarcic/books-service/blob/master/Dockerfile">Dockerfile</a></li>
-                            <li><a href="https://github.com/vfarcic/books-service/blob/master/run.sh">run.sh</a></li>
                         </ul>
                         <pre><code>
-sudo docker build -t books-service .
+sudo docker build -t vfarcic/books-service .
 sudo docker run -d --name books-service \
   -p 9001:8080 \
   -v /data/books-service/db:/data/db \
-  books-service
-curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 1, "title": "My First Book", "author": "John Doe", "description": "Not a very good book"}' http://localhost:9001/api/v1/books
-curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 2, "title": "My Second Book", "author": "John Doe", "description": "Not a bad as the first book"}' http://localhost:9001/api/v1/books
-curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 3, "title": "My Third Book", "author": "John Doe", "description": "Failed writers club"}' http://localhost:9001/api/v1/books
-curl -H 'Content-Type: application/json' http://localhost:9001/api/v1/books
-curl -H 'Content-Type: application/json' http://localhost:9001/api/v1/books/_id/1
+  vfarcic/books-service
+curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 1, "title": "My First Book", "author": "John Doe", "description": "Not a very good book"}' http://localhost:9001/api/v1/books | python -mjson.tool
+curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 2, "title": "My Second Book", "author": "John Doe", "description": "Not a bad as the first book"}' http://localhost:9001/api/v1/books | python -mjson.tool
+curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 3, "title": "My Third Book", "author": "John Doe", "description": "Failed writers club"}' http://localhost:9001/api/v1/books | python -mjson.tool
+curl -H 'Content-Type: application/json' http://localhost:9001/api/v1/books | python -mjson.tool
+curl -H 'Content-Type: application/json' http://localhost:9001/api/v1/books/_id/1 | python -mjson.tool
+sudo docker rm -f books-service
                         </code></pre>
                     </section>
                     <section id="containersRegistry">
                         <h2>Containers</h2>
                         <h4>Registry</h4>
-                        TODO
-                    </section>
-                    TODO: nginx in prod
-                    <section id="containersPostDeployment">
-                        <h2>Containers</h2>
-                        <h4>Post Deployment Integration Tests (<a href="https://github.com/vfarcic/books-service">books-service repo</a>)</h4>
                         <ul>
-                            <li><a href="https://github.com/vfarcic/books-service/blob/master/Dockerfile.test">Dockerfile.test</a></li>
-                            <li><a href="https://github.com/vfarcic/books-service/blob/master/build_tests.sh">build_tests.sh</a></li>
-                            <li><a href="https://github.com/vfarcic/books-service/blob/master/run_tests.sh">run_tests.sh</a></li>
-                            <li>TODO: Integration tests code</li>
+                            <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/registry/tasks/main.yml">registry/tasks/main.yml</a></li>
+                        </ul>
+                        <code><pre>
+sudo docker tag vfarcic/books-service-tests 192.168.50.91:5000/books-service-tests
+sudo docker tag vfarcic/books-service 192.168.50.91:5000/books-service
+sudo docker images
+sudo docker push 192.168.50.91:5000/books-service-tests
+sudo docker push 192.168.50.91:5000/books-service
+curl http://localhost:5000/v1/search | python -mjson.tool
+exit
+                        </pre></code>
+                    </section>
+                    <section id="containersApp">
+                        <h2>Containers</h2>
+                        <h4>Application in production (<a href="https://github.com/vfarcic/books-service">books-service repo</a>)</h4>
+                        <ul>
+                            <li><a href="https://github.com/vfarcic/books-service/blob/master/Dockerfile">Dockerfile</a></li>
+                            <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/prod.yml">prod.yml</a></li>
                         </ul>
                         <pre><code>
-TODO: Move to prod
-sudo docker run -it --rm \
-  -e "TEST_TYPE=integ" \
-  -e "DOMAIN=http://172.17.42.1" \
-  -v /data/.ivy2:/root/.ivy2/cache \
-  vfarcic/books-service-tests
+vagrant up prod
+vagrant ssh cd
+ansible-playbook /vagrant/ansible/prod.yml -i /vagrant/ansible/hosts/prod
+exit
+vagrant ssh prod
+sudo docker run -d --name books-service \
+  -p 9001:8080 \
+  -v /data/books-service/db:/data/db \
+  192.168.50.91:5000/books-service
+curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 1, "title": "My First Book", "author": "John Doe", "description": "Not a very good book"}' http://localhost:9001/api/v1/books | python -mjson.tool
+curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 2, "title": "My Second Book", "author": "John Doe", "description": "Not a bad as the first book"}' http://localhost:9001/api/v1/books | python -mjson.tool
+curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 3, "title": "My Third Book", "author": "John Doe", "description": "Failed writers club"}' http://localhost:9001/api/v1/books | python -mjson.tool
+curl -H 'Content-Type: application/json' http://localhost:9001/api/v1/books | python -mjson.tool
+curl -H 'Content-Type: application/json' http://localhost:9001/api/v1/books/_id/1 | python -mjson.tool
+curl -H 'Content-Type: application/json' http://localhost/api/v1/books | python -mjson.tool
+exit
+                        </code></pre>
+                    </section>
+                    <section id="containersApp">
+                        <h2>Reverse Proxy</h2>
+                        <h4>nginx (<a href="https://github.com/vfarcic/cd-workshop">cd-workshop repo</a>)</h4>
+                        <ul>
+                            <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/nginx/tasks/main.yml">nginx/tasks/main.yml</a></li>
+                            <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/nginx/templates/services.conf.j2">nginx/templates/services.conf.j2</a></li>
+                        </ul>
+                        <pre><code>
+vagrant ssh cd
+ansible-playbook /vagrant/ansible/nginx.yml -i /vagrant/ansible/hosts/prod
+exit
+vagrant ssh prod
+curl -H 'Content-Type: application/json' http://localhost/api/v1/books | python -mjson.tool
                         </code></pre>
                     </section>
                     <section id="containersPostDeployment">
                         <h2>Containers</h2>
-                        <h4>Post Deployment Stress Tests (<a href="https://github.com/vfarcic/books-service">books-service repo</a>)</h4>
+                        <h4>Post Deployment Integration Tests (<a href="https://github.com/vfarcic/books-service">books-service repo</a>)</h4>
                         <ul>
+                            <li><a href="https://github.com/vfarcic/books-service/blob/master/src/test/scala/com/technologyconversations/api/ServiceInteg.scala">ServiceInteg.scala</a></li>
                             <li><a href="https://github.com/vfarcic/books-service/blob/master/Dockerfile.test">Dockerfile.test</a></li>
                             <li><a href="https://github.com/vfarcic/books-service/blob/master/build_tests.sh">build_tests.sh</a></li>
                             <li><a href="https://github.com/vfarcic/books-service/blob/master/run_tests.sh">run_tests.sh</a></li>
-                            <li>TODO: Stress tests code</li>
                         </ul>
                         <pre><code>
-TODO
+sudo docker run -it --rm \
+  -e "TEST_TYPE=integ" \
+  -e "DOMAIN=http://172.17.42.1" \
+  -v /data/.ivy2:/root/.ivy2/cache \
+  192.168.50.91:5000/books-service-tests
+                        </code></pre>
+                    </section>
+                    <section id="containersPostDeployment">
+                        <h2>Containers</h2>
+                        <h4>Post Deployment Stress Tests (<a href="https://github.com/vfarcic/books-stress">books-stress repo</a>)</h4>
+                        <ul>
+                            <li><a href="https://github.com/vfarcic/books-stress/blob/master/user-files/simulations/technologyconversations/Books.scala">Books.scala</a></li>
+                            <li>TODO: Continue</li>
+                        </ul>
+                        <pre><code>
                         </code></pre>
                     </section>
                 </section>
