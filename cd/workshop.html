@@ -243,7 +243,7 @@ sudo docker run -t --rm \
 sudo docker build -t vfarcic/books-service .
 sudo docker run -d --name books-service \
   -p 9001:8080 \
-  -v /data/books-service/db:/data/db \
+  -v /data/db:/data/db \
   vfarcic/books-service
 curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 1, "title": "My First Book", "author": "John Doe", "description": "Not a very good book"}' http://localhost:9001/api/v1/books | python -mjson.tool
 curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 2, "title": "My Second Book", "author": "John Doe", "description": "Not a bad as the first book"}' http://localhost:9001/api/v1/books | python -mjson.tool
@@ -284,7 +284,7 @@ exit
 vagrant ssh prod
 sudo docker run -d --name books-service \
   -p 9001:8080 \
-  -v /data/books-service/db:/data/db \
+  -v /data/db:/data/db \
   192.168.50.91:5000/books-service
 curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 1, "title": "My First Book", "author": "John Doe", "description": "Not a very good book"}' http://localhost:9001/api/v1/books | python -mjson.tool
 curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 2, "title": "My Second Book", "author": "John Doe", "description": "Not a bad as the first book"}' http://localhost:9001/api/v1/books | python -mjson.tool
@@ -371,7 +371,7 @@ sudo docker pull 192.168.50.91:5000/books-service
 curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
 sudo docker run -d --name books-service \
   -p 9001:8080 \
-  -v /data/books-service/db:/data/db \
+  -v /data/db:/data/db \
   192.168.50.91:5000/books-service
 sudo docker logs -f books-service
 curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
@@ -385,18 +385,21 @@ sudo docker rm -f books-service
                             <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/nginx/templates/services.conf.j2">nginx/templates/services.conf.j2</a></li>
                         </ul>
                         <code><pre>
+sudo docker run -d --name mongodb \
+  -p 27017:27017 \
+  -v /data/db:/data/db \
+  dockerfile/mongodb
 sudo docker run -d --name books-service-blue \
   -p 9001:8080 \
-  -v /data/books-service/db:/data/db \
+  --link mongodb:db \
   192.168.50.91:5000/books-service
 sudo docker logs -f books-service-blue
 curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
-sudo docker pull 192.168.50.91:5000/books-service
 sudo docker run -d --name books-service-green \
   -p 9002:8080 \
-  -v /data/books-service/db:/data/db \
+  --link mongodb:db \
   192.168.50.91:5000/books-service
-curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
+curl -H 'Content-Type: application/json' http://192.168.50.92:9002/api/v1/books | python -mjson.tool
 sudo docker ps -a | grep books-service
 cat /data/nginx/sites-enabled/services.conf | grep proxy | grep books
 exit
@@ -415,6 +418,53 @@ sudo docker run -it --rm \
   -e "DOMAIN=http://192.168.50.92:9002" \
   -v /data/.ivy2:/root/.ivy2/cache \
   192.168.50.91:5000/books-service-tests
+sudo docker run -t --rm \
+  -e "DOMAIN=http://192.168.50.92:9002" \
+  -e "USERS=10" \
+  -e "USERS_OVER_SECONDS=20" \
+  -e "MAX_RESPONSE_TIME=1000" \
+  -e "DURATION=120" \
+  -v /data/stress/results:/stress/results \
+  192.168.50.91:5000/books-stress
+                        </pre></code>
+                    </section>
+                    <section id="zdBlueGreenParallel">
+                        <h2>Zero-downtime</h2>
+                        <h4>Blue-Green: Switch</h4>
+                        <ul>
+                            <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/nginx/templates/services.conf.j2">nginx/templates/services.conf.j2</a></li>
+                        </ul>
+                        <code><pre>
+sudo docker run -it --rm \
+  -e "TEST_TYPE=integ" \
+  -e "DOMAIN=http://192.168.50.92:9002" \
+  -v /data/.ivy2:/root/.ivy2/cache \
+  192.168.50.91:5000/books-service-tests
+sudo docker run -t --rm \
+  -e "DOMAIN=http://192.168.50.92:9002" \
+  -e "USERS=10" \
+  -e "USERS_OVER_SECONDS=20" \
+  -e "MAX_RESPONSE_TIME=1000" \
+  -e "DURATION=120" \
+  -v /data/stress/results:/stress/results \
+  192.168.50.91:5000/books-stress
+cat /data/nginx/sites-enabled/services.conf | grep proxy_pass
+sudo sed -i 's/9001/9002/g' /data/nginx/sites-enabled/services.conf
+cat /data/nginx/sites-enabled/services.conf | grep proxy_pass
+sudo docker kill -s HUP nginx
+sleep 5
+sudo docker rm -f books-service-blue
+sudo docker ps -a | grep books-service
+curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
+                        </pre></code>
+                    </section>
+                    <section id="zdBlueGreenParallel">
+                        <h2>Zero-downtime</h2>
+                        <h4>Blue-Green: Better Switch</h4>
+                        <ul>
+                            <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/nginx/templates/services.conf.j2">nginx/templates/services.conf.j2</a></li>
+                        </ul>
+                        <code><pre>
                         </pre></code>
                     </section>
                 </section>
