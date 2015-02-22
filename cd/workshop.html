@@ -471,12 +471,14 @@ sudo docker run -d --name books-service-blue \
   192.168.50.91:5000/books-service
 # Run tests
 sudo docker stop books-service-green
-sudo docker rm -f books-service-green
 # Run tests
+etcdctl get /books-service/color
+etcdctl get /books-service/port
 sudo sed -i 's/9002/9001/g' /data/nginx/sites-enabled/services.conf
 cat /data/nginx/sites-enabled/services.conf | grep proxy_pass
 sudo docker kill -s HUP nginx
 curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
+sudo docker rm -f books-service-green
                         </pre></code>
                     </section>
                 </section>
