@@ -304,7 +304,7 @@ exit
                         </ul>
                         <pre><code>
 vagrant ssh cd
-ansible-playbook /vagrant/ansible/nginx.yml -i /vagrant/ansible/hosts/prod
+ansible-playbook /vagrant/ansible/prod.yml -i /vagrant/ansible/hosts/prod
 curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
                         </code></pre>
                     </section>
@@ -426,6 +426,7 @@ sudo docker run -t --rm \
   -e "DURATION=120" \
   -v /data/stress/results:/stress/results \
   192.168.50.91:5000/books-stress
+exit
                         </pre></code>
                     </section>
                     <section id="zdBlueGreenParallel">
@@ -435,24 +436,21 @@ sudo docker run -t --rm \
                             <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/nginx/templates/services.conf.j2">nginx/templates/services.conf.j2</a></li>
                         </ul>
                         <code><pre>
-sudo docker run -it --rm \
-  -e "TEST_TYPE=integ" \
-  -e "DOMAIN=http://192.168.50.92:9002" \
-  -v /data/.ivy2:/root/.ivy2/cache \
-  192.168.50.91:5000/books-service-tests
-sudo docker run -t --rm \
-  -e "DOMAIN=http://192.168.50.92:9002" \
-  -e "USERS=10" \
-  -e "USERS_OVER_SECONDS=20" \
-  -e "MAX_RESPONSE_TIME=1000" \
-  -e "DURATION=120" \
-  -v /data/stress/results:/stress/results \
-  192.168.50.91:5000/books-stress
+vagrant ssh prod
 cat /data/nginx/sites-enabled/services.conf | grep proxy_pass
 sudo sed -i 's/9001/9002/g' /data/nginx/sites-enabled/services.conf
 cat /data/nginx/sites-enabled/services.conf | grep proxy_pass
 sudo docker kill -s HUP nginx
-sleep 5
+sudo docker stop books-service-blue
+exit
+vagrant ssh cd
+sudo docker run -it --rm \
+  -e "TEST_TYPE=integ" \
+  -e "DOMAIN=http://192.168.50.92" \
+  -v /data/.ivy2:/root/.ivy2/cache \
+  192.168.50.91:5000/books-service-tests
+exit
+vagrant ssh prod
 sudo docker rm -f books-service-blue
 sudo docker ps -a | grep books-service
 curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
@@ -465,6 +463,20 @@ curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | pyt
                             <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/nginx/templates/services.conf.j2">nginx/templates/services.conf.j2</a></li>
                         </ul>
                         <code><pre>
+etcdctl set /books-service/color green
+etcdctl set /books-service/port 9002
+sudo docker run -d --name books-service-blue \
+  -p 9001:8080 \
+  --link mongodb:db \
+  192.168.50.91:5000/books-service
+# Run tests
+sudo docker stop books-service-green
+sudo docker rm -f books-service-green
+# Run tests
+sudo sed -i 's/9002/9001/g' /data/nginx/sites-enabled/services.conf
+cat /data/nginx/sites-enabled/services.conf | grep proxy_pass
+sudo docker kill -s HUP nginx
+curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
                         </pre></code>
                     </section>
                 </section>
