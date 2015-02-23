@@ -413,7 +413,7 @@ exit
                         </ul>
                         <code><pre>
 vagrant ssh cd
-sudo docker run -it --rm \
+sudo docker run --rm \
   -e "TEST_TYPE=integ" \
   -e "DOMAIN=http://192.168.50.92:9002" \
   -v /data/.ivy2:/root/.ivy2/cache \
@@ -429,7 +429,7 @@ sudo docker run -t --rm \
 exit
                         </pre></code>
                     </section>
-                    <section id="zdBlueGreenParallel">
+                    <section id="zdBlueGreenSwitch">
                         <h2>Zero-downtime</h2>
                         <h4>Blue-Green: Switch</h4>
                         <ul>
@@ -456,7 +456,7 @@ sudo docker ps -a | grep books-service
 curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
                         </pre></code>
                     </section>
-                    <section id="zdBlueGreenParallel">
+                    <section id="zdBlueGreenBetterSwitch">
                         <h2>Zero-downtime</h2>
                         <h4>Blue-Green: Better Switch</h4>
                         <ul>
