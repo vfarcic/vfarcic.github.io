@@ -77,7 +77,7 @@
                             <li>Microservices</li>
                             <li>Front-end decoupled from back-end</li>
                             <li>Tested, built, deployed and tested again with containers</li>
-                            <li>Zero-downtime with nginx</li>
+                            <li>Zero-downtime with reverse proxy</li>
                             <li>CD with Jenkins</li>
                         </ul>
                     </section>
@@ -384,7 +384,7 @@ sudo docker rm -f books-service
                         <ul>
                             <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/nginx/templates/services.conf.j2">nginx/templates/services.conf.j2</a></li>
                         </ul>
-                        <code><pre>
+                        <pre><code>
 sudo docker run -d --name mongodb \
   -p 27017:27017 \
   -v /data/db:/data/db \
@@ -403,7 +403,7 @@ curl -H 'Content-Type: application/json' http://192.168.50.92:9002/api/v1/books 
 sudo docker ps -a | grep books-service
 cat /data/nginx/sites-enabled/services.conf | grep proxy | grep books
 exit
-                        </pre></code>
+                        </code></pre>
                     </section>
                     <section id="zdBlueGreenParallel">
                         <h2>Zero-downtime</h2>
@@ -498,6 +498,7 @@ sudo docker rm -f books-service-green
                     <section id="fe">
                         <h2>Front-End</h2>
                         <h4>AngularJS</h4>
+                        TODO
                     </section>
                 </section>
                 <section id="qa">
