@@ -72,7 +72,6 @@
                     <section id="design">
                         <h2>High Level Design</h2>
                         <ul>
-                            <li>VMs with Vagrant</li>
                             <li>Provisioning with Ansible</li>
                             <li>Microservices</li>
                             <li>Front-end decoupled from back-end</li>
@@ -91,7 +90,17 @@
                             <li>Provision</li>
                             <li>Destroy</li>
                         </ul>
+                        <h4><a href="https://github.com/vfarcic/cd-workshop">vfarcic/cd-workshop repo</a></h4>
+                        <ul>
+                            <li>VM: <a href="https://github.com/vfarcic/cd-workshop/blob/master/Vagrantfile">Vagrantfile</a></li>
+                        </ul>
                         <img src="img/vagrant.png" style="background-color: black; width: 50%; height: 50%; float: right;">
+                        <pre><code>
+git clone https://github.com/vfarcic/cd-workshop.git
+cd cd-workshop
+vagrant up
+vagrant ssh
+                        </code></pre>
                     </section>
                     <section id="envProv">
                         <h2>Environments</h2>
@@ -103,38 +112,26 @@
                             <li>YAML configuration</li>
                             <li>Push</li>
                         </ul>
-                    </section>
-                    <section id="envCodeDev">
-                        <h2>Environments</h2>
-                        <h4>Development</h4>
-                        <h4><a href="https://github.com/vfarcic/books-service">vfarcic/books-service repo</a></h4>
-                        <ul>
-                            <li>VM: <a href="https://github.com/vfarcic/books-service/blob/master/Vagrantfile">Vagrantfile</a></li>
-                            <li>Provisioning: <a href="https://github.com/vfarcic/books-service/blob/master/bootstrap.sh">bootstrap.sh</a></li>
-                            <li>Provisioning: <a href="https://github.com/vfarcic/books-service/blob/master/ansible/dev.yml">dev.yml</a></li>
-                            <li>Provisioning: <a href="https://github.com/vfarcic/books-service/blob/master/ansible/roles/scala/tasks/main.yml">scala/tasks/main.yml</a></li>
-                        </ul>
                         <pre><code data-trim>
-git clone https://github.com/vfarcic/books-service.git
-cd books-service
-vagrant up dev
-vagrant halt dev
-cd ..
+sudo apt-get install -y software-properties-common
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt-get update
+sudo apt-get install -y ansible
                         </code></pre>
                     </section>
                     <section id="envCodeCd">
                         <h2>Environments</h2>
                         <h4>Continuous Deployment</h4>
+                        <!--TODO: Move to Jenkins -->
                         <h4><a href="https://github.com/vfarcic/cd-workshop">vfarcic/cd-workshop repo</a></h4>
                         <ul>
-                            <li>VM: <a href="https://github.com/vfarcic/cd-workshop/blob/master/Vagrantfile">Vagrantfile</a></li>
-                            <li>Provisioning: <a href="https://github.com/vfarcic/cd-workshop/blob/master/bootstrap.sh">bootstrap.sh</a></li>
                             <li>Provisioning: <a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/cd.yml">cd.yml</a></li>
                             <li>Provisioning: <a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/tasks/main.yml">jenkins/tasks/main.yml</a></li>
-                            <li>TODO: Move to Jenkins - Provisioning: <a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/templates/build.xml.j2">jenkins/templates/build.xml.j2</a></li>
-                            <li>TODO: Move to Jenkins - Provisioning: <a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/defaults/main.yml">jenkins/defaults/main.yml</a></li>
+                            <li>Provisioning: <a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/templates/build.xml.j2">jenkins/templates/build.xml.j2</a></li>
+                            <li>Provisioning: <a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/defaults/main.yml">jenkins/defaults/main.yml</a></li>
                         </ul>
                         <pre><code data-trim>
+cd ~
 git clone https://github.com/vfarcic/cd-workshop.git
 cd cd-workshop
 vagrant up cd
@@ -144,21 +141,17 @@ vagrant halt cd
                     </section>
                     <section id="envCodeProd">
                         <h2>Environments</h2>
-                        <h4>Production</h4>
+                        <h4>Docker & Registry</h4>
                         <h4><a href="https://github.com/vfarcic/cd-workshop">vfarcic/cd-workshop repo</a></h4>
                         <ul>
-                            <li>VM: <a href="https://github.com/vfarcic/cd-workshop/blob/master/Vagrantfile">Vagrantfile</a></li>
+                            <li>Playbook: <a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/docker.yml">docker.yml</a></li>
+                            <li>Role: <a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/docker/tasks/main.yml">roles/docker/tasks/main.yml</a></li>
                         </ul>
                         <pre><code data-trim>
-vagrant up prod
-vagrant ssh prod
-ssh-keygen # Simply press enter to all questions
-exit
-vagrant ssh cd
-ssh-keygen # Simply press enter to all questions
-ssh-copy-id 192.168.50.92 # Password is "vagrant"
-exit
-vagrant halt prod
+cd ~
+git clone https://github.com/vfarcic/cd-workshop.git
+cd cd-workshop/ansible
+sudo ansible-playbook docker.yml -c local
                         </code></pre>
                     </section>
                     <section id="envBenefits">
@@ -223,7 +216,8 @@ vagrant halt prod
                             <li><a href="https://github.com/vfarcic/books-service/blob/master/run_tests.sh">run_tests.sh</a></li>
                         </ul>
                         <pre><code>
-vagrant ssh cd
+<!--TODO: Continue-->
+cd ~
 git clone https://github.com/vfarcic/books-service.git
 cd books-service
 sudo ./build_tests.sh
