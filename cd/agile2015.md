@@ -41,7 +41,7 @@ Duration
 Keywords
 ========
 
-Continuous Delivery, Continuous Deployment, CD, Docker, CoreOS, DevOps
+Continuous Delivery, Continuous Deployment, CD, Docker, DevOps
 
 Abstract
 ========

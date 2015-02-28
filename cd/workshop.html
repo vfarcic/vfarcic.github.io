@@ -59,7 +59,7 @@
         <section>
             <section id="requirements">
                 <h2>High Level Requirements</h2>
-                <h3>Books Shop application</h3>
+                <h3>Book Shop application</h3>
                 <ul>
                     <li>Any device (desktop, tables and mobiles)</li>
                     <li>Search, see details and purchase</li>
@@ -83,9 +83,13 @@
             </section>
         </section>
         <section>
+            <section id="env">
+                <h1>Environments</h1>
+                <img src="img/servers.jpg">
+            </section>
             <section id="envVm">
-                <h2>Environments</h2>
-                <h3>Virtual Machines</h3>
+                <h4>Environments</h4>
+                <h2>Virtual Machines</h2>
                 <ul>
                     <li>Create</li>
                     <li>Provision</li>
@@ -99,8 +103,8 @@
                 </ul>
             </section>
             <section id="envProv">
-                <h2>Environments</h2>
-                <h3>Provisioning</h3>
+                <h4>Environments</h4>
+                <h2>Provisioning</h2>
                 <img src="img/ansible.png" style="background-color: white; width: 35%; height: 35%; float: right;">
                 <ul>
                     <li>SSH based</li>
@@ -109,30 +113,41 @@
                     <li>Push</li>
                 </ul>
             </section>
-            <section id="envCodeDev">
-                <h2>Environments</h2>
-                <h4>Development</h4>
+            <section id="envDevCode">
+                <h4>Environments</h4>
+                <h2>Development</h2>
                 <h4><a href="https://github.com/vfarcic/books-service">vfarcic/books-service repo</a></h4>
                 <ul>
                     <li>VM: <a href="https://github.com/vfarcic/books-service/blob/master/Vagrantfile">Vagrantfile</a></li>
                     <li>Provisioning: <a href="https://github.com/vfarcic/books-service/blob/master/bootstrap.sh">bootstrap.sh</a></li>
                     <li>Provisioning: <a href="https://github.com/vfarcic/books-service/blob/master/ansible/dev.yml">dev.yml</a></li>
-                    <li>Provisioning: <a href="https://github.com/vfarcic/books-service/blob/master/ansible/roles/scala/tasks/main.yml">scala/tasks/main.yml</a></li>
+                    <li>Provisioning: <a href="https://github.com/vfarcic/books-service/blob/master/ansible/roles/java/tasks/main.yml">roles/java/tasks/main.yml</a></li>
                 </ul>
-                        <pre><code data-trim>
-git clone https://github.com/vfarcic/books-service.git
-cd books-service
-vagrant up dev
-vagrant ssh dev
-scala -version
-sudo docker ps -a
-exit
-vagrant halt dev
-                        </code></pre>
             </section>
-            <section id="envCodeCd">
-                <h2>Environments</h2>
-                <h4>Continuous Deployment</h4>
+            <section id="envDevComm">
+                <h4>Environments</h4>
+                <h2>Development</h2>
+                <pre><code data-trim contenteditable>
+git clone https://github.com/vfarcic/books-service.git
+
+cd books-service
+
+vagrant up dev
+
+vagrant ssh dev
+
+scala -version
+
+sudo docker ps -a
+
+exit
+
+vagrant halt dev
+                </code></pre>
+            </section>
+            <section id="envCdCode">
+                <h4>Environments</h4>
+                <h2>Continuous Deployment</h2>
                 <h4><a href="https://github.com/vfarcic/cd-workshop">vfarcic/cd-workshop repo</a></h4>
                 <ul>
                     <li>VM: <a href="https://github.com/vfarcic/cd-workshop/blob/master/Vagrantfile">Vagrantfile</a></li>
@@ -140,15 +155,25 @@ vagrant halt dev
                     <li>Provisioning: <a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/cd.yml">cd.yml</a></li>
                     <li>Provisioning: <a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/tasks/main.yml">jenkins/tasks/main.yml</a></li>
                 </ul>
-                    <pre><code data-trim>
+            </section>
+            <section id="envCdComm">
+                <h4>Environments</h4>
+                <h2>Continuous Deployment</h2>
+                <pre><code data-trim contenteditable>
 cd ~
+
 git clone https://github.com/vfarcic/cd-workshop.git
+
 cd cd-workshop
+
 vagrant up cd
+
 vagrant ssh cd
+
 sudo docker ps -a
+
 exit
-                    </code></pre>
+                </code></pre>
                     Open <a href="http://localhost:8080/">http://localhost:8080/</a>
             </section>
             <section id="envCodeProd">
@@ -158,16 +183,23 @@ exit
                 <ul>
                     <li>VM: <a href="https://github.com/vfarcic/cd-workshop/blob/master/Vagrantfile">Vagrantfile</a></li>
                 </ul>
-                        <pre><code data-trim>
+                <pre><code data-trim contenteditable>
 vagrant up prod
+
 vagrant ssh prod
-ssh-keygen # Simply press enter to all questions
+
+ssh-keygen # Enter to all questions
+
 exit
+
 vagrant ssh cd
-ssh-keygen # Simply press enter to all questions
-ssh-copy-id 192.168.50.92 # Password is "vagrant"
+
+ssh-keygen # Enter to all questions
+
+ssh-copy-id 192.168.50.92 # Pass: vagrant
+
 exit
-                        </code></pre>
+                </code></pre>
             </section>
             <section id="envBenefits">
                 <h2>VM and Provisioning</h2>
@@ -211,7 +243,12 @@ exit
         </section>
         <section>
             <section id="containers">
-                <h2>Containers</h2>
+                <h1>Containers</h1>
+                <img src="img/containers.jpg">
+            </section>
+            <section id="containersBenefits">
+                <h4>Containers</h4>
+                <h2>Docker</h2>
                 <img src="img/docker.png" style="background-color: white; width: 50%; height: 50%; float: right;">
                 <ul>
                     <li>Portable</li>
@@ -222,133 +259,210 @@ exit
                     <li>Immutable</li>
                 </ul>
             </section>
-            <section id="containersTests">
-                <h2>Containers</h2>
-                <h4>Tests (<a href="https://github.com/vfarcic/books-service">books-service repo</a>)</h4>
+            <section id="containersTestsCode">
+                <h4>Containers</h4>
+                <h2>Tests</h2>
+                <h4><a href="https://github.com/vfarcic/books-service">vfarcic/books-service repo</a></h4>
                 <ul>
-                    <li><a href="https://github.com/vfarcic/books-service/blob/master/src/test/scala/com/technologyconversations/api/ServiceSpec.scala">Unit/functional tests</a></li>
-                    <li><a href="https://github.com/vfarcic/books-service/blob/master/docker/tests/Dockerfile">Dockerfile</a></li>
+                    <li><a href="https://github.com/vfarcic/books-service/blob/master/Dockerfile.test">Dockerfile.test</a></li>
                     <li><a href="https://github.com/vfarcic/books-service/blob/master/run_tests.sh">run_tests.sh</a></li>
+                    <li><a href="https://github.com/vfarcic/books-service/blob/master/src/test/scala/com/technologyconversations/api/ServiceSpec.scala">Unit/functional tests</a></li>
                 </ul>
-                        <pre><code>
+            </section>
+            <section id="containersTestsComm">
+                <h4>Containers</h4>
+                <h2>Tests</h2>
+                <pre><code data-trim contenteditable>
 vagrant ssh cd
+
 git clone https://github.com/vfarcic/books-service.git
+
 cd books-service
+
 sudo ./build_tests.sh
+
 sudo docker images
+
 sudo docker run -t --rm \
   -v $PWD/target/scala-2.10:/source/target/scala-2.10 \
   -v /data/.ivy2:/root/.ivy2/cache \
   vfarcic/books-service-tests
+
 ll target/scala-2.10/books-service-assembly-1.0.jar
-                        </code></pre>
+                </code></pre>
             </section>
-            <section id="containersApp">
-                <h2>Containers</h2>
-                <h4>Application (<a href="https://github.com/vfarcic/books-service">books-service repo</a>)</h4>
+            <section id="containersAppCode">
+                <h4>Containers</h4>
+                <h2>Application</h2>
+                <h4><a href="https://github.com/vfarcic/books-service">vfarcic/books-service repo</a></h4>
                 <ul>
                     <li><a href="https://github.com/vfarcic/books-service/blob/master/Dockerfile">Dockerfile</a></li>
+                    <li><a href="https://github.com/vfarcic/books-service/blob/master/run.sh">run.sh</a></li>
                 </ul>
-                        <pre><code>
+            </section>
+            <section id="containersAppComm">
+                <h4>Containers</h4>
+                <h2>Application</h2>
+                <pre><code data-trim contenteditable>
 sudo docker build -t vfarcic/books-service .
+
 sudo docker run -d --name books-service \
   -p 9001:8080 \
   -v /data/books-service/db:/data/db \
   vfarcic/books-service
-curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 1, "title": "My First Book", "author": "John Doe", "description": "Not a very good book"}' http://localhost:9001/api/v1/books | python -mjson.tool
-curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 2, "title": "My Second Book", "author": "John Doe", "description": "Not a bad as the first book"}' http://localhost:9001/api/v1/books | python -mjson.tool
-curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 3, "title": "My Third Book", "author": "John Doe", "description": "Failed writers club"}' http://localhost:9001/api/v1/books | python -mjson.tool
-curl -H 'Content-Type: application/json' http://localhost:9001/api/v1/books | python -mjson.tool
-curl -H 'Content-Type: application/json' http://localhost:9001/api/v1/books/_id/1 | python -mjson.tool
+
+curl -H 'Content-Type: application/json' -X PUT -d \
+  '{"_id": 1, "title": "My First Book", "author": "John Doe", "description": "Not a very good book"}' \
+  http://localhost:9001/api/v1/books | python -mjson.tool
+
+curl -H 'Content-Type: application/json' -X PUT -d \
+  '{"_id": 2, "title": "My Second Book", "author": "John Doe", "description": "Not a bad as the first book"}' \
+  http://localhost:9001/api/v1/books | python -mjson.tool
+
+curl -H 'Content-Type: application/json' -X PUT -d \
+  '{"_id": 3, "title": "My Third Book", "author": "John Doe", "description": "Failed writers club"}' \
+  http://localhost:9001/api/v1/books | python -mjson.tool
+
+curl http://localhost:9001/api/v1/books | python -mjson.tool
+
+curl http://localhost:9001/api/v1/books/_id/1 | python -mjson.tool
+
 sudo docker rm -f books-service
-                        </code></pre>
+                </code></pre>
             </section>
-            <section id="containersRegistry">
-                <h2>Containers</h2>
-                <h4>Registry</h4>
+            <section id="containersRegistryCode">
+                <h4>Containers</h4>
+                <h2>Registry</h2>
                 <ul>
-                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/registry/tasks/main.yml">registry/tasks/main.yml</a></li>
+                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/cd.yml">cd.yml</a></li>
+                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/registry/tasks/main.yml">roles/registry/tasks/main.yml</a></li>
                 </ul>
-                <code><pre>
-sudo docker tag vfarcic/books-service-tests 192.168.50.91:5000/books-service-tests
-sudo docker tag vfarcic/books-service 192.168.50.91:5000/books-service
-sudo docker images | grep books-service
-sudo docker push 192.168.50.91:5000/books-service-tests
-sudo docker push 192.168.50.91:5000/books-service
-curl http://localhost:5000/v1/search | python -mjson.tool
-                        </pre></code>
             </section>
-            <section id="containersApp">
-                <h2>Containers</h2>
-                <h4>Application in production (<a href="https://github.com/vfarcic/books-service">books-service repo</a>)</h4>
+            <section id="containersRegistryComm">
+                <h4>Containers</h4>
+                <h2>Registry</h2>
+                <pre><code data-trim contenteditable>
+sudo docker tag vfarcic/books-service-tests \
+  192.168.50.91:5000/books-service-tests
+
+sudo docker tag vfarcic/books-service \
+  192.168.50.91:5000/books-service
+
+sudo docker images | grep books-service
+
+sudo docker push \
+  192.168.50.91:5000/books-service-tests
+
+sudo docker push \
+  192.168.50.91:5000/books-service
+
+curl http://localhost:5000/v1/search | python -mjson.tool
+                </code></pre>
+            </section>
+            <section id="containersAppProdCode">
+                <h4>Containers</h4>
+                <h2>Application in production</h2>
+                <h4><a href="https://github.com/vfarcic/books-service">vfarcic/books-service repo</a></h4>
                 <ul>
-                    <li><a href="https://github.com/vfarcic/books-service/blob/master/Dockerfile">Dockerfile</a></li>
                     <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/docker.yml">docker.yml</a></li>
                     <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/docker/tasks/main.yml">roles/docker/tasks/main.yml</a></li>
                 </ul>
-                        <pre><code>
-ansible-playbook /vagrant/ansible/docker.yml -i /vagrant/ansible/hosts/prod
+            </section>
+            <section id="containersAppProdComm">
+                <h4>Containers</h4>
+                <h2>Application in production</h2>
+                <pre><code data-trim contenteditable>
+ansible-playbook /vagrant/ansible/docker.yml \
+  -i /vagrant/ansible/hosts/prod
+
 exit
+
 vagrant ssh prod
+
 sudo docker run -d --name books-service \
   -p 9001:8080 \
   -v /data/books-service/db:/data/db \
   192.168.50.91:5000/books-service
-curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 1, "title": "My First Book", "author": "John Doe", "description": "Not a very good book"}' http://localhost:9001/api/v1/books | python -mjson.tool
-curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 2, "title": "My Second Book", "author": "John Doe", "description": "Not a bad as the first book"}' http://localhost:9001/api/v1/books | python -mjson.tool
-curl -H 'Content-Type: application/json' -X PUT -d '{"_id": 3, "title": "My Third Book", "author": "John Doe", "description": "Failed writers club"}' http://localhost:9001/api/v1/books | python -mjson.tool
-curl -H 'Content-Type: application/json' http://localhost:9001/api/v1/books | python -mjson.tool
-curl -H 'Content-Type: application/json' http://localhost:9001/api/v1/books/_id/1 | python -mjson.tool
-curl -H 'Content-Type: application/json' http://localhost:9001/api/v1/books | python -mjson.tool
+
+curl http://localhost:9001/api/v1/books | python -mjson.tool
+
 exit
-                        </code></pre>
+                </code></pre>
             </section>
-            <section id="containersNginx">
-                <h2>Containers</h2>
-                <h4>nginx (<a href="https://github.com/vfarcic/cd-workshop">cd-workshop repo</a>)</h4>
+            <section id="containersNginxCode">
+                <h4>Containers</h4>
+                <h2>nginx</h2>
+                <h4><a href="https://github.com/vfarcic/cd-workshop">vfarcic/cd-workshop repo</a></h4>
                 <ul>
-                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/nginx_with_books/tasks/main.yml">nginx_with_books/tasks/main.yml</a></li>
-                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/nginx_with_books/templates/services.conf.j2">nginx_with_books/templates/services.conf.j2</a></li>
+                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/nginx_with_books/tasks/main.yml">roles/nginx_with_books/tasks/main.yml</a></li>
+                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/nginx_with_books/defaults/main.yml">roles/nginx_with_books/defaults/main.yml</a></li>
+                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/nginx_with_books/templates/services.conf.j2">roles/nginx_with_books/templates/services.conf.j2</a></li>
                 </ul>
-                        <pre><code>
-vagrant ssh cd
-curl -H 'Content-Type: application/json' http://192.168.50.92:9001/api/v1/books | python -mjson.tool
-curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
-ansible-playbook /vagrant/ansible/nginx_with_books.yml -i /vagrant/ansible/hosts/prod
-curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
-                        </code></pre>
             </section>
-            <section id="containersPDIT">
-                <h2>Containers</h2>
-                <h4>Post Deployment Integration Tests (<a href="https://github.com/vfarcic/books-service">books-service repo</a>)</h4>
+            <section id="containersNginxComm">
+                <h4>Containers</h4>
+                <h2>nginx</h2>
+                <pre><code data-trim contenteditable>
+vagrant ssh cd
+
+curl -H 'Content-Type: application/json' \
+  http://192.168.50.92:9001/api/v1/books | python -mjson.tool
+
+curl -H 'Content-Type: application/json' \
+  http://192.168.50.92/api/v1/books | python -mjson.tool
+
+ansible-playbook /vagrant/ansible/nginx_with_books.yml \
+  -i /vagrant/ansible/hosts/prod
+
+curl -H 'Content-Type: application/json' \
+  http://192.168.50.92/api/v1/books | python -mjson.tool
+                </code></pre>
+            </section>
+            <section id="containersPDITCode">
+                <h4>Containers</h4>
+                <h2>Post Deployment Integration Tests</h2>
+                <h4><a href="https://github.com/vfarcic/books-service">vfarcic/books-service repo</a></h4>
                 <ul>
                     <li><a href="https://github.com/vfarcic/books-service/blob/master/src/test/scala/com/technologyconversations/api/ServiceInteg.scala">ServiceInteg.scala</a></li>
-                    <li><a href="https://github.com/vfarcic/books-service/blob/master/Dockerfile.test">Dockerfile.test</a></li>
-                    <li><a href="https://github.com/vfarcic/books-service/blob/master/build_tests.sh">build_tests.sh</a></li>
                     <li><a href="https://github.com/vfarcic/books-service/blob/master/run_tests.sh">run_tests.sh</a></li>
                 </ul>
-                        <pre><code>
+            </section>
+            <section id="containersPDITComm">
+                <h4>Containers</h4>
+                <h2>Post Deployment Integration Tests</h2>
+                <pre><code data-trim contenteditable>
 sudo docker run -it --rm \
   -e "TEST_TYPE=integ" \
   -e "DOMAIN=http://192.168.50.92" \
   -v /data/.ivy2:/root/.ivy2/cache \
   192.168.50.91:5000/books-service-tests
-                        </code></pre>
+                </code></pre>
             </section>
-            <section id="containersPDST">
-                <h2>Containers</h2>
-                <h4>Post Deployment Stress Tests (<a href="https://github.com/vfarcic/books-stress">books-stress repo</a>)</h4>
+            <section id="containersPDSTCode">
+                <h4>Containers</h4>
+                <h2>Post Deployment Stress Tests</h2>
+                <h4><a href="https://github.com/vfarcic/books-stress">vfarcic/books-stress repo</a></h4>
                 <ul>
                     <li><a href="https://github.com/vfarcic/books-stress/blob/master/user-files/simulations/technologyconversations/Books.scala">Books.scala</a></li>
                     <li><a href="https://github.com/vfarcic/books-stress/blob/master/Dockerfile">Dockerfile</a></li>
                 </ul>
-                        <pre><code>
+            </section>
+            <section id="containersPDSTComm">
+                <h4>Containers</h4>
+                <h2>Post Deployment Stress Tests</h2>
+                <pre><code data-trim contenteditable>
 cd ~
+
 git clone https://github.com/vfarcic/books-stress.git
+
 cd books-stress
+
 sudo docker build -t vfarcic/books-stress .
+
 sudo docker tag vfarcic/books-stress 192.168.50.91:5000/books-stress
+
 sudo docker push 192.168.50.91:5000/books-stress
+
 sudo docker run -t --rm \
   -e "DOMAIN=http://192.168.50.92" \
   -e "USERS=10" \
@@ -357,12 +471,17 @@ sudo docker run -t --rm \
   -e "DURATION=120" \
   -v /data/stress/results:/stress/results \
   192.168.50.91:5000/books-stress
+
 exit
-                        </code></pre>
+                </code></pre>
             </section>
         </section>
         <section>
             <section id="zd">
+                <h2>Zero-downtime</h2>
+                <img src="img/downtime.jpg">
+            </section>
+            <section id="zdBenefits">
                 <h2>Zero-downtime</h2>
                 <ul>
                     <li>No downtime</li>
@@ -370,63 +489,94 @@ exit
                     <li>nginx & etcd</li>
                 </ul>
             </section>
-            <section id="zdWithDowntime">
-                <h2><strike>Zero-downtime</strike></h2>
-                <h4>Traditional</h4>
-                <code><pre>
+            <section id="zdWithDowntimeProcess">
+                <h4><strike>Zero-downtime</strike></h4>
+                <h2>Traditional Deployment</h2>
+                <ul>
+                    <li>Come to the office one weekend when there is least traffic</li>
+                    <li>Download latest release</li>
+                    <li>Stop the running application</li>
+                    <li>Deploy the latest release</li>
+                    <li>Start the deployed application</li>
+                    <li>Hope that there is no reason for rollback</li>
+                    <li>Hope that no one noticed the downtime</li>
+                </ul>
+            </section>
+            <section id="zdWithDowntimeComm">
+                <h4><strike>Zero-downtime</strike></h4>
+                <h2>Traditional Deployment</h2>
+                <pre><code data-trim contenteditable>
 vagrant ssh prod
-curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
-sudo docker rm -f books-service
-curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
+
+curl http://192.168.50.92/api/v1/books | python -mjson.tool
+
 sudo docker pull 192.168.50.91:5000/books-service
+
+sudo docker rm -f books-service
+
+curl http://192.168.50.92/api/v1/books | python -mjson.tool
+
 sudo docker run -d --name books-service \
   -p 9001:8080 \
   -v /data/books-service/db:/data/db \
   192.168.50.91:5000/books-service
-curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
+
+curl http://192.168.50.92/api/v1/books | python -mjson.tool
+
 sudo docker rm -f books-service
-                        </pre></code>
+                </code></pre>
             </section>
-            <section id="zdBlueGreenParallel">
-                <h2>Zero-downtime</h2>
-                <h4>Blue-Green: Parallel Running</h4>
+            <section id="zdBlueGreenParallelCode">
+                <h4>Zero-downtime</h4>
+                <h2>Blue-Green: Parallel Running</h2>
                 <ul>
-                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/nginx/templates/services.conf.j2">nginx/templates/services.conf.j2</a></li>
+                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/nginx_with_books/templates/services.conf.j2">roles/nginx_with_books/templates/services.conf.j2</a></li>
                 </ul>
-                        <pre><code>
+            </section>
+            <section id="zdBlueGreenParallelComm">
+                <h4>Zero-downtime</h4>
+                <h2>Blue-Green: Parallel Running</h2>
+                <pre><code data-trim contenteditable>
 sudo docker run -d --name books-service-db \
   -p 27017:27017 \
   -v /data/books-service/db:/data/db \
   dockerfile/mongodb
+
 sudo docker run -d --name books-service-blue \
   -p 9001:8080 \
   --link books-service-db:db \
   192.168.50.91:5000/books-service
-curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
+
+curl http://192.168.50.92/api/v1/books | python -mjson.tool
+
 sudo docker pull 192.168.50.91:5000/books-service
+
 sudo docker run -d --name books-service-green \
   -p 9002:8080 \
   --link books-service-db:db \
   192.168.50.91:5000/books-service
+
 sudo docker ps -a | grep books-service
-curl -H 'Content-Type: application/json' http://192.168.50.92:9002/api/v1/books | python -mjson.tool
+
+curl http://192.168.50.92:9002/api/v1/books | python -mjson.tool
+
 cat /data/nginx/sites-enabled/services.conf | grep proxy | grep books
+
 exit
-                        </code></pre>
+                </code></pre>
             </section>
             <section id="zdBlueGreenTests">
                 <h2>Zero-downtime</h2>
                 <h4>Blue-Green: Tests</h4>
-                <ul>
-                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/nginx/templates/services.conf.j2">nginx/templates/services.conf.j2</a></li>
-                </ul>
-                <code><pre>
+                <pre><code data-trim contenteditable>
 vagrant ssh cd
+
 sudo docker run --rm \
   -e "TEST_TYPE=integ" \
   -e "DOMAIN=http://192.168.50.92:9002" \
   -v /data/.ivy2:/root/.ivy2/cache \
   192.168.50.91:5000/books-service-tests
+
 sudo docker run -t --rm \
   -e "DOMAIN=http://192.168.50.92:9002" \
   -e "USERS=10" \
@@ -435,97 +585,149 @@ sudo docker run -t --rm \
   -e "DURATION=120" \
   -v /data/stress/results:/stress/results \
   192.168.50.91:5000/books-stress
+
 exit
-                        </pre></code>
+               </code> </pre>
             </section>
             <section id="zdBlueGreenSwitch">
                 <h2>Zero-downtime</h2>
                 <h4>Blue-Green: Switch</h4>
-                <ul>
-                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/nginx/templates/services.conf.j2">nginx/templates/services.conf.j2</a></li>
-                </ul>
-                <code><pre>
+                <pre><code data-trim contenteditable>
 vagrant ssh prod
+
 cat /data/nginx/sites-enabled/services.conf | grep proxy_pass
+
 sudo sed -i 's/9001/9002/g' /data/nginx/sites-enabled/services.conf
+
 cat /data/nginx/sites-enabled/services.conf | grep proxy_pass
+
 sudo docker kill -s HUP nginx
+
 sudo docker stop books-service-blue
+
 sudo docker ps -a | grep books-service
+
 exit
+                </code></pre>
+            </section>
+            <section id="zdBlueGreenFinalTests">
+                <h2>Zero-downtime</h2>
+                <h4>Blue-Green: Final Tests</h4>
+                <pre><code data-trim contenteditable>
 vagrant ssh cd
+
 sudo docker run -it --rm \
   -e "TEST_TYPE=integ" \
   -e "DOMAIN=http://192.168.50.92" \
   -v /data/.ivy2:/root/.ivy2/cache \
   192.168.50.91:5000/books-service-tests
+
 exit
+
 vagrant ssh prod
+
 sudo docker rm -f books-service-blue
+
 sudo docker ps -a | grep books-service
-curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
+
+curl http://192.168.50.92/api/v1/books | python -mjson.tool
+
 exit
-                        </pre></code>
+                </code></pre>
             </section>
             <section id="zdBlueGreenEtcd">
                 <h2>Zero-downtime</h2>
                 <h4>Blue-Green: etcd</h4>
-                <ul>
-                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/nginx/templates/services.conf.j2">nginx/templates/services.conf.j2</a></li>
-                </ul>
-                <code><pre>
+                <pre><code data-trim contenteditable>
 vagrant ssh cd
-ansible-playbook /vagrant/ansible/etcd.yml -i /vagrant/ansible/hosts/prod
+
+ansible-playbook /vagrant/ansible/etcd.yml \
+  -i /vagrant/ansible/hosts/prod
+
 exit
+
 vagrant ssh prod
+
 etcdctl set /books-service/color green
+
 etcdctl set /books-service/port 9002
+
 etcdctl get /books-service/color
+
 etcdctl get /books-service/port
-                        </pre></code>
+
+                </code></pre>
             </section>
-        </section>
-        <section id="zdBlueGreenBetterSwitch">
-            <h2>Zero-downtime</h2>
-            <h4>Blue-Green: Better Switch</h4>
-            <ul>
-                <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/nginx/templates/services.conf.j2">nginx/templates/services.conf.j2</a></li>
-            </ul>
-            <code><pre>
+            <section id="zdBlueGreenBetterSwitch">
+                <h2>Zero-downtime</h2>
+                <h4>Blue-Green: Better Switch</h4>
+                <pre><code data-trim contenteditable>
 sudo docker run -d --name books-service-blue \
   -p 9001:8080 \
   --link books-service-db:db \
   192.168.50.91:5000/books-service
+
 # Run tests
+
 sudo docker stop books-service-green
+
 # Run tests
+
 sudo sed -i 's/9002/9001/g' /data/nginx/sites-enabled/services.conf
+
 cat /data/nginx/sites-enabled/services.conf | grep proxy_pass
+
 sudo docker kill -s HUP nginx
+
 curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
+
 sudo docker rm -f books-service-green
+
 etcdctl set /books-service/color blue
+
 etcdctl set /books-service/port 9001
+
 exit
-                        </pre></code>
-        </section>
-        <section>
-            <section id="cdAnsible">
-                <h2>Continuous Delivery</h2>
-                <h4>Ansible</h4>
-                <pre><code>
-vagrant ssh cd
-ansible-playbook /vagrant/ansible/books-service.yml -i /vagrant/ansible/hosts/prod
                 </code></pre>
             </section>
-            <section id="cdJenkins">
-                <h2>Continuous Delivery</h2>
-                <h4>Jenkins</h4>
+        </section>
+        <section>
+            <section id="cd">
+                <h1>Continuous Delivery</h1>
+                <h2><span class="fragment grow highlight-green">Every commit</span> that passed all tests is deployed <span class="fragment grow highlight-green">to production</span> automatically</h2>
+            </section>
+            <section id="cdAnsibleCode">
+                <h4>Continuous Delivery</h4>
+                <h2>Ansible</h2>
                 <ul>
-                    <li>Provisioning: <a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/templates/build.xml.j2">jenkins/templates/build.xml.j2</a></li>
-                    <li>Provisioning: <a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/defaults/main.yml">jenkins/defaults/main.yml</a></li>
+                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/books-service.yml">books-service.yml</a></li>
+                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/books-service/tasks/main.yml">roles/books-service/tasks/main.yml</a></li>
                 </ul>
-                <pre><code>
+            </section>
+            <section id="cdAnsibleComm">
+                <h4>Continuous Delivery</h4>
+                <h2>Ansible</h2>
+                <pre><code data-trim contenteditable>
+vagrant ssh cd
+
+ansible-playbook /vagrant/ansible/books-service.yml \
+  -i /vagrant/ansible/hosts/prod
+                </code></pre>
+            </section>
+            <section id="cdJenkinsCode">
+                <h4>Continuous Delivery</h4>
+                <h2>Jenkins</h2>
+                <ul>
+                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/cd.yml">cd.yml</a></li>
+                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/tasks/main.yml">roles/jenkins/tasks/main.yml</a></li>
+                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/templates/build.xml.j2">roles/jenkins/templates/build.xml.j2</a></li>
+                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/defaults/main.yml">roles/jenkins/defaults/main.yml</a></li>
+                </ul>
+            </section>
+            <section id="cdJenkinsComm">
+                <h4>Continuous Delivery</h4>
+                <h2>Jenkins</h2>
+                <pre><code data-trim contenteditable>
 ansible-playbook /vagrant/ansible/cd.yml -c local
                 </code></pre>
                 <ul>
@@ -533,8 +735,9 @@ ansible-playbook /vagrant/ansible/cd.yml -c local
                 </ul>
             </section>
             <section>
-                <h2>Continuous Delivery</h2>
-                <h4>Jenkins Nodes</h4>
+                <h4>Continuous Delivery</h4>
+                <h2>Jenkins Nodes</h2>
+                <h4>Nodes</h4>
                 <ul>
                     <li>Click Manage Jenkins > Manage Nodes > CD > Configure</li>
                     <li>Click Add button in the Credentials Section</li>
@@ -543,38 +746,38 @@ ansible-playbook /vagrant/ansible/cd.yml -c local
                     <li>Click the Save and, finally, the Launch slave agent buttons</li>
                 </ul>
             </section>
-        </section>
-        <section>
-            <section id="fe">
-                <h2>Front-End</h2>
-                <h4>AngularJS</h4>
-                TODO
+            <section>
+                <h4>Continuous Delivery</h4>
+                <h2>Jenkins Nodes</h2>
+                <h4>Jobs</h4>
+                <img src="img/jenkins_jobs.png">
             </section>
         </section>
         <section id="qa">
             <section>
-                <h1>Q&A</h1>
+                <img src="img/questions.jpg">
             </section>
         </section>
         <section id="moreInfo">
             <section>
                 <h2>Additional Information</h2>
-                <h1>
+                <h4>
                     <a href="http://technologyconversations.com/category/continuous-integration-delivery-and-deployment/">
                         Continuous Integration, Delivery and Deployment
                     </a>
-                    @
+                </h4>
+                <h4>
                     <a href="http://technologyconversations.com/">
-                        Technology Conversations
+                        TechnologyConversations.com
                     </a>
-                </h1>
+                </h4>
             </section>
         </section>
         <section>
             <section id="theEnd">
-                <h1>THE END</h1>
-                <h3>BY Viktor Farcic</h3>
-                <h4>@vfarcic</h4>
+                <img src="img/the_end.jpg" style="width: 50%; height: 50%; float: right;">
+                <h1>Viktor Farcic</h1>
+                <h3><a href="https://twitter.com/vfarcic">@vfarcic</a></h3>
                 <h4><a href="http://technologyconversations.com">technologyconversations.com</a></h4>
             </section>
         </section>
