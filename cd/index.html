@@ -102,14 +102,18 @@
                 </section>
                 <section>
                     <section id="whatIsCd">
+                        <img src="img/what.jpg" style="width: 40%; height: 40%; float: right;">
+                        <h1>What is continuous delivery?</h1>
+                    </section>
+                    <section id="whatIsCdViktor">
                         <img src="img/high_school.jpg" style="width: 50%; height: 50%; float: right;">
-                        <h2>What is continuous delivery?</h2>
+                        <h4>What is continuous delivery?</h4>
                         <div>
                             Continuous Delivery is like sex in high school: everyone talks about it, everyone claims they're doing it, but hardly anyone is.
                         </div>
                     </section>
                     <section id="whatIsCdMartin">
-                        <h2>What is continuous delivery?</h2>
+                        <h4>What is continuous delivery?</h4>
                         <div>
                             <blockquote>
                                 Continuous Delivery is a software development discipline where you build software in such a way that the software can be released to production at any time.
@@ -156,9 +160,14 @@
                 </section>
                 <section>
                     <section id="tools">
-						<h2>Tools</h2>
+                        <h1>Tools</h1>
+                        <img src="img/tools.jpg">
+                    </section>
+                    <section id="toolsCi">
+						<h4>Tools</h4>
+                        <h2>Continuous Integration, Delivery and Deployment</h2>
                         <div>
-                            <ul style="list-style-type: none; text-align: center;">
+                            <ul style="list-style-type: none; text-align: center; ">
                                 <li class="fragment" data-fragment-index="0">
                                     <img src="img/jenkins.png" style="width: 25%; height: 25%; background-color: #ffffff; margin: 0;">
                                 </li>
@@ -171,29 +180,31 @@
                                 <li class="fragment" data-fragment-index="3">
                                     <img src="img/circle.png" style="width: 25%; height: 25%; background-color: #ffffff; margin: 0;">
                                 </li>
-                                <li class="fragment" data-fragment-index="4">
-                                    <img src="img/cloudbees.jpg" style="width: 25%; height: 25%; background-color: #ffffff; margin: 0;">
+                            </ul>
+                        </div>
+                    </section>
+                    <section id="environments">
+                        <h4>Tools</h4>
+                        <h2>Environments</h2>
+                        <div>
+                            <ul style="list-style-type: none; text-align: center;">
+                                <li class="fragment" data-fragment-index="0">
+                                    <img src="img/vagrant.png" style="width: 75%; height: 75%; background-color: #ffffff; margin: 0;">
+                                </li>
+                                <li class="fragment" data-fragment-index="1">
+                                    <img src="img/docker.png" style="width: 75%; height: 75%; background-color: #ffffff; margin: 0;">
                                 </li>
                             </ul>
                         </div>
                     </section>
                     <section id="environmentSetupTools">
-                        <h2>Environment Setup Tools</h2>
+                        <h4>Tools</h4>
+                        <h2>Provisioning</h2>
                         <div>
-                            <ul style="list-style-type: none; text-align: center;">
-                                <li>
-                                    <img src="img/vagrant.png" style="width: 50%; height: 50%; background-color: #ffffff; margin: 0;">
-                                </li>
-                                <li>
-                                    <img src="img/puppet.png" style="width: 12.5%; height: 12.5%; background-color: #ffffff; margin: 0;">
-                                    <img src="img/chef.png" style="width: 12.5%; height: 12.5%; background-color: #ffffff; margin: 0;">
-                                    <img src="img/ansible.png" style="width: 12.5%; height: 12.5%; background-color: #ffffff; margin: 0;">
-                                    <img src="img/cfengine.png" style="width: 12.5%; height: 12.5%; background-color: #ffffff; margin: 0;">
-                                </li>
-                                <li>
-                                    <img src="img/docker.png" style="width: 50%; height: 50%; background-color: #ffffff; margin: 0;">
-                                </li>
-                            </ul>
+                            <img src="img/cfengine.png" style="width: 20%; height: 20%; background-color: #ffffff; margin: 0;" class="fragment" data-fragment-index="0">
+                            <img src="img/puppet.png" style="width: 20%; height: 20%; background-color: #ffffff; margin: 0;" class="fragment" data-fragment-index="1">
+                            <img src="img/chef.png" style="width: 20%; height: 20%; background-color: #ffffff; margin: 0;" class="fragment" data-fragment-index="2">
+                            <img src="img/ansible.png" style="width: 20%; height: 20%; background-color: #ffffff; margin: 0;" class="fragment" data-fragment-index="3">
                         </div>
                     </section>
                 </section>
@@ -203,7 +214,7 @@
                         <div>
                             <ul>
                                 <li>
-                                    Unit testing
+                                    Unit, functional, integration and stress tests
                                 </li>
                                 <li>
                                     Test-driven development
@@ -217,36 +228,23 @@
                 </section>
                 <section>
                     <section id="flow">
-                        <h2>Flow</h2>
+                        <h1>Flow</h1>
+                        <img src="img/flow.jpg">
+                    </section>
+                    <section id="flowSteps">
+                        <h4>Flow</h4>
+                        <img src="img/repeat.gif" style="width: 30%; height: 30%; float: right;">
                         <div>
                             <ol>
-                                <li>
-                                    Checkout the code
-                                </li>
-                                <li>
-                                    Static Analysis
-                                </li>
-                                <li>
-                                    Unit Tests
-                                </li>
-                                <li>
-                                    Packaging
-                                </li>
-                                <li>
-                                    Deployment to Test Environment
-                                </li>
-                                <li>
-                                    Functional / Integration Tests
-                                </li>
-                                <li>
-                                    Code Coverage
-                                </li>
-                                <li>
-                                    Stress Tests
-                                </li>
-                                <li>
-                                    Deployment to Production
-                                </li>
+                                <li>Checkout the code</li>
+                                <li>Static Analysis</li>
+                                <li>Unit & Functional Tests</li>
+                                <li>Code Coverage</li>
+                                <li>Packaging</li>
+                                <li>Deployment</li>
+                                <li>Integration Tests</li>
+                                <li>Stress Tests</li>
+                                <li>Deployment to Production</li>
                             </ol>
                         </div>
                     </section>
@@ -256,21 +254,11 @@
                         <h2>Deployment</h2>
                         <img src="img/deployment.jpg" style="float: right; width: 50%; height: 50%;"/>
                         <ul>
-                            <li>
-                                Often
-                            </li>
-                            <li>
-                                Automatic
-                            </li>
-                            <li>
-                                Fast
-                            </li>
-                            <li>
-                                Zero downtime
-                            </li>
-                            <li>
-                                Ability to roll back
-                            </li>
+                            <li>Often</li>
+                            <li>Automatic</li>
+                            <li>Fast</li>
+                            <li>Zero downtime</li>
+                            <li>Ability to roll back</li>
                         </ul>
                     </section>
                 </section>
@@ -280,7 +268,7 @@
                         <h3>Deployment</h3>
                         <h2>Mutable Monster Server</h2>
                     </section>
-                    <section id="deploymentMutable">
+                    <section id="deploymentMutableDiagram">
                         <h3>Deployment</h3>
                         <h2>Mutable Monster Server</h2>
                         <div>
@@ -385,44 +373,26 @@
                     </section>
                 </section>
                 <section id="qa">
-                    <h1>Q&A</h1>
+                    <img src="img/questions.jpg">
                 </section>
                 <section id="moreInfo">
                     <h2>Additional Information</h2>
-                    <ul>
-                        <li>
-                            Continuous Delivery
-                            <small>
-                                <ul>
-                                    <li><a href="http://technologyconversations.com/2014/04/29/continuous-delivery-introduction-to-concepts-and-tools/">Introduction to concepts and tools</a></li>
-                                    <li><a href="http://technologyconversations.com/2014/05/06/continuous-delivery-ci-tools-setup/">CI Tools Setup</a></li>
-                                    <li><a href="http://technologyconversations.com/2014/05/20/continuous-delivery-static-analysis/">Static Analysis</a></li>
-                                    <li><a href="http://technologyconversations.com/2014/06/10/continuous-delivery-unit-tests/">Unit Tests</a></li>
-                                    <li><a href="http://technologyconversations.com/2014/11/21/continuous-delivery-code-coverage/">Code Coverage</a></li>
-                                </ul>
-                            </small>
-                        </li>
-                        <li>
-                            Continuous Deployment
-                            <small>
-                                <ul>
-                                    <li><a href="http://technologyconversations.com/2014/11/27/continuous-deployment-introduction/">Introduction</a></li>
-                                    <li><a href="http://technologyconversations.com/2014/12/03/continuous-deployment-strategies/">Strategies</a></li>
-                                    <li><a href="http://technologyconversations.com/2014/12/08/continuous-deployment-implementation/">Implementation</a></li>
-                                    <li><a href="http://technologyconversations.com/2014/12/29/continuous-deployment-implementation-with-ansible-and-docker/">Implementation with Ansible and Docker</a></li>
-                                </ul>
-                            </small>
-                        </li>
-                        <li><a href="http://technologyconversations.com/2014/08/26/feature-toggles-feature-switches-or-feature-flags-vs-feature-branches/">Feature Toggles vs Feature Branches</a></li>
-                        <li><a href="http://technologyconversations.com/2014/07/23/bdd-behavior-driven-development-missing-piece-in-the-continuous-integration-puzzle/">BDD: Missing Piece in the Continuous Integration Puzzle</a></li>
-                        <li><a href="http://technologyconversations.com/2015/01/07/monolithic-servers-vs-microservices/">Monolithic Servers vs Microservices</a></li>
-                    </ul>
+                    <h4>
+                        <a href="http://technologyconversations.com/category/continuous-integration-delivery-and-deployment/">
+                            Continuous Integration, Delivery and Deployment
+                        </a>
+                    </h4>
+                    <h4>
+                        <a href="http://technologyconversations.com/">
+                            TechnologyConversations.com
+                        </a>
+                    </h4>
                 </section>
                 <section>
                     <section id="theEnd">
-                        <h1>THE END</h1>
-                        <h3>BY Viktor Farcic</h3>
-                        <h4>@vfarcic</h4>
+                        <img src="img/the_end.jpg" style="width: 50%; height: 50%; float: right;">
+                        <h1>Viktor Farcic</h1>
+                        <h3><a href="https://twitter.com/vfarcic">@vfarcic</a></h3>
                         <h4><a href="http://technologyconversations.com">technologyconversations.com</a></h4>
                     </section>
                 </section>
