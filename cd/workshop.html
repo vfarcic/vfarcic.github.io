@@ -388,6 +388,18 @@ sudo docker run -d --name books-service \
   -v /data/books-service/db:/data/db \
   192.168.50.91:5000/books-service
 
+curl -H 'Content-Type: application/json' -X PUT -d \
+  '{"_id": 1, "title": "My First Book", "author": "John Doe", "description": "Not a very good book"}' \
+  http://localhost:9001/api/v1/books | python -mjson.tool
+
+curl -H 'Content-Type: application/json' -X PUT -d \
+  '{"_id": 2, "title": "My Second Book", "author": "John Doe", "description": "Not a bad as the first book"}' \
+  http://localhost:9001/api/v1/books | python -mjson.tool
+
+curl -H 'Content-Type: application/json' -X PUT -d \
+  '{"_id": 3, "title": "My Third Book", "author": "John Doe", "description": "Failed writers club"}' \
+  http://localhost:9001/api/v1/books | python -mjson.tool
+
 curl http://localhost:9001/api/v1/books | python -mjson.tool
 
 exit
