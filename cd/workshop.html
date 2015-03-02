@@ -118,10 +118,10 @@
                 <h2>Development</h2>
                 <h4><a href="https://github.com/vfarcic/books-service">vfarcic/books-service repo</a></h4>
                 <ul>
-                    <li>VM: <a href="https://github.com/vfarcic/books-service/blob/master/Vagrantfile">Vagrantfile</a></li>
-                    <li>Provisioning: <a href="https://github.com/vfarcic/books-service/blob/master/bootstrap.sh">bootstrap.sh</a></li>
-                    <li>Provisioning: <a href="https://github.com/vfarcic/books-service/blob/master/ansible/dev.yml">dev.yml</a></li>
-                    <li>Provisioning: <a href="https://github.com/vfarcic/books-service/blob/master/ansible/roles/java/tasks/main.yml">roles/java/tasks/main.yml</a></li>
+                    <li><a href="https://github.com/vfarcic/books-service/blob/master/Vagrantfile">Vagrantfile</a></li>
+                    <li><a href="https://github.com/vfarcic/books-service/blob/master/bootstrap.sh">bootstrap.sh</a></li>
+                    <li><a href="https://github.com/vfarcic/books-service/blob/master/ansible/dev.yml">dev.yml</a></li>
+                    <li><a href="https://github.com/vfarcic/books-service/blob/master/ansible/roles/java/tasks/main.yml">roles/java/tasks/main.yml</a></li>
                 </ul>
             </section>
             <section id="envDevComm">
@@ -150,10 +150,10 @@ vagrant halt dev
                 <h2>Continuous Deployment</h2>
                 <h4><a href="https://github.com/vfarcic/cd-workshop">vfarcic/cd-workshop repo</a></h4>
                 <ul>
-                    <li>VM: <a href="https://github.com/vfarcic/cd-workshop/blob/master/Vagrantfile">Vagrantfile</a></li>
-                    <li>Provisioning: <a href="https://github.com/vfarcic/cd-workshop/blob/master/bootstrap.sh">bootstrap.sh</a></li>
-                    <li>Provisioning: <a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/cd.yml">cd.yml</a></li>
-                    <li>Provisioning: <a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/tasks/main.yml">jenkins/tasks/main.yml</a></li>
+                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/Vagrantfile">Vagrantfile</a></li>
+                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/bootstrap.sh">bootstrap.sh</a></li>
+                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/cd.yml">cd.yml</a></li>
+                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/tasks/main.yml">jenkins/tasks/main.yml</a></li>
                 </ul>
             </section>
             <section id="envCdComm">
@@ -176,13 +176,17 @@ exit
                 </code></pre>
                     Open <a href="http://localhost:8080/">http://localhost:8080/</a>
             </section>
-            <section id="envCodeProd">
-                <h2>Environments</h2>
-                <h4>Production</h4>
+            <section id="envProdCode">
+                <h4>Environments</h4>
+                <h2>Production</h2>
                 <h4><a href="https://github.com/vfarcic/cd-workshop">vfarcic/cd-workshop repo</a></h4>
                 <ul>
                     <li>VM: <a href="https://github.com/vfarcic/cd-workshop/blob/master/Vagrantfile">Vagrantfile</a></li>
                 </ul>
+            </section>
+            <section id="envProdComm">
+                <h4>Environments</h4>
+                <h2>Production</h2>
                 <pre><code data-trim contenteditable>
 vagrant up prod
 
@@ -202,8 +206,8 @@ exit
                 </code></pre>
             </section>
             <section id="envBenefits">
-                <h2>VM and Provisioning</h2>
-                <h3>Benefits</h3>
+                <h4>VM and Provisioning</h4>
+                <h2>Benefits</h2>
                 <ul>
                     <li>Version control</li>
                     <li>Repeatable</li>
