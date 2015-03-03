@@ -697,7 +697,8 @@ sudo docker stop books-service-green
 
 # Run tests
 
-curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
+curl -H 'Content-Type: application/json' \
+  http://192.168.50.92/api/v1/books | python -mjson.tool
 
 sudo docker rm -f books-service-green
 
@@ -715,15 +716,16 @@ exit
                 <h2><span class="fragment grow highlight-green">Every commit</span> that passed all tests is deployed <span class="fragment grow highlight-green">to production</span> automatically</h2>
             </section>
             <section id="cdAnsibleCode">
-                <h4>Continuous Delivery</h4>
+                <h4>Continuous Deployment</h4>
                 <h2>Ansible</h2>
                 <ul>
                     <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/books-service.yml">books-service.yml</a></li>
                     <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/books-service/tasks/main.yml">roles/books-service/tasks/main.yml</a></li>
+                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/books-service/templates/books-service.conf.j2">roles/books-service/templates/books-service.conf.j2</a></li>
                 </ul>
             </section>
             <section id="cdAnsibleComm">
-                <h4>Continuous Delivery</h4>
+                <h4>Continuous Deployment</h4>
                 <h2>Ansible</h2>
                 <pre><code data-trim contenteditable>
 vagrant ssh cd
@@ -733,17 +735,18 @@ ansible-playbook /vagrant/ansible/books-service.yml \
                 </code></pre>
             </section>
             <section id="cdJenkinsCode">
-                <h4>Continuous Delivery</h4>
+                <h4>Continuous Deployment</h4>
                 <h2>Jenkins</h2>
                 <ul>
                     <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/cd.yml">cd.yml</a></li>
                     <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/tasks/main.yml">roles/jenkins/tasks/main.yml</a></li>
                     <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/templates/build.xml.j2">roles/jenkins/templates/build.xml.j2</a></li>
+                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/templates/deployment.xml.j2">roles/jenkins/templates/deployment.xml.j2</a></li>
                     <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/defaults/main.yml">roles/jenkins/defaults/main.yml</a></li>
                 </ul>
             </section>
             <section id="cdJenkinsComm">
-                <h4>Continuous Delivery</h4>
+                <h4>Continuous Deployment</h4>
                 <h2>Jenkins</h2>
                 <pre><code data-trim contenteditable>
 ansible-playbook /vagrant/ansible/cd.yml -c local
@@ -753,7 +756,7 @@ ansible-playbook /vagrant/ansible/cd.yml -c local
                 </ul>
             </section>
             <section>
-                <h4>Continuous Delivery</h4>
+                <h4>Continuous Deployment</h4>
                 <h2>Jenkins Nodes</h2>
                 <h4>Nodes</h4>
                 <ul>
@@ -765,7 +768,7 @@ ansible-playbook /vagrant/ansible/cd.yml -c local
                 </ul>
             </section>
             <section>
-                <h4>Continuous Delivery</h4>
+                <h4>Continuous Deployment</h4>
                 <h2>Jenkins Nodes</h2>
                 <h4>Jobs</h4>
                 <img src="img/jenkins_jobs.png">
