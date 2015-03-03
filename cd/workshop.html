@@ -678,14 +678,12 @@ etcdctl get /books-service/port
                 <h2>Zero-downtime</h2>
                 <h4>Blue-Green: Better Switch</h4>
                 <pre><code data-trim contenteditable>
+sudo docker pull 192.168.50.91:5000/books-service
+
 sudo docker run -d --name books-service-blue \
   -p 9001:8080 \
   --link books-service-db:db \
   192.168.50.91:5000/books-service
-
-# Run tests
-
-sudo docker stop books-service-green
 
 # Run tests
 
@@ -694,6 +692,10 @@ sudo sed -i 's/9002/9001/g' /data/nginx/sites-enabled/services.conf
 cat /data/nginx/sites-enabled/services.conf | grep proxy_pass
 
 sudo docker kill -s HUP nginx
+
+sudo docker stop books-service-green
+
+# Run tests
 
 curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
 
