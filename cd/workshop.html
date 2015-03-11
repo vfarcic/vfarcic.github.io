@@ -389,6 +389,18 @@ sudo docker run -d --name books-service \
   -v /data/books-service/db:/data/db \
   192.168.50.91:5000/books-service
 
+curl -H 'Content-Type: application/json' -X PUT -d \
+  '{"_id": 1, "title": "My First Book", "author": "John Doe", "description": "Not a very good book"}' \
+  http://localhost:9001/api/v1/books | python -mjson.tool
+
+curl -H 'Content-Type: application/json' -X PUT -d \
+  '{"_id": 2, "title": "My Second Book", "author": "John Doe", "description": "Not a bad as the first book"}' \
+  http://localhost:9001/api/v1/books | python -mjson.tool
+
+curl -H 'Content-Type: application/json' -X PUT -d \
+  '{"_id": 3, "title": "My Third Book", "author": "John Doe", "description": "Failed writers club"}' \
+  http://localhost:9001/api/v1/books | python -mjson.tool
+
 curl http://localhost:9001/api/v1/books | python -mjson.tool
 
 exit
@@ -667,14 +679,12 @@ etcdctl get /books-service/port
                 <h2>Zero-downtime</h2>
                 <h4>Blue-Green: Better Switch</h4>
                 <pre><code data-trim contenteditable>
+sudo docker pull 192.168.50.91:5000/books-service
+
 sudo docker run -d --name books-service-blue \
   -p 9001:8080 \
   --link books-service-db:db \
   192.168.50.91:5000/books-service
-
-# Run tests
-
-sudo docker stop books-service-green
 
 # Run tests
 
@@ -684,7 +694,12 @@ cat /data/nginx/sites-enabled/services.conf | grep proxy_pass
 
 sudo docker kill -s HUP nginx
 
-curl -H 'Content-Type: application/json' http://192.168.50.92/api/v1/books | python -mjson.tool
+sudo docker stop books-service-green
+
+# Run tests
+
+curl -H 'Content-Type: application/json' \
+  http://192.168.50.92/api/v1/books | python -mjson.tool
 
 sudo docker rm -f books-service-green
 
@@ -702,15 +717,16 @@ exit
                 <h2><span class="fragment grow highlight-green">Every commit</span> that passed all tests is deployed <span class="fragment grow highlight-green">to production</span> automatically</h2>
             </section>
             <section id="cdAnsibleCode">
-                <h4>Continuous Delivery</h4>
+                <h4>Continuous Deployment</h4>
                 <h2>Ansible</h2>
                 <ul>
                     <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/books-service.yml">books-service.yml</a></li>
                     <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/books-service/tasks/main.yml">roles/books-service/tasks/main.yml</a></li>
+                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/books-service/templates/books-service.conf.j2">roles/books-service/templates/books-service.conf.j2</a></li>
                 </ul>
             </section>
             <section id="cdAnsibleComm">
-                <h4>Continuous Delivery</h4>
+                <h4>Continuous Deployment</h4>
                 <h2>Ansible</h2>
                 <pre><code data-trim contenteditable>
 vagrant ssh cd
@@ -720,17 +736,18 @@ ansible-playbook /vagrant/ansible/books-service.yml \
                 </code></pre>
             </section>
             <section id="cdJenkinsCode">
-                <h4>Continuous Delivery</h4>
+                <h4>Continuous Deployment</h4>
                 <h2>Jenkins</h2>
                 <ul>
                     <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/cd.yml">cd.yml</a></li>
                     <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/tasks/main.yml">roles/jenkins/tasks/main.yml</a></li>
                     <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/templates/build.xml.j2">roles/jenkins/templates/build.xml.j2</a></li>
+                    <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/templates/deployment.xml.j2">roles/jenkins/templates/deployment.xml.j2</a></li>
                     <li><a href="https://github.com/vfarcic/cd-workshop/blob/master/ansible/roles/jenkins/defaults/main.yml">roles/jenkins/defaults/main.yml</a></li>
                 </ul>
             </section>
             <section id="cdJenkinsComm">
-                <h4>Continuous Delivery</h4>
+                <h4>Continuous Deployment</h4>
                 <h2>Jenkins</h2>
                 <pre><code data-trim contenteditable>
 ansible-playbook /vagrant/ansible/cd.yml -c local
@@ -740,7 +757,7 @@ ansible-playbook /vagrant/ansible/cd.yml -c local
                 </ul>
             </section>
             <section>
-                <h4>Continuous Delivery</h4>
+                <h4>Continuous Deployment</h4>
                 <h2>Jenkins Nodes</h2>
                 <h4>Nodes</h4>
                 <ul>
@@ -752,7 +769,7 @@ ansible-playbook /vagrant/ansible/cd.yml -c local
                 </ul>
             </section>
             <section>
-                <h4>Continuous Delivery</h4>
+                <h4>Continuous Deployment</h4>
                 <h2>Jenkins Nodes</h2>
                 <h4>Jobs</h4>
                 <img src="img/jenkins_jobs.png">
