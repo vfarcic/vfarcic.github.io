@@ -4,4 +4,4 @@ Microservices is the way to go if possible. Risks aside, in many cases there is 
 
 In this hands-on workshop we'll build an entire system from scratch following some of best practices for continuous deployment. It will be done in a way that it can be deployed often, be fully automatic and very fast with zero-downtime and ability to rollback.
 
-We'll use VAgrant, Docker, etcd, nginx, blue-green deployment, microservices, TDD, etc. At the end of the workshop, each participant will gain practical knowledge how to specify, design, develop and test their applications in a way that they can be continuously deployed to production. Every commit that passed all validations will be deployed fast and without any downtime.
+We'll use Vagrant, Docker, etcd, nginx, blue-green deployment, microservices, TDD, etc. At the end of the workshop, each participant will gain practical knowledge how to specify, design, develop and test their applications in a way that they can be continuously deployed to production. Every commit that passed all validations will be deployed fast and without any downtime.

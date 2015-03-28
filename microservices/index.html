@@ -73,14 +73,21 @@
                         <li class="fragment">Data exchange through APIs</li>
                     </ul>
                 </section>
-                <section id="linux">
-                    <h2>Linux = Microservices</h2>
+                <section id="examples">
+                    <section id="ood">
+                        <h2>Object-Oriented Design</h2>
+                        <blockquote>
+                            The big idea is 'messaging'.
+                            The key in making great and growable systems is much more to design how its modules communicate rather than what their internal properties and behaviors should be.
+                            <div style="float: right;">- Alan Kay</div>
+                        </blockquote>
+                    </section>
+                    <section id="linux">
+                        <h2>Linux = Microservices</h2>
                     <pre><code data-trim contenteditable>
-                        ps aux | \
-                        grep jav[a] | \
-                        awk '{print $2}' | \
-                        xargs kill
+ps aux | grep jav[a] | awk '{print $2}' | xargs kill
                     </code></pre>
+                    </section>
                 </section>
                 <section id="msKeys">
                     <h2>Microservices</h2>
@@ -113,11 +120,12 @@
                         <li class="fragment">Scaling</li>
                         <li class="fragment">Innovation</li>
                         <li class="fragment">Size</li>
+                        <li class="fragment">Decoupling</li>
                         <li class="fragment">Deployment, rollback, fault isolation</li>
                         <li class="fragment">No need for long term commitment</li>
                     </ul>
                 </section>
-                <section id="msPros">
+                <section id="msBestPractices">
                     <h2>Best Practices</h2>
                     <ul>
                         <li class="fragment">Containers (Docker)</li>
