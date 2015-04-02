@@ -295,7 +295,7 @@ sudo docker run -t --rm \
 ll target/scala-2.10/books-service-assembly-1.0.jar
                 </code></pre>
             </section>
-            <section id="containersTestsExercise">
+            <section id="containersBuildExercise">
                 <h4>Containers</h4>
                 <h2>Create Docker Image Exercise</h2>
                 <pre><code data-trim contenteditable>
@@ -310,6 +310,9 @@ clear && cat unit_tests.md
                 <a href="https://github.com/vfarcic/books-fe/blob/master/create_docker.md">Instructions</a>
                 <aside class="notes">
                     <a href="https://github.com/vfarcic/books-fe/blob/master/Dockerfile">Dockerfile</a>
+                    <pre><code>
+sudo docker build -t books-fe .
+                    </code></pre>
                 </aside>
             </section>
             <section id="containersAppCode">
@@ -350,6 +353,29 @@ curl http://localhost:9001/api/v1/books/_id/1 | python -mjson.tool
 
 sudo docker rm -f books-service
                 </code></pre>
+            </section>
+            <section id="containersRunExercise">
+                <h4>Containers</h4>
+                <h2>Run Docker Image with Mock Server Exercise</h2>
+                Run books-fe image using following requirements.
+                <ul>
+                    <li>Image is called <strong>books-fe</strong></li>
+                    <li>Set env var <strong>MODE</strong> to <strong>mock_server</strong></li>
+                    <li>Set env var <strong>MOCK_PORT</strong> to <strong>9002</strong></li>
+                    <li>Expose port <strong>8080</strong> as <strong>9001</strong></li>
+                    <li>Expose port <strong>9002</strong> as <strong>9002</strong></li>
+                </ul>
+                <aside class="notes">
+                    <pre><code>
+docker run -d \
+  --name books-fe-mock \
+  -e MODE=mock_server \
+  -e MOCK_PORT=9002 \
+  -p 9001:8080 \
+  -p 9002:9002 \
+  books-fe
+                    </code></pre>
+                </aside>
             </section>
             <section id="containersRegistryCode">
                 <h4>Containers</h4>
