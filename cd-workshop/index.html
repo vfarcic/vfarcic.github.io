@@ -367,7 +367,7 @@ sudo docker rm -f books-service
                 </ul>
                 <aside class="notes">
                     <pre><code>
-docker run -d \
+sudo docker run -d \
   --name books-fe-mock \
   -e MODE=mock_server \
   -e MOCK_PORT=9002 \
@@ -405,6 +405,19 @@ sudo docker push \
 
 curl http://localhost:5000/v1/search | python -mjson.tool
                 </code></pre>
+            </section>
+            <section id="containersRegistryExercise">
+                <h4>Containers</h4>
+                <h2>Push to Registry Exercise</h2>
+                Push <strong>books-fe</strong> image to the registry.
+                <aside class="notes">
+                    <pre><code>
+sudo docker tag books-fe \
+  192.168.50.91:5000/books-fe
+sudo docker push \
+  192.168.50.91:5000/books-fe
+                    </code></pre>
+                </aside>
             </section>
             <section id="containersAppProdCode">
                 <h4>Containers</h4>
