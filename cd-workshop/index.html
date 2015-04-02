@@ -357,7 +357,7 @@ sudo docker rm -f books-service
             <section id="containersRunExercise">
                 <h4>Containers</h4>
                 <h2>Run Docker Image with Mock Server Exercise</h2>
-                Run books-fe image using following requirements.
+                Run <strong>books-fe</strong> image using following parameters.
                 <ul>
                     <li>Image is called <strong>books-fe</strong></li>
                     <li>Set env var <strong>MODE</strong> to <strong>mock_server</strong></li>
@@ -376,6 +376,28 @@ sudo docker run -d \
   books-fe
                     </code></pre>
                 </aside>
+            </section>
+            <section id="containersBddCode">
+                <h4>Containers</h4>
+                <h2>Functional Tests with BDD</h2>
+                <h4><a href="https://github.com/vfarcic/books-fe">vfarcic/books-fe repo</a></h4>
+                <ul>
+                    <li><a href="http://bddassistant.com/">BDD Assistant</a></li>
+                    <li><a href="https://registry.hub.docker.com/u/vfarcic/bdd-runner-phantomjs/">bdd-runner-phantomjs</a></li>
+                    <li><a href="https://github.com/vfarcic/books-fe/blob/master/stories/functional/functional.story">functional.story</a></li>
+                </ul>
+            </section>
+            <section id="containersBddComm">
+                <h4>Containers</h4>
+                <h2>Functional Tests with BDD</h2>
+                <pre><code>
+sudo docker run -t --rm \
+  -v $PWD/stories:/opt/bdd/data/stories \
+  vfarcic/bdd-runner-phantomjs \
+  -P url=http://172.17.42.1:9001 \
+  -P widthHeight=1024,768 \
+  --story_path data/stories/functional/**
+                </code></pre>
             </section>
             <section id="containersRegistryCode">
                 <h4>Containers</h4>
@@ -430,7 +452,7 @@ sudo docker push \
             </section>
             <section id="containersAppProdComm">
                 <h4>Containers</h4>
-                <h2>Application in production</h2>
+                <h2>Application in Production</h2>
                 <pre><code data-trim contenteditable>
 ansible-playbook /vagrant/ansible/docker.yml \
   -i /vagrant/ansible/hosts/prod
