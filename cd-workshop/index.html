@@ -601,6 +601,30 @@ sudo docker run -it --rm \
   192.168.50.91:5000/books-service-tests
                 </code></pre>
             </section>
+            <!--TODO: Finish-->
+            <section id="containersPDITExercise">
+                <h4>Containers</h4>
+                <h2>Post Deployment Integration Tests Exercise</h2>
+                <ul>
+                    <li>Modify template in nginx Ansible role to proxy <strong>/</strong> to port <strong>9011</strong>.</li>
+                    <li>Rerun Ansible playbook <strong>nginx_with_books.yml</strong></li>
+                </ul>
+                <div>
+                    Open <a href="http://192.168.50.92">http://192.168.50.92</a> to confirm
+                </div>
+                <aside class="notes">
+                    <pre><code>
+cd  ~/books-fe
+
+sudo docker run -t --rm \
+  -v $PWD/stories:/opt/bdd/data/stories \
+  vfarcic/bdd-runner-phantomjs \
+  -P url=http://192.168.50.92 \
+  -P widthHeight=1024,768 \
+  --story_path data/stories/integration/**
+                    </code></pre>
+                </aside>
+            </section>
             <section id="containersPDSTCode">
                 <h4>Containers</h4>
                 <h2>Post Deployment Stress Tests</h2>
