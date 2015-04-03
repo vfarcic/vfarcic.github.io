@@ -503,9 +503,29 @@ curl -H 'Content-Type: application/json' -X PUT -d \
   http://localhost:9001/api/v1/books | python -mjson.tool
 
 curl http://localhost:9001/api/v1/books | python -mjson.tool
-
-exit
                 </code></pre>
+            </section>
+            <section id="containersAppProductionExercise">
+                <h4>Containers</h4>
+                <h2>Application in Production Exercise</h2>
+                Run <strong>books-fe</strong> image using following parameters.
+                <ul>
+                    <li>Image is called <strong>books-fe</strong></li>
+                    <li>Expose port <strong>8080</strong> as <strong>9011</strong></li>
+                </ul>
+                <div>
+                    Open <a href="http://192.168.50.92:9011">http://192.168.50.92:9011</a> to confirm
+                </div>
+                <aside class="notes">
+                    <pre><code>
+sudo docker run \
+  -d --name books-fe \
+  -p 9011:8080 \
+  192.168.50.91:5000/books-fe
+
+sudo docker ps -a
+                    </code></pre>
+                </aside>
             </section>
             <section id="containersNginxCode">
                 <h4>Containers</h4>
@@ -521,6 +541,8 @@ exit
                 <h4>Containers</h4>
                 <h2>nginx</h2>
                 <pre><code data-trim contenteditable>
+exit
+
 vagrant ssh cd
 
 curl -H 'Content-Type: application/json' \
@@ -535,6 +557,29 @@ ansible-playbook /vagrant/ansible/nginx_with_books.yml \
 curl -H 'Content-Type: application/json' \
   http://192.168.50.92/api/v1/books | python -mjson.tool
                 </code></pre>
+            </section>
+            <section id="containersNginxExercise">
+                <h4>Containers</h4>
+                <h2>nginx Exercise</h2>
+                <ul>
+                    <li>Modify template in nginx Ansible role to proxy <strong>/</strong> to port <strong>9011</strong>.</li>
+                    <li>Rerun Ansible playbook <strong>nginx_with_books.yml</strong></li>
+                </ul>
+                <div>
+                    Open <a href="http://192.168.50.92">http://192.168.50.92</a> to confirm
+                </div>
+                <aside class="notes">
+                    <pre><code>
+location / {
+  proxy_pass http://172.17.42.1:9011/;
+}
+                    </code></pre>
+                    <pre><code>
+ansible-playbook \
+  /vagrant/ansible/nginx_with_books.yml \
+  -i /vagrant/ansible/hosts/prod
+                    </code></pre>
+                </aside>
             </section>
             <section id="containersPDITCode">
                 <h4>Containers</h4>
