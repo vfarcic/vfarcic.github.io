@@ -299,13 +299,13 @@ ll target/scala-2.10/books-service-assembly-1.0.jar
                 <h4>Containers</h4>
                 <h2>Create Docker Image Exercise</h2>
                 <pre><code data-trim contenteditable>
-vagrant ssh cd
+cd ~
 
 git clone https://github.com/vfarcic/books-fe.git
 
 cd books-fe
 
-clear && cat unit_tests.md
+clear && cat create_docker.md
                 </code></pre>
                 <a href="https://github.com/vfarcic/books-fe/blob/master/create_docker.md">Instructions</a>
                 <aside class="notes">
@@ -328,6 +328,8 @@ sudo docker build -t books-fe .
                 <h4>Containers</h4>
                 <h2>Application</h2>
                 <pre><code data-trim contenteditable>
+cd ~/books-service
+
 sudo docker build -t vfarcic/books-service .
 
 sudo docker run -d --name books-service \
@@ -352,6 +354,8 @@ curl http://localhost:9001/api/v1/books | python -mjson.tool
 curl http://localhost:9001/api/v1/books/_id/1 | python -mjson.tool
 
 sudo docker rm -f books-service
+
+sudo docker ps -a
                 </code></pre>
             </section>
             <section id="containersRunExercise">
@@ -365,6 +369,9 @@ sudo docker rm -f books-service
                     <li>Expose port <strong>8080</strong> as <strong>9001</strong></li>
                     <li>Expose port <strong>9002</strong> as <strong>9002</strong></li>
                 </ul>
+                <div>
+                    Open <a href="http://192.168.50.91:9001">http://192.168.50.91:9001</a> to confirm and then kill the Docker process
+                </div>
                 <aside class="notes">
                     <pre><code>
 sudo docker run -d \
@@ -374,6 +381,8 @@ sudo docker run -d \
   -p 9001:8080 \
   -p 9002:9002 \
   books-fe
+
+sudo docker rm -f books-fe-mock
                     </code></pre>
                 </aside>
             </section>
@@ -391,12 +400,24 @@ sudo docker run -d \
                 <h4>Containers</h4>
                 <h2>Functional Tests with BDD</h2>
                 <pre><code>
+cd ~/books-fe
+
+sudo docker run -d \
+  --name books-fe-mock \
+  -e MODE=mock_server \
+  -e MOCK_PORT=9002 \
+  -p 9001:8080 \
+  -p 9002:9002 \
+  books-fe
+
 sudo docker run -t --rm \
   -v $PWD/stories:/opt/bdd/data/stories \
   vfarcic/bdd-runner-phantomjs \
   -P url=http://172.17.42.1:9001 \
   -P widthHeight=1024,768 \
   --story_path data/stories/functional/**
+
+sudo docker rm -f books-fe-mock
                 </code></pre>
             </section>
             <section id="containersRegistryCode">
@@ -438,6 +459,9 @@ sudo docker tag books-fe \
   192.168.50.91:5000/books-fe
 sudo docker push \
   192.168.50.91:5000/books-fe
+
+curl http://localhost:5000/v1/search \
+  | python -mjson.tool
                     </code></pre>
                 </aside>
             </section>
@@ -479,9 +503,29 @@ curl -H 'Content-Type: application/json' -X PUT -d \
   http://localhost:9001/api/v1/books | python -mjson.tool
 
 curl http://localhost:9001/api/v1/books | python -mjson.tool
-
-exit
                 </code></pre>
+            </section>
+            <section id="containersAppProductionExercise">
+                <h4>Containers</h4>
+                <h2>Application in Production Exercise</h2>
+                Run <strong>books-fe</strong> image using following parameters.
+                <ul>
+                    <li>Image is called <strong>books-fe</strong></li>
+                    <li>Expose port <strong>8080</strong> as <strong>9011</strong></li>
+                </ul>
+                <div>
+                    Open <a href="http://192.168.50.92:9011">http://192.168.50.92:9011</a> to confirm
+                </div>
+                <aside class="notes">
+                    <pre><code>
+sudo docker run \
+  -d --name books-fe \
+  -p 9011:8080 \
+  192.168.50.91:5000/books-fe
+
+sudo docker ps -a
+                    </code></pre>
+                </aside>
             </section>
             <section id="containersNginxCode">
                 <h4>Containers</h4>
@@ -497,6 +541,8 @@ exit
                 <h4>Containers</h4>
                 <h2>nginx</h2>
                 <pre><code data-trim contenteditable>
+exit
+
 vagrant ssh cd
 
 curl -H 'Content-Type: application/json' \
@@ -511,6 +557,29 @@ ansible-playbook /vagrant/ansible/nginx_with_books.yml \
 curl -H 'Content-Type: application/json' \
   http://192.168.50.92/api/v1/books | python -mjson.tool
                 </code></pre>
+            </section>
+            <section id="containersNginxExercise">
+                <h4>Containers</h4>
+                <h2>nginx Exercise</h2>
+                <ul>
+                    <li>Modify template in nginx Ansible role to proxy <strong>/</strong> to port <strong>9011</strong>.</li>
+                    <li>Rerun Ansible playbook <strong>nginx_with_books.yml</strong></li>
+                </ul>
+                <div>
+                    Open <a href="http://192.168.50.92">http://192.168.50.92</a> to confirm
+                </div>
+                <aside class="notes">
+                    <pre><code>
+location / {
+  proxy_pass http://172.17.42.1:9011/;
+}
+                    </code></pre>
+                    <pre><code>
+ansible-playbook \
+  /vagrant/ansible/nginx_with_books.yml \
+  -i /vagrant/ansible/hosts/prod
+                    </code></pre>
+                </aside>
             </section>
             <section id="containersPDITCode">
                 <h4>Containers</h4>
@@ -531,6 +600,30 @@ sudo docker run -it --rm \
   -v /data/.ivy2:/root/.ivy2/cache \
   192.168.50.91:5000/books-service-tests
                 </code></pre>
+            </section>
+            <!--TODO: Finish-->
+            <section id="containersPDITExercise">
+                <h4>Containers</h4>
+                <h2>Post Deployment Integration Tests Exercise</h2>
+                <ul>
+                    <li>Modify template in nginx Ansible role to proxy <strong>/</strong> to port <strong>9011</strong>.</li>
+                    <li>Rerun Ansible playbook <strong>nginx_with_books.yml</strong></li>
+                </ul>
+                <div>
+                    Open <a href="http://192.168.50.92">http://192.168.50.92</a> to confirm
+                </div>
+                <aside class="notes">
+                    <pre><code>
+cd  ~/books-fe
+
+sudo docker run -t --rm \
+  -v $PWD/stories:/opt/bdd/data/stories \
+  vfarcic/bdd-runner-phantomjs \
+  -P url=http://192.168.50.92 \
+  -P widthHeight=1024,768 \
+  --story_path data/stories/integration/**
+                    </code></pre>
+                </aside>
             </section>
             <section id="containersPDSTCode">
                 <h4>Containers</h4>
