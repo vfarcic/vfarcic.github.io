@@ -52,6 +52,17 @@
                         <li>Java Test-Driven Development: Mastering TDD Through Katas</li>
                     </ul>
                 </section>
+                <section id="history">
+                    <h2>Things in Common</h2>
+                    <ul>
+                        <li class="fragment">Domain-Driven Design</li>
+                        <li class="fragment">Continuous Delivery</li>
+                        <li class="fragment">On-demand virtualization</li>
+                        <li class="fragment">Containers</li>
+                        <li class="fragment">Small autonomous teams</li>
+                        <li class="fragment">Scalable systems</li>
+                    </ul>
+                </section>
                 <section id="monolithicServers">
                     <h2>Monolithic servers</h2>
                     <ul>
@@ -67,9 +78,9 @@
                 <section id="ms">
                     <h2>Microservices</h2>
                     <ul>
-                        <img style="float: right; width: 50%; height: 50%;" src="img/microservices.gif">
-                        <li class="fragment">Single application composed of small services</li>
-                        <li class="fragment">Independence</li>
+                        <img style="float: right; width: 40%; height: 40%;" src="img/microservices.gif">
+                        <li class="fragment">System composed of small services</li>
+                        <li class="fragment">Autonomy/independence</li>
                         <li class="fragment">Data exchange through APIs</li>
                     </ul>
                 </section>
@@ -80,6 +91,13 @@
                             The big idea is 'messaging'.
                             The key in making great and growable systems is much more to design how its modules communicate rather than what their internal properties and behaviors should be.
                             <div style="float: right;">- Alan Kay</div>
+                        </blockquote>
+                    </section>
+                    <section id="srp">
+                        <h2>Single Responsibility Principle</h2>
+                        <blockquote>
+                            Gather together those things that change for the same reason, and separate those things that change for different reasons
+                            <div style="float: right;">- Robert C. Martin</div>
                         </blockquote>
                     </section>
                     <section id="linux">
@@ -118,10 +136,11 @@ ps aux | grep jav[a] | awk '{print $2}' | xargs kill
                     <h2>Advantages</h2>
                     <ul>
                         <li class="fragment">Scaling</li>
+                        <li class="fragment">Resilience / fault isolation</li>
                         <li class="fragment">Innovation</li>
                         <li class="fragment">Size</li>
                         <li class="fragment">Decoupling</li>
-                        <li class="fragment">Deployment, rollback, fault isolation</li>
+                        <li class="fragment">Deployment</li>
                         <li class="fragment">No need for long term commitment</li>
                     </ul>
                 </section>
@@ -129,8 +148,7 @@ ps aux | grep jav[a] | awk '{print $2}' | xargs kill
                     <h2>Best Practices</h2>
                     <ul>
                         <li class="fragment">Containers (Docker)</li>
-                        <li class="fragment">Proxy microservices or API gateway</li>
-                        <li class="fragment">Reverse proxy</li>
+                        <li class="fragment">Proxy or API gateway</li>
                         <li class="fragment">Minimalist approach</li>
                         <li class="fragment">CM is a must</li>
                         <li class="fragment">Cross functional teams</li>
