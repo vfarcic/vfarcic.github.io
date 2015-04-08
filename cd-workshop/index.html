@@ -381,8 +381,6 @@ sudo docker run -d \
   -p 9001:8080 \
   -p 9002:9002 \
   books-fe
-
-sudo docker rm -f books-fe-mock
                     </code></pre>
                 </aside>
             </section>
@@ -401,14 +399,6 @@ sudo docker rm -f books-fe-mock
                 <h2>Functional Tests with BDD</h2>
                 <pre><code>
 cd ~/books-fe
-
-sudo docker run -d \
-  --name books-fe-mock \
-  -e MODE=mock_server \
-  -e MOCK_PORT=9002 \
-  -p 9001:8080 \
-  -p 9002:9002 \
-  books-fe
 
 sudo docker run -t --rm \
   -v $PWD/stories:/opt/bdd/data/stories \
@@ -432,10 +422,10 @@ sudo docker rm -f books-fe-mock
                 <h4>Containers</h4>
                 <h2>Registry</h2>
                 <pre><code data-trim contenteditable>
-sudo docker tag vfarcic/books-service-tests \
+sudo docker tag -f vfarcic/books-service-tests \
   192.168.50.91:5000/books-service-tests
 
-sudo docker tag vfarcic/books-service \
+sudo docker tag -f vfarcic/books-service \
   192.168.50.91:5000/books-service
 
 sudo docker images | grep books-service
@@ -455,8 +445,9 @@ curl http://localhost:5000/v1/search | python -mjson.tool
                 Push <strong>books-fe</strong> image to the registry.
                 <aside class="notes">
                     <pre><code>
-sudo docker tag books-fe \
+sudo docker tag -f books-fe \
   192.168.50.91:5000/books-fe
+
 sudo docker push \
   192.168.50.91:5000/books-fe
 
