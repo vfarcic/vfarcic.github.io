@@ -201,8 +201,6 @@ vagrant ssh cd
 ssh-keygen # Enter to all questions
 
 ssh-copy-id 192.168.50.92 # Pass: vagrant
-
-exit
                 </code></pre>
             </section>
             <section id="envBenefits">
@@ -277,19 +275,19 @@ exit
                 <h4>Containers</h4>
                 <h2>Tests</h2>
                 <pre><code data-trim contenteditable>
-vagrant ssh cd
-
 git clone https://github.com/vfarcic/books-service.git
 
 cd books-service
 
 sudo ./build_tests.sh
 
-sudo docker images
+sudo docker images | grep books-service
+
+mkdir -p target/scala-2.10/
+touch target/scala-2.10/books-service-assembly-1.0.jar
 
 sudo docker run -t --rm \
-  -v $PWD/target/scala-2.10:/source/target/scala-2.10 \
-  -v /data/.ivy2:/root/.ivy2/cache \
+  -v $PWD/target/scala-2.10/books-service-assembly-1.0.jar:/source/target/scala-2.10/books-service-assembly-1.0.jar \
   vfarcic/books-service-tests
 
 ll target/scala-2.10/books-service-assembly-1.0.jar
@@ -585,14 +583,12 @@ ansible-playbook \
                 <h4>Containers</h4>
                 <h2>Post Deployment Integration Tests</h2>
                 <pre><code data-trim contenteditable>
-sudo docker run -it --rm \
+sudo docker run -t --rm \
   -e "TEST_TYPE=integ" \
   -e "DOMAIN=http://192.168.50.92" \
-  -v /data/.ivy2:/root/.ivy2/cache \
   192.168.50.91:5000/books-service-tests
                 </code></pre>
             </section>
-            <!--TODO: Finish-->
             <section id="containersPDITExercise">
                 <h4>Containers</h4>
                 <h2>Post Deployment Integration Tests Exercise</h2>
@@ -625,6 +621,8 @@ sudo docker run -t --rm \
                     <li><a href="https://github.com/vfarcic/books-stress/blob/master/Dockerfile">Dockerfile</a></li>
                 </ul>
             </section>
+            <!--TODO: Continue Everis-->
+            <!--TODO: Add UI stress tests-->
             <section id="containersPDSTComm">
                 <h4>Containers</h4>
                 <h2>Post Deployment Stress Tests</h2>
