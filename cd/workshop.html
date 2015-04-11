@@ -556,7 +556,7 @@ sudo docker rm -f books-service
 sudo docker run -d --name books-service-db \
   -p 27017:27017 \
   -v /data/books-service/db:/data/db \
-  dockerfile/mongodb
+  mongo
 
 sudo docker run -d --name books-service-blue \
   -p 9001:8080 \

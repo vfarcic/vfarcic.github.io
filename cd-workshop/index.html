@@ -281,13 +281,11 @@ cd books-service
 
 sudo ./build_tests.sh
 
-sudo docker images | grep books-service
-
-mkdir -p target/scala-2.10/
-touch target/scala-2.10/books-service-assembly-1.0.jar
+sudo docker images | grep vfarcic/books-service-tests
 
 sudo docker run -t --rm \
-  -v $PWD/target/scala-2.10/books-service-assembly-1.0.jar:/source/target/scala-2.10/books-service-assembly-1.0.jar \
+  -v $PWD/target/scala-2.10:/source/target/scala-2.10 \
+  -v /data/.ivy2:/root/.ivy2/cache \
   vfarcic/books-service-tests
 
 ll target/scala-2.10/books-service-assembly-1.0.jar
@@ -434,7 +432,7 @@ sudo docker push \
 sudo docker push \
   192.168.50.91:5000/books-service
 
-curl http://localhost:5000/v1/search | python -mjson.tool
+curl http://localhost:5000/v1/search?q=books-service | python -mjson.tool
                 </code></pre>
             </section>
             <section id="containersRegistryExercise">
@@ -449,7 +447,7 @@ sudo docker tag -f books-fe \
 sudo docker push \
   192.168.50.91:5000/books-fe
 
-curl http://localhost:5000/v1/search \
+curl http://localhost:5000/v1/search?q=books-fe \
   | python -mjson.tool
                     </code></pre>
                 </aside>
@@ -551,8 +549,9 @@ curl -H 'Content-Type: application/json' \
                 <h4>Containers</h4>
                 <h2>nginx Exercise</h2>
                 <ul>
-                    <li>Modify template in nginx Ansible role to proxy <strong>/</strong> to port <strong>9011</strong>.</li>
-                    <li>Rerun Ansible playbook <strong>nginx_with_books.yml</strong></li>
+                    <li>Template is located in <strong>/vagrant/ansible/roles/nginx_with_books/templates/services.conf.j2</strong></li>
+                    <li>Modify template to proxy <strong>/</strong> to port <strong>9011</strong>.</li>
+                    <li>Rerun Ansible playbook <strong>/vagrant/ansible/nginx_with_books.yml</strong></li>
                 </ul>
                 <div>
                     Open <a href="http://192.168.50.92">http://192.168.50.92</a> to confirm
@@ -586,6 +585,7 @@ ansible-playbook \
 sudo docker run -t --rm \
   -e "TEST_TYPE=integ" \
   -e "DOMAIN=http://192.168.50.92" \
+  -v /data/.ivy2:/root/.ivy2/cache \
   192.168.50.91:5000/books-service-tests
                 </code></pre>
             </section>
@@ -716,7 +716,7 @@ sudo docker rm -f books-service
 sudo docker run -d --name books-service-db \
   -p 27017:27017 \
   -v /data/books-service/db:/data/db \
-  dockerfile/mongodb
+  mongo
 
 sudo docker run -d --name books-service-blue \
   -p 9001:8080 \
@@ -736,7 +736,7 @@ sudo docker ps -a | grep books-service
 
 curl http://192.168.50.92:9002/api/v1/books | python -mjson.tool
 
-cat /data/nginx/sites-enabled/services.conf | grep proxy | grep books
+cat /data/nginx/sites-enabled/services.conf
 
 exit
                 </code></pre>
@@ -771,11 +771,11 @@ exit
                 <pre><code data-trim contenteditable>
 vagrant ssh prod
 
-cat /data/nginx/sites-enabled/services.conf | grep proxy_pass
+cat /data/nginx/sites-enabled/services.conf
 
 sudo sed -i 's/9001/9002/g' /data/nginx/sites-enabled/services.conf
 
-cat /data/nginx/sites-enabled/services.conf | grep proxy_pass
+cat /data/nginx/sites-enabled/services.conf
 
 sudo docker kill -s HUP nginx
 
@@ -831,7 +831,6 @@ etcdctl set /books-service/port 9002
 etcdctl get /books-service/color
 
 etcdctl get /books-service/port
-
                 </code></pre>
             </section>
             <section id="zdBlueGreenBetterSwitch">
@@ -849,7 +848,7 @@ sudo docker run -d --name books-service-blue \
 
 sudo sed -i 's/9002/9001/g' /data/nginx/sites-enabled/services.conf
 
-cat /data/nginx/sites-enabled/services.conf | grep proxy_pass
+cat /data/nginx/sites-enabled/services.conf
 
 sudo docker kill -s HUP nginx
 
@@ -893,6 +892,11 @@ vagrant ssh cd
 ansible-playbook /vagrant/ansible/books-service.yml \
   -i /vagrant/ansible/hosts/prod
                 </code></pre>
+            </section>
+            <section id="cdAnsibleExercise">
+                <h4>Continuous Deployment</h4>
+                <h2>Ansible Exercise</h2>
+                <!--TODO-->
             </section>
             <section id="cdJenkinsCode">
                 <h4>Continuous Deployment</h4>
