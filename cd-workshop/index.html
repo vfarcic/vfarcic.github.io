@@ -899,7 +899,7 @@ ansible-playbook /vagrant/ansible/books-service.yml \
             </section>
             <section id="cdAnsibleExercise01">
                 <h4>Continuous Deployment</h4>
-                <h2>Ansible Exercise</h2>
+                <h2>Ansible Exercise: Playbook</h2>
                 <h4>books-fe.yml</h4>
                 <ul>
                     <li>Create ~/vagrant/ansible/books-fe.yml</li>
@@ -909,15 +909,51 @@ ansible-playbook /vagrant/ansible/books-service.yml \
                     <li>Create <strong>~/vagrant/ansible/roles/books-fe/templates/main.yml</strong></li>
                 </ul>
             </section>
+            <section id="cdAnsibleExercise01Solution">
+                <h4>Continuous Deployment</h4>
+                <h2>Ansible Exercise: Playbook Solution</h2>
+                <h4>books-fe.yml</h4>
+                <pre><code contenteditable>
+- hosts: books-service
+  remote_user: vagrant
+  sudo: yes
+  roles:
+    - docker
+    - nginx
+    - etcd
+    - books-fe
+                </code></pre>
+            </section>
             <section id="cdAnsibleExercise02">
                 <h4>Continuous Deployment</h4>
-                <h2>Ansible Exercise</h2>
+                <h2>Ansible Exercise: Colors</h2>
                 <h4>roles/books-fe/tasks/main.yml</h4>
                 <ul>
                     <li>Retrieve colors from the server with <strong>9011</strong> as the default <strong>blue</strong> and <strong>9012</strong> as the default <strong>green</strong> ports</li>
                     <li>Set <strong>port</strong> fact/variable as the previously retrieved <strong>new_port</strong></li>
                     <li>Use debug to see the output (i.e. <strong>- debug: var=colors</strong>)</li>
                 </ul>
+            </section>
+            <section id="cdAnsibleExercise02Solution">
+                <h4>Continuous Deployment</h4>
+                <h2>Ansible Exercise: Colors</h2>
+                <h4>roles/books-fe/tasks/main.yml</h4>
+                <pre><code contenteditable>
+- name: Colors are retrieved
+  blue_green: name={{ container }} blue_port={{ blue_port }} green_port={{ green_port }}
+  register: colors
+  tags: [books-fe]
+
+- debug: var=colors
+  tags: [books-fe]
+
+- name: Set port
+  set_fact: port={{ colors.new_port }}
+  tags: [books-fe]
+
+- debug: var=port
+  tags: [books-fe]
+                </code></pre>
             </section>
             <!--TODO: Continue-->
             <section id="cdJenkinsCode">
