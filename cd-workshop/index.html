@@ -45,7 +45,7 @@
                 </small>
             </p>
         </section>
-        <section id="aboutMe">
+        <section id="aboutMe" data-background="#ff0000">
             <h2>Viktor Farcic</h2>
             <ul>
                 <img src="img/viktor.jpg" style="float: right; width: 25%; height: 25%;"/>
@@ -359,11 +359,12 @@ sudo docker ps -a
                 <h2>Run Docker Image with Mock Server Exercise</h2>
                 Run <strong>books-fe</strong> image using following parameters.
                 <ul>
-                    <li>Image is called <strong>books-fe</strong></li>
+                    <li>Use <strong>-d</strong> to detach from the process</li>
                     <li>Set env var <strong>MODE</strong> to <strong>mock_server</strong></li>
                     <li>Set env var <strong>MOCK_PORT</strong> to <strong>9002</strong></li>
                     <li>Expose port <strong>8080</strong> as <strong>9001</strong></li>
                     <li>Expose port <strong>9002</strong> as <strong>9002</strong></li>
+                    <li>Image is called <strong>books-fe</strong></li>
                 </ul>
                 <div>
                     Open <a href="http://192.168.50.91:9001">http://192.168.50.91:9001</a> to confirm and then kill the Docker process
@@ -497,8 +498,9 @@ curl http://localhost:9001/api/v1/books | python -mjson.tool
                 <h2>Application in Production Exercise</h2>
                 Run <strong>books-fe</strong> image using following parameters.
                 <ul>
-                    <li>Image is called <strong>books-fe</strong></li>
+                    <li>Use <strong>-d</strong> to detach from the process</li>
                     <li>Expose port <strong>8080</strong> as <strong>9011</strong></li>
+                    <li>Image is called <strong>192.168.50.91:5000/books-fe</strong></li>
                 </ul>
                 <div>
                     Open <a href="http://192.168.50.92:9011">http://192.168.50.92:9011</a> to confirm
@@ -550,7 +552,7 @@ curl -H 'Content-Type: application/json' \
                 <h2>nginx Exercise</h2>
                 <ul>
                     <li>Template is located in <strong>/vagrant/ansible/roles/nginx_with_books/templates/services.conf.j2</strong></li>
-                    <li>Modify template to proxy <strong>/</strong> to port <strong>9011</strong>.</li>
+                    <li>Modify template to proxy <strong>/</strong> to <strong>http://172.17.42.1:9011</strong>.</li>
                     <li>Rerun Ansible playbook <strong>/vagrant/ansible/nginx_with_books.yml</strong></li>
                 </ul>
                 <div>
@@ -592,16 +594,18 @@ sudo docker run -t --rm \
             <section id="containersPDITExercise">
                 <h4>Containers</h4>
                 <h2>Post Deployment Integration Tests Exercise</h2>
+                Run container with integration tests from the <strong>~/books-fe</strong> directory
                 <ul>
-                    <li>Modify template in nginx Ansible role to proxy <strong>/</strong> to port <strong>9011</strong>.</li>
-                    <li>Rerun Ansible playbook <strong>nginx_with_books.yml</strong></li>
+                    <small>
+                    <li>Use <strong>-t</strong> to see terminal output and <strong>--rm</strong> to remove when finished</li>
+                    <li>Share container volume <strong>/opt/bdd/data/stories</strong> with <strong>$PWD/stories</strong> on the host</li>
+                    <li>Container name is <strong>vfarcic/bdd-runner-phantomjs</strong></li>
+                    <li>Use <strong>-P url=http://192.168.50.92 -P widthHeight=1024,768 --story_path data/stories/integration/**</strong> as command</li>
+                    </small>
                 </ul>
-                <div>
-                    Open <a href="http://192.168.50.92">http://192.168.50.92</a> to confirm
-                </div>
                 <aside class="notes">
                     <pre><code>
-cd  ~/books-fe
+cd ~/books-fe
 
 sudo docker run -t --rm \
   -v $PWD/stories:/opt/bdd/data/stories \
@@ -893,11 +897,29 @@ ansible-playbook /vagrant/ansible/books-service.yml \
   -i /vagrant/ansible/hosts/prod
                 </code></pre>
             </section>
-            <section id="cdAnsibleExercise">
+            <section id="cdAnsibleExercise01">
                 <h4>Continuous Deployment</h4>
                 <h2>Ansible Exercise</h2>
-                <!--TODO-->
+                <h4>books-fe.yml</h4>
+                <ul>
+                    <li>Create ~/vagrant/ansible/books-fe.yml</li>
+                    <li>Include roles <strong>docker</strong>, <strong>nginx</strong>, <strong>etcd</strong> and <strong>books-fe</strong></li>
+                    <li>Create <strong>~/vagrant/ansible/roles/books-fe/defaults/main.yml</strong></li>
+                    <li>Create <strong>~/vagrant/ansible/roles/books-fe/tasks/main.yml</strong></li>
+                    <li>Create <strong>~/vagrant/ansible/roles/books-fe/templates/main.yml</strong></li>
+                </ul>
             </section>
+            <section id="cdAnsibleExercise02">
+                <h4>Continuous Deployment</h4>
+                <h2>Ansible Exercise</h2>
+                <h4>roles/books-fe/tasks/main.yml</h4>
+                <ul>
+                    <li>Retrieve colors from the server with <strong>9011</strong> as the default <strong>blue</strong> and <strong>9012</strong> as the default <strong>green</strong> ports</li>
+                    <li>Set <strong>port</strong> fact/variable as the previously retrieved <strong>new_port</strong></li>
+                    <li>Use debug to see the output (i.e. <strong>- debug: var=colors</strong>)</li>
+                </ul>
+            </section>
+            <!--TODO: Continue-->
             <section id="cdJenkinsCode">
                 <h4>Continuous Deployment</h4>
                 <h2>Jenkins</h2>
