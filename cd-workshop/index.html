@@ -143,6 +143,7 @@ sudo docker ps -a
 exit
 
 vagrant halt dev
+
                 </code></pre>
             </section>
             <section id="envCdCode">
@@ -173,6 +174,7 @@ vagrant ssh cd
 sudo docker ps -a
 
 exit
+
                 </code></pre>
                     Open <a href="http://localhost:8080/">http://localhost:8080/</a>
             </section>
@@ -201,6 +203,7 @@ vagrant ssh cd
 ssh-keygen # Enter to all questions
 
 ssh-copy-id 192.168.50.92 # Pass: vagrant
+
                 </code></pre>
             </section>
             <section id="envBenefits">
@@ -289,6 +292,7 @@ sudo docker run -t --rm \
   vfarcic/books-service-tests
 
 ll target/scala-2.10/books-service-assembly-1.0.jar
+
                 </code></pre>
             </section>
             <section id="containersBuildExercise">
@@ -302,12 +306,14 @@ git clone https://github.com/vfarcic/books-fe.git
 cd books-fe
 
 clear && cat create_docker.md
+
                 </code></pre>
                 <a href="https://github.com/vfarcic/books-fe/blob/master/create_docker.md">Instructions</a>
                 <aside class="notes">
                     <a href="https://github.com/vfarcic/books-fe/blob/master/Dockerfile">Dockerfile</a>
                     <pre><code>
 sudo docker build -t books-fe .
+
                     </code></pre>
                 </aside>
             </section>
@@ -352,6 +358,7 @@ curl http://localhost:9001/api/v1/books/_id/1 | python -mjson.tool
 sudo docker rm -f books-service
 
 sudo docker ps -a
+
                 </code></pre>
             </section>
             <section id="containersRunExercise">
@@ -378,6 +385,7 @@ sudo docker run -d \
   -p 9001:8080 \
   -p 9002:9002 \
   books-fe
+
                     </code></pre>
                 </aside>
             </section>
@@ -405,6 +413,7 @@ sudo docker run -t --rm \
   --story_path data/stories/functional/**
 
 sudo docker rm -f books-fe-mock
+
                 </code></pre>
             </section>
             <section id="containersRegistryCode">
@@ -434,6 +443,7 @@ sudo docker push \
   192.168.50.91:5000/books-service
 
 curl http://localhost:5000/v1/search?q=books-service | python -mjson.tool
+
                 </code></pre>
             </section>
             <section id="containersRegistryExercise">
@@ -450,6 +460,7 @@ sudo docker push \
 
 curl http://localhost:5000/v1/search?q=books-fe \
   | python -mjson.tool
+
                     </code></pre>
                 </aside>
             </section>
@@ -491,6 +502,7 @@ curl -H 'Content-Type: application/json' -X PUT -d \
   http://localhost:9001/api/v1/books | python -mjson.tool
 
 curl http://localhost:9001/api/v1/books | python -mjson.tool
+
                 </code></pre>
             </section>
             <section id="containersAppProductionExercise">
@@ -513,6 +525,7 @@ sudo docker run \
   192.168.50.91:5000/books-fe
 
 sudo docker ps -a
+
                     </code></pre>
                 </aside>
             </section>
@@ -545,6 +558,7 @@ ansible-playbook /vagrant/ansible/nginx_with_books.yml \
 
 curl -H 'Content-Type: application/json' \
   http://192.168.50.92/api/v1/books | python -mjson.tool
+
                 </code></pre>
             </section>
             <section id="containersNginxExercise">
@@ -589,6 +603,7 @@ sudo docker run -t --rm \
   -e "DOMAIN=http://192.168.50.92" \
   -v /data/.ivy2:/root/.ivy2/cache \
   192.168.50.91:5000/books-service-tests
+
                 </code></pre>
             </section>
             <section id="containersPDITExercise">
@@ -613,6 +628,7 @@ sudo docker run -t --rm \
   -P url=http://192.168.50.92 \
   -P widthHeight=1024,768 \
   --story_path data/stories/integration/**
+
                     </code></pre>
                 </aside>
             </section>
@@ -653,6 +669,7 @@ sudo docker run -t --rm \
   192.168.50.91:5000/books-stress
 
 exit
+
                 </code></pre>
             </section>
         </section>
@@ -704,6 +721,7 @@ sudo docker run -d --name books-service \
 curl http://192.168.50.92/api/v1/books | python -mjson.tool
 
 sudo docker rm -f books-service
+
                 </code></pre>
             </section>
             <section id="zdBlueGreenParallelCode">
@@ -743,6 +761,7 @@ curl http://192.168.50.92:9002/api/v1/books | python -mjson.tool
 cat /data/nginx/sites-enabled/services.conf
 
 exit
+
                 </code></pre>
             </section>
             <section id="zdBlueGreenTests">
@@ -788,6 +807,7 @@ sudo docker stop books-service-blue
 sudo docker ps -a | grep books-service
 
 exit
+
                 </code></pre>
             </section>
             <section id="zdBlueGreenFinalTests">
@@ -813,6 +833,7 @@ sudo docker ps -a | grep books-service
 curl http://192.168.50.92/api/v1/books | python -mjson.tool
 
 exit
+
                 </code></pre>
             </section>
             <section id="zdBlueGreenEtcd">
@@ -835,6 +856,7 @@ etcdctl set /books-service/port 9002
 etcdctl get /books-service/color
 
 etcdctl get /books-service/port
+
                 </code></pre>
             </section>
             <section id="zdBlueGreenBetterSwitch">
@@ -870,6 +892,7 @@ etcdctl set /books-service/color blue
 etcdctl set /books-service/port 9001
 
 exit
+
                 </code></pre>
             </section>
         </section>
@@ -895,6 +918,7 @@ vagrant ssh cd
 
 ansible-playbook /vagrant/ansible/books-service.yml \
   -i /vagrant/ansible/hosts/prod
+
                 </code></pre>
             </section>
             <section id="cdAnsibleExercise01">
@@ -922,19 +946,35 @@ ansible-playbook /vagrant/ansible/books-service.yml \
     - nginx
     - etcd
     - books-fe
+
                 </code></pre>
             </section>
             <section id="cdAnsibleExercise02">
                 <h4>Continuous Deployment</h4>
                 <h2>Ansible Exercise: Colors</h2>
-                <h4>roles/books-fe/tasks/main.yml</h4>
                 <ul>
                     <li>Retrieve colors from the server with <strong>9011</strong> as the default <strong>blue</strong> and <strong>9012</strong> as the default <strong>green</strong> ports</li>
                     <li>Set <strong>port</strong> fact/variable as the previously retrieved <strong>new_port</strong></li>
                     <li>Use debug to see the output (i.e. <strong>- debug: var=colors</strong>)</li>
                 </ul>
+                <pre><code contenteditable>
+ansible-playbook /vagrant/ansible/books-fe.yml \
+  -i /vagrant/ansible/hosts/prod --tags "books-fe"
+
+                </code></pre>
             </section>
-            <section id="cdAnsibleExercise02Solution">
+            <section id="cdAnsibleExercise0201Solution">
+                <h4>Continuous Deployment</h4>
+                <h2>Ansible Exercise: Colors</h2>
+                <h4>roles/books-fe/defaults/main.yml</h4>
+                <pre><code contenteditable>
+container: books-fe
+blue_port: 9011
+green_port: 9012
+
+                </code></pre>
+            </section>
+            <section id="cdAnsibleExercise0202Solution">
                 <h4>Continuous Deployment</h4>
                 <h2>Ansible Exercise: Colors</h2>
                 <h4>roles/books-fe/tasks/main.yml</h4>
@@ -953,6 +993,191 @@ ansible-playbook /vagrant/ansible/books-service.yml \
 
 - debug: var=port
   tags: [books-fe]
+
+                </code></pre>
+            </section>
+            <section id="cdAnsibleExercise03">
+                <h4>Continuous Deployment</h4>
+                <h2>Ansible Exercise: Run Container</h2>
+                <ul>
+                    <li>Pull the latest <strong>books-fe</strong> container from the registry <strong>192.168.50.91:5000</strong></li>
+                    <li>Remove the Docker process with the same name as the new color</li>
+                    <li>Run the container as the new color</li>
+                </ul>
+            </section>
+            <section id="cdAnsibleExercise03Solution">
+                <h4>Continuous Deployment</h4>
+                <h2>Ansible Exercise: Run Container</h2>
+                <h4>roles/books-fe/tasks/main.yml</h4>
+                <pre><code contenteditable>
+- name: Latest container is pulled
+  shell: docker pull {{ registry }}/{{ container }}
+  tags: [books-fe]
+
+- name: Container is absent
+  docker:
+    image: '{{ registry }}/{{ container }}'
+    name: '{{ container }}-{{ colors.new_color }}'
+    state: absent
+  tags: [books-fe]
+
+- name: New container is running
+  docker:
+    name: '{{ container }}-{{ colors.new_color }}'
+    image: '{{ registry }}/{{ container }}'
+    ports: '{{ colors.new_port }}:8080'
+    state: running
+  tags: [books-fe]
+
+                </code></pre>
+            </section>
+            <section id="cdAnsibleExercise04">
+                <h4>Continuous Deployment</h4>
+                <h2>Ansible Exercise: Update nginx configuration</h2>
+                <ul>
+                    <li>Create the nginx template</li>
+                    <li>Deploy the template to the server</li>
+                    <li>Restart nginx container if template changed</li>
+                </ul>
+            </section>
+            <section id="cdAnsibleExercise0401Solution">
+                <h4>Continuous Deployment</h4>
+                <h2>Ansible Exercise: Update nginx configuration</h2>
+                <h4>roles/books-fe/templates/books-fe.conf</h4>
+                <pre><code contenteditable>
+  location / {
+    proxy_pass http://172.17.42.1:{{ port }}/;
+  }
+
+                </code></pre>
+            </section>
+            <section id="cdAnsibleExercise0402Solution">
+                <h4>Continuous Deployment</h4>
+                <h2>Ansible Exercise: Update nginx configuration</h2>
+                <h4>roles/books-fe/tasks/main.yml</h4>
+                <pre><code contenteditable>
+- name: nginx config files are present
+  template: src={{ container }}.conf.j2 dest=/data/nginx/includes/{{ container }}.conf
+  register: nginx_result
+  tags: [books-fe]
+
+- debug: var=nginx_result
+  tags: [books-fe]
+
+- name: nginx container is restarted
+  shell: docker kill -s HUP nginx
+  when: nginx_result|changed
+  tags: [books-fe]
+
+                </code></pre>
+            </section>
+            <section id="cdAnsibleExercise05">
+                <h4>Continuous Deployment</h4>
+                <h2>Ansible Exercise: Run Integration Tests</h2>
+                <ul>
+                    <li>Remove tests container</li>
+                    <li>Run integration tests in local</li>
+                </ul>
+            </section>
+            <section id="cdAnsibleExercise05Solution">
+                <h4>Continuous Deployment</h4>
+                <h2>Ansible Exercise: Run Integration Tests</h2>
+                <h4>roles/books-fe/tasks/main.yml</h4>
+                <pre><code contenteditable>
+- name: Integration tests are absent
+  docker:
+    name: '{{ container }}-tests'
+    image: '{{ registry }}/{{ container }}-tests'
+    state: absent
+  delegate_to: 127.0.0.1
+  tags: [books-fe]
+
+- name: Integration tests are run
+  command: >
+    sudo docker run -t --name {{ container }}-tests
+    -v /home/vagrant/books-fe/stories:/opt/bdd/data/stories
+    vfarcic/bdd-runner-phantomjs
+    -P url=http://192.168.50.92
+    -P widthHeight=1024,768
+    --story_path data/stories/integration/**
+  delegate_to: 127.0.0.1
+  register: test_results
+  ignore_errors: yes
+  tags: [books-fe]
+
+- debug: var=test_results
+  tags: [books-fe]
+
+                </code></pre>
+            </section>
+            <section id="cdAnsibleExercise06">
+                <h4>Continuous Deployment</h4>
+                <h2>Ansible Exercise: Revert if Tests Failed</h2>
+                <ul>
+                    <li>Revert nginx configuration</li>
+                    <li>Fail deployment</li>
+                </ul>
+            </section>
+            <section id="cdAnsibleExercise06Solution">
+                <h4>Continuous Deployment</h4>
+                <h2>Ansible Exercise: Revert if Tests Failed</h2>
+                <h4>roles/books-fe/tasks/main.yml</h4>
+                <pre><code contenteditable>
+- name: Revert colors
+  set_fact: port={{ colors.current_port }}
+  when: test_results|failed
+  tags: [books-fe]
+
+- debug: var=port
+  tags: [books-fe]
+
+- name: nginx config files are present
+  template: src={{ container }}.conf.j2 dest=/data/nginx/includes/{{ container }}.conf
+  when: test_results|failed
+  tags: [books-fe]
+
+- name: nginx container is restarted
+  shell: docker kill -s HUP nginx
+  when: test_results|failed
+  tags: [books-fe]
+
+- name: fail deployment
+  fail: msg="Deployment failed"
+  when: test_results|failed
+  tags: [books-fe]
+
+                </code></pre>
+            </section>
+            <section id="cdAnsibleExercise07">
+                <h4>Continuous Deployment</h4>
+                <h2>Ansible Exercise: Cleanup if Tests Were Succesfull</h2>
+                <ul>
+                    <li>Update colors</li>
+                    <li>Stop the old container</li>
+                </ul>
+            </section>
+            <section id="cdAnsibleExercise07Solution">
+                <h4>Continuous Deployment</h4>
+                <h2>Ansible Exercise: Cleanup if Tests Were Succesfull</h2>
+                <h4>roles/books-fe/tasks/main.yml</h4>
+                <pre><code contenteditable>
+- name: Colors are changed
+  blue_green: name={{ container }} blue_port={{ blue_port }} green_port={{ green_port }} state=changed
+  register: colors
+  when: test_results|success
+  tags: [books-fe]
+
+- debug: var=colors
+  tags: [books-fe]
+
+- name: Container is stopped
+  docker:
+    image: '{{ registry }}/{{ container }}'
+    name: '{{ container }}-{{ colors.old_color }}'
+    state: stopped
+  when: test_results|success
+  tags: [books-fe]
+
                 </code></pre>
             </section>
             <!--TODO: Continue-->
