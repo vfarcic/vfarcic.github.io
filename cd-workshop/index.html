@@ -11,15 +11,21 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
     <link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+    <link rel="stylesheet" href="css/theme/black.css" id="theme">
 
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
 
-    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <!-- Printing and PDF exports -->
     <script>
-        document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
     </script>
 
     <!--[if lt IE 9]>
@@ -45,7 +51,7 @@
                 </small>
             </p>
         </section>
-        <section id="aboutMe" data-background="#ff0000">
+        <section id="aboutMe">
             <h2>Viktor Farcic</h2>
             <ul>
                 <img src="img/viktor.jpg" style="float: right; width: 25%; height: 25%;"/>
@@ -295,7 +301,7 @@ ll target/scala-2.10/books-service-assembly-1.0.jar
 
                 </code></pre>
             </section>
-            <section id="containersBuildExercise">
+            <section id="containersbuildexercise" data-background="gray">
                 <h4>Containers</h4>
                 <h2>Create Docker Image Exercise</h2>
                 <pre><code data-trim contenteditable>
@@ -361,7 +367,7 @@ sudo docker ps -a
 
                 </code></pre>
             </section>
-            <section id="containersRunExercise">
+            <section id="containersrunexercise" data-background="gray">
                 <h4>Containers</h4>
                 <h2>Run Docker Image with Mock Server Exercise</h2>
                 Run <strong>books-fe</strong> image using following parameters.
@@ -446,7 +452,7 @@ curl http://localhost:5000/v1/search?q=books-service | python -mjson.tool
 
                 </code></pre>
             </section>
-            <section id="containersRegistryExercise">
+            <section id="containersregistryexercise" data-background="gray">
                 <h4>Containers</h4>
                 <h2>Push to Registry Exercise</h2>
                 Push <strong>books-fe</strong> image to the registry.
@@ -505,7 +511,7 @@ curl http://localhost:9001/api/v1/books | python -mjson.tool
 
                 </code></pre>
             </section>
-            <section id="containersAppProductionExercise">
+            <section id="containersappproductionexercise" data-background="gray">
                 <h4>Containers</h4>
                 <h2>Application in Production Exercise</h2>
                 Run <strong>books-fe</strong> image using following parameters.
@@ -561,7 +567,7 @@ curl -H 'Content-Type: application/json' \
 
                 </code></pre>
             </section>
-            <section id="containersNginxExercise">
+            <section id="containersnginxexercise" data-background="gray">
                 <h4>Containers</h4>
                 <h2>nginx Exercise</h2>
                 <ul>
@@ -606,7 +612,7 @@ sudo docker run -t --rm \
 
                 </code></pre>
             </section>
-            <section id="containersPDITExercise">
+            <section id="containerspditexercise" data-background="gray">
                 <h4>Containers</h4>
                 <h2>Post Deployment Integration Tests Exercise</h2>
                 Run container with integration tests from the <strong>~/books-fe</strong> directory
@@ -641,7 +647,6 @@ sudo docker run -t --rm \
                     <li><a href="https://github.com/vfarcic/books-stress/blob/master/Dockerfile">Dockerfile</a></li>
                 </ul>
             </section>
-            <!--TODO: Continue Everis-->
             <!--TODO: Add UI stress tests-->
             <section id="containersPDSTComm">
                 <h4>Containers</h4>
@@ -921,9 +926,10 @@ ansible-playbook /vagrant/ansible/books-service.yml \
 
                 </code></pre>
             </section>
-            <section id="cdAnsibleExercise01">
+            <section id="cd-ansible-exercise-01" data-background="gray">
                 <h4>Continuous Deployment</h4>
-                <h2>Ansible Exercise: Playbook</h2>
+                <h3>Ansible Exercise</h3>
+                <h2>Playbook</h2>
                 <h4>books-fe.yml</h4>
                 <ul>
                     <li>Create ~/vagrant/ansible/books-fe.yml</li>
@@ -933,9 +939,10 @@ ansible-playbook /vagrant/ansible/books-service.yml \
                     <li>Create <strong>~/vagrant/ansible/roles/books-fe/templates/main.yml</strong></li>
                 </ul>
             </section>
-            <section id="cdAnsibleExercise01Solution">
+            <section id="cd-ansible-exercise-01-solution" data-background="lightgreen">
                 <h4>Continuous Deployment</h4>
-                <h2>Ansible Exercise: Playbook Solution</h2>
+                <h3>Ansible Exercise</h3>
+                <h2>Playbook Solution</h2>
                 <h4>books-fe.yml</h4>
                 <pre><code contenteditable>
 - hosts: books-service
@@ -949,9 +956,10 @@ ansible-playbook /vagrant/ansible/books-service.yml \
 
                 </code></pre>
             </section>
-            <section id="cdAnsibleExercise02">
+            <section id="cd-ansible-exercise-02" data-background="gray">
                 <h4>Continuous Deployment</h4>
-                <h2>Ansible Exercise: Colors</h2>
+                <h3>Ansible Exercise</h3>
+                <h2>Colors</h2>
                 <ul>
                     <li>Retrieve colors from the server with <strong>9011</strong> as the default <strong>blue</strong> and <strong>9012</strong> as the default <strong>green</strong> ports</li>
                     <li>Set <strong>port</strong> fact/variable as the previously retrieved <strong>new_port</strong></li>
@@ -963,9 +971,10 @@ ansible-playbook /vagrant/ansible/books-fe.yml \
 
                 </code></pre>
             </section>
-            <section id="cdAnsibleExercise0201Solution">
+            <section id="cd-ansible-exercise-02-01-solution" data-background="lightgreen">
                 <h4>Continuous Deployment</h4>
-                <h2>Ansible Exercise: Colors</h2>
+                <h3>Ansible Exercise</h3>
+                <h2>Colors Solution</h2>
                 <h4>roles/books-fe/defaults/main.yml</h4>
                 <pre><code contenteditable>
 container: books-fe
@@ -974,13 +983,17 @@ green_port: 9012
 
                 </code></pre>
             </section>
-            <section id="cdAnsibleExercise0202Solution">
+            <section id="cd-ansible-exercise-02-02-solution" data-background="lightgreen">
                 <h4>Continuous Deployment</h4>
-                <h2>Ansible Exercise: Colors</h2>
+                <h3>Ansible Exercise</h3>
+                <h2>Colors Solution</h2>
                 <h4>roles/books-fe/tasks/main.yml</h4>
                 <pre><code contenteditable>
 - name: Colors are retrieved
-  blue_green: name={{ container }} blue_port={{ blue_port }} green_port={{ green_port }}
+  blue_green:
+    name: {{ container }}
+    blue_port: {{ blue_port }}
+    green_port: {{ green_port }}
   register: colors
   tags: [books-fe]
 
@@ -996,18 +1009,19 @@ green_port: 9012
 
                 </code></pre>
             </section>
-            <section id="cdAnsibleExercise03">
+            <section id="cd-ansible-exercise-03" data-background="gray">
                 <h4>Continuous Deployment</h4>
-                <h2>Ansible Exercise: Run Container</h2>
+                <h3>Ansible Exercise</h3>
+                <h2>Run Container</h2>
                 <ul>
                     <li>Pull the latest <strong>books-fe</strong> container from the registry <strong>192.168.50.91:5000</strong></li>
                     <li>Remove the Docker process with the same name as the new color</li>
                     <li>Run the container as the new color</li>
                 </ul>
             </section>
-            <section id="cdAnsibleExercise03Solution">
-                <h4>Continuous Deployment</h4>
-                <h2>Ansible Exercise: Run Container</h2>
+            <section id="cd-ansible-exercise-03-solution" data-background="lightgreen">
+                <h4>Continuous Deployment: Ansible Exercise</h4>
+                <h2>Run Container Solution</h2>
                 <h4>roles/books-fe/tasks/main.yml</h4>
                 <pre><code contenteditable>
 - name: Latest container is pulled
@@ -1031,18 +1045,18 @@ green_port: 9012
 
                 </code></pre>
             </section>
-            <section id="cdAnsibleExercise04">
-                <h4>Continuous Deployment</h4>
-                <h2>Ansible Exercise: Update nginx configuration</h2>
+            <section id="cd-ansible-exercise-04" data-background="gray">
+                <h4>Continuous Deployment: Ansible Exercise</h4>
+                <h2>Update nginx configuration</h2>
                 <ul>
                     <li>Create the nginx template</li>
                     <li>Deploy the template to the server</li>
                     <li>Restart nginx container if template changed</li>
                 </ul>
             </section>
-            <section id="cdAnsibleExercise0401Solution">
-                <h4>Continuous Deployment</h4>
-                <h2>Ansible Exercise: Update nginx configuration</h2>
+            <section id="cd-ansible-exercise-04-01-solution" data-background="lightgreen">
+                <h4>Continuous Deployment: Ansible Exercise</h4>
+                <h2>Update nginx configuration solution</h2>
                 <h4>roles/books-fe/templates/books-fe.conf</h4>
                 <pre><code contenteditable>
   location / {
@@ -1051,13 +1065,15 @@ green_port: 9012
 
                 </code></pre>
             </section>
-            <section id="cdAnsibleExercise0402Solution">
-                <h4>Continuous Deployment</h4>
-                <h2>Ansible Exercise: Update nginx configuration</h2>
+            <section id="cd-ansible-exercise-04-02-solution" data-background="lightgreen">
+                <h4>Continuous Deployment: Ansible Exercise</h4>
+                <h2>Update nginx configuration solution</h2>
                 <h4>roles/books-fe/tasks/main.yml</h4>
                 <pre><code contenteditable>
 - name: nginx config files are present
-  template: src={{ container }}.conf.j2 dest=/data/nginx/includes/{{ container }}.conf
+  template:
+    src: {{ container }}.conf.j2
+    dest: /data/nginx/includes/{{ container }}.conf
   register: nginx_result
   tags: [books-fe]
 
@@ -1071,17 +1087,17 @@ green_port: 9012
 
                 </code></pre>
             </section>
-            <section id="cdAnsibleExercise05">
-                <h4>Continuous Deployment</h4>
-                <h2>Ansible Exercise: Run Integration Tests</h2>
+            <section id="cd-ansible-exercise-05" data-background="gray">
+                <h4>Continuous Deployment: Ansible Exercise</h4>
+                <h2>Run Integration Tests</h2>
                 <ul>
                     <li>Remove tests container</li>
                     <li>Run integration tests in local</li>
                 </ul>
             </section>
-            <section id="cdAnsibleExercise05Solution">
-                <h4>Continuous Deployment</h4>
-                <h2>Ansible Exercise: Run Integration Tests</h2>
+            <section id="cd-ansible-exercise-05-solution" data-background="lightgreen">
+                <h4>Continuous Deployment: Ansible Exercise</h4>
+                <h2>Run Integration Tests Solution</h2>
                 <h4>roles/books-fe/tasks/main.yml</h4>
                 <pre><code contenteditable>
 - name: Integration tests are absent
@@ -1110,17 +1126,17 @@ green_port: 9012
 
                 </code></pre>
             </section>
-            <section id="cdAnsibleExercise06">
-                <h4>Continuous Deployment</h4>
-                <h2>Ansible Exercise: Revert if Tests Failed</h2>
+            <section id="cd-ansible-exercise-06" data-background="gray">
+                <h4>Continuous Deployment: Ansible Exercise</h4>
+                <h2>Revert if Tests Failed</h2>
                 <ul>
                     <li>Revert nginx configuration</li>
                     <li>Fail deployment</li>
                 </ul>
             </section>
-            <section id="cdAnsibleExercise06Solution">
-                <h4>Continuous Deployment</h4>
-                <h2>Ansible Exercise: Revert if Tests Failed</h2>
+            <section id="cd-ansible-exercise-06-solution" data-background="lightgreen">
+                <h4>Continuous Deployment: Ansible Exercise</h4>
+                <h2>Revert if Tests Failed Solution</h2>
                 <h4>roles/books-fe/tasks/main.yml</h4>
                 <pre><code contenteditable>
 - name: Revert colors
@@ -1132,7 +1148,9 @@ green_port: 9012
   tags: [books-fe]
 
 - name: nginx config files are present
-  template: src={{ container }}.conf.j2 dest=/data/nginx/includes/{{ container }}.conf
+  template:
+    src: {{ container }}.conf.j2
+    dest: /data/nginx/includes/{{ container }}.conf
   when: test_results|failed
   tags: [books-fe]
 
@@ -1148,21 +1166,25 @@ green_port: 9012
 
                 </code></pre>
             </section>
-            <section id="cdAnsibleExercise07">
-                <h4>Continuous Deployment</h4>
-                <h2>Ansible Exercise: Cleanup if Tests Were Succesfull</h2>
+            <section id="cd-ansible-exercise-07" data-background="gray">
+                <h4>Continuous Deployment: Ansible Exercise</h4>
+                <h2>Cleanup if Tests Were Successful</h2>
                 <ul>
                     <li>Update colors</li>
                     <li>Stop the old container</li>
                 </ul>
             </section>
-            <section id="cdAnsibleExercise07Solution">
-                <h4>Continuous Deployment</h4>
-                <h2>Ansible Exercise: Cleanup if Tests Were Succesfull</h2>
+            <section id="cd-ansible-exercise-07-solution" data-background="lightgreen">
+                <h4>Continuous Deployment: Ansible Exercise</h4>
+                <h2>Cleanup if Tests Were Successful Solution</h2>
                 <h4>roles/books-fe/tasks/main.yml</h4>
                 <pre><code contenteditable>
 - name: Colors are changed
-  blue_green: name={{ container }} blue_port={{ blue_port }} green_port={{ green_port }} state=changed
+  blue_green:
+    name: {{ container }}
+    blue_port: {{ blue_port }}
+    green_port: {{ green_port }}
+    state: changed
   register: colors
   when: test_results|success
   tags: [books-fe]
@@ -1180,7 +1202,6 @@ green_port: 9012
 
                 </code></pre>
             </section>
-            <!--TODO: Continue-->
             <section id="cdJenkinsCode">
                 <h4>Continuous Deployment</h4>
                 <h2>Jenkins</h2>
@@ -1242,8 +1263,8 @@ ansible-playbook /vagrant/ansible/cd.yml -c local
             </section>
         </section>
         <section>
-            <section id="theEnd">
-                <img src="img/the_end.jpg" style="width: 50%; height: 50%; float: right;">
+            <section id="the-end">
+                <img src="img/the_end.jpg" style="width: 40%; height: 40%; float: right;">
                 <h1>Viktor Farcic</h1>
                 <h3><a href="https://twitter.com/vfarcic">@vfarcic</a></h3>
                 <h4><a href="http://technologyconversations.com">technologyconversations.com</a></h4>
@@ -1253,7 +1274,7 @@ ansible-playbook /vagrant/ansible/cd.yml -c local
 </div>
 
 <script src="lib/js/head.min.js"></script>
-<script src="js/reveal.min.js"></script>
+<script src="js/reveal.js"></script>
 
 
 <script>
