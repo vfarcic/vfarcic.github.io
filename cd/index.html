@@ -11,16 +11,22 @@
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+        <link rel="stylesheet" href="css/theme/black.css" id="theme">
 
 		<!-- For syntax highlighting -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
 
-		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
-		<script>
-			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-		</script>
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
 
 		<!--[if lt IE 9]>
 		<script src="lib/js/html5shiv.js"></script>
@@ -394,7 +400,7 @@
                 </section>
                 <section>
                     <section id="theEnd">
-                        <img src="img/the_end.jpg" style="width: 50%; height: 50%; float: right;">
+                        <img src="img/the_end.jpg" style="width: 40%; height: 40%; float: right;">
                         <h1>Viktor Farcic</h1>
                         <h3><a href="https://twitter.com/vfarcic">@vfarcic</a></h3>
                         <h4><a href="http://technologyconversations.com">technologyconversations.com</a></h4>
@@ -404,7 +410,7 @@
 		</div>
 
 		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.min.js"></script>
+		<script src="js/reveal.js"></script>
 
 
 		<script>
@@ -434,4 +440,3 @@
 
 	</body>
 </html>
-
