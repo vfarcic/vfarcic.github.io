@@ -49,6 +49,10 @@ Can we automatically scale (and de-scale) services depending on traffic and serv
 
 This presentation will try to answer those and other questions. It is the result of different proofs of concept done as experiments as well as successful implementations of large scalable systems.
 
+Speed: microservices
+Reliability: tests
+Consistency: immutable containers
+
 Learning Outcomes
 =================
 
