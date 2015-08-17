@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Microservices</title>
+		<title>Microservices Lifecycle</title>
 
 		<meta name="author" content="Viktor Farcic">
 
@@ -40,7 +40,7 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section id="cover">
-					<h1>Microservices</h1>
+					<h1>Microservices Lifecycle</h1>
 					<p>
 						<small>
 							Created by <a href="http://technologyconversations.com/about/">Viktor Farcic</a>
@@ -52,13 +52,77 @@
 					<h2>Viktor Farcic</h2>
 					<ul>
 						<img src="img/viktor.jpg" style="float: right; width: 25%; height: 25%;"/>
-						<li>Software Architect at <a href="http://defie.co">Defie</a></li>
+						<li>Software Architect at <a href="http://everis.com">Everis</a></li>
 						<li>Never developed in Fortran</li>
-						<li>Passionate about TDD, BDD, microservices and continuous delivery</li>
+						<li>Passionate about microservices, continuous delivery, TDD, and BDD</li>
 						<li>Blogger in <a href="http://technologyconversations.com/">Technology Conversations</a> and speaker at conferences</li>
 						<li>Java Test-Driven Development: Mastering TDD Through Katas</li>
 					</ul>
 				</section>
+				<section id="failures">
+					<h2>History of the Failed Initiatives</h2>
+					<h4>Continuous Integration (CI), Delivery and Deployment (CD)</h4>
+					<ul>
+						<li class="fragment">Integration phase = Dante's Infierno</li>
+						<li class="fragment">eXtreme programming (XP)</li>
+						<li class="fragment">Architecture</li>
+						<li class="fragment">Testing</li>
+						<li class="fragment">Orchestration</li>
+						<li class="fragment">Deployments</li>
+					</ul>
+				</section>
+				</section>
+				<section>
+					<section id="musketeers">
+						<h2>Three Musketeers</h2>
+						<ul>
+							<li class="fragment">Continuous deployment</li>
+							<li class="fragment">Microservices</li>
+							<li class="fragment">Containers</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<section id="ci-cd">
+						<h2>Continuous deployment</h2>
+						<ul>
+							<li class="fragment"><strong>Continuous integration</strong>
+								<div>
+									<label class="fragment">push/clone,</label>
+									<label class="fragment">analysis,</label>
+									<label class="fragment">pre-deployment testing,</label>
+									<label class="fragment">packaging/deployment,</label>
+									<label class="fragment">post-deployment testing</label>
+								</div>
+							</li>
+							<li class="fragment"><strong>Continuous delivery</strong>
+								<div>
+									<label class="fragment">every commit <label class="fragment grow highlight-current-green">can be</label> deployed to production</label>
+								</div>
+							</li>
+							<li class="fragment"><strong>Continuous deployment</strong>
+								<div>
+									<label class="fragment">every commit <label class="fragment grow highlight-current-green">is</label> deployed to production</label>
+								</div>
+							</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<section id="containers">
+						<h2>Containers</h2>
+						<blockquote>Shipping container is an object for holding or transporting something</blockquote>
+						<ul>
+							<li class="fragment">Isolated</li>
+							<li class="fragment">Immutable</li>
+							<li class="fragment">Reliable</li>
+							<li class="fragment">Self-sufficient</li>
+							<li class="fragment">Scalable</li>
+						</ul>
+					</section>
+				</section>
+				TODO: Continue from chapter 4
+				TODO: Reorder
 				<section id="history">
 					<h2>Things in Common</h2>
 					<ul>
