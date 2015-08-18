@@ -71,71 +71,53 @@
 						<li class="fragment">Deployments</li>
 					</ul>
 				</section>
-				</section>
-				<section>
-					<section id="musketeers">
-						<h2>Three Musketeers</h2>
-						<ul>
-							<li class="fragment">Continuous deployment</li>
-							<li class="fragment">Microservices</li>
-							<li class="fragment">Containers</li>
-						</ul>
-					</section>
-				</section>
-				<section>
-					<section id="ci-cd">
-						<h2>Continuous deployment</h2>
-						<ul>
-							<li class="fragment"><strong>Continuous integration</strong>
-								<div>
-									<label class="fragment">push/clone,</label>
-									<label class="fragment">analysis,</label>
-									<label class="fragment">pre-deployment testing,</label>
-									<label class="fragment">packaging/deployment,</label>
-									<label class="fragment">post-deployment testing</label>
-								</div>
-							</li>
-							<li class="fragment"><strong>Continuous delivery</strong>
-								<div>
-									<label class="fragment">every commit <label class="fragment grow highlight-current-green">can be</label> deployed to production</label>
-								</div>
-							</li>
-							<li class="fragment"><strong>Continuous deployment</strong>
-								<div>
-									<label class="fragment">every commit <label class="fragment grow highlight-current-green">is</label> deployed to production</label>
-								</div>
-							</li>
-						</ul>
-					</section>
-				</section>
-				<section>
-					<section id="containers">
-						<h2>Containers</h2>
-						<blockquote>Shipping container is an object for holding or transporting something</blockquote>
-						<ul>
-							<li class="fragment">Isolated</li>
-							<li class="fragment">Immutable</li>
-							<li class="fragment">Reliable</li>
-							<li class="fragment">Self-sufficient</li>
-							<li class="fragment">Scalable</li>
-						</ul>
-					</section>
-				</section>
-				TODO: Continue from chapter 4
-				TODO: Reorder
 				<section id="history">
 					<h2>Things in Common</h2>
 					<ul>
-						<li class="fragment">Domain-Driven Design</li>
-						<li class="fragment">Continuous Delivery</li>
-						<li class="fragment">On-demand virtualization</li>
+						<li class="fragment">Domain-driven design</li>
+						<li class="fragment">Continuous delivery</li>
 						<li class="fragment">Containers</li>
 						<li class="fragment">Small autonomous teams</li>
 						<li class="fragment">Scalable systems</li>
 					</ul>
 				</section>
-				<section id="monolithic-servers" data-background="img/monolith.jpg">
-					<h1>Monolithic servers</h1>
+				<section id="ci-cd">
+					<h2>Continuous deployment</h2>
+					<ul>
+						<li class="fragment"><strong>Continuous integration</strong>
+							<div>
+								<label class="fragment">push/clone,</label>
+								<label class="fragment">analysis,</label>
+								<label class="fragment">pre-deployment testing,</label>
+								<label class="fragment">packaging/deployment,</label>
+								<label class="fragment">post-deployment testing</label>
+							</div>
+						</li>
+						<li class="fragment"><strong>Continuous delivery</strong>
+							<div>
+								<label class="fragment">every commit <label class="fragment grow highlight-current-green">can be</label> deployed to production</label>
+							</div>
+						</li>
+						<li class="fragment"><strong>Continuous deployment</strong>
+							<div>
+								<label class="fragment">every commit <label class="fragment grow highlight-current-green">is</label> deployed to production</label>
+							</div>
+						</li>
+					</ul>
+				</section>
+				<section id="containers">
+					<h2>Containers</h2>
+					<blockquote>Shipping container is an object for holding or transporting something</blockquote>
+					<ul>
+						<li class="fragment">Isolated</li>
+						<li class="fragment">Immutable</li>
+						<li class="fragment">Reliable</li>
+						<li class="fragment">Self-sufficient</li>
+						<li class="fragment">Scalable</li>
+					</ul>
+				</section>
+				<section id="monoliths" data-background="img/monolith.jpg">
+					<h1>Monolithic applications</h1>
 					<ul>
 						<li class="fragment">Single unit</li>
 						<li class="fragment">Time increases complexity and size</li>
@@ -146,12 +128,9 @@
 					</ul>
 				</section>
 				<section>
-					<section id="ms-monitor" data-background="img/code.jpg">
+					<section id="ms" data-background="img/code.jpg">
 						<h1>Microservices</h1>
 						<h4>Applications that fit into a screen</h4>
-					</section>
-					<section id="ms-what" data-background="img/microservices.gif">
-						<h1>Microservices</h1>
 						<ul>
 							<li class="fragment">System composed of small services</li>
 							<li class="fragment">Autonomy/independence</li>
@@ -159,9 +138,7 @@
 							<li class="fragment">Bounded context</li>
 						</ul>
 					</section>
-				</section>
-				<section id="examples">
-					<section id="ood">
+					<section id="ms-ood">
 						<h2>Object-Oriented Design</h2>
 						<blockquote>
 							The big idea is 'messaging'.
@@ -169,21 +146,21 @@
 							<br/><div style="float: right;">- Alan Kay</div>
 						</blockquote>
 					</section>
-					<section id="srp">
+					<section id="ms-srp">
 						<h2>Single Responsibility Principle</h2>
 						<blockquote>
 							Gather together those things that change for the same reason, and separate those things that change for different reasons
 							<div style="float: right;">- Robert C. Martin</div>
 						</blockquote>
 					</section>
-					<section id="linux">
+					<section id="ms-linux">
 						<h2>Linux = Microservices</h2>
-                    <pre><code data-trim contenteditable>
+                    	<pre><code data-trim contenteditable>
 						ps aux | grep jav[a] | awk '{print $2}' | xargs kill
-					</code></pre>
+						</code></pre>
 					</section>
 				</section>
-				<section id="msKeys">
+				<section id="ms-keys">
 					<h2>Microservices</h2>
 					<h3>Key Aspects</h3>
 					<ul>
@@ -195,8 +172,9 @@
 						<li class="fragment">Decentralization</li>
 					</ul>
 				</section>
-				<section id="msCons">
-					<h2>Disadvantages</h2>
+				<section id="ms-cons">
+					<h2>Microservices</h2>
+					<h4>Disadvantages</h4>
 					<ul>
 						<li class="fragment">Increased operational and deployment complexity
 							<ul>
@@ -208,8 +186,9 @@
 						<li class="fragment">Remote process calls</li>
 					</ul>
 				</section>
-				<section id="msPros">
-					<h2>Advantages</h2>
+				<section id="ms-pros">
+					<h2>Microservices</h2>
+					<h4>Advantages</h4>
 					<ul>
 						<li class="fragment">Scaling</li>
 						<li class="fragment">Resilience / fault isolation</li>
@@ -220,16 +199,138 @@
 						<li class="fragment">No need for long term commitment</li>
 					</ul>
 				</section>
-				<section id="msBestPractices">
-					<h2>Best Practices</h2>
+				<section id="ms-bp">
+					<h2>Microservices</h2>
+					<h4>Best Practices</h4>
 					<ul>
 						<li class="fragment">Containers (Docker)</li>
-						<li class="fragment">Proxy or API gateway</li>
+						<li class="fragment">Reverse proxy</li>
 						<li class="fragment">Minimalist approach</li>
 						<li class="fragment">CM is a must</li>
 						<li class="fragment">Cross functional teams</li>
 						<li class="fragment">API versioning</li>
 					</ul>
+				</section>
+				<section>
+					<section id="deployment">
+						<h2>Deployment</h2>
+						<ul>
+							<li class="fragment">Big vs small</li>
+							<li class="fragment">Mutable vs immutable</li>
+						</ul>
+					</section>
+					<section id="deployment-mutable">
+						<h3>Deployment</h3>
+						<h2>Mutable Monster Server</h2>
+						<div>
+							<img src="img/deployment_01_mutable_server.gif">
+						</div>
+					</section>
+					<section id="deployment-immutable-server-01">
+						<h3>Deployment</h3>
+						<h2>Immutable Server</h2>
+						<div>
+							<img src="img/deployment_02_immutable_servers_01.gif">
+						</div>
+					</section>
+					<section id="deployment-immutable-server-02">
+						<h3>Deployment</h3>
+						<h2>Immutable Server</h2>
+						<div>
+							<img src="img/deployment_02_immutable_servers_02.gif">
+						</div>
+					</section>
+					<section id="deployment-immutable-server-03">
+						<h3>Deployment</h3>
+						<h2>Immutable Server</h2>
+						<div>
+							<img src="img/deployment_02_immutable_servers_03.gif">
+						</div>
+					</section>
+					<section id="deployment-immutable-server-04">
+						<h3>Deployment</h3>
+						<h2>Immutable Server</h2>
+						<div>
+							<img src="img/deployment_02_immutable_servers_04.gif">
+						</div>
+					</section>
+					<section id="deployment-immutable-ms-01">
+						<h3>Deployment</h3>
+						<h2>Immutable Micro Services</h2>
+						<div>
+							<img src="img/deployment_03_immutable_microservices_01.gif">
+						</div>
+					</section>
+					<section id="deployment-immutable-ms-02">
+						<h3>Deployment</h3>
+						<h2>Immutable Micro Services</h2>
+						<div>
+							<img src="img/deployment_03_immutable_microservices_02.gif">
+						</div>
+					</section>
+					<section id="deployment-immutable-ms-03">
+						<h3>Deployment</h3>
+						<h2>Immutable Micro Services</h2>
+						<div>
+							<img src="img/deployment_03_immutable_microservices_03.gif">
+						</div>
+					</section>
+					<section id="deployment-immutable-ms-04">
+						<h3>Deployment</h3>
+						<h2>Immutable Micro Services</h2>
+						<div>
+							<img src="img/deployment_03_immutable_microservices_04.gif">
+						</div>
+					</section>
+					<section id="deployment-immutable-ms-05">
+						<h3>Deployment</h3>
+						<h2>Immutable Micro Services</h2>
+						<div>
+							<img src="img/deployment_03_immutable_microservices_05.gif">
+						</div>
+					</section>
+					<section id="deployment-immutable-ms-06">
+						<h3>Deployment</h3>
+						<h2>Immutable Micro Services</h2>
+						<div>
+							<img src="img/deployment_03_immutable_microservices_06.gif">
+						</div>
+					</section>
+					<section id="deployment-immutable-ms-details-01">
+						<h3>Deployment</h3>
+						<h2>Immutable Micro Services Details</h2>
+						<div>
+							<img src="img/deployment_04_immutable_microservices_details_01.gif">
+						</div>
+					</section>
+					<section id="deployment-immutable-ms-details-02">
+						<h3>Deployment</h3>
+						<h2>Immutable Micro Services Details</h2>
+						<div>
+							<img src="img/deployment_04_immutable_microservices_details_02.gif">
+						</div>
+					</section>
+					<section id="deployment-immutable-ms-details-03">
+						<h3>Deployment</h3>
+						<h2>Immutable Micro Services Details</h2>
+						<div>
+							<img src="img/deployment_04_immutable_microservices_details_03.gif">
+						</div>
+					</section>
+					<section id="deployment-immutable-ms-details-04">
+						<h3>Deployment</h3>
+						<h2>Immutable Micro Services Details</h2>
+						<div>
+							<img src="img/deployment_04_immutable_microservices_details_04.gif">
+						</div>
+					</section>
+					<section id="deployment-immutable-ms-details-05">
+						<h3>Deployment</h3>
+						<h2>Immutable Micro Services Details</h2>
+						<div>
+							<img src="img/deployment_04_immutable_microservices_details_05.gif">
+						</div>
+					</section>
 				</section>
 				<section id="summary">
 					<h2>Summary</h2>
