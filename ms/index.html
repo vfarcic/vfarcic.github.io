@@ -332,6 +332,91 @@
 						</div>
 					</section>
 				</section>
+				<section>
+					<section id="dev">
+						<h2>Development Environment</h2>
+						<ul>
+							<li class="fragment">Vagrant</li>
+							<li class="fragment">Docker</li>
+						</ul>
+					</section>
+					<section id="dev-vm">
+						<h4>Development Environment</h4>
+						<h2>Create Virtual Machine</h2>
+						<pre><code data-trim contenteditable>
+git clone https://github.com/vfarcic/books-ms.git
+cd books-ms
+vagrant plugin install vagrant-cachier
+vagrant up dev
+						</code></pre>
+					</section>
+					<section id="dev-vagrantfile">
+						<h4>Development Environment</h4>
+						<h2>Vagrantfile</h2>
+						<pre><code data-trim contenteditable>
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+	config.vm.box = "ubuntu/trusty64"
+	config.vm.synced_folder ".", "/vagrant"
+	config.vm.provider "virtualbox" do |v|
+		v.memory = 2048
+	end
+	config.vm.define :dev do |dev|
+		dev.vm.provision :shell, path: "bootstrap.sh"
+		dev.vm.provision :shell,
+		inline: 'ansible-playbook \
+			/vagrant/ansible/dev.yml -c local -v'
+	end
+	if Vagrant.has_plugin?("vagrant-cachier")
+		config.cache.scope = :box
+	end
+end
+						</code></pre>
+					</section>
+					<section id="dev-inside-vm">
+						<h4>Development Environment</h4>
+						<h2>Inside Virtual Machine</h2>
+						<pre><code data-trim contenteditable>
+vagrant ssh dev
+ansible --version
+docker --version
+docker-compose --version
+cd /vagrant
+ll
+						</code></pre>
+					</section>
+					<section id="dev-fe-tests">
+						<h4>Development Environment</h4>
+						<h2>Front-end tests</h2>
+						<pre><code data-trim contenteditable>
+sudo docker run -it \
+	-v $PWD/client/components:/source/client/components \
+	-v $PWD/client/test:/source/client/test \
+	-v $PWD/src:/source/src \
+	-v $PWD/target:/source/target \
+	-v /data/tests/db:/data/db \
+	-p 8080:8080 \
+	--env TEST_TYPE=watch-front \
+	vfarcic/books-ms-tests
+						</code></pre>
+					</section>
+					<section id="dev-fe-tests-compose">
+						<h4>Development Environment</h4>
+						<h2>Tests with Docker Compose</h2>
+						<pre><code data-trim contenteditable>
+sudo docker-compose -f docker-compose-dev.yml up feTests
+
+sudo docker-compose run tests
+						</code></pre>
+					</section>
+					<section id="dev-stop-vm">
+						<h4>Development Environment</h4>
+						<h2>Stop the VM</h2>
+						<pre><code data-trim contenteditable>
+exit
+vagrant halt dev
+						</code></pre>
+					</section>
+				</section>
 				<section id="summary">
 					<h2>Summary</h2>
 					<h3>Not a silver bullet</h3>
