@@ -417,6 +417,142 @@ vagrant halt dev
 						</code></pre>
 					</section>
 				</section>
+				<section>
+					<section id="dp">
+						<h2>Deployment Pipeline</h2>
+						<ol>
+							<li class="fragment">Checkout the code</li>
+							<li class="fragment">Run pre-deployment tests</li>
+							<li class="fragment">Compile and/or package the code</li>
+							<li class="fragment">Build the container</li>
+							<li class="fragment">Push the container to the registry</li>
+							<li class="fragment">Deploy the container to the production server</li>
+							<li class="fragment">Run post-deployment tests</li>
+						</ol>
+					</section>
+					<section id="dp-env">
+						<h4>Deployment Pipeline</h4>
+						<h2>Creating CD VM</h2>
+						<pre><code data-trim contenteditable>
+cd ../
+git clone https://github.com/vfarcic/ms-lifecycle.git
+cd ms-lifecycle
+vagrant up cd
+vagrant ssh cd
+						</code></pre>
+					</section>
+					<section id="dp-checkout">
+						<h4>Deployment Pipeline</h4>
+						<h2>Checking out the code</h2>
+						<pre><code data-trim contenteditable>
+git clone https://github.com/vfarcic/books-ms.git
+cd books-ms
+						</code></pre>
+					</section>
+					<section id="dp-pre-deployment-tests">
+						<h4>Deployment Pipeline</h4>
+						<h2>Running pre-deployment tests and compiling and/or packaging the code</h2>
+						<pre><code data-trim contenteditable>
+sudo docker-compose -f docker-compose-dev.yml run --rm tests
+ll target/scala-2.10/
+						</code></pre>
+					</section>
+					<section id="dp-building">
+						<h4>Deployment Pipeline</h4>
+						<h2>Building Docker containers</h2>
+						<pre><code data-trim contenteditable>
+cat Dockerfile
+
+sudo docker build -t vfarcic/books-ms .
+						</code></pre>
+					</section>
+					<section id="dp-running-1">
+						<h4>Deployment Pipeline</h4>
+						<h2>Running containers (Docker)</h2>
+						<h3>Docker</h3>
+						<pre><code data-trim contenteditable>
+sudo docker run -d --name books-ms-db mongo
+
+sudo docker run -d --name books-ms \
+	-p 8080:8080 \
+	--link books-ms-db:db \
+	vfarcic/books-ms
+
+sudo docker exec -it books-ms bash
+
+env | grep DB
+
+exit
+
+sudo docker ps -a
+
+sudo docker logs books-ms
+
+sudo docker rm -f books-ms books-ms-db
+
+sudo docker ps -a
+						</code></pre>
+					</section>
+					<section id="dp-running-2">
+						<h4>Deployment Pipeline</h4>
+						<h2>Running containers</h2>
+						<h3>Docker Compose</h3>
+						<pre><code data-trim contenteditable>
+sudo docker-compose -f docker-compose-dev.yml up -d app
+
+cat docker-compose-dev.yml
+
+sudo docker-compose ps
+
+sudo docker ps -a
+
+sudo docker-compose logs app
+						</code></pre>
+					</section>
+					<section id="dp-running-3">
+						<h4>Deployment Pipeline</h4>
+						<h2>Running containers</h2>
+						<h3>cURL</h3>
+						<pre><code data-trim contenteditable>
+curl -H 'Content-Type: application/json' -X PUT -d \
+	'{"_id": 1,
+	"title": "My First Book",
+	"author": "John Doe",
+	"description": "Not a very good book"}' \
+	http://localhost:8080/api/v1/books | python -mjson.tool
+
+curl -H 'Content-Type: application/json' -X PUT -d \
+	'{"_id": 2,
+	"title": "My Second Book",
+	"author": "John Doe",
+	"description": "Not a bad as the first book"}' \
+	http://localhost:8080/api/v1/books | python -mjson.tool
+
+curl -H 'Content-Type: application/json' -X PUT -d \
+	'{"_id": 3,
+	"title": "My Third Book",
+	"author": "John Doe",
+	"description": "Failed writers club"}' \
+	http://localhost:8080/api/v1/books | python -mjson.tool
+
+curl http://localhost:8080/api/v1/books | python -mjson.tool
+
+curl http://localhost:8080/api/v1/books/_id/1 | python -mjson.tool
+						</code></pre>
+					</section>
+					<section id="dp-checklist">
+						<h2>Deployment Pipeline</h2>
+						<ol>
+							<li class="fragment"><strike>Checkout the code</strike></li>
+							<li class="fragment"><strike>Run pre-deployment tests</strike></li>
+							<li class="fragment"><strike>Compile and/or package the code</strike></li>
+							<li class="fragment"><strike>Build the container</strike></li>
+							<li class="fragment">Push the container to the registry</li>
+							<li class="fragment">Deploy the container to the production server</li>
+							<li class="fragment">Run post-deployment tests</li>
+						</ol>
+					</section>
+				</section>
 				<section id="summary">
 					<h2>Summary</h2>
 					<h3>Not a silver bullet</h3>
