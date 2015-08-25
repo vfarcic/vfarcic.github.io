@@ -540,6 +540,14 @@ curl http://localhost:8080/api/v1/books | python -mjson.tool
 curl http://localhost:8080/api/v1/books/_id/1 | python -mjson.tool
 						</code></pre>
 					</section>
+					<section id="dp-registry">
+						<h4>Deployment Pipeline</h4>
+						<h2>Pushing containers to the registry</h2>
+						<pre><code data-trim contenteditable>
+sudo docker tag vfarcic/books-ms 10.100.198.200:5000/books-ms
+sudo docker push 10.100.198.200:5000/books-ms
+						</code></pre>
+					</section>
 					<section id="dp-checklist">
 						<h2>Deployment Pipeline</h2>
 						<ol>
