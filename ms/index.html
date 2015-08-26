@@ -437,7 +437,7 @@ vagrant halt dev
 cd ../
 git clone https://github.com/vfarcic/ms-lifecycle.git
 cd ms-lifecycle
-vagrant up cd
+vagrant up cd prod
 vagrant ssh cd
 						</code></pre>
 					</section>
@@ -559,6 +559,39 @@ sudo docker push 10.100.198.200:5000/books-ms
 							<li class="fragment">Deploy the container to the production server</li>
 							<li class="fragment">Run post-deployment tests</li>
 						</ol>
+					</section>
+				</section>
+				<section>
+					<section id="cm">
+						<h2>Configuration Management in the Docker World</h2>
+						<ol>
+							<li class="fragment">CFEngine</li>
+							<li class="fragment">Puppet</li>
+							<li class="fragment">Chef</li>
+							<li class="fragment"><label class="fragment grow highlight-current-green">Ansible</label></li>
+						</ol>
+					</section>
+					<section id="cm-prod">
+						<h4>Configuration Management in the Docker World</h4>
+						<h2>Configuring the Production Environment</h2>
+						<pre><code data-trim contenteditable>
+cd /vagrant/ansible
+
+ansible-playbook prod.yml -i hosts/prod
+
+ansible-playbook prod.yml -i hosts/prod
+						</code></pre>
+					</section>
+					<section id="cm-playbook">
+						<h4>Configuration Management in the Docker World</h4>
+						<h2>Production environment Ansible playbook</h2>
+						<pre><code data-trim contenteditable>
+cat prod.yml
+
+cat roles/docker/tasks/main.yml
+
+cat hosts/prod
+						</code></pre>
 					</section>
 				</section>
 				<section id="summary">
