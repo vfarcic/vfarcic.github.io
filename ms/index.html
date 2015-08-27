@@ -403,9 +403,9 @@ sudo docker run -it \
 						<h4>Development Environment</h4>
 						<h2>Tests with Docker Compose</h2>
 						<pre><code data-trim contenteditable>
-sudo docker-compose -f docker-compose-dev.yml up feTests
+sudo docker-compose -f docker-compose-dev.yml up feTestsLocal
 
-sudo docker-compose run tests
+sudo docker-compose -f docker-compose-dev.yml run testsLocal
 						</code></pre>
 					</section>
 					<section id="dev-stop-vm">
@@ -453,7 +453,7 @@ cd books-ms
 						<h4>Deployment Pipeline</h4>
 						<h2>Running pre-deployment tests and compiling and/or packaging the code</h2>
 						<pre><code data-trim contenteditable>
-sudo docker-compose -f docker-compose-dev.yml run --rm tests
+sudo docker-compose -f docker-compose-dev.yml run --rm testsLocal
 ll target/scala-2.10/
 						</code></pre>
 					</section>
@@ -498,7 +498,7 @@ sudo docker ps -a
 						<h2>Running containers</h2>
 						<h3>Docker Compose</h3>
 						<pre><code data-trim contenteditable>
-sudo docker-compose -f docker-compose-dev.yml up -d app
+sudo docker-compose -f docker-compose-dev.yml up -d appLocal
 
 cat docker-compose-dev.yml
 
