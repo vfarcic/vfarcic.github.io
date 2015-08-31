@@ -665,6 +665,15 @@ curl http://localhost:$PORT/api/v1/books | python -mjson.tool
 curl http://localhost:$PORT/api/v1/books/_id/1 | python -mjson.tool
 						</code></pre>
 					</section>
+					<section id="dp2-exit">
+						<h4>Deployment Pipeline (Part 2)</h4>
+						<h2>Stopping Production Node</h2>
+						<pre><code data-trim contenteditable class="nohighlight">
+exit # Exit prod
+exit # Exit cd
+vagrant halt prod # Stop all VMs
+						</code></pre>
+					</section>
 					<section id="dp2-checklist">
 						<h2>Deployment Pipeline (Part 2)</h2>
 						<ol>
