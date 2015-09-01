@@ -1,8 +1,8 @@
 Title
 =====
 
-Microservices Lifecycle
------------------------
+Microservices Lifecycle Workshop
+--------------------------------
 
 Co-Presenter
 ============
@@ -48,6 +48,8 @@ Microservices are becoming more and more popular and, as with every other new tr
 This workshop will go through the whole **microservices development lifecycle**. We'll start from the very beginning. We'll define and design architecture. From there on we'll move from requirements, technological choices and development environment setup, through coding and testing all the way until the final deployment to production. We won't stop there. Once our new services are up and running we'll see how to maintain them, scale them depending on resource utilization and response time, recuperate them in case of failures and create central monitoring and notifications system. We'll try to balance the need for creative manual work and the need to automate as much of the process as possible.
 
 This will be a journey through all the aspect of the lives or microservices and everything that surrounds them. We'll see how microservices fit into continuous deployment and immutable containers concepts and why the best results are obtained when those three are combined into one unique framework.
+
+During the workshop we'll explore tools Docker, CoreOS, RancherOS, Docker Swarm, Docker Compose, Rocket, Ansible, Consul, etcd, confd, Registrator, and so on.
 
 Learning Outcomes
 =================
