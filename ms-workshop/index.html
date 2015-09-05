@@ -674,7 +674,7 @@ curl http://localhost:$PORT/api/v1/books/_id/1 | python -mjson.tool
 						<pre><code data-trim contenteditable class="nohighlight">
 exit # Exit prod
 exit # Exit cd
-vagrant halt prod # Stop all VMs
+vagrant halt prod # Stop prod VM
 						</code></pre>
 					</section>
 					<section id="dp2-checklist">
@@ -689,6 +689,176 @@ vagrant halt prod # Stop all VMs
 							<li class="fragment">Integrate the container</li>
 							<li class="fragment">Run post-deployment tests</li>
 						</ol>
+					</section>
+				</section>
+				<section>
+					<section id="sd">
+						<h2>Service Discovery</h2>
+						<ol>
+							<li class="fragment">Service registration</li>
+							<li class="fragment">Service discovery</li>
+						</ol>
+					</section>
+					<section id="sd-tools">
+						<h4>Service Discovery</h4>
+						<h2>Tools</h2>
+						<ol>
+							<li class="fragment">Manual configuration</li>
+							<li class="fragment">Zookeeper</li>
+							<li class="fragment">etcd / Registrator / confd</li>
+							<li class="fragment">Consul / Registrator / consul-template</li>
+						</ol>
+					</section>
+					<section id="sd-consul-playbook">
+						<h4>Service Discovery</h4>
+						<h2>Consul Ansible playbook</h2>
+						<pre><code data-trim contenteditable>
+vagrant up serv-disc-01 serv-disc-02 serv-disc-03
+
+vagrant ssh cd
+
+cat /vagrant/ansible/hosts/serv-disc
+
+cat /vagrant/ansible/roles/consul/tasks/main.yml
+
+cat /vagrant/ansible/roles/consul/defaults/main.yml
+
+cat /vagrant/ansible/host_vars/10.100.197.201
+
+cat /vagrant/ansible/consul.yml
+						</code></pre>
+					</section>
+					<section id="sd-consul">
+						<h4>Service Discovery</h4>
+						<h2>Setting up Consul</h2>
+						<pre><code data-trim contenteditable>
+ansible-playbook \
+	/vagrant/ansible/consul.yml \
+	-i /vagrant/ansible/hosts/serv-disc
+
+curl 10.100.197.201:8500/v1/catalog/nodes \
+	| python -mjson.tool
+						</code></pre>
+					</section>
+					<section id="sd-kv-put">
+						<h4>Service Discovery</h4>
+						<h2>Key/value store: PUT</h2>
+						<pre><code data-trim contenteditable>
+curl -X PUT -d 'this is a test' \
+	http://10.100.197.201:8500/v1/kv/msg1
+
+curl -X PUT -d 'this is another test' \
+	http://10.100.197.202:8500/v1/kv/messages/msg2
+
+curl -X PUT -d 'this is a test with flags' \
+	http://10.100.197.203:8500/v1/kv/messages/msg3?flags=1234
+						</code></pre>
+					</section>
+					<section id="sd-kv-get-delete">
+						<h4>Service Discovery</h4>
+						<h2>Key/value store: GET/DELETE</h2>
+						<pre><code data-trim contenteditable>
+curl http://10.100.197.203:8500/v1/kv/?recurse \
+	| python -mjson.tool
+
+curl http://10.100.197.202:8500/v1/kv/msg1 \
+	| python -mjson.tool
+
+curl http://10.100.197.201:8500/v1/kv/msg1?raw
+
+curl -X DELETE http://10.100.197.201:8500/v1/kv/messages/msg2
+
+curl -X DELETE http://10.100.197.202:8500/v1/kv/?recurse
+						</code></pre>
+					</section>
+					<section id="sd-registrator-playbook">
+						<h4>Service Discovery</h4>
+						<h2>Registrator Ansible playbook</h2>
+						<pre><code data-trim contenteditable>
+cat /vagrant/ansible/roles/registrator/tasks/main.yml
+
+cat /vagrant/ansible/roles/registrator/defaults/main.yml
+						</code></pre>
+					</section>
+					<section id="sd-registrator">
+						<h4>Service Discovery</h4>
+						<h2>Setting up Registrator</h2>
+						<pre><code data-trim contenteditable>
+ansible-playbook \
+	/vagrant/ansible/registrator.yml \
+	-i /vagrant/ansible/hosts/serv-disc
+						</code></pre>
+					</section>
+					<section id="sd-nginx">
+						<h4>Service Discovery</h4>
+						<h2>Registering service</h2>
+						<pre><code data-trim contenteditable>
+exit # Exit cd
+
+vagrant ssh serv-disc-01
+
+sudo docker run -d --name nginx \
+	--env SERVICE_NAME=nginx \
+	--env SERVICE_ID=nginx \
+	-p 1234:80 \
+	nginx
+
+curl http://10.100.197.201:8500/v1/catalog/service/nginx \
+	| python -mjson.tool
+						</code></pre>
+					</section>
+					<section id="sd-nginx2">
+						<h4>Service Discovery</h4>
+						<h2>Registering service again</h2>
+						<pre><code data-trim contenteditable>
+sudo docker run -d --name nginx2 \
+	--env "SERVICE_ID=nginx2" \
+	--env "SERVICE_NAME=nginx" \
+	--env "SERVICE_TAGS=balancer,proxy,www" \
+	-p 1111:80 \
+	nginx
+
+curl http://localhost:8500/v1/catalog/service/nginx \
+	| python -mjson.tool
+						</code></pre>
+					</section>
+					<section id="sd-consul-template-playbook">
+						<h4>Service Discovery</h4>
+						<h2>consul-template Ansible playbook</h2>
+						<pre><code data-trim contenteditable>
+cat /vagrant/ansible/roles/consul-template/tasks/main.yml
+
+cat /vagrant/ansible/consul-template.yml
+						</code></pre>
+					</section>
+					<section id="sd-consul-template">
+						<h4>Service Discovery</h4>
+						<h2>Setting up consul-template</h2>
+						<pre><code data-trim contenteditable>
+ansible-playbook \
+	/vagrant/ansible/consul-template.yml \
+	-i /vagrant/ansible/hosts/serv-disc
+						</code></pre>
+					</section>
+					<section id="sd-consul-template-run">
+						<h4>Service Discovery</h4>
+						<h2>Running consul-template</h2>
+						<pre><code data-trim contenteditable>
+exit # Exit cd node
+
+vagrant ssh serv-disc-01 # Enter serv-disc-01
+
+curl http://localhost:8500/v1/catalog/service/nginx \
+	| python -mjson.tool
+
+consul-template \
+	-consul localhost:8500 \
+	-template "/data/consul-template/example.ctmpl\
+:/tmp/example.conf" \
+	-once
+
+cat /tmp/example.conf
+						</code></pre>
 					</section>
 				</section>
 				<section id="summary">
