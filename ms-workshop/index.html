@@ -900,8 +900,15 @@ consul-template \
 	-once
 
 cat /tmp/example.conf
+						</code></pre>
+					</section>
+					<section id="sd-cleanup">
+						<h4>Service Discovery</h4>
+						<h2>Cleanup</h2>
+						<pre><code data-trim contenteditable>
+exit # Exit cd node
 
-exit
+vagrant halt serv-disc-01 serv-disc-02 serv-disc-03
 						</code></pre>
 					</section>
 				</section>
@@ -993,7 +1000,7 @@ curl http://localhost/api/v1/books | python -mjson.tool
 					</section>
 					<section id="proxy-consul">
 						<h4>Proxy Service</h4>
-						<h2>Setting Proxy with Consul</h2>
+						<h2>Configuring Proxy with Consul</h2>
 						<pre><code data-trim contenteditable>
 sudo docker-compose scale app=2
 
@@ -1035,6 +1042,15 @@ sudo docker logs nginx
 						<h4>Proxy Service</h4>
 						<h2>Setting Proxy with Consul</h2>
 						<img src="img/proxy-consul.png">
+					</section>
+					<section id="proxy-cleanup">
+						<h4>Proxy Service</h4>
+						<h2>Cleanup</h2>
+						<pre><code data-trim contenteditable>
+exit
+
+vagrant halt proxy
+						</code></pre>
 					</section>
 				</section>
 				<section id="summary">
