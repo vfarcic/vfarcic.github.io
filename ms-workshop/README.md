@@ -95,3 +95,48 @@ Contact Details:
 * Twitter: @vfarcic
 * Skype: vfarcic
 * LinkedIn: https://www.linkedin.com/in/viktorfarcic
+
+Pre-Workshop Instructions
+=========================
+
+Install [Virtual Box](https://www.virtualbox.org/), [Vagrant](https://www.vagrantup.com/) and [Git](https://git-scm.com/).
+
+Run following commands:
+
+```bash
+vagrant plugin install vagrant-cachier
+
+git clone https://github.com/vfarcic/books-ms.git
+cd books-ms
+vagrant up dev
+vagrant ssh dev -c "sudo chmod +x /vagrant/*.sh"
+vagrant ssh dev -c "sudo /vagrant/preload.sh"
+vagrant halt dev
+
+cd ..
+git clone https://github.com/vfarcic/ms-lifecycle.git
+cd ms-lifecycle
+vagrant up cd prod
+vagrant ssh cd -c "sudo chmod +x /vagrant/scripts/*"
+vagrant ssh cd -c "sudo /vagrant/scripts/preload_cd.sh"
+vagrant ssh cd -c "ansible-playbook /vagrant/ansible/docker.yml -i /vagrant/ansible/hosts/prod" # Answer "yes" when asked
+vagrant ssh prod -c "sudo /vagrant/scripts/preload_prod.sh"
+vagrant halt prod
+
+vagrant up serv-disc-01 serv-disc-02 serv-disc-03
+vagrant ssh cd -c "ansible-playbook /vagrant/ansible/docker.yml -i /vagrant/ansible/hosts/serv-disc" # Answer "yes" when asked
+vagrant ssh serv-disc-01 -c "sudo chmod +x /vagrant/scripts/*"
+vagrant ssh serv-disc-01 -c "sudo /vagrant/scripts/preload_serv_disc.sh"
+vagrant ssh serv-disc-02 -c "sudo chmod +x /vagrant/scripts/*"
+vagrant ssh serv-disc-02 -c "sudo /vagrant/scripts/preload_serv_disc.sh"
+vagrant ssh serv-disc-03 -c "sudo chmod +x /vagrant/scripts/*"
+vagrant ssh serv-disc-03 -c "sudo /vagrant/scripts/preload_serv_disc.sh"
+vagrant halt serv-disc-01 serv-disc-02 serv-disc-03
+
+vagrant up proxy
+vagrant ssh cd -c "ansible-playbook /vagrant/ansible/docker.yml -i /vagrant/ansible/hosts/proxy" # Answer "yes" when asked
+vagrant ssh proxy -c "sudo chmod +x /vagrant/scripts/*"
+vagrant ssh proxy -c "sudo /vagrant/scripts/preload_proxy.sh"
+
+vagrant halt cd
+```

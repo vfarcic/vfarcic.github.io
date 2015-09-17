@@ -52,11 +52,11 @@
 					<h2>Viktor Farcic</h2>
 					<ul>
 						<img src="img/viktor.jpg" style="float: right; width: 25%; height: 25%;"/>
-						<li>Software Architect at <a href="http://everis.com">Everis</a></li>
+						<li>Software Architect at <a href="http://everis.com">everis</a> an <a href="http://www.nttdata.com/">NTT DATA Company</a></li>
 						<li>Never developed in Fortran</li>
-						<li>Passionate about microservices, continuous delivery, TDD, and BDD</li>
+						<li>Passionate about microservices, continuous delivery and TDD</li>
 						<li>Blogger in <a href="http://technologyconversations.com/">Technology Conversations</a> and speaker at conferences</li>
-						<li>Java Test-Driven Development: Mastering TDD Through Katas</li>
+						<li><a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">Java Test-Driven Development: Mastering TDD Through Katas</a></li>
 					</ul>
 				</section>
 				<section id="failures">
@@ -222,7 +222,7 @@
 					<section id="ms-linux">
 						<h2>Linux = Microservices</h2>
                     	<pre><code data-trim contenteditable>
-						ps aux | grep jav[a] | awk '{print $2}' | xargs kill
+ps aux | grep jav[a] | awk '{print $2}' | xargs kill
 						</code></pre>
 					</section>
 				</section>
@@ -360,11 +360,11 @@
 					<section id="dev-vm">
 						<h4>Development Environment</h4>
 						<h2>Create Virtual Machine</h2>
+						Please skip the first two steps if you followed the workshop preparation instructions.
 						<pre><code data-trim contenteditable>
 git clone https://github.com/vfarcic/books-ms.git
-cd books-ms
 vagrant plugin install vagrant-cachier
-vagrant up dev
+cd books-ms
 						</code></pre>
 					</section>
 					<section id="dev-vagrantfile">
@@ -393,6 +393,7 @@ end
 						<h4>Development Environment</h4>
 						<h2>Inside Virtual Machine</h2>
 						<pre><code data-trim contenteditable>
+vagrant up dev
 vagrant ssh dev
 ansible --version
 docker --version
@@ -405,7 +406,7 @@ ll
 						<h4>Development Environment</h4>
 						<h2>Front-end tests</h2>
 						<pre><code data-trim contenteditable>
-sudo docker run -it \
+sudo docker run -it --rm \
 	-v $PWD/client/components:/source/client/components \
 	-v $PWD/client/test:/source/client/test \
 	-v $PWD/src:/source/src \
@@ -415,6 +416,7 @@ sudo docker run -it \
 	--env TEST_TYPE=watch-front \
 	vfarcic/books-ms-tests
 						</code></pre>
+						Press <strong>CTRL+c</strong> to stop the container.
 					</section>
 					<section id="dev-fe-tests-compose">
 						<h4>Development Environment</h4>
@@ -430,6 +432,7 @@ sudo docker-compose -f docker-compose-dev.yml run testsLocal
 						<h2>Stop the VM</h2>
 						<pre><code data-trim contenteditable>
 exit
+
 vagrant halt dev
 						</code></pre>
 					</section>
@@ -451,19 +454,26 @@ vagrant halt dev
 					<section id="dp-env">
 						<h4>Deployment Pipeline</h4>
 						<h2>Creating CD VM</h2>
+						Please skip the <strong>git clone</strong> step if you followed the workshop preparation instructions.
 						<pre><code data-trim contenteditable>
-cd ../
+cd ..
+
 git clone https://github.com/vfarcic/ms-lifecycle.git
+
 cd ms-lifecycle
-vagrant up cd prod
+
+vagrant up cd
+
 vagrant ssh cd
 						</code></pre>
 					</section>
 					<section id="dp-checkout">
 						<h4>Deployment Pipeline</h4>
 						<h2>Checking out the code</h2>
+						Please skip the <strong>git clone</strong> step if you followed the workshop preparation instructions.
 						<pre><code data-trim contenteditable>
 git clone https://github.com/vfarcic/books-ms.git
+
 cd books-ms
 						</code></pre>
 					</section>
@@ -472,6 +482,7 @@ cd books-ms
 						<h2>Running pre-deployment tests and compiling and/or packaging the code</h2>
 						<pre><code data-trim contenteditable>
 sudo docker-compose -f docker-compose-dev.yml run --rm testsLocal
+
 ll target/scala-2.10/
 						</code></pre>
 					</section>
@@ -524,7 +535,7 @@ sudo docker-compose ps
 
 sudo docker ps -a
 
-sudo docker-compose logs app
+sudo docker logs booksms_appLocal_1
 						</code></pre>
 					</section>
 					<section id="dp-running-3">
@@ -556,14 +567,25 @@ curl -H 'Content-Type: application/json' -X PUT -d \
 curl http://localhost:8080/api/v1/books | python -mjson.tool
 
 curl http://localhost:8080/api/v1/books/_id/1 | python -mjson.tool
+
+sudo docker rm -f booksms_app_1 booksms_db_1
 						</code></pre>
 					</section>
 					<section id="dp-registry">
 						<h4>Deployment Pipeline</h4>
 						<h2>Pushing containers to the registry</h2>
 						<pre><code data-trim contenteditable>
-sudo docker tag vfarcic/books-ms 10.100.198.200:5000/books-ms
+sudo docker tag vfarcic/books-ms \
+	10.100.198.200:5000/books-ms
+
 sudo docker push 10.100.198.200:5000/books-ms
+
+sudo docker tag vfarcic/books-ms-tests \
+	10.100.198.200:5000/books-ms-tests
+
+sudo docker push 10.100.198.200:5000/books-ms-tests
+
+exit
 						</code></pre>
 					</section>
 					<section id="dp-checklist">
@@ -594,6 +616,8 @@ sudo docker push 10.100.198.200:5000/books-ms
 						<h4>Configuration Management in the Docker World</h4>
 						<h2>Configuring the Production Environment</h2>
 						<pre><code data-trim contenteditable>
+vagrant ssh cd
+
 cd /vagrant/ansible
 
 ansible-playbook prod.yml -i hosts/prod
@@ -609,7 +633,11 @@ cat prod.yml
 
 cat roles/docker/tasks/main.yml
 
+cat roles/docker-compose/tasks/main.yml
+
 cat hosts/prod
+
+exit
 						</code></pre>
 					</section>
 				</section>
@@ -631,21 +659,14 @@ cat hosts/prod
 						<h4>Deployment Pipeline (Part 2)</h4>
 						<h2>Deploying containers to the production server</h2>
 						<pre><code data-trim contenteditable>
-ssh-keygen # Answer with the Enter key to all questions
+vagrant ssh prod
 
-ssh-copy-id 10.100.198.201 # Use vagrant as the password
-
-ssh 10.100.198.201
-
-GITHUB_OWNER=vfarcic
-
-SERVICE_NAME=books-ms
-
-wget https://raw.githubusercontent.com/$GITHUB_OWNER/$SERVICE_NAME/master/docker-compose.yml
+wget https://raw.githubusercontent.com/vfarcic\
+/books-ms/master/docker-compose.yml
 
 cat docker-compose.yml
 
-sudo docker-compose up --allow-insecure-ssl -d app
+sudo docker-compose up -d app
 						</code></pre>
 					</section>
 					<section id="dp2-verification">
@@ -689,9 +710,9 @@ curl http://localhost:$PORT/api/v1/books/_id/1 | python -mjson.tool
 						<h4>Deployment Pipeline (Part 2)</h4>
 						<h2>Stopping Production Node</h2>
 						<pre><code data-trim contenteditable>
-exit # Exit prod
-exit # Exit cd
-vagrant halt prod # Stop prod VM
+exit
+
+vagrant halt prod
 						</code></pre>
 					</section>
 					<section id="dp2-checklist">
@@ -863,6 +884,10 @@ curl http://localhost:8500/v1/catalog/service/nginx \
 						<h4>Service Discovery</h4>
 						<h2>consul-template Ansible playbook</h2>
 						<pre><code data-trim contenteditable>
+exit
+
+vagrant ssh cd
+
 cat /vagrant/ansible/roles/consul-template/tasks/main.yml
 
 cat /vagrant/ansible/consul-template.yml
@@ -893,10 +918,11 @@ vagrant ssh serv-disc-01 # Enter serv-disc-01
 curl http://localhost:8500/v1/catalog/service/nginx \
 	| python -mjson.tool
 
+cat /data/consul-template/example.ctmpl
+
 consul-template \
 	-consul localhost:8500 \
-	-template "/data/consul-template/example.ctmpl\
-:/tmp/example.conf" \
+	-template "/data/consul-template/example.ctmpl:/tmp/example.conf" \
 	-once
 
 cat /tmp/example.conf
@@ -938,7 +964,7 @@ exit
 
 vagrant ssh proxy
 
-sudo docker ps | grep nginx
+sudo docker ps
 						</code></pre>
 					</section>
 					<section id="proxy-without">
@@ -950,9 +976,11 @@ wget https://raw.githubusercontent.com/vfarcic\
 
 cat docker-compose.yml
 
-sudo docker-compose up --allow-insecure-ssl -d app
+sudo docker-compose up -d app
 
 curl http://localhost/api/v1/books
+
+sudo docker ps | grep books
 
 PORT=$(sudo docker inspect \
 	--format='{{(index (index .NetworkSettings.Ports "8080/tcp") 0).HostPort}}' \
@@ -1004,15 +1032,15 @@ curl http://localhost/api/v1/books | python -mjson.tool
 						<pre><code data-trim contenteditable>
 sudo docker-compose scale app=2
 
-sudo docker ps
+sudo docker ps | grep books
 
-sudo wget https://raw.githubusercontent.com/vfarcic\
+sudo wget http://raw.githubusercontent.com/vfarcic\
 /books-ms/master/nginx-includes.conf \
 	-O /data/nginx/includes/books-ms.conf
 
 cat /data/nginx/includes/books-ms.conf
 
-sudo wget https://raw.githubusercontent.com/vfarcic\
+sudo wget http://raw.githubusercontent.com/vfarcic\
 /books-ms/master/nginx-upstreams.ctmpl \
 	-O /data/nginx/upstreams/books-ms.ctmpl
 
