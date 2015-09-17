@@ -452,7 +452,7 @@ vagrant halt dev
 						</ol>
 					</section>
 					<section id="dp-env">
-						<h4>Deployment Pipeline</h4>
+						<h4>Deployment Pipeline: Initial Stages</h4>
 						<h2>Creating CD VM</h2>
 						Please skip the <strong>git clone</strong> step if you followed the workshop preparation instructions.
 						<pre><code data-trim contenteditable>
@@ -468,7 +468,7 @@ vagrant ssh cd
 						</code></pre>
 					</section>
 					<section id="dp-checkout">
-						<h4>Deployment Pipeline</h4>
+						<h4>Deployment Pipeline: Initial Stages</h4>
 						<h2>Checking out the code</h2>
 						Please skip the <strong>git clone</strong> step if you followed the workshop preparation instructions.
 						<pre><code data-trim contenteditable>
@@ -478,7 +478,7 @@ cd books-ms
 						</code></pre>
 					</section>
 					<section id="dp-pre-deployment-tests">
-						<h4>Deployment Pipeline</h4>
+						<h4>Deployment Pipeline: Initial Stages</h4>
 						<h2>Running pre-deployment tests and compiling and/or packaging the code</h2>
 						<pre><code data-trim contenteditable>
 sudo docker-compose -f docker-compose-dev.yml run --rm testsLocal
@@ -487,7 +487,7 @@ ll target/scala-2.10/
 						</code></pre>
 					</section>
 					<section id="dp-building">
-						<h4>Deployment Pipeline</h4>
+						<h4>Deployment Pipeline: Initial Stages</h4>
 						<h2>Building Docker containers</h2>
 						<pre><code data-trim contenteditable>
 cat Dockerfile
@@ -496,7 +496,7 @@ sudo docker build -t vfarcic/books-ms .
 						</code></pre>
 					</section>
 					<section id="dp-running-1">
-						<h4>Deployment Pipeline</h4>
+						<h4>Deployment Pipeline: Initial Stages</h4>
 						<h2>Running containers (Docker)</h2>
 						<h3>Docker</h3>
 						<pre><code data-trim contenteditable>
@@ -523,7 +523,7 @@ sudo docker ps -a
 						</code></pre>
 					</section>
 					<section id="dp-running-2">
-						<h4>Deployment Pipeline</h4>
+						<h4>Deployment Pipeline: Initial Stages</h4>
 						<h2>Running containers</h2>
 						<h3>Docker Compose</h3>
 						<pre><code data-trim contenteditable>
@@ -539,7 +539,7 @@ sudo docker logs booksms_appLocal_1
 						</code></pre>
 					</section>
 					<section id="dp-running-3">
-						<h4>Deployment Pipeline</h4>
+						<h4>Deployment Pipeline: Initial Stages</h4>
 						<h2>Running containers</h2>
 						<h3>cURL</h3>
 						<pre><code data-trim contenteditable>
@@ -572,7 +572,7 @@ sudo docker rm -f booksms_app_1 booksms_db_1
 						</code></pre>
 					</section>
 					<section id="dp-registry">
-						<h4>Deployment Pipeline</h4>
+						<h4>Deployment Pipeline: Initial Stages</h4>
 						<h2>Pushing containers to the registry</h2>
 						<pre><code data-trim contenteditable>
 sudo docker tag vfarcic/books-ms \
@@ -589,7 +589,8 @@ exit
 						</code></pre>
 					</section>
 					<section id="dp-checklist">
-						<h2>Deployment Pipeline</h2>
+						<h4>Deployment Pipeline: Initial Stages</h4>
+						<h2>Checklist</h2>
 						<ol>
 							<li class="fragment"><strike>Checkout the code</strike></li>
 							<li class="fragment"><strike>Run pre-deployment tests</strike></li>
@@ -643,7 +644,7 @@ exit
 				</section>
 				<section>
 					<section id="dp2">
-						<h2>Deployment Pipeline (Part 2)</h2>
+						<h2>Deployment Pipeline: Intermediate Stages</h2>
 						<ol>
 							<li class="fragment"><strike>Checkout the code</strike></li>
 							<li class="fragment"><strike>Run pre-deployment tests</strike></li>
@@ -656,7 +657,7 @@ exit
 						</ol>
 					</section>
 					<section id="dp2-deploy">
-						<h4>Deployment Pipeline (Part 2)</h4>
+						<h4>Deployment Pipeline: Intermediate Stages</h4>
 						<h2>Deploying containers to the production server</h2>
 						<pre><code data-trim contenteditable>
 vagrant ssh prod
@@ -670,7 +671,7 @@ sudo docker-compose up -d app
 						</code></pre>
 					</section>
 					<section id="dp2-verification">
-						<h4>Deployment Pipeline (Part 2)</h4>
+						<h4>Deployment Pipeline: Intermediate Stages</h4>
 						<h2>Post-deployment verification</h2>
 						<pre><code data-trim contenteditable>
 sudo docker inspect vagrant_app_1
@@ -707,7 +708,7 @@ curl http://localhost:$PORT/api/v1/books/_id/1 | python -mjson.tool
 						</code></pre>
 					</section>
 					<section id="dp2-exit">
-						<h4>Deployment Pipeline (Part 2)</h4>
+						<h4>Deployment Pipeline: Intermediate Stages</h4>
 						<h2>Stopping Production Node</h2>
 						<pre><code data-trim contenteditable>
 exit
@@ -716,7 +717,8 @@ vagrant halt prod
 						</code></pre>
 					</section>
 					<section id="dp2-checklist">
-						<h2>Deployment Pipeline (Part 2)</h2>
+						<h4>Deployment Pipeline: Intermediate Stages</h4>
+						<h2>Checklist</h2>
 						<ol>
 							<li class="fragment"><strike>Checkout the code</strike></li>
 							<li class="fragment"><strike>Run pre-deployment tests</strike></li>
@@ -1079,6 +1081,120 @@ exit
 
 vagrant halt proxy
 						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section id="dp-late">
+						<h2>Deployment Pipeline: The Late Stages</h2>
+						<ol>
+							<li class="fragment"><strike>Checkout the code</strike></li>
+							<li class="fragment"><strike>Run pre-deployment tests</strike></li>
+							<li class="fragment"><strike>Compile and/or package the code</strike></li>
+							<li class="fragment"><strike>Build the container</strike></li>
+							<li class="fragment"><strike>Push the container to the registry</strike></li>
+							<li class="fragment"><strike>Deploy the container to the production server</strike></li>
+							<li class="fragment">Integrate the container</li>
+							<li class="fragment">Run post-deployment tests</li>
+						</ol>
+					</section>
+					<section id="dp-late-provision">
+						<h4>Deployment Pipeline: The Late Stages</h4>
+						<h2>Provision Production</h2>
+						<pre><code data-trim contenteditable>
+vagrant up prod --provision
+
+vagrant ssh cd
+
+cd /vagrant/ansible
+
+cat prod2.yml
+
+ansible-playbook prod2.yml -i hosts/prod
+
+exit
+						</code></pre>
+					</section>
+					<section id="dp-late-run">
+						<h4>Deployment Pipeline: The Late Stages</h4>
+						<h2>Run Containainers</h2>
+						<pre><code data-trim contenteditable>
+vagrant ssh prod
+
+sudo docker start vagrant_db_1
+
+sudo docker start vagrant_app_1
+
+curl 10.100.198.201:8500/v1/catalog/service/books-ms \
+	| python -mjson.tool
+						</code></pre>
+						Open <a href="http://10.100.198.201:8500/ui">http://10.100.198.201:8500/ui</a>.
+					</section>
+					<section id="dp-late-proxy">
+						<h4>Deployment Pipeline: The Late Stages</h4>
+						<h2>Update the Proxy Service</h2>
+						<pre><code data-trim contenteditable>
+curl http://localhost/api/v1/books
+
+sudo wget https://raw.githubusercontent.com/vfarcic\
+/books-ms/master/nginx-includes.conf \
+	-O /data/nginx/includes/books-ms.conf
+
+cat /data/nginx/includes/books-ms.conf
+
+sudo wget https://raw.githubusercontent.com/vfarcic\
+/books-ms/master/nginx-upstreams.ctmpl \
+	-O /data/nginx/upstreams/books-ms.ctmpl
+
+cat /data/nginx/upstreams/books-ms.ctmpl
+
+sudo consul-template \
+	-consul localhost:8500 \
+	-template "/data/nginx/upstreams/books-ms.ctmpl:\
+/data/nginx/upstreams/books-ms.conf:\
+docker kill -s HUP nginx" \
+	-once
+
+cat /data/nginx/upstreams/books-ms.conf
+
+curl http://localhost/api/v1/books \
+	| python -mjson.tool
+
+exit
+						</code></pre>
+					</section>
+					<section id="dp-late-intef">
+						<h4>Deployment Pipeline: The Late Stages</h4>
+						<h2>Run Integration Tests</h2>
+						<pre><code data-trim contenteditable>
+vagrant ssh cd
+
+curl http://10.100.198.201/api/v1/books \
+	| python -mjson.tool
+
+cd ~/books-ms
+
+cat docker-compose-dev.yml
+
+sudo docker-compose \
+	-f docker-compose-dev.yml \
+	run --rm \
+	-e DOMAIN=http://10.100.198.201 \
+	integ
+						</code></pre>
+					</section>
+					<section id="dp-late-checklist">
+						<h4>Deployment Pipeline: The Late Stages</h4>
+						<h2>Checklist</h2>
+						<ol>
+							<li class="fragment"><strike>Checkout the code</strike></li>
+							<li class="fragment"><strike>Run pre-deployment tests</strike></li>
+							<li class="fragment"><strike>Compile and/or package the code</strike></li>
+							<li class="fragment"><strike>Build the container</strike></li>
+							<li class="fragment"><strike>Push the container to the registry</strike></li>
+							<li class="fragment"><strike>Deploy the container to the production server</strike></li>
+							<li class="fragment"><strike>Integrate the container</strike></li>
+							<li class="fragment"><strike>Run post-deployment tests</strike></li>
+						</ol>
 					</section>
 				</section>
 				<section id="summary">
