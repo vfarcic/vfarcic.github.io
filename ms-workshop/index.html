@@ -1211,7 +1211,207 @@ exit
 				</section>
 				<section>
 					<section id="dp-auto">
-						<h2>Automating Implementation of the Deployment Pipeline</h2>
+						<h2>Automating the Deployment Pipeline</h2>
+						<img src="img/cd-pipeline-docker.png">
+					</section>
+					<section id="dp-auto-code">
+						<h4>Automating the Deployment Pipeline</h4>
+						<h2>Checking Out the Code</h2>
+						<pre><code data-trim contenteditable>
+vagrant ssh cd
+
+cd ~/books-ms
+
+git pull
+						</code></pre>
+					</section>
+					<section id="dp-auto-playbook">
+						<h4>Automating the Deployment Pipeline</h4>
+						<h2>Ansible Playbook</h2>
+						<pre><code data-trim contenteditable>
+cat /vagrant/ansible/roles/service/tasks/main.yml
+						</code></pre>
+					</section>
+					<section id="dp-auto-pre-depployment-tests">
+						<h4>Automating the Deployment Pipeline</h4>
+						<h2>Running the Pre-Deployment Tests, Compiling and Packaging</h2>
+						<pre><code data-trim contenteditable>
+# roles/service/tasks/main.yml
+
+- name: Tests container is built
+  shell: docker build \
+    -t 10.100.198.200:5000/{{ service_name }}-tests \
+    -f Dockerfile.test .
+  args:
+    chdir: "{{ repo_dir }}"
+  delegate_to: 127.0.0.1
+  tags: [service, tests]
+
+- name: Pre-deployment tests are run
+  shell: docker-compose \
+    -f docker-compose-dev.yml \
+    run --rm tests
+  args:
+    chdir: "{{ repo_dir }}"
+  delegate_to: 127.0.0.1
+  tags: [service, tests]
+						</code></pre>
+					</section>
+					<section id="dp-auto-build">
+						<h4>Automating the Deployment Pipeline</h4>
+						<h2>Building the Container</h2>
+						<pre><code data-trim contenteditable>
+# roles/service/tasks/main.yml
+
+- name: Container is built
+  shell: docker build \
+    -t 10.100.198.200:5000/{{ service_name }} .
+  args:
+    chdir: "{{ repo_dir }}"
+  delegate_to: 127.0.0.1
+  tags: [service]
+						</code></pre>
+					</section>
+					<section id="dp-auto-push">
+						<h4>Automating the Deployment Pipeline</h4>
+						<h2>Pushing the Container to the Registry</h2>
+						<pre><code data-trim contenteditable>
+# roles/service/tasks/main.yml
+
+- name: Container is pushed
+  shell: docker push \
+    10.100.198.200:5000/{{ service_name }}
+  delegate_to: 127.0.0.1
+  tags: [service]
+						</code></pre>
+					</section>
+					<section id="dp-auto-prepare-deploy">
+						<h4>Automating the Deployment Pipeline</h4>
+						<h2>Preparing for the Deployment to the Production Server</h2>
+						<pre><code data-trim contenteditable>
+# roles/service/tasks/main.yml
+
+- name: Directories are created
+  file:
+    path: /data/{{ service_name }}
+    recurse: yes
+    state: directory
+  tags: [service]
+
+- name: Files are copied
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items: files
+  tags: [service]
+						</code></pre>
+					</section>
+					<section id="dp-auto-prepare-deploy-2">
+						<h4>Automating the Deployment Pipeline</h4>
+						<h2>Preparing for the Deployment to the Production Server</h2>
+						<pre><code data-trim contenteditable>
+# roles/service/defaults/main.yml
+
+files: [
+  {
+    src: "{{ repo_dir }}/docker-compose.yml",
+    dest: "/data/{{ service_name }}/docker-compose.yml"
+  }, {
+    src: "{{ repo_dir }}/nginx-includes.conf",
+    dest: "/data/nginx/includes/{{ service_name }}.conf"
+  }, {
+    src: "{{ repo_dir }}/nginx-upstreams.ctmpl",
+    dest: "/data/nginx/upstreams/{{ service_name }}.ctmpl"
+  }
+]
+						</code></pre>
+					</section>
+					<section id="dp-auto-deploy">
+						<h4>Automating the Deployment Pipeline</h4>
+						<h2>Deploying the Containers to the Production Server</h2>
+						<pre><code data-trim contenteditable>
+# roles/service/tasks/main.yml
+
+- name: Containers are pulled
+  shell: docker-compose pull app
+  args:
+    chdir: /data/{{ service_name }}
+  tags: [service]
+
+- name: Containers are running
+  shell: docker-compose up -d app
+  args:
+    chdir: /data/{{ service_name }}
+  tags: [service]
+						</code></pre>
+					</section>
+					<section id="dp-auto-integrate">
+						<h4>Automating the Deployment Pipeline</h4>
+						<h2>Integrating the Container</h2>
+						<pre><code data-trim contenteditable>
+# roles/service/tasks/main.yml
+
+- name: Proxy is configured
+  shell: consul-template \
+    -consul localhost:8500 \
+    -template "{{ ct_src }}:{{ ct_dest }}:{{ ct_cmd }}" \
+    -once
+  tags: [service]
+						</code></pre>
+					</section>
+					<section id="dp-auto-integrate-variables">
+						<h4>Automating the Deployment Pipeline</h4>
+						<h2>Integration Variables</h2>
+						<pre><code data-trim contenteditable>
+# roles/service/defaults/main.yml
+
+ct_src: /data/nginx/upstreams/{{ service_name }}.ctmpl
+ct_dest: /data/nginx/upstreams/{{ service_name }}.conf
+ct_cmd: docker kill -s HUP nginx
+						</code></pre>
+					</section>
+					<section id="dp-auto-post-deployment-tests">
+						<h4>Automating the Deployment Pipeline</h4>
+						<h2>Running the Post-Deployment Tests</h2>
+						<pre><code data-trim contenteditable>
+# roles/service/tasks/main.yml
+
+- name: Post-deployment tests are run
+  shell: docker-compose \
+    -f docker-compose-dev.yml \
+    run --rm \
+    -e DOMAIN={{ proxy_url }} \
+    integ
+  args:
+    chdir: "{{ repo_dir }}"
+  delegate_to: 127.0.0.1
+  tags: [service, tests]
+						</code></pre>
+					</section>
+					<section id="dp-auto-push-tests">
+						<h4>Automating the Deployment Pipeline</h4>
+						<h2>Pushing the Tests Container to the Registry</h2>
+						<pre><code data-trim contenteditable>
+# roles/service/tasks/main.yml
+
+- name: Tests container is pushed
+  shell: docker push \
+    10.100.198.200:5000/{{ service_name }}-tests
+  delegate_to: 127.0.0.1
+  tags: [service, tests]
+						</code></pre>
+					</section>
+					<section id="dp-auto-run-pipeline">
+						<h4>Automating the Deployment Pipeline</h4>
+						<h2>Running the Deployment Pipeline</h2>
+						<pre><code data-trim contenteditable>
+cd ~/books-ms
+
+ansible-playbook /vagrant/ansible/service.yml \
+	-i /vagrant/ansible/hosts/prod \
+	--extra-vars "repo_dir=$PWD service_name=books-ms" \
+	-vvvv
+						</code></pre>
 					</section>
 				</section>
 				<section id="summary">
