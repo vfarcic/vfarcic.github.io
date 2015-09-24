@@ -109,7 +109,7 @@
 					<section id="ci-process">
 						<h4>Continuous deployment</h4>
 						<h2>CI process</h2>
-						<img src="img/ci.png">
+						<img src="img/ci.png" style="width: 65%; height: 65%;">
 					</section>
 					<section id="ci-pipeline">
 						<h4>Continuous deployment</h4>
@@ -119,7 +119,7 @@
 					<section id="cd-process">
 						<h4>Continuous deployment</h4>
 						<h2>Continuous delivery process</h2>
-						<img src="img/cd.png">
+						<img src="img/cd.png" style="width: 65%; height: 65%;">
 					</section>
 					<section id="cd-pipeline">
 						<img src="img/cd-pipeline.png" style="width: 60%; height: 60%; float: right;">
@@ -143,12 +143,12 @@
 					<section id="containers-vms">
 						<h4>Containers (Docker)</h4>
 						<h2>VMs vs Containers</h2>
-						<img src="img/containers-vms.png">
+						<img src="img/containers-vms.png" style="width: 85%; height: 85%;">
 					</section>
 					<section id="container-self-sufficient">
 						<h4>Containers (Docker)</h4>
 						<h2>Self-sufficient container</h2>
-						<img src="img/container.png" style="width: 60%; height: 60%; ">
+						<img src="img/container.png" style="width: 60%; height: 60%;">
 					</section>
 					<section id="container-db">
 						<h4>Containers (Docker)</h4>
@@ -840,6 +840,12 @@ curl -X DELETE http://10.100.197.202:8500/v1/kv/?recurse
 						<h4>Service Discovery</h4>
 						<h2>Registrator Ansible playbook</h2>
 						<pre><code data-trim contenteditable>
+sudo docker pull gilderlabs/registrator
+
+sudo docker tag gilderlabs/registrator 10.100.198.200:5000/registrator
+
+sudo docker push 10.100.198.200:5000/registrator
+
 cat /vagrant/ansible/roles/registrator/tasks/main.yml
 
 cat /vagrant/ansible/roles/registrator/defaults/main.yml
@@ -962,6 +968,12 @@ vagrant halt serv-disc-01 serv-disc-02 serv-disc-03
 vagrant up proxy
 
 vagrant ssh cd
+
+sudo docker pull nginx
+
+sudo docker tag nginx 10.100.198.200:5000/nginx
+
+sudo docker push 10.100.198.200:5000/nginx
 
 cat /vagrant/ansible/nginx.yml
 
