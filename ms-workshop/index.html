@@ -510,7 +510,14 @@ sudo docker build -t vfarcic/books-ms .
 						<h2>Running containers (Docker)</h2>
 						<h3>Docker</h3>
 						<pre><code data-trim contenteditable>
-sudo docker run -d --name books-ms-db mongo
+sudo docker pull mongo
+
+sudo docker tag mongo 10.100.198.200:5000/mongo
+
+sudo docker push 10.100.198.200:5000/mongo
+
+sudo docker run -d --name books-ms-db \
+	10.100.198.200:5000/mongo
 
 sudo docker run -d --name books-ms \
 	-p 8080:8080 \
