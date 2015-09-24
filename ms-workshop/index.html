@@ -1444,6 +1444,113 @@ ansible-playbook /vagrant/ansible/service.yml \
 	-vvvv
 						</code></pre>
 					</section>
+					<section id="dp-auto-clean-up">
+						<h4>Automating the Deployment Pipeline</h4>
+						<h2>Clean Up</h2>
+						<pre><code data-trim contenteditable>
+exit
+
+vagrant destroy prod -f
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section id="bg" data-transition="fade-in slide-out">
+						<h2>Blue-Green Deployment</h2>
+					</section>
+					<section id="bg-blue" data-transition="fade-in slide-out">
+						<h4>Blue-Green Deployment</h4>
+						<h2>Deploy Blue</h2>
+						<img src="img/blue-green-containers-deploy-blue.png">
+					</section>
+					<section id="bg-integ-blue" data-transition="fade-in slide-out">
+						<h4>Blue-Green Deployment</h4>
+						<h2>Integrate Blue</h2>
+						<img src="img/blue-green-containers-integrate-blue.png">
+					</section>
+					<section id="bg-green" data-transition="fade-in slide-out">
+						<h4>Blue-Green Deployment</h4>
+						<h2>Deploy Green</h2>
+						<img src="img/blue-green-containers-deploy-green.png">
+					</section>
+					<section id="bg-integ-green" data-transition="fade-in slide-out">
+						<h4>Blue-Green Deployment</h4>
+						<h2>Integrate Green</h2>
+						<img src="img/blue-green-containers-integrate-green.png">
+					</section>
+					<section id="bg-remove-blue" data-transition="fade-in slide-out">
+						<h4>Blue-Green Deployment</h4>
+						<h2>Remove Blue</h2>
+						<img src="img/blue-green-containers-remove-blue.png">
+					</section>
+					<section id="bg-get-color" data-transition="fade-in slide-out">
+						<h4>Blue-Green Deployment</h4>
+						<h2>Get the Current Color</h2>
+						<img src="img/blue-green-containers-get-color.png">
+					</section>
+					<section id="bg-put-color" data-transition="fade-in">
+						<h4>Blue-Green Deployment</h4>
+						<h2>Put the Current Color</h2>
+						<img src="img/blue-green-containers-put-color.png">
+					</section>
+					<section id="bg-combination">
+						<h4>Blue-Green Deployment Playbook</h4>
+						<h2>Combinations</h2>
+						<ul>
+							<li class="fragment">The First Run</li>
+							<li class="fragment">After the First Run</li>
+							<li class="fragment">Pre-deployment tests failed</li>
+							<li class="fragment">Pre-integration tests failed</li>
+							<li class="fragment">Post-integration tests failed</li>
+						</ul>
+					</section>
+					<section id="bg-playbook">
+						<h4>Blue-Green Deployment Playbook</h4>
+						<h2>Playbook</h2>
+                    	<pre><code data-trim contenteditable>
+cat /vagrant/ansible/service-bg.yml
+
+cat /vagrant/ansible/roles/service-bg/tasks/main.yml
+
+cat /vagrant/ansible/roles/service-bg/tasks/pre-deployment.yml
+
+cat /vagrant/ansible/roles/service-bg/tasks/deployment.yml
+
+cat /vagrant/ansible/roles/service-bg/tasks/post-deployment.yml
+
+cat /vagrant/ansible/roles/service-bg/tasks/rollback.yml
+
+cat /vagrant/ansible/roles/service-bg/tasks/main.yml
+
+cat /vagrant/ansible/roles/service-bg/tasks/copy.yml
+
+cat /vagrant/ansible/roles/service-bg/defaults/main.yml
+
+cat /vagrant/ansible/roles/service-bg/files/get-color.yml
+
+cat /vagrant/ansible/roles/service-bg/files/get-port.yml
+						</code></pre>
+					</section>
+					<section id="bg-run">
+						<h4>Blue-Green Deployment Playbook</h4>
+						<h2>Running the Playbook</h2>
+							<pre><code data-trim contenteditable>
+ansible-playbook /vagrant/ansible/service-bg.yml \
+	-i /vagrant/ansible/hosts/prod \
+	--extra-vars "repo_dir=$PWD service_name=books-ms" \
+	-vv
+
+curl 10.100.198.201:8500/v1/catalog/services \
+	| jq '.'
+
+curl 10.100.198.201:8500/v1/catalog/service/books-ms-blue \
+	| jq '.'
+
+curl http://10.100.198.201:8500/v1/kv/books-ms/color?raw
+
+curl 10.100.198.201/api/v1/books | jq '.'
+						</code></pre>
+					</section>
 				</section>
 				<section id="summary">
 					<h2>Summary</h2>
