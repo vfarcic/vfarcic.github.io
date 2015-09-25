@@ -137,6 +137,7 @@ vagrant up proxy
 vagrant ssh cd -c "ansible-playbook /vagrant/ansible/docker.yml -i /vagrant/ansible/hosts/proxy" # Answer "yes" when asked
 vagrant ssh proxy -c "sudo chmod +x /vagrant/scripts/*"
 vagrant ssh proxy -c "sudo /vagrant/scripts/preload_proxy.sh"
+vagrant halt proxy
 
 vagrant up swarm-master swarm-node-1 swarm-node-2
 vagrant ssh cd -c "ansible-playbook /vagrant/ansible/docker.yml -i /vagrant/ansible/hosts/swarm" # Answer "yes" when asked
@@ -146,6 +147,7 @@ vagrant ssh swarm-node-1 -c "sudo chmod +x /vagrant/scripts/*"
 vagrant ssh swarm-node-1 -c "sudo /vagrant/scripts/preload_swarm.sh"
 vagrant ssh swarm-node-2 -c "sudo chmod +x /vagrant/scripts/*"
 vagrant ssh swarm-node-2 -c "sudo /vagrant/scripts/preload_swarm.sh"
+vagrant halt swarm-master swarm-node-1 swarm-node-2
 
 vagrant halt cd
 ```
