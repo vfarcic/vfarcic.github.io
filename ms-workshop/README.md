@@ -138,5 +138,14 @@ vagrant ssh cd -c "ansible-playbook /vagrant/ansible/docker.yml -i /vagrant/ansi
 vagrant ssh proxy -c "sudo chmod +x /vagrant/scripts/*"
 vagrant ssh proxy -c "sudo /vagrant/scripts/preload_proxy.sh"
 
+vagrant up swarm-master swarm-node-1 swarm-node-2
+vagrant ssh cd -c "ansible-playbook /vagrant/ansible/docker.yml -i /vagrant/ansible/hosts/swarm" # Answer "yes" when asked
+vagrant ssh swarm-master -c "sudo chmod +x /vagrant/scripts/*"
+vagrant ssh swarm-master -c "sudo /vagrant/scripts/preload_swarm.sh"
+vagrant ssh swarm-node-1 -c "sudo chmod +x /vagrant/scripts/*"
+vagrant ssh swarm-node-1 -c "sudo /vagrant/scripts/preload_swarm.sh"
+vagrant ssh swarm-node-2 -c "sudo chmod +x /vagrant/scripts/*"
+vagrant ssh swarm-node-2 -c "sudo /vagrant/scripts/preload_swarm.sh"
+
 vagrant halt cd
 ```
