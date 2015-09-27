@@ -145,8 +145,10 @@ vagrant ssh swarm-master -c "sudo chmod +x /vagrant/scripts/*"
 vagrant ssh swarm-master -c "sudo /vagrant/scripts/preload_swarm.sh"
 vagrant ssh swarm-node-1 -c "sudo chmod +x /vagrant/scripts/*"
 vagrant ssh swarm-node-1 -c "sudo /vagrant/scripts/preload_swarm.sh"
+vagrant ssh swarm-node-1 -c "sudo /vagrant/scripts/preload_swarm_node.sh"
 vagrant ssh swarm-node-2 -c "sudo chmod +x /vagrant/scripts/*"
 vagrant ssh swarm-node-2 -c "sudo /vagrant/scripts/preload_swarm.sh"
+vagrant ssh swarm-node-2 -c "sudo /vagrant/scripts/preload_swarm_node.sh"
 vagrant halt swarm-master swarm-node-1 swarm-node-2
 
 vagrant halt cd
