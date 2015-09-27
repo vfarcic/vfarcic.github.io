@@ -1551,7 +1551,91 @@ curl http://10.100.198.201:8500/v1/kv/books-ms/color?raw
 curl 10.100.198.201/api/v1/books | jq '.'
 
 exit
+
+halt prod
 						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section id="scale">
+						<h2>Clustering And Scaling Services</h2>
+						<ul>
+							<li class="fragment">Swarm</li>
+							<li class="fragment">Kubernetes</li>
+							<li class="fragment">Mesos DCOS</li>
+						</ul>
+					</section>
+					<section>
+						<h4>Clustering And Scaling Services</h4>
+						<h2>Setting Up Docker Swarm</h2>
+							<pre><code data-trim contenteditable>
+vagrant up swarm-master swarm-node-1 swarm-node-2
+
+vagrant ssh cd
+
+ansible-playbook /vagrant/ansible/swarm.yml \
+	-i /vagrant/ansible/hosts/prod \
+	-vv
+
+cat /vagrant/ansible/swarm.yml
+
+cat /vagrant/ansible/roles/swarm/tasks/main.yml
+
+export DOCKER_HOST=tcp://10.100.195.200:2375
+
+docker info
+
+docker ps -a
+							</code></pre>
+					</section>
+					<section>
+						<h4>Clustering And Scaling Services</h4>
+						<h2>Deploying with Docker Swarm</h2>
+							<pre><code data-trim contenteditable>
+cd ~/books-ms
+
+docker-compose up -d app
+
+docker ps -a | grep books
+
+curl 10.100.195.200:8500/v1/catalog/services \
+	| jq '.'
+
+curl 10.100.195.200:8500/v1/catalog/service/books-ms \
+	| jq '.'
+
+docker ps | grep booksms
+							</code></pre>
+					</section>
+					<section>
+						<h4>Clustering And Scaling Services</h4>
+						<h2>Testing Deployments with Docker Swarm</h2>
+							<pre><code data-trim contenteditable>
+BOOKS_MS_ADDRESS=`curl \
+	10.100.195.200:8500/v1/catalog/service/books-ms \
+	| jq '.[0].Address'`
+
+BOOKS_MS_PORT=`curl \
+	10.100.195.200:8500/v1/catalog/service/books-ms \
+	| jq '.[0].ServicePort'`
+
+BOOKS_MS_HOST=${BOOKS_MS_ADDRESS//\"}:${BOOKS_MS_PORT}
+
+echo $BOOKS_MS_HOST
+
+curl -H 'Content-Type: application/json' -X PUT -d \
+	'{"_id": 1,
+	"title": "My First Book",
+	"author": "John Doe",
+	"description": "Not a very good book"}' \
+	$BOOKS_MS_HOST/api/v1/books | jq '.'
+
+curl $BOOKS_MS_HOST/api/v1/books
+
+docker rm -f swarm-node-1/booksms_app_1
+
+docker rm -f swarm-node-1/booksms_db_1
+							</code></pre>
 					</section>
 				</section>
 				<section id="summary">
