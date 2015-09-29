@@ -1559,13 +1559,54 @@ halt prod
 				<section>
 					<section id="scale">
 						<h2>Clustering And Scaling Services</h2>
+						<img src="img/scale/servers.png" class="fragment">
+						<img src="img/scale/cluster.png" class="fragment">
+					</section>
+					<section id="scale-tools">
+						<h4>Clustering And Scaling Services</h4>
+						<h2>Tools</h2>
 						<ul>
-							<li class="fragment">Swarm</li>
 							<li class="fragment">Kubernetes</li>
 							<li class="fragment">Mesos DCOS</li>
+							<li class="fragment"><label class="fragment grow highlight-current-green">Swarm</label></li>
 						</ul>
 					</section>
-					<section>
+					<section id="scale-discovery" data-transition="slide-out">
+						<h4>Clustering And Scaling Services</h4>
+						<h2>Service Discovery</h2>
+						<img src="img/scale/swarm-consul.png">
+					</section>
+					<section id="scale-master-nodes" data-transition="fade-in slide-out">
+						<h4>Clustering And Scaling Services</h4>
+						<h2>Master and Nodes</h2>
+						<img src="img/scale/swarm-master-nodes.png">
+					</section>
+					<section id="scale-first-container" data-transition="fade-in slide-out">
+						<h4>Clustering And Scaling Services</h4>
+						<h2>Deploying the First Container</h2>
+						<img src="img/scale/swarm-first-container.png">
+					</section>
+					<section id="scale-second-container" data-transition="fade-in slide-out">
+						<h4>Clustering And Scaling Services</h4>
+						<h2>The Second Container</h2>
+						<img src="img/scale/swarm-second-container.png">
+					</section>
+					<section id="scale-nodes-full" data-transition="fade-in slide-out">
+						<h4>Clustering And Scaling Services</h4>
+						<h2>All Nodes Full</h2>
+						<img src="img/scale/swarm-nodes-full.png">
+					</section>
+					<section id="scale-new-node" data-transition="fade-in slide-out">
+						<h4>Clustering And Scaling Services</h4>
+						<h2>Adding a New Node</h2>
+						<img src="img/scale/swarm-new-node.png">
+					</section>
+					<section id="scale-failed-node" data-transition="fade-in">
+						<h4>Clustering And Scaling Services</h4>
+						<h2>Failed Node</h2>
+						<img src="img/scale/swarm-failed-node.png">
+					</section>
+					<section id="scale-swarm-set-up">
 						<h4>Clustering And Scaling Services</h4>
 						<h2>Setting Up Docker Swarm</h2>
 							<pre><code data-trim contenteditable>
@@ -1588,7 +1629,7 @@ docker info
 docker ps -a
 							</code></pre>
 					</section>
-					<section>
+					<section id="scale-swarm-deploy">
 						<h4>Clustering And Scaling Services</h4>
 						<h2>Deploying with Docker Swarm</h2>
 						<pre><code data-trim contenteditable>
@@ -1607,7 +1648,7 @@ curl 10.100.195.200:8500/v1/catalog/service/books-ms \
 docker ps | grep booksms
 						</code></pre>
 					</section>
-					<section>
+					<section id="scale-testing">
 						<h4>Clustering and Scaling Services</h4>
 						<h2>Testing Deployments with Docker Swarm</h2>
 						<pre><code data-trim contenteditable>
@@ -1637,7 +1678,7 @@ docker rm -f swarm-node-1/booksms_app_1
 docker rm -f swarm-node-1/booksms_db_1
 						</code></pre>
 					</section>
-					<section>
+					<section id="scale-swarm-deploy-cluster">
 						<h4>Clustering And Scaling Services</h4>
 						<h2>Deploying with Docker Swarm to the Cluster</h2>
 							<pre><code data-trim contenteditable>
@@ -1662,7 +1703,7 @@ docker-compose -f docker-compose-swarm.yml run --rm \
 docker-compose -f docker-compose-swarm.yml up -d app
 							</code></pre>
 					</section>
-					<section>
+					<section id="scale-testing-cluster">
 						<h4>Clustering And Scaling Services</h4>
 						<h2>Testing Deployment with Docker Swarm to the Cluster</h2>
 						<pre><code data-trim contenteditable>
@@ -1674,10 +1715,12 @@ curl 10.100.195.200:8500/v1/catalog/service/books-ms \
 
 docker ps | grep booksms
 
-BOOKS_MS_ADDRESS=`curl 10.100.195.200:8500/v1/catalog/service/books-ms \
+BOOKS_MS_ADDRESS=`curl \
+	10.100.195.200:8500/v1/catalog/service/books-ms \
 	| jq '.[0].Address'`
 
-BOOKS_MS_PORT=`curl 10.100.195.200:8500/v1/catalog/service/books-ms \
+BOOKS_MS_PORT=`curl \
+	10.100.195.200:8500/v1/catalog/service/books-ms \
 	| jq '.[0].ServicePort'`
 
 BOOKS_MS_HOST=${BOOKS_MS_ADDRESS//\"}:${BOOKS_MS_PORT}
@@ -1694,7 +1737,7 @@ curl -H 'Content-Type: application/json' -X PUT -d \
 curl $BOOKS_MS_HOST/api/v1/books | jq '.'
 						</code></pre>
 					</section>
-					<section>
+					<section id="scale-swarm-scale">
 						<h4>Clustering And Scaling Services</h4>
 						<h2>Scaling Services with Docker Swarm</h2>
 						<pre><code data-trim contenteditable>
@@ -1731,7 +1774,7 @@ echo $BOOKS_MS_HOST
 curl $BOOKS_MS_HOST/api/v1/books | jq '.'
 						</code></pre>
 					</section>
-					<section>
+					<section id="scale-swarm-de-scale">
 						<h4>Clustering And Scaling Services</h4>
 						<h2>Descaling Services with Docker Swarm</h2>
 						<pre><code data-trim contenteditable>
@@ -1754,7 +1797,7 @@ echo $BOOKS_MS_HOST
 curl $BOOKS_MS_HOST/api/v1/books | jq '.'
 						</code></pre>
 					</section>
-					<section>
+					<section id="scale-clean-up">
 						<h4>Clustering And Scaling Services</h4>
 						<h2>Cleaning Up</h2>
 						<pre><code data-trim contenteditable>
@@ -1767,7 +1810,7 @@ docker-compose -f docker-compose-swarm.yml stop db
 docker-compose -f docker-compose-swarm.yml rm -f db
 						</code></pre>
 					</section>
-					<section>
+					<section id="scale-swarm-playbook">
 						<h4>Clustering And Scaling Services</h4>
 						<h2>Examining the Swarm Deployment Playbook</h2>
 						<pre><code data-trim contenteditable>
@@ -1796,7 +1839,7 @@ cat /vagrant/ansible/roles/service-swarm/files/get-color.yml
 cat /vagrant/ansible/roles/service-swarm/files/get-domain.yml
 						</code></pre>
 					</section>
-					<section>
+					<section id="scale-swarm-playbook-run">
 						<h4>Clustering And Scaling Services</h4>
 						<h2>Running the Swarm Deployment Playbook</h2>
 						<pre><code data-trim contenteditable>
@@ -1822,14 +1865,6 @@ curl 10.100.195.200/api/v1/books | jq '.'
 					<h3>Not a silver bullet</h3>
 				</section>
 				<section id="qa" data-background="img/questions.jpg">
-				</section>
-				<section id="moreInfo">
-					<h2>Additional Information</h2>
-					<ul>
-						<li>
-							<a href="http://technologyconversations.com/2015/01/07/monolithic-servers-vs-microservices/">Monolithic Servers vs Microservices</a>
-						</li>
-					</ul>
 				</section>
 				<section>
 					<section id="the-end" data-background="img/the_end.jpg">
