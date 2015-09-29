@@ -1859,6 +1859,26 @@ curl 10.100.195.200:8500/v1/kv/books-ms/color?raw
 curl 10.100.195.200/api/v1/books | jq '.'
 						</code></pre>
 					</section>
+					<section id="scale-swarm-scale-ansible">
+						<h4>Clustering And Scaling Services</h4>
+						<h2>Scaling the Service With Ansible</h2>
+						<pre><code data-trim contenteditable>
+ansible-playbook /vagrant/ansible/service-swarm.yml \
+	-i /vagrant/ansible/hosts/prod \
+	--extra-vars "repo_dir=$PWD service_name=books-ms" \
+	--skip-tags "pull" --extra-vars "scale_service=2" -vv
+
+curl 10.100.195.200:8500/v1/catalog/services \
+	| jq '.'
+
+curl 10.100.195.200:8500/v1/catalog/service/books-ms-green \
+	| jq '.'
+
+curl http://10.100.195.200:8500/v1/kv/books-ms/color?raw
+
+curl 10.100.195.200/api/v1/books | jq '.'
+						</code></pre>
+					</section>
 				</section>
 				<section id="summary">
 					<h2>Summary</h2>
