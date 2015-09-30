@@ -59,7 +59,7 @@
 						<li><a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">Java Test-Driven Development: Mastering TDD Through Katas</a></li>
 					</ul>
 				</section>
-				<section id="failures">
+				<section id="failures" data-background="img/background/rage.jpg">
 					<h2>History of the Failed Initiatives</h2>
 					<h4>Continuous Integration (CI), Delivery and Deployment (CD)</h4>
 					<ul>
@@ -71,7 +71,7 @@
 						<li class="fragment">Deployments</li>
 					</ul>
 				</section>
-				<section id="history">
+				<section id="history" data-background="img/background/fireworks.png">
 					<h2>Things in Common</h2>
 					<ul>
 						<li class="fragment">Domain-driven design</li>
@@ -81,7 +81,7 @@
 						<li class="fragment">Scalable systems</li>
 					</ul>
 				</section>
-				<section>
+				<section data-background="img/background/train.png">
 					<section id="ci-cd">
 						<h2>Continuous deployment</h2>
 						<ul>
@@ -127,7 +127,7 @@
 						<h2>Continuous deployment pipeline</h2>
 					</section>
 				</section>
-				<section>
+				<section data-background="img/background/containers.png">
 					<section id="containers">
 						<h2>Containers (Docker)</h2>
 						<blockquote>Shipping container is an object for holding or transporting something</blockquote>
@@ -161,8 +161,8 @@
 						<img src="img/container-shared-db.png" style="width: 70%; height: 70%; ">
 					</section>
 				</section>
-				<section>
-					<section id="monolith" data-background="img/monolith/monolith.jpg">
+				<section data-background="img/background/monolith.png">
+					<section id="monolith">
 						<h2>Monolithic applications</h2>
 						<ul>
 							<li class="fragment">Single unit</li>
@@ -189,8 +189,8 @@
 						<img src="img/monolith/monolith-scaling.png" style="width: 80%; height: 80%;">
 					</section>
 				</section>
-				<section>
-					<section id="ms" data-background="img/code.jpg">
+				<section data-background="img/background/microservices.png">
+					<section id="ms">
 						<h2>Microservices</h2>
 						<h4>Applications that fit into a screen</h4>
 						<ul>
@@ -238,58 +238,59 @@ ps aux | grep jav[a] | awk '{print $2}' | xargs kill
 						</code></pre>
 					</section>
 				</section>
-				<section id="ms-keys">
-					<h2>Microservices</h2>
-					<h3>Key Aspects</h3>
-					<ul>
-						<li class="fragment">One thing or one functionality</li>
-						<li class="fragment">Any tools or languages</li>
-						<li class="fragment">Truly loosely coupled</li>
-						<li class="fragment">Teams independence</li>
-						<li class="fragment">Easier testing and CD</li>
-						<li class="fragment">Decentralization</li>
-					</ul>
+				<section data-background="img/background/microservices.png">
+					<section id="ms-keys">
+						<h2>Microservices</h2>
+						<ul>
+							<li class="fragment">One thing or one functionality</li>
+							<li class="fragment">Any tools or languages</li>
+							<li class="fragment">Truly loosely coupled</li>
+							<li class="fragment">Teams independence</li>
+							<li class="fragment">Easier testing and CD</li>
+							<li class="fragment">Decentralization</li>
+						</ul>
+					</section>
+					<section id="ms-cons" data-background="img/background/microservices.png">
+						<h4>Microservices</h4>
+						<h2>Disadvantages</h2>
+						<ul>
+							<li class="fragment">Increased operational and deployment complexity
+								<ul>
+									<li class="fragment">Configuration Management</li>
+									<li class="fragment">Containers (Docker)</li>
+									<li class="fragment">Work shifted from development to DevOps</li>
+								</ul>
+							</li>
+							<li class="fragment">Remote process calls</li>
+						</ul>
+					</section>
+					<section id="ms-pros">
+						<h4>Microservices</h4>
+						<h2>Advantages</h2>
+						<ul>
+							<li class="fragment">Scaling</li>
+							<li class="fragment">Resilience / fault isolation</li>
+							<li class="fragment">Innovation</li>
+							<li class="fragment">Size</li>
+							<li class="fragment">Decoupling</li>
+							<li class="fragment">Deployment</li>
+							<li class="fragment">No need for long term commitment</li>
+						</ul>
+					</section>
+					<section id="ms-bp">
+						<h4>Microservices</h4>
+						<h2>Best Practices</h2>
+						<ul>
+							<li class="fragment">Containers (Docker)</li>
+							<li class="fragment">Reverse proxy</li>
+							<li class="fragment">Minimalist approach</li>
+							<li class="fragment">CM is a must</li>
+							<li class="fragment">Cross functional teams</li>
+							<li class="fragment">API versioning</li>
+						</ul>
+					</section>
 				</section>
-				<section id="ms-cons">
-					<h2>Microservices</h2>
-					<h4>Disadvantages</h4>
-					<ul>
-						<li class="fragment">Increased operational and deployment complexity
-							<ul>
-								<li class="fragment">Configuration Management</li>
-								<li class="fragment">Containers (Docker)</li>
-								<li class="fragment">Work shifted from development to DevOps</li>
-							</ul>
-						</li>
-						<li class="fragment">Remote process calls</li>
-					</ul>
-				</section>
-				<section id="ms-pros">
-					<h2>Microservices</h2>
-					<h4>Advantages</h4>
-					<ul>
-						<li class="fragment">Scaling</li>
-						<li class="fragment">Resilience / fault isolation</li>
-						<li class="fragment">Innovation</li>
-						<li class="fragment">Size</li>
-						<li class="fragment">Decoupling</li>
-						<li class="fragment">Deployment</li>
-						<li class="fragment">No need for long term commitment</li>
-					</ul>
-				</section>
-				<section id="ms-bp">
-					<h2>Microservices</h2>
-					<h4>Best Practices</h4>
-					<ul>
-						<li class="fragment">Containers (Docker)</li>
-						<li class="fragment">Reverse proxy</li>
-						<li class="fragment">Minimalist approach</li>
-						<li class="fragment">CM is a must</li>
-						<li class="fragment">Cross functional teams</li>
-						<li class="fragment">API versioning</li>
-					</ul>
-				</section>
-				<section>
+				<section data-background="img/background/deployment.png">
 					<section id="deployment">
 						<h2>Deployment</h2>
 						<ul>
@@ -361,7 +362,7 @@ ps aux | grep jav[a] | awk '{print $2}' | xargs kill
 						</div>
 					</section>
 				</section>
-				<section>
+				<section data-background="img/background/dev-env.png">
 					<section id="dev">
 						<h2>Development Environment</h2>
 						<ul>
@@ -442,7 +443,7 @@ vagrant halt dev
 						</code></pre>
 					</section>
 				</section>
-				<section>
+				<section data-background="img/background/deployment-pipeline.png">
 					<section id="dp">
 						<h2>Deployment Pipeline</h2>
 						<ol>
@@ -619,7 +620,7 @@ exit
 						</ol>
 					</section>
 				</section>
-				<section>
+				<section data-background="img/background/cm.png">
 					<section id="cm">
 						<h2>Configuration Management in the Docker World</h2>
 						<table>
@@ -668,7 +669,7 @@ exit
 						</code></pre>
 					</section>
 				</section>
-				<section>
+				<section data-background="img/background/deployment-pipeline.png">
 					<section id="dp2">
 						<h2>Deployment Pipeline: Intermediate Stages</h2>
 						<ol>
@@ -761,7 +762,7 @@ vagrant halt prod
 						</ol>
 					</section>
 				</section>
-				<section>
+				<section data-background="img/background/sd.png">
 					<section id="sd">
 						<h2>Service Discovery</h2>
 						<img src="img/sd/service-discovery.png">
@@ -975,7 +976,7 @@ vagrant halt serv-disc-01 serv-disc-02 serv-disc-03
 						</code></pre>
 					</section>
 				</section>
-				<section>
+				<section data-background="img/background/proxy.png">
 					<section id="proxy">
 						<h2>Proxy Service</h2>
 						<img src="img/ms/microservices.png">
@@ -1124,7 +1125,7 @@ vagrant halt proxy
 						</code></pre>
 					</section>
 				</section>
-				<section>
+				<section data-background="img/background/deployment-pipeline.png">
 					<section id="dp-late">
 						<h2>Deployment Pipeline: The Late Stages</h2>
 						<ol>
@@ -1246,7 +1247,7 @@ exit
 						</ol>
 					</section>
 				</section>
-				<section>
+				<section data-background="img/background/deployment-pipeline.png">
 					<section id="dp-auto" data-transition="fade-in slide-out">
 						<h2>Automating the Deployment Pipeline</h2>
 						<img src="img/cd-pipeline-docker-no-ansible.png" style="width: 85%; height: 85%;">
@@ -1472,7 +1473,7 @@ vagrant destroy prod -f
 						</code></pre>
 					</section>
 				</section>
-				<section>
+				<section data-background="img/background/blue-green.png">
 					<section id="bg" data-transition="fade-in slide-out">
 						<h2>Blue-Green Deployment</h2>
 						<h4>&nbsp;</h4>
@@ -1576,7 +1577,7 @@ halt prod
 						</code></pre>
 					</section>
 				</section>
-				<section>
+				<section data-background="img/background/scaling.png">
 					<section id="scale">
 						<h2>Clustering And Scaling Services</h2>
 						<img src="img/scale/servers.png" class="fragment">
@@ -1899,10 +1900,6 @@ curl http://10.100.195.200:8500/v1/kv/books-ms/color?raw
 curl 10.100.195.200/api/v1/books | jq '.'
 						</code></pre>
 					</section>
-				</section>
-				<section id="summary">
-					<h2>Summary</h2>
-					<h3>Not a silver bullet</h3>
 				</section>
 				<section id="qa" data-background="img/questions.jpg">
 				</section>
