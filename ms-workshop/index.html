@@ -375,7 +375,9 @@ ps aux | grep jav[a] | awk '{print $2}' | xargs kill
 						Please skip the first two steps if you followed the workshop preparation instructions.
 						<pre><code data-trim contenteditable>
 git clone https://github.com/vfarcic/books-ms.git
+
 vagrant plugin install vagrant-cachier
+
 cd books-ms
 						</code></pre>
 					</section>
@@ -383,34 +385,25 @@ cd books-ms
 						<h4>Development Environment</h4>
 						<h2>Vagrantfile</h2>
 						<pre><code data-trim contenteditable>
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-	config.vm.box = "ubuntu/trusty64"
-	config.vm.synced_folder ".", "/vagrant"
-	config.vm.provider "virtualbox" do |v|
-		v.memory = 2048
-	end
-	config.vm.define :dev do |dev|
-		dev.vm.provision :shell, path: "bootstrap.sh"
-		dev.vm.provision :shell,
-		inline: 'ansible-playbook \
-			/vagrant/ansible/dev.yml -c local -v'
-	end
-	if Vagrant.has_plugin?("vagrant-cachier")
-		config.cache.scope = :box
-	end
-end
+cat Vagrantfile
+
+vagrant up dev
 						</code></pre>
 					</section>
 					<section id="dev-inside-vm">
 						<h4>Development Environment</h4>
-						<h2>Inside Virtual Machine</h2>
+						<h2>Inside the Virtual Machine</h2>
 						<pre><code data-trim contenteditable>
-vagrant up dev
 vagrant ssh dev
+
 ansible --version
+
 docker --version
+
 docker-compose --version
+
 cd /vagrant
+
 ll
 						</code></pre>
 					</section>
@@ -453,6 +446,7 @@ vagrant halt dev
 					<section id="dp">
 						<h2>Deployment Pipeline</h2>
 						<ol>
+							<img src="img/dp/cd-pipeline-docker-no-ansible.png" style="float: right; width: 50%; height: 50%;">
 							<li class="fragment">Checkout the code</li>
 							<li class="fragment">Run pre-deployment tests</li>
 							<li class="fragment">Compile and/or package the code</li>
@@ -461,11 +455,12 @@ vagrant halt dev
 							<li class="fragment">Deploy the container to the production server</li>
 							<li class="fragment">Integrate the container</li>
 							<li class="fragment">Run post-deployment tests</li>
+							<li class="fragment">Push the tests container to the registry</li>
 						</ol>
 					</section>
 					<section id="dp-env">
 						<h4>Deployment Pipeline: Initial Stages</h4>
-						<h2>Creating CD VM</h2>
+						<h2>Creating the CD VM</h2>
 						Please skip the <strong>git clone</strong> step if you followed the workshop preparation instructions.
 						<pre><code data-trim contenteditable>
 cd ..
@@ -611,6 +606,7 @@ exit
 						<h4>Deployment Pipeline: Initial Stages</h4>
 						<h2>Checklist</h2>
 						<ol>
+							<img src="img/dp/cd-pipeline-docker-initial.png" style="float: right; width: 50%; height: 50%;">
 							<li class="fragment"><del>Checkout the code</del></li>
 							<li class="fragment"><del>Run pre-deployment tests</del></li>
 							<li class="fragment"><del>Compile and/or package the code</del></li>
@@ -619,18 +615,29 @@ exit
 							<li class="fragment">Deploy the container to the production server</li>
 							<li class="fragment">Integrate the container</li>
 							<li class="fragment">Run post-deployment tests</li>
+							<li class="fragment">Push the tests container to the registry</li>
 						</ol>
 					</section>
 				</section>
 				<section>
 					<section id="cm">
 						<h2>Configuration Management in the Docker World</h2>
-						<ol>
-							<li class="fragment">CFEngine</li>
-							<li class="fragment">Puppet</li>
-							<li class="fragment">Chef</li>
-							<li class="fragment"><label class="fragment grow highlight-current-green">Ansible</label></li>
-						</ol>
+						<table>
+							<tr>
+								<td class="fragment" style="width: 24%;">
+									<img src="img/cm/cfengine.png" style="background-color: white;">
+								</td>
+								<td class="fragment" style="width: 24%;">
+									<img src="img/cm/puppet.png" style="background-color: white;">
+								</td>
+								<td class="fragment" style="width: 24%;">
+									<img src="img/cm/chef.png" style="background-color: white;">
+								</td>
+								<td class="fragment" style="width: 24%;">
+									<img src="img/cm/ansible.png" style="background-color: white;">
+								</td>
+							</tr>
+						</table>
 					</section>
 					<section id="cm-prod">
 						<h4>Configuration Management in the Docker World</h4>
@@ -665,6 +672,7 @@ exit
 					<section id="dp2">
 						<h2>Deployment Pipeline: Intermediate Stages</h2>
 						<ol>
+							<img src="img/dp/cd-pipeline-docker-initial.png" style="float: right; width: 50%; height: 50%;">
 							<li class="fragment"><del>Checkout the code</del></li>
 							<li class="fragment"><del>Run pre-deployment tests</del></li>
 							<li class="fragment"><del>Compile and/or package the code</del></li>
@@ -673,6 +681,7 @@ exit
 							<li class="fragment">Deploy the container to the production server</li>
 							<li class="fragment">Integrate the container</li>
 							<li class="fragment">Run post-deployment tests</li>
+							<li class="fragment">Push the tests container to the registry</li>
 						</ol>
 					</section>
 					<section id="dp2-deploy">
@@ -739,6 +748,7 @@ vagrant halt prod
 						<h4>Deployment Pipeline: Intermediate Stages</h4>
 						<h2>Checklist</h2>
 						<ol>
+							<img src="img/dp/cd-pipeline-docker-intermediate.png" style="float: right; width: 50%; height: 50%;">
 							<li class="fragment"><del>Checkout the code</del></li>
 							<li class="fragment"><del>Run pre-deployment tests</del></li>
 							<li class="fragment"><del>Compile and/or package the code</del></li>
@@ -747,26 +757,24 @@ vagrant halt prod
 							<li class="fragment"><del>Deploy the container to the production server</del></li>
 							<li class="fragment">Integrate the container</li>
 							<li class="fragment">Run post-deployment tests</li>
+							<li class="fragment">Push the tests container to the registry</li>
 						</ol>
 					</section>
 				</section>
 				<section>
 					<section id="sd">
 						<h2>Service Discovery</h2>
-						<ol>
-							<li class="fragment">Service registration</li>
-							<li class="fragment">Service discovery</li>
-						</ol>
+						<img src="img/sd/service-discovery.png">
 					</section>
 					<section id="sd-single-node">
 						<h4>Service Discovery</h4>
 						<h2>Single node</h2>
-						<img src="img/single-node-docker.png">
+						<img src="img/sd/single-node-docker.png">
 					</section>
 					<section id="sd-multi-node">
 						<h4>Service Discovery</h4>
 						<h2>Multiple nodes</h2>
-						<img src="img/multi-node-docker.png">
+						<img src="img/sd/multi-node-docker.png">
 					</section>
 					<section id="sd-tools">
 						<h4>Service Discovery</h4>
@@ -775,7 +783,9 @@ vagrant halt prod
 							<li class="fragment">Manual configuration</li>
 							<li class="fragment">Zookeeper</li>
 							<li class="fragment">etcd / Registrator / confd</li>
-							<li class="fragment">Consul / Registrator / consul-template</li>
+							<li class="fragment">
+								<label class="fragment grow highlight-current-green">Consul / Registrator / Consul Template</label>
+							</li>
 						</ol>
 					</section>
 					<section id="sd-consul-playbook">
@@ -909,7 +919,7 @@ curl http://localhost:8500/v1/catalog/service/nginx \
 					</section>
 					<section id="sd-consul-template-playbook">
 						<h4>Service Discovery</h4>
-						<h2>consul-template Ansible playbook</h2>
+						<h2>Consul Template Ansible playbook</h2>
 						<pre><code data-trim contenteditable>
 exit
 
@@ -922,7 +932,7 @@ cat /vagrant/ansible/consul-template.yml
 					</section>
 					<section id="sd-consul-template-setup">
 						<h4>Service Discovery</h4>
-						<h2>Setting up consul-template</h2>
+						<h2>Setting Up Consul Template</h2>
 						<pre><code data-trim contenteditable>
 ansible-playbook \
 	/vagrant/ansible/consul-template.yml \
@@ -931,12 +941,12 @@ ansible-playbook \
 					</section>
 					<section id="sd-consul-registrator-consul-template-diagram">
 						<h4>Service Discovery</h4>
-						<h2>Consul / Registrator / consul-template</h2>
+						<h2>Consul / Registrator / Consul Template</h2>
 						<img src="img/consul-registrator-consul-template.png">
 					</section>
 					<section id="sd-consul-template-run">
 						<h4>Service Discovery</h4>
-						<h2>Running consul-template</h2>
+						<h2>Running Consul Template</h2>
 						<pre><code data-trim contenteditable>
 exit # Exit cd node
 
@@ -968,7 +978,7 @@ vagrant halt serv-disc-01 serv-disc-02 serv-disc-03
 				<section>
 					<section id="proxy">
 						<h2>Proxy Service</h2>
-						<img src="img/microservices.png">
+						<img src="img/ms/microservices.png">
 					</section>
 					<section id="proxy-playbook">
 						<h4>Proxy Service</h4>
@@ -1028,7 +1038,7 @@ curl http://localhost:$PORT/api/v1/books \
 					<section id="proxy-without-diagram">
 						<h4>Proxy Service</h4>
 						<h2>Services Without Proxy</h2>
-						<img src="img/proxy-without.png">
+						<img src="img/proxy/proxy-without.png">
 					</section>
 					<section id="proxy-manual">
 						<h4>Proxy Service</h4>
@@ -1057,7 +1067,7 @@ curl http://localhost/api/v1/books | python -mjson.tool
 					<section id="proxy-manual-diagram">
 						<h4>Proxy Service</h4>
 						<h2>Manually Setting Proxy</h2>
-						<img src="img/proxy-manual.png">
+						<img src="img/proxy/proxy-manual.png" style="width: 75%; height: 75%;">
 					</section>
 					<section id="proxy-consul">
 						<h4>Proxy Service</h4>
@@ -1101,8 +1111,8 @@ sudo docker logs nginx
 					</section>
 					<section id="proxy-consul-diagram">
 						<h4>Proxy Service</h4>
-						<h2>Setting Proxy with Consul</h2>
-						<img src="img/proxy-consul.png">
+						<h2>Configuring Proxy with Consul</h2>
+						<img src="img/proxy/proxy-consul.png">
 					</section>
 					<section id="proxy-cleanup">
 						<h4>Proxy Service</h4>
@@ -1118,6 +1128,7 @@ vagrant halt proxy
 					<section id="dp-late">
 						<h2>Deployment Pipeline: The Late Stages</h2>
 						<ol>
+							<img src="img/dp/cd-pipeline-docker-intermediate.png" style="float: right; width: 50%; height: 50%;">
 							<li class="fragment"><del>Checkout the code</del></li>
 							<li class="fragment"><del>Run pre-deployment tests</del></li>
 							<li class="fragment"><del>Compile and/or package the code</del></li>
@@ -1126,6 +1137,7 @@ vagrant halt proxy
 							<li class="fragment"><del>Deploy the container to the production server</del></li>
 							<li class="fragment">Integrate the container</li>
 							<li class="fragment">Run post-deployment tests</li>
+							<li class="fragment">Push the tests container to the registry</li>
 						</ol>
 					</section>
 					<section id="dp-late-provision">
@@ -1212,6 +1224,8 @@ sudo docker-compose \
 	-e DOMAIN=http://10.100.198.201 \
 	integ
 
+sudo docker push 10.100.198.200:5000/books-ms-tests
+
 exit
 						</code></pre>
 					</section>
@@ -1219,6 +1233,7 @@ exit
 						<h4>Deployment Pipeline: The Late Stages</h4>
 						<h2>Checklist</h2>
 						<ol>
+							<img src="img/dp/cd-pipeline-docker-no-ansible.png" style="float: right; width: 50%; height: 50%;">
 							<li class="fragment"><del>Checkout the code</del></li>
 							<li class="fragment"><del>Run pre-deployment tests</del></li>
 							<li class="fragment"><del>Compile and/or package the code</del></li>
@@ -1227,6 +1242,7 @@ exit
 							<li class="fragment"><del>Deploy the container to the production server</del></li>
 							<li class="fragment"><del>Integrate the container</del></li>
 							<li class="fragment"><del>Run post-deployment tests</del></li>
+							<li class="fragment"><del>Push the tests container to the registry</del></li>
 						</ol>
 					</section>
 				</section>
@@ -1459,41 +1475,43 @@ vagrant destroy prod -f
 				<section>
 					<section id="bg" data-transition="fade-in slide-out">
 						<h2>Blue-Green Deployment</h2>
+						<h4>&nbsp;</h4>
+						<img src="img/bg/blue-green-containers-only.png">
 					</section>
 					<section id="bg-blue" data-transition="fade-in slide-out">
 						<h4>Blue-Green Deployment</h4>
 						<h2>Deploy Blue</h2>
-						<img src="img/blue-green-containers-deploy-blue.png">
+						<img src="img/bg/blue-green-containers-deploy-blue.png">
 					</section>
 					<section id="bg-integ-blue" data-transition="fade-in slide-out">
 						<h4>Blue-Green Deployment</h4>
 						<h2>Integrate Blue</h2>
-						<img src="img/blue-green-containers-integrate-blue.png">
+						<img src="img/bg/blue-green-containers-integrate-blue.png">
 					</section>
 					<section id="bg-green" data-transition="fade-in slide-out">
 						<h4>Blue-Green Deployment</h4>
 						<h2>Deploy Green</h2>
-						<img src="img/blue-green-containers-deploy-green.png">
+						<img src="img/bg/blue-green-containers-deploy-green.png">
 					</section>
 					<section id="bg-integ-green" data-transition="fade-in slide-out">
 						<h4>Blue-Green Deployment</h4>
 						<h2>Integrate Green</h2>
-						<img src="img/blue-green-containers-integrate-green.png">
+						<img src="img/bg/blue-green-containers-integrate-green.png">
 					</section>
 					<section id="bg-remove-blue" data-transition="fade-in slide-out">
 						<h4>Blue-Green Deployment</h4>
 						<h2>Remove Blue</h2>
-						<img src="img/blue-green-containers-remove-blue.png">
+						<img src="img/bg/blue-green-containers-remove-blue.png">
 					</section>
 					<section id="bg-get-color" data-transition="fade-in slide-out">
 						<h4>Blue-Green Deployment</h4>
 						<h2>Get the Current Color</h2>
-						<img src="img/blue-green-containers-get-color.png">
+						<img src="img/bg/blue-green-containers-get-color.png">
 					</section>
 					<section id="bg-put-color" data-transition="fade-in">
 						<h4>Blue-Green Deployment</h4>
 						<h2>Put the Current Color</h2>
-						<img src="img/blue-green-containers-put-color.png">
+						<img src="img/bg/blue-green-containers-put-color.png">
 					</section>
 					<section id="bg-combination">
 						<h4>Blue-Green Deployment Playbook</h4>
