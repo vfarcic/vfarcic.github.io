@@ -524,7 +524,7 @@ ll target/scala-2.10/
 						<pre><code data-trim contenteditable>
 cat Dockerfile
 
-sudo docker build -t vfarcic/books-ms .
+sudo docker build -t 10.100.198.200:5000/books-ms .
 						</code></pre>
 					</section>
 					<section id="dp-running-1">
@@ -532,19 +532,12 @@ sudo docker build -t vfarcic/books-ms .
 						<h2>Running containers (Docker)</h2>
 						<h3>Docker</h3>
 						<pre><code data-trim contenteditable>
-sudo docker pull mongo
-
-sudo docker tag mongo 10.100.198.200:5000/mongo
-
-sudo docker push 10.100.198.200:5000/mongo
-
-sudo docker run -d --name books-ms-db \
-	10.100.198.200:5000/mongo
+sudo docker run -d --name books-db mongo
 
 sudo docker run -d --name books-ms \
 	-p 8080:8080 \
-	--link books-ms-db:db \
-	vfarcic/books-ms
+	--link books-db:db \
+	10.100.198.200:5000/books-ms
 
 sudo docker exec -it books-ms bash
 
@@ -556,7 +549,7 @@ sudo docker ps -a
 
 sudo docker logs books-ms
 
-sudo docker rm -f books-ms books-ms-db
+sudo docker rm -f books-ms books-db
 
 sudo docker ps -a
 						</code></pre>
@@ -566,7 +559,7 @@ sudo docker ps -a
 						<h2>Running containers</h2>
 						<h3>Docker Compose</h3>
 						<pre><code data-trim contenteditable>
-sudo docker-compose -f docker-compose-dev.yml up -d appLocal
+sudo docker-compose -f docker-compose-dev.yml up -d app
 
 cat docker-compose-dev.yml
 
@@ -574,7 +567,7 @@ sudo docker-compose ps
 
 sudo docker ps -a
 
-sudo docker logs booksms_appLocal_1
+sudo docker logs booksms_app_1
 						</code></pre>
 					</section>
 					<section id="dp-running-3">
@@ -614,15 +607,7 @@ sudo docker rm -f booksms_app_1 booksms_db_1
 						<h4>Deployment Pipeline: Initial Stages</h4>
 						<h2>Pushing containers to the registry</h2>
 						<pre><code data-trim contenteditable>
-sudo docker tag vfarcic/books-ms \
-	10.100.198.200:5000/books-ms
-
 sudo docker push 10.100.198.200:5000/books-ms
-
-sudo docker tag vfarcic/books-ms-tests \
-	10.100.198.200:5000/books-ms-tests
-
-sudo docker push 10.100.198.200:5000/books-ms-tests
 
 exit
 						</code></pre>
@@ -664,15 +649,16 @@ exit
 							</tr>
 						</table>
 					</section>
+					<!--TODO: Continue the review-->
 					<section id="cm-prod">
 						<h4>Configuration Management in the Docker World</h4>
 						<h2>Configuring the Production Environment</h2>
 						<pre><code data-trim contenteditable>
+vagrant up prod --provision
+
 vagrant ssh cd
 
 cd /vagrant/ansible
-
-ansible-playbook prod.yml -i hosts/prod
 
 ansible-playbook prod.yml -i hosts/prod
 						</code></pre>
