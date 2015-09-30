@@ -114,15 +114,15 @@
 					<section id="ci-pipeline">
 						<h4>Continuous deployment</h4>
 						<h2>CI pipeline</h2>
-						<img src="img/ci-pipeline.png">
+						<img src="img/ci-cd/ci-pipeline.png">
 					</section>
 					<section id="cd-process">
 						<h4>Continuous deployment</h4>
 						<h2>Continuous delivery process</h2>
-						<img src="img/cd.png" style="width: 65%; height: 65%;">
+						<img src="img/ci-cd/cd.png" style="width: 65%; height: 65%;">
 					</section>
 					<section id="cd-pipeline">
-						<img src="img/cd-pipeline.png" style="width: 60%; height: 60%; float: right;">
+						<img src="img/ci-cd/cd-pipeline.png" style="width: 60%; height: 60%; float: right;">
 						<h4>Continuous deployment</h4>
 						<h2>Continuous deployment pipeline</h2>
 					</section>
@@ -131,7 +131,7 @@
 					<section id="containers">
 						<h2>Containers (Docker)</h2>
 						<blockquote>Shipping container is an object for holding or transporting something</blockquote>
-						<img src="img/docker.png" style="float: right; width: 40%; height: 40%; background-color: white;">
+						<img src="img/containers/docker.png" style="float: right; width: 40%; height: 40%; background-color: white;">
 						<ul>
 							<li class="fragment">Isolated</li>
 							<li class="fragment">Immutable</li>
@@ -143,22 +143,22 @@
 					<section id="containers-vms">
 						<h4>Containers (Docker)</h4>
 						<h2>VMs vs Containers</h2>
-						<img src="img/containers-vms.png" style="width: 85%; height: 85%;">
+						<img src="img/containers/containers-vms.png" style="width: 85%; height: 85%;">
 					</section>
 					<section id="container-self-sufficient">
 						<h4>Containers (Docker)</h4>
 						<h2>Self-sufficient container</h2>
-						<img src="img/container.png" style="width: 60%; height: 60%;">
+						<img src="img/containers/container.png" style="width: 60%; height: 60%;">
 					</section>
 					<section id="container-db">
 						<h4>Containers (Docker)</h4>
 						<h2>Container with the separate DB</h2>
-						<img src="img/container-db.png" style="width: 90%; height: 90%; ">
+						<img src="img/containers/container-db.png" style="width: 90%; height: 90%; ">
 					</section>
 					<section id="container-shared-db">
 						<h4>Containers (Docker)</h4>
 						<h2>Containers with the shared DB</h2>
-						<img src="img/container-shared-db.png" style="width: 70%; height: 70%; ">
+						<img src="img/containers/container-shared-db.png" style="width: 70%; height: 70%; ">
 					</section>
 				</section>
 				<section data-background="img/background/monolith.png">
@@ -765,7 +765,7 @@ vagrant halt prod
 				<section data-background="img/background/sd.png">
 					<section id="sd">
 						<h2>Service Discovery</h2>
-						<img src="img/sd/service-discovery.png">
+						<img src="img/sd/service-discovery.png" class="fragment">
 					</section>
 					<section id="sd-single-node">
 						<h4>Service Discovery</h4>
@@ -823,7 +823,7 @@ curl 10.100.197.201:8500/v1/catalog/nodes \
 					<section id="sd-consul-diagram">
 						<h4>Service Discovery</h4>
 						<h2>Consul</h2>
-						<img src="img/consul.png">
+						<img src="img/sd/consul.png">
 					</section>
 					<section id="sd-kv-put">
 						<h4>Service Discovery</h4>
@@ -883,7 +883,7 @@ ansible-playbook \
 					<section id="sd-consul-registrator-diagram">
 						<h4>Service Discovery</h4>
 						<h2>Consul / Registrator</h2>
-						<img src="img/consul-registrator.png">
+						<img src="img/sd/consul-registrator.png">
 					</section>
 					<section id="sd-nginx">
 						<h4>Service Discovery</h4>
@@ -943,7 +943,7 @@ ansible-playbook \
 					<section id="sd-consul-registrator-consul-template-diagram">
 						<h4>Service Discovery</h4>
 						<h2>Consul / Registrator / Consul Template</h2>
-						<img src="img/consul-registrator-consul-template.png">
+						<img src="img/sd/consul-registrator-consul-template.png">
 					</section>
 					<section id="sd-consul-template-run">
 						<h4>Service Discovery</h4>
@@ -979,7 +979,7 @@ vagrant halt serv-disc-01 serv-disc-02 serv-disc-03
 				<section data-background="img/background/proxy.png">
 					<section id="proxy">
 						<h2>Proxy Service</h2>
-						<img src="img/ms/microservices.png">
+						<img src="img/ms/microservices.png" class="fragment">
 					</section>
 					<section id="proxy-playbook">
 						<h4>Proxy Service</h4>
@@ -1250,7 +1250,7 @@ exit
 				<section data-background="img/background/deployment-pipeline.png">
 					<section id="dp-auto" data-transition="fade-in slide-out">
 						<h2>Automating the Deployment Pipeline</h2>
-						<img src="img/cd-pipeline-docker-no-ansible.png" style="width: 85%; height: 85%;">
+						<img src="img/cd-pipeline-docker-no-ansible.png" style="width: 85%; height: 85%;" class="fragment">
 					</section>
 					<section id="dp-auto-ansible" data-transition="fade-in slide-out">
 						<h2>Automating the Deployment Pipeline</h2>
@@ -1477,7 +1477,7 @@ vagrant destroy prod -f
 					<section id="bg" data-transition="fade-in slide-out">
 						<h2>Blue-Green Deployment</h2>
 						<h4>&nbsp;</h4>
-						<img src="img/bg/blue-green-containers-only.png">
+						<img src="img/bg/blue-green-containers-only.png" class="fragment">
 					</section>
 					<section id="bg-blue" data-transition="fade-in slide-out">
 						<h4>Blue-Green Deployment</h4>
@@ -1899,6 +1899,22 @@ curl http://10.100.195.200:8500/v1/kv/books-ms/color?raw
 
 curl 10.100.195.200/api/v1/books | jq '.'
 						</code></pre>
+					</section>
+				</section>
+				<section data-background="img/background/summary.png">
+					<section id="summary">
+						<h2>Say Again</h2>
+						<ul>
+							<li class="fragment"><strong>Immutable</strong> over mutable deployments</li>
+							<li class="fragment"><strong>Small</strong> over big</li>
+							<li class="fragment"><strong>Automation</strong> over manual procedures</li>
+							<li class="fragment"><strong>Service discovery</strong> over predefined configuration</li>
+							<li class="fragment"><strong>Dynamic</strong> over static</li>
+							<li class="fragment"><strong>Specialized</strong> over do-it-all tools</li>
+						</ul>
+						<h4 class="fragment">
+							That is, while there is value in the items on the <strong>right</strong>, we value the items on the <strong>left</strong> more.
+						</h4>
 					</section>
 				</section>
 				<section id="qa" data-background="img/questions.jpg">
