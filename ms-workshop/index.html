@@ -417,21 +417,38 @@ sudo docker run -it --rm \
 	-v $PWD/client/test:/source/client/test \
 	-v $PWD/src:/source/src \
 	-v $PWD/target:/source/target \
-	-v /data/tests/db:/data/db \
 	-p 8080:8080 \
 	--env TEST_TYPE=watch-front \
 	vfarcic/books-ms-tests
 						</code></pre>
-						Press <strong>CTRL+c</strong> to stop the container.
+						<div>
+							<small>Open <a href="http://10.100.199.200:8080/components/tc-books/demo/index.html">http://10.100.199.200:8080/components/tc-books/demo/index.html</a></small>
+						</div>
+						<div>
+							Press <strong>CTRL+c</strong> to stop the container.
+						</div>
 					</section>
 					<section id="dev-fe-tests-compose">
 						<h4>Development Environment</h4>
 						<h2>Tests with Docker Compose</h2>
 						<pre><code data-trim contenteditable>
-sudo docker-compose -f docker-compose-dev.yml up feTestsLocal
+sudo docker-compose -f docker-compose-dev.yml run feTestsLocal
 
 sudo docker-compose -f docker-compose-dev.yml run testsLocal
 						</code></pre>
+					</section>
+					<section id="dev-what">
+						<h4>Development Environment</h4>
+						<h2>What did we do?</h2>
+						<ul>
+							<li>Installed Chrome, Firefox, MongoDB, NodeJS, Git, sbt, JDK, Scala, npm and gulp</li>
+							<li>Downloaded Java/Scala dependencies through sbt</li>
+							<li>Downloaded JavaScript dependencies through npm and bower</li>
+							<li>Run MongoDB</li>
+							<li>Run Scala tests</li>
+							<li>Run JS tests</li>
+							<li>Compiled Scala code</li>
+						</ul>
 					</section>
 					<section id="dev-stop-vm">
 						<h4>Development Environment</h4>
