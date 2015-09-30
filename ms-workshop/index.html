@@ -487,7 +487,7 @@ git clone https://github.com/vfarcic/ms-lifecycle.git
 
 cd ms-lifecycle
 
-vagrant up cd
+vagrant up cd --provision
 
 vagrant ssh cd
 						</code></pre>
@@ -506,7 +506,14 @@ cd books-ms
 						<h4>Deployment Pipeline: Initial Stages</h4>
 						<h2>Running pre-deployment tests and compiling and/or packaging the code</h2>
 						<pre><code data-trim contenteditable>
-sudo docker-compose -f docker-compose-dev.yml run --rm testsLocal
+sudo docker build \
+	-f Dockerfile.test \
+	-t 10.100.198.200:5000/books-ms-tests \
+	.
+
+sudo docker-compose \
+	-f docker-compose-dev.yml \
+	run --rm tests
 
 ll target/scala-2.10/
 						</code></pre>
