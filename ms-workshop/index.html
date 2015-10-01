@@ -649,7 +649,6 @@ exit
 							</tr>
 						</table>
 					</section>
-					<!--TODO: Continue the review-->
 					<section id="cm-prod">
 						<h4>Configuration Management in the Docker World</h4>
 						<h2>Configuring the Production Environment</h2>
@@ -707,6 +706,8 @@ wget https://raw.githubusercontent.com/vfarcic\
 cat docker-compose.yml
 
 sudo docker-compose up -d app
+
+sudo docker ps
 						</code></pre>
 					</section>
 					<section id="dp2-verification">
@@ -718,7 +719,8 @@ sudo docker inspect vagrant_app_1
 PORT=$(sudo docker inspect \
 	--format='{{(index (index .NetworkSettings.Ports "8080/tcp") 0).HostPort}}' \
 	vagrant_app_1)
-	echo $PORT
+
+echo $PORT
 
 curl -H 'Content-Type: application/json' -X PUT -d \
 	"{\"_id\": 1,
