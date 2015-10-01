@@ -580,25 +580,25 @@ curl -H 'Content-Type: application/json' -X PUT -d \
 	"title": "My First Book",
 	"author": "John Doe",
 	"description": "Not a very good book"}' \
-	http://localhost:8080/api/v1/books | python -mjson.tool
+	http://localhost:8080/api/v1/books | jq '.'
 
 curl -H 'Content-Type: application/json' -X PUT -d \
 	'{"_id": 2,
 	"title": "My Second Book",
 	"author": "John Doe",
 	"description": "Not a bad as the first book"}' \
-	http://localhost:8080/api/v1/books | python -mjson.tool
+	http://localhost:8080/api/v1/books | jq '.'
 
 curl -H 'Content-Type: application/json' -X PUT -d \
 	'{"_id": 3,
 	"title": "My Third Book",
 	"author": "John Doe",
 	"description": "Failed writers club"}' \
-	http://localhost:8080/api/v1/books | python -mjson.tool
+	http://localhost:8080/api/v1/books | jq '.'
 
-curl http://localhost:8080/api/v1/books | python -mjson.tool
+curl http://localhost:8080/api/v1/books | jq '.'
 
-curl http://localhost:8080/api/v1/books/_id/1 | python -mjson.tool
+curl http://localhost:8080/api/v1/books/_id/1 | jq '.'
 
 sudo docker rm -f booksms_app_1 booksms_db_1
 						</code></pre>
@@ -727,25 +727,25 @@ curl -H 'Content-Type: application/json' -X PUT -d \
 	\"title\": \"My First Book\",
 	\"author\": \"John Doe\",
 	\"description\": \"Not a very good book\"}" \
-	http://localhost:$PORT/api/v1/books | python -mjson.tool
+	http://localhost:$PORT/api/v1/books | jq '.'
 
 curl -H 'Content-Type: application/json' -X PUT -d \
 	"{\"_id\": 2,
 	\"title\": \"My Second Book\",
 	\"author\": \"John Doe\",
 	\"description\": \"Not a bad as the first book\"}" \
-	http://localhost:$PORT/api/v1/books | python -mjson.tool
+	http://localhost:$PORT/api/v1/books | jq '.'
 
 curl -H 'Content-Type: application/json' -X PUT -d \
 	"{\"_id\": 3,
 	\"title\": \"My Third Book\",
 	\"author\": \"John Doe\",
 	\"description\": \"Failed writers club\"}" \
-	http://localhost:$PORT/api/v1/books | python -mjson.tool
+	http://localhost:$PORT/api/v1/books | jq '.'
 
-curl http://localhost:$PORT/api/v1/books | python -mjson.tool
+curl http://localhost:$PORT/api/v1/books | jq '.'
 
-curl http://localhost:$PORT/api/v1/books/_id/1 | python -mjson.tool
+curl http://localhost:$PORT/api/v1/books/_id/1 | jq '.'
 						</code></pre>
 					</section>
 					<section id="dp2-exit">
@@ -829,7 +829,7 @@ ansible-playbook \
 	-i /vagrant/ansible/hosts/serv-disc
 
 curl 10.100.197.201:8500/v1/catalog/nodes \
-	| python -mjson.tool
+	| jq '.'
 						</code></pre>
 					</section>
 					<section id="sd-consul-diagram">
@@ -856,28 +856,28 @@ curl -X PUT -d 'this is a test with flags' \
 						<h2>Key/value store: GET/DELETE</h2>
 						<pre><code data-trim contenteditable>
 curl http://10.100.197.203:8500/v1/kv/?recurse \
-	| python -mjson.tool
+	| jq '.'
 
 curl http://10.100.197.202:8500/v1/kv/msg1 \
-	| python -mjson.tool
+	| jq '.'
 
 curl http://10.100.197.201:8500/v1/kv/msg1?raw
 
 curl -X DELETE http://10.100.197.201:8500/v1/kv/messages/msg2
 
+curl http://10.100.197.203:8500/v1/kv/?recurse \
+	| jq '.'
+
 curl -X DELETE http://10.100.197.202:8500/v1/kv/?recurse
+
+curl http://10.100.197.203:8500/v1/kv/?recurse \
+	| jq '.'
 						</code></pre>
 					</section>
 					<section id="sd-registrator-playbook">
 						<h4>Service Discovery</h4>
 						<h2>Registrator Ansible playbook</h2>
 						<pre><code data-trim contenteditable>
-sudo docker pull gilderlabs/registrator
-
-sudo docker tag gilderlabs/registrator 10.100.198.200:5000/registrator
-
-sudo docker push 10.100.198.200:5000/registrator
-
 cat /vagrant/ansible/roles/registrator/tasks/main.yml
 
 cat /vagrant/ansible/roles/registrator/defaults/main.yml
@@ -906,28 +906,32 @@ exit # Exit cd
 vagrant ssh serv-disc-01
 
 sudo docker run -d --name nginx \
-	--env SERVICE_NAME=nginx \
-	--env SERVICE_ID=nginx \
-	-p 1234:80 \
-	nginx
+    --env SERVICE_NAME=nginx \
+    --env SERVICE_ID=nginx \
+    -p 1234:80 \
+    nginx
 
 curl http://10.100.197.201:8500/v1/catalog/service/nginx \
-	| python -mjson.tool
+    | jq '.'
 						</code></pre>
 					</section>
 					<section id="sd-nginx2">
 						<h4>Service Discovery</h4>
 						<h2>Registering service again</h2>
 						<pre><code data-trim contenteditable>
+exit
+
+vagrant ssh serv-disc-02
+
 sudo docker run -d --name nginx2 \
-	--env "SERVICE_ID=nginx2" \
-	--env "SERVICE_NAME=nginx" \
-	--env "SERVICE_TAGS=balancer,proxy,www" \
-	-p 1111:80 \
-	nginx
+    --env "SERVICE_ID=nginx2" \
+    --env "SERVICE_NAME=nginx" \
+    --env "SERVICE_TAGS=balancer,proxy,www" \
+    -p 1111:80 \
+    nginx
 
 curl http://localhost:8500/v1/catalog/service/nginx \
-	| python -mjson.tool
+    | jq '.'
 						</code></pre>
 					</section>
 					<section id="sd-consul-template-playbook">
@@ -948,8 +952,8 @@ cat /vagrant/ansible/consul-template.yml
 						<h2>Setting Up Consul Template</h2>
 						<pre><code data-trim contenteditable>
 ansible-playbook \
-	/vagrant/ansible/consul-template.yml \
-	-i /vagrant/ansible/hosts/serv-disc
+    /vagrant/ansible/consul-template.yml \
+    -i /vagrant/ansible/hosts/serv-disc
 						</code></pre>
 					</section>
 					<section id="sd-consul-registrator-consul-template-diagram">
@@ -966,14 +970,14 @@ exit # Exit cd node
 vagrant ssh serv-disc-01 # Enter serv-disc-01
 
 curl http://localhost:8500/v1/catalog/service/nginx \
-	| python -mjson.tool
+    | jq '.'
 
 cat /data/consul-template/example.ctmpl
 
 consul-template \
-	-consul localhost:8500 \
-	-template "/data/consul-template/example.ctmpl:/tmp/example.conf" \
-	-once
+    -consul localhost:8500 \
+    -template "/data/consul-template/example.ctmpl:/tmp/example.conf" \
+    -once
 
 cat /tmp/example.conf
 						</code></pre>
@@ -1001,26 +1005,24 @@ vagrant up proxy
 
 vagrant ssh cd
 
-sudo docker pull nginx
-
-sudo docker tag nginx 10.100.198.200:5000/nginx
-
-sudo docker push 10.100.198.200:5000/nginx
-
 cat /vagrant/ansible/nginx.yml
 
 cat /vagrant/ansible/roles/nginx/tasks/main.yml
 
+cat /vagrant/ansible/roles/nginx/defaults/main.yml
+
 cat /vagrant/ansible/roles/nginx/files/services.conf
 
 ansible-playbook /vagrant/ansible/nginx.yml \
-	-i /vagrant/ansible/hosts/proxy
+    -i /vagrant/ansible/hosts/proxy
 
 exit
 
 vagrant ssh proxy
 
 sudo docker ps
+
+ps aux | grep consul
 						</code></pre>
 					</section>
 					<section id="proxy-without">
@@ -1039,13 +1041,13 @@ curl http://localhost/api/v1/books
 sudo docker ps | grep books
 
 PORT=$(sudo docker inspect \
-	--format='{{(index (index .NetworkSettings.Ports "8080/tcp") 0).HostPort}}' \
-	vagrant_app_1)
+    --format='{{(index (index .NetworkSettings.Ports "8080/tcp") 0).HostPort}}' \
+    vagrant_app_1)
 
 echo $PORT
 
 curl http://localhost:$PORT/api/v1/books \
-	| python -mjson.tool
+    | jq '.'
 						</code></pre>
 					</section>
 					<section id="proxy-without-diagram">
@@ -1059,22 +1061,22 @@ curl http://localhost:$PORT/api/v1/books \
 						<pre><code data-trim contenteditable>
 echo "
 location /api/v1/books {
-	proxy_pass http://10.100.196.200:$PORT/api/v1/books;
+    proxy_pass http://10.100.196.200:$PORT/api/v1/books;
 }
 " | sudo tee /data/nginx/includes/books-ms.conf
 
 sudo docker kill -s HUP nginx
 
-curl http://localhost/api/v1/books | python -mjson.tool
+curl http://localhost/api/v1/books | jq '.'
 
 curl -H 'Content-Type: application/json' -X PUT -d \
-	"{\"_id\": 1,
-	\"title\": \"My First Book\",
-	\"author\": \"John Doe\",
-	\"description\": \"Not a very good book\"}" \
-	http://localhost/api/v1/books | python -mjson.tool
+    "{\"_id\": 1,
+    \"title\": \"My First Book\",
+    \"author\": \"John Doe\",
+    \"description\": \"Not a very good book\"}" \
+    http://localhost/api/v1/books | jq '.'
 
-curl http://localhost/api/v1/books | python -mjson.tool
+curl http://localhost/api/v1/books | jq '.'
 						</code></pre>
 					</section>
 					<section id="proxy-manual-diagram">
@@ -1092,32 +1094,32 @@ sudo docker ps | grep books
 
 sudo wget http://raw.githubusercontent.com/vfarcic\
 /books-ms/master/nginx-includes.conf \
-	-O /data/nginx/includes/books-ms.conf
+    -O /data/nginx/includes/books-ms.conf
 
 cat /data/nginx/includes/books-ms.conf
 
 sudo wget http://raw.githubusercontent.com/vfarcic\
 /books-ms/master/nginx-upstreams.ctmpl \
-	-O /data/nginx/upstreams/books-ms.ctmpl
+    -O /data/nginx/upstreams/books-ms.ctmpl
 
 cat /data/nginx/upstreams/books-ms.ctmpl
 
 sudo consul-template \
-	-consul localhost:8500 \
-	-template "/data/nginx/upstreams/books-ms.ctmpl:\
+    -consul localhost:8500 \
+    -template "/data/nginx/upstreams/books-ms.ctmpl:\
 /data/nginx/upstreams/books-ms.conf:\
 docker kill -s HUP nginx" \
-	-once
+    -once
 
 cat /data/nginx/upstreams/books-ms.conf
 
-curl http://localhost/api/v1/books | python -mjson.tool
+curl http://localhost/api/v1/books | jq '.'
 
-curl http://localhost/api/v1/books | python -mjson.tool
+curl http://localhost/api/v1/books | jq '.'
 
-curl http://localhost/api/v1/books | python -mjson.tool
+curl http://localhost/api/v1/books | jq '.'
 
-curl http://localhost/api/v1/books | python -mjson.tool
+curl http://localhost/api/v1/books | jq '.'
 
 sudo docker logs nginx
 						</code></pre>
@@ -1137,6 +1139,7 @@ vagrant halt proxy
 						</code></pre>
 					</section>
 				</section>
+				<!--TODO: Continue-->
 				<section data-background="img/background/deployment-pipeline.png">
 					<section id="dp-late">
 						<h2>Deployment Pipeline: The Late Stages</h2>
@@ -1157,7 +1160,7 @@ vagrant halt proxy
 						<h4>Deployment Pipeline: The Late Stages</h4>
 						<h2>Provision Production</h2>
 						<pre><code data-trim contenteditable>
-vagrant up prod --provision
+vagrant up prod
 
 vagrant ssh cd
 
@@ -1181,7 +1184,7 @@ sudo docker start vagrant_db_1
 sudo docker start vagrant_app_1
 
 curl 10.100.198.201:8500/v1/catalog/service/books-ms \
-	| python -mjson.tool
+	| jq '.'
 						</code></pre>
 						Open <a href="http://10.100.198.201:8500/ui">http://10.100.198.201:8500/ui</a>.
 					</section>
@@ -1213,7 +1216,7 @@ docker kill -s HUP nginx" \
 cat /data/nginx/upstreams/books-ms.conf
 
 curl http://localhost/api/v1/books \
-	| python -mjson.tool
+	| jq '.'
 
 exit
 						</code></pre>
@@ -1225,7 +1228,7 @@ exit
 vagrant ssh cd
 
 curl http://10.100.198.201/api/v1/books \
-	| python -mjson.tool
+	| jq '.'
 
 cd ~/books-ms
 

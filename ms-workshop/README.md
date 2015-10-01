@@ -127,9 +127,8 @@ vagrant ssh cd -c "ansible-playbook /vagrant/ansible/prod.yml -i /vagrant/ansibl
 vagrant ssh prod -c "sudo /vagrant/scripts/preload_prod.sh"
 vagrant halt prod
 
-# TODO: Continue
 vagrant up serv-disc-01 serv-disc-02 serv-disc-03
-vagrant ssh cd -c "ansible-playbook /vagrant/ansible/docker.yml -i /vagrant/ansible/hosts/serv-disc" # Answer "yes" when asked
+vagrant ssh cd -c "ansible-playbook /vagrant/ansible/consul.yml -i /vagrant/ansible/hosts/serv-disc" # Answer "yes" when asked
 vagrant ssh serv-disc-01 -c "sudo /vagrant/scripts/preload_serv_disc.sh"
 vagrant ssh serv-disc-02 -c "sudo /vagrant/scripts/preload_serv_disc.sh"
 vagrant ssh serv-disc-03 -c "sudo /vagrant/scripts/preload_serv_disc.sh"
