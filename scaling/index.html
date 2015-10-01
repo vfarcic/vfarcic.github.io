@@ -60,17 +60,97 @@
 						<li><a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">Java Test-Driven Development: Mastering TDD Through Katas</a></li>
 					</ul>
 				</section>
-				<section id="failures" data-background="img/background/rage.jpg">
-					<h2>History of the Failed Initiatives</h2>
-					<h4>Continuous Integration (CI), Delivery and Deployment (CD)</h4>
-					<ul>
-						<li class="fragment">Integration phase = Dante's Infierno</li>
-						<li class="fragment">eXtreme programming (XP)</li>
-						<li class="fragment">Architecture</li>
-						<li class="fragment">Testing</li>
-						<li class="fragment">Orchestration</li>
-						<li class="fragment">Deployments</li>
-					</ul>
+				<section data-background="img/background/rage.jpg">
+					<section id="failures-me">
+						<h2>History of the Failed Initiatives</h2>
+						<ul>
+							<li class="fragment">Developer</li>
+							<li class="fragment">Senior programmer</li>
+							<li class="fragment">Software craftsman</li>
+							<li class="fragment">Testing</li>
+							<li class="fragment">Close to customers</li>
+							<li class="fragment">Software architecture</li>
+							<li class="fragment">Everything</li>
+						</ul>
+					</section>
+					<section id="failures-customers">
+						<h4>History of the Failed Initiatives</h4>
+						<h2>Customers</h2>
+						<ul>
+							<li class="fragment">Small greenfield project</li>
+							<li class="fragment">Automotive industry</li>
+							<li class="fragment">Lotteries</li>
+							<li class="fragment">Banks</li>
+							<li class="fragment">Insurances</li>
+							<li class="fragment">Everything in between</li>
+						</ul>
+					</section>
+					<section id="failures-problems">
+						<h4>History of the Failed Initiatives</h4>
+						<h2>Problems</h2>
+						<ul>
+							<li class="fragment">Integration phase = Dante's Infierno</li>
+							<li class="fragment">eXtreme programming (XP)</li>
+							<li class="fragment">Architecture</li>
+							<li class="fragment">Testing</li>
+							<li class="fragment">Orchestration</li>
+							<li class="fragment">Deployments</li>
+							<li class="fragment">Continuous Integration/Delivery/Deployment</li>
+						</ul>
+					</section>
+					<section id="failures-cd-dream">
+						<h4>History of the Failed Initiatives</h4>
+						<h2>CI/CD</h2>
+						<ul>
+							<li class="fragment">Checking out</li>
+							<li class="fragment">Static analysis</li>
+							<li class="fragment">Testing</li>
+							<li class="fragment">Packaging</li>
+							<li class="fragment">Deploying</li>
+						</ul>
+						<h2><label class="fragment">Failure</label> <label class="fragment">after</label> <label class="fragment">failure</label></h2>
+					</section>
+					<section id="failures-circle">
+						<h4>History of the Failed Initiatives</h4>
+						<h2>CI/CD</h2>
+						<ul>
+							<li class="fragment">
+								Monoliths
+								<label class="fragment highlight-current-green">&gt; (micro)services</label>
+								<label class="fragment highlight-current-red">&gt; huge mess</label>
+							</li>
+							<li class="fragment">
+								Huge mess
+								<label class="fragment highlight-current-green">&gt; standardization and coupling</label>
+								<label class="fragment highlight-current-red">&gt; speed, innovation, scalability</label>
+							</li>
+							<li class="fragment">
+								CM
+								<label class="fragment highlight-current-green">&gt; predictability</label>
+								<label class="fragment highlight-current-red">&gt; maintenance problems</label>
+							</li>
+						</ul>
+						<h2><label class="fragment">Failure</label> <label class="fragment">after</label> <label class="fragment">failure</label></h2>
+					</section>
+					<section id="failures-improvement">
+						<h4>History of the Failed Initiatives</h4>
+						<h3 class="fragment">Each improvement</h3>
+						<h3 class="fragment">raises the bar</h3>
+						<h3 class="fragment">and converts itself into a failure</h3>
+					</section>
+					<section id="failures-today">
+						<h4>History of the Failed Initiatives</h4>
+						<h2>Today?</h2>
+						<ul>
+							<li class="fragment">Small specialized tools</li>
+							<li class="fragment">Immutable deployments</li>
+							<li class="fragment">Blue-green deployments</li>
+							<li class="fragment">Service discovery</li>
+							<li class="fragment">Domain-driven design</li>
+							<li class="fragment">Continuous delivery/deployment</li>
+							<li class="fragment">Scalable and fault tolerant systems</li>
+						</ul>
+					</section>
 				</section>
 				<section id="history" data-background="img/background/fireworks.png">
 					<h2>Things in Common</h2>
@@ -81,6 +161,7 @@
 						<li class="fragment">Small autonomous teams</li>
 						<li class="fragment">Scalable systems</li>
 					</ul>
+					<h2 class="fragment">Microservices</h2>
 				</section>
 				<section data-background="img/background/train.png">
 					<section id="ci-cd">
@@ -490,15 +571,15 @@ ps aux | grep jav[a] | awk '{print $2}' | xargs kill
 					<section id="summary">
 						<h2>Say Again</h2>
 						<ul>
-							<li class="fragment"><strong>Immutable</strong> over mutable deployments</li>
-							<li class="fragment"><strong>Small</strong> over big</li>
-							<li class="fragment"><strong>Automation</strong> over manual procedures</li>
-							<li class="fragment"><strong>Service discovery</strong> over predefined configuration</li>
-							<li class="fragment"><strong>Dynamic</strong> over static</li>
-							<li class="fragment"><strong>Specialized</strong> over do-it-all tools</li>
+							<li class="fragment"><label class="fragment grow highlight-current-green">Immutable</label> over mutable deployments</li>
+							<li class="fragment"><label class="fragment grow highlight-current-green">Small</label> over big</li>
+							<li class="fragment"><label class="fragment grow highlight-current-green">Automation</label> over manual procedures</li>
+							<li class="fragment"><label class="fragment grow highlight-current-green">Service discovery</label> over predefined configuration</li>
+							<li class="fragment"><label class="fragment grow highlight-current-green">Dynamic</label> over static</li>
+							<li class="fragment"><label class="fragment grow highlight-current-green">Specialized</label> over do-it-all tools</li>
 						</ul>
 						<h4 class="fragment">
-							That is, while there is value in the items on the <strong>right</strong>, we value the items on the <strong>left</strong> more.
+							That is, while there is value in the items on the <label class="fragment grow highlight-current-blue">right</label>, we value the items on the <label class="fragment grow highlight-current-green">left</label> more.
 						</h4>
 					</section>
 				</section>
