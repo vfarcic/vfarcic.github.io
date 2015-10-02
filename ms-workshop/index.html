@@ -1533,6 +1533,7 @@ halt prod
 						<h2>Failed Node</h2>
 						<img src="img/scale/swarm-failed-node.png">
 					</section>
+					<!--TODO: Continue-->
 					<section id="scale-swarm-set-up">
 						<h4>Clustering And Scaling Services</h4>
 						<h2>Setting Up Docker Swarm</h2>
@@ -1542,8 +1543,8 @@ vagrant up swarm-master swarm-node-1 swarm-node-2
 vagrant ssh cd
 
 ansible-playbook /vagrant/ansible/swarm.yml \
-	-i /vagrant/ansible/hosts/prod \
-	-vv
+    -i /vagrant/ansible/hosts/prod \
+    -vv
 
 cat /vagrant/ansible/swarm.yml
 
@@ -1567,10 +1568,10 @@ docker-compose up -d app
 docker ps -a | grep books
 
 curl 10.100.195.200:8500/v1/catalog/services \
-	| jq '.'
+    | jq '.'
 
 curl 10.100.195.200:8500/v1/catalog/service/books-ms \
-	| jq '.'
+    | jq '.'
 
 docker ps | grep booksms
 						</code></pre>
@@ -1580,23 +1581,23 @@ docker ps | grep booksms
 						<h2>Testing Deployments with Docker Swarm</h2>
 						<pre><code data-trim contenteditable>
 BOOKS_MS_ADDRESS=`curl \
-	10.100.195.200:8500/v1/catalog/service/books-ms \
-	| jq '.[0].Address'`
+    10.100.195.200:8500/v1/catalog/service/books-ms \
+    | jq '.[0].Address'`
 
 BOOKS_MS_PORT=`curl \
-	10.100.195.200:8500/v1/catalog/service/books-ms \
-	| jq '.[0].ServicePort'`
+    10.100.195.200:8500/v1/catalog/service/books-ms \
+    | jq '.[0].ServicePort'`
 
 BOOKS_MS_HOST=${BOOKS_MS_ADDRESS//\"}:${BOOKS_MS_PORT}
 
 echo $BOOKS_MS_HOST
 
 curl -H 'Content-Type: application/json' -X PUT -d \
-	'{"_id": 1,
-	"title": "My First Book",
-	"author": "John Doe",
-	"description": "Not a very good book"}' \
-	$BOOKS_MS_HOST/api/v1/books | jq '.'
+    '{"_id": 1,
+    "title": "My First Book",
+    "author": "John Doe",
+    "description": "Not a very good book"}' \
+    $BOOKS_MS_HOST/api/v1/books | jq '.'
 
 curl $BOOKS_MS_HOST/api/v1/books
 
@@ -1612,20 +1613,20 @@ docker rm -f swarm-node-1/booksms_db_1
 docker-compose -f docker-compose-swarm.yml up -d db
 
 curl 10.100.195.200:8500/v1/catalog/services \
-	| jq '.'
+    | jq '.'
 
 curl 10.100.195.200:8500/v1/catalog/service/books-ms-db \
-	| jq '.'
+    | jq '.'
 
 consul-template \
-	-consul 10.100.195.200:8500 \
-	-template "docker-compose-swarm.ctmpl:docker-compose-swarm.yml" \
-	-once
+    -consul 10.100.195.200:8500 \
+    -template "docker-compose-swarm.ctmpl:docker-compose-swarm.yml" \
+    -once
 
 cat docker-compose-swarm.yml
 
 docker-compose -f docker-compose-swarm.yml run --rm \
-	app env | grep 'DB_PORT_27017_TCP_ADDR\|DB_PORT_27017_PORT'
+    app env | grep 'DB_PORT_27017_TCP_ADDR\|DB_PORT_27017_PORT'
 
 docker-compose -f docker-compose-swarm.yml up -d app
 							</code></pre>
@@ -1635,31 +1636,31 @@ docker-compose -f docker-compose-swarm.yml up -d app
 						<h2>Testing Deployment with Docker Swarm to the Cluster</h2>
 						<pre><code data-trim contenteditable>
 curl 10.100.195.200:8500/v1/catalog/services \
-	| jq '.'
+    | jq '.'
 
 curl 10.100.195.200:8500/v1/catalog/service/books-ms \
-	| jq '.'
+    | jq '.'
 
 docker ps | grep booksms
 
 BOOKS_MS_ADDRESS=`curl \
-	10.100.195.200:8500/v1/catalog/service/books-ms \
-	| jq '.[0].Address'`
+    10.100.195.200:8500/v1/catalog/service/books-ms \
+    | jq '.[0].Address'`
 
 BOOKS_MS_PORT=`curl \
-	10.100.195.200:8500/v1/catalog/service/books-ms \
-	| jq '.[0].ServicePort'`
+    10.100.195.200:8500/v1/catalog/service/books-ms \
+    | jq '.[0].ServicePort'`
 
 BOOKS_MS_HOST=${BOOKS_MS_ADDRESS//\"}:${BOOKS_MS_PORT}
 
 echo $BOOKS_MS_HOST
 
 curl -H 'Content-Type: application/json' -X PUT -d \
-	'{"_id": 2,
-	"title": "My Second Book",
-	"author": "John Doe",
-	"description": "A bit better book"}' \
-	$BOOKS_MS_HOST/api/v1/books | jq '.'
+    '{"_id": 2,
+    "title": "My Second Book",
+    "author": "John Doe",
+    "description": "A bit better book"}' \
+    $BOOKS_MS_HOST/api/v1/books | jq '.'
 
 curl $BOOKS_MS_HOST/api/v1/books | jq '.'
 						</code></pre>
@@ -1673,12 +1674,12 @@ docker-compose -f docker-compose-swarm.yml scale app=2
 docker ps | grep booksms
 
 BOOKS_MS_ADDRESS=`curl \
-	10.100.195.200:8500/v1/catalog/service/books-ms \
-	| jq '.[0].Address'`
+    10.100.195.200:8500/v1/catalog/service/books-ms \
+    | jq '.[0].Address'`
 
 BOOKS_MS_PORT=`curl \
-	10.100.195.200:8500/v1/catalog/service/books-ms \
-	| jq '.[0].ServicePort'`
+    10.100.195.200:8500/v1/catalog/service/books-ms \
+    | jq '.[0].ServicePort'`
 
 BOOKS_MS_HOST=${BOOKS_MS_ADDRESS//\"}:${BOOKS_MS_PORT}
 
@@ -1687,12 +1688,12 @@ echo $BOOKS_MS_HOST
 curl $BOOKS_MS_HOST/api/v1/books | jq '.'
 
 BOOKS_MS_ADDRESS=`curl \
-	10.100.195.200:8500/v1/catalog/service/books-ms \
-	| jq '.[1].Address'`
+    10.100.195.200:8500/v1/catalog/service/books-ms \
+    | jq '.[1].Address'`
 
 BOOKS_MS_PORT=`curl \
-	10.100.195.200:8500/v1/catalog/service/books-ms \
-	| jq '.[1].ServicePort'`
+    10.100.195.200:8500/v1/catalog/service/books-ms \
+    | jq '.[1].ServicePort'`
 
 BOOKS_MS_HOST=${BOOKS_MS_ADDRESS//\"}:${BOOKS_MS_PORT}
 
@@ -1710,12 +1711,12 @@ docker-compose -f docker-compose-swarm.yml scale app=1
 docker ps | grep booksms
 
 BOOKS_MS_ADDRESS=`curl \
-	10.100.195.200:8500/v1/catalog/service/books-ms \
-	| jq '.[0].Address'`
+    10.100.195.200:8500/v1/catalog/service/books-ms \
+    | jq '.[0].Address'`
 
 BOOKS_MS_PORT=`curl \
-	10.100.195.200:8500/v1/catalog/service/books-ms \
-	| jq '.[0].ServicePort'`
+    10.100.195.200:8500/v1/catalog/service/books-ms \
+    | jq '.[0].ServicePort'`
 
 BOOKS_MS_HOST=${BOOKS_MS_ADDRESS//\"}:${BOOKS_MS_PORT}
 
@@ -1771,15 +1772,15 @@ cat /vagrant/ansible/roles/service-swarm/files/get-domain.yml
 						<h2>Running the Swarm Deployment Playbook</h2>
 						<pre><code data-trim contenteditable>
 ansible-playbook /vagrant/ansible/service-swarm.yml \
-	-i /vagrant/ansible/hosts/prod \
-	--extra-vars "repo_dir=$PWD service_name=books-ms" \
-	-vv
+    -i /vagrant/ansible/hosts/prod \
+    --extra-vars "repo_dir=$PWD service_name=books-ms" \
+    -vv
 
 curl 10.100.195.200:8500/v1/catalog/services \
-	| jq '.'
+    | jq '.'
 
 curl 10.100.195.200:8500/v1/catalog/service/books-ms-blue \
-	| jq '.'
+    | jq '.'
 
 curl 10.100.195.200:8500/v1/kv/books-ms/color?raw
 
@@ -1791,15 +1792,15 @@ curl 10.100.195.200/api/v1/books | jq '.'
 						<h2>Scaling the Service With Ansible</h2>
 						<pre><code data-trim contenteditable>
 ansible-playbook /vagrant/ansible/service-swarm.yml \
-	-i /vagrant/ansible/hosts/prod \
-	--extra-vars "repo_dir=$PWD service_name=books-ms" \
-	--skip-tags "pull" --extra-vars "scale_service=2" -vv
+    -i /vagrant/ansible/hosts/prod \
+    --extra-vars "repo_dir=$PWD service_name=books-ms" \
+    --skip-tags "pull" --extra-vars "scale_service=2" -vv
 
 curl 10.100.195.200:8500/v1/catalog/services \
-	| jq '.'
+    | jq '.'
 
 curl 10.100.195.200:8500/v1/catalog/service/books-ms-green \
-	| jq '.'
+    | jq '.'
 
 curl http://10.100.195.200:8500/v1/kv/books-ms/color?raw
 
