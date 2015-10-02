@@ -1250,8 +1250,19 @@ sudo docker-compose \
 	integ
 
 sudo docker push 10.100.198.200:5000/books-ms-tests
-
+						</code></pre>
+					</section>
+					<section id="dp-later-clean-up">
+						<h4>Automating the Deployment Pipeline</h4>
+						<h2>Clean Up</h2>
+						<pre><code data-trim contenteditable>
 exit
+
+cd ~
+
+sudo docker-compose stop app db
+
+sudo docker-compose rm -f app db
 						</code></pre>
 					</section>
 					<section id="dp-late-checklist">
@@ -1268,6 +1279,17 @@ exit
 							<li class="fragment"><del>Integrate the container</del></li>
 							<li class="fragment"><del>Run post-deployment tests</del></li>
 							<li class="fragment"><del>Push the tests container to the registry</del></li>
+						</ol>
+					</section>
+					<section id="dp-late-problems">
+						<h4>Deployment Pipeline: The Late Stages</h4>
+						<h2>Problems</h2>
+						<ol>
+							<li class="fragment"><del>Not automated</del></li>
+							<li class="fragment"><del>Downtime</del></li>
+							<li class="fragment"><del>Not scalable</del></li>
+							<li class="fragment"><del>Not failure tollerant</del></li>
+							<li class="fragment"><del>Difficult to monitor</del></li>
 						</ol>
 					</section>
 				</section>
@@ -1296,183 +1318,26 @@ vagrant ssh cd
 
 cd ~/books-ms
 
-git pull
+sudo git pull
 						</code></pre>
 					</section>
 					<section id="dp-auto-playbook">
 						<h4>Automating the Deployment Pipeline</h4>
 						<h2>Ansible Playbook</h2>
 						<pre><code data-trim contenteditable>
+cat /vagrant/ansible/service.yml
+
 cat /vagrant/ansible/roles/service/tasks/main.yml
-						</code></pre>
-					</section>
-					<section id="dp-auto-pre-depployment-tests">
-						<h4>Automating the Deployment Pipeline</h4>
-						<h2>Running the Pre-Deployment Tests, Compiling and Packaging</h2>
-						<pre><code data-trim contenteditable>
-# roles/service/tasks/main.yml
 
-- name: Tests container is built
-  shell: docker build \
-    -t 10.100.198.200:5000/{{ service_name }}-tests \
-    -f Dockerfile.test .
-  args:
-    chdir: "{{ repo_dir }}"
-  delegate_to: 127.0.0.1
-  tags: [service, tests]
+cat /vagrant/ansible/roles/service/tasks/pre-deployment.yml
 
-- name: Pre-deployment tests are run
-  shell: docker-compose \
-    -f docker-compose-dev.yml \
-    run --rm tests
-  args:
-    chdir: "{{ repo_dir }}"
-  delegate_to: 127.0.0.1
-  tags: [service, tests]
-						</code></pre>
-					</section>
-					<section id="dp-auto-build">
-						<h4>Automating the Deployment Pipeline</h4>
-						<h2>Building the Container</h2>
-						<pre><code data-trim contenteditable>
-# roles/service/tasks/main.yml
+cat /vagrant/ansible/roles/service/tasks/deployment.yml
 
-- name: Container is built
-  shell: docker build \
-    -t 10.100.198.200:5000/{{ service_name }} .
-  args:
-    chdir: "{{ repo_dir }}"
-  delegate_to: 127.0.0.1
-  tags: [service]
-						</code></pre>
-					</section>
-					<section id="dp-auto-push">
-						<h4>Automating the Deployment Pipeline</h4>
-						<h2>Pushing the Container to the Registry</h2>
-						<pre><code data-trim contenteditable>
-# roles/service/tasks/main.yml
+cat /vagrant/ansible/roles/service/defaults/main.yml
 
-- name: Container is pushed
-  shell: docker push \
-    10.100.198.200:5000/{{ service_name }}
-  delegate_to: 127.0.0.1
-  tags: [service]
-						</code></pre>
-					</section>
-					<section id="dp-auto-prepare-deploy">
-						<h4>Automating the Deployment Pipeline</h4>
-						<h2>Preparing for the Deployment to the Production Server</h2>
-						<pre><code data-trim contenteditable>
-# roles/service/tasks/main.yml
+cat /vagrant/ansible/roles/service/tasks/post-deployment.yml
 
-- name: Directories are created
-  file:
-    path: /data/{{ service_name }}
-    recurse: yes
-    state: directory
-  tags: [service]
-
-- name: Files are copied
-  copy:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-  with_items: files
-  tags: [service]
-						</code></pre>
-					</section>
-					<section id="dp-auto-prepare-deploy-2">
-						<h4>Automating the Deployment Pipeline</h4>
-						<h2>Preparing for the Deployment to the Production Server</h2>
-						<pre><code data-trim contenteditable>
-# roles/service/defaults/main.yml
-
-files: [
-  {
-    src: "{{ repo_dir }}/docker-compose.yml",
-    dest: "/data/{{ service_name }}/docker-compose.yml"
-  }, {
-    src: "{{ repo_dir }}/nginx-includes.conf",
-    dest: "/data/nginx/includes/{{ service_name }}.conf"
-  }, {
-    src: "{{ repo_dir }}/nginx-upstreams.ctmpl",
-    dest: "/data/nginx/upstreams/{{ service_name }}.ctmpl"
-  }
-]
-						</code></pre>
-					</section>
-					<section id="dp-auto-deploy">
-						<h4>Automating the Deployment Pipeline</h4>
-						<h2>Deploying the Containers to the Production Server</h2>
-						<pre><code data-trim contenteditable>
-# roles/service/tasks/main.yml
-
-- name: Containers are pulled
-  shell: docker-compose pull app
-  args:
-    chdir: /data/{{ service_name }}
-  tags: [service]
-
-- name: Containers are running
-  shell: docker-compose up -d app
-  args:
-    chdir: /data/{{ service_name }}
-  tags: [service]
-						</code></pre>
-					</section>
-					<section id="dp-auto-integrate">
-						<h4>Automating the Deployment Pipeline</h4>
-						<h2>Integrating the Container</h2>
-						<pre><code data-trim contenteditable>
-# roles/service/tasks/main.yml
-
-- name: Proxy is configured
-  shell: consul-template \
-    -consul localhost:8500 \
-    -template "{{ ct_src }}:{{ ct_dest }}:{{ ct_cmd }}" \
-    -once
-  tags: [service]
-						</code></pre>
-					</section>
-					<section id="dp-auto-integrate-variables">
-						<h4>Automating the Deployment Pipeline</h4>
-						<h2>Integration Variables</h2>
-						<pre><code data-trim contenteditable>
-# roles/service/defaults/main.yml
-
-ct_src: /data/nginx/upstreams/{{ service_name }}.ctmpl
-ct_dest: /data/nginx/upstreams/{{ service_name }}.conf
-ct_cmd: docker kill -s HUP nginx
-						</code></pre>
-					</section>
-					<section id="dp-auto-post-deployment-tests">
-						<h4>Automating the Deployment Pipeline</h4>
-						<h2>Running the Post-Deployment Tests</h2>
-						<pre><code data-trim contenteditable>
-# roles/service/tasks/main.yml
-
-- name: Post-deployment tests are run
-  shell: docker-compose \
-    -f docker-compose-dev.yml \
-    run --rm \
-    -e DOMAIN={{ proxy_url }} \
-    integ
-  args:
-    chdir: "{{ repo_dir }}"
-  delegate_to: 127.0.0.1
-  tags: [service, tests]
-						</code></pre>
-					</section>
-					<section id="dp-auto-push-tests">
-						<h4>Automating the Deployment Pipeline</h4>
-						<h2>Pushing the Tests Container to the Registry</h2>
-						<pre><code data-trim contenteditable>
-# roles/service/tasks/main.yml
-
-- name: Tests container is pushed
-  shell: docker push \
-    10.100.198.200:5000/{{ service_name }}-tests
-  delegate_to: 127.0.0.1
-  tags: [service, tests]
+cat /vagrant/ansible/group_vars/all
 						</code></pre>
 					</section>
 					<section id="dp-auto-run-pipeline">
@@ -1493,7 +1358,15 @@ ansible-playbook /vagrant/ansible/service.yml \
 						<pre><code data-trim contenteditable>
 exit
 
-vagrant destroy prod -f
+vagrant ssh prod
+
+cd /data/books-ms
+
+sudo docker-compose stop app db
+
+sudo docker-compose rm -f app db
+
+exit
 						</code></pre>
 					</section>
 				</section>
@@ -1549,10 +1422,17 @@ vagrant destroy prod -f
 							<li class="fragment">Post-integration tests failed</li>
 						</ul>
 					</section>
+					<section id="bg-flow">
+						<h4>Blue-Green Deployment Playbook</h4>
+						<h2>The Flow</h2>
+						<img src="img/bg/blue-green-flow.png">
+					</section>
 					<section id="bg-playbook">
 						<h4>Blue-Green Deployment Playbook</h4>
 						<h2>Playbook</h2>
                     	<pre><code data-trim contenteditable>
+vagrant ssh cd
+
 cat /vagrant/ansible/service-bg.yml
 
 cat /vagrant/ansible/roles/service-bg/tasks/main.yml
@@ -1561,35 +1441,35 @@ cat /vagrant/ansible/roles/service-bg/tasks/pre-deployment.yml
 
 cat /vagrant/ansible/roles/service-bg/tasks/deployment.yml
 
+cat /vagrant/ansible/roles/service-bg/tasks/copy.yml
+
+cat /vagrant/ansible/roles/service-bg/defaults/main.yml
+
+cat /vagrant/ansible/roles/service-bg/files/get-color.sh
+
 cat /vagrant/ansible/roles/service-bg/tasks/post-deployment.yml
 
 cat /vagrant/ansible/roles/service-bg/tasks/rollback.yml
 
 cat /vagrant/ansible/roles/service-bg/tasks/main.yml
-
-cat /vagrant/ansible/roles/service-bg/tasks/copy.yml
-
-cat /vagrant/ansible/roles/service-bg/defaults/main.yml
-
-cat /vagrant/ansible/roles/service-bg/files/get-color.yml
-
-cat /vagrant/ansible/roles/service-bg/files/get-port.yml
 						</code></pre>
 					</section>
 					<section id="bg-run">
 						<h4>Blue-Green Deployment Playbook</h4>
 						<h2>Running the Playbook</h2>
 							<pre><code data-trim contenteditable>
+cd ~/books-ms
+
 ansible-playbook /vagrant/ansible/service-bg.yml \
-	-i /vagrant/ansible/hosts/prod \
-	--extra-vars "repo_dir=$PWD service_name=books-ms" \
-	-vv
+    -i /vagrant/ansible/hosts/prod \
+    --extra-vars "repo_dir=$PWD service_name=books-ms" \
+    -vv
 
 curl 10.100.198.201:8500/v1/catalog/services \
-	| jq '.'
+    | jq '.'
 
 curl 10.100.198.201:8500/v1/catalog/service/books-ms-blue \
-	| jq '.'
+    | jq '.'
 
 curl http://10.100.198.201:8500/v1/kv/books-ms/color?raw
 
