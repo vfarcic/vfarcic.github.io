@@ -1572,8 +1572,6 @@ curl 10.100.195.200:8500/v1/catalog/services \
 
 curl 10.100.195.200:8500/v1/catalog/service/books-ms \
     | jq '.'
-
-docker ps | grep booksms
 						</code></pre>
 					</section>
 					<section id="scale-testing">
@@ -1601,22 +1599,28 @@ curl -H 'Content-Type: application/json' -X PUT -d \
 
 curl $BOOKS_MS_HOST/api/v1/books
 
-docker rm -f swarm-node-1/booksms_app_1
+docker-compose stop app db
 
-docker rm -f swarm-node-1/booksms_db_1
+docker-compose rm -f app db
+
+docker ps -a
 						</code></pre>
 					</section>
 					<section id="scale-swarm-deploy-cluster">
-						<h4>Clustering And Scaling Services</h4>
+						<h4>Clustering and Scaling Services</h4>
 						<h2>Deploying with Docker Swarm to the Cluster</h2>
 							<pre><code data-trim contenteditable>
+cat docker-compose-swarm.yml
+
 docker-compose -f docker-compose-swarm.yml up -d db
 
 curl 10.100.195.200:8500/v1/catalog/services \
     | jq '.'
 
-curl 10.100.195.200:8500/v1/catalog/service/books-ms-db \
+curl 10.100.195.200:8500/v1/catalog/service/books-db \
     | jq '.'
+
+cat docker-compose-swarm.ctmpl
 
 consul-template \
     -consul 10.100.195.200:8500 \
@@ -1729,21 +1733,17 @@ curl $BOOKS_MS_HOST/api/v1/books | jq '.'
 						<h4>Clustering And Scaling Services</h4>
 						<h2>Cleaning Up</h2>
 						<pre><code data-trim contenteditable>
-docker-compose -f docker-compose-swarm.yml stop app
+docker-compose -f docker-compose-swarm.yml stop app db
 
-docker-compose -f docker-compose-swarm.yml rm -f app
+docker-compose -f docker-compose-swarm.yml rm -f app db
 
-docker-compose -f docker-compose-swarm.yml stop db
-
-docker-compose -f docker-compose-swarm.yml rm -f db
+docker ps -a
 						</code></pre>
 					</section>
 					<section id="scale-swarm-playbook">
 						<h4>Clustering And Scaling Services</h4>
 						<h2>Examining the Swarm Deployment Playbook</h2>
 						<pre><code data-trim contenteditable>
-cd ~/books-ms
-
 cat /vagrant/ansible/service-swarm.yml
 
 cat /vagrant/ansible/roles/service-swarm/tasks/main.yml
@@ -1751,6 +1751,8 @@ cat /vagrant/ansible/roles/service-swarm/tasks/main.yml
 cat /vagrant/ansible/roles/service-swarm/tasks/pre-deployment.yml
 
 cat /vagrant/ansible/roles/service-swarm/tasks/deployment.yml
+
+cat /vagrant/ansible/roles/service-swarm/tasks/nginx.yml
 
 cat /vagrant/ansible/roles/service-swarm/tasks/post-deployment.yml
 
@@ -1774,9 +1776,12 @@ cat /vagrant/ansible/roles/service-swarm/files/get-domain.yml
 ansible-playbook /vagrant/ansible/service-swarm.yml \
     -i /vagrant/ansible/hosts/prod \
     --extra-vars "repo_dir=$PWD service_name=books-ms" \
-    -vv
+    -vv --skip-tags "build,pull"
 
 curl 10.100.195.200:8500/v1/catalog/services \
+    | jq '.'
+
+curl 10.100.195.200:8500/v1/catalog/service/books-db \
     | jq '.'
 
 curl 10.100.195.200:8500/v1/catalog/service/books-ms-blue \
@@ -1794,7 +1799,7 @@ curl 10.100.195.200/api/v1/books | jq '.'
 ansible-playbook /vagrant/ansible/service-swarm.yml \
     -i /vagrant/ansible/hosts/prod \
     --extra-vars "repo_dir=$PWD service_name=books-ms" \
-    --skip-tags "pull" --extra-vars "scale_service=2" -vv
+    --skip-tags "build,pull" --extra-vars "scale_service=2" -vv
 
 curl 10.100.195.200:8500/v1/catalog/services \
     | jq '.'
