@@ -155,6 +155,8 @@ Self-Healing
 ============
 
 ```bash
+vagrant ssh cd
+
 ansible-playbook /vagrant/ansible/cd-jenkins.yml \
     -c local \
     -vv
@@ -188,13 +190,73 @@ ansible-playbook /vagrant/ansible/swarm-healing.yml \
 
 Open [http://10.100.195.200:8500/](http://10.100.195.200:8500/)
 
-TODO: Action when hardware watchers fail
-
 ```bash
+cd ~/books-ms
+
 ansible-playbook /vagrant/ansible/service-healing.yml \
     -i /vagrant/ansible/hosts/prod \
     --extra-vars "repo_dir=$PWD service_name=books-ms ping_address=/api/v1/books" \
     -vv --skip-tags "build,pull"
+
+export DOCKER_HOST=tcp://10.100.195.200:2375
+
+docker stop $(docker ps | grep booksms_app | awk '{ print $1}')
+
+curl 10.100.195.200/api/v1/books | jq '.'
 ```
 
+Check the console output of the Jenkins job [redeploy-service](http://10.100.198.200:8080/job/service-redeploy/).
+
+Check the status of the Consul service [books-ms](http://10.100.195.200:8500/ui/#/dc1/services/books-ms)..
+
+```bash
+# Make sure that there is a service running on swarm-node-2.
+# If there isn't stop the container again.
+
+exit
+
+vagrant halt swarm-node-2
+```
+
+Check the console output of the Jenkins job [redeploy-service](http://10.100.198.200:8080/job/service-redeploy/).
+
+Check the status of the Consul service [books-ms](http://10.100.195.200:8500/ui/#/dc1/services/books-ms)..
+
+```bash
+vagrant ssh cd
+
+curl 10.100.195.200/api/v1/books | jq '.'
+
+export DOCKER_HOST=tcp://10.100.195.200:2375
+
+docker info
+
+docker ps -a | grep books
+
+exit
+
+vagrant up swarm-node-2
+
+vagrant ssh cd
+
+ansible-playbook /vagrant/ansible/swarm-healing.yml \
+    -i /vagrant/ansible/hosts/swarm \
+    -vv
+
+export DOCKER_HOST=tcp://10.100.195.200:2375
+
+docker info
+
+cd ~/books-ms
+
+ansible-playbook /vagrant/ansible/service-healing.yml \
+    -i /vagrant/ansible/hosts/prod \
+    --extra-vars "repo_dir=$PWD service_name=books-ms ping_address=/api/v1/books" \
+    -vv --skip-tags "build,pull,tests"
+
+docker ps -a | grep books
+```
+
+TODO: Create Jenkins jobs with Ansible
 TODO: Move ping_address to the service repo
+TODO: Action when hardware watchers fail
