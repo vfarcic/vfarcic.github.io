@@ -150,3 +150,51 @@ vagrant halt swarm-master swarm-node-1 swarm-node-2
 
 vagrant halt cd
 ```
+
+Self-Healing
+============
+
+```bash
+ansible-playbook /vagrant/ansible/cd-jenkins.yml \
+    -c local \
+    -vv
+```
+
+Open [http://10.100.198.200:8080](http://10.100.198.200:8080)
+
+### Add the cd node
+
+* Click __Manage Jenkins__ > __Manage Nodes__ > __New Node__
+* Type __cd__, click __Dumb Slave__ > __OK__
+* Type __/data/jenkins_slaves/cd__ in the __Remote root directory__ field
+* Type __10.100.198.200__ in the __Host__ field
+* Click the __Add__ button on the left side of the __Credentials__ label
+* Type __vagrant__ as both __Username__ and __Password__
+* Click the __Add__ button
+* Click the __Save__ button
+* Refresh the screen if the __cd__ node is marked as failed.
+
+### Add the git plugin
+
+* Click __Manage Jenkins__ > __Manage Plugins__ > __Available__
+* Select __GIT plugin__
+* Click __Install without restart__ > __Restart Jenkins when installation is complete and no jobs are running__
+
+```bash
+ansible-playbook /vagrant/ansible/swarm-healing.yml \
+    -i /vagrant/ansible/hosts/swarm \
+    -vv
+```
+
+Open [http://10.100.195.200:8500/](http://10.100.195.200:8500/)
+
+TODO: Action when hardware watchers fail
+
+```bash
+ansible-playbook /vagrant/ansible/service-healing.yml \
+    -i /vagrant/ansible/hosts/prod \
+    --extra-vars "repo_dir=$PWD service_name=books-ms ping_address=/api/v1/books" \
+    -vv --skip-tags "build,pull"
+```
+
+TODO: Move ping_address to the service repo
