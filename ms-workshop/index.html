@@ -1810,6 +1810,198 @@ curl 10.100.195.200:8500/v1/catalog/service/books-ms-green \
 curl http://10.100.195.200:8500/v1/kv/books-ms/color?raw
 
 curl 10.100.195.200/api/v1/books | jq '.'
+
+							exit
+
+vagrant halt swarm-master swarm-node-1 swarm-node-2
+						</code></pre>
+					</section>
+				</section>
+				<section data-background="img/background/health.png">
+					<section id="health">
+						<h2>Self-Healing Systems</h2>
+						<ul>
+							<li class="fragment">Application level</li>
+							<li class="fragment">System level</li>
+							<li class="fragment">Hardware level</li>
+						</ul>
+					</section>
+					<section id="health-ttl">
+						<h4>Self-Healing Systems</h4>
+						<h2>System Level: Time-To-Live (TTL)</h2>
+						<img src="img/health/health-ttl.png">
+					</section>
+					<section id="health-ping">
+						<h4>Self-Healing Systems</h4>
+						<h2>System Level: Pings</h2>
+						<img src="img/health/health-ping.png">
+					</section>
+					<section id="health-types">
+						<h4>Self-Healing Systems</h4>
+						<h2>Check Types</h2>
+						<ul>
+							<li class="fragment">Preventive</li>
+							<li class="fragment">Reactive</li>
+						</ul>
+					</section>
+					<section id="health-consul">
+						<h4>Self-Healing Systems</h4>
+						<h2>Consul Health Checks</h2>
+						<img src="img/health/health-consul.png">
+					</section>
+					<section id="health-jenkins-ansible">
+						<h4>Self-Healing Systems</h4>
+						<h2>Setting Up Jenkins: Ansible</h2>
+						<pre><code data-trim contenteditable>
+vagrant up swarm-master swarm-node-1 swarm-node-2
+
+vagrant ssh cd
+
+ansible-playbook /vagrant/ansible/cd-jenkins.yml \
+    -c local \
+    -vv
+						</code></pre>
+						Open <a href="http://10.100.198.200:8080">http://10.100.198.200:8080</a>
+					</section>
+					<section id="health-jenkins-git">
+						<h4>Self-Healing Systems</h4>
+						<h2>Setting Up Jenkins: Git Plugin</h2>
+						<ul>
+							<li class="fragment">Click <strong>Manage Jenkins</strong> &gt; <strong>Manage Plugins</strong> &gt; <strong>Available</strong></li>
+							<li class="fragment">Select <strong>GIT plugin</strong></li>
+							<li class="fragment">Click <strong>Install without restart</strong> > <strong>Restart Jenkins when installation is complete and no jobs are running</strong></li>
+						</ul>
+					</section>
+					<section id="health-jenkins-cd-node">
+						<h4>Self-Healing Systems</h4>
+						<h2>Setting Up Jenkins: cd Node</h2>
+						<ul>
+							<li class="fragment">Click <strong>Manage Jenkins</strong> > <strong>Manage Nodes</strong> > <strong>New Node</strong>
+							<li class="fragment">Type <strong>cd</strong>, click <strong>Dumb Slave</strong> > <strong>OK</strong>
+							<li class="fragment">Type <strong>/data/jenkins_slaves/cd</strong> in the <strong>Remote root directory</strong> field
+							<li class="fragment">Type <strong>10.100.198.200</strong> in the <strong>Host</strong> field
+							<li class="fragment">Click the <strong>Add</strong> button on the left side of the <strong>Credentials</strong> label
+							<li class="fragment">Type <strong>vagrant</strong> as both <strong>Username</strong> and <strong>Password</strong>
+							<li class="fragment">Click the <strong>Add</strong> button
+							<li class="fragment">Click the <strong>Save</strong> button
+							<li class="fragment">Refresh the screen if the <strong>cd</strong> node is marked as failed.
+						</ul>
+					</section>
+					<section id="health-ansible-playbook">
+						<h4>Self-Healing Systems</h4>
+						<h2>Ansible Playbook</h2>
+						<pre><code data-trim contenteditable>
+cat /vagrant/ansible/swarm-healing.yml
+
+cat /vagrant/ansible/roles/consul-healing/tasks/main.yml
+
+cat /vagrant/ansible/roles/consul-healing/defaults/main.yml
+
+cat /vagrant/ansible/roles/consul-healing/files/consul_check.json
+
+cat /vagrant/ansible/roles/consul-healing/files/mem.sh
+
+cat /vagrant/ansible/roles/consul-healing/files/disk.sh
+
+cat /vagrant/ansible/roles/consul-healing/templates/watchers.json
+
+cat /vagrant/ansible/roles/consul-healing/templates/manage_critical.sh
+
+cat /vagrant/ansible/roles/consul-healing/templates/manage_warning.sh
+						</code></pre>
+					</section>
+					<section id="health-ansible-run">
+						<h4>Self-Healing Systems</h4>
+						<h2>Ansible Playbook</h2>
+						<pre><code data-trim contenteditable>
+ansible-playbook /vagrant/ansible/swarm-healing.yml \
+    -i /vagrant/ansible/hosts/swarm \
+    -vv
+						</code></pre>
+						Open <a href="http://10.100.195.200:8500/">http://10.100.195.200:8500/</a>
+						<br />
+						Open <a hre="http://10.100.198.200:8080/job/service-redeploy/">http://10.100.198.200:8080/job/service-redeploy/</a>
+					</section>
+					<section id="health-stop-container">
+						<h4>Self-Healing Systems</h4>
+						<h2>Stop the Container</h2>
+						<pre><code data-trim contenteditable>
+export DOCKER_HOST=tcp://10.100.195.200:2375
+
+docker ps -a | grep books
+
+curl 10.100.195.200:8500/v1/catalog/services \
+    | jq '.'
+
+docker stop $(docker ps | grep booksms_app | awk '{ print $1}')
+
+docker ps -a | grep books
+
+curl 10.100.195.200:8500/v1/catalog/services \
+    | jq '.'
+
+curl 10.100.195.200/api/v1/books | jq '.'
+						</code></pre>
+						<small>Open <a href="http://10.100.195.200:8500/ui/#/dc1/services/books-ms">http://10.100.195.200:8500/ui/#/dc1/services/books-ms</a></small>
+						<br />
+						<small>Open <a hre="http://10.100.198.200:8080/job/service-redeploy/">http://10.100.198.200:8080/job/service-redeploy/</a></small>
+					</section>
+					<section id="health-stop-node">
+						<h4>Self-Healing Systems</h4>
+						<h2>Stop the Node</h2>
+						<pre><code data-trim contenteditable>
+exit
+
+vagrant halt swarm-node-2
+						</code></pre>
+						<small>Open <a href="http://10.100.195.200:8500/ui/#/dc1/services/books-ms">http://10.100.195.200:8500/ui/#/dc1/services/books-ms</a></small>
+						<br />
+						<small>Open <a hre="http://10.100.198.200:8080/job/service-redeploy/">http://10.100.198.200:8080/job/service-redeploy/</a></small>
+					</section>
+					<section id="health-check-node">
+						<h4>Self-Healing Systems</h4>
+						<h2>Check the Node</h2>
+						<pre><code data-trim contenteditable>
+vagrant ssh cd
+
+curl 10.100.195.200/api/v1/books | jq '.'
+
+export DOCKER_HOST=tcp://10.100.195.200:2375
+
+docker info
+
+docker ps -a | grep books
+
+curl 10.100.195.200:8500/v1/catalog/services \
+    | jq '.'
+
+exit
+						</code></pre>
+					</section>
+					<section id="health-up-node">
+						<h4>Self-Healing Systems</h4>
+						<h2>Bring Up the Node</h2>
+						<pre><code data-trim contenteditable>
+vagrant up swarm-node-2
+
+vagrant ssh cd
+
+ansible-playbook /vagrant/ansible/swarm-healing.yml \
+    -i /vagrant/ansible/hosts/swarm \
+    -vv
+
+export DOCKER_HOST=tcp://10.100.195.200:2375
+
+docker info
+
+docker stop $(docker ps | grep booksms_app | awk '{ print $1}')
+
+docker ps -a | grep books
+
+curl 10.100.195.200:8500/v1/catalog/services \
+    | jq '.'
+
+curl 10.100.195.200/api/v1/books | jq '.'
 						</code></pre>
 					</section>
 				</section>
