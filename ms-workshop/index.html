@@ -1618,7 +1618,7 @@ curl 10.100.195.200:8500/v1/catalog/service/books-db \
 
 cat docker-compose-swarm.ctmpl
 
-consul-template \
+sudo consul-template \
     -consul 10.100.195.200:8500 \
     -template "docker-compose-swarm.ctmpl:docker-compose-swarm.yml" \
     -once
@@ -1807,7 +1807,7 @@ curl http://10.100.195.200:8500/v1/kv/books-ms/color?raw
 
 curl 10.100.195.200/api/v1/books | jq '.'
 
-							exit
+exit
 
 vagrant halt swarm-master swarm-node-1 swarm-node-2
 						</code></pre>
