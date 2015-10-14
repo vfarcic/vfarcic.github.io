@@ -1066,7 +1066,7 @@ curl http://localhost:$PORT/api/v1/books \
 						<pre><code data-trim contenteditable>
 echo "
 location /api/v1/books {
-    proxy_pass http://10.100.193.200:$PORT/api/v1/books;
+    proxy_pass http://10.100.193 .200:$PORT/api/v1/books;
 }
 " | sudo tee /data/nginx/includes/books-ms.conf
 
