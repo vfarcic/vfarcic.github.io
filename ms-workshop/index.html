@@ -1129,6 +1129,23 @@ curl http://localhost/api/v1/books | jq '.'
 sudo docker logs nginx
 						</code></pre>
 					</section>
+					<section id="proxy-failover">
+						<h4>Proxy Service</h4>
+						<h2>Proxy Failover</h2>
+						<pre><code data-trim contenteditable>
+sudo docker stop vagrant_app_2
+
+curl http://localhost/api/v1/books | jq '.'
+
+curl http://localhost/api/v1/books | jq '.'
+
+curl http://localhost/api/v1/books | jq '.'
+
+curl http://localhost/api/v1/books | jq '.'
+
+sudo docker logs nginx
+						</code></pre>
+					</section>
 					<section id="proxy-consul-diagram">
 						<h4>Proxy Service</h4>
 						<h2>Configuring Proxy with Consul</h2>
