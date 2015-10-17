@@ -150,74 +150,14 @@
 					</ul>
 					<h2 class="fragment">Microservices</h2>
 				</section>
-				<section data-background="img/background/train.png">
-					<section id="ci-cd">
-						<h2>Continuous deployment</h2>
-						<ul>
-							<li class="fragment"><strong>Continuous integration</strong>
-								<div>
-									<label class="fragment">Push/clone,</label>
-									<label class="fragment">Static analysis,</label>
-									<label class="fragment">Pre-deployment testing,</label>
-									<label class="fragment">Packaging/deployment,</label>
-									<label class="fragment">Post-deployment testing</label>
-								</div>
-							</li>
-							<li class="fragment"><strong>Continuous delivery</strong>
-								<div>
-									<label class="fragment">every commit <label class="fragment grow highlight-current-green">can be</label> deployed to production</label>
-								</div>
-							</li>
-							<li class="fragment"><strong>Continuous deployment</strong>
-								<div>
-									<label class="fragment">every commit <label class="fragment grow highlight-current-green">is</label> deployed to production</label>
-								</div>
-							</li>
-						</ul>
-					</section>
-				</section>
-				<section data-background="img/background/containers.png">
-					<section id="containers">
-						<h2>Containers (Docker)</h2>
-						<blockquote>Shipping container is an object for holding or transporting something</blockquote>
-						<img src="img/containers/docker.png" style="float: right; width: 40%; height: 40%; background-color: white;">
-						<ul>
-							<li class="fragment">Isolated</li>
-							<li class="fragment">Immutable</li>
-							<li class="fragment">Reliable</li>
-							<li class="fragment">Self-sufficient</li>
-							<li class="fragment">Scalable</li>
-						</ul>
-					</section>
-					<section id="containers-vms">
-						<h4>Containers (Docker)</h4>
-						<h2>VMs vs Containers</h2>
-						<img src="img/containers/containers-vms.png" style="width: 85%; height: 85%;">
-					</section>
-					<section id="container-self-sufficient">
-						<h4>Containers (Docker)</h4>
-						<h2>Self-sufficient container</h2>
-						<img src="img/containers/container.png" style="width: 60%; height: 60%;">
-					</section>
-					<section id="container-db">
-						<h4>Containers (Docker)</h4>
-						<h2>Container with the separate DB</h2>
-						<img src="img/containers/container-db.png" style="width: 90%; height: 90%; ">
-					</section>
-					<section id="container-shared-db">
-						<h4>Containers (Docker)</h4>
-						<h2>Containers with the shared DB</h2>
-						<img src="img/containers/container-shared-db.png" style="width: 70%; height: 70%; ">
-					</section>
-				</section>
 				<section data-background="img/background/monolith.png">
 					<section id="monolith">
 						<h2>Monolithic applications</h2>
 						<ul>
 							<li class="fragment">Single unit</li>
+							<li class="fragment">Layers</li>
 							<li class="fragment">Time increases complexity and size</li>
 							<li class="fragment">Time decreases development, testing and deployment speed</li>
-							<li class="fragment">Layers</li>
 							<li class="fragment">Change is hard and with risks</li>
 							<li class="fragment">Scaling = multiplication of the entire application</li>
 						</ul>
@@ -337,6 +277,66 @@ ps aux | grep jav[a] | awk '{print $2}' | xargs kill
 							<li class="fragment">Cross functional teams</li>
 							<li class="fragment">API versioning</li>
 						</ul>
+					</section>
+				</section>
+				<section data-background="img/background/train.png">
+					<section id="ci-cd">
+						<h2>Continuous deployment</h2>
+						<ul>
+							<li class="fragment"><strong>Continuous integration</strong>
+								<div>
+									<label class="fragment">Push/clone,</label>
+									<label class="fragment">Static analysis,</label>
+									<label class="fragment">Pre-deployment testing,</label>
+									<label class="fragment">Packaging/deployment,</label>
+									<label class="fragment">Post-deployment testing</label>
+								</div>
+							</li>
+							<li class="fragment"><strong>Continuous delivery</strong>
+								<div>
+									<label class="fragment">every commit <label class="fragment grow highlight-current-green">can be</label> deployed to production</label>
+								</div>
+							</li>
+							<li class="fragment"><strong>Continuous deployment</strong>
+								<div>
+									<label class="fragment">every commit <label class="fragment grow highlight-current-green">is</label> deployed to production</label>
+								</div>
+							</li>
+						</ul>
+					</section>
+				</section>
+				<section data-background="img/background/containers.png">
+					<section id="containers">
+						<h2>Containers (Docker)</h2>
+						<blockquote>Shipping container is an object for holding or transporting something</blockquote>
+						<img src="img/containers/docker.png" style="float: right; width: 40%; height: 40%; background-color: white;">
+						<ul>
+							<li class="fragment">Isolated</li>
+							<li class="fragment">Immutable</li>
+							<li class="fragment">Reliable</li>
+							<li class="fragment">Self-sufficient</li>
+							<li class="fragment">Scalable</li>
+						</ul>
+					</section>
+					<section id="containers-vms">
+						<h4>Containers (Docker)</h4>
+						<h2>VMs vs Containers</h2>
+						<img src="img/containers/containers-vms.png" style="width: 85%; height: 85%;">
+					</section>
+					<section id="container-self-sufficient">
+						<h4>Containers (Docker)</h4>
+						<h2>Self-sufficient container</h2>
+						<img src="img/containers/container.png" style="width: 60%; height: 60%;">
+					</section>
+					<section id="container-db">
+						<h4>Containers (Docker)</h4>
+						<h2>Container with the separate DB</h2>
+						<img src="img/containers/container-db.png" style="width: 90%; height: 90%; ">
+					</section>
+					<section id="container-shared-db">
+						<h4>Containers (Docker)</h4>
+						<h2>Containers with the shared DB</h2>
+						<img src="img/containers/container-shared-db.png" style="width: 70%; height: 70%; ">
 					</section>
 				</section>
 				<section data-background="img/background/deployment.png">
