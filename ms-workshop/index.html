@@ -2014,6 +2014,33 @@ curl 10.100.192.200:8500/v1/catalog/services \
     | jq '.'
 
 curl 10.100.192.200/api/v1/books | jq '.'
+
+exit
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section id="logging">
+						<pre><code data-trim contenteditable>
+vagrant ssh cd
+
+cd /vagrant/ansible
+
+ansible-playbook logging.yml -i hosts/prod
+
+export DOCKER_HOST=tcp://10.100.192.200:2375
+
+cd ~/books-ms
+
+docker-compose -f docker-compose-swarm.yml up -d db
+
+docker ps -a | grep books
+
+curl 10.100.192.200:8500/v1/catalog/services \
+    | jq '.'
+
+curl 10.100.192.200:8500/v1/catalog/service/books-ms \
+    | jq '.'
 						</code></pre>
 					</section>
 				</section>
