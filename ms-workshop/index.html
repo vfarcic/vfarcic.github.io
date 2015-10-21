@@ -1824,8 +1824,6 @@ curl http://10.100.192.200:8500/v1/kv/books-ms/color?raw
 curl 10.100.192.200/api/v1/books | jq '.'
 
 exit
-
-vagrant halt swarm-master swarm-node-1 swarm-node-2
 						</code></pre>
 					</section>
 				</section>
@@ -1849,6 +1847,8 @@ ansible-playbook /vagrant/ansible/service-swarm.yml \
     -vv --skip-tags "build,pull"
 
 sudo docker logs -f logstash
+
+exit
 						</code></pre>
 					</section>
 				</section>
@@ -1888,8 +1888,6 @@ sudo docker logs -f logstash
 						<h4>Self-Healing Systems</h4>
 						<h2>Setting Up Jenkins: Ansible</h2>
 						<pre><code data-trim contenteditable>
-vagrant up swarm-master swarm-node-1 swarm-node-2
-
 vagrant ssh cd
 
 ansible-playbook /vagrant/ansible/cd-jenkins.yml \
