@@ -1829,6 +1829,29 @@ vagrant halt swarm-master swarm-node-1 swarm-node-2
 						</code></pre>
 					</section>
 				</section>
+				<section>
+					<section id="logging">
+						<h2>Centralized Logging</h2>
+						<pre><code data-trim contenteditable>
+vagrant ssh cd
+
+cd /vagrant/ansible
+
+ansible-playbook logging.yml -i hosts/prod
+
+export DOCKER_HOST=tcp://10.100.192.200:2375
+
+cd ~/books-ms
+
+ansible-playbook /vagrant/ansible/service-swarm.yml \
+    -i /vagrant/ansible/hosts/prod \
+    --extra-vars "repo_dir=$PWD service_name=books-ms" \
+    -vv --skip-tags "build,pull"
+
+sudo docker logs -f logstash
+						</code></pre>
+					</section>
+				</section>
 				<section data-background="img/background/health.png">
 					<section id="health">
 						<h2>Self-Healing Systems</h2>
@@ -2016,31 +2039,6 @@ curl 10.100.192.200:8500/v1/catalog/services \
 curl 10.100.192.200/api/v1/books | jq '.'
 
 exit
-						</code></pre>
-					</section>
-				</section>
-				<section>
-					<section id="logging">
-						<pre><code data-trim contenteditable>
-vagrant ssh cd
-
-cd /vagrant/ansible
-
-ansible-playbook logging.yml -i hosts/prod
-
-export DOCKER_HOST=tcp://10.100.192.200:2375
-
-cd ~/books-ms
-
-docker-compose -f docker-compose-swarm.yml up -d db
-
-docker ps -a | grep books
-
-curl 10.100.192.200:8500/v1/catalog/services \
-    | jq '.'
-
-curl 10.100.192.200:8500/v1/catalog/service/books-ms \
-    | jq '.'
 						</code></pre>
 					</section>
 				</section>
