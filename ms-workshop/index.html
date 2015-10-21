@@ -819,7 +819,7 @@ cat /vagrant/ansible/roles/consul/tasks/main.yml
 
 cat /vagrant/ansible/roles/consul/defaults/main.yml
 
-cat /vagrant/ansible/host_vars/10.100.197.201
+cat /vagrant/ansible/host_vars/10.100.194.201
 
 cat /vagrant/ansible/consul.yml
 						</code></pre>
@@ -832,7 +832,7 @@ ansible-playbook \
 	/vagrant/ansible/consul.yml \
 	-i /vagrant/ansible/hosts/serv-disc
 
-curl 10.100.197.201:8500/v1/catalog/nodes \
+curl 10.100.194.201:8500/v1/catalog/nodes \
 	| jq '.'
 						</code></pre>
 					</section>
@@ -846,35 +846,35 @@ curl 10.100.197.201:8500/v1/catalog/nodes \
 						<h2>Key/value store: PUT</h2>
 						<pre><code data-trim contenteditable>
 curl -X PUT -d 'this is a test' \
-	http://10.100.197.201:8500/v1/kv/msg1
+	http://10.100.194.201:8500/v1/kv/msg1
 
 curl -X PUT -d 'this is another test' \
-	http://10.100.197.202:8500/v1/kv/messages/msg2
+	http://10.100.194.202:8500/v1/kv/messages/msg2
 
 curl -X PUT -d 'this is a test with flags' \
-	http://10.100.197.203:8500/v1/kv/messages/msg3?flags=1234
+	http://10.100.194.203:8500/v1/kv/messages/msg3?flags=1234
 						</code></pre>
 					</section>
 					<section id="sd-kv-get-delete">
 						<h4>Service Discovery</h4>
 						<h2>Key/value store: GET/DELETE</h2>
 						<pre><code data-trim contenteditable>
-curl http://10.100.197.203:8500/v1/kv/?recurse \
+curl http://10.100.194.203:8500/v1/kv/?recurse \
 	| jq '.'
 
-curl http://10.100.197.202:8500/v1/kv/msg1 \
+curl http://10.100.194.202:8500/v1/kv/msg1 \
 	| jq '.'
 
-curl http://10.100.197.201:8500/v1/kv/msg1?raw
+curl http://10.100.194.201:8500/v1/kv/msg1?raw
 
-curl -X DELETE http://10.100.197.201:8500/v1/kv/messages/msg2
+curl -X DELETE http://10.100.194.201:8500/v1/kv/messages/msg2
 
-curl http://10.100.197.203:8500/v1/kv/?recurse \
+curl http://10.100.194.203:8500/v1/kv/?recurse \
 	| jq '.'
 
-curl -X DELETE http://10.100.197.202:8500/v1/kv/?recurse
+curl -X DELETE http://10.100.194.202:8500/v1/kv/?recurse
 
-curl http://10.100.197.203:8500/v1/kv/?recurse \
+curl http://10.100.194.203:8500/v1/kv/?recurse \
 	| jq '.'
 						</code></pre>
 					</section>
@@ -915,7 +915,7 @@ sudo docker run -d --name nginx \
     -p 1234:80 \
     nginx
 
-curl http://10.100.197.201:8500/v1/catalog/service/nginx \
+curl http://10.100.194.201:8500/v1/catalog/service/nginx \
     | jq '.'
 						</code></pre>
 					</section>
@@ -1065,7 +1065,7 @@ curl http://localhost:$PORT/api/v1/books \
 						<pre><code data-trim contenteditable>
 echo "
 location /api/v1/books {
-    proxy_pass http://10.100.193 .200:$PORT/api/v1/books;
+    proxy_pass http://10.100.193.200:$PORT/api/v1/books;
 }
 " | sudo tee /data/nginx/includes/books-ms.conf
 
@@ -1562,7 +1562,7 @@ cat /vagrant/ansible/swarm.yml
 
 cat /vagrant/ansible/roles/swarm/tasks/main.yml
 
-export DOCKER_HOST=tcp://10.100.195.200:2375
+export DOCKER_HOST=tcp://10.100.192.200:2375
 
 docker info
 
@@ -1579,10 +1579,10 @@ docker-compose up -d app
 
 docker ps -a | grep books
 
-curl 10.100.195.200:8500/v1/catalog/services \
+curl 10.100.192.200:8500/v1/catalog/services \
     | jq '.'
 
-curl 10.100.195.200:8500/v1/catalog/service/books-ms \
+curl 10.100.192.200:8500/v1/catalog/service/books-ms \
     | jq '.'
 						</code></pre>
 					</section>
@@ -1591,11 +1591,11 @@ curl 10.100.195.200:8500/v1/catalog/service/books-ms \
 						<h2>Testing Deployments with Docker Swarm</h2>
 						<pre><code data-trim contenteditable>
 BOOKS_MS_ADDRESS=`curl \
-    10.100.195.200:8500/v1/catalog/service/books-ms \
+    10.100.192.200:8500/v1/catalog/service/books-ms \
     | jq '.[0].Address'`
 
 BOOKS_MS_PORT=`curl \
-    10.100.195.200:8500/v1/catalog/service/books-ms \
+    10.100.192.200:8500/v1/catalog/service/books-ms \
     | jq '.[0].ServicePort'`
 
 BOOKS_MS_HOST=${BOOKS_MS_ADDRESS//\"}:${BOOKS_MS_PORT}
@@ -1626,16 +1626,16 @@ cat docker-compose-swarm.yml
 
 docker-compose -f docker-compose-swarm.yml up -d db
 
-curl 10.100.195.200:8500/v1/catalog/services \
+curl 10.100.192.200:8500/v1/catalog/services \
     | jq '.'
 
-curl 10.100.195.200:8500/v1/catalog/service/books-db \
+curl 10.100.192.200:8500/v1/catalog/service/books-db \
     | jq '.'
 
 cat docker-compose-swarm.ctmpl
 
 sudo consul-template \
-    -consul 10.100.195.200:8500 \
+    -consul 10.100.192.200:8500 \
     -template "docker-compose-swarm.ctmpl:docker-compose-swarm.yml" \
     -once
 
@@ -1651,20 +1651,20 @@ docker-compose -f docker-compose-swarm.yml up -d app
 						<h4>Clustering And Scaling Services</h4>
 						<h2>Testing Deployment with Docker Swarm to the Cluster</h2>
 						<pre><code data-trim contenteditable>
-curl 10.100.195.200:8500/v1/catalog/services \
+curl 10.100.192.200:8500/v1/catalog/services \
     | jq '.'
 
-curl 10.100.195.200:8500/v1/catalog/service/books-ms \
+curl 10.100.192.200:8500/v1/catalog/service/books-ms \
     | jq '.'
 
 docker ps | grep booksms
 
 BOOKS_MS_ADDRESS=`curl \
-    10.100.195.200:8500/v1/catalog/service/books-ms \
+    10.100.192.200:8500/v1/catalog/service/books-ms \
     | jq '.[0].Address'`
 
 BOOKS_MS_PORT=`curl \
-    10.100.195.200:8500/v1/catalog/service/books-ms \
+    10.100.192.200:8500/v1/catalog/service/books-ms \
     | jq '.[0].ServicePort'`
 
 BOOKS_MS_HOST=${BOOKS_MS_ADDRESS//\"}:${BOOKS_MS_PORT}
@@ -1690,11 +1690,11 @@ docker-compose -f docker-compose-swarm.yml scale app=2
 docker ps | grep booksms
 
 BOOKS_MS_ADDRESS=`curl \
-    10.100.195.200:8500/v1/catalog/service/books-ms \
+    10.100.192.200:8500/v1/catalog/service/books-ms \
     | jq '.[0].Address'`
 
 BOOKS_MS_PORT=`curl \
-    10.100.195.200:8500/v1/catalog/service/books-ms \
+    10.100.192.200:8500/v1/catalog/service/books-ms \
     | jq '.[0].ServicePort'`
 
 BOOKS_MS_HOST=${BOOKS_MS_ADDRESS//\"}:${BOOKS_MS_PORT}
@@ -1704,11 +1704,11 @@ echo $BOOKS_MS_HOST
 curl $BOOKS_MS_HOST/api/v1/books | jq '.'
 
 BOOKS_MS_ADDRESS=`curl \
-    10.100.195.200:8500/v1/catalog/service/books-ms \
+    10.100.192.200:8500/v1/catalog/service/books-ms \
     | jq '.[1].Address'`
 
 BOOKS_MS_PORT=`curl \
-    10.100.195.200:8500/v1/catalog/service/books-ms \
+    10.100.192.200:8500/v1/catalog/service/books-ms \
     | jq '.[1].ServicePort'`
 
 BOOKS_MS_HOST=${BOOKS_MS_ADDRESS//\"}:${BOOKS_MS_PORT}
@@ -1727,11 +1727,11 @@ docker-compose -f docker-compose-swarm.yml scale app=1
 docker ps | grep booksms
 
 BOOKS_MS_ADDRESS=`curl \
-    10.100.195.200:8500/v1/catalog/service/books-ms \
+    10.100.192.200:8500/v1/catalog/service/books-ms \
     | jq '.[0].Address'`
 
 BOOKS_MS_PORT=`curl \
-    10.100.195.200:8500/v1/catalog/service/books-ms \
+    10.100.192.200:8500/v1/catalog/service/books-ms \
     | jq '.[0].ServicePort'`
 
 BOOKS_MS_HOST=${BOOKS_MS_ADDRESS//\"}:${BOOKS_MS_PORT}
@@ -1790,18 +1790,18 @@ ansible-playbook /vagrant/ansible/service-swarm.yml \
     --extra-vars "repo_dir=$PWD service_name=books-ms" \
     -vv --skip-tags "build,pull"
 
-curl 10.100.195.200:8500/v1/catalog/services \
+curl 10.100.192.200:8500/v1/catalog/services \
     | jq '.'
 
-curl 10.100.195.200:8500/v1/catalog/service/books-db \
+curl 10.100.192.200:8500/v1/catalog/service/books-db \
     | jq '.'
 
-curl 10.100.195.200:8500/v1/catalog/service/books-ms-blue \
+curl 10.100.192.200:8500/v1/catalog/service/books-ms-blue \
     | jq '.'
 
-curl 10.100.195.200:8500/v1/kv/books-ms/color?raw
+curl 10.100.192.200:8500/v1/kv/books-ms/color?raw
 
-curl 10.100.195.200/api/v1/books | jq '.'
+curl 10.100.192.200/api/v1/books | jq '.'
 						</code></pre>
 					</section>
 					<section id="scale-swarm-scale-ansible">
@@ -1813,15 +1813,15 @@ ansible-playbook /vagrant/ansible/service-swarm.yml \
     --extra-vars "repo_dir=$PWD service_name=books-ms" \
     --skip-tags "build,pull" --extra-vars "scale_service=2" -vv
 
-curl 10.100.195.200:8500/v1/catalog/services \
+curl 10.100.192.200:8500/v1/catalog/services \
     | jq '.'
 
-curl 10.100.195.200:8500/v1/catalog/service/books-ms-green \
+curl 10.100.192.200:8500/v1/catalog/service/books-ms-green \
     | jq '.'
 
-curl http://10.100.195.200:8500/v1/kv/books-ms/color?raw
+curl http://10.100.192.200:8500/v1/kv/books-ms/color?raw
 
-curl 10.100.195.200/api/v1/books | jq '.'
+curl 10.100.192.200/api/v1/books | jq '.'
 
 exit
 
@@ -1930,7 +1930,7 @@ ansible-playbook /vagrant/ansible/swarm-healing.yml \
     -i /vagrant/ansible/hosts/swarm \
     -vv
 						</code></pre>
-						Open <a href="http://10.100.195.200:8500/">http://10.100.195.200:8500/</a>
+						Open <a href="http://10.100.192.200:8500/">http://10.100.192.200:8500/</a>
 						<br />
 						Open <a hre="http://10.100.198.200:8080/job/service-redeploy/">http://10.100.198.200:8080/job/service-redeploy/</a>
 					</section>
@@ -1938,23 +1938,23 @@ ansible-playbook /vagrant/ansible/swarm-healing.yml \
 						<h4>Self-Healing Systems</h4>
 						<h2>Stop the Container</h2>
 						<pre><code data-trim contenteditable>
-export DOCKER_HOST=tcp://10.100.195.200:2375
+export DOCKER_HOST=tcp://10.100.192.200:2375
 
 docker ps -a | grep books
 
-curl 10.100.195.200:8500/v1/catalog/services \
+curl 10.100.192.200:8500/v1/catalog/services \
     | jq '.'
 
 docker stop $(docker ps | grep booksms_app | awk '{ print $1}')
 
 docker ps -a | grep books
 
-curl 10.100.195.200:8500/v1/catalog/services \
+curl 10.100.192.200:8500/v1/catalog/services \
     | jq '.'
 
-curl 10.100.195.200/api/v1/books | jq '.'
+curl 10.100.192.200/api/v1/books | jq '.'
 						</code></pre>
-						<small>Open <a href="http://10.100.195.200:8500/ui/#/dc1/services/books-ms">http://10.100.195.200:8500/ui/#/dc1/services/books-ms</a></small>
+						<small>Open <a href="http://10.100.192.200:8500/ui/#/dc1/services/books-ms">http://10.100.192.200:8500/ui/#/dc1/services/books-ms</a></small>
 						<br />
 						<small>Open <a hre="http://10.100.198.200:8080/job/service-redeploy/">http://10.100.198.200:8080/job/service-redeploy/</a></small>
 					</section>
@@ -1966,7 +1966,7 @@ exit
 
 vagrant halt swarm-node-2
 						</code></pre>
-						<small>Open <a href="http://10.100.195.200:8500/ui/#/dc1/services/books-ms">http://10.100.195.200:8500/ui/#/dc1/services/books-ms</a></small>
+						<small>Open <a href="http://10.100.192.200:8500/ui/#/dc1/services/books-ms">http://10.100.192.200:8500/ui/#/dc1/services/books-ms</a></small>
 						<br />
 						<small>Open <a hre="http://10.100.198.200:8080/job/service-redeploy/">http://10.100.198.200:8080/job/service-redeploy/</a></small>
 					</section>
@@ -1976,15 +1976,15 @@ vagrant halt swarm-node-2
 						<pre><code data-trim contenteditable>
 vagrant ssh cd
 
-curl 10.100.195.200/api/v1/books | jq '.'
+curl 10.100.192.200/api/v1/books | jq '.'
 
-export DOCKER_HOST=tcp://10.100.195.200:2375
+export DOCKER_HOST=tcp://10.100.192.200:2375
 
 docker info
 
 docker ps -a | grep books
 
-curl 10.100.195.200:8500/v1/catalog/services \
+curl 10.100.192.200:8500/v1/catalog/services \
     | jq '.'
 
 exit
@@ -2002,7 +2002,7 @@ ansible-playbook /vagrant/ansible/swarm-healing.yml \
     -i /vagrant/ansible/hosts/swarm \
     -vv
 
-export DOCKER_HOST=tcp://10.100.195.200:2375
+export DOCKER_HOST=tcp://10.100.192.200:2375
 
 docker info
 
@@ -2010,10 +2010,10 @@ docker stop $(docker ps | grep booksms_app | awk '{ print $1}')
 
 docker ps -a | grep books
 
-curl 10.100.195.200:8500/v1/catalog/services \
+curl 10.100.192.200:8500/v1/catalog/services \
     | jq '.'
 
-curl 10.100.195.200/api/v1/books | jq '.'
+curl 10.100.192.200/api/v1/books | jq '.'
 						</code></pre>
 					</section>
 				</section>
