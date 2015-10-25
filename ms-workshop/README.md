@@ -49,7 +49,7 @@ This workshop will go through the whole **microservices development lifecycle**.
 
 This will be a journey through all the aspects of the lives of microservices and everything that surrounds them. We'll see how microservices fit into continuous deployment and immutable containers concepts and why the best results are obtained when those three are combined into one unique framework.
 
-During the workshop we'll explore tools Docker, CoreOS, RancherOS, Docker Swarm, Docker Compose, Rocket, Ansible, Consul, etcd, confd, Registrator, and so on.
+During the workshop we'll explore tools Docker, Docker Swarm, Docker Compose, Ansible, Consul, etcd, confd, Registrator, nginx, HAProxy, ElasticSearch, LogStash, Kibana, and so on.
 
 Learning Outcomes
 =================

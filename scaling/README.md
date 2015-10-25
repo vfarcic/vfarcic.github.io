@@ -47,8 +47,6 @@ It's been a bit over a year since Docker released its first "production ready" r
 
 Can we automatically scale (and de-scale) services depending on traffic and server load? Do we need to know where will the applications be deployed? Can we treat all our servers as one big "server farm"? What can we do with auto-discovery? Can we recuperate from failures without human intervention? Can we truly accomplish zero-downtime?
 
-This presentation will try to answer those and other questions. It is the result of different proofs of concept done as experiments as well as successful implementations of large scalable systems.
-
 Learning Outcomes
 =================
 
@@ -74,11 +72,11 @@ Presentation Sample
 Bio
 ===
 
-Viktor Farcic is a Software Architect at everis.
+Viktor Farcic is a Software Architect at everis / NTT Data.
 
 He coded using plethora of languages starting with Pascal (yes, he is old), Basic (before it got Visual prefix), ASP (before it got .Net suffix), C, C++, Perl, Python, ASP.Net, Visual Basic, C#, JavaScript, etc. He never worked with Fortran. His current favorites are **Scala** and **JavaScript** even though most of his office hours are spent with **Java**.
 
-His big passions are Continuous Integration, Delivery and Deployment (CI/CD), Test-Driven Development (TDD) and Behavior-Driven Development (BDD).
+His big passions are Microservices, Continuous Integration, Delivery and Deployment (CI/CD) and Test-Driven Development.
 
 He often speaks at community gatherings and conferences.
 
