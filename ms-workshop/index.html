@@ -1477,7 +1477,7 @@ cd ~/books-ms
 ansible-playbook /vagrant/ansible/service-bg.yml \
     -i /vagrant/ansible/hosts/prod \
     --extra-vars "repo_dir=$PWD service_name=books-ms" \
-    --skip-tags "build" \
+    --skip-tags "build,push,pull" \
     -vv
 
 curl 10.100.198.201:8500/v1/catalog/services \
@@ -1495,8 +1495,6 @@ curl 10.100.198.201/api/v1/books | jq '.'
 						<h4>Blue-Green Deployment</h4>
 						<h2>Failing Pre-Integration Tests</h2>
 							<pre><code data-trim contenteditable>
-cd ~/books-ms
-
 ansible-playbook /vagrant/ansible/service-bg.yml \
     -i /vagrant/ansible/hosts/prod \
     --extra-vars "repo_dir=$PWD service_name=books-ms fail_pre_deployment_tests=true" \
@@ -1512,7 +1510,12 @@ curl 10.100.198.201:8500/v1/catalog/service/books-ms-blue \
 curl http://10.100.198.201:8500/v1/kv/books-ms/color?raw
 
 curl 10.100.198.201/api/v1/books | jq '.'
-
+							</code></pre>
+					</section>
+					<section id="bg-cleaup">
+						<h4>Blue-Green Deployment</h4>
+						<h2>Cleaning Up</h2>
+							<pre><code data-trim contenteditable>
 exit
 
 halt prod
