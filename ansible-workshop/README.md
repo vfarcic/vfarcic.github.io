@@ -82,7 +82,9 @@ Pre-Workshop Instructions
 
 Install [Virtual Box](https://www.virtualbox.org/), [Vagrant](https://www.vagrantup.com/) and [Git](https://git-scm.com/).
 
-__If you are using Windows, please make sure that Git is configured to use "Checkout as-is". This can be accomplished during the setup by selecting the second or third option from the screen depicted in the Figure 4-1.__
+__If you are using Windows, please make sure that Git is configured to use "Checkout as-is". This can be accomplished during the setup by selecting the second or third option from the screen.__
+
+![Windows Git Setup](git-windows.png)
 
 ```bash
 git clone https://github.com/vfarcic/ansible-workshop.git
