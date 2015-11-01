@@ -325,6 +325,176 @@ curl 10.100.192.200:8500/v1/catalog/nodes \
 						Open <a href="http://10.100.192.200:8500/">http://10.100.192.200:8500/</a>
 					</section>
 				</section>
+				<section>
+					<section id="docker-repo">
+						<h4>Docker Role</h4>
+						<h2>Task: Add Repository</h2>
+						<p>
+							Add Docker repository <strong>deb https://apt.dockerproject.org/repo ubuntu-trusty main</strong> and update cache.
+						</p>
+						<h4>Tips:</h4>
+						<ul>
+							<li><a href="http://docs.ansible.com/ansible/apt_repository_module.html">http://docs.ansible.com/ansible/apt_repository_module.html</a></li>
+						</ul>
+					</section>
+					<section id="docker-repo-solution">
+						<h4>Docker Role</h4>
+						<h2>Solution: Add Repository</h2>
+						<pre><code data-trim contenteditable>
+# roles/docker/tasks/main.yml
+
+- apt_repository:
+    repo: deb https://apt.dockerproject.org/repo ubuntu-trusty main
+    update_cache: yes
+						</code></pre>
+					</section>
+					<section id="docker-package">
+						<h4>Docker Role</h4>
+						<h2>Task: Install Debian Packages</h2>
+						<p>
+							Install the following Debian packages:
+						</p>
+						<ul>
+							<li>docker-engine</li>
+							<li>python-pip</li>
+						</ul>
+						<h4>Tips:</h4>
+						<ul>
+							<li><a href="http://docs.ansible.com/ansible/apt_module.html">http://docs.ansible.com/ansible/apt_module.html</a></li>
+						</ul>
+					</section>
+					<section id="docker-package-solution">
+						<h4>Docker Role</h4>
+						<h2>Solution: Install Debian Packages</h2>
+						<pre><code data-trim contenteditable>
+# roles/docker/tasks/main.yml
+
+- apt:
+    name: "{{ item }}"
+    force: yes
+  with_items:
+    - docker-engine
+    - python-pip
+						</code></pre>
+					</section>
+					<section id="docker-pip">
+						<h4>Docker Role</h4>
+						<h2>Task: Install PIP Package</h2>
+						<p>
+							Install the <strong>docker-py</strong> PIP package version <strong>0.4.0</strong>
+						</p>
+						<h4>Tips:</h4>
+						<ul>
+							<li><a href="http://docs.ansible.com/ansible/pip_module.html">http://docs.ansible.com/ansible/pip_module.html</a></li>
+						</ul>
+					</section>
+					<section id="docker-pip-solution">
+						<h4>Docker Role</h4>
+						<h2>Solution: Install PIP Package</h2>
+						<pre><code data-trim contenteditable>
+# roles/docker/tasks/main.yml
+
+- pip:
+    name: docker-py
+    version: 0.4.0
+						</code></pre>
+					</section>
+					<section id="docker-test">
+						<h4>Common Role</h4>
+						<h2>Test</h2>
+						<pre><code data-trim contenteditable>
+sudo docker --version
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section id="swarm-docker">
+						<h4>Docker Role</h4>
+						<h2>Task: Reconfigure Docker</h2>
+						<ul>
+							<li>Copy the configuration file <strong>docker.cfg</strong> to <strong>/etc/default/docker</strong> (only if NOT the main server)</li>
+							<li>Restart the <strong>docker</strong> service if the configuration file has changed</li>
+						</ul>
+						<h4>Tips:</h4>
+						<ul>
+							<li><a href="http://docs.ansible.com/ansible/copy_module.html">http://docs.ansible.com/ansible/copy_module.html</a></li>
+							<li><a href="http://docs.ansible.com/ansible/playbooks_variables.html#registered-variables">http://docs.ansible.com/ansible/playbooks_variables.html#registered-variables</a></li>
+							<li><a href="http://docs.ansible.com/ansible/service_module.html">http://docs.ansible.com/ansible/service_module.html</a></li>
+						</ul>
+					</section>
+					<section id="swarm-docker-solution">
+						<h4>Docker Role</h4>
+						<h2>Solution: Reconfigure Docker</h2>
+						<pre><code data-trim contenteditable># hosts/prod
+[swarm]
+10.100.192.200 main_server=true
+10.100.192.20[1:2]
+
+# roles/swarm/tasks/main.yml
+- copy:
+    src: docker.cfg
+    dest: /etc/default/docker
+  when: not main_server is defined
+  register: result
+
+- service:
+    name: docker
+    state: restarted
+  when: result|changed</code></pre>
+					</section>
+					<section id="swarm">
+						<h4>Docker Role</h4>
+						<h2>Task: Deploy Swarm</h2>
+						<p>
+							Run the Docker container called <strong>swarm</strong>
+						</p>
+						<ul>
+							<li>If main server, command should be <strong>manage consul://[IP]:8500/swarm</strong></li>
+							<li>If NOT main server, command should be <strong>join --advertise=[IP]:2375 consul://[IP]:8500/swarm</strong></li>
+							<li>Replace <strong>[IP]</strong> with the IP of the server</li>
+						</ul>
+						<h4>Tips:</h4>
+						<ul>
+							<li><a href="http://docs.ansible.com/ansible/docker_module.html">http://docs.ansible.com/ansible/docker_module.html</a></li>
+						</ul>
+					</section>
+					<section id="swarm-solution">
+						<h4>Docker Role</h4>
+						<h2>Solution: Deploy Swarm</h2>
+						<pre><code data-trim contenteditable>
+# roles/swarm/tasks/main.yml
+
+- docker:
+    name: swarm
+    image: swarm
+    ports: 2375:2375
+    command: manage consul://{{ facter_ipaddress_eth1 }}:8500/swarm
+  when: main_server is defined
+
+- docker:
+    name: swarm
+    image: swarm
+    command: join --advertise={{ facter_ipaddress_eth1 }}:2375 consul://{{ facter_ipaddress_eth1 }}:8500/swarm
+  when: not main_server is defined
+						</code></pre>
+					</section>
+					<section id="swarm-test">
+						<h4>Common Role</h4>
+						<h2>Test</h2>
+						<pre><code data-trim contenteditable>
+export DOCKER_HOST=tcp://10.100.192.200:2375
+
+docker info
+
+docker run -d --name hello-world \
+    ubuntu /bin/sh -c "while true; do echo hello world; sleep 5; done"
+
+docker ps -a
+
+docker logs -f hello-world
+						</code></pre>
+					</section>
+				</section>
 				<section id="qa" data-background="img/background/questions.jpg">
 				</section>
 				<section>
