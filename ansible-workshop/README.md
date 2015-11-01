@@ -1,84 +1,8 @@
-Title
-=====
-
 Ansible Workshop
-----------------
-
-Co-Presenter
-============
-
-Featured Participants
-=====================
-
-Track
-=====
-
-DevOps
-
-Session Type
-============
-
-Workshop
-
-Audience Level
-==============
-
-Learning
-
-Room Setup
-==========
-
-Duration
-========
-
-2 hours
-
-Keywords
-========
-
-Ansible, Docker, Docker Swarm, Ubuntu
-
-Abstract
-========
-
-Learning Outcomes
-=================
-
-Prerequisite Knowledge
-======================
-
-Information for Review Team
-===========================
-
-Presentation History
-====================
-
-Presentation Sample
-===================
-
-Bio
-===
-
-Viktor Farcic is a Software Architect at everis.
-
-He coded using plethora of languages starting with Pascal (yes, he is old), Basic (before it got Visual prefix), ASP (before it got .Net suffix), C, C++, Perl, Python, ASP.Net, Visual Basic, C#, JavaScript, etc. He never worked with Fortran. His current favorites are **Scala** and **JavaScript** even though most of his office hours are spent with **Java**.
-
-His big passions are Microservices, Continuous Deployment and Test-Driven Development (TDD).
-
-He often speaks at community gatherings and conferences.
-
-He wrote the Test-Driven Java Development book published by Packt Publishing.
-
-Contact Details:
-
-* Blog: http://technologyconversations.com/
-* E-mail: viktor@farcic.com
-* Twitter: @vfarcic
-* Skype: vfarcic
-* LinkedIn: https://www.linkedin.com/in/viktorfarcic
+================
 
 Pre-Workshop Instructions
-=========================
+-------------------------
 
 Install [Virtual Box](https://www.virtualbox.org/), [Vagrant](https://www.vagrantup.com/) and [Git](https://git-scm.com/).
 
