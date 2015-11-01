@@ -112,14 +112,14 @@ __Vagrant tends to create problems with file permissions when linux VMs are crea
   # config.vm.synced_folder ".", "/vagrant", mount_options: ["dmode=700,fmode=600"]
 ```
 
-__Please comment the first and uncomment the second line. The end result should be as follows.__
+*Please comment the first and uncomment the second line. The end result should be as follows.*
 
 ```
   # config.vm.synced_folder ".", "/vagrant"
   config.vm.synced_folder ".", "/vagrant", mount_options: ["dmode=700,fmode=600"]
 ```
 
-__This process of changing synced_folder in the Vagrantfile should be repeated every time we clone some code from the GitHub repository into a Windows host.__
+*This process of changing synced_folder in the Vagrantfile should be repeated every time we clone some code from the GitHub repository into a Windows host.*
 
 Run the following commands:
 
