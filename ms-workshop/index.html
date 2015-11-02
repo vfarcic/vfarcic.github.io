@@ -1948,6 +1948,7 @@ exit
 vagrant ssh cd
 
 ansible-playbook /vagrant/ansible/jenkins.yml \
+    --extra-vars "playbook=service-healing" \
     -c local \
     -vv
 						</code></pre>
