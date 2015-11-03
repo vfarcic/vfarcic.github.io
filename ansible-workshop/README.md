@@ -24,6 +24,8 @@ config.vm.synced_folder ".", "/vagrant"
 config.vm.synced_folder ".", "/vagrant", mount_options: ["dmode=700,fmode=600"]
 ```
 
+*Also, if you do not have SSH installed, please make sure that [PATH_TO_GIT]\bin is added to your PATH.**
+
 Run the following commands:
 
 ```bash
