@@ -1160,7 +1160,6 @@ vagrant halt proxy
 						</code></pre>
 					</section>
 				</section>
-				<!--TODO: Continue-->
 				<section data-background="img/background/deployment-pipeline.png">
 					<section id="dp-late">
 						<h2>Deployment Pipeline: The Late Stages</h2>
@@ -1602,7 +1601,6 @@ halt prod
 						<h2>Failed Node</h2>
 						<img src="img/scale/swarm-failed-node.png">
 					</section>
-					<!--TODO: Continue-->
 					<section id="scale-swarm-set-up">
 						<h4>Clustering And Scaling Services</h4>
 						<h2>Setting Up Docker Swarm</h2>
@@ -1884,31 +1882,88 @@ exit
 						</code></pre>
 					</section>
 				</section>
-				<section>
-					<section id="logging">
-						<h2>Centralized Logging</h2>
+				<section data-background="img/background/jenkins.png">
+					<section id="jenkins">
+						<h2>CI Tools</h2>
+						<ul>
+							<li class="fragment">GoCD</li>
+							<li class="fragment">Bamboo</li>
+							<li class="fragment">Travis</li>
+							<li class="fragment">CircleCI</li>
+							<li class="fragment">Shippable</li>
+							<li class="fragment"><label class="fragment grow highlight-current-green">Jenkins</label></li>
+						</ul>
+					</section>
+					<section id="jenkins-setup">
+						<h4>CI Tools</h4>
+						<h2>Jenkins Setup</h2>
 						<pre><code data-trim contenteditable>
 vagrant ssh cd
 
-cd /vagrant/ansible
+ansible-playbook /vagrant/ansible/jenkins.yml \
+    -c local \
+    -vv
 
-ansible-playbook logging.yml -i hosts/prod
+cat /vagrant/ansible/jenkins.yml
 
-export DOCKER_HOST=tcp://10.100.192.200:2375
+cat /vagrant/ansible/roles/java/tasks/main.yml
 
-cd ~/books-ms
+cat /vagrant/ansible/roles/jenkins/tasks/main.yml
 
-ansible-playbook /vagrant/ansible/service-swarm.yml \
-    -i /vagrant/ansible/hosts/prod \
-    --extra-vars "repo_dir=$PWD service_name=books-ms" \
-    -vv --skip-tags "build,pull"
-
-sudo docker logs -f logstash
-
-exit
+cat /vagrant/ansible/roles/jenkins/templates/service-config.xml
 						</code></pre>
+						Open <a href="http://10.100.198.200:8080">http://10.100.198.200:8080</a>
+					</section>
+					<section id="jenkins-git">
+						<h4>CI Tools</h4>
+						<h2>Jenkins Setup: Git Plugin</h2>
+						<ul>
+							<li class="fragment">Click <strong>Manage Jenkins</strong> &gt; <strong>Manage Plugins</strong> &gt; <strong>Available</strong></li>
+							<li class="fragment">Select <strong>GIT plugin</strong></li>
+							<li class="fragment">Click <strong>Install without restart</strong> &gt; <strong>Restart Jenkins when installation is complete and no jobs are running</strong></li>
+						</ul>
+					</section>
+					<section id="jenkins-cd-node">
+						<h4>CI Tools</h4>
+						<h2>Jenkins Setup: cd Node</h2>
+						<ul>
+							<li class="fragment">Click <strong>Manage Jenkins</strong> &gt; <strong>Manage Nodes</strong> &gt; <strong>New Node</strong>
+							<li class="fragment">Type <strong>cd</strong>, click <strong>Dumb Slave</strong> &gt; <strong>OK</strong>
+							<li class="fragment">Type <strong>/data/jenkins_slaves/cd</strong> in the <strong>Remote root directory</strong> field
+							<li class="fragment">Type <strong>10.100.198.200</strong> in the <strong>Host</strong> field
+							<li class="fragment">Click the <strong>Add</strong> button on the left side of the <strong>Credentials</strong> label
+							<li class="fragment">Type <strong>vagrant</strong> as both <strong>Username</strong> and <strong>Password</strong>
+							<li class="fragment">Click the <strong>Add</strong> button
+							<li class="fragment">Click the <strong>Save</strong> button
+							<li class="fragment">Refresh the screen if the <strong>cd</strong> node is marked as failed.
+						</ul>
 					</section>
 				</section>
+				<!--<section>-->
+					<!--<section id="logging">-->
+						<!--<h2>Centralized Logging</h2>-->
+						<!--<pre><code data-trim contenteditable>-->
+<!--vagrant ssh cd-->
+
+<!--cd /vagrant/ansible-->
+
+<!--ansible-playbook logging.yml -i hosts/prod-->
+
+<!--export DOCKER_HOST=tcp://10.100.192.200:2375-->
+
+<!--cd ~/books-ms-->
+
+<!--ansible-playbook /vagrant/ansible/service-swarm.yml \-->
+    <!-&#45;&#45;i /vagrant/ansible/hosts/prod \-->
+    <!--&#45;&#45;extra-vars "repo_dir=$PWD service_name=books-ms" \-->
+    <!-&#45;&#45;vv &#45;&#45;skip-tags "build,pull"-->
+
+<!--sudo docker logs -f logstash-->
+
+<!--exit-->
+						<!--</code></pre>-->
+					<!--</section>-->
+				<!--</section>-->
 				<section data-background="img/background/health.png">
 					<section id="health">
 						<h2>Self-Healing Systems</h2>
@@ -1940,43 +1995,6 @@ exit
 						<h4>Self-Healing Systems</h4>
 						<h2>Consul Health Checks</h2>
 						<img src="img/health/health-consul.png">
-					</section>
-					<section id="health-jenkins-ansible">
-						<h4>Self-Healing Systems</h4>
-						<h2>Setting Up Jenkins: Ansible</h2>
-						<pre><code data-trim contenteditable>
-vagrant ssh cd
-
-ansible-playbook /vagrant/ansible/jenkins.yml \
-    --extra-vars "playbook=service-healing" \
-    -c local \
-    -vv
-						</code></pre>
-						Open <a href="http://10.100.198.200:8080">http://10.100.198.200:8080</a>
-					</section>
-					<section id="health-jenkins-git">
-						<h4>Self-Healing Systems</h4>
-						<h2>Setting Up Jenkins: Git Plugin</h2>
-						<ul>
-							<li class="fragment">Click <strong>Manage Jenkins</strong> &gt; <strong>Manage Plugins</strong> &gt; <strong>Available</strong></li>
-							<li class="fragment">Select <strong>GIT plugin</strong></li>
-							<li class="fragment">Click <strong>Install without restart</strong> &gt; <strong>Restart Jenkins when installation is complete and no jobs are running</strong></li>
-						</ul>
-					</section>
-					<section id="health-jenkins-cd-node">
-						<h4>Self-Healing Systems</h4>
-						<h2>Setting Up Jenkins: cd Node</h2>
-						<ul>
-							<li class="fragment">Click <strong>Manage Jenkins</strong> &gt; <strong>Manage Nodes</strong> &gt; <strong>New Node</strong>
-							<li class="fragment">Type <strong>cd</strong>, click <strong>Dumb Slave</strong> &gt; <strong>OK</strong>
-							<li class="fragment">Type <strong>/data/jenkins_slaves/cd</strong> in the <strong>Remote root directory</strong> field
-							<li class="fragment">Type <strong>10.100.198.200</strong> in the <strong>Host</strong> field
-							<li class="fragment">Click the <strong>Add</strong> button on the left side of the <strong>Credentials</strong> label
-							<li class="fragment">Type <strong>vagrant</strong> as both <strong>Username</strong> and <strong>Password</strong>
-							<li class="fragment">Click the <strong>Add</strong> button
-							<li class="fragment">Click the <strong>Save</strong> button
-							<li class="fragment">Refresh the screen if the <strong>cd</strong> node is marked as failed.
-						</ul>
 					</section>
 					<section id="health-ansible-playbook">
 						<h4>Self-Healing Systems</h4>
