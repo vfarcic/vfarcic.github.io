@@ -1,10 +1,13 @@
 Ansible Workshop
 ================
 
-Pre-Workshop Instructions
--------------------------
+Prerequisites
+-------------
 
 Install [Virtual Box](https://www.virtualbox.org/), [Vagrant](https://www.vagrantup.com/) and [Git](https://git-scm.com/).
+
+Note to Windows Users
+---------------------
 
 *If you are using Windows, please make sure that Git is configured to use "Checkout as-is". This can be accomplished during the setup by selecting the second or third option from the screen.*
 
@@ -25,6 +28,9 @@ config.vm.synced_folder ".", "/vagrant", mount_options: ["dmode=700,fmode=600"]
 ```
 
 *Also, if you do not have SSH installed, please make sure that [PATH_TO_GIT]\bin is added to your PATH.**
+
+Pre-Workshop Instructions
+-------------------------
 
 Run the following commands:
 
