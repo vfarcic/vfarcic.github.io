@@ -1681,27 +1681,13 @@ docker ps -a
 							<pre><code data-trim contenteditable>
 cat docker-compose-swarm.yml
 
-docker-compose -f docker-compose-swarm.yml up -d db
+docker-compose -f docker-compose-swarm.yml up -d db app
 
 curl 10.100.192.200:8500/v1/catalog/services \
     | jq '.'
 
 curl 10.100.192.200:8500/v1/catalog/service/books-db \
     | jq '.'
-
-cat docker-compose-swarm.ctmpl
-
-sudo consul-template \
-    -consul 10.100.192.200:8500 \
-    -template "docker-compose-swarm.ctmpl:docker-compose-swarm.yml" \
-    -once
-
-cat docker-compose-swarm.yml
-
-docker-compose -f docker-compose-swarm.yml run --rm \
-    app env | grep 'DB_PORT_27017_TCP_ADDR\|DB_PORT_27017_PORT'
-
-docker-compose -f docker-compose-swarm.yml up -d app
 							</code></pre>
 					</section>
 					<section id="scale-testing-cluster">
@@ -1845,7 +1831,7 @@ cat /vagrant/ansible/roles/service-swarm/files/get-domain.yml
 ansible-playbook /vagrant/ansible/service-swarm.yml \
     -i /vagrant/ansible/hosts/prod \
     --extra-vars "repo_dir=$PWD service_name=books-ms" \
-    -vv --skip-tags "build,pull"
+    -vv --skip-tags "build,pull,push"
 
 curl 10.100.192.200:8500/v1/catalog/services \
     | jq '.'
