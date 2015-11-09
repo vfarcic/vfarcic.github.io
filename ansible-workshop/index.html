@@ -409,7 +409,7 @@ sudo docker --version
 				</section>
 				<section>
 					<section id="swarm-docker">
-						<h4>Docker Role</h4>
+						<h4>Swarm Role</h4>
 						<h2>Task: Reconfigure Docker</h2>
 						<ul>
 							<li>Copy the configuration file <strong>docker.cfg</strong> to <strong>/etc/default/docker</strong> (only if NOT the main server)</li>
@@ -423,7 +423,7 @@ sudo docker --version
 						</ul>
 					</section>
 					<section id="swarm-docker-solution">
-						<h4>Docker Role</h4>
+						<h4>Swarm Role</h4>
 						<h2>Solution: Reconfigure Docker</h2>
 						<pre><code data-trim contenteditable># hosts/prod
 [swarm]
@@ -443,7 +443,7 @@ sudo docker --version
   when: result|changed</code></pre>
 					</section>
 					<section id="swarm">
-						<h4>Docker Role</h4>
+						<h4>Swarm Role</h4>
 						<h2>Task: Deploy Swarm</h2>
 						<p>
 							Run the Docker container called <strong>swarm</strong>
@@ -459,7 +459,7 @@ sudo docker --version
 						</ul>
 					</section>
 					<section id="swarm-solution">
-						<h4>Docker Role</h4>
+						<h4>Swarm Role</h4>
 						<h2>Solution: Deploy Swarm</h2>
 						<pre><code data-trim contenteditable>
 # roles/swarm/tasks/main.yml
@@ -479,7 +479,7 @@ sudo docker --version
 						</code></pre>
 					</section>
 					<section id="swarm-test">
-						<h4>Common Role</h4>
+						<h4>Swarm Role</h4>
 						<h2>Test</h2>
 						<pre><code data-trim contenteditable>
 export DOCKER_HOST=tcp://10.100.192.200:2375
