@@ -1902,21 +1902,6 @@ cat /vagrant/ansible/roles/jenkins/templates/service-config.xml
 						</code></pre>
 						Open <a href="http://10.100.198.200:8080">http://10.100.198.200:8080</a>
 					</section>
-					<section id="jenkins-cd-node">
-						<h4>CI Tools</h4>
-						<h2>Jenkins Setup: cd Node</h2>
-						<ul>
-							<li class="fragment">Click <strong>Manage Jenkins</strong> &gt; <strong>Manage Nodes</strong> &gt; <strong>New Node</strong>
-							<li class="fragment">Type <strong>cd</strong>, click <strong>Dumb Slave</strong> &gt; <strong>OK</strong>
-							<li class="fragment">Type <strong>/data/jenkins_slaves/cd</strong> in the <strong>Remote root directory</strong> field
-							<li class="fragment">Type <strong>10.100.198.200</strong> in the <strong>Host</strong> field
-							<li class="fragment">Click the <strong>Add</strong> button on the left side of the <strong>Credentials</strong> label
-							<li class="fragment">Type <strong>vagrant</strong> as both <strong>Username</strong> and <strong>Password</strong>
-							<li class="fragment">Click the <strong>Add</strong> button
-							<li class="fragment">Click the <strong>Save</strong> button
-							<li class="fragment">Refresh the screen if the <strong>cd</strong> node is marked as failed.
-						</ul>
-					</section>
 				</section>
 				<!--<section>-->
 					<!--<section id="logging">-->
