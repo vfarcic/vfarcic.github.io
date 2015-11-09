@@ -38,7 +38,7 @@
 		<div class="reveal">
 
 			<!-- Any section element inside of this container is displayed as a slide -->
-			<div class="slides">
+			< class="slides">
 				<section id="cover">
 					<h1>Ansible Workshop</h1>
 					<p>
@@ -478,20 +478,32 @@ sudo docker --version
   when: not main_server is defined
 						</code></pre>
 					</section>
-					<section id="swarm-test">
-						<h4>Swarm Role</h4>
+				</section>
+				<section>
+					<section id="playbook">
+						<h4>The Playbook</h4>
 						<h2>Test</h2>
 						<pre><code data-trim contenteditable>
+ansible-playbook /vagrant/ansible/swarm.yml \
+    -i /vagrant/ansible/hosts/prod
+
 export DOCKER_HOST=tcp://10.100.192.200:2375
 
 docker info
 
-docker run -d --name hello-world \
+docker run -d --name hello-world-1 \
     ubuntu /bin/sh -c "while true; do echo hello world; sleep 5; done"
 
-docker ps -a
+docker ps
 
-docker logs -f hello-world
+docker logs -f hello-world-1
+
+docker run -d --name hello-world-2 \
+    ubuntu /bin/sh -c "while true; do echo hello world; sleep 5; done"
+
+docker ps
+
+docker logs -f hello-world-2
 						</code></pre>
 					</section>
 				</section>
