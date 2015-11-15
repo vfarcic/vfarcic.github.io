@@ -3,12 +3,6 @@ Pre-Workshop Instructions
 
 Install [Virtual Box](https://www.virtualbox.org/), [Vagrant](https://www.vagrantup.com/) and [Git](https://git-scm.com/).
 
-Install *vagrant-chachier* by running the following command.
-
-```bash
-vagrant plugin install vagrant-cachier
-```
-
 __If you are using Windows, please make sure that Git is configured to use "Checkout as-is". This can be accomplished during the setup by selecting the second or third option from the screen.__
 
 ![Windows Git Setup](git-windows.png)
