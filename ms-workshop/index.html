@@ -560,9 +560,7 @@ cat docker-compose-dev.yml
 
 sudo docker-compose ps
 
-sudo docker ps -a
-
-sudo docker logs booksms_app_1
+sudo docker-compose logs
 						</code></pre>
 					</section>
 					<section id="dp-running-3">
@@ -595,7 +593,9 @@ curl http://localhost:8080/api/v1/books | jq '.'
 
 curl http://localhost:8080/api/v1/books/_id/1 | jq '.'
 
-sudo docker rm -f booksms_app_1 booksms_db_1
+sudo docker-compose stop
+
+sudo docker-compose rm -f
 						</code></pre>
 					</section>
 					<section id="dp-registry">

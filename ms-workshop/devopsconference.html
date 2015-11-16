@@ -357,104 +357,6 @@ ps aux | grep jav[a] | awk '{print $2}' | xargs kill
 						</div>
 					</section>
 				</section>
-				<section data-background="img/background/dev-env.png">
-					<section id="dev">
-						<h2>Development Environment</h2>
-						<ul>
-							<li class="fragment">Vagrant</li>
-							<li class="fragment">Docker</li>
-						</ul>
-					</section>
-					<section id="dev-vm">
-						<h4>Development Environment</h4>
-						<h2>Create Virtual Machine</h2>
-						Please skip the first two steps if you followed the workshop preparation instructions.
-						<pre><code data-trim contenteditable>
-git clone https://github.com/vfarcic/books-ms.git
-
-vagrant plugin install vagrant-cachier
-
-cd books-ms
-						</code></pre>
-					</section>
-					<section id="dev-vagrantfile">
-						<h4>Development Environment</h4>
-						<h2>Vagrantfile</h2>
-						<pre><code data-trim contenteditable>
-cat Vagrantfile
-
-vagrant up dev
-						</code></pre>
-					</section>
-					<section id="dev-inside-vm">
-						<h4>Development Environment</h4>
-						<h2>Inside the Virtual Machine</h2>
-						<pre><code data-trim contenteditable>
-vagrant ssh dev
-
-ansible --version
-
-docker --version
-
-docker-compose --version
-
-cd /vagrant
-
-ll
-						</code></pre>
-					</section>
-					<section id="dev-fe-tests">
-						<h4>Development Environment</h4>
-						<h2>Front-end tests</h2>
-						<pre><code data-trim contenteditable>
-sudo docker run -it --rm \
-	-v $PWD/client/components:/source/client/components \
-	-v $PWD/client/test:/source/client/test \
-	-v $PWD/src:/source/src \
-	-v $PWD/target:/source/target \
-	-p 8080:8080 \
-	--env TEST_TYPE=watch-front \
-	vfarcic/books-ms-tests
-						</code></pre>
-						<div>
-							<small>Open <a href="http://10.100.199.200:8080/components/tc-books/demo/index.html">http://10.100.199.200:8080/components/tc-books/demo/index.html</a></small>
-						</div>
-						<div>
-							Press <strong>CTRL+c</strong> to stop the container.
-						</div>
-					</section>
-					<section id="dev-fe-tests-compose">
-						<h4>Development Environment</h4>
-						<h2>Tests with Docker Compose</h2>
-						<pre><code data-trim contenteditable>
-sudo docker-compose -f docker-compose-dev.yml run feTestsLocal
-
-sudo docker-compose -f docker-compose-dev.yml run testsLocal
-						</code></pre>
-					</section>
-					<section id="dev-what">
-						<h4>Development Environment</h4>
-						<h2>What did we do?</h2>
-						<ul>
-							<li>Installed Chrome, Firefox, MongoDB, NodeJS, Git, sbt, JDK, Scala, npm and gulp</li>
-							<li>Downloaded Java/Scala dependencies through sbt</li>
-							<li>Downloaded JavaScript dependencies through npm and bower</li>
-							<li>Run MongoDB</li>
-							<li>Run Scala tests</li>
-							<li>Run JS tests</li>
-							<li>Compiled Scala code</li>
-						</ul>
-					</section>
-					<section id="dev-stop-vm">
-						<h4>Development Environment</h4>
-						<h2>Stop the VM</h2>
-						<pre><code data-trim contenteditable>
-exit
-
-vagrant halt dev
-						</code></pre>
-					</section>
-				</section>
 				<section data-background="img/background/deployment-pipeline.png">
 					<section id="dp">
 						<h2>Deployment Pipeline</h2>
@@ -513,6 +415,19 @@ sudo docker-compose \
 ll target/scala-2.10/
 						</code></pre>
 					</section>
+					<section id="dev-what">
+						<h4>Deployment Pipeline: Initial Stages</h4>
+						<h2>What did we do?</h2>
+						<ul>
+							<li>Installed Chrome, Firefox, MongoDB, NodeJS, Git, sbt, JDK, Scala, npm and gulp</li>
+							<li>Downloaded Java/Scala dependencies through sbt</li>
+							<li>Downloaded JavaScript dependencies through npm and bower</li>
+							<li>Run MongoDB</li>
+							<li>Run Scala tests</li>
+							<li>Run JS tests</li>
+							<li>Compiled Scala code</li>
+						</ul>
+					</section>
 					<section id="dp-building">
 						<h4>Deployment Pipeline: Initial Stages</h4>
 						<h2>Building Docker containers</h2>
@@ -560,9 +475,7 @@ cat docker-compose-dev.yml
 
 sudo docker-compose ps
 
-sudo docker ps -a
-
-sudo docker logs booksms_app_1
+sudo docker-compose logs
 						</code></pre>
 					</section>
 					<section id="dp-running-3">
@@ -595,7 +508,9 @@ curl http://localhost:8080/api/v1/books | jq '.'
 
 curl http://localhost:8080/api/v1/books/_id/1 | jq '.'
 
-sudo docker rm -f booksms_app_1 booksms_db_1
+sudo docker-compose stop
+
+sudo docker-compose rm -f
 						</code></pre>
 					</section>
 					<section id="dp-registry">
