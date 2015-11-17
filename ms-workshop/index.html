@@ -1269,11 +1269,15 @@ sudo docker push 10.100.198.200:5000/books-ms-tests
 						<pre><code data-trim contenteditable>
 exit
 
+vagrant ssh prod
+
 cd ~
 
 sudo docker-compose stop app db
 
 sudo docker-compose rm -f app db
+
+exit
 						</code></pre>
 					</section>
 					<section id="dp-late-checklist">
