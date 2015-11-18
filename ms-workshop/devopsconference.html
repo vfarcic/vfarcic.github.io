@@ -1220,7 +1220,7 @@ exit
 							<li class="fragment">Not automated</li>
 							<li class="fragment">Downtime</li>
 							<li class="fragment">Not scalable</li>
-							<li class="fragment">Not failure tollerant</li>
+							<li class="fragment">Not failure tolerant</li>
 							<li class="fragment">Difficult to monitor</li>
 						</ol>
 					</section>
@@ -1276,12 +1276,12 @@ cat /vagrant/ansible/group_vars/all
 						<h4>Automating the Deployment Pipeline</h4>
 						<h2>Running the Deployment Pipeline</h2>
 						<pre><code data-trim contenteditable>
-cd ~/books-ms
-
 ansible-playbook /vagrant/ansible/service.yml \
 	-i /vagrant/ansible/hosts/prod \
-	--extra-vars "repo_dir=$PWD service_name=books-ms" \
-	-vvvv
+	--extra-vars "repo_dir=$PWD service_name=books-ms"
+
+curl http://10.100.198.201/api/v1/books \
+    | jq '.'
 						</code></pre>
 					</section>
 					<section id="dp-auto-clean-up">
