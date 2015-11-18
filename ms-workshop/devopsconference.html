@@ -1444,7 +1444,7 @@ curl http://10.100.198.201:8500/v1/kv/books-ms/color?raw
 curl 10.100.198.201/api/v1/books | jq '.'
 							</code></pre>
 					</section>
-					<section id="bg-fail-pre-integration">
+					<section id="bg-fail-post-integration">
 						<h4>Blue-Green Deployment</h4>
 						<h2>Failing Post-Integration Tests</h2>
 							<pre><code data-trim contenteditable>
@@ -1468,7 +1468,7 @@ curl 10.100.198.201/api/v1/books | jq '.'
 							<pre><code data-trim contenteditable>
 exit
 
-halt prod
+vagrant halt prod
 							</code></pre>
 					</section>
 				</section>
@@ -1530,13 +1530,12 @@ vagrant up swarm-master swarm-node-1 swarm-node-2
 
 vagrant ssh cd
 
-ansible-playbook /vagrant/ansible/swarm.yml \
-    -i /vagrant/ansible/hosts/prod \
-    -vv
-
 cat /vagrant/ansible/swarm.yml
 
 cat /vagrant/ansible/roles/swarm/tasks/main.yml
+
+ansible-playbook /vagrant/ansible/swarm.yml \
+    -i /vagrant/ansible/hosts/prod
 
 export DOCKER_HOST=tcp://10.100.192.200:2375
 
@@ -1553,9 +1552,7 @@ cd ~/books-ms
 
 docker-compose up -d app
 
-docker-compose ps
-
-docker ps -a | grep books
+docker ps --filter name=books --format "table {{.Names}}"
 
 curl 10.100.192.200:8500/v1/catalog/services \
     | jq '.'
@@ -1602,27 +1599,22 @@ docker ps -a
 							<pre><code data-trim contenteditable>
 cat docker-compose-swarm.yml
 
-docker-compose -f docker-compose-swarm.yml up -d db app
+docker-compose --x-networking \
+    -f docker-compose-swarm.yml \
+    up -d db app
 
 curl 10.100.192.200:8500/v1/catalog/services \
     | jq '.'
 
-curl 10.100.192.200:8500/v1/catalog/service/books-db \
-    | jq '.'
+docker ps --filter name=books --format "table {{.Names}}"
+
+docker exec -t booksms_app_1 cat /etc/hosts
 							</code></pre>
 					</section>
 					<section id="scale-testing-cluster">
 						<h4>Clustering And Scaling Services</h4>
 						<h2>Testing Deployment with Docker Swarm to the Cluster</h2>
 						<pre><code data-trim contenteditable>
-curl 10.100.192.200:8500/v1/catalog/services \
-    | jq '.'
-
-curl 10.100.192.200:8500/v1/catalog/service/books-ms \
-    | jq '.'
-
-docker ps | grep booksms
-
 BOOKS_MS_ADDRESS=`curl \
     10.100.192.200:8500/v1/catalog/service/books-ms \
     | jq '.[0].Address'`
@@ -1649,9 +1641,11 @@ curl $BOOKS_MS_HOST/api/v1/books | jq '.'
 						<h4>Clustering And Scaling Services</h4>
 						<h2>Scaling Services with Docker Swarm</h2>
 						<pre><code data-trim contenteditable>
-docker-compose -f docker-compose-swarm.yml scale app=2
+docker-compose --x-networking \
+    -f docker-compose-swarm.yml \
+    scale app=3
 
-docker ps | grep booksms
+docker ps --filter name=books --format "table {{.Names}}"
 
 BOOKS_MS_ADDRESS=`curl \
     10.100.192.200:8500/v1/catalog/service/books-ms \
@@ -1686,9 +1680,11 @@ curl $BOOKS_MS_HOST/api/v1/books | jq '.'
 						<h4>Clustering And Scaling Services</h4>
 						<h2>Descaling Services with Docker Swarm</h2>
 						<pre><code data-trim contenteditable>
-docker-compose -f docker-compose-swarm.yml scale app=1
+docker-compose --x-networking \
+    -f docker-compose-swarm.yml \
+    scale app=1
 
-docker ps | grep booksms
+docker ps --filter name=books --format "table {{.Names}}"
 
 BOOKS_MS_ADDRESS=`curl \
     10.100.192.200:8500/v1/catalog/service/books-ms \
@@ -1740,9 +1736,9 @@ cat /vagrant/ansible/roles/service-swarm/tasks/copy.yml
 
 cat /vagrant/ansible/roles/service-swarm/defaults/main.yml
 
-cat /vagrant/ansible/roles/service-swarm/files/get-color.yml
+cat /vagrant/ansible/roles/service-swarm/files/get-color.sh
 
-cat /vagrant/ansible/roles/service-swarm/files/get-domain.yml
+cat /vagrant/ansible/roles/service-swarm/files/get-domain.sh
 						</code></pre>
 					</section>
 					<section id="scale-swarm-playbook-run">

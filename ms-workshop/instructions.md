@@ -62,7 +62,10 @@ vagrant ssh proxy -c "sudo /vagrant/scripts/preload_proxy.sh"
 vagrant halt proxy
 
 vagrant up swarm-master swarm-node-1 swarm-node-2
-vagrant ssh cd -c "ansible-playbook /vagrant/ansible/docker.yml -i /vagrant/ansible/hosts/swarm" # Answer "yes" when asked
+vagrant ssh cd -c "ping -c 1 10.100.192.200"
+vagrant ssh cd -c "ping -c 1 10.100.192.201"
+vagrant ssh cd -c "ping -c 1 10.100.192.202"
+vagrant ssh cd -c "ansible-playbook /vagrant/ansible/swarm.yml -i /vagrant/ansible/hosts/prod" # Answer "yes" when asked
 vagrant ssh swarm-master -c "sudo /vagrant/scripts/preload_swarm.sh"
 vagrant ssh swarm-node-1 -c "sudo /vagrant/scripts/preload_swarm.sh"
 vagrant ssh swarm-node-1 -c "sudo /vagrant/scripts/preload_swarm_node.sh"
