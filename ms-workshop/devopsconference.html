@@ -1584,7 +1584,7 @@ curl -H 'Content-Type: application/json' -X PUT -d \
     "description": "Not a very good book"}' \
     $BOOKS_MS_HOST/api/v1/books | jq '.'
 
-curl $BOOKS_MS_HOST/api/v1/books
+curl $BOOKS_MS_HOST/api/v1/books | jq '.'
 
 docker-compose stop app db
 
@@ -1771,7 +1771,7 @@ curl 10.100.192.200/api/v1/books | jq '.'
 ansible-playbook /vagrant/ansible/service-swarm.yml \
     -i /vagrant/ansible/hosts/prod \
     --extra-vars "repo_dir=$PWD service_name=books-ms" \
-    --skip-tags "build,pull" --extra-vars "scale_service=2" -vv
+    --skip-tags "build,pull,push" --extra-vars "scale_service=3"
 
 curl 10.100.192.200:8500/v1/catalog/services \
     | jq '.'
@@ -1782,8 +1782,6 @@ curl 10.100.192.200:8500/v1/catalog/service/books-ms-green \
 curl http://10.100.192.200:8500/v1/kv/books-ms/color?raw
 
 curl 10.100.192.200/api/v1/books | jq '.'
-
-exit
 						</code></pre>
 					</section>
 				</section>
@@ -1803,11 +1801,8 @@ exit
 						<h4>CI Tools</h4>
 						<h2>Jenkins Setup</h2>
 						<pre><code data-trim contenteditable>
-vagrant ssh cd
-
 ansible-playbook /vagrant/ansible/jenkins.yml \
-    -c local \
-    -vv
+    -c local
 
 cat /vagrant/ansible/jenkins.yml
 
@@ -1815,36 +1810,13 @@ cat /vagrant/ansible/roles/java/tasks/main.yml
 
 cat /vagrant/ansible/roles/jenkins/tasks/main.yml
 
+cat /vagrant/ansible/roles/jenkins/defaults/main.yml
+
 cat /vagrant/ansible/roles/jenkins/templates/service-config.xml
 						</code></pre>
 						Open <a href="http://10.100.198.200:8080">http://10.100.198.200:8080</a>
 					</section>
 				</section>
-				<!--<section>-->
-					<!--<section id="logging">-->
-						<!--<h2>Centralized Logging</h2>-->
-						<!--<pre><code data-trim contenteditable>-->
-<!--vagrant ssh cd-->
-
-<!--cd /vagrant/ansible-->
-
-<!--ansible-playbook logging.yml -i hosts/prod-->
-
-<!--export DOCKER_HOST=tcp://10.100.192.200:2375-->
-
-<!--cd ~/books-ms-->
-
-<!--ansible-playbook /vagrant/ansible/service-swarm.yml \-->
-    <!-&#45;&#45;i /vagrant/ansible/hosts/prod \-->
-    <!--&#45;&#45;extra-vars "repo_dir=$PWD service_name=books-ms" \-->
-    <!-&#45;&#45;vv &#45;&#45;skip-tags "build,pull"-->
-
-<!--sudo docker logs -f logstash-->
-
-<!--exit-->
-						<!--</code></pre>-->
-					<!--</section>-->
-				<!--</section>-->
 				<section data-background="img/background/health.png">
 					<section id="health">
 						<h2>Self-Healing Systems</h2>
@@ -1893,11 +1865,9 @@ cat /vagrant/ansible/roles/consul-healing/files/mem.sh
 
 cat /vagrant/ansible/roles/consul-healing/files/disk.sh
 
-cat /vagrant/ansible/roles/consul-healing/templates/watchers.json
+cat /vagrant/ansible/roles/consul-healing/templates/watches.json
 
-cat /vagrant/ansible/roles/consul-healing/templates/manage_critical.sh
-
-cat /vagrant/ansible/roles/consul-healing/templates/manage_warning.sh
+cat /vagrant/ansible/roles/consul-healing/templates/manage_watches.sh
 						</code></pre>
 					</section>
 					<section id="health-ansible-run">
@@ -1905,12 +1875,29 @@ cat /vagrant/ansible/roles/consul-healing/templates/manage_warning.sh
 						<h2>Ansible Playbook</h2>
 						<pre><code data-trim contenteditable>
 ansible-playbook /vagrant/ansible/swarm-healing.yml \
-    -i /vagrant/ansible/hosts/swarm \
-    -vv
+    -i /vagrant/ansible/hosts/prod
 						</code></pre>
 						Open <a href="http://10.100.192.200:8500/">http://10.100.192.200:8500/</a>
 						<br />
-						Open <a hre="http://10.100.198.200:8080/job/service-redeploy/">http://10.100.198.200:8080/job/service-redeploy/</a>
+						Open <a href="http://10.100.198.200:8080/job/hardware-notification/">http://10.100.198.200:8080/job/hardware-notification/</a>
+					</section>
+					<section id="health-jenkins">
+						<h4>Self-Healing Systems</h4>
+						<h2>Update Jenkins Jobs</h2>
+						<pre><code data-trim contenteditable>
+cat /vagrant/ansible/roles/service-swarm/tasks/post-deployment.yml
+
+cat /vagrant/ansible/roles/service-swarm/templates/consul_service.json
+
+ansible-playbook /vagrant/ansible/jenkins.yml \
+    --extra-vars "service_job_template=service-config-healing.xml"
+    -c local
+						</code></pre>
+						Open <a href="http://10.100.198.200:8080/job/books-ms/configure">http://10.100.198.200:8080/job/books-ms/configure</a>
+						<br />
+						Open <a href="http://10.100.198.200:8080/job/books-ms/build">http://10.100.198.200:8080/job/books-ms/build</a>
+						<br />
+						Open <a href="http://10.100.198.200:8080/job/books-ms/lastBuild/console">http://10.100.198.200:8080/job/books-ms/lastBuild/console</a>
 					</section>
 					<section id="health-stop-container">
 						<h4>Self-Healing Systems</h4>
@@ -1918,10 +1905,7 @@ ansible-playbook /vagrant/ansible/swarm-healing.yml \
 						<pre><code data-trim contenteditable>
 export DOCKER_HOST=tcp://10.100.192.200:2375
 
-docker ps -a | grep books
-
-curl 10.100.192.200:8500/v1/catalog/services \
-    | jq '.'
+docker ps --filter name=books --format "table {{.Names}}"
 
 docker stop $(docker ps | grep booksms_app | awk '{ print $1}')
 
