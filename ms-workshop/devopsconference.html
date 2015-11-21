@@ -1881,27 +1881,35 @@ ansible-playbook /vagrant/ansible/swarm-healing.yml \
 						<br />
 						Open <a href="http://10.100.198.200:8080/job/hardware-notification/">http://10.100.198.200:8080/job/hardware-notification/</a>
 					</section>
-					<section id="health-jenkins">
+					<section id="health-automation">
 						<h4>Self-Healing Systems</h4>
-						<h2>Update Jenkins Jobs</h2>
+						<h2>Healing Automation</h2>
 						<pre><code data-trim contenteditable>
 cat /vagrant/ansible/roles/service-swarm/tasks/post-deployment.yml
 
 cat /vagrant/ansible/roles/service-swarm/templates/consul_service.json
 
+cat /vagrant/ansible/roles/service-redeploy/tasks/main.yml
+
 ansible-playbook /vagrant/ansible/jenkins.yml \
     --extra-vars "service_job_template=service-config-healing.xml"
     -c local
 						</code></pre>
+					</section>
+					<section id="health-jenkins">
+						<h4>Self-Healing Systems</h4>
+						<h2>Jenkins</h2>
 						Open <a href="http://10.100.198.200:8080/job/books-ms/configure">http://10.100.198.200:8080/job/books-ms/configure</a>
 						<br />
 						Open <a href="http://10.100.198.200:8080/job/books-ms/build">http://10.100.198.200:8080/job/books-ms/build</a>
 						<br />
 						Open <a href="http://10.100.198.200:8080/job/books-ms/lastBuild/console">http://10.100.198.200:8080/job/books-ms/lastBuild/console</a>
+						<br />
+						Open <a href="http://10.100.198.200:8080/job/books-ms-redeploy/configure">http://10.100.198.200:8080/job/books-ms-redeploy/configure</a>
 					</section>
 					<section id="health-stop-container">
 						<h4>Self-Healing Systems</h4>
-						<h2>Stop the Container</h2>
+						<h2>Healing Services</h2>
 						<pre><code data-trim contenteditable>
 export DOCKER_HOST=tcp://10.100.192.200:2375
 
@@ -1909,76 +1917,15 @@ docker ps --filter name=books --format "table {{.Names}}"
 
 docker stop $(docker ps | grep booksms_app | awk '{ print $1}')
 
-docker ps -a | grep books
-
-curl 10.100.192.200:8500/v1/catalog/services \
-    | jq '.'
+docker ps --filter name=books --format "table {{.Names}}"
 
 curl 10.100.192.200/api/v1/books | jq '.'
+
+docker ps --filter name=books --format "table {{.Names}}"
 						</code></pre>
-						<small>Open <a href="http://10.100.192.200:8500/ui/#/dc1/services/books-ms">http://10.100.192.200:8500/ui/#/dc1/services/books-ms</a></small>
+						Open <a href="http://10.100.192.200:8500/ui/#/dc1/services/books-ms">http://10.100.192.200:8500/ui/#/dc1/services/books-ms</a>
 						<br />
-						<small>Open <a hre="http://10.100.198.200:8080/job/service-redeploy/">http://10.100.198.200:8080/job/service-redeploy/</a></small>
-					</section>
-					<section id="health-stop-node">
-						<h4>Self-Healing Systems</h4>
-						<h2>Stop the Node</h2>
-						<pre><code data-trim contenteditable>
-exit
-
-vagrant halt swarm-node-2
-						</code></pre>
-						<small>Open <a href="http://10.100.192.200:8500/ui/#/dc1/services/books-ms">http://10.100.192.200:8500/ui/#/dc1/services/books-ms</a></small>
-						<br />
-						<small>Open <a hre="http://10.100.198.200:8080/job/service-redeploy/">http://10.100.198.200:8080/job/service-redeploy/</a></small>
-					</section>
-					<section id="health-check-node">
-						<h4>Self-Healing Systems</h4>
-						<h2>Check the Node</h2>
-						<pre><code data-trim contenteditable>
-vagrant ssh cd
-
-curl 10.100.192.200/api/v1/books | jq '.'
-
-export DOCKER_HOST=tcp://10.100.192.200:2375
-
-docker info
-
-docker ps -a | grep books
-
-curl 10.100.192.200:8500/v1/catalog/services \
-    | jq '.'
-
-exit
-						</code></pre>
-					</section>
-					<section id="health-up-node">
-						<h4>Self-Healing Systems</h4>
-						<h2>Bring Up the Node</h2>
-						<pre><code data-trim contenteditable>
-vagrant up swarm-node-2
-
-vagrant ssh cd
-
-ansible-playbook /vagrant/ansible/swarm-healing.yml \
-    -i /vagrant/ansible/hosts/swarm \
-    -vv
-
-export DOCKER_HOST=tcp://10.100.192.200:2375
-
-docker info
-
-docker stop $(docker ps | grep booksms_app | awk '{ print $1}')
-
-docker ps -a | grep books
-
-curl 10.100.192.200:8500/v1/catalog/services \
-    | jq '.'
-
-curl 10.100.192.200/api/v1/books | jq '.'
-
-exit
-						</code></pre>
+						Open <a href="http://10.100.198.200:8080/job/books-ms-redeploy/lastBuild/console">http://10.100.198.200:8080/job/books-ms-redeploy/lastBuild/console</a>
 					</section>
 				</section>
 				<section data-background="img/background/summary.png">
