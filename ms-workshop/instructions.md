@@ -67,6 +67,7 @@ vagrant ssh cd -c "ping -c 1 10.100.192.201"
 vagrant ssh cd -c "ping -c 1 10.100.192.202"
 vagrant ssh cd -c "ansible-playbook /vagrant/ansible/swarm.yml -i /vagrant/ansible/hosts/prod" # Answer "yes" when asked
 vagrant ssh swarm-master -c "sudo /vagrant/scripts/preload_swarm.sh"
+vagrant ssh swarm-master -c "sudo /vagrant/scripts/preload_logging.sh"
 vagrant ssh swarm-node-1 -c "sudo /vagrant/scripts/preload_swarm.sh"
 vagrant ssh swarm-node-1 -c "sudo /vagrant/scripts/preload_swarm_node.sh"
 vagrant ssh swarm-node-2 -c "sudo /vagrant/scripts/preload_swarm.sh"

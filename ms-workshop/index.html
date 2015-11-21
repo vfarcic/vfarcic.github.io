@@ -74,6 +74,7 @@
 							<li class="fragment"><a href="#/scale">Clustering and scaling services</a></li>
 							<li class="fragment"><a href="#/jenkins">CI/CD Tools</a></li>
 							<li class="fragment"><a href="#/health">Self-healing systems</a></li>
+							<li class="fragment"><a href="#/logging">Centralized Logging</a></li>
 						</ul>
 					</section>
 				</section>
@@ -1978,7 +1979,7 @@ cat /vagrant/ansible/roles/service-swarm/templates/consul_service.json
 cat /vagrant/ansible/roles/service-redeploy/tasks/main.yml
 
 ansible-playbook /vagrant/ansible/jenkins.yml \
-    --extra-vars "service_job_template=service-config-healing.xml"
+    --extra-vars "service_job_template=service-config-healing.xml" \
     -c local
 						</code></pre>
 					</section>
