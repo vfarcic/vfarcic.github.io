@@ -73,7 +73,6 @@
 							<li class="fragment"><a href="#/scale">Clustering and scaling services</a></li>
 							<li class="fragment"><a href="#/jenkins">CI/CD Tools</a></li>
 							<li class="fragment"><a href="#/health">Self-healing systems</a></li>
-							<li class="fragment"><a href="#/logging">Centralized Logging</a></li>
 						</ul>
 					</section>
 				</section>
@@ -1927,40 +1926,6 @@ docker ps --filter name=books --format "table {{.Names}}"
 						Open <a href="http://10.100.192.200:8500/ui/#/dc1/services/books-ms">http://10.100.192.200:8500/ui/#/dc1/services/books-ms</a>
 						<br />
 						Open <a href="http://10.100.198.200:8080/job/books-ms-redeploy/lastBuild/console">http://10.100.198.200:8080/job/books-ms-redeploy/lastBuild/console</a>
-					</section>
-				</section>
-				<section>
-					<section id="logging">
-						<h2>Centralized Logging</h2>
-						<img src="img/logging/logging-logstash.png">
-					</section>
-					<section id="logging-ansible">
-						<h4>Centralized Logging</h4>
-						<h2>Ansible Playbook</h2>
-						<pre><code data-trim contenteditable>
-cat /vagrant/ansible/logging.yml
-
-cat /vagrant/ansible/roles/elasticsearch/tasks/main.yml
-
-cat /vagrant/ansible/roles/logstash/tasks/main.yml
-
-cat /vagrant/ansible/roles/logstash/files/syslog.conf
-
-cat /vagrant/ansible/roles/kibana/tasks/main.yml
-
-cat /vagrant/ansible/roles/rsyslog/tasks/main.yml
-
-cat /vagrant/ansible/roles/rsyslog/templates/10-logstash.conf
-						</code></pre>
-					</section>
-					<section id="logging-ansible-run">
-						<h4>Centralized Logging</h4>
-						<h2>Running Ansible Playbook</h2>
-						<pre><code data-trim contenteditable>
-ansible-playbook /vagrant/ansible/logging.yml \
-    -i /vagrant/ansible/hosts/prod
-						</code></pre>
-						Open <a href="http://10.100.192.200:5601">http://10.100.192.200:5601</a>.
 					</section>
 				</section>
 				<section data-background="img/background/summary.png">
