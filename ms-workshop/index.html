@@ -2069,9 +2069,41 @@ curl 10.100.192.200:8500/v1/catalog/services \
     | jq '.'
 
 curl 10.100.192.200/api/v1/books | jq '.'
-
-exit
 						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section id="logging">
+						<h2>Centralized Logging</h2>
+						<img src="img/logging/logging-logstash.png">
+					</section>
+					<section id="logging-ansible">
+						<h4>Centralized Logging</h4>
+						<h2>Ansible Playbook</h2>
+						<pre><code data-trim contenteditable>
+cat /vagrant/ansible/logging.yml
+
+cat /vagrant/ansible/roles/elasticsearch/tasks/main.yml
+
+cat /vagrant/ansible/roles/logstash/tasks/main.yml
+
+cat /vagrant/ansible/roles/logstash/files/syslog.conf
+
+cat /vagrant/ansible/roles/kibana/tasks/main.yml
+
+cat /vagrant/ansible/roles/rsyslog/tasks/main.yml
+
+cat /vagrant/ansible/roles/rsyslog/templates/10-logstash.conf
+						</code></pre>
+					</section>
+					<section id="logging-ansible-run">
+						<h4>Centralized Logging</h4>
+						<h2>Running Ansible Playbook</h2>
+						<pre><code data-trim contenteditable>
+ansible-playbook /vagrant/ansible/logging.yml \
+    -i /vagrant/ansible/hosts/prod
+						</code></pre>
+						Open <a href="http://10.100.192.200:5601">http://10.100.192.200:5601</a>.
 					</section>
 				</section>
 				<section data-background="img/background/summary.png">

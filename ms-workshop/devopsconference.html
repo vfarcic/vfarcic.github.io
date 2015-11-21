@@ -1947,6 +1947,10 @@ cat /vagrant/ansible/roles/logstash/tasks/main.yml
 cat /vagrant/ansible/roles/logstash/files/syslog.conf
 
 cat /vagrant/ansible/roles/kibana/tasks/main.yml
+
+cat /vagrant/ansible/roles/rsyslog/tasks/main.yml
+
+cat /vagrant/ansible/roles/rsyslog/templates/10-logstash.conf
 						</code></pre>
 					</section>
 					<section id="logging-ansible-run">
@@ -1956,6 +1960,7 @@ cat /vagrant/ansible/roles/kibana/tasks/main.yml
 ansible-playbook /vagrant/ansible/logging.yml \
     -i /vagrant/ansible/hosts/prod
 						</code></pre>
+						Open <a href="http://10.100.192.200:5601">http://10.100.192.200:5601</a>.
 					</section>
 				</section>
 				<section data-background="img/background/summary.png">
