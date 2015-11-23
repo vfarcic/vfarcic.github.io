@@ -78,7 +78,7 @@ Presentation Sample
 Bio
 ===
 
-Viktor Farcic is a Software Architect at everis.
+Viktor Farcic is a Senior Consultant at CloudBees.
 
 He coded using plethora of languages starting with Pascal (yes, he is old), Basic (before it got Visual prefix), ASP (before it got .Net suffix), C, C++, Perl, Python, ASP.Net, Visual Basic, C#, JavaScript, etc. He never worked with Fortran. His current favorites are **Scala** and **JavaScript** even though most of his office hours are spent with **Java**.
 
