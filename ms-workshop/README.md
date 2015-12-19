@@ -86,7 +86,7 @@ His big passions are Microservices, Continuous Deployment and Test-Driven Develo
 
 He often speaks at community gatherings and conferences.
 
-He wrote the Test-Driven Java Development book published by Packt Publishing.
+He wrote "Test-Driven Java Development" book published by Packt Publishing and is currently writing "The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices".
 
 Contact Details:
 
