@@ -29,6 +29,7 @@ Run the following commands:
 vagrant plugin install vagrant-cachier
 
 git clone https://github.com/vfarcic/books-ms.git
+
 cd books-ms
 
 vagrant up dev

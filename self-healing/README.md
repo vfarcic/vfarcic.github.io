@@ -59,6 +59,15 @@ We'll use tool like Docker, Docker Swarm, Docker Compose, Consul, Consul Templat
 Learning Outcomes
 =================
 
+Participants will get insights into the following concepts and their relations.
+
+* Fault tolerant systems
+* Microservices
+* Clustering
+* Self-healing
+* Docker Containers
+* Service Discovery
+
 Prerequisite Knowledge
 ======================
 
@@ -76,7 +85,7 @@ Bio
 
 Viktor Farcic is a Senior Consultant at CloudBees.
 
-He coded using plethora of languages starting with Pascal (yes, he is old), Basic (before it got Visual prefix), ASP (before it got .Net suffix), C, C++, Perl, Python, ASP.Net, Visual Basic, C#, JavaScript, etc. He never worked with Fortran. His current favorites are **Scala** and **JavaScript** even though most of his office hours are spent with **Java**.
+He coded using a plethora of languages starting with Pascal (yes, he is old), Basic (before it got Visual prefix), ASP (before it got .Net suffix), C, C++, Perl, Python, ASP.Net, Visual Basic, C#, JavaScript, etc. He never worked with Fortran. His current favorites are **Scala** and **JavaScript** even though most of his office hours are spent with **Java**.
 
 His big passions are Microservices, Continuous Integration, Delivery and Deployment (CI/CD) and Test-Driven Development.
 
@@ -84,7 +93,7 @@ He often speaks at community gatherings and conferences.
 
 He wrote the "Test-Driven Java Development" book published by Packt Publishing.
 
-He is currently working on a book tentatively called "The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices"".
+He is currently working a book called "The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices".
 
 Contact Details:
 
