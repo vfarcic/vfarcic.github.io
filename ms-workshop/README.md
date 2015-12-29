@@ -3,6 +3,8 @@ Title
 
 Microservices Lifecycle Workshop
 --------------------------------
+Understanding the Life of Microservices
+---------------------------------------
 
 Co-Presenter
 ============
