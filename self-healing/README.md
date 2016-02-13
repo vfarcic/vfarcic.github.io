@@ -43,14 +43,14 @@ Continuous Delivery, Continuous Deployment, CD, Docker, DevOps, Docker Swarm, Do
 Talk Abstract
 =============
 
-We can think of the whole computer systems as a human body that consist of cells of various types. They can be hardware or software. When they are software units, the smaller they are, the easier it is for them to self-heal, recuperate from failures, multiply or even get destroyed when that is needed. We call those small units microservices and they can indeed have behaviours similar to those observed in a human body.  The microservices based system we are building can be made in a way that is has the ability to self-heal. That is not to say that self-healing we are about to explore is applicable only to microservices. It is not. However, self-healing can be applied to almost any type of the architecture but provides best results when combined with microservices.
+We can think of the whole computer systems like a human body that consist of cells of various types. They can be hardware or software. When they are software units, the smaller they are, the easier it is for them to self-heal, recuperate from failures, multiply or even get destroyed when that is needed. We call those small units microservices, and they can indeed have behaviours similar to those observed in a human body.  The microservices-based system we are building can be made in a way that is has the ability to self-heal. That is not to say that self-healing we are about to explore is applicable only to microservices. It is not. However, self-healing can be applied to almost any type of the architecture but provides best results when combined with microservices.
 
 We'll explore practices and tools required to set up fully autonomous self-healing systems capable of both reactive recuperation from failures and proactive predictions of steps that should be taken to prevent failures before they happen.
 
 Workshop Abstract
 =================
 
-We can think of the whole computer systems as a human body that consist of cells of various types. They can be hardware or software. When they are software units, the smaller they are, the easier it is for them to self-heal, recuperate from failures, multiply or even get destroyed when that is needed. We call those small units microservices and they can indeed have behaviours similar to those observed in a human body.  The microservices based system we are building can be made in a way that is has the ability to self-heal. That is not to say that self-healing we are about to explore is applicable only to microservices. It is not. However, self-healing can be applied to almost any type of the architecture but provides best results when combined with microservices.
+We can think of the whole computer systems like a human body that consist of cells of various types. They can be hardware or software. When they are software units, the smaller they are, the easier it is for them to self-heal, recuperate from failures, multiply or even get destroyed when that is needed. We call those small units microservices, and they can indeed have behaviours similar to those observed in a human body.  The microservices-based system we are building can be made in a way that is has the ability to self-heal. That is not to say that self-healing we are about to explore is applicable only to microservices. It is not. However, self-healing can be applied to almost any type of the architecture but provides best results when combined with microservices.
 
 We'll explore practices and tools required to set up fully autonomous self-healing systems capable of both reactive recuperation from failures and proactive predictions of steps that should be taken to prevent failures before they happen.
 
@@ -64,6 +64,7 @@ Participants will get insights into the following concepts and their relations.
 * Fault tolerant systems
 * Microservices
 * Clustering
+* Jenkins Pipeline
 * Self-healing
 * Docker Containers
 * Service Discovery
@@ -91,9 +92,7 @@ His big passions are Microservices, Continuous Integration, Delivery and Deploym
 
 He often speaks at community gatherings and conferences.
 
-He wrote the "Test-Driven Java Development" book published by Packt Publishing.
-
-He is currently working a book called "The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices".
+He wrote the "Test-Driven Java Development" and "The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices" books.
 
 Contact Details:
 
