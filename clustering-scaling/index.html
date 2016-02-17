@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Self-Healing Systems</title>
+
+		<meta name="author" content="Viktor Farcic">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/viktor.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<!--<link rel="stylesheet" href="lib/css/zenburn.css">-->
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<header style="position: absolute;top: 50px; left: 100px; z-index:500; font-size:100px;background-color: rgba(0,0,0,0.5)"></header>
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section id="cover">
+					<h1>Self-Healing Systems</h1>
+					<h3>
+						<a href="http://technologyconversations.com/about/">Viktor Farcic</a> (<a href="https://twitter.com/vfarcic">@vfarcic</a>)
+                    </h3>
+                    <p>
+						<a href="http://technologyconversations.com">TechnologyConversations.com</a>
+                    </p>
+                    <p>
+                        <a href="https://www.cloudbees.com">CloudBees.com</a>
+					</p>
+				</section>
+                <section>
+                    <section id="about-me">
+                        <h2>Viktor Farcic</h2>
+                        <img src="img/viktor.jpg" style="width: 50%; height: 50%;" />
+                    </section>
+                    <section id="about-company">
+                        <a href="https://www.cloudbees.com">
+                            <img src="img/cloudbees-big.png" style="background-color: white;" />
+                        </a>
+                    </section>
+                    <section id="about-books">
+                        <a href="https://leanpub.com/the-devops-2-toolkit">
+                            <img src="img/devops2.png" style="float: left; width: 40%; height: 40%;" />
+                        </a>
+                        <a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">
+                            <img src="img/tdd.jpg" style="float: right; width: 40%; height: 40%;" />
+                        </a>
+                    </section>
+                </section>
+                <section data-background="img/background/rage.jpg">
+                    <section id="failures-customers">
+                        <h4>History of the Failed Initiatives</h4>
+                        <h2>Customers</h2>
+                        <ul>
+                            <li class="fragment">Small greenfield projects</li>
+                            <li class="fragment">Automotive industry</li>
+                            <li class="fragment">Lotteries</li>
+                            <li class="fragment">Banks</li>
+                            <li class="fragment">Insurances</li>
+                            <li class="fragment">Everything in between</li>
+                        </ul>
+                    </section>
+                    <section id="failures-problems">
+                        <h4>History of the Failed Initiatives</h4>
+                        <h2>Problems</h2>
+                        <ul>
+                            <li class="fragment">Integration phase = Dante's Infierno</li>
+                            <li class="fragment">Testing</li>
+                            <li class="fragment">eXtreme programming (XP)</li>
+                            <li class="fragment">Continuous integration</li>
+                            <li class="fragment">Architecture</li>
+                            <h2><label class="fragment">Failure</label> <label class="fragment">after</label> <label class="fragment">failure</label></h2>
+                        </ul>
+                    </section>
+                    <section id="failures-circle">
+                        <h4>History of the Failed Initiatives</h4>
+                        <ul>
+                            <li class="fragment">
+                                Monoliths
+                                <label class="fragment highlight-current-green">&gt; (micro)services</label>
+                                <label class="fragment highlight-current-red">&gt; huge mess</label>
+                            </li>
+                            <li class="fragment">
+                                Huge mess
+                                <label class="fragment highlight-current-green">&gt; standardization and coupling</label>
+                                <label class="fragment highlight-current-red">&gt; speed, innovation, scalability</label>
+                            </li>
+                            <li class="fragment">
+                                CM
+                                <label class="fragment highlight-current-green">&gt; predictability</label>
+                                <label class="fragment highlight-current-red">&gt; maintenance problems</label>
+                            </li>
+                        </ul>
+                        <h2><label class="fragment">Failure</label> <label class="fragment">after</label> <label class="fragment">failure</label></h2>
+                    </section>
+                    <section id="failures-improvement">
+                        <h4>History of the Failed Initiatives</h4>
+                        <h3 class="fragment">Each improvement</h3>
+                        <h3 class="fragment">raises the bar</h3>
+                        <h3 class="fragment">and converts itself into a failure</h3>
+                    </section>
+                    <section id="failures-today">
+                        <h4>History of the Failed Initiatives</h4>
+                        <h2>Today?</h2>
+                        <ul>
+                            <li class="fragment">Small specialized tools</li>
+                            <li class="fragment">Immutable deployments</li>
+                            <li class="fragment">Blue-green deployments</li>
+                            <li class="fragment">Service discovery</li>
+                            <li class="fragment">Domain-driven design</li>
+                            <li class="fragment">Continuous delivery/deployment</li>
+                            <li class="fragment">Scalable and fault tolerant systems</li>
+                            <li class="fragment"><label class="fragment grow highlight-current-green">Self-healing systems</label></li>
+                        </ul>
+                    </section>
+                </section>
+				<section>
+					<section id="perfection" data-background="img/background/goals.jpg">
+						<h2>What Are We Trying to Accomplish?</h2>
+						<h1 class="fragment">Perfection?</h1>
+						<ul>
+							<li class="fragment">Applications that never fail?</li>
+							<li class="fragment">Services that can handle any load?</li>
+							<li class="fragment">Commits without bags?</li>
+							<li class="fragment">Hardware that never breaks?</li>
+						</ul>
+					</section>
+					<section id="perfection-not" data-background="img/background/goals.jpg">
+						<h4>What Are We Trying to Accomplish?</h4>
+						<h1 class="fragment">There is no such thing as perfection</h1>
+						<ul>
+							<li class="fragment">Applications fail!</li>
+							<li class="fragment">Services that can NOT handle any load!</li>
+							<li class="fragment">Commits contain bags!</li>
+							<li class="fragment">Hardware breaks!</li>
+						</ul>
+                    </section>
+					<section id="perfection-darwin" data-background="img/background/darwin.jpg">
+                        <h4>What Are We Trying to Accomplish?</h4>
+						<h2>Self-Replicating System</h2>
+						<h1 class="fragment">Life</h1>
+						<ul>
+							<li class="fragment">System over individuals</li>
+							<li class="fragment">Small and incremental evolutionary improvements</li>
+                            <li class="fragment">Reproduction</li>
+							<li class="fragment">Self-healing</li>
+						</ul>
+					</section>
+                    <section id="perfection-human" data-background="img/background/human.jpg">
+                        <h4>What Are We Trying to Accomplish?</h4>
+                        <h2>Resilient System</h2>
+                        <h1 class="fragment">Cells</h1>
+                        <ul>
+                            <li class="fragment">Restoring to the state of equilibrium</li>
+                            <li class="fragment">Monitoring and adjusting processes</li>
+                            <li class="fragment">Reproducing</li>
+                            <li class="fragment">Healing</li>
+                        </ul>
+                    </section>
+                </section>
+                <section data-background="img/background/health.png">
+                    <section id="self-healing">
+                        <h1>Self-Healing System</h1>
+                        <ul>
+                            <li class="fragment">Discover problems</li>
+                            <li class="fragment">Restore itself to the desired state</li>
+                            <li class="fragment">Make decisions</li>
+                            <li class="fragment">Adapt to changed conditions</li>
+                        </ul>
+                    </section>
+                    <section id="self-healing-levels">
+                        <h4>Self-Healing System</h4>
+                        <h2>Levels</h2>
+                        <ul>
+                            <li class="fragment">Application level</li>
+                            <li class="fragment">System level</li>
+                            <li class="fragment">Hardware level</li>
+                        </ul>
+                    </section>
+                    <section id="self-healing-types">
+                        <h4>Self-Healing System</h4>
+                        <h2>Types</h2>
+                        <ul>
+                            <li class="fragment">Reactive healing</li>
+                            <li class="fragment">Preventive healing</li>
+                        </ul>
+                    </section>
+                    <section id="self-healing-tools">
+                        <h4>Self-Healing System</h4>
+                        <h2>Tools</h2>
+                        <div>
+                            <img src="img/tools/mesos.jpg" class="fragment" style="width: 30%; height: 30%;"/>
+                            <img src="img/tools/kubernetes.png" class="fragment" style="width: 30%; height: 30%;"/>
+                            <img src="img/tools/swarm.png" class="fragment" style="width: 30%; height: 30%; background-color: white;"/>
+                        </div>
+                    </section>
+                </section>
+                <section data-background="img/background/self-healing.png">
+                    <section id="architecture" data-transition="fade-in slide-out">
+                        <h1>Architecture</h1>
+                    </section>
+                    <section id="architecture-01" data-transition="fade-in slide-out">
+                        <h4>Architecture</h4>
+                        <img src="img/architecture/01-self-healing.png"/>
+                    </section>
+                    <section id="architecture-02" data-transition="fade-in slide-out">
+                        <h4>Architecture</h4>
+                        <img src="img/architecture/02-self-healing.png"/>
+                    </section>
+                    <section id="architecture-03" data-transition="fade-in slide-out">
+                        <h4>Architecture</h4>
+                        <img src="img/architecture/03-self-healing.png"/>
+                    </section>
+                    <section id="architecture-04" data-transition="fade-in slide-out">
+                        <h4>Architecture</h4>
+                        <img src="img/architecture/04-self-healing.png"/>
+                    </section>
+                    <section id="architecture-05" data-transition="fade-in slide-out">
+                        <h4>Architecture</h4>
+                        <img src="img/architecture/05-self-healing.png"/>
+                    </section>
+                    <section id="architecture-06" data-transition="fade-in slide-out">
+                        <h4>Architecture</h4>
+                        <img src="img/architecture/06-self-healing.png"/>
+                    </section>
+                    <section id="architecture-07" data-transition="fade-in slide-out">
+                        <h4>Architecture</h4>
+                        <img src="img/architecture/07-self-healing.png"/>
+                    </section>
+                    <section id="architecture-08" data-transition="fade-in slide-out">
+                        <h4>Architecture</h4>
+                        <img src="img/architecture/08-self-healing.png"/>
+                    </section>
+                    <section id="architecture-09" data-transition="fade-in slide-out">
+                        <h4>Architecture</h4>
+                        <img src="img/architecture/09-self-healing.png"/>
+                    </section>
+                </section>
+				<section id="qa" data-background="img/background/questions.jpg">
+				</section>
+				<section>
+					<section id="the-end" data-background="img/background/the_end.jpg">
+						<h2>Viktor Farcic (<a href="https://twitter.com/vfarcic">@vfarcic</a>)</h2>
+                        <h2><a href="http://technologyconversations.com">TechnologyConversations.com</a></h2>
+                        <a href="https://leanpub.com/the-devops-2-toolkit">
+                            <img src="img/devops2.png" style="width: 40%; height: 40%;" />
+                        </a>
+					</section>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+//					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
