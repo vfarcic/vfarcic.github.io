@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Self-Healing Systems</title>
+
+		<meta name="author" content="Viktor Farcic">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="../css/reveal.css">
+		<link rel="stylesheet" href="../css/theme/viktor.css" id="theme">
+
+		<link rel="stylesheet" href="../lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<header style="position: absolute;top: 50px; left: 100px; z-index:500; font-size:100px;background-color: rgba(0,0,0,0.5)"></header>
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section id="cover" data-background="../img/background/swarm.jpg">
+					<h1>Scaling and Clustering with Docker Swarm</h1>
+					<h3>
+						<a href="http://technologyconversations.com/about/">Viktor Farcic</a> (<a href="https://twitter.com/vfarcic">@vfarcic</a>)
+                    </h3>
+                    <p>
+						<a href="http://technologyconversations.com">TechnologyConversations.com</a>
+                    </p>
+                    <p>
+                        <a href="https://www.cloudbees.com">CloudBees.com</a>
+					</p>
+				</section>
+                <section data-background="../img/background/about-me.jpg">
+                    <section id="about-me">
+                        <h2>Viktor Farcic</h2>
+                        <img src="../img/viktor.jpg" style="width: 50%; height: 50%;" />
+                    </section>
+                    <section id="about-company">
+                        <a href="https://www.cloudbees.com">
+                            <img src="../img/cloudbees-big.png" style="background-color: white;" />
+                        </a>
+                    </section>
+                    <section id="about-books">
+                        <a href="https://leanpub.com/the-devops-2-toolkit">
+                            <img src="../img/devops2.png" style="float: left; width: 40%; height: 40%;" />
+                        </a>
+                        <a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">
+                            <img src="../img/tdd.jpg" style="float: right; width: 40%; height: 40%;" />
+                        </a>
+                    </section>
+                </section>
+                <section data-background="../img/background/scaling.png">
+                    <section id="scaling">
+                        <h1>Scaling</h1>
+                        <h2 class="fragment" style="float: left;">High availability</h2>
+                        <ul style="float: right;">
+                            <li class="fragment">Performance</li>
+                            <li class="fragment">Fault tolerance</li>
+                        </ul>
+                        <h2 class="fragment" style="float: left;">Axis scaling</h2>
+                        <ul style="float: right;">
+                            <li class="fragment">X-axis scaling</li>
+                            <li class="fragment">Y-axis scaling</li>
+                            <li class="fragment">Z-axis scaling</li>
+                        </ul>
+                    </section>
+					<section id="clustering">
+						<h1>Clustering</h1>
+						<div class="fragment">
+							<img src="img/servers.png"/>
+						</div>
+						<div class="fragment">
+							<img src="img/cluster.png"/>
+						</div>
+					</section>
+				</section>
+				<section data-background="../img/background/tools.jpg">
+					<section id="tools">
+						<h1>Tools</h1>
+						<div>
+							<img src="img/mesos.jpg" class="fragment" style="width: 30%; height: 30%;"/>
+							<img src="img/kubernetes.png" class="fragment" style="width: 30%; height: 30%;"/>
+							<img src="img/swarm.png" class="fragment" style="width: 30%; height: 30%; background-color: white;"/>
+						</div>
+					</section>
+				</section>
+				<section data-background="../img/background/swarm.jpg">
+					<section id="swarm-consul" data-transition="fade-in slide-out">
+						<h1>Swarm Cluster</h1>
+						<div>
+							<img src="img/swarm-consul.png"/>
+						</div>
+					</section>
+					<section id="swarm-master-nodes" data-transition="fade-in slide-out">
+						<h1>Swarm Cluster</h1>
+						<div>
+							<img src="img/swarm-master-nodes.png"/>
+						</div>
+					</section>
+					<section id="swarm-first-container" data-transition="fade-in slide-out">
+						<h1>Swarm Cluster</h1>
+						<div>
+							<img src="img/swarm-first-container.png"/>
+						</div>
+					</section>
+					<section id="swarm-second-container" data-transition="fade-in slide-out">
+						<h1>Swarm Cluster</h1>
+						<div>
+							<img src="img/swarm-second-container.png"/>
+						</div>
+					</section>
+					<section id="swarm-nodes-full" data-transition="fade-in slide-out">
+						<h1>Swarm Cluster</h1>
+						<div>
+							<img src="img/swarm-nodes-full.png"/>
+						</div>
+					</section>
+					<section id="swarm-new-node" data-transition="fade-in slide-out">
+						<h1>Swarm Cluster</h1>
+						<div>
+							<img src="img/swarm-new-node.png"/>
+						</div>
+					</section>
+					<section id="swarm-failed-node" data-transition="fade-in slide-out">
+						<h1>Swarm Cluster</h1>
+						<div>
+							<img src="img/swarm-failed-node.png"/>
+						</div>
+					</section>
+				</section>
+				<section data-background="../img/background/demo.jpg">
+					<section id="demo-provisioning">
+						<h2>Demonstration</h2>
+						<h1>Provisioning</h1>
+						<pre><code data-trim contenteditable>
+git clone https://github.com/vfarcic/ms-lifecycle.git
+
+cd ms-lifecycle
+
+vagrant up cd swarm-master swarm-node-1 swarm-node-2
+
+vagrant ssh cd
+
+ansible-playbook /vagrant/ansible/swarm.yml \
+    -i /vagrant/ansible/hosts/prod
+
+docker pull vfarcic/books-ms
+
+docker tag vfarcic/books-ms 10.100.198.200:5000/books-ms
+
+docker push 10.100.198.200:5000/books-ms
+						</code></pre>
+					</section>
+					<section id="demo-info">
+						<h2>Demonstration</h2>
+						<h1>Cluster Info</h1>
+						<pre><code data-trim contenteditable>
+export DOCKER_HOST=tcp://10.100.192.200:2375
+
+docker info
+
+docker images
+
+docker ps -a
+						</code></pre>
+					</section>
+					<section id="demo-links">
+						<h2>Demonstration</h2>
+						<h1>Deploying with links</h1>
+						<pre><code data-trim contenteditable>
+git clone https://github.com/vfarcic/books-ms.git
+
+cd ~/books-ms
+
+docker-compose up -d app
+
+docker ps --filter name=books --format "table {{.Names}}"
+
+docker-compose stop
+
+docker-compose rm -f
+						</code></pre>
+					</section>
+					<section id="demo-network">
+						<h2>Demo</h2>
+						<h1>Networking</h1>
+						<pre><code data-trim contenteditable>
+docker network create books-ms
+
+docker network ls
+
+docker-compose -f docker-compose-swarm.yml \
+    up -d db app
+
+docker exec -it booksms_app_1 bash
+
+ping books-ms-db
+
+exit
+
+docker ps --filter name=books --format "table {{.Names}}"
+						</code></pre>
+					</section>
+					<section id="demo-testing">
+						<h2>Demonstration</h2>
+						<h1>Testing</h1>
+						<pre><code data-trim contenteditable>
+ADDRESS=`curl \
+    10.100.192.200:8500/v1/catalog/service/books-ms \
+    | jq -r '.[0].ServiceAddress + ":" + (.[0].ServicePort | tostring)'`
+
+curl -H 'Content-Type: application/json' -X PUT -d \
+    '{"_id": 2,
+    "title": "My Second Book",
+    "author": "John Doe",
+    "description": "A bit better book"}' \
+    $ADDRESS/api/v1/books | jq '.'
+
+curl $ADDRESS/api/v1/books | jq '.'
+						</code></pre>
+					</section>
+					<section id="demo-scaling">
+						<h2>Demonstration</h2>
+						<h1>Scaling</h1>
+						<pre><code data-trim contenteditable>
+docker-compose -f docker-compose-swarm.yml scale app=3
+
+docker ps --filter name=books --format "table {{.Names}}"
+
+docker-compose -f docker-compose-swarm.yml scale app=2
+
+docker ps --filter name=books --format "table {{.Names}}"
+
+docker-compose stop
+
+docker-compose rm -f
+						</code></pre>
+					</section>
+					<section id="demo-scheduling-cpu">
+						<h2>Demonstration</h2>
+						<h1>Scheduling CPU</h1>
+						<pre><code data-trim contenteditable>
+docker info
+
+docker run -d --cpu-shares 1 --name db1 mongo
+
+docker info
+
+docker run -d --cpu-shares 1 --name db2 mongo
+
+docker info
+
+docker ps --filter name=db --format "table {{.Names}}"
+
+docker run -d --cpu-shares 1 --name db3 mongo
+
+docker rm -f db1 db2
+						</code></pre>
+					</section>
+					<section id="demo-scheduling-memory">
+						<h2>Demonstration</h2>
+						<h1>Scheduling Memory</h1>
+						<pre><code data-trim contenteditable>
+docker run -d --cpu-shares 1 -m 1g --name db1 mongo
+
+docker info
+
+docker run -d -m 100m --name db2 mongo
+
+docker run -d -m 100m --name db3 mongo
+
+docker run -d -m 100m --name db4 mongo
+
+docker info
+
+docker ps --filter name=db --format "table {{.Names}}"
+
+docker rm -f db1 db2 db3 db4
+						</code></pre>
+					</section>
+				</section>
+				<section id="qa" data-background="../img/background/questions.jpg">
+				</section>
+				<section>
+					<section id="the-end" data-background="../img/background/the_end.jpg">
+						<h2><a href="http://technologyconversations.com/about/">Viktor Farcic</a></h2>
+                        <h4><a href="http://technologyconversations.com">TechnologyConversations.com</a> |  <a href="https://twitter.com/vfarcic">@vfarcic</a></h4>
+						<div>
+							<a href="https://leanpub.com/the-devops-2-toolkit">
+								<img src="../img/devops2.png" style="width: 35%; height: 35%;" />
+							</a>
+						</div>
+						<a href="https://leanpub.com/the-devops-2-toolkit">LeanPub</a> & <a href="http://www.amazon.com/dp/B01BJ4V66M">Amazon</a>
+					</section>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="../lib/js/head.min.js"></script>
+		<script src="../js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+//					{ src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../plugin/zoom-js/zoom.js', async: true },
+					{ src: '../plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
