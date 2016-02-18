@@ -14,7 +14,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
 		<link rel="stylesheet" href="../css/reveal.css">
-		<link rel="stylesheet" href="../css/theme/viktor.css" id="theme">
+		<link rel="stylesheet" href="../css/theme/viktor-harbour.css" id="theme">
 
 		<link rel="stylesheet" href="../lib/css/zenburn.css">
 
@@ -40,15 +40,16 @@
 			<div class="slides">
 				<section id="cover" data-background="../img/background/swarm.jpg">
 					<h1>Scaling and Clustering with Docker Swarm</h1>
+					<hr />
 					<h3>
-						<a href="http://technologyconversations.com/about/">Viktor Farcic</a> (<a href="https://twitter.com/vfarcic">@vfarcic</a>)
+						Viktor Farcic
                     </h3>
-                    <p>
-						<a href="http://technologyconversations.com">TechnologyConversations.com</a>
-                    </p>
-                    <p>
-                        <a href="https://www.cloudbees.com">CloudBees.com</a>
-					</p>
+					<a href="https://twitter.com/vfarcic">@vfarcic</a> | <a href="http://technologyconversations.com">TechnologyConversations.com</a> | <a href="https://www.cloudbees.com">CloudBees.com</a>
+					<hr />
+					<h3>
+						Dimitris Kapanidis
+					</h3>
+					<a href="https://twitter.com/spiddy">@spiddy</a> | <a href="http://harbour.io">Harbour.io</a>
 				</section>
                 <section data-background="../img/background/about-me.jpg">
                     <section id="about-me">
@@ -298,16 +299,58 @@ docker ps --filter name=db --format "table {{.Names}}"
 docker rm -f db1 db2 db3 db4
 						</code></pre>
 					</section>
+					<section id="demo-filters-constrain">
+						<h2>Demonstration</h2>
+						<h1>Constrain Filters</h1>
+						<pre><code data-trim contenteditable>
+docker info
+
+docker run -d --name db1 -e constraint:environment==testing mongo
+
+docker ps --filter name=db --format "table {{.Names}}"
+
+docker run -d --name db2 -e constraint:environment==testing mongo
+
+docker ps --filter name=db --format "table {{.Names}}"
+
+docker run -d --name db3 -e constraint:environment==production mongo
+
+docker ps --filter name=db --format "table {{.Names}}"
+
+docker rm -f db1 db2 db3
+						</code></pre>
+					</section>
+					<section id="demo-filters-affinity">
+						<h2>Demonstration</h2>
+						<h1>Affinity Filters</h1>
+						<pre><code data-trim contenteditable>
+docker-compose -f docker-compose-swarm.yml up -d db
+
+docker-compose -f docker-compose-swarm.yml \
+    -e affinity:container==books-ms-db up -d app
+						</code></pre>
+					</section>
 				</section>
 				<section id="qa" data-background="../img/background/questions.jpg">
 				</section>
 				<section>
 					<section id="the-end" data-background="../img/background/the_end.jpg">
-						<h2><a href="http://technologyconversations.com/about/">Viktor Farcic</a></h2>
-                        <h4><a href="http://technologyconversations.com">TechnologyConversations.com</a> |  <a href="https://twitter.com/vfarcic">@vfarcic</a></h4>
+						<h4>
+							Dimitris Kapanidis |
+							<a href="https://twitter.com/spiddy">@spiddy</a> |
+							<a href="http://harbour.io">Harbour.io</a>
+						</h4>
+						<hr />
+                        <h4>
+							Viktor Farcic |
+							<a href="https://twitter.com/vfarcic">@vfarcic</a> |
+							<a href="http://technologyconversations.com">TechnologyConversations.com</a> |
+							<a href="https://www.cloudbees.com">CloudBees.com</a>
+						</h4>
+						<hr />
 						<div>
 							<a href="https://leanpub.com/the-devops-2-toolkit">
-								<img src="../img/devops2.png" style="width: 35%; height: 35%;" />
+								<img src="../img/devops2.png" style="width: 30%; height: 30%;" />
 							</a>
 						</div>
 						<a href="https://leanpub.com/the-devops-2-toolkit">LeanPub</a> & <a href="http://www.amazon.com/dp/B01BJ4V66M">Amazon</a>
