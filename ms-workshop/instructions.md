@@ -46,27 +46,24 @@ vagrant ssh cd -c "sudo chmod +x /vagrant/scripts/*"
 vagrant ssh cd -c "sudo /vagrant/scripts/preload_cd.sh"
 
 vagrant up prod
-vagrant ssh cd -c "ansible-playbook /vagrant/ansible/prod.yml -i /vagrant/ansible/hosts/prod" # Answer "yes" when asked
+vagrant ssh cd -c "ansible-playbook /vagrant/ansible/prod.yml -i /vagrant/ansible/hosts/prod"
 vagrant ssh prod -c "sudo /vagrant/scripts/preload_prod.sh"
 vagrant halt prod
 
 vagrant up serv-disc-01 serv-disc-02 serv-disc-03
-vagrant ssh cd -c "ansible-playbook /vagrant/ansible/consul.yml -i /vagrant/ansible/hosts/serv-disc" # Answer "yes" when asked
+vagrant ssh cd -c "ansible-playbook /vagrant/ansible/consul.yml -i /vagrant/ansible/hosts/serv-disc"
 vagrant ssh serv-disc-01 -c "sudo /vagrant/scripts/preload_serv_disc.sh"
 vagrant ssh serv-disc-02 -c "sudo /vagrant/scripts/preload_serv_disc.sh"
 vagrant ssh serv-disc-03 -c "sudo /vagrant/scripts/preload_serv_disc.sh"
 vagrant halt serv-disc-01 serv-disc-02 serv-disc-03
 
 vagrant up proxy
-vagrant ssh cd -c "ansible-playbook /vagrant/ansible/docker.yml -i /vagrant/ansible/hosts/proxy" # Answer "yes" when asked
+vagrant ssh cd -c "ansible-playbook /vagrant/ansible/docker.yml -i /vagrant/ansible/hosts/proxy"
 vagrant ssh proxy -c "sudo /vagrant/scripts/preload_proxy.sh"
 vagrant halt proxy
 
 vagrant up swarm-master swarm-node-1 swarm-node-2
-vagrant ssh cd -c "ping -c 1 10.100.192.200"
-vagrant ssh cd -c "ping -c 1 10.100.192.201"
-vagrant ssh cd -c "ping -c 1 10.100.192.202"
-vagrant ssh cd -c "ansible-playbook /vagrant/ansible/swarm.yml -i /vagrant/ansible/hosts/prod" # Answer "yes" when asked
+vagrant ssh cd -c "ansible-playbook /vagrant/ansible/swarm.yml -i /vagrant/ansible/hosts/prod"
 vagrant ssh swarm-master -c "sudo /vagrant/scripts/preload_swarm.sh"
 vagrant ssh swarm-node-1 -c "sudo /vagrant/scripts/preload_swarm.sh"
 vagrant ssh swarm-node-1 -c "sudo /vagrant/scripts/preload_swarm_node.sh"
