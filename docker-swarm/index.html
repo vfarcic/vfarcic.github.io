@@ -154,11 +154,13 @@
 						<h2>Demonstration</h2>
 						<h1>Provisioning</h1>
 						<pre><code data-trim contenteditable>
+git clone https://github.com/vfarcic/books-ms.git
+
 git clone https://github.com/vfarcic/ms-lifecycle.git
 
 cd ms-lifecycle
 
-vagrant up cd swarm-master swarm-node-1 swarm-node-2
+vagrant up cd swarm-master swarm-node-1 swarm-node-2 --provision
 
 vagrant ssh cd
 
@@ -189,35 +191,28 @@ docker ps -a
 						<h2>Demonstration</h2>
 						<h1>Deploying with links</h1>
 						<pre><code data-trim contenteditable>
-git clone https://github.com/vfarcic/books-ms.git
-
 cd ~/books-ms
+
+cat docker-compose.yml
 
 docker-compose up -d app
 
 docker ps --filter name=books --format "table {{.Names}}"
 
-docker-compose stop
-
-docker-compose rm -f
+docker-compose down
 						</code></pre>
 					</section>
 					<section id="demo-network">
 						<h2>Demo</h2>
 						<h1>Networking</h1>
 						<pre><code data-trim contenteditable>
-docker network create books-ms
+cat docker-compose-swarm-v2.yml
+
+docker-compose -f docker-compose-swarm-v2.yml up -d db app
 
 docker network ls
 
-docker-compose -f docker-compose-swarm.yml \
-    up -d db app
-
-docker exec -it booksms_app_1 bash
-
-ping books-ms-db
-
-exit
+docker exec -it booksms_app_1 ping books-ms-db
 
 docker ps --filter name=books --format "table {{.Names}}"
 						</code></pre>
@@ -226,8 +221,10 @@ docker ps --filter name=books --format "table {{.Names}}"
 						<h2>Demonstration</h2>
 						<h1>Testing</h1>
 						<pre><code data-trim contenteditable>
+curl swarm-master:8500/v1/catalog/service/books-ms | jq '.'
+
 ADDRESS=`curl \
-    10.100.192.200:8500/v1/catalog/service/books-ms \
+    swarm-master:8500/v1/catalog/service/books-ms \
     | jq -r '.[0].ServiceAddress + ":" + (.[0].ServicePort | tostring)'`
 
 curl -H 'Content-Type: application/json' -X PUT -d \
@@ -244,17 +241,15 @@ curl $ADDRESS/api/v1/books | jq '.'
 						<h2>Demonstration</h2>
 						<h1>Scaling</h1>
 						<pre><code data-trim contenteditable>
-docker-compose -f docker-compose-swarm.yml scale app=3
+docker-compose -f docker-compose-swarm-v2.yml scale app=3
 
 docker ps --filter name=books --format "table {{.Names}}"
 
-docker-compose -f docker-compose-swarm.yml scale app=2
+docker-compose -f docker-compose-swarm-v2.yml scale app=2
 
 docker ps --filter name=books --format "table {{.Names}}"
 
-docker-compose stop
-
-docker-compose rm -f
+docker-compose down
 						</code></pre>
 					</section>
 					<section id="demo-scheduling-cpu">
@@ -299,61 +294,43 @@ docker ps --filter name=db --format "table {{.Names}}"
 docker rm -f db1 db2 db3 db4
 						</code></pre>
 					</section>
-					<section id="demo-filters-constrain">
-						<h2>Demonstration</h2>
-						<h1>Constrain Filters</h1>
-						<pre><code data-trim contenteditable>
-docker info
-
-docker run -d --name db1 -e constraint:environment==testing mongo
-
-docker ps --filter name=db --format "table {{.Names}}"
-
-docker run -d --name db2 -e constraint:environment==testing mongo
-
-docker ps --filter name=db --format "table {{.Names}}"
-
-docker run -d --name db3 -e constraint:environment==production mongo
-
-docker ps --filter name=db --format "table {{.Names}}"
-
-docker rm -f db1 db2 db3
-						</code></pre>
-					</section>
-					<section id="demo-filters-affinity">
-						<h2>Demonstration</h2>
-						<h1>Affinity Filters</h1>
-						<pre><code data-trim contenteditable>
-docker-compose -f docker-compose-swarm.yml up -d db
-
-docker-compose -f docker-compose-swarm.yml \
-    -e affinity:container==books-ms-db up -d app
-						</code></pre>
-					</section>
 				</section>
 				<section id="qa" data-background="../img/background/questions.jpg">
 				</section>
-				<section>
-					<section id="the-end" data-background="../img/background/the_end.jpg">
-						<h4>
-							Dimitris Kapanidis |
-							<a href="https://twitter.com/spiddy">@spiddy</a> |
-							<a href="http://harbour.io">Harbour.io</a>
-						</h4>
-						<hr />
-                        <h4>
-							Viktor Farcic |
-							<a href="https://twitter.com/vfarcic">@vfarcic</a> |
-							<a href="http://technologyconversations.com">TechnologyConversations.com</a> |
-							<a href="https://www.cloudbees.com">CloudBees.com</a>
-						</h4>
-						<hr />
+				<section id="the-end-dimitris">
+					<section>
+						<h2>Dimitris Kapanidis</h2>
+						<hr/>
+						<h3><a href="https://twitter.com/spiddy">@spiddy</a></h3>
+						<hr/>
+						<h3><a href="http://harbour.io">Harbour.io</a></h3>
+					</section>
+					<section id="the-end-blog">
+						<h2>Viktor Farcic</h2>
+						<hr/>
+						<h3><a href="https://twitter.com/vfarcic">@vfarcic</a></h3>
+						<hr/>
+						<figure>
+							<img src="../img/qr/technology-conversations.jpg"/>
+						</figure>
+						<h3><a href="http://technologyconversations.com">TechnologyConversations.com</a></h3>
+					</section>
+					<section id="the-end-book">
+						<h2>Viktor Farcic</h2>
+						<hr/>
 						<div>
+							<figure style="width: 30%; height: 30%; float: left;">
+								<img src="../img/qr/devops2-amazon.jpg"/>
+								<figcaption><a href="http://www.amazon.com/dp/B01BJ4V66M">Amazon</a></figcaption>
+							</figure>
+							<figure style="width: 30%; height: 30%; float: right;">
+								<img src="../img/qr/devops2-leanpub.jpg"/>
+								<figcaption><a href="https://leanpub.com/the-devops-2-toolkit">LeanPub</a></figcaption>
+							</figure>
 							<a href="https://leanpub.com/the-devops-2-toolkit">
 								<img src="../img/devops2.png" style="width: 30%; height: 30%;" />
 							</a>
 						</div>
-						<a href="https://leanpub.com/the-devops-2-toolkit">LeanPub</a> & <a href="http://www.amazon.com/dp/B01BJ4V66M">Amazon</a>
 					</section>
 				</section>
 			</div>
