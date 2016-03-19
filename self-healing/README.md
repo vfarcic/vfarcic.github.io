@@ -54,7 +54,7 @@ We can think of the whole computer systems like a human body that consist of cel
 
 We'll explore practices and tools required to set up fully autonomous self-healing systems capable of both reactive recuperation from failures and proactive predictions of steps that should be taken to prevent failures before they happen.
 
-We'll use tool like Docker, Docker Swarm, Docker Compose, Consul, Consul Template, Registrator and  Jenkins to design and develop a system that is continuously deploying services packed as containers and perform actions that will recuperate it from failures and scale or de-scale depending on historical records.
+We'll use tools like Docker, Docker Swarm, Docker Compose, Consul, Consul Template, Registrator and Jenkins to design and develop a system that is continuously deploying services packed as containers and performs actions that will recuperate it from failures and scale or de-scale depending on historical records.
 
 Learning Outcomes
 =================
