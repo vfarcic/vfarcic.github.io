@@ -98,7 +98,7 @@ His big passions are Microservices, Continuous Deployment and Test-Driven Develo
 
 He often speaks at community gatherings and conferences.
 
-He wrote "The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices" and ""Test-Driven Java Development" books.
+He wrote "The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices" and "Test-Driven Java Development" books.
 
 Contact Details:
 
