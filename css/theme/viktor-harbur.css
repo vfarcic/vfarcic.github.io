@@ -15,7 +15,7 @@ body {
   background-color: #222; }
 
 body:after {
-  content: url(../../img/harbour.png);
+  content: url(../../img/cloudbees-harbur.png);
   background-color: white;
   transform: scale(.6);
   position: fixed;
