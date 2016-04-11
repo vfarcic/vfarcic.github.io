@@ -4,12 +4,6 @@ Title
 Self-Healing Systems
 --------------------
 
-Co-Presenter
-============
-
-Featured Participants
-=====================
-
 Track
 =====
 
@@ -18,22 +12,7 @@ DevOps
 Session Type
 ============
 
-Talk
-
-Audience Level
-==============
-
-Learning
-
-Room Setup
-==========
-
-Theater
-
-Duration
-========
-
-75 minutes
+Talk or Workshop
 
 Keywords
 ========
@@ -69,24 +48,12 @@ Participants will get insights into the following concepts and their relations.
 * Docker Containers
 * Service Discovery
 
-Prerequisite Knowledge
-======================
-
-Information for Review Team
-===========================
-
-Presentation History
-====================
-
-Presentation Sample
-===================
-
 Bio
 ===
 
 Viktor Farcic is a Senior Consultant at CloudBees.
 
-He coded using a plethora of languages starting with Pascal (yes, he is old), Basic (before it got Visual prefix), ASP (before it got .Net suffix), C, C++, Perl, Python, ASP.Net, Visual Basic, C#, JavaScript, etc. He never worked with Fortran. His current favorites are **Scala** and **JavaScript** even though most of his office hours are spent with **Java**.
+He coded using a plethora of languages starting with Pascal (yes, he is old), Basic (before it got Visual prefix), ASP (before it got .Net suffix), C, C++, Perl, Python, ASP.Net, Visual Basic, C#, JavaScript, Java, Scala, etc. He never worked with Fortran. His current favorite is **Go**.
 
 His big passions are Microservices, Continuous Integration, Delivery and Deployment (CI/CD) and Test-Driven Development.
 
