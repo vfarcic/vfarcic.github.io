@@ -4,16 +4,6 @@ Title
 Self-Healing Systems
 --------------------
 
-Track
-=====
-
-DevOps
-
-Session Type
-============
-
-Talk or Workshop
-
 Keywords
 ========
 
@@ -51,15 +41,15 @@ Participants will get insights into the following concepts and their relations.
 Bio
 ===
 
-Viktor Farcic is a Senior Consultant at CloudBees.
+**Viktor Farcic** is a Senior Consultant at **CloudBees**.
 
 He coded using a plethora of languages starting with Pascal (yes, he is old), Basic (before it got Visual prefix), ASP (before it got .Net suffix), C, C++, Perl, Python, ASP.Net, Visual Basic, C#, JavaScript, Java, Scala, etc. He never worked with Fortran. His current favorite is **Go**.
 
-His big passions are Microservices, Continuous Integration, Delivery and Deployment (CI/CD) and Test-Driven Development.
+His big passions are **Microservices**, **Continuous Integration**, **Delivery and Deployment (CI/CD)** and **Test-Driven Development**.
 
 He often speaks at community gatherings and conferences.
 
-He wrote the "Test-Driven Java Development" and "The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices" books.
+He wrote [The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices](http://www.amazon.com/dp/B01BJ4V66M) and [Test-Driven Java Development](http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC) books.
 
 Contact Details:
 
