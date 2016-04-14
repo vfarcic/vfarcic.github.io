@@ -11,7 +11,7 @@ Many of us have already experimented with Docker - for example, running one of t
 
 However, you must create a comprehensive build pipeline before deploying any containers into a live environment.
 
-Integrating containers into a continuous-delivery pipeline is far from easy. Along with the benefits Docker brings, there are challenges both technological and process related. This article attempts to outline the steps you need to take for a fully automated Jenkins pipeline that continuously builds, tests, and deploys microservices into a Docker Swarm cluster.
+Integrating containers into a continuous-delivery pipeline is far from easy. Along with the benefits Docker brings, there are challenges both technological and process related. This presentation attempts to outline the steps you need to take for a fully automated Jenkins pipeline that continuously builds, tests, and deploys microservices into a Docker Swarm cluster.
 
 ### Bio
 
