@@ -13,8 +13,8 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/viktor.css" id="theme">
+		<link rel="stylesheet" href="../css/reveal.css">
+		<link rel="stylesheet" href="../css/theme/viktor.css" id="theme">
 
 		<!-- Code syntax highlighting -->
 		<!--<link rel="stylesheet" href="lib/css/zenburn.css">-->
@@ -24,7 +24,7 @@
 			var link = document.createElement( 'link' );
 			link.rel = 'stylesheet';
 			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
 
@@ -39,29 +39,54 @@
 
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
-				<section id="cover">
+				<section id="cover" data-background="img/background/scaling.png">
 					<h1>Scaling To Infinity</h1>
 					<h3>The Quest For Fully Automated, Scalable, Self-Healing System With Zero-Downtime</h3>
-					<p>
-						Created by <a href="http://technologyconversations.com/about/">Viktor Farcic</a>
-						for <a href="http://technologyconversations.com">TechnologyConversations.com</a>
-					</p>
-					<h3><a href="https://twitter.com/vfarcic">@vfarcic</a></h3>
+					<hr/>
+					<h2>
+						<a href="http://technologyconversations.com/about/">Viktor Farcic</a>
+					</h2>
+					<hr/>
+					<h4>
+						<a href="https://twitter.com/vfarcic">@vfarcic</a>
+					</h4>
+					<h4>
+						<a href="http://technologyconversations.com">TechnologyConversations.com</a>
+					</h4>
+					<h4>
+						<a href="https://www.cloudbees.com">CloudBees.com</a>
+					</h4>
 				</section>
-				<section id="about-me">
-					<h2>Viktor Farcic</h2>
-					<ul>
-						<img src="img/viktor.jpg" style="float: right; width: 25%; height: 25%;"/>
-						<li>Senior Consultant at <a href="https://www.cloudbees.com/">CloudBees</a></li>
-						<li>Never developed in Fortran</li>
-						<li>Passionate about microservices, continuous deployment and TDD</li>
-						<li>Blogger in <a href="http://technologyconversations.com/">TechnologyConversations.com</a></li>
-						<li><a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">Java Test-Driven Development: Mastering TDD Through Katas</a></li>
-					</ul>
+				<section data-background="../img/background/about-me.jpg">
+					<section id="about-me">
+						<h2>Viktor Farcic</h2>
+						<img src="../img/viktor.jpg" style="width: 50%; height: 50%;" />
+					</section>
+					<section id="about-company">
+						<a href="https://www.cloudbees.com">
+							<img src="../img/cloudbees-big.png" style="background-color: white;" />
+						</a>
+					</section>
+					<section id="about-docker">
+						<img src="../img/docker-captain.png" style="width: 50%; height: 50%;" />
+					</section>
+					<section id="about-books">
+						<a href="https://leanpub.com/the-devops-2-toolkit">
+							<img src="../img/devops2.png" style="float: left; width: 40%; height: 40%;" />
+						</a>
+						<a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">
+							<img src="../img/tdd.jpg" style="float: right; width: 40%; height: 40%;" />
+						</a>
+					</section>
 				</section>
 				<section data-background="img/background/why.jpg">
-					<section id="why">
+					<section id="scaling-why">
 						<h1>Why Scaling?</h1>
+						<ul>
+							<li class="fragment">Applications and services</li>
+							<li class="fragment">Teams</li>
+							<li class="fragment">Business</li>
+						</ul>
 					</section>
 				</section>
 				<section data-background="img/background/rage.jpg">
@@ -84,31 +109,10 @@
 							<li class="fragment">Integration phase = Dante's Infierno</li>
 							<li class="fragment">Testing</li>
 							<li class="fragment">eXtreme programming (XP)</li>
-							<li class="fragment">Continuous integration</li>
+							<li class="fragment">Continuous deployment</li>
 							<li class="fragment">Architecture</li>
 							<h2><label class="fragment">Failure</label> <label class="fragment">after</label> <label class="fragment">failure</label></h2>
 						</ul>
-					</section>
-					<section id="failures-circle">
-						<h4>History of the Failed Initiatives</h4>
-						<ul>
-							<li class="fragment">
-								Monoliths
-								<label class="fragment highlight-current-green">&gt; (micro)services</label>
-								<label class="fragment highlight-current-red">&gt; huge mess</label>
-							</li>
-							<li class="fragment">
-								Huge mess
-								<label class="fragment highlight-current-green">&gt; standardization and coupling</label>
-								<label class="fragment highlight-current-red">&gt; speed, innovation, scalability</label>
-							</li>
-							<li class="fragment">
-								CM
-								<label class="fragment highlight-current-green">&gt; predictability</label>
-								<label class="fragment highlight-current-red">&gt; maintenance problems</label>
-							</li>
-						</ul>
-						<h2><label class="fragment">Failure</label> <label class="fragment">after</label> <label class="fragment">failure</label></h2>
 					</section>
 					<section id="failures-improvement">
 						<h4>History of the Failed Initiatives</h4>
@@ -588,13 +592,33 @@ ps aux | grep jav[a] | awk '{print $2}' | xargs kill
 						</h4>
 					</section>
 				</section>
-				<section id="qa" data-background="img/questions.jpg">
-				</section>
-				<section>
-					<section id="the-end" data-background="img/the_end.jpg">
-						<h1>Viktor Farcic</h1>
+				<section  data-background="../img/background/the_end.jpg">
+					<section id="the-end-blog">
+						<h2>Viktor Farcic</h2>
+						<hr/>
 						<h3><a href="https://twitter.com/vfarcic">@vfarcic</a></h3>
-						<h4><a href="http://technologyconversations.com">TechnologyConversations.com</a></h4>
+						<hr/>
+						<figure>
+							<img src="../img/qr/technology-conversations.jpg"/>
+						</figure>
+						<h3><a href="http://technologyconversations.com">TechnologyConversations.com</a></h3>
+					</section>
+					<section id="the-end-book">
+						<h2>Viktor Farcic</h2>
+						<hr/>
+						<div>
+							<figure style="width: 30%; height: 30%; float: left;">
+								<img src="../img/qr/devops2-amazon.jpg"/>
+								<figcaption><a href="http://www.amazon.com/dp/B01BJ4V66M">Amazon</a></figcaption>
+							</figure>
+							<figure style="width: 30%; height: 30%; float: right;">
+								<img src="../img/qr/devops2-leanpub.jpg"/>
+								<figcaption><a href="https://leanpub.com/the-devops-2-toolkit">LeanPub</a></figcaption>
+							</figure>
+							<a href="https://leanpub.com/the-devops-2-toolkit">
+								<img src="../img/devops2.png" style="width: 30%; height: 30%;" />
+							</a>
+						</div>
 					</section>
 				</section>
 			</div>
