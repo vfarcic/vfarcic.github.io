@@ -67,7 +67,9 @@
                         </a>
                     </section>
                     <section id="about-docker">
-                        <img src="../img/docker-captain.png" style="width: 50%; height: 50%;" />
+                        <a href="https://www.docker.com/community/docker-captains">
+                            <img src="../img/docker-captain.png" style="width: 50%; height: 50%;" />
+                        </a>
                     </section>
                     <section id="about-books">
                         <a href="https://leanpub.com/the-devops-2-toolkit">
@@ -102,27 +104,6 @@
                             <li class="fragment">Architecture</li>
                             <h2><label class="fragment">Failure</label> <label class="fragment">after</label> <label class="fragment">failure</label></h2>
                         </ul>
-                    </section>
-                    <section id="failures-circle">
-                        <h4>History of the Failed Initiatives</h4>
-                        <ul>
-                            <li class="fragment">
-                                Monoliths
-                                <label class="fragment highlight-current-green">&gt; (micro)services</label>
-                                <label class="fragment highlight-current-red">&gt; huge mess</label>
-                            </li>
-                            <li class="fragment">
-                                Huge mess
-                                <label class="fragment highlight-current-green">&gt; standardization and coupling</label>
-                                <label class="fragment highlight-current-red">&gt; speed, innovation, scalability</label>
-                            </li>
-                            <li class="fragment">
-                                CM
-                                <label class="fragment highlight-current-green">&gt; predictability</label>
-                                <label class="fragment highlight-current-red">&gt; maintenance problems</label>
-                            </li>
-                        </ul>
-                        <h2><label class="fragment">Failure</label> <label class="fragment">after</label> <label class="fragment">failure</label></h2>
                     </section>
                     <section id="failures-improvement">
                         <h4>History of the Failed Initiatives</h4>
@@ -253,15 +234,6 @@
                             <li class="fragment">Preventive healing</li>
                         </ul>
                     </section>
-                    <section id="self-healing-tools">
-                        <h4>Self-Healing System</h4>
-                        <h2>Tools</h2>
-                        <div>
-                            <img src="img/tools/mesos.jpg" class="fragment" style="width: 30%; height: 30%;"/>
-                            <img src="img/tools/kubernetes.png" class="fragment" style="width: 30%; height: 30%;"/>
-                            <img src="img/tools/swarm.png" class="fragment" style="width: 30%; height: 30%; background-color: white;"/>
-                        </div>
-                    </section>
                 </section>
                 <section data-background="img/background/self-healing.png">
                     <section id="architecture" data-transition="fade-in slide-out">
@@ -304,7 +276,63 @@
                         <img src="img/architecture/09-self-healing.png"/>
                     </section>
                 </section>
-                <section  data-background="../img/background/the_end.jpg">
+                <section data-background="../img/background/tools.jpg">
+                    <section id="tools">
+                        <h2>Tools</h2>
+                        <ul>
+                            <li class="fragment">Cluster orchestrator</li>
+                            <li class="fragment">Realtime Registry</li>
+                            <li class="fragment">Historical Registry</li>
+                            <li class="fragment">Monitoring</li>
+                            <li class="fragment">General orchestrator</li>
+                        </ul>
+                    </section>
+                    <section id="tools-cluster-orchestrator">
+                        <h4>Tools</h4>
+                        <h2>Cluster Orchestrator Tools</h2>
+                        <div>
+                            <img src="../img/products/mesos.jpg" class="fragment" style="width: 30%; height: 30%;"/>
+                            <img src="../img/products/kubernetes.png" class="fragment" style="width: 30%; height: 30%;"/>
+                            <img src="../img/products/swarm.png" class="fragment" style="width: 30%; height: 30%; background-color: white;"/>
+                        </div>
+                    </section>
+                    <section id="tools-realtime-registry">
+                        <h4>Tools</h4>
+                        <h2>Realtime Registry</h2>
+                        <div>
+                            <img src="../img/products/zookeeper.png" class="fragment" style="width: 40%; height: 40%; background-color: white;"/>
+                            <br/>
+                            <img src="../img/products/etcd.png" class="fragment" style="width: 40%; height: 40%; background-color: white;"/>
+                            <img src="../img/products/consul.jpg" class="fragment" style="width: 40%; height: 40%;"/>
+                        </div>
+                    </section>
+                    <section id="tools-historical-registry">
+                        <h4>Tools</h4>
+                        <h2>Historical Registry</h2>
+                        <div>
+                            <img src="../img/products/elastic.png" class="fragment" style="width: 80%; height: 80%; background-color: white;"/>
+                        </div>
+                    </section>
+                    <section id="tools-monitoring">
+                        <h4>Tools</h4>
+                        <h2>Monitoring</h2>
+                        <div>
+                            <img src="../img/products/nagios.png" class="fragment" style="width: 40%; height: 40%; background-color: white;"/>
+                            <img src="../img/products/icinga.png" class="fragment" style="width: 40%; height: 40%; background-color: white;"/>
+                            <br/>
+                            <img src="../img/products/consul.jpg" class="fragment" style="width: 40%; height: 40%; background-color: white;"/>
+                            <img src="../img/products/kibana.png" class="fragment" style="width: 40%; height: 40%; background-color: black;"/>
+                        </div>
+                    </section>
+                    <section id="tools-general-orchestrator">
+                        <h4>Tools</h4>
+                        <h2>General Orchestrator</h2>
+                        <div>
+                            <img src="../img/products/jenkins.png" class="fragment" style="background-color: white;"/>
+                        </div>
+                    </section>
+                </section>
+                <section data-background="../img/background/the_end.jpg">
                     <section id="the-end-blog">
                         <h2>Viktor Farcic</h2>
                         <hr/>
