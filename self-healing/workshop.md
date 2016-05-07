@@ -1,26 +1,16 @@
+TODO
+====
+
+* Pre-load vfarcic/docker-flow-proxy
+* Pre-load vfarcic/books-ms
+
 Self-Healing Systems Workshop
 =============================
 
 Workshop
 --------
 
-### Provision the Environments
-
 ```bash
-vagrant up cd swarm-master swarm-node-1 swarm-node-2
-
-vagrant ssh cd -c "ansible-playbook \
-    /vagrant/ansible/swarm.yml \
-    -i /vagrant/ansible/hosts/prod"
-
-vagrant ssh cd -c "ansible-playbook \
-    /vagrant/ansible/jenkins-node-swarm.yml \
-    -i /vagrant/ansible/hosts/prod"
-
-vagrant ssh cd -c "ansible-playbook \
-    /vagrant/ansible/jenkins.yml \
-    --extra-vars "main_job_src=service-healing-config.xml" \
-    -c local"
 ```
 
 ### Setting Up Consul Health Checks and Watches for Monitoring Hardware

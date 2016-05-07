@@ -39,7 +39,7 @@
 			<header style="position: absolute;top: 50px; left: 100px; z-index:500; font-size:100px;background-color: rgba(0,0,0,0.5)"></header>
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
-				<section id="cover" data-background="img/geecon.jpg">
+				<section id="cover" data-background="../img/background/health.png">
 					<h1>Self-Healing Systems</h1>
                     <hr/>
 					<h2>
@@ -78,52 +78,6 @@
                         <a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">
                             <img src="../img/tdd.jpg" style="float: right; width: 40%; height: 40%;" />
                         </a>
-                    </section>
-                </section>
-                <section data-background="img/background/rage.jpg">
-                    <section id="failures-customers">
-                        <h4>History of the Failed Initiatives</h4>
-                        <h2>Customers</h2>
-                        <ul>
-                            <li class="fragment">Small greenfield projects</li>
-                            <li class="fragment">Automotive industry</li>
-                            <li class="fragment">Lotteries</li>
-                            <li class="fragment">Banks</li>
-                            <li class="fragment">Insurances</li>
-                            <li class="fragment">Everything in between</li>
-                        </ul>
-                    </section>
-                    <section id="failures-problems">
-                        <h4>History of the Failed Initiatives</h4>
-                        <h2>Problems</h2>
-                        <ul>
-                            <li class="fragment">Integration phase = Dante's Infierno</li>
-                            <li class="fragment">Testing</li>
-                            <li class="fragment">eXtreme programming (XP)</li>
-                            <li class="fragment">Continuous integration</li>
-                            <li class="fragment">Architecture</li>
-                            <h2><label class="fragment">Failure</label> <label class="fragment">after</label> <label class="fragment">failure</label></h2>
-                        </ul>
-                    </section>
-                    <section id="failures-improvement">
-                        <h4>History of the Failed Initiatives</h4>
-                        <h3 class="fragment">Each improvement</h3>
-                        <h3 class="fragment">raises the bar</h3>
-                        <h3 class="fragment">and converts itself into a failure</h3>
-                    </section>
-                    <section id="failures-today">
-                        <h4>History of the Failed Initiatives</h4>
-                        <h2>Today?</h2>
-                        <ul>
-                            <li class="fragment">Small specialized tools</li>
-                            <li class="fragment">Immutable deployments</li>
-                            <li class="fragment">Blue-green deployments</li>
-                            <li class="fragment">Service discovery</li>
-                            <li class="fragment">Domain-driven design</li>
-                            <li class="fragment">Continuous delivery/deployment</li>
-                            <li class="fragment">Scalable and fault tolerant systems</li>
-                            <li class="fragment"><label class="fragment grow highlight-current-green">Self-healing systems</label></li>
-                        </ul>
                     </section>
                 </section>
                 <section data-background="../img/background/train.png">
@@ -289,39 +243,31 @@
                     </section>
                     <section id="tools-cluster-orchestrator">
                         <h4>Tools</h4>
-                        <h2>Cluster Orchestrator Tools</h2>
+                        <h2>Cluster Orchestrator</h2>
                         <div>
-                            <img src="../img/products/mesos.jpg" class="fragment" style="width: 30%; height: 30%;"/>
-                            <img src="../img/products/kubernetes.png" class="fragment" style="width: 30%; height: 30%;"/>
-                            <img src="../img/products/swarm.png" class="fragment" style="width: 30%; height: 30%; background-color: white;"/>
+                            <img src="../img/products/swarm.png" class="fragment" style="width: 40%; height: 40%; background-color: white;"/>
                         </div>
                     </section>
                     <section id="tools-realtime-registry">
                         <h4>Tools</h4>
                         <h2>Realtime Registry</h2>
                         <div>
-                            <img src="../img/products/zookeeper.png" class="fragment" style="width: 40%; height: 40%; background-color: white;"/>
-                            <br/>
-                            <img src="../img/products/etcd.png" class="fragment" style="width: 40%; height: 40%; background-color: white;"/>
-                            <img src="../img/products/consul.jpg" class="fragment" style="width: 40%; height: 40%;"/>
+                            <img src="../img/products/consul.jpg" class="fragment" style="width: 80%; height: 80%;"/>
                         </div>
                     </section>
                     <section id="tools-historical-registry">
                         <h4>Tools</h4>
                         <h2>Historical Registry</h2>
                         <div>
-                            <img src="../img/products/elastic.png" class="fragment" style="width: 80%; height: 80%; background-color: white;"/>
+                            <img src="../img/products/elastic.png" class="fragment" style="width: 100%; height: 100%; background-color: white;"/>
                         </div>
                     </section>
                     <section id="tools-monitoring">
                         <h4>Tools</h4>
                         <h2>Monitoring</h2>
                         <div>
-                            <img src="../img/products/nagios.png" class="fragment" style="width: 40%; height: 40%; background-color: white;"/>
-                            <img src="../img/products/icinga.png" class="fragment" style="width: 40%; height: 40%; background-color: white;"/>
-                            <br/>
-                            <img src="../img/products/consul.jpg" class="fragment" style="width: 40%; height: 40%; background-color: white;"/>
-                            <img src="../img/products/kibana.png" class="fragment" style="width: 40%; height: 40%; background-color: black;"/>
+                            <img src="../img/products/consul.jpg" class="fragment" style="width: 50%; height: 50%; background-color: white;"/>
+                            <img src="../img/products/kibana.png" class="fragment" style="width: 50%; height: 50%; background-color: black;"/>
                         </div>
                     </section>
                     <section id="tools-general-orchestrator">
@@ -330,6 +276,347 @@
                         <div>
                             <img src="../img/products/jenkins.png" class="fragment" style="background-color: white;"/>
                         </div>
+                    </section>
+                </section>
+                <section>
+                    <section id="provisioning">
+                        <h2>Provisioning</h2>
+                        <img src="../img/products/vagrant.png" style="background-color: white"/>
+                        <img src="../img/products/ansible.png" style="width: 25%; height: 25%; background-color: white"/>
+                    </section>
+                    <section id="provisioning-nodes-code">
+                        <h4>Provisioning</h4>
+                        <h2>Nodes</h2>
+						<pre><code data-trim contenteditable>
+vagrant up cd swarm-master swarm-node-1 swarm-node-2
+                        </code></pre>
+                    </section>
+                    <section id="provisioning-nodes">
+                        <h4>Provisioning</h4>
+                        <h2>Nodes</h2>
+                        <img src="img/architecture/self-healing-tools-nodes-bare.png"/>
+                    </section>
+                    <section id="provisioning-nodes-swarm-code">
+                        <h4>Provisioning</h4>
+                        <h2>Swarm</h2>
+						<pre><code data-trim contenteditable>
+cat /vagrant/ansible/swarm.yml
+
+ansible-playbook /vagrant/ansible/swarm.yml \
+    -i /vagrant/ansible/hosts/prod
+                        </code></pre>
+                    </section>
+                    <section id="provisioning-nodes-swarm">
+                        <h4>Provisioning</h4>
+                        <h2>Swarm</h2>
+                        <img src="img/architecture/self-healing-tools-nodes-swarm.png"/>
+                    </section>
+                    <section id="provisioning-nodes-jenkins-code">
+                        <h4>Provisioning</h4>
+                        <h2>Jenkins</h2>
+						<pre><code data-trim contenteditable>
+cat /vagrant/ansible/jenkins-node-swarm.yml
+
+cat /vagrant/ansible/jenkins.yml
+
+ansible-playbook /vagrant/ansible/jenkins-node-swarm.yml \
+    -i /vagrant/ansible/hosts/prod
+
+ansible-playbook /vagrant/ansible/jenkins.yml \
+    --extra-vars "main_job_src=service-healing-config.xml" \
+    -c local
+                        </code></pre>
+                    </section>
+                    <section id="provisioning-nodes-jenkins">
+                        <h4>Provisioning</h4>
+                        <h2>Jenkins</h2>
+                        <img src="img/architecture/self-healing-tools-nodes-jenkins.png"/>
+                    </section>
+                </section>
+                <section>
+                    <section id="deployment">
+                        <h2>Deployment</h2>
+                    </section>
+                    <section id="deployment-container-code">
+                        <h4>Deployment</h4>
+                        <h2>The Code</h2>
+						<pre><code data-trim contenteditable>
+git clone https://github.com/vfarcic/books-ms.git
+
+cd books-ms
+
+docker pull vfarcic/books-ms
+
+docker tag vfarcic/books-ms 10.100.198.200:5000/books-ms
+
+docker push 10.100.198.200:5000/books-ms
+                        </code></pre>
+                    </section>
+                    <section id="deployment-run-code">
+                        <h4>Deployment</h4>
+                        <h2>Run</h2>
+						<pre><code data-trim contenteditable>
+cat docker-compose-swarm-v2.yml
+
+docker-compose -f docker-compose-swarm-v2.yml \
+    up -d db app-blue
+                        </code></pre>
+                    </section>
+                    <section id="deployment-ps-code">
+                        <h4>Deployment</h4>
+                        <h2>List</h2>
+						<pre><code data-trim contenteditable>
+docker-compose -f docker-compose-swarm-v2.yml \
+    ps
+
+docker-compose -f docker-compose-swarm-v2.yml \
+    down
+
+docker-compose -f docker-compose-swarm-v2.yml \
+    ps
+                        </code></pre>
+                    </section>
+                    <section id="deployment-run-cluster-code">
+                        <h4>Deployment</h4>
+                        <h2>Run in cluster</h2>
+						<pre><code data-trim contenteditable>
+export DOCKER_HOST=tcp://swarm-master:2375
+
+docker info
+
+docker-compose -f docker-compose-swarm-v2.yml \
+    up -d db app-blue
+
+docker-compose -f docker-compose-swarm-v2.yml \
+    ps
+
+docker ps
+                        </code></pre>
+                    </section>
+                    <section id="deployment-run">
+                        <h4>Deployment</h4>
+                        <h2>Run</h2>
+                        <img src="img/architecture/01-self-healing-tools.png"/>
+                    </section>
+                    <section id="deployment-discovery-code">
+                        <h4>Deployment</h4>
+                        <h2>Discover</h2>
+						<pre><code data-trim contenteditable>
+curl swarm-master:8500/v1/catalog/service/books-ms-blue \
+    | jq '.'
+                        </code></pre>
+                    </section>
+                    <section id="deployment-proxy-code">
+                        <h4>Deployment</h4>
+                        <h2>Proxy</h2>
+						<pre><code data-trim contenteditable>
+curl -i localhost/api/v1/books
+
+sudo docker run -d \
+    --name docker-flow-proxy \
+    -e CONSUL_ADDRESS=10.100.192.200:8500 \
+    -p 80:80 -p 8081:8080 \
+    vfarcic/docker-flow-proxy
+
+curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=books-ms-blue&servicePath=/api/v1/books" \
+    | jq '.'
+
+curl -i localhost/api/v1/books
+                        </code></pre>
+                    </section>
+                    <section id="deployment-proxy">
+                        <h4>Deployment</h4>
+                        <h2>Proxy</h2>
+                        <img src="img/architecture/docker-flow-proxy-swarm.png"/>
+                    </section>
+                    <section id="deployment-scale-code">
+                        <h4>Deployment</h4>
+                        <h2>Run</h2>
+						<pre><code data-trim contenteditable>
+docker-compose -f docker-compose-swarm-v2.yml \
+    scale app-blue=3
+
+curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=books-ms-blue&servicePath=/api/v1/books" \
+    | jq '.'
+
+curl -i localhost/api/v1/books
+                        </code></pre>
+                    </section>
+                </section>
+                <section>
+                    <section id="hardware-checks">
+                        <h2>Hardware Health Checks and Watches</h2>
+                    </section>
+                    <section id="hardware-checks-df-commands">
+                        <h4>Hardware Health Checks and Watches</h4>
+                        <h2>Hard Disk Script</h2>
+						<pre><code data-trim contenteditable>
+df -h
+
+set -- $(df -h | awk '$NF=="/"{print $2" "$3" "$5}')
+
+total=$1
+
+used=$2
+
+used_percent=${3::-1}
+
+printf "Disk Usage: %s/%s (%s%%)\n" $used $total $used_percent
+                        </code></pre>
+                    </section>
+                    <section id="hardware-checks-df-script-prep">
+                        <h4>Hardware Health Checks and Watches</h4>
+                        <h2>Hard Disk Script</h2>
+						<pre><code data-trim contenteditable>
+exit
+
+vagrant ssh swarm-master
+
+sudo mkdir -p /data/consul/scripts
+                        </code></pre>
+                    </section>
+                    <section id="hardware-checks-df-script">
+                        <h4>Hardware Health Checks and Watches</h4>
+                        <h2>Hard Disk Script</h2>
+						<pre><code data-trim contenteditable>
+echo '#!/usr/bin/env bash
+
+set -- $(df -h | awk '"'"'$NF=="/"{print $2" "$3" "$5}'"'"')
+total=$1
+used=$2
+used_percent=${3::-1}
+printf "Disk Usage: %s/%s (%s%%)\n" $used $total $used_percent
+if [ $used_percent -gt 95 ]; then
+  exit 2
+elif [ $used_percent -gt 80 ]; then
+  exit 1
+else
+  exit 0
+fi
+' | sudo tee /data/consul/scripts/disk.sh
+                        </code></pre>
+                    </section>
+                    <section id="hardware-checks-df-try">
+                        <h4>Hardware Health Checks and Watches</h4>
+                        <h2>Hard Disk Script</h2>
+						<pre><code data-trim contenteditable>
+sudo chmod +x /data/consul/scripts/disk.sh
+
+/data/consul/scripts/disk.sh
+
+echo $?
+                        </code></pre>
+                    </section>
+                    <section id="hardware-checks-df-check-json">
+                        <h4>Hardware Health Checks and Watches</h4>
+                        <h2>Hard Disk Check</h2>
+						<pre><code data-trim contenteditable>
+echo '{
+  "checks": [
+    {
+      "id": "disk",
+      "name": "Disk utilization",
+      "notes": "Critical 95% util, warning 80% util",
+      "script": "/data/consul/scripts/disk.sh",
+      "interval": "10s"
+    }
+  ]
+}' | sudo tee /data/consul/config/consul_check.json
+
+sudo killall -HUP consul
+                        </code></pre>
+                    </section>
+                    <section id="hardware-checks-df-check">
+                        <h4>Hardware Health Checks and Watches</h4>
+                        <h2>Hard Disk Check</h2>
+                        <img src="img/architecture/health-consul-hardware-hd.png" style="width: 35%; height: 35%;"/>
+                        <br />
+                        <a href="http://10.100.192.200:8500/ui/">http://10.100.192.200:8500/ui/</a>
+                    </section>
+                    <section id="hardware-checks-df-watch-script">
+                        <h4>Hardware Health Checks and Watches</h4>
+                        <h2>Hard Disk Check</h2>
+						<pre><code data-trim contenteditable>
+echo '#!/usr/bin/env bash
+
+read -r JSON
+
+STATUS_ARRAY=($(echo "$JSON" | jq -r ".[].Status"))
+CHECK_ID_ARRAY=($(echo "$JSON" | jq -r ".[].CheckID"))
+LENGTH=${#STATUS_ARRAY[*]}
+
+for (( i=0; i<=$(( $LENGTH -1 )); i++ ))
+do
+  CHECK_ID=${CHECK_ID_ARRAY[$i]}
+  STATUS=${STATUS_ARRAY[$i]}
+  echo -e "${RED}Triggering Jenkins job http://10.100.198.200:8080/job/hardware-notification/build${NC}"
+  curl -X POST http://10.100.198.200:8080/job/hardware-notification/build \
+    --data-urlencode json="{\"parameter\": [{\"name\":\"checkId\", \"value\":\"$CHECK_ID\"}, {\"name\":\"status\", \"value\":\"$STATUS\"}]}"
+done
+' | sudo tee /data/consul/scripts/manage_watches.sh
+
+sudo chmod +x /data/consul/scripts/manage_watches.sh
+                        </code></pre>
+                    </section>
+                    <section id="hardware-checks-df-watch-json">
+                        <h4>Hardware Health Checks and Watches</h4>
+                        <h2>Hard Disk Check</h2>
+						<pre><code data-trim contenteditable>
+echo '{
+  "watches": [
+    {
+      "type": "checks",
+      "state": "warning",
+      "handler": "/data/consul/scripts/manage_watches.sh >>/data/consul/logs/watches.log"
+    }, {
+      "type": "checks",
+      "state": "critical",
+      "handler": "/data/consul/scripts/manage_watches.sh >>/data/consul/logs/watches.log"
+    }
+  ]
+}' | sudo tee /data/consul/config/watches.json
+                        </code></pre>
+                    </section>
+                    <section id="hardware-checks-df-run">
+                        <h4>Hardware Health Checks and Watches</h4>
+                        <h2>Hard Disk Check</h2>
+						<pre><code data-trim contenteditable>
+sudo sed -i "s/80/2/" /data/consul/scripts/disk.sh
+
+sudo killall -HUP consul
+
+cat /data/consul/logs/watches.log
+
+exit
+                        </code></pre>
+                        <a href="http://10.100.198.200:8080/job/hardware-notification/">http://10.100.198.200:8080/job/hardware-notification/</a>
+                    </section>
+                    <section id="hardware-checks-ansible">
+                        <h4>Hardware Health Checks and Watches</h4>
+                        <h2>Cluster Hardware Checks</h2>
+						<pre><code data-trim contenteditable>
+vagrant ssh cd
+
+cat /vagrant/ansible/swarm-healing.yml
+
+ansible-playbook /vagrant/ansible/swarm-healing.yml \
+    -i /vagrant/ansible/hosts/prod
+                        </code></pre>
+                        <a href="http://10.100.192.200:8500/ui/#/dc1/nodes">http://10.100.192.200:8500/ui/#/dc1/nodes</a>
+                    </section>
+                </section>
+                <section>
+                    <section id="service-checks">
+                        <h2>Service Checks</h2>
+                    </section>
+                    <section id="service-checks-service">
+                        <h4>Service Checks</h4>
+                        <h2>Service</h2>
+						<pre><code data-trim contenteditable>
+cd ~/books-ms
+
+cat consul_check.ctmpl
+                        </code></pre>
                     </section>
                 </section>
                 <section data-background="../img/background/the_end.jpg">
