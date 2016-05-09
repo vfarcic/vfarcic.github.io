@@ -287,9 +287,11 @@
                     <section id="provisioning-nodes-code">
                         <h4>Provisioning</h4>
                         <h2>Nodes</h2>
-						<pre><code data-trim contenteditable>
-vagrant up cd swarm-master swarm-node-1 swarm-node-2
-                        </code></pre>
+						<pre><code data-trim contenteditable>git clone https://github.com/vfarcic/ms-lifecycle.git
+
+cd ms-lifecycle
+
+vagrant up cd swarm-master swarm-node-1 swarm-node-2</code></pre>
                     </section>
                     <section id="provisioning-nodes">
                         <h4>Provisioning</h4>
@@ -298,24 +300,25 @@ vagrant up cd swarm-master swarm-node-1 swarm-node-2
                     </section>
                     <section id="provisioning-nodes-swarm-code">
                         <h4>Provisioning</h4>
-                        <h2>Swarm</h2>
-						<pre><code data-trim contenteditable>
+                        <h2>Docker Swarm</h2>
+						<pre><code data-trim contenteditable>vagrant ssh cd
+
 cat /vagrant/ansible/swarm.yml
 
+cat /vagrant/ansible/roles/docker/tasks/debian.yml
+
 ansible-playbook /vagrant/ansible/swarm.yml \
-    -i /vagrant/ansible/hosts/prod
-                        </code></pre>
+    -i /vagrant/ansible/hosts/prod</code></pre>
                     </section>
                     <section id="provisioning-nodes-swarm">
                         <h4>Provisioning</h4>
-                        <h2>Swarm</h2>
+                        <h2>Docker Swarm</h2>
                         <img src="img/architecture/self-healing-tools-nodes-swarm.png"/>
                     </section>
                     <section id="provisioning-nodes-jenkins-code">
                         <h4>Provisioning</h4>
                         <h2>Jenkins</h2>
-						<pre><code data-trim contenteditable>
-cat /vagrant/ansible/jenkins-node-swarm.yml
+						<pre><code data-trim contenteditable>cat /vagrant/ansible/jenkins-node-swarm.yml
 
 cat /vagrant/ansible/jenkins.yml
 
@@ -324,8 +327,7 @@ ansible-playbook /vagrant/ansible/jenkins-node-swarm.yml \
 
 ansible-playbook /vagrant/ansible/jenkins.yml \
     --extra-vars "main_job_src=service-healing-config.xml" \
-    -c local
-                        </code></pre>
+    -c local</code></pre>
                     </section>
                     <section id="provisioning-nodes-jenkins">
                         <h4>Provisioning</h4>
@@ -335,63 +337,53 @@ ansible-playbook /vagrant/ansible/jenkins.yml \
                 </section>
                 <section>
                     <section id="deployment">
-                        <h2>Deployment</h2>
+                        <h2>Prerequisite #1</h2>
+                        <span class="fragment">Ability to <span class="fragment grow highlight-current-green">deploy to any server</span> inside a cluster that meets hardware requirements</span>
                     </section>
                     <section id="deployment-container-code">
                         <h4>Deployment</h4>
                         <h2>The Code</h2>
-						<pre><code data-trim contenteditable>
-git clone https://github.com/vfarcic/books-ms.git
+						<pre><code data-trim contenteditable>git clone https://github.com/vfarcic/go-demo.git
 
-cd books-ms
+cd go-demo
 
-docker pull vfarcic/books-ms
+export REGISTRY="10.100.198.200:5000/"
 
-docker tag vfarcic/books-ms 10.100.198.200:5000/books-ms
+cat docker-compose-test.yml
 
-docker push 10.100.198.200:5000/books-ms
-                        </code></pre>
+docker-compose -f docker-compose-test.yml run --rm unit
+
+cat Dockerfile
+
+docker build -t ${REGISTRY}go-demo .
+
+docker push ${REGISTRY}go-demo</code></pre>
                     </section>
                     <section id="deployment-run-code">
                         <h4>Deployment</h4>
                         <h2>Run</h2>
-						<pre><code data-trim contenteditable>
-cat docker-compose-swarm-v2.yml
+						<pre><code data-trim contenteditable>docker-compose up -d app
 
-docker-compose -f docker-compose-swarm-v2.yml \
-    up -d db app-blue
-                        </code></pre>
-                    </section>
-                    <section id="deployment-ps-code">
-                        <h4>Deployment</h4>
-                        <h2>List</h2>
-						<pre><code data-trim contenteditable>
-docker-compose -f docker-compose-swarm-v2.yml \
-    ps
+docker-compose ps
 
-docker-compose -f docker-compose-swarm-v2.yml \
-    down
+GO_DEMO_PORT=&lt;PORT&gt;
 
-docker-compose -f docker-compose-swarm-v2.yml \
-    ps
-                        </code></pre>
+curl -i -XPUT localhost:$GO_DEMO_PORT/demo/hello
+
+docker-compose down
+
+docker-compose ps</code></pre>
                     </section>
                     <section id="deployment-run-cluster-code">
                         <h4>Deployment</h4>
                         <h2>Run in cluster</h2>
-						<pre><code data-trim contenteditable>
-export DOCKER_HOST=tcp://swarm-master:2375
+						<pre><code data-trim contenteditable>export DOCKER_HOST=tcp://swarm-master:2375
 
 docker info
 
-docker-compose -f docker-compose-swarm-v2.yml \
-    up -d db app-blue
+docker-compose up -d app
 
-docker-compose -f docker-compose-swarm-v2.yml \
-    ps
-
-docker ps
-                        </code></pre>
+docker-compose ps</code></pre>
                     </section>
                     <section id="deployment-run">
                         <h4>Deployment</h4>
@@ -401,16 +393,13 @@ docker ps
                     <section id="deployment-discovery-code">
                         <h4>Deployment</h4>
                         <h2>Discover</h2>
-						<pre><code data-trim contenteditable>
-curl swarm-master:8500/v1/catalog/service/books-ms-blue \
-    | jq '.'
-                        </code></pre>
+						<pre><code data-trim contenteditable>curl swarm-master:8500/v1/catalog/service/go-demo \
+    | jq '.'</code></pre>
                     </section>
                     <section id="deployment-proxy-code">
                         <h4>Deployment</h4>
                         <h2>Proxy</h2>
-						<pre><code data-trim contenteditable>
-curl -i localhost/api/v1/books
+						<pre><code data-trim contenteditable>curl -i localhost/demo/hello
 
 sudo docker run -d \
     --name docker-flow-proxy \
@@ -418,40 +407,92 @@ sudo docker run -d \
     -p 80:80 -p 8081:8080 \
     vfarcic/docker-flow-proxy
 
-curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=books-ms-blue&servicePath=/api/v1/books" \
+curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
     | jq '.'
 
-curl -i localhost/api/v1/books
-                        </code></pre>
+curl -i localhost/demo/hello</code></pre>
                     </section>
-                    <section id="deployment-proxy">
+                    <section id="deployment-proxy-operations">
                         <h4>Deployment</h4>
-                        <h2>Proxy</h2>
+                        <h2>Proxy: Operations</h2>
                         <img src="img/architecture/docker-flow-proxy-swarm.png"/>
+                    </section>
+                    <section id="deployment-proxy-user">
+                        <h4>Deployment</h4>
+                        <h2>Proxy: User</h2>
+                        <img src="img/architecture/docker-flow-proxy-user.png"/>
                     </section>
                     <section id="deployment-scale-code">
                         <h4>Deployment</h4>
-                        <h2>Run</h2>
-						<pre><code data-trim contenteditable>
-docker-compose -f docker-compose-swarm-v2.yml \
-    scale app-blue=3
+                        <h2>Scale</h2>
+						<pre><code data-trim contenteditable>docker-compose scale app=3
 
-curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=books-ms-blue&servicePath=/api/v1/books" \
+docker-compose ps
+
+curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
     | jq '.'
 
-curl -i localhost/api/v1/books
-                        </code></pre>
+curl -i localhost/demo/hello # Repeat a few times
+
+docker-compose logs app
+
+docker-compose down</code></pre>
                     </section>
+                    <section id="deployment-limits-code">
+                        <h4>Deployment</h4>
+                        <h2>Scale With Limitations</h2>
+						<pre><code data-trim contenteditable>cat docker-compose-limits.yml
+
+docker-compose -f docker-compose-limits.yml up -d app-big
+
+docker info
+
+docker-compose -f docker-compose-limits.yml up -d app-small
+
+docker-compose -f docker-compose-limits.yml scale app-small=10
+
+docker info
+
+docker-compose -f docker-compose-limits.yml scale app-big=2
+
+docker-compose -f docker-compose-limits.yml down</code></pre>
+                    </section>
+                    <section id="deployment-network-code">
+                        <h4>Deployment</h4>
+                        <h2>Networking</h2>
+						<pre><code data-trim contenteditable>docker-compose up -d app
+
+curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
+    | jq '.'
+
+curl -i -XPUT localhost/demo/person?name=Viktor
+
+curl -i -XPUT localhost/demo/person?name=Sara
+
+curl -i localhost/demo/person
+
+docker-compose exec app ping -c 1 db
+
+docker-compose exec db ping -c 1 app
+
+docker-compose down</code></pre>
+                    </section>
+                    <section id="deployment-network">
+                        <h4>Deployment</h4>
+                        <h2>Networking</h2>
+                        <img src="img/architecture/proxy-comm.png"/>
+                    </section>
+                    <!--TODO: Add Docker DNS example-->
                 </section>
                 <section>
                     <section id="hardware-checks">
-                        <h2>Hardware Health Checks and Watches</h2>
+                        <h2>Prerequisite #2</h2>
+                        <span class="fragment">Ability to dynamically adjust <span class="fragment grow highlight-current-green">cluster capacity</span> (elasticity)</span>
                     </section>
                     <section id="hardware-checks-df-commands">
                         <h4>Hardware Health Checks and Watches</h4>
                         <h2>Hard Disk Script</h2>
-						<pre><code data-trim contenteditable>
-df -h
+						<pre><code data-trim contenteditable>df -h
 
 set -- $(df -h | awk '$NF=="/"{print $2" "$3" "$5}')
 
@@ -461,25 +502,21 @@ used=$2
 
 used_percent=${3::-1}
 
-printf "Disk Usage: %s/%s (%s%%)\n" $used $total $used_percent
-                        </code></pre>
+printf "Disk Usage: %s/%s (%s%%)\n" $used $total $used_percent</code></pre>
                     </section>
                     <section id="hardware-checks-df-script-prep">
                         <h4>Hardware Health Checks and Watches</h4>
                         <h2>Hard Disk Script</h2>
-						<pre><code data-trim contenteditable>
-exit
+						<pre><code data-trim contenteditable>exit
 
 vagrant ssh swarm-master
 
-sudo mkdir -p /data/consul/scripts
-                        </code></pre>
+sudo mkdir -p /data/consul/scripts</code></pre>
                     </section>
                     <section id="hardware-checks-df-script">
                         <h4>Hardware Health Checks and Watches</h4>
                         <h2>Hard Disk Script</h2>
-						<pre><code data-trim contenteditable>
-echo '#!/usr/bin/env bash
+						<pre><code data-trim contenteditable>echo '#!/usr/bin/env bash
 
 set -- $(df -h | awk '"'"'$NF=="/"{print $2" "$3" "$5}'"'"')
 total=$1
@@ -493,25 +530,21 @@ elif [ $used_percent -gt 80 ]; then
 else
   exit 0
 fi
-' | sudo tee /data/consul/scripts/disk.sh
-                        </code></pre>
+' | sudo tee /data/consul/scripts/disk.sh</code></pre>
                     </section>
                     <section id="hardware-checks-df-try">
                         <h4>Hardware Health Checks and Watches</h4>
                         <h2>Hard Disk Script</h2>
-						<pre><code data-trim contenteditable>
-sudo chmod +x /data/consul/scripts/disk.sh
+						<pre><code data-trim contenteditable>sudo chmod +x /data/consul/scripts/disk.sh
 
 /data/consul/scripts/disk.sh
 
-echo $?
-                        </code></pre>
+echo $?</code></pre>
                     </section>
                     <section id="hardware-checks-df-check-json">
                         <h4>Hardware Health Checks and Watches</h4>
                         <h2>Hard Disk Check</h2>
-						<pre><code data-trim contenteditable>
-echo '{
+						<pre><code data-trim contenteditable>echo '{
   "checks": [
     {
       "id": "disk",
@@ -523,21 +556,19 @@ echo '{
   ]
 }' | sudo tee /data/consul/config/consul_check.json
 
-sudo killall -HUP consul
-                        </code></pre>
+sudo killall -HUP consul</code></pre>
                     </section>
                     <section id="hardware-checks-df-check">
                         <h4>Hardware Health Checks and Watches</h4>
                         <h2>Hard Disk Check</h2>
                         <img src="img/architecture/health-consul-hardware-hd.png" style="width: 35%; height: 35%;"/>
                         <br />
-                        <a href="http://10.100.192.200:8500/ui/">http://10.100.192.200:8500/ui/</a>
+                        <a href="http://10.100.192.200:8500/ui/">http://10.100.192.200:8500/ui/</a> &gt; Nodes &gt; swarm-master
                     </section>
                     <section id="hardware-checks-df-watch-script">
                         <h4>Hardware Health Checks and Watches</h4>
                         <h2>Hard Disk Check</h2>
-						<pre><code data-trim contenteditable>
-echo '#!/usr/bin/env bash
+						<pre><code data-trim contenteditable>echo '#!/usr/bin/env bash
 
 read -r JSON
 
@@ -552,17 +583,14 @@ do
   echo -e "${RED}Triggering Jenkins job http://10.100.198.200:8080/job/hardware-notification/build${NC}"
   curl -X POST http://10.100.198.200:8080/job/hardware-notification/build \
     --data-urlencode json="{\"parameter\": [{\"name\":\"checkId\", \"value\":\"$CHECK_ID\"}, {\"name\":\"status\", \"value\":\"$STATUS\"}]}"
-done
-' | sudo tee /data/consul/scripts/manage_watches.sh
+done' | sudo tee /data/consul/scripts/manage_watches.sh
 
-sudo chmod +x /data/consul/scripts/manage_watches.sh
-                        </code></pre>
+sudo chmod +x /data/consul/scripts/manage_watches.sh</code></pre>
                     </section>
                     <section id="hardware-checks-df-watch-json">
                         <h4>Hardware Health Checks and Watches</h4>
                         <h2>Hard Disk Check</h2>
-						<pre><code data-trim contenteditable>
-echo '{
+						<pre><code data-trim contenteditable>echo '{
   "watches": [
     {
       "type": "checks",
@@ -574,49 +602,52 @@ echo '{
       "handler": "/data/consul/scripts/manage_watches.sh >>/data/consul/logs/watches.log"
     }
   ]
-}' | sudo tee /data/consul/config/watches.json
-                        </code></pre>
+}' | sudo tee /data/consul/config/watches.json</code></pre>
                     </section>
                     <section id="hardware-checks-df-run">
                         <h4>Hardware Health Checks and Watches</h4>
                         <h2>Hard Disk Check</h2>
-						<pre><code data-trim contenteditable>
-sudo sed -i "s/80/2/" /data/consul/scripts/disk.sh
+						<pre><code data-trim contenteditable>sudo sed -i "s/80/2/" /data/consul/scripts/disk.sh
 
 sudo killall -HUP consul
 
 cat /data/consul/logs/watches.log
 
-exit
-                        </code></pre>
+exit</code></pre>
                         <a href="http://10.100.198.200:8080/job/hardware-notification/">http://10.100.198.200:8080/job/hardware-notification/</a>
                     </section>
                     <section id="hardware-checks-ansible">
                         <h4>Hardware Health Checks and Watches</h4>
                         <h2>Cluster Hardware Checks</h2>
-						<pre><code data-trim contenteditable>
-vagrant ssh cd
+						<pre><code data-trim contenteditable>vagrant ssh cd
+
+export DOCKER_HOST=tcp://swarm-master:2375
+
+export REGISTRY="10.100.198.200:5000/"
 
 cat /vagrant/ansible/swarm-healing.yml
 
 ansible-playbook /vagrant/ansible/swarm-healing.yml \
-    -i /vagrant/ansible/hosts/prod
-                        </code></pre>
-                        <a href="http://10.100.192.200:8500/ui/#/dc1/nodes">http://10.100.192.200:8500/ui/#/dc1/nodes</a>
+    -i /vagrant/ansible/hosts/prod</code></pre>
+                        <a href="http://10.100.192.200:8500/ui/">http://10.100.192.200:8500/ui/</a> &gt; Nodes
                     </section>
+                    <!--TODO: Add example of scaling nodes when Swarm reports that there are not resources available-->
                 </section>
+                <!--TODO: Continue-->
                 <section>
                     <section id="service-checks">
-                        <h2>Service Checks</h2>
+                        <h2>Prerequisite #3</h2>
+                        <!--TODO: Add prerequisite-->
+                        <!--<span class="fragment">Services must be able to <span class="fragment grow highlight-current-green">communicate with each others</span> no matter where they are</span>-->
                     </section>
                     <section id="service-checks-service">
                         <h4>Service Checks</h4>
                         <h2>Service</h2>
-						<pre><code data-trim contenteditable>
-cd ~/books-ms
+						<pre><code data-trim contenteditable>cd ~/go-demo
 
 cat consul_check.ctmpl
-                        </code></pre>
+
+curl -XPUT -d "10.100.198.200" http://swarm-master:8500/v1/kv/proxy/ip</code></pre>
                     </section>
                 </section>
                 <section data-background="../img/background/the_end.jpg">
