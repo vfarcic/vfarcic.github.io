@@ -362,7 +362,7 @@ docker push ${REGISTRY}go-demo</code></pre>
                     <section id="deployment-run-code">
                         <h4>Deployment</h4>
                         <h2>Run</h2>
-						<pre><code data-trim contenteditable>docker-compose up -d app
+						<pre><code data-trim contenteditable>docker-compose up -d db app
 
 docker-compose ps
 
@@ -381,7 +381,7 @@ docker-compose ps</code></pre>
 
 docker info
 
-docker-compose up -d app
+docker-compose up -d db app
 
 docker-compose ps</code></pre>
                     </section>
@@ -443,11 +443,11 @@ docker-compose down</code></pre>
                         <h2>Scale With Limitations</h2>
 						<pre><code data-trim contenteditable>cat docker-compose-limits.yml
 
-docker-compose -f docker-compose-limits.yml up -d app-big
+docker-compose -f docker-compose-limits.yml up -d db app-big
 
 docker info
 
-docker-compose -f docker-compose-limits.yml up -d app-small
+docker-compose -f docker-compose-limits.yml up -d db app-small
 
 docker-compose -f docker-compose-limits.yml scale app-small=10
 
@@ -457,10 +457,12 @@ docker-compose -f docker-compose-limits.yml scale app-big=2
 
 docker-compose -f docker-compose-limits.yml down</code></pre>
                     </section>
-                    <section id="deployment-network-code">
+                    <section id="deployment-network-code-1">
                         <h4>Deployment</h4>
                         <h2>Networking</h2>
-						<pre><code data-trim contenteditable>docker-compose up -d app
+						<pre><code data-trim contenteditable>docker-compose up -d db app
+
+docker-compose scale app=2
 
 curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
     | jq '.'
@@ -469,11 +471,16 @@ curl -i -XPUT localhost/demo/person?name=Viktor
 
 curl -i -XPUT localhost/demo/person?name=Sara
 
-curl -i localhost/demo/person
+curl -i localhost/demo/person</code></pre>
+                    </section>
+                    <section id="deployment-network-code-2">
+                        <h4>Deployment</h4>
+                        <h2>Networking</h2>
+						<pre><code data-trim contenteditable>docker-compose exec app ping -c 1 db
 
-docker-compose exec app ping -c 1 db
+docker-compose exec db ping -c 1 godemo_app_1
 
-docker-compose exec db ping -c 1 app
+docker-compose exec db ping -c 1 godemo_app_2
 
 docker-compose down</code></pre>
                     </section>
@@ -485,8 +492,204 @@ docker-compose down</code></pre>
                     <!--TODO: Add Docker DNS example-->
                 </section>
                 <section>
-                    <section id="hardware-checks">
+                    <section id="redeployment">
                         <h2>Prerequisite #2</h2>
+                        <span class="fragment">Ability to redeploy <span class="fragment grow highlight-current-green">without downtime</span> and to <span class="fragment grow highlight-current-green">automatically scale and de-scale</span> instances</span>
+                    </section>
+                    <section id="redeployment-deployment-code">
+                        <h4>Redeployment</h4>
+                        <h2>Deployment</h2>
+						<pre><code data-trim contenteditable>docker-compose up -d db app
+
+docker-compose ps
+
+curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
+    | jq '.'
+
+curl -i localhost/demo/hello</code></pre>
+                    </section>
+                    <section id="redeployment-deployment">
+                        <h4>Redeployment</h4>
+                        <h2>Deployment</h2>
+                        <img src="img/architecture/docker-flow-scaling-deploy.png"/>
+                    </section>
+                    <section id="redeployment-scaling-code">
+                        <h4>Redeployment</h4>
+                        <h2>Scaling</h2>
+						<pre><code data-trim contenteditable>docker-compose up -d db app
+
+docker-compose scale app=2
+
+docker-compose ps
+
+curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
+    | jq '.'
+
+curl -i localhost/demo/hello
+
+curl -XPUT -d "2" http://swarm-master:8500/v1/kv/go-demo/scale</code></pre>
+                    </section>
+                    <section id="redeployment-scaling">
+                        <h4>Redeployment</h4>
+                        <h2>Scaling</h2>
+                        <img src="img/architecture/docker-flow-scaling-scale.png"/>
+                    </section>
+                    <section id="redeployment-relative-scaling-code">
+                        <h4>Redeployment</h4>
+                        <h2>Relative Scaling</h2>
+						<pre><code data-trim contenteditable>curl http://swarm-master:8500/v1/kv/go-demo/scale?raw
+
+CURRENT_SCALE=$(curl http://swarm-master:8500/v1/kv/go-demo/scale?raw)
+
+NEW_SCALE=$(($CURRENT_SCALE + 1))
+
+docker-compose scale app=$NEW_SCALE
+
+docker-compose ps
+
+curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
+    | jq '.'
+
+curl -XPUT -d $NEW_SCALE http://swarm-master:8500/v1/kv/go-demo/scale
+
+curl -i localhost/demo/hello</code></pre>
+                    </section>
+                    <section id="redeployment-relative-scaling">
+                        <h4>Redeployment</h4>
+                        <h2>Relative Scaling</h2>
+                        <img src="img/architecture/docker-flow-scaling-relative-scale.png"/>
+                    </section>
+                    <section id="redeployment-relative-descaling-code">
+                        <h4>Redeployment</h4>
+                        <h2>Relative De-scaling</h2>
+						<pre><code data-trim contenteditable>CURRENT_SCALE=$(curl http://swarm-master:8500/v1/kv/go-demo/scale?raw)
+
+NEW_SCALE=$(($CURRENT_SCALE - 1))
+
+docker-compose scale app=$NEW_SCALE
+
+docker-compose ps
+
+curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
+    | jq '.'
+
+curl -XPUT -d $NEW_SCALE http://swarm-master:8500/v1/kv/go-demo/scale
+
+curl -i localhost/demo/hello
+
+docker-compose down</code></pre>
+                    </section>
+                    <section id="redeployment-relative-descaling">
+                        <h4>Redeployment</h4>
+                        <h2>Relative De-scaling</h2>
+                        <img src="img/architecture/docker-flow-scaling-relative-descale.png"/>
+                    </section>
+                    <section id="redeployment-release-code">
+                        <h4>Redeployment</h4>
+                        <h2>Creating Releases</h2>
+						<pre><code data-trim contenteditable>sudo docker tag ${REGISTRY}go-demo ${REGISTRY}go-demo:1.0
+
+sudo docker push ${REGISTRY}go-demo:1.0
+
+sudo docker tag ${REGISTRY}go-demo ${REGISTRY}go-demo:1.1
+
+sudo docker push ${REGISTRY}go-demo:1.1</code></pre>
+                    </section>
+                    <section id="redeployment-standard-code">
+                        <h4>Redeployment</h4>
+                        <h2>Standard Deployment</h2>
+						<pre><code data-trim contenteditable>cat docker-compose-bg.yml
+
+VERSION=:1.0 docker-compose -f docker-compose-bg.yml up -d db app
+
+curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
+    | jq '.'
+
+VERSION=:1.1 docker-compose -f docker-compose-bg.yml up -d db app
+
+curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
+    | jq '.'
+
+docker-compose -f docker-compose-bg.yml down
+
+curl "localhost:8081/v1/docker-flow-proxy/remove?serviceName=go-demo" \
+    | jq '.'</code></pre>
+                    </section>
+                    <section id="redeployment-standard-1">
+                        <h4>Redeployment</h4>
+                        <h2>Standard Deployment</h2>
+                        <img src="img/architecture/docker-flow-deployment-standard-1.png"/>
+                    </section>
+                    <section id="redeployment-standard-2">
+                        <h4>Redeployment</h4>
+                        <h2>Standard Deployment</h2>
+                        <img src="img/architecture/docker-flow-deployment-standard-2.png"/>
+                    </section>
+                    <section id="redeployment-bg-code-1">
+                        <h4>Redeployment</h4>
+                        <h2>Blue-Green Deployment</h2>
+                        <pre><code data-trim contenteditable>cat docker-compose-bg.yml
+
+VERSION=:1.0 docker-compose -f docker-compose-bg.yml \
+    up -d db app-blue
+
+curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo-blue&servicePath=/demo" \
+    | jq '.'
+
+curl localhost/demo/hello
+
+docker-compose -f docker-compose-bg.yml logs</code></pre>
+                    </section>
+                    <section id="redeployment-bg-1">
+                        <h4>Redeployment</h4>
+                        <h2>Blue-Green Deployment</h2>
+                        <img src="img/architecture/docker-flow-deployment-bg-1.png"/>
+                    </section>
+                    <section id="redeployment-bg-code-2">
+                        <h4>Redeployment</h4>
+                        <h2>Blue-Green Deployment</h2>
+						<pre><code data-trim contenteditable>VERSION=:1.1 docker-compose -f docker-compose-bg.yml \
+    up -d db app-green
+
+docker-compose -f docker-compose-bg.yml ps
+
+curl localhost/demo/hello # Repeat multiple times
+
+docker-compose -f docker-compose-bg.yml logs</code></pre>
+                    </section>
+                    <section id="redeployment-bg-2">
+                        <h4>Redeployment</h4>
+                        <h2>Blue-Green Deployment</h2>
+                        <img src="img/architecture/docker-flow-deployment-bg-2.png"/>
+                    </section>
+                    <section id="redeployment-bg-code-3">
+                        <h4>Redeployment</h4>
+                        <h2>Blue-Green Deployment</h2>
+						<pre><code data-trim contenteditable>curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo-green&servicePath=/demo" | jq '.'
+
+curl "localhost:8081/v1/docker-flow-proxy/remove?serviceName=go-demo-blue" | jq '.'
+
+curl localhost/demo/hello # Repeat multiple times
+
+docker-compose -f docker-compose-bg.yml logs
+
+docker-compose -f docker-compose-bg.yml stop app-blue
+
+docker-compose -f docker-compose-bg.yml ps
+
+docker-compose -f docker-compose-bg.yml down
+
+curl "localhost:8081/v1/docker-flow-proxy/remove?serviceName=go-demo-green" | jq '.'</code></pre>
+                    </section>
+                    <section id="redeployment-bg-3">
+                        <h4>Redeployment</h4>
+                        <h2>Blue-Green Deployment</h2>
+                        <img src="img/architecture/docker-flow-deployment-bg-3.png"/>
+                    </section>
+                </section>
+                <section>
+                    <section id="hardware-checks">
+                        <h2>Prerequisite #3</h2>
                         <span class="fragment">Ability to dynamically adjust <span class="fragment grow highlight-current-green">cluster capacity</span> (elasticity)</span>
                     </section>
                     <section id="hardware-checks-df-commands">
@@ -627,6 +830,8 @@ export REGISTRY="10.100.198.200:5000/"
 
 cat /vagrant/ansible/swarm-healing.yml
 
+cat /vagrant/ansible/roles/consul-healing/files/mem.sh
+
 ansible-playbook /vagrant/ansible/swarm-healing.yml \
     -i /vagrant/ansible/hosts/prod</code></pre>
                         <a href="http://10.100.192.200:8500/ui/">http://10.100.192.200:8500/ui/</a> &gt; Nodes
@@ -636,7 +841,7 @@ ansible-playbook /vagrant/ansible/swarm-healing.yml \
                 <!--TODO: Continue-->
                 <section>
                     <section id="service-checks">
-                        <h2>Prerequisite #3</h2>
+                        <h2>Prerequisite #4</h2>
                         <!--TODO: Add prerequisite-->
                         <!--<span class="fragment">Services must be able to <span class="fragment grow highlight-current-green">communicate with each others</span> no matter where they are</span>-->
                     </section>
