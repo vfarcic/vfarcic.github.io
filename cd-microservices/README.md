@@ -49,15 +49,15 @@ Participants will get insights into the following concepts and their relations.
 Bio
 ===
 
-Viktor Farcic is a Senior Consultant at CloudBees.
+Viktor Farcic is a Senior Consultant at CloudBees and member of the Docker Captains group.
 
-He coded using a plethora of languages starting with Pascal (yes, he is old), Basic (before it got Visual prefix), ASP (before it got .Net suffix), C, C++, Perl, Python, ASP.Net, Visual Basic, C#, JavaScript, etc. He never worked with Fortran. His current favorites are **Scala** and **JavaScript** even though most of his office hours are spent with **Java**.
+He coded using a plethora of languages starting with Pascal (yes, he is old), Basic (before it got Visual prefix), ASP (before it got .Net suffix), C, C++, Perl, Python, ASP.Net, Visual Basic, C#, JavaScript, Java, Scala, etc. He never worked with Fortran. His current favorite is *Go*.
 
-His big passions are Microservices, Continuous Integration, Delivery and Deployment (CI/CD) and Test-Driven Development.
+His big passions are Microservices, Continuous Integration, Delivery and Deployment (CI/CD) and Test-Driven Development (TDD).
 
 He often speaks at community gatherings and conferences.
 
-He wrote the "Test-Driven Java Development" and "The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices" books.
+He wrote [The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices](https://www.amazon.com/DevOps-2-0-Toolkit-Containerized-Microservices-ebook/dp/B01BJ4V66M) and the [Test-Driven Java Development](Test-Driven Java Development) books.
 
 Contact Details:
 

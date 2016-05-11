@@ -75,38 +75,24 @@ Learning Outcomes
 * Scaling
 * Fault tolerant and self-healing systems
 
-Prerequisite Knowledge
-======================
-
-Information for Review Team
-===========================
-
-Presentation History
-====================
-
-Presentation Sample
-===================
-
 Bio
 ===
 
-Viktor Farcic is a Senior Consultant at CloudBees.
+Viktor Farcic is a Senior Consultant at CloudBees and member of the Docker Captains group.
 
-He coded using a plethora of languages starting with Pascal (yes, he is old), Basic (before it got Visual prefix), ASP (before it got .Net suffix), C, C++, Perl, Python, ASP.Net, Visual Basic, C#, JavaScript, Java, Scala, etc. He never worked with Fortran. His current favorite is **Go**.
+He coded using a plethora of languages starting with Pascal (yes, he is old), Basic (before it got Visual prefix), ASP (before it got .Net suffix), C, C++, Perl, Python, ASP.Net, Visual Basic, C#, JavaScript, Java, Scala, etc. He never worked with Fortran. His current favorite is *Go*.
 
-His big passions are Microservices, Continuous Deployment and Test-Driven Development (TDD).
+His big passions are Microservices, Continuous Integration, Delivery and Deployment (CI/CD) and Test-Driven Development (TDD).
 
 He often speaks at community gatherings and conferences.
 
-He wrote "The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices" and "Test-Driven Java Development" books.
+He wrote [The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices](https://www.amazon.com/DevOps-2-0-Toolkit-Containerized-Microservices-ebook/dp/B01BJ4V66M) and the [Test-Driven Java Development](Test-Driven Java Development) books.
 
 Contact Details:
 
-* Blog: http://technologyconversations.com/
 * E-mail: viktor@farcic.com
 * Twitter: @vfarcic
 * Skype: vfarcic
 * LinkedIn: https://www.linkedin.com/in/viktorfarcic
+* Blog: http://technologyconversations.com/
 
-[Pre-Workshop Instructions](instructions.md)
-=========================
