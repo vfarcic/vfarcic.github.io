@@ -326,7 +326,7 @@ ansible-playbook /vagrant/ansible/jenkins-node-swarm.yml \
     -i /vagrant/ansible/hosts/prod
 
 ansible-playbook /vagrant/ansible/jenkins.yml \
-    --extra-vars "main_job_src=service-healing-config.xml" \
+    --extra-vars "main_job_src=service-healing-config.xml service_redeploy_src=service-redeploy-df-config.xml" \
     -c local</code></pre>
                     </section>
                     <section id="provisioning-nodes-jenkins">
@@ -347,17 +347,15 @@ ansible-playbook /vagrant/ansible/jenkins.yml \
 
 cd go-demo
 
-export REGISTRY="10.100.198.200:5000/"
-
 cat docker-compose-test.yml
 
 docker-compose -f docker-compose-test.yml run --rm unit
 
 cat Dockerfile
 
-docker build -t ${REGISTRY}go-demo .
+docker build -t vfarcic/go-demo .
 
-docker push ${REGISTRY}go-demo</code></pre>
+# docker push vfarcic/go-demo</code></pre>
                     </section>
                     <section id="deployment-run-code">
                         <h4>Deployment</h4>
@@ -379,22 +377,21 @@ docker-compose ps</code></pre>
                         <h2>Run in cluster</h2>
 						<pre><code data-trim contenteditable>export DOCKER_HOST=tcp://swarm-master:2375
 
+docker ps -a --format "table {{.Names}}\t{{.Status}}"
+
 docker info
 
 docker-compose up -d db app
 
-docker-compose ps</code></pre>
+docker-compose ps
+
+curl swarm-master:8500/v1/catalog/service/go-demo \
+    | jq '.'</code></pre>
                     </section>
                     <section id="deployment-run">
                         <h4>Deployment</h4>
                         <h2>Run</h2>
                         <img src="img/architecture/01-self-healing-tools.png"/>
-                    </section>
-                    <section id="deployment-discovery-code">
-                        <h4>Deployment</h4>
-                        <h2>Discover</h2>
-						<pre><code data-trim contenteditable>curl swarm-master:8500/v1/catalog/service/go-demo \
-    | jq '.'</code></pre>
                     </section>
                     <section id="deployment-proxy-code">
                         <h4>Deployment</h4>
@@ -425,7 +422,9 @@ curl -i localhost/demo/hello</code></pre>
                     <section id="deployment-scale-code">
                         <h4>Deployment</h4>
                         <h2>Scale</h2>
-						<pre><code data-trim contenteditable>docker-compose scale app=3
+						<pre><code data-trim contenteditable>docker-compose ps
+
+docker-compose scale app=3
 
 docker-compose ps
 
@@ -440,7 +439,7 @@ docker-compose down</code></pre>
                     </section>
                     <section id="deployment-limits-code">
                         <h4>Deployment</h4>
-                        <h2>Scale With Limitations</h2>
+                        <h2>Scale With Limits</h2>
 						<pre><code data-trim contenteditable>cat docker-compose-limits.yml
 
 docker-compose -f docker-compose-limits.yml up -d db app-big
@@ -584,17 +583,6 @@ docker-compose down</code></pre>
                         <h2>Relative De-scaling</h2>
                         <img src="img/architecture/docker-flow-scaling-relative-descale.png"/>
                     </section>
-                    <section id="redeployment-release-code">
-                        <h4>Redeployment</h4>
-                        <h2>Creating Releases</h2>
-						<pre><code data-trim contenteditable>sudo docker tag ${REGISTRY}go-demo ${REGISTRY}go-demo:1.0
-
-sudo docker push ${REGISTRY}go-demo:1.0
-
-sudo docker tag ${REGISTRY}go-demo ${REGISTRY}go-demo:1.1
-
-sudo docker push ${REGISTRY}go-demo:1.1</code></pre>
-                    </section>
                     <section id="redeployment-standard-code">
                         <h4>Redeployment</h4>
                         <h2>Standard Deployment</h2>
@@ -717,7 +705,7 @@ export FLOW_PROXY_DOCKER_HOST=tcp://10.100.198.200:2375
 
 docker-flow --flow=deploy --flow=proxy --flow=stop-old
 
-docker ps -a
+docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
 
 curl localhost/demo/hello</code></pre>
                     </section>
@@ -731,7 +719,7 @@ curl localhost/demo/hello</code></pre>
                         <h2>Docker Flow</h2>
                             <pre><code data-trim contenteditable>docker-flow --flow=deploy --flow=proxy --flow=stop-old
 
-docker ps -a
+docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
 
 curl localhost/demo/hello</code></pre>
                     </section>
@@ -745,21 +733,67 @@ curl localhost/demo/hello</code></pre>
                         <h2>Docker Flow</h2>
                             <pre><code data-trim contenteditable>docker-flow --scale="+2" --flow=scale --flow=proxy
 
-docker ps -a
+docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
 
-curl localhost/demo/hello</code></pre>
+curl localhost/demo/hello
+
+docker-flow --scale="-2" --flow=scale --flow=proxy
+
+docker rm -f $(docker ps -a | grep godemo | awk '{ print $1}')</code></pre>
                     </section>
                     <section id="redeployment-df-3">
                         <h4>Redeployment</h4>
                         <h2>Docker Flow</h2>
                         <img src="img/architecture/docker-flow-scaling-flow.png"/>
                     </section>
-                    <!--TODO: Add Jenkinsfile example-->
+                    <section id="redeployment-jenkins-setup-code">
+                        <h4>Redeployment</h4>
+                        <h2>Automation With Jenkins</h2>
+                            <pre><code data-trim contenteditable>git clone http://10.100.198.200:8080/workflowLibs.git /tmp/workflowLibs
+
+cd /tmp/workflowLibs
+
+git checkout -b master
+
+mkdir vars
+
+cp ~/go-demo/jenkins/vars/dockerFlowWorkshop.groovy /tmp/workflowLibs/vars/dockerFlow.groovy
+
+git config --global user.name "vfarcic"
+
+git add --all && git commit -a -m "Docker Flow"
+
+git push --set-upstream origin master</code></pre>
+                    </section>
+                    <section id="redeployment-jenkins-code">
+                        <h4>Redeployment</h4>
+                        <h2>Automation With Jenkins</h2>
+                            <pre><code data-trim contenteditable>cd ~/go-demo
+
+cat jenkins/vars/dockerFlowWorkshop.groovy
+
+mkdir -p /data/jenkins/workflow-libs/vars/
+
+cp jenkins/vars/dockerFlowWorkshop.groovy \
+    /data/jenkins/workflow-libs/vars/dockerFlow.groovy
+
+cat Jenkinsfile</code></pre>
+                    </section>
+                    <section id="redeployment-jenkins-ui">
+                        <h4>Redeployment</h4>
+                        <h2>Automation With Jenkins</h2>
+                        <div><a href="http://10.100.198.200:8080">http://10.100.198.200:8080</a> &gt; New Item</div>
+                        <div>Item Name: go-demo; Type: Multibranch Pipeline &gt; OK</div>
+                        <div>Add Source &gt; Git</div>
+                        <div>Project Repository: https://github.com/vfarcic/go-demo.git &gt; Save</div>
+                        <div><a href="http://10.100.198.200:8080/job/go-demo/branch/master/">http://10.100.198.200:8080/job/go-demo/branch/master/</a> &gt; Build Now</div>
+                        <div><a href="http://10.100.198.200:8080/job/go-demo/branch/master/lastBuild/console">http://10.100.198.200:8080/job/go-demo/branch/master/lastBuild/console</a></div>
+                    </section>
                 </section>
                 <section>
                     <section id="hardware-checks">
                         <h2>Prerequisite #3</h2>
-                        <span class="fragment">Ability <span class="fragment grow highlight-current-green">monitor hardware</span> and dynamically adjust <span class="fragment grow highlight-current-green">cluster capacity</span> (elasticity)</span>
+                        <span class="fragment">Ability to <span class="fragment grow highlight-current-green">monitor hardware</span> and dynamically adjust <span class="fragment grow highlight-current-green">cluster capacity</span> (elasticity)</span>
                     </section>
                     <section id="hardware-checks-df-commands">
                         <h4>Hardware Health Checks and Watches</h4>
@@ -852,7 +886,7 @@ for (( i=0; i<=$(( $LENGTH -1 )); i++ ))
 do
   CHECK_ID=${CHECK_ID_ARRAY[$i]}
   STATUS=${STATUS_ARRAY[$i]}
-  echo -e "${RED}Triggering Jenkins job http://10.100.198.200:8080/job/hardware-notification/build${NC}"
+  echo -e "Triggering Jenkins job http://10.100.198.200:8080/job/hardware-notification/build"
   curl -X POST http://10.100.198.200:8080/job/hardware-notification/build \
     --data-urlencode json="{\"parameter\": [{\"name\":\"checkId\", \"value\":\"$CHECK_ID\"}, {\"name\":\"status\", \"value\":\"$STATUS\"}]}"
 done' | sudo tee /data/consul/scripts/manage_watches.sh
@@ -895,8 +929,6 @@ exit</code></pre>
 
 export DOCKER_HOST=tcp://swarm-master:2375
 
-export REGISTRY="10.100.198.200:5000/"
-
 cat /vagrant/ansible/swarm-healing.yml
 
 cat /vagrant/ansible/roles/consul-healing/files/mem.sh
@@ -913,14 +945,36 @@ ansible-playbook /vagrant/ansible/swarm-healing.yml \
                         <h2>Prerequisite #4</h2>
                         <span class="fragment">Ability to <span class="fragment grow highlight-current-green">monitor services</span> in (near)real-time and execute <span class="fragment grow highlight-current-green">reactive actions</span></span>
                     </section>
-                    <section id="service-checks-service">
+                    <section id="service-checks-code-1">
                         <h4>Service Checks</h4>
                         <h2>Service</h2>
-						<pre><code data-trim contenteditable>cd ~/go-demo
+						<pre><code data-trim contenteditable>cat /vagrant/ansible/roles/consul-healing/templates/manage_watches.sh
+
+ansible-playbook /vagrant/ansible/swarm-healing.yml \
+    -i /vagrant/ansible/hosts/prod
+
+cd ~/go-demo
 
 cat consul_check.ctmpl
 
-curl -XPUT -d "10.100.198.200" http://swarm-master:8500/v1/kv/proxy/ip</code></pre>
+curl -XPUT -d "10.100.198.200" \
+    http://swarm-master:8500/v1/kv/proxy/ip
+
+cat Jenkinsfile</code></pre>
+                    </section>
+                    <section id="service-checks-code-2">
+                        <h4>Service Checks</h4>
+                        <h2>Service</h2>
+                        <pre><code data-trim contenteditable>docker rm -f $(docker ps -a | grep godemo | awk '{ print $1}')</code></pre>
+                        <a href="http://10.100.198.200:8080/job/service-redeploy/lastBuild/console">http://10.100.198.200:8080/job/service-redeploy/lastBuild/console</a>
+                        <pre><code data-trim contenteditable>curl -i http://10.100.198.200/demo/hello</code></pre>
+                    </section>
+                    <section id="service-checks-code-3">
+                        <h4>Service Checks</h4>
+                        <h2>Service</h2>
+                        <pre><code data-trim contenteditable>sudo docker rm -f docker-flow-proxy</code></pre>
+                        <a href="http://10.100.198.200:8080/job/service-redeploy/lastBuild/console">http://10.100.198.200:8080/job/service-redeploy/lastBuild/console</a>
+                        <pre><code data-trim contenteditable>curl -i http://10.100.198.200/demo/hello</code></pre>
                     </section>
                 </section>
                 <section data-background="../img/background/the_end.jpg">

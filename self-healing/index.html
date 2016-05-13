@@ -80,52 +80,6 @@
                         </a>
                     </section>
                 </section>
-                <section data-background="img/background/rage.jpg">
-                    <section id="failures-customers">
-                        <h4>History of the Failed Initiatives</h4>
-                        <h2>Customers</h2>
-                        <ul>
-                            <li class="fragment">Small greenfield projects</li>
-                            <li class="fragment">Automotive industry</li>
-                            <li class="fragment">Lotteries</li>
-                            <li class="fragment">Banks</li>
-                            <li class="fragment">Insurances</li>
-                            <li class="fragment">Everything in between</li>
-                        </ul>
-                    </section>
-                    <section id="failures-problems">
-                        <h4>History of the Failed Initiatives</h4>
-                        <h2>Problems</h2>
-                        <ul>
-                            <li class="fragment">Integration phase = Dante's Infierno</li>
-                            <li class="fragment">Testing</li>
-                            <li class="fragment">eXtreme programming (XP)</li>
-                            <li class="fragment">Continuous integration</li>
-                            <li class="fragment">Architecture</li>
-                            <h2><label class="fragment">Failure</label> <label class="fragment">after</label> <label class="fragment">failure</label></h2>
-                        </ul>
-                    </section>
-                    <section id="failures-improvement">
-                        <h4>History of the Failed Initiatives</h4>
-                        <h3 class="fragment">Each improvement</h3>
-                        <h3 class="fragment">raises the bar</h3>
-                        <h3 class="fragment">and converts itself into a failure</h3>
-                    </section>
-                    <section id="failures-today">
-                        <h4>History of the Failed Initiatives</h4>
-                        <h2>Today?</h2>
-                        <ul>
-                            <li class="fragment">Small specialized tools</li>
-                            <li class="fragment">Immutable deployments</li>
-                            <li class="fragment">Blue-green deployments</li>
-                            <li class="fragment">Service discovery</li>
-                            <li class="fragment">Domain-driven design</li>
-                            <li class="fragment">Continuous delivery/deployment</li>
-                            <li class="fragment">Scalable and fault tolerant systems</li>
-                            <li class="fragment"><label class="fragment grow highlight-current-green">Self-healing systems</label></li>
-                        </ul>
-                    </section>
-                </section>
                 <section data-background="../img/background/train.png">
                     <section id="cd">
                         <h1>Continuous Deployment</h1>
@@ -236,8 +190,14 @@
                     </section>
                 </section>
                 <section data-background="img/background/self-healing.png">
-                    <section id="architecture" data-transition="fade-in slide-out">
-                        <h1>Architecture</h1>
+                    <section id="prerequisites">
+                        <h1>Prerequisites</h1>
+                    </section>
+                </section>
+                <section data-background="img/background/self-healing.png">
+                    <section id="deployment">
+                        <h2>Prerequisite #1</h2>
+                        <span class="fragment">Ability to <span class="fragment grow highlight-current-green">deploy to any server</span> inside a cluster that meets hardware requirements</span>
                     </section>
                     <section id="architecture-01" data-transition="fade-in slide-out">
                         <h4>Architecture</h4>
@@ -259,6 +219,69 @@
                         <h4>Architecture</h4>
                         <img src="img/architecture/05-self-healing.png"/>
                     </section>
+                    <section id="self-healing-01-run-in-cluster-video" data-transition="fade-in slide-out">
+                        <h3>Deploy to the Cluster</h3>
+                        <script type="text/javascript" src="https://asciinema.org/a/45386.js" id="asciicast-45386" async></script>
+                    </section>
+                    <section id="self-healing-01-run-in-cluster-diag" data-transition="fade-in slide-out">
+                        <h4>Architecture</h4>
+                        <img src="img/architecture/01-self-healing-tools.png"/>
+                    </section>
+                    <section id="self-healing-02-proxy-video" data-transition="fade-in slide-out">
+                        <h3>Configure the Proxy</h3>
+                        <script type="text/javascript" src="https://asciinema.org/a/45391.js" id="asciicast-45391" async></script>
+                    </section>
+                    <section id="self-healing-02-proxy-diag" data-transition="fade-in slide-out">
+                        <h4>Architecture</h4>
+                        <img src="img/architecture/docker-flow-proxy-swarm.png"/>
+                    </section>
+                    <section id="self-healing-03-scale-video" data-transition="fade-in slide-out">
+                        <h3>Scale</h3>
+                        <script type="text/javascript" src="https://asciinema.org/a/45394.js" id="asciicast-45394" async></script>
+                    </section>
+                </section>
+                <section data-background="img/background/self-healing.png">
+                    <section id="redeployment">
+                        <h2>Prerequisite #2</h2>
+                        <span class="fragment">Ability to deploy <span class="fragment grow highlight-current-green">without downtime</span> and to <span class="fragment grow highlight-current-green">automatically scale and de-scale</span> instances</span>
+                    </section>
+                    <section id="self-healing-06-blue-green-video" data-transition="fade-in slide-out">
+                        <h3>Blue-Green Deployment</h3>
+                        <script type="text/javascript" src="https://asciinema.org/a/45429.js" id="asciicast-45429" async></script>
+                    </section>
+                    <section id="self-healing-06-blue-green-diag-1">
+                        <h4>Architecture</h4>
+                        <img src="img/architecture/docker-flow-first-deployment-flow.png"/>
+                    </section>
+                    <section id="self-healing-06-blue-green-diag-2">
+                        <h4>Architecture</h4>
+                        <img src="img/architecture/docker-flow-second-deployment-flow.png"/>
+                    </section>
+                    <section id="self-healing-07-relative-scaling-video" data-transition="fade-in slide-out">
+                        <h3>Relative Scaling</h3>
+                        <script type="text/javascript" src="https://asciinema.org/a/45430.js" id="asciicast-45430" async></script>
+                    </section>
+                    <section id="self-healing-07-relative-scaling">
+                        <h4>Architecture</h4>
+                        <img src="img/architecture/docker-flow-scaling-flow.png"/>
+                    </section>
+                    <section id="self-healing-redeployment-jenkins-code">
+                        <h3>Jenkinsfile</h3>
+                        <pre><code data-trim contenteditable>node("cd") {
+    checkout scm
+    dockerFlow("go-demo", ["deploy", "proxy", "stop-old"])
+}</code></pre>
+                    </section>
+                    <section id="self-healing-redeployment-jenkins-screen">
+                        <h4>Jenkins Multibranch Pipeline</h4>
+                        <img src="img/screenshots/jenkins-go-demo.png"/>
+                    </section>
+                </section>
+                <section data-background="img/background/self-healing.png">
+                    <section id="hardware-checks">
+                        <h2>Prerequisite #3</h2>
+                        <span class="fragment">Ability to <span class="fragment grow highlight-current-green">monitor hardware</span> and dynamically adjust <span class="fragment grow highlight-current-green">cluster capacity</span> (elasticity)</span>
+                    </section>
                     <section id="architecture-06" data-transition="fade-in slide-out">
                         <h4>Architecture</h4>
                         <img src="img/architecture/06-self-healing.png"/>
@@ -267,13 +290,31 @@
                         <h4>Architecture</h4>
                         <img src="img/architecture/07-self-healing.png"/>
                     </section>
+                    <section id="self-healing-08-hd-check-video" data-transition="fade-in slide-out">
+                        <h3>Hard Disk Check</h3>
+                        <script type="text/javascript" src="https://asciinema.org/a/45462.js" id="asciicast-45462" async></script>
+                    </section>
+                    <section id="self-healing-08-hd-check-diag">
+                        <h4>Architecture</h4>
+                        <img src="img/architecture/health-consul-hardware-hd.png"/>
+                    </section>
+                    <section id="self-healing-08-hd-check-consul-screen">
+                        <h4>Architecture</h4>
+                        <img src="img/screenshots/health-consul-hardware-hd.png"/>
+                    </section>
+                    <section id="self-healing-08-hd-check-jenkins-screen">
+                        <h4>Architecture</h4>
+                        <img src="img/screenshots/jenkins-hardware-notification.png"/>
+                    </section>
+                </section>
+                <section data-background="img/background/self-healing.png">
+                    <section id="service-checks">
+                        <h2>Prerequisite #4</h2>
+                        <span class="fragment">Ability to <span class="fragment grow highlight-current-green">monitor services</span> in (near)real-time and execute <span class="fragment grow highlight-current-green">reactive actions</span></span>
+                    </section>
                     <section id="architecture-08" data-transition="fade-in slide-out">
                         <h4>Architecture</h4>
-                        <img src="img/architecture/08-self-healing.png"/>
-                    </section>
-                    <section id="architecture-09" data-transition="fade-in slide-out">
-                        <h4>Architecture</h4>
-                        <img src="img/architecture/09-self-healing.png"/>
+                        <img src="img/architecture/07-self-healing.png"/>
                     </section>
                 </section>
                 <section data-background="../img/background/tools.jpg">
