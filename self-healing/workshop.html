@@ -351,6 +351,8 @@ cat docker-compose-test.yml
 
 docker-compose -f docker-compose-test.yml run --rm unit
 
+ll
+
 cat Dockerfile
 
 docker build -t vfarcic/go-demo .
@@ -463,6 +465,8 @@ docker-compose -f docker-compose-limits.yml down</code></pre>
 
 docker-compose scale app=2
 
+docker-compose ps
+
 curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
     | jq '.'
 
@@ -525,6 +529,9 @@ curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servic
     | jq '.'
 
 curl -i localhost/demo/hello
+
+curl -XPUT -d "10.100.198.200" \
+    http://swarm-master:8500/v1/kv/proxy/ip
 
 curl -XPUT -d "2" http://swarm-master:8500/v1/kv/go-demo/scale</code></pre>
                     </section>
@@ -626,7 +633,7 @@ VERSION=:1.0 docker-compose -f docker-compose-bg.yml \
 curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo-${NEXT_COLOR}&servicePath=/demo" \
     | jq '.'
 
-curl localhost/demo/hello
+curl -i localhost/demo/hello
 
 docker-compose -f docker-compose-bg.yml logs
 
@@ -651,7 +658,7 @@ VERSION=:1.1 docker-compose -f docker-compose-bg.yml \
 
 docker-compose -f docker-compose-bg.yml ps
 
-curl localhost/demo/hello
+curl -i localhost/demo/hello
 
 docker-compose -f docker-compose-bg.yml logs</code></pre>
                     </section>
@@ -671,7 +678,7 @@ curl "localhost:8081/v1/docker-flow-proxy/remove?serviceName=go-demo-${COLOR}" \
 
 curl -XPUT -d $NEXT_COLOR http://swarm-master:8500/v1/kv/go-demo/color
 
-curl localhost/demo/hello # Repeat
+curl -i localhost/demo/hello # Repeat
 
 docker-compose -f docker-compose-bg.yml logs
 
@@ -707,7 +714,7 @@ docker-flow --flow=deploy --flow=proxy --flow=stop-old
 
 docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
 
-curl localhost/demo/hello</code></pre>
+curl -i localhost/demo/hello</code></pre>
                     </section>
                     <section id="redeployment-df-1">
                         <h4>Redeployment</h4>
@@ -721,7 +728,7 @@ curl localhost/demo/hello</code></pre>
 
 docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
 
-curl localhost/demo/hello</code></pre>
+curl -i localhost/demo/hello</code></pre>
                     </section>
                     <section id="redeployment-df-2">
                         <h4>Redeployment</h4>
@@ -735,7 +742,7 @@ curl localhost/demo/hello</code></pre>
 
 docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
 
-curl localhost/demo/hello
+curl -i localhost/demo/hello
 
 docker-flow --scale="-2" --flow=scale --flow=proxy
 
@@ -757,7 +764,8 @@ git checkout -b master
 
 mkdir vars
 
-cp ~/go-demo/jenkins/vars/dockerFlowWorkshop.groovy /tmp/workflowLibs/vars/dockerFlow.groovy
+cp ~/go-demo/jenkins/vars/dockerFlowWorkshop.groovy \
+    /tmp/workflowLibs/vars/dockerFlow.groovy
 
 git config --global user.name "vfarcic"
 
@@ -772,11 +780,6 @@ git push --set-upstream origin master</code></pre>
 
 cat jenkins/vars/dockerFlowWorkshop.groovy
 
-mkdir -p /data/jenkins/workflow-libs/vars/
-
-cp jenkins/vars/dockerFlowWorkshop.groovy \
-    /data/jenkins/workflow-libs/vars/dockerFlow.groovy
-
 cat Jenkinsfile</code></pre>
                     </section>
                     <section id="redeployment-jenkins-ui">
@@ -786,7 +789,7 @@ cat Jenkinsfile</code></pre>
                         <div>Item Name: go-demo; Type: Multibranch Pipeline &gt; OK</div>
                         <div>Add Source &gt; Git</div>
                         <div>Project Repository: https://github.com/vfarcic/go-demo.git &gt; Save</div>
-                        <div><a href="http://10.100.198.200:8080/job/go-demo/branch/master/">http://10.100.198.200:8080/job/go-demo/branch/master/</a> &gt; Build Now</div>
+                        <div><a href="http://10.100.198.200:8080/job/go-demo/branch/master/">http://10.100.198.200:8080/job/go-demo/branch/master/</a></div>
                         <div><a href="http://10.100.198.200:8080/job/go-demo/branch/master/lastBuild/console">http://10.100.198.200:8080/job/go-demo/branch/master/lastBuild/console</a></div>
                     </section>
                 </section>
@@ -946,36 +949,61 @@ ansible-playbook /vagrant/ansible/swarm-healing.yml \
                         <span class="fragment">Ability to <span class="fragment grow highlight-current-green">monitor services</span> in (near)real-time and execute <span class="fragment grow highlight-current-green">reactive actions</span></span>
                     </section>
                     <section id="service-checks-code-1">
-                        <h4>Service Checks</h4>
-                        <h2>Service</h2>
+                        <h4>Reactive Healing</h4>
+                        <h2>Service Checks</h2>
 						<pre><code data-trim contenteditable>cat /vagrant/ansible/roles/consul-healing/templates/manage_watches.sh
 
-ansible-playbook /vagrant/ansible/swarm-healing.yml \
-    -i /vagrant/ansible/hosts/prod
+# ansible-playbook /vagrant/ansible/swarm-healing.yml \
+#    -i /vagrant/ansible/hosts/prod
 
 cd ~/go-demo
 
 cat consul_check.ctmpl
 
-curl -XPUT -d "10.100.198.200" \
-    http://swarm-master:8500/v1/kv/proxy/ip
-
 cat Jenkinsfile</code></pre>
                     </section>
                     <section id="service-checks-code-2">
-                        <h4>Service Checks</h4>
-                        <h2>Service</h2>
+                        <h4>Reactive Healing</h4>
+                        <h2>Service Checks</h2>
                         <pre><code data-trim contenteditable>docker rm -f $(docker ps -a | grep godemo | awk '{ print $1}')</code></pre>
-                        <a href="http://10.100.198.200:8080/job/service-redeploy/lastBuild/console">http://10.100.198.200:8080/job/service-redeploy/lastBuild/console</a>
+                        <a href="http://10.100.198.200:8080/job/service-redeploy">http://10.100.198.200:8080/job/service-redeploy</a>
                         <pre><code data-trim contenteditable>curl -i http://10.100.198.200/demo/hello</code></pre>
                     </section>
                     <section id="service-checks-code-3">
-                        <h4>Service Checks</h4>
-                        <h2>Service</h2>
+                        <h4>Reactive Healing</h4>
+                        <h2>Service Checks</h2>
                         <pre><code data-trim contenteditable>sudo docker rm -f docker-flow-proxy</code></pre>
                         <a href="http://10.100.198.200:8080/job/service-redeploy/lastBuild/console">http://10.100.198.200:8080/job/service-redeploy/lastBuild/console</a>
                         <pre><code data-trim contenteditable>curl -i http://10.100.198.200/demo/hello</code></pre>
                     </section>
+                </section>
+                <section>
+                    <section id="service-proactive">
+                        <h2>Prerequisite #5</h2>
+                        <span class="fragment">Ability to <span class="fragment grow highlight-current-green">predict the future</span> and execute <span class="fragment grow highlight-current-green">proactive actions</span></span>
+                    </section>
+                    <section id="service-schedule-scale">
+                        <h4>Proactive Healing</h4>
+                        <h2>Scheduled Scaling</h2>
+                        <div><a href="http://10.100.198.200:8080/job/go-demo-scale/configure">http://10.100.198.200:8080/job/go-demo-scale/configure</a></div>
+                        <div>Build With Parameters &gt; Build</div>
+                        <div><a href="http://10.100.198.200:8080/job/go-demo-scale/lastBuild/console">http://10.100.198.200:8080/job/go-demo-scale/lastBuild/console</a></div>
+                    </section>
+                    <section id="service-schedule-descale">
+                        <h4>Proactive Healing</h4>
+                        <h2>Scheduled Descaling</h2>
+                        <div><a href="http://10.100.198.200:8080/job/go-demo-descale/configure">http://10.100.198.200:8080/job/go-demo-scale/configure</a></div>
+                        <div>Build With Parameters &gt; Build</div>
+                        <div><a href="http://10.100.198.200:8080/job/go-demo-descale/lastBuild/console">http://10.100.198.200:8080/job/go-demo-scale/lastBuild/console</a></div>
+                    </section>
+                    <section id="elk-code">
+                        <h4>Proactive Healing</h4>
+                        <h2>ELK Setup</h2>
+						<pre><code data-trim contenteditable>ansible-playbook /vagrant/ansible/elk-local.yml \
+    --extra-vars "logstash_config=file.conf" -c local
+                        </code></pre>
+                    </section>
+                    <!--http://10.100.198.202:5601-->
                 </section>
                 <section data-background="../img/background/the_end.jpg">
                     <section id="the-end-blog">

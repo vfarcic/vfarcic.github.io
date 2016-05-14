@@ -1,3 +1,3 @@
-Docker Flow With Jenkins
-========================
+Docker Flow: Continuous Deployment Flow
+=======================================
 
