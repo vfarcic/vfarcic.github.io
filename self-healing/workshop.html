@@ -189,47 +189,6 @@
                         </ul>
                     </section>
                 </section>
-                <section data-background="img/background/self-healing.png">
-                    <section id="architecture" data-transition="fade-in slide-out">
-                        <h1>Architecture</h1>
-                    </section>
-                    <section id="architecture-01" data-transition="fade-in slide-out">
-                        <h4>Architecture</h4>
-                        <img src="img/architecture/01-self-healing.png"/>
-                    </section>
-                    <section id="architecture-02" data-transition="fade-in slide-out">
-                        <h4>Architecture</h4>
-                        <img src="img/architecture/02-self-healing.png"/>
-                    </section>
-                    <section id="architecture-03" data-transition="fade-in slide-out">
-                        <h4>Architecture</h4>
-                        <img src="img/architecture/03-self-healing.png"/>
-                    </section>
-                    <section id="architecture-04" data-transition="fade-in slide-out">
-                        <h4>Architecture</h4>
-                        <img src="img/architecture/04-self-healing.png"/>
-                    </section>
-                    <section id="architecture-05" data-transition="fade-in slide-out">
-                        <h4>Architecture</h4>
-                        <img src="img/architecture/05-self-healing.png"/>
-                    </section>
-                    <section id="architecture-06" data-transition="fade-in slide-out">
-                        <h4>Architecture</h4>
-                        <img src="img/architecture/06-self-healing.png"/>
-                    </section>
-                    <section id="architecture-07" data-transition="fade-in slide-out">
-                        <h4>Architecture</h4>
-                        <img src="img/architecture/07-self-healing.png"/>
-                    </section>
-                    <section id="architecture-08" data-transition="fade-in slide-out">
-                        <h4>Architecture</h4>
-                        <img src="img/architecture/08-self-healing.png"/>
-                    </section>
-                    <section id="architecture-09" data-transition="fade-in slide-out">
-                        <h4>Architecture</h4>
-                        <img src="img/architecture/09-self-healing.png"/>
-                    </section>
-                </section>
                 <section data-background="../img/background/tools.jpg">
                     <section id="tools">
                         <h2>Tools</h2>
@@ -241,7 +200,7 @@
                             <li class="fragment">General orchestrator</li>
                         </ul>
                     </section>
-                    <section id="tools-cluster-orchestrator">
+                    <section id="tools-swarm">
                         <h4>Tools</h4>
                         <h2>Cluster Orchestrator</h2>
                         <div>
@@ -340,6 +299,24 @@ ansible-playbook /vagrant/ansible/jenkins.yml \
                         <h2>Prerequisite #1</h2>
                         <span class="fragment">Ability to <span class="fragment grow highlight-current-green">deploy to any server</span> inside a cluster that meets hardware requirements</span>
                     </section>
+                    <section id="architecture-01" data-transition="fade-in slide-out">
+                        <img src="img/architecture/01-self-healing.png"/>
+                    </section>
+                    <section id="architecture-02" data-transition="fade-in slide-out">
+                        <img src="img/architecture/02-self-healing.png"/>
+                    </section>
+                    <section id="architecture-03" data-transition="fade-in slide-out">
+                        <img src="img/architecture/03-self-healing.png"/>
+                    </section>
+                    <section id="tools-cluster-orchestrator">
+                        <h4>Deployment</h4>
+                        <h2>Cluster Orchestrator Tools</h2>
+                        <div>
+                            <img src="../img/products/mesos.jpg" class="fragment" style="width: 30%; height: 30%;"/>
+                            <img src="../img/products/kubernetes.png" class="fragment" style="width: 30%; height: 30%;"/>
+                            <img src="../img/products/swarm.png" class="fragment" style="width: 30%; height: 30%; background-color: white;"/>
+                        </div>
+                    </section>
                     <section id="deployment-container-code">
                         <h4>Deployment</h4>
                         <h2>The Code</h2>
@@ -358,6 +335,12 @@ cat Dockerfile
 docker build -t vfarcic/go-demo .
 
 # docker push vfarcic/go-demo</code></pre>
+                    </section>
+                    <section id="architecture-04" data-transition="fade-in slide-out">
+                        <img src="img/architecture/04-self-healing.png"/>
+                    </section>
+                    <section id="architecture-05" data-transition="fade-in slide-out">
+                        <img src="img/architecture/05-self-healing.png"/>
                     </section>
                     <section id="deployment-run-code">
                         <h4>Deployment</h4>
@@ -394,6 +377,16 @@ curl swarm-master:8500/v1/catalog/service/go-demo \
                         <h4>Deployment</h4>
                         <h2>Run</h2>
                         <img src="img/architecture/01-self-healing-tools.png"/>
+                    </section>
+                    <section id="tools-proxy">
+                        <h4>Deployment</h4>
+                        <h2>Proxy</h2>
+                        <div>
+                            <img src="../img/products/apache.png" class="fragment" style="width: 30%; height: 30%;"/>
+                            <br />
+                            <img src="../img/products/nginx.png" class="fragment" style="width: 50%; height: 50%; background-color: white;"/>
+                            <img src="../img/products/haproxy.png" class="fragment" style="width: 50%; height: 50%; background-color: white;"/>
+                        </div>
                     </section>
                     <section id="deployment-proxy-code">
                         <h4>Deployment</h4>
@@ -746,7 +739,7 @@ curl -i localhost/demo/hello
 
 docker-flow --scale="-2" --flow=scale --flow=proxy
 
-docker rm -f $(docker ps -a | grep godemo | awk '{ print $1}')</code></pre>
+docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"</code></pre>
                     </section>
                     <section id="redeployment-df-3">
                         <h4>Redeployment</h4>
@@ -797,6 +790,12 @@ cat Jenkinsfile</code></pre>
                     <section id="hardware-checks">
                         <h2>Prerequisite #3</h2>
                         <span class="fragment">Ability to <span class="fragment grow highlight-current-green">monitor hardware</span> and dynamically adjust <span class="fragment grow highlight-current-green">cluster capacity</span> (elasticity)</span>
+                    </section>
+                    <section id="architecture-06" data-transition="fade-in slide-out">
+                        <img src="img/architecture/06-self-healing.png"/>
+                    </section>
+                    <section id="architecture-07" data-transition="fade-in slide-out">
+                        <img src="img/architecture/07-self-healing.png"/>
                     </section>
                     <section id="hardware-checks-df-commands">
                         <h4>Hardware Health Checks and Watches</h4>
@@ -937,12 +936,12 @@ cat /vagrant/ansible/swarm-healing.yml
 cat /vagrant/ansible/roles/consul-healing/files/mem.sh
 
 ansible-playbook /vagrant/ansible/swarm-healing.yml \
-    -i /vagrant/ansible/hosts/prod</code></pre>
+    -i /vagrant/ansible/hosts/prod \
+    --extra-vars "elk_ip=10.100.198.200"</code></pre>
                         <a href="http://10.100.192.200:8500/ui/">http://10.100.192.200:8500/ui/</a> &gt; Nodes
                     </section>
                     <!--TODO: Add example of scaling nodes when Swarm reports that there are not resources available-->
                 </section>
-                <!--TODO: Continue-->
                 <section>
                     <section id="service-checks">
                         <h2>Prerequisite #4</h2>
@@ -954,9 +953,12 @@ ansible-playbook /vagrant/ansible/swarm-healing.yml \
 						<pre><code data-trim contenteditable>cat /vagrant/ansible/roles/consul-healing/templates/manage_watches.sh
 
 # ansible-playbook /vagrant/ansible/swarm-healing.yml \
-#    -i /vagrant/ansible/hosts/prod
+#    -i /vagrant/ansible/hosts/prod \
+#    --extra-vars "elk_ip=10.100.198.200"
 
 cd ~/go-demo
+
+cat consul_service.ctmpl
 
 cat consul_check.ctmpl
 
@@ -965,14 +967,18 @@ cat Jenkinsfile</code></pre>
                     <section id="service-checks-code-2">
                         <h4>Reactive Healing</h4>
                         <h2>Service Checks</h2>
-                        <pre><code data-trim contenteditable>docker rm -f $(docker ps -a | grep godemo | awk '{ print $1}')</code></pre>
+                        <pre><code data-trim contenteditable>docker rm -f $(docker ps -a | grep godemo | awk '{ print $1}')
+
+curl -i http://10.100.198.200/demo/hello</code></pre>
                         <a href="http://10.100.198.200:8080/job/service-redeploy">http://10.100.198.200:8080/job/service-redeploy</a>
                         <pre><code data-trim contenteditable>curl -i http://10.100.198.200/demo/hello</code></pre>
                     </section>
                     <section id="service-checks-code-3">
                         <h4>Reactive Healing</h4>
                         <h2>Service Checks</h2>
-                        <pre><code data-trim contenteditable>sudo docker rm -f docker-flow-proxy</code></pre>
+                        <pre><code data-trim contenteditable>sudo docker rm -f docker-flow-proxy
+
+curl -i http://10.100.198.200/demo/hello</code></pre>
                         <a href="http://10.100.198.200:8080/job/service-redeploy/lastBuild/console">http://10.100.198.200:8080/job/service-redeploy/lastBuild/console</a>
                         <pre><code data-trim contenteditable>curl -i http://10.100.198.200/demo/hello</code></pre>
                     </section>
@@ -982,28 +988,144 @@ cat Jenkinsfile</code></pre>
                         <h2>Prerequisite #5</h2>
                         <span class="fragment">Ability to <span class="fragment grow highlight-current-green">predict the future</span> and execute <span class="fragment grow highlight-current-green">proactive actions</span></span>
                     </section>
-                    <section id="service-schedule-scale">
+                    <section id="service-proactive-scale">
                         <h4>Proactive Healing</h4>
                         <h2>Scheduled Scaling</h2>
                         <div><a href="http://10.100.198.200:8080/job/go-demo-scale/configure">http://10.100.198.200:8080/job/go-demo-scale/configure</a></div>
                         <div>Build With Parameters &gt; Build</div>
                         <div><a href="http://10.100.198.200:8080/job/go-demo-scale/lastBuild/console">http://10.100.198.200:8080/job/go-demo-scale/lastBuild/console</a></div>
                     </section>
-                    <section id="service-schedule-descale">
+                    <section id="service-proactive-descale">
                         <h4>Proactive Healing</h4>
                         <h2>Scheduled Descaling</h2>
-                        <div><a href="http://10.100.198.200:8080/job/go-demo-descale/configure">http://10.100.198.200:8080/job/go-demo-scale/configure</a></div>
+                        <div><a href="http://10.100.198.200:8080/job/go-demo-descale/configure">http://10.100.198.200:8080/job/go-demo-descale/configure</a></div>
                         <div>Build With Parameters &gt; Build</div>
-                        <div><a href="http://10.100.198.200:8080/job/go-demo-descale/lastBuild/console">http://10.100.198.200:8080/job/go-demo-scale/lastBuild/console</a></div>
+                        <div><a href="http://10.100.198.200:8080/job/go-demo-descale/lastBuild/console">http://10.100.198.200:8080/job/go-demo-descale/lastBuild/console</a></div>
                     </section>
-                    <section id="elk-code">
+                    <section id="architecture-08" data-transition="fade-in slide-out">
+                        <img src="img/architecture/08-self-healing.png"/>
+                    </section>
+                    <section id="architecture-09" data-transition="fade-in slide-out">
+                        <img src="img/architecture/09-self-healing.png"/>
+                    </section>
+                    <section id="proactive-proxy-stats">
+                        <h4>Proactive Healing</h4>
+                        <h2>Proxy Stats</h2>
+                        <div><a href="http://10.100.198.200/admin?stats">http://10.100.198.200/admin?stats</a></div>
+                        <div><a href="http://10.100.198.200/admin?stats;csv">http://10.100.198.200/admin?stats;csv</a></div>
+                    </section>
+                    <section id="proactive-elk-code">
                         <h4>Proactive Healing</h4>
                         <h2>ELK Setup</h2>
-						<pre><code data-trim contenteditable>ansible-playbook /vagrant/ansible/elk-local.yml \
-    --extra-vars "logstash_config=file.conf" -c local
-                        </code></pre>
+						<pre><code data-trim contenteditable>cat /vagrant/ansible/roles/logstash/files/haproxy.conf
+
+ansible-playbook /vagrant/ansible/elk-local.yml \
+    --extra-vars "logstash_config=haproxy.conf" -c local
+
+sudo docker logs logstash</code></pre>
+                        <a href="http://10.100.198.200:5601/">http://10.100.198.200:5601/</a>
                     </section>
-                    <!--http://10.100.198.202:5601-->
+                    <section id="proactive-es-code-1">
+                        <h4>Proactive Healing</h4>
+                        <h2>LogStash API</h2>
+						<pre><code data-trim contenteditable>curl http://10.100.198.200:9200/logstash-*/_search | jq '.'</code></pre>
+                    </section>
+                    <section id="proactive-es-code-2">
+                        <h4>Proactive Healing</h4>
+                        <h2>LogStash API</h2>
+						<pre><code data-trim contenteditable>curl http://10.100.198.200:9200/logstash-*/_search -d '{
+  "query": {
+    "bool": {
+      "must": { "match": { "tags" : "haproxy_stats" } },
+      "must": { "match": { "haproxy_stats.svname" : "BACKEND" } },
+      "must": { "range": { "@timestamp": { "gt" : "now-1h" } } }
+    }
+  }
+}' | jq '.'</code></pre>
+                    </section>
+                    <section id="proactive-es-code-3">
+                        <h4>Proactive Healing</h4>
+                        <h2>LogStash API</h2>
+						<pre><code data-trim contenteditable>curl http://10.100.198.200:9200/logstash-*/_search -d '{
+  "size" : 0,
+  "query": {
+    "bool": {
+      "must": { "match": { "tags" : "haproxy_stats" } },
+      "must": { "match": { "haproxy_stats.svname" : "BACKEND" } },
+      "must": { "range": { "@timestamp": { "gt" : "now-1h" } } }
+    }
+  },
+  "aggs" : {
+    "services" : {
+      "terms" : { "field" : "haproxy_stats.pxname.raw" },
+      "aggs": { "avg_rtime": { "avg": { "field": "haproxy_stats.rtime" } } }
+    }
+  }
+}' | jq '.'</code></pre>
+                    </section>
+                    <section id="proactive-es-code-4">
+                        <h4>Proactive Healing</h4>
+                        <h2>LogStash API</h2>
+						<pre><code data-trim contenteditable>curl http://10.100.198.200:9200/logstash-*/_search -d '{
+  "size" : 0,
+  "query": {
+    "bool": {
+      "must": { "match": { "tags" : "haproxy_stats" } },
+      "must": { "match": { "haproxy_stats.svname" : "BACKEND" } },
+      "must": { "match": { "haproxy_stats.pxname.raw" : "go-demo-app-be" } },
+      "must": { "range": { "@timestamp": { "gt" : "now-1h" } } }
+    }
+  },
+  "aggs" : {
+    "avg_rtime" : {
+      "avg": { "field": "haproxy_stats.rtime" }
+    }
+  }
+}' | jq '.'</code></pre>
+                    </section>
+                    <section id="proactive-consul-code-1">
+                        <h4>Proactive Healing</h4>
+                        <h2>Consul / Jenkins</h2>
+						<pre><code data-trim contenteditable>cat /vagrant/ansible/roles/consul-healing/templates/rtime_up.sh
+
+cat /vagrant/ansible/roles/consul-healing/templates/rtime_down.sh
+
+cat /vagrant/ansible/roles/consul-healing/templates/manage_watches.sh
+
+cat consul_check.ctmpl</code></pre>
+                        <a href="http://10.100.198.200:8080/job/service-scale/configure">http://10.100.198.200:8080/job/service-scale/configure</a>
+                    </section>
+                    <section id="proactive-consul-code-2">
+                        <h4>Proactive Healing</h4>
+                        <h2>Consul</h2>
+						<pre><code data-trim contenteditable>exit
+
+vagrant ssh swarm-master
+
+sudo sed -i "s/1000 2000/1 2/" /data/consul/config/go-demo_check.json
+
+sudo killall -HUP consul
+
+exit
+
+vagrant ssh cd
+
+curl localhost/demo/hello?delay=2000 # Repeat</code></pre>
+                        <div><a href="http://10.100.198.200:8080/job/service-scale/1/console">http://10.100.198.200:8080/job/service-scale/1/console</a></div>
+                        <div><a href="http://10.100.192.200:8500/ui">http://10.100.192.200:8500/ui</a></div>
+                    </section>
+                    <section id="proactive-consul-code-3">
+                        <h4>Proactive Healing</h4>
+                        <h2>Consul</h2>
+						<pre><code data-trim contenteditable>exit
+
+vagrant ssh swarm-master
+
+sudo sed -i "s/1 2/1000 2000/" /data/consul/config/go-demo_check.json
+
+sudo killall -HUP consul</code></pre>
+                        <div><a href="http://10.100.192.200:8500/ui">http://10.100.192.200:8500/ui</a></div>
+                    </section>
                 </section>
                 <section data-background="../img/background/the_end.jpg">
                     <section id="the-end-blog">
@@ -1032,6 +1154,12 @@ cat Jenkinsfile</code></pre>
                                 <img src="../img/devops2.png" style="width: 30%; height: 30%;" />
                             </a>
                         </div>
+                    </section>
+                </section>
+                <section>
+                    <section id="cleanup">
+                        <h1>Cleanup</h1>
+						<pre><code data-trim contenteditable>vagrant destroy -f</code></pre>
                     </section>
                 </section>
 			</div>

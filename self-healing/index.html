@@ -200,44 +200,37 @@
                         <span class="fragment">Ability to <span class="fragment grow highlight-current-green">deploy to any server</span> inside a cluster that meets hardware requirements</span>
                     </section>
                     <section id="architecture-01" data-transition="fade-in slide-out">
-                        <h4>Architecture</h4>
                         <img src="img/architecture/01-self-healing.png"/>
                     </section>
                     <section id="architecture-02" data-transition="fade-in slide-out">
-                        <h4>Architecture</h4>
                         <img src="img/architecture/02-self-healing.png"/>
                     </section>
                     <section id="architecture-03" data-transition="fade-in slide-out">
-                        <h4>Architecture</h4>
                         <img src="img/architecture/03-self-healing.png"/>
                     </section>
                     <section id="architecture-04" data-transition="fade-in slide-out">
-                        <h4>Architecture</h4>
                         <img src="img/architecture/04-self-healing.png"/>
                     </section>
                     <section id="architecture-05" data-transition="fade-in slide-out">
-                        <h4>Architecture</h4>
                         <img src="img/architecture/05-self-healing.png"/>
                     </section>
                     <section id="self-healing-01-run-in-cluster-video" data-transition="fade-in slide-out">
                         <h3>Deploy to the Cluster</h3>
-                        <script type="text/javascript" src="https://asciinema.org/a/45386.js" id="asciicast-45386" async></script>
+                        <a href="https://asciinema.org/a/45386" target="_blank"><img src="https://asciinema.org/a/45386.png" width="921"/></a>
                     </section>
                     <section id="self-healing-01-run-in-cluster-diag" data-transition="fade-in slide-out">
-                        <h4>Architecture</h4>
                         <img src="img/architecture/01-self-healing-tools.png"/>
                     </section>
                     <section id="self-healing-02-proxy-video" data-transition="fade-in slide-out">
                         <h3>Configure the Proxy</h3>
-                        <script type="text/javascript" src="https://asciinema.org/a/45391.js" id="asciicast-45391" async></script>
+                        <a href="https://asciinema.org/a/45391" target="_blank"><img src="https://asciinema.org/a/45391.png" width="921"/></a>
                     </section>
                     <section id="self-healing-02-proxy-diag" data-transition="fade-in slide-out">
-                        <h4>Architecture</h4>
                         <img src="img/architecture/docker-flow-proxy-swarm.png"/>
                     </section>
                     <section id="self-healing-03-scale-video" data-transition="fade-in slide-out">
                         <h3>Scale</h3>
-                        <script type="text/javascript" src="https://asciinema.org/a/45394.js" id="asciicast-45394" async></script>
+                        <a href="https://asciinema.org/a/45394" target="_blank"><img src="https://asciinema.org/a/45394.png" width="921"/></a>
                     </section>
                 </section>
                 <section data-background="img/background/self-healing.png">
@@ -247,22 +240,19 @@
                     </section>
                     <section id="self-healing-06-blue-green-video" data-transition="fade-in slide-out">
                         <h3>Blue-Green Deployment</h3>
-                        <script type="text/javascript" src="https://asciinema.org/a/45429.js" id="asciicast-45429" async></script>
+                        <a href="https://asciinema.org/a/45429" target="_blank"><img src="https://asciinema.org/a/45429.png" width="921"/></a>
                     </section>
                     <section id="self-healing-06-blue-green-diag-1">
-                        <h4>Architecture</h4>
                         <img src="img/architecture/docker-flow-first-deployment-flow.png"/>
                     </section>
                     <section id="self-healing-06-blue-green-diag-2">
-                        <h4>Architecture</h4>
                         <img src="img/architecture/docker-flow-second-deployment-flow.png"/>
                     </section>
                     <section id="self-healing-07-relative-scaling-video" data-transition="fade-in slide-out">
                         <h3>Relative Scaling</h3>
-                        <script type="text/javascript" src="https://asciinema.org/a/45430.js" id="asciicast-45430" async></script>
+                        <a href="https://asciinema.org/a/45430" target="_blank"><img src="https://asciinema.org/a/45430.png" width="921"/></a>
                     </section>
                     <section id="self-healing-07-relative-scaling">
-                        <h4>Architecture</h4>
                         <img src="img/architecture/docker-flow-scaling-flow.png"/>
                     </section>
                     <section id="self-healing-redeployment-jenkins-code">
@@ -276,6 +266,13 @@
                         <h4>Jenkins Multibranch Pipeline</h4>
                         <img src="img/screenshots/jenkins-go-demo.png"/>
                     </section>
+                    <section id="self-healing-scale-jenkins-code">
+                        <h3>Scaling Pipeline</h3>
+                        <pre><code data-trim contenteditable>node("cd") {
+    git url: "https://github.com/vfarcic/${serviceName}.git"
+    dockerFlow(serviceName, ["scale", "proxy"], ["--scale=\"" + scale + "\""])
+}</code></pre>
+                    </section>
                 </section>
                 <section data-background="img/background/self-healing.png">
                     <section id="hardware-checks">
@@ -283,27 +280,22 @@
                         <span class="fragment">Ability to <span class="fragment grow highlight-current-green">monitor hardware</span> and dynamically adjust <span class="fragment grow highlight-current-green">cluster capacity</span> (elasticity)</span>
                     </section>
                     <section id="architecture-06" data-transition="fade-in slide-out">
-                        <h4>Architecture</h4>
                         <img src="img/architecture/06-self-healing.png"/>
                     </section>
                     <section id="architecture-07" data-transition="fade-in slide-out">
-                        <h4>Architecture</h4>
                         <img src="img/architecture/07-self-healing.png"/>
                     </section>
                     <section id="self-healing-08-hd-check-video" data-transition="fade-in slide-out">
                         <h3>Hard Disk Check</h3>
-                        <script type="text/javascript" src="https://asciinema.org/a/45462.js" id="asciicast-45462" async></script>
+                        <a href="https://asciinema.org/a/45462" target="_blank"><img src="https://asciinema.org/a/45462.png" width="921"/></a>
                     </section>
                     <section id="self-healing-08-hd-check-diag">
-                        <h4>Architecture</h4>
                         <img src="img/architecture/health-consul-hardware-hd.png"/>
                     </section>
                     <section id="self-healing-08-hd-check-consul-screen">
-                        <h4>Architecture</h4>
                         <img src="img/screenshots/health-consul-hardware-hd.png"/>
                     </section>
                     <section id="self-healing-08-hd-check-jenkins-screen">
-                        <h4>Architecture</h4>
                         <img src="img/screenshots/jenkins-hardware-notification.png"/>
                     </section>
                 </section>
@@ -312,21 +304,51 @@
                         <h2>Prerequisite #4</h2>
                         <span class="fragment">Ability to <span class="fragment grow highlight-current-green">monitor services</span> in (near)real-time and execute <span class="fragment grow highlight-current-green">reactive actions</span></span>
                     </section>
-                    <section id="architecture-08" data-transition="fade-in slide-out">
-                        <h4>Architecture</h4>
+                    <section id="architecture-07-2" data-transition="fade-in slide-out">
                         <img src="img/architecture/07-self-healing.png"/>
                     </section>
                     <section id="self-healing-09-service-check-video" data-transition="fade-in slide-out">
                         <h3>Service Checks</h3>
-                        <script type="text/javascript" src="https://asciinema.org/a/45617.js" id="asciicast-45617" async></script>
+                        <a href="https://asciinema.org/a/45617" target="_blank"><img src="https://asciinema.org/a/45617.png" width="921"/></a>
                     </section>
                     <section id="self-healing-09-service-check-consul-screen">
-                        <h4>Architecture</h4>
                         <img src="img/screenshots/health-consul-service.png"/>
                     </section>
                     <section id="self-healing-09-service-check-jenkins-screen">
-                        <h4>Architecture</h4>
                         <img src="img/screenshots/jenkins-service-redeploy.png"/>
+                    </section>
+                </section>
+                <section data-background="img/background/self-healing.png">
+                    <section id="service-proactive">
+                        <h2>Prerequisite #5</h2>
+                        <span class="fragment">Ability to <span class="fragment grow highlight-current-green">predict the future</span> and execute <span class="fragment grow highlight-current-green">proactive actions</span></span>
+                    </section>
+                    <section id="service-proactive-scale">
+                        <h4>Proactive Healing</h4>
+                        <h2>Scheduled Scaling</h2>
+                        <img src="img/screenshots/jenkins-scheduled-scale.png">
+                    </section>
+                    <section>
+                        <h4>Proactive Healing</h4>
+                        <h2>Scaling Based on Historical Data</h2>
+                    </section>
+                    <section id="architecture-08" data-transition="fade-in slide-out">
+                        <img src="img/architecture/08-self-healing.png"/>
+                    </section>
+                    <section id="architecture-09" data-transition="fade-in slide-out">
+                        <img src="img/architecture/09-self-healing.png"/>
+                    </section>
+                    <section id="haproxy-stats-screen" data-transition="fade-in slide-out">
+                        <h2>Data Sources</h2>
+                        <img src="img/screenshots/haproxy-stats.png"/>
+                    </section>
+                    <section id="tools-es" data-transition="fade-in slide-out">
+                        <h2>Data Store</h2>
+                        <img src="../img/products/elastic.png" style="background-color: white;"/>
+                    </section>
+                    <section id="tools-kibana" data-transition="fade-in slide-out">
+                        <h2>Visualization</h2>
+                        <img src="../img/products/kibana.png"/>
                     </section>
                 </section>
                 <section data-background="../img/background/tools.jpg">
