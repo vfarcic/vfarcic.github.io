@@ -13,23 +13,23 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/viktor.css" id="theme">
+		<link rel="stylesheet" href="../css/reveal.css">
+		<link rel="stylesheet" href="../css/theme/viktor.css" id="theme">
 
 		<!-- Code syntax highlighting -->
-		<!--<link rel="stylesheet" href="lib/css/zenburn.css">-->
+		<!--<link rel="stylesheet" href="../lib/css/zenburn.css">-->
 
 		<!-- Printing and PDF exports -->
 		<script>
 			var link = document.createElement( 'link' );
 			link.rel = 'stylesheet';
 			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
 
 		<!--[if lt IE 9]>
-		<script src="lib/js/html5shiv.js"></script>
+		<script src="../lib/js/html5shiv.js"></script>
 		<![endif]-->
 	</head>
 
@@ -39,43 +39,45 @@
 
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
-				<section id="cover">
-					<h1>Microservices Lifecycle</h1>
-					<p>
-						Created by <a href="http://technologyconversations.com/about/">Viktor Farcic</a>
-						for <a href="http://technologyconversations.com">Technology Conversations</a>
-					</p>
-					<h3><a href="https://twitter.com/vfarcic">@vfarcic</a></h3>
+				<section id="cover" data-background="../img/background/microservices.png">
+					<h1>Microservices Lifecycle Workshop</h1>
+					<hr/>
+					<h2>
+						<a href="http://technologyconversations.com/about/">Viktor Farcic</a>
+					</h2>
+					<hr/>
+					<h4>
+						<a href="https://twitter.com/vfarcic">@vfarcic</a>
+					</h4>
+					<h4>
+						<a href="http://technologyconversations.com">TechnologyConversations.com</a>
+					</h4>
+					<h4>
+						<a href="https://www.cloudbees.com">CloudBees.com</a>
+					</h4>
 				</section>
-				<section id="about-me">
-					<h2>Viktor Farcic</h2>
-					<ul>
-						<img src="img/viktor.jpg" style="float: right; width: 25%; height: 25%;"/>
-						<li>Senior Consultant at <a href="https://www.cloudbees.com/">CloudBees</a></li>
-						<li>Never developed in Fortran</li>
-						<li>Passionate about microservices, continuous deployment and TDD</li>
-						<li>Blogger in <a href="http://technologyconversations.com/">TechnologyConversations.com</a></li>
-						<li><a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">Java Test-Driven Development: Mastering TDD Through Katas</a></li>
-					</ul>
-				</section>
-				<section>
-					<section id="index">
-						<ul>
-							<li class="fragment"><a href="#/ci-cd">Continuous Deployment</a></li>
-							<li class="fragment"><a href="#/containers">Containers</a></li>
-							<li class="fragment"><a href="#/monolith">Monolithic Applications vs Microservices</a></li>
-							<li class="fragment"><a href="#/dev">Development environment</a></li>
-							<li class="fragment"><a href="#/dp">Deployment pipeline</a></li>
-							<li class="fragment"><a href="#/cm">Configuration management (CM)</a></li>
-							<li class="fragment"><a href="#/sd">Service discovery</a></li>
-							<li class="fragment"><a href="#/proxy">Proxy service</a></li>
-							<li class="fragment"><a href="#/dp-auto">Deployment automation</a></li>
-							<li class="fragment"><a href="#/bg">Blue-green deployment</a></li>
-							<li class="fragment"><a href="#/scale">Clustering and scaling services</a></li>
-							<li class="fragment"><a href="#/jenkins">CI/CD Tools</a></li>
-							<li class="fragment"><a href="#/health">Self-healing systems</a></li>
-							<li class="fragment"><a href="#/logging">Centralized Logging</a></li>
-						</ul>
+				<section data-background="../img/background/about-me.jpg">
+					<section id="about-me">
+						<h2>Viktor Farcic</h2>
+						<img src="../img/viktor.jpg" style="width: 50%; height: 50%;" />
+					</section>
+					<section id="about-company">
+						<a href="https://www.cloudbees.com">
+							<img src="../img/cloudbees-big.png" style="background-color: white;" />
+						</a>
+					</section>
+					<section id="about-docker">
+						<a href="https://www.docker.com/community/docker-captains">
+							<img src="../img/docker-captain.png" style="width: 50%; height: 50%;" />
+						</a>
+					</section>
+					<section id="about-books">
+						<a href="https://leanpub.com/the-devops-2-toolkit">
+							<img src="../img/devops2.png" style="float: left; width: 40%; height: 40%;" />
+						</a>
+						<a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">
+							<img src="../img/tdd.jpg" style="float: right; width: 40%; height: 40%;" />
+						</a>
 					</section>
 				</section>
 				<section data-background="../img/background/train.png">
@@ -359,104 +361,6 @@ ps aux | grep jav[a] | awk '{print $2}' | xargs kill
 						</div>
 					</section>
 				</section>
-				<section data-background="img/background/dev-env.png">
-					<section id="dev">
-						<h2>Development Environment</h2>
-						<ul>
-							<li class="fragment">Vagrant</li>
-							<li class="fragment">Docker</li>
-						</ul>
-					</section>
-					<section id="dev-vm">
-						<h4>Development Environment</h4>
-						<h2>Create Virtual Machine</h2>
-						Please skip the first two steps if you followed the workshop preparation instructions.
-						<pre><code data-trim contenteditable>
-git clone https://github.com/vfarcic/books-ms.git
-
-vagrant plugin install vagrant-cachier
-
-cd books-ms
-						</code></pre>
-					</section>
-					<section id="dev-vagrantfile">
-						<h4>Development Environment</h4>
-						<h2>Vagrantfile</h2>
-						<pre><code data-trim contenteditable>
-cat Vagrantfile
-
-vagrant up dev
-						</code></pre>
-					</section>
-					<section id="dev-inside-vm">
-						<h4>Development Environment</h4>
-						<h2>Inside the Virtual Machine</h2>
-						<pre><code data-trim contenteditable>
-vagrant ssh dev
-
-ansible --version
-
-docker --version
-
-docker-compose --version
-
-cd /vagrant
-
-ll
-						</code></pre>
-					</section>
-					<section id="dev-fe-tests">
-						<h4>Development Environment</h4>
-						<h2>Front-end tests</h2>
-						<pre><code data-trim contenteditable>
-sudo docker run -it --rm \
-	-v $PWD/client/components:/source/client/components \
-	-v $PWD/client/test:/source/client/test \
-	-v $PWD/src:/source/src \
-	-v $PWD/target:/source/target \
-	-p 8080:8080 \
-	--env TEST_TYPE=watch-front \
-	vfarcic/books-ms-tests
-						</code></pre>
-						<div>
-							<small>Open <a href="http://10.100.199.200:8080/components/tc-books/demo/index.html">http://10.100.199.200:8080/components/tc-books/demo/index.html</a></small>
-						</div>
-						<div>
-							Press <strong>CTRL+c</strong> to stop the container.
-						</div>
-					</section>
-					<section id="dev-fe-tests-compose">
-						<h4>Development Environment</h4>
-						<h2>Tests with Docker Compose</h2>
-						<pre><code data-trim contenteditable>
-sudo docker-compose -f docker-compose-dev.yml run feTestsLocal
-
-sudo docker-compose -f docker-compose-dev.yml run testsLocal
-						</code></pre>
-					</section>
-					<section id="dev-what">
-						<h4>Development Environment</h4>
-						<h2>What did we do?</h2>
-						<ul>
-							<li>Installed Chrome, Firefox, MongoDB, NodeJS, Git, sbt, JDK, Scala, npm and gulp</li>
-							<li>Downloaded Java/Scala dependencies through sbt</li>
-							<li>Downloaded JavaScript dependencies through npm and bower</li>
-							<li>Run MongoDB</li>
-							<li>Run Scala tests</li>
-							<li>Run JS tests</li>
-							<li>Compiled Scala code</li>
-						</ul>
-					</section>
-					<section id="dev-stop-vm">
-						<h4>Development Environment</h4>
-						<h2>Stop the VM</h2>
-						<pre><code data-trim contenteditable>
-exit
-
-vagrant halt dev
-						</code></pre>
-					</section>
-				</section>
 				<section data-background="img/background/deployment-pipeline.png">
 					<section id="dp">
 						<h2>Deployment Pipeline</h2>
@@ -470,144 +374,88 @@ vagrant halt dev
 							<li class="fragment">Deploy the container to the production server</li>
 							<li class="fragment">Integrate the container</li>
 							<li class="fragment">Run post-deployment tests</li>
-							<li class="fragment">Push the tests container to the registry</li>
 						</ol>
 					</section>
 					<section id="dp-env">
 						<h4>Deployment Pipeline: Initial Stages</h4>
 						<h2>Creating the CD VM</h2>
-						Please skip the <strong>git clone</strong> step if you followed the workshop preparation instructions.
-						<pre><code data-trim contenteditable>
-cd ..
-
-git clone https://github.com/vfarcic/ms-lifecycle.git
+						<pre><code data-trim contenteditable>git clone https://github.com/vfarcic/ms-lifecycle.git
 
 cd ms-lifecycle
 
 vagrant up cd --provision
 
-vagrant ssh cd
-						</code></pre>
+vagrant ssh cd</code></pre>
 					</section>
 					<section id="dp-checkout">
 						<h4>Deployment Pipeline: Initial Stages</h4>
 						<h2>Checking out the code</h2>
-						Please skip the <strong>git clone</strong> step if you followed the workshop preparation instructions.
-						<pre><code data-trim contenteditable>
-git clone https://github.com/vfarcic/books-ms.git
+						<pre><code data-trim contenteditable>git clone https://github.com/vfarcic/go-demo.git
 
-cd books-ms
-						</code></pre>
+cd go-demo</code></pre>
 					</section>
 					<section id="dp-pre-deployment-tests">
 						<h4>Deployment Pipeline: Initial Stages</h4>
 						<h2>Running pre-deployment tests and compiling and/or packaging the code</h2>
-						<pre><code data-trim contenteditable>
-sudo docker build \
-	-f Dockerfile.test \
-	-t 10.100.198.200:5000/books-ms-tests \
-	.
+						<pre><code data-trim contenteditable>cat docker-compose-test.yml
 
-sudo docker-compose \
-	-f docker-compose-dev.yml \
-	run --rm tests
+docker-compose -f docker-compose-test.yml run --rm unit
 
-ll target/scala-2.10/
-						</code></pre>
+docker ps -a
+
+ll -t</code></pre>
 					</section>
 					<section id="dp-building">
 						<h4>Deployment Pipeline: Initial Stages</h4>
 						<h2>Building Docker containers</h2>
-						<pre><code data-trim contenteditable>
-cat Dockerfile
+						<pre><code data-trim contenteditable>cat Dockerfile
 
-sudo docker build -t 10.100.198.200:5000/books-ms .
-						</code></pre>
+docker build -t vfarcic/go-demo .
+
+docker images</code></pre>
 					</section>
-					<section id="dp-running-1">
-						<h4>Deployment Pipeline: Initial Stages</h4>
-						<h2>Running containers (Docker)</h2>
-						<h3>Docker</h3>
-						<pre><code data-trim contenteditable>
-sudo docker run -d --name books-db mongo
-
-sudo docker run -d --name books-ms \
-	-p 8080:8080 \
-	--link books-db:db \
-	10.100.198.200:5000/books-ms
-
-sudo docker exec -it books-ms bash
-
-env | grep DB
-
-exit
-
-sudo docker ps -a
-
-sudo docker logs books-ms
-
-sudo docker rm -f books-ms books-db
-
-sudo docker ps -a
-						</code></pre>
-					</section>
-					<section id="dp-running-2">
+					<section id="dp-running">
 						<h4>Deployment Pipeline: Initial Stages</h4>
 						<h2>Running containers</h2>
-						<h3>Docker Compose</h3>
-						<pre><code data-trim contenteditable>
-sudo docker-compose -f docker-compose-dev.yml up -d app
+						<h3>Docker</h3>
+						<pre><code data-trim contenteditable>docker-compose up -d db app
 
-cat docker-compose-dev.yml
+docker-compose ps
 
-sudo docker-compose ps
+IP=&lt;PORT&gt; # Put the port from the ps command
 
-sudo docker-compose logs
-						</code></pre>
+docker-compose logs
+
+docker-compose exec app ping -c 1 db
+
+docker-compose exec db ping -c 1 app</code></pre>
 					</section>
-					<section id="dp-running-3">
+					<section id="dp-running-ping">
 						<h4>Deployment Pipeline: Initial Stages</h4>
 						<h2>Running containers</h2>
 						<h3>cURL</h3>
-						<pre><code data-trim contenteditable>
-curl -H 'Content-Type: application/json' -X PUT -d \
-	'{"_id": 1,
-	"title": "My First Book",
-	"author": "John Doe",
-	"description": "Not a very good book"}' \
-	http://localhost:8080/api/v1/books | jq '.'
+						<pre><code data-trim contenteditable>curl localhost:$IP/demo/hello
 
-curl -H 'Content-Type: application/json' -X PUT -d \
-	'{"_id": 2,
-	"title": "My Second Book",
-	"author": "John Doe",
-	"description": "Not a bad as the first book"}' \
-	http://localhost:8080/api/v1/books | jq '.'
+curl -XPUT localhost:$PORT/demo/person?name=Viktor
 
-curl -H 'Content-Type: application/json' -X PUT -d \
-	'{"_id": 3,
-	"title": "My Third Book",
-	"author": "John Doe",
-	"description": "Failed writers club"}' \
-	http://localhost:8080/api/v1/books | jq '.'
+curl -XPUT localhost:$PORT/demo/person?name=Sara
 
-curl http://localhost:8080/api/v1/books | jq '.'
+curl localhost:$PORT/demo/person
 
-curl http://localhost:8080/api/v1/books/_id/1 | jq '.'
+docker-compose down
 
-sudo docker-compose stop
-
-sudo docker-compose rm -f
-						</code></pre>
+docker ps -a</code></pre>
 					</section>
 					<section id="dp-registry">
 						<h4>Deployment Pipeline: Initial Stages</h4>
 						<h2>Pushing containers to the registry</h2>
-						<pre><code data-trim contenteditable>
-sudo docker push 10.100.198.200:5000/books-ms
+						<pre><code data-trim contenteditable># docker push vfarcic/go-demo
 
-exit
-						</code></pre>
+docker tag vfarcic/go-demo 10.100.198.200:5000/go-demo
+
+docker push 10.100.198.200:5000/go-demo
+
+exit</code></pre>
 					</section>
 					<section id="dp-checklist">
 						<h4>Deployment Pipeline: Initial Stages</h4>
@@ -622,57 +470,48 @@ exit
 							<li class="fragment">Deploy the container to the production server</li>
 							<li class="fragment">Integrate the container</li>
 							<li class="fragment">Run post-deployment tests</li>
-							<li class="fragment">Push the tests container to the registry</li>
 						</ol>
 					</section>
 				</section>
 				<section data-background="img/background/cm.png">
 					<section id="cm">
-						<h2>Configuration Management in the Docker World</h2>
+						<h2>Configuration Management</h2>
 						<table>
-							<tr>
-								<td class="fragment" style="width: 24%;">
-									<img src="img/cm/cfengine.png" style="background-color: white;">
-								</td>
-								<td class="fragment" style="width: 24%;">
-									<img src="img/cm/puppet.png" style="background-color: white;">
-								</td>
-								<td class="fragment" style="width: 24%;">
-									<img src="img/cm/chef.png" style="background-color: white;">
-								</td>
-								<td class="fragment" style="width: 24%;">
-									<img src="img/cm/ansible.png" style="background-color: white;">
-								</td>
-							</tr>
+							<div>
+								<img class="fragment" src="../img/products/cfengine.png" style="background-color: white; width: 20%; height: 20%;">
+								<img class="fragment" src="../img/products/puppet.png" style="background-color: white; width: 20%; height: 20%;">
+								<img class="fragment" src="../img/products/chef.png" style="background-color: white; width: 20%; height: 20%;">
+								<img class="fragment" src="../img/products/ansible.png" style="background-color: white; width: 20%; height: 20%;">
+							</div>
+							<div>
+								<img class="fragment" src="../img/products/packer.png" style="width: 40%; height: 40%;">
+								<img class="fragment" src="../img/products/terraform.png" style="width: 20%; height: 20%;">
+							</div>
 						</table>
 					</section>
 					<section id="cm-prod">
-						<h4>Configuration Management in the Docker World</h4>
+						<h4>Configuration Management</h4>
 						<h2>Configuring the Production Environment</h2>
-						<pre><code data-trim contenteditable>
-vagrant up prod --provision
+						<pre><code data-trim contenteditable>vagrant up prod
 
 vagrant ssh cd
 
 cd /vagrant/ansible
 
-ansible-playbook prod.yml -i hosts/prod
-						</code></pre>
+ansible-playbook prod.yml -i hosts/prod</code></pre>
 					</section>
 					<section id="cm-playbook">
-						<h4>Configuration Management in the Docker World</h4>
+						<h4>Configuration Management</h4>
 						<h2>Production environment Ansible playbook</h2>
-						<pre><code data-trim contenteditable>
-cat prod.yml
+						<pre><code data-trim contenteditable>cat prod.yml
 
 cat roles/docker/tasks/main.yml
 
-cat roles/docker-compose/tasks/main.yml
+cat roles/docker/tasks/debian.yml
 
 cat hosts/prod
 
-exit
-						</code></pre>
+exit</code></pre>
 					</section>
 				</section>
 				<section data-background="img/background/deployment-pipeline.png">
@@ -688,71 +527,46 @@ exit
 							<li class="fragment">Deploy the container to the production server</li>
 							<li class="fragment">Integrate the container</li>
 							<li class="fragment">Run post-deployment tests</li>
-							<li class="fragment">Push the tests container to the registry</li>
 						</ol>
 					</section>
 					<section id="dp2-deploy">
 						<h4>Deployment Pipeline: Intermediate Stages</h4>
 						<h2>Deploying containers to the production server</h2>
-						<pre><code data-trim contenteditable>
-vagrant ssh prod
+						<pre><code data-trim contenteditable>vagrant ssh cd
 
-wget https://raw.githubusercontent.com/vfarcic\
-/books-ms/master/docker-compose.yml
+export DOCKER_HOST=tcp://prod:2375
 
-cat docker-compose.yml
+docker ps -a
 
-sudo docker-compose up -d app
+cd go-demo
 
-sudo docker ps
-						</code></pre>
+docker-compose up -d db app
+
+docker-compose ps</code></pre>
 					</section>
 					<section id="dp2-verification">
 						<h4>Deployment Pipeline: Intermediate Stages</h4>
 						<h2>Post-deployment verification</h2>
-						<pre><code data-trim contenteditable>
-sudo docker inspect vagrant_app_1
+						<pre><code data-trim contenteditable>docker inspect godemo_app_1
 
-PORT=$(sudo docker inspect \
+PORT=$(docker inspect \
 	--format='{{(index (index .NetworkSettings.Ports "8080/tcp") 0).HostPort}}' \
-	vagrant_app_1)
+	godemo_app_1)
 
 echo $PORT
 
-curl -H 'Content-Type: application/json' -X PUT -d \
-	"{\"_id\": 1,
-	\"title\": \"My First Book\",
-	\"author\": \"John Doe\",
-	\"description\": \"Not a very good book\"}" \
-	http://localhost:$PORT/api/v1/books | jq '.'
+curl -XPUT prod:$PORT/demo/person?name=Viktor
 
-curl -H 'Content-Type: application/json' -X PUT -d \
-	"{\"_id\": 2,
-	\"title\": \"My Second Book\",
-	\"author\": \"John Doe\",
-	\"description\": \"Not a bad as the first book\"}" \
-	http://localhost:$PORT/api/v1/books | jq '.'
+curl -XPUT prod:$PORT/demo/person?name=Sara
 
-curl -H 'Content-Type: application/json' -X PUT -d \
-	"{\"_id\": 3,
-	\"title\": \"My Third Book\",
-	\"author\": \"John Doe\",
-	\"description\": \"Failed writers club\"}" \
-	http://localhost:$PORT/api/v1/books | jq '.'
-
-curl http://localhost:$PORT/api/v1/books | jq '.'
-
-curl http://localhost:$PORT/api/v1/books/_id/1 | jq '.'
-						</code></pre>
+curl prod:$PORT/demo/person</code></pre>
 					</section>
 					<section id="dp2-exit">
 						<h4>Deployment Pipeline: Intermediate Stages</h4>
 						<h2>Stopping Production Node</h2>
-						<pre><code data-trim contenteditable>
-exit
+						<pre><code data-trim contenteditable>exit
 
-vagrant halt prod
-						</code></pre>
+vagrant halt prod</code></pre>
 					</section>
 					<section id="dp2-checklist">
 						<h4>Deployment Pipeline: Intermediate Stages</h4>
@@ -767,7 +581,6 @@ vagrant halt prod
 							<li class="fragment"><del>Deploy the container to the production server</del></li>
 							<li class="fragment">Integrate the container</li>
 							<li class="fragment">Run post-deployment tests</li>
-							<li class="fragment">Push the tests container to the registry</li>
 						</ol>
 					</section>
 				</section>
@@ -798,20 +611,18 @@ vagrant halt prod
 					<section id="sd-tools">
 						<h4>Service Discovery</h4>
 						<h2>Tools</h2>
-						<ol>
-							<li class="fragment">Manual configuration</li>
-							<li class="fragment">Zookeeper</li>
-							<li class="fragment">etcd / Registrator / confd</li>
-							<li class="fragment">
-								<label class="fragment grow highlight-current-green">Consul / Registrator / Consul Template</label>
-							</li>
-						</ol>
+						<div>
+							<img class="fragment" src="../img/products/zookeeper.png" class="fragment" style="width: 40%; height: 40%; background-color: white;"/>
+						</div>
+						<div>
+							<img class="fragment" src="../img/products/etcd.png" class="fragment" style="width: 40%; height: 40%; background-color: white;"/>
+							<img class="fragment" src="../img/products/consul.jpg" class="fragment" style="width: 40%; height: 40%;"/>
+						</div>
 					</section>
 					<section id="sd-consul-playbook">
 						<h4>Service Discovery</h4>
 						<h2>Consul Ansible playbook</h2>
-						<pre><code data-trim contenteditable>
-vagrant up serv-disc-01 serv-disc-02 serv-disc-03
+						<pre><code data-trim contenteditable>vagrant up serv-disc-01 serv-disc-02 serv-disc-03
 
 vagrant ssh cd
 
@@ -823,20 +634,16 @@ cat /vagrant/ansible/roles/consul/tasks/main.yml
 
 cat /vagrant/ansible/roles/consul/defaults/main.yml
 
-cat /vagrant/ansible/host_vars/10.100.194.201
-						</code></pre>
+cat /vagrant/ansible/host_vars/10.100.194.201</code></pre>
 					</section>
 					<section id="sd-consul-setup">
 						<h4>Service Discovery</h4>
 						<h2>Setting up Consul</h2>
-						<pre><code data-trim contenteditable>
-ansible-playbook \
-	/vagrant/ansible/consul.yml \
-	-i /vagrant/ansible/hosts/serv-disc
+						<pre><code data-trim contenteditable>ansible-playbook \
+    /vagrant/ansible/consul.yml \
+    -i /vagrant/ansible/hosts/serv-disc
 
-curl 10.100.194.201:8500/v1/catalog/nodes \
-	| jq '.'
-						</code></pre>
+curl serv-disc-01:8500/v1/catalog/nodes | jq '.'</code></pre>
 					</section>
 					<section id="sd-consul-diagram">
 						<h4>Service Discovery</h4>
@@ -846,57 +653,42 @@ curl 10.100.194.201:8500/v1/catalog/nodes \
 					<section id="sd-kv-put">
 						<h4>Service Discovery</h4>
 						<h2>Key/value store: PUT</h2>
-						<pre><code data-trim contenteditable>
-curl -X PUT -d 'this is a test' \
-	http://10.100.194.201:8500/v1/kv/msg1
+						<pre><code data-trim contenteditable>curl -X PUT -d 'this is a test' \
+    serv-disc-01:8500/v1/kv/msg1
 
 curl -X PUT -d 'this is another test' \
-	http://10.100.194.202:8500/v1/kv/messages/msg2
+    serv-disc-02:8500/v1/kv/messages/msg2
 
 curl -X PUT -d 'this is a test with flags' \
-	http://10.100.194.203:8500/v1/kv/messages/msg3?flags=1234
-						</code></pre>
+    serv-disc-03:8500/v1/kv/messages/msg3?flags=1234</code></pre>
 					</section>
 					<section id="sd-kv-get-delete">
 						<h4>Service Discovery</h4>
 						<h2>Key/value store: GET/DELETE</h2>
-						<pre><code data-trim contenteditable>
-curl http://10.100.194.203:8500/v1/kv/?recurse \
-	| jq '.'
+						<pre><code data-trim contenteditable>curl serv-disc-03:8500/v1/kv/?recurse | jq '.'
 
-curl http://10.100.194.202:8500/v1/kv/msg1 \
-	| jq '.'
+curl serv-disc-02:8500/v1/kv/msg1 | jq '.'
 
-curl http://10.100.194.201:8500/v1/kv/msg1?raw
+curl serv-disc-01:8500/v1/kv/msg1?raw
 
-curl -X DELETE http://10.100.194.201:8500/v1/kv/messages/msg2
+curl -X DELETE serv-disc-01:8500/v1/kv/messages/msg2
 
-curl http://10.100.194.203:8500/v1/kv/?recurse \
-	| jq '.'
+curl serv-disc-03:8500/v1/kv/?recurse | jq '.'
 
-curl -X DELETE http://10.100.194.202:8500/v1/kv/?recurse
+curl -X DELETE serv-disc-02:8500/v1/kv/?recurse
 
-curl http://10.100.194.203:8500/v1/kv/?recurse \
-	| jq '.'
-						</code></pre>
+curl serv-disc-03:8500/v1/kv/?recurse | jq '.'</code></pre>
 					</section>
 					<section id="sd-registrator-playbook">
 						<h4>Service Discovery</h4>
-						<h2>Registrator Ansible playbook</h2>
-						<pre><code data-trim contenteditable>
-cat /vagrant/ansible/roles/registrator/tasks/main.yml
+						<h2>Registrator</h2>
+						<pre><code data-trim contenteditable>cat /vagrant/ansible/roles/registrator/tasks/main.yml
 
 cat /vagrant/ansible/roles/registrator/defaults/main.yml
-						</code></pre>
-					</section>
-					<section id="sd-registrator-setup">
-						<h4>Service Discovery</h4>
-						<h2>Setting up Registrator</h2>
-						<pre><code data-trim contenteditable>
+
 ansible-playbook \
-	/vagrant/ansible/registrator.yml \
-	-i /vagrant/ansible/hosts/serv-disc
-						</code></pre>
+    /vagrant/ansible/registrator.yml \
+    -i /vagrant/ansible/hosts/serv-disc</code></pre>
 					</section>
 					<section id="sd-consul-registrator-diagram">
 						<h4>Service Discovery</h4>
@@ -906,61 +698,27 @@ ansible-playbook \
 					<section id="sd-nginx">
 						<h4>Service Discovery</h4>
 						<h2>Registering service</h2>
-						<pre><code data-trim contenteditable>
-exit # Exit cd
-
-vagrant ssh serv-disc-01
-
-sudo docker run -d --name nginx \
+						<pre><code data-trim contenteditable>DOCKER_HOST=tcp://serv-disc-01:2375 \
+    docker run -d --name nginx \
     --env SERVICE_NAME=nginx \
     --env SERVICE_ID=nginx \
     -p 1234:80 \
-    nginx
+    nginx:alpine
 
-curl http://10.100.194.201:8500/v1/catalog/service/nginx \
-    | jq '.'
-						</code></pre>
+curl serv-disc-01:8500/v1/catalog/service/nginx-80 | jq '.'</code></pre>
 					</section>
 					<section id="sd-nginx2">
 						<h4>Service Discovery</h4>
 						<h2>Registering service again</h2>
-						<pre><code data-trim contenteditable>
-exit
-
-vagrant ssh serv-disc-02
-
-sudo docker run -d --name nginx2 \
+						<pre><code data-trim contenteditable>DOCKER_HOST=tcp://serv-disc-02:2375 \
+    docker run -d --name nginx2 \
     --env "SERVICE_ID=nginx2" \
     --env "SERVICE_NAME=nginx" \
     --env "SERVICE_TAGS=balancer,proxy,www" \
     -p 1111:80 \
-    nginx
+    nginx:alpine
 
-curl http://localhost:8500/v1/catalog/service/nginx \
-    | jq '.'
-						</code></pre>
-					</section>
-					<section id="sd-consul-template-playbook">
-						<h4>Service Discovery</h4>
-						<h2>Consul Template Ansible playbook</h2>
-						<pre><code data-trim contenteditable>
-exit
-
-vagrant ssh cd
-
-cat /vagrant/ansible/consul-template.yml
-
-cat /vagrant/ansible/roles/consul-template/tasks/main.yml
-						</code></pre>
-					</section>
-					<section id="sd-consul-template-setup">
-						<h4>Service Discovery</h4>
-						<h2>Setting Up Consul Template</h2>
-						<pre><code data-trim contenteditable>
-ansible-playbook \
-    /vagrant/ansible/consul-template.yml \
-    -i /vagrant/ansible/hosts/serv-disc
-						</code></pre>
+curl serv-disc-02:8500/v1/catalog/service/nginx-80 | jq '.'</code></pre>
 					</section>
 					<section id="sd-consul-registrator-consul-template-diagram">
 						<h4>Service Discovery</h4>
@@ -970,32 +728,23 @@ ansible-playbook \
 					<section id="sd-consul-template-run">
 						<h4>Service Discovery</h4>
 						<h2>Running Consul Template</h2>
-						<pre><code data-trim contenteditable>
-exit # Exit cd node
+						<pre><code data-trim contenteditable>curl serv-disc-01:8500/v1/catalog/service/nginx-80 | jq '.'
 
-vagrant ssh serv-disc-01 # Enter serv-disc-01
-
-curl http://localhost:8500/v1/catalog/service/nginx \
-    | jq '.'
-
-cat /data/consul-template/example.ctmpl
+cat /data/consul-template/example2.ctmpl
 
 consul-template \
-    -consul localhost:8500 \
-    -template "/data/consul-template/example.ctmpl:/tmp/example.conf" \
+    -consul serv-disc-01:8500 \
+    -template "/data/consul-template/example2.ctmpl:/tmp/example.conf" \
     -once
 
-cat /tmp/example.conf
-						</code></pre>
+cat /tmp/example.conf</code></pre>
 					</section>
 					<section id="sd-cleanup">
 						<h4>Service Discovery</h4>
 						<h2>Cleanup</h2>
-						<pre><code data-trim contenteditable>
-exit # Exit cd node
+						<pre><code data-trim contenteditable>exit # Exit cd node
 
-vagrant halt serv-disc-01 serv-disc-02 serv-disc-03
-						</code></pre>
+vagrant destroy -f serv-disc-01 serv-disc-02 serv-disc-03</code></pre>
 					</section>
 				</section>
 				<section data-background="img/background/proxy.png">
@@ -1006,55 +755,41 @@ vagrant halt serv-disc-01 serv-disc-02 serv-disc-03
 					<section id="proxy-playbook">
 						<h4>Proxy Service</h4>
 						<h2>nginx Ansible Playbook</h2>
-						<pre><code data-trim contenteditable>
-vagrant up proxy
+						<pre><code data-trim contenteditable>vagrant up proxy
 
 vagrant ssh cd
 
 cat /vagrant/ansible/nginx.yml
-
-cat /vagrant/ansible/roles/nginx/tasks/main.yml
-
-cat /vagrant/ansible/roles/nginx/defaults/main.yml
 
 cat /vagrant/ansible/roles/nginx/files/services.conf
 
 ansible-playbook /vagrant/ansible/nginx.yml \
     -i /vagrant/ansible/hosts/proxy
 
-exit
+export DOCKER_HOST=tcp://proxy:2375
 
-vagrant ssh proxy
+docker ps
 
-sudo docker ps
-
-ps aux | grep consul
-						</code></pre>
+curl proxy:8500/v1/catalog/services | jq '.'</code></pre>
 					</section>
 					<section id="proxy-without">
 						<h4>Proxy Service</h4>
 						<h2>Services Without Proxy</h2>
-						<pre><code data-trim contenteditable>
-wget https://raw.githubusercontent.com/vfarcic\
-/books-ms/master/docker-compose.yml
+						<pre><code data-trim contenteditable>cd go-demo
 
-cat docker-compose.yml
+docker-compose up -d db app
 
-sudo docker-compose up -d app
+curl proxy/api/v1/books
 
-curl http://localhost/api/v1/books
+docker-compose ps
 
-sudo docker ps | grep books
-
-PORT=$(sudo docker inspect \
+PORT=$(docker inspect \
     --format='{{(index (index .NetworkSettings.Ports "8080/tcp") 0).HostPort}}' \
-    vagrant_app_1)
+    godemo_app_1)
 
-echo $PORT
+curl proxy:$PORT/demo/hello
 
-curl http://localhost:$PORT/api/v1/books \
-    | jq '.'
-						</code></pre>
+exit</code></pre>
 					</section>
 					<section id="proxy-without-diagram">
 						<h4>Proxy Service</h4>
@@ -1064,36 +799,31 @@ curl http://localhost:$PORT/api/v1/books \
 					<section id="proxy-manual">
 						<h4>Proxy Service</h4>
 						<h2>Manually Setting Proxy</h2>
-						<pre><code data-trim contenteditable>
-echo "
-location /api/v1/books {
-    proxy_pass http://10.100.193.200:$PORT/api/v1/books;
-}
-" | sudo tee /data/nginx/includes/books-ms.conf
+						<pre><code data-trim contenteditable>vagrant ssh proxy
 
-sudo docker kill -s HUP nginx
+PORT=$(docker inspect \
+    --format='{{(index (index .NetworkSettings.Ports "8080/tcp") 0).HostPort}}' \
+    godemo_app_1)
 
-curl http://localhost/api/v1/books | jq '.'
+echo "location /demo {
+    proxy_pass http://10.100.193.200:$PORT/demo;
+}" | sudo tee /data/nginx/includes/go-demo.conf
 
-curl -H 'Content-Type: application/json' -X PUT -d \
-    "{\"_id\": 1,
-    \"title\": \"My First Book\",
-    \"author\": \"John Doe\",
-    \"description\": \"Not a very good book\"}" \
-    http://localhost/api/v1/books | jq '.'
+docker kill -s HUP nginx
 
-curl http://localhost/api/v1/books | jq '.'
-						</code></pre>
+curl http://localhost/demo/hello</code></pre>
 					</section>
 					<section id="proxy-manual-diagram">
 						<h4>Proxy Service</h4>
 						<h2>Manually Setting Proxy</h2>
 						<img src="img/proxy/proxy-manual.png" style="width: 75%; height: 75%;">
 					</section>
+					<!--TODO: Continue the review-->
 					<section id="proxy-consul">
 						<h4>Proxy Service</h4>
-						<h2>Configuring Proxy with Consul</h2>
+						<h2>Docker Flow: Proxy</h2>
 						<pre><code data-trim contenteditable>
+
 sudo docker-compose scale app=2
 
 sudo docker ps | grep books
@@ -1175,7 +905,6 @@ vagrant halt proxy
 							<li class="fragment"><del>Deploy the container to the production server</del></li>
 							<li class="fragment">Integrate the container</li>
 							<li class="fragment">Run post-deployment tests</li>
-							<li class="fragment">Push the tests container to the registry</li>
 						</ol>
 					</section>
 					<section id="dp-late-provision">
@@ -1295,7 +1024,6 @@ exit
 							<li class="fragment"><del>Deploy the container to the production server</del></li>
 							<li class="fragment"><del>Integrate the container</del></li>
 							<li class="fragment"><del>Run post-deployment tests</del></li>
-							<li class="fragment"><del>Push the tests container to the registry</del></li>
 						</ol>
 					</section>
 					<section id="dp-late-problems">
@@ -2135,8 +1863,8 @@ ansible-playbook /vagrant/ansible/logging.yml \
 
 		</div>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+		<script src="../lib/js/head.min.js"></script>
+		<script src="../js/reveal.js"></script>
 
 		<script>
 
@@ -2152,12 +1880,12 @@ ansible-playbook /vagrant/ansible/logging.yml \
 
 				// Optional reveal.js plugins
 				dependencies: [
-					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 //					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: 'plugin/zoom-js/zoom.js', async: true },
-					{ src: 'plugin/notes/notes.js', async: true }
+					{ src: '../plugin/zoom-js/zoom.js', async: true },
+					{ src: '../plugin/notes/notes.js', async: true }
 				]
 			});
 

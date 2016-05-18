@@ -40,7 +40,7 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section id="cover" data-background="../img/background/health.png">
-					<h1>Self-Healing Systems</h1>
+					<h1>Self-Healing Systems Workshop</h1>
                     <hr/>
 					<h2>
 						<a href="http://technologyconversations.com/about/">Viktor Farcic</a>
@@ -237,11 +237,11 @@
                         </div>
                     </section>
                 </section>
-                <section>
+                <section data-background="../img/background/dev-env.png">
                     <section id="provisioning">
                         <h2>Provisioning</h2>
-                        <img src="../img/products/vagrant.png" style="background-color: white"/>
-                        <img src="../img/products/ansible.png" style="width: 25%; height: 25%; background-color: white"/>
+                        <div><img class="fragment" src="../img/products/vagrant.png" style="background-color: white"/></div>
+                        <div><img class="fragment" src="../img/products/ansible.png" style="width: 25%; height: 25%; background-color: white"/></div>
                     </section>
                     <section id="provisioning-nodes-code">
                         <h4>Provisioning</h4>
@@ -249,6 +249,8 @@
 						<pre><code data-trim contenteditable>git clone https://github.com/vfarcic/ms-lifecycle.git
 
 cd ms-lifecycle
+
+vagrant plugin install vagrant-cachier
 
 vagrant up cd swarm-master swarm-node-1 swarm-node-2</code></pre>
                     </section>
