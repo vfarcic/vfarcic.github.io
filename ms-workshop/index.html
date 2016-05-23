@@ -417,12 +417,11 @@ docker images</code></pre>
 					<section id="dp-running">
 						<h4>Deployment Pipeline: Initial Stages</h4>
 						<h2>Running containers</h2>
-						<h3>Docker</h3>
 						<pre><code data-trim contenteditable>docker-compose up -d db app
 
 docker-compose ps
 
-IP=&lt;PORT&gt; # Put the port from the ps command
+PORT=&lt;PORT&gt; # Put the port from the ps command
 
 docker-compose logs
 
@@ -433,8 +432,7 @@ docker-compose exec db ping -c 1 app</code></pre>
 					<section id="dp-running-ping">
 						<h4>Deployment Pipeline: Initial Stages</h4>
 						<h2>Running containers</h2>
-						<h3>cURL</h3>
-						<pre><code data-trim contenteditable>curl localhost:$IP/demo/hello
+						<pre><code data-trim contenteditable>curl localhost:$PORT/demo/hello
 
 curl -XPUT localhost:$PORT/demo/person?name=Viktor
 
@@ -698,8 +696,8 @@ ansible-playbook \
 					<section id="sd-nginx">
 						<h4>Service Discovery</h4>
 						<h2>Registering service</h2>
-						<pre><code data-trim contenteditable>DOCKER_HOST=tcp://serv-disc-01:2375 \
-    docker run -d --name nginx \
+						<pre><code data-trim contenteditable>docker -H tcp://serv-disc-01:2375 run -d \
+    --name nginx \
     --env SERVICE_NAME=nginx \
     --env SERVICE_ID=nginx \
     -p 1234:80 \
@@ -710,8 +708,8 @@ curl serv-disc-01:8500/v1/catalog/service/nginx-80 | jq '.'</code></pre>
 					<section id="sd-nginx2">
 						<h4>Service Discovery</h4>
 						<h2>Registering service again</h2>
-						<pre><code data-trim contenteditable>DOCKER_HOST=tcp://serv-disc-02:2375 \
-    docker run -d --name nginx2 \
+						<pre><code data-trim contenteditable>docker -H tcp://serv-disc-02:2375 run -d \
+    --name nginx2 \
     --env "SERVICE_ID=nginx2" \
     --env "SERVICE_NAME=nginx" \
     --env "SERVICE_TAGS=balancer,proxy,www" \
@@ -811,85 +809,64 @@ echo "location /demo {
 
 docker kill -s HUP nginx
 
-curl http://localhost/demo/hello</code></pre>
+curl http://localhost/demo/hello
+
+docker rm -f nginx
+
+exit</code></pre>
 					</section>
 					<section id="proxy-manual-diagram">
 						<h4>Proxy Service</h4>
 						<h2>Manually Setting Proxy</h2>
 						<img src="img/proxy/proxy-manual.png" style="width: 75%; height: 75%;">
 					</section>
-					<!--TODO: Continue the review-->
-					<section id="proxy-consul">
+					<section id="docker-flow-proxy-reconf">
 						<h4>Proxy Service</h4>
 						<h2>Docker Flow: Proxy</h2>
-						<pre><code data-trim contenteditable>
+						<pre><code data-trim contenteditable>vagrant ssh cd
 
-sudo docker-compose scale app=2
+export DOCKER_HOST=tcp://proxy:2375
 
-sudo docker ps | grep books
+docker run -d \
+    --name docker-flow-proxy \
+    -e CONSUL_ADDRESS=10.100.193.200:8500 \
+    -p 80:80 -p 8081:8080 \
+    vfarcic/docker-flow-proxy
 
-sudo wget http://raw.githubusercontent.com/vfarcic\
-/books-ms/master/nginx-includes.conf \
-    -O /data/nginx/includes/books-ms.conf
+curl "proxy:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
+    | jq '.'
 
-cat /data/nginx/includes/books-ms.conf
-
-sudo wget http://raw.githubusercontent.com/vfarcic\
-/books-ms/master/nginx-upstreams.ctmpl \
-    -O /data/nginx/upstreams/books-ms.ctmpl
-
-cat /data/nginx/upstreams/books-ms.ctmpl
-
-sudo consul-template \
-    -consul localhost:8500 \
-    -template "/data/nginx/upstreams/books-ms.ctmpl:\
-/data/nginx/upstreams/books-ms.conf:\
-docker kill -s HUP nginx" \
-    -once
-
-cat /data/nginx/upstreams/books-ms.conf
-
-curl http://localhost/api/v1/books | jq '.'
-
-curl http://localhost/api/v1/books | jq '.'
-
-curl http://localhost/api/v1/books | jq '.'
-
-curl http://localhost/api/v1/books | jq '.'
-
-sudo docker logs nginx
-						</code></pre>
+curl -i proxy/demo/hello</code></pre>
 					</section>
-					<section id="proxy-consul-diagram">
+					<section id="docker-flow-proxy-scale">
 						<h4>Proxy Service</h4>
-						<h2>Configuring Proxy with Consul</h2>
-						<img src="img/proxy/proxy-consul.png">
+						<h2>Docker Flow: Proxy</h2>
+						<pre><code data-trim contenteditable>cd go-demo
+
+docker-compose ps
+
+docker-compose scale app=3
+
+docker-compose ps
+
+curl "proxy:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
+    | jq '.'
+
+curl -i proxy/demo/hello # Repeat a few times
+
+docker-compose logs app</code></pre>
 					</section>
-					<section id="proxy-failover">
-						<h4>Proxy Service</h4>
-						<h2>Proxy Failover</h2>
-						<pre><code data-trim contenteditable>
-sudo docker stop vagrant_app_2
-
-curl http://localhost/api/v1/books | jq '.'
-
-curl http://localhost/api/v1/books | jq '.'
-
-curl http://localhost/api/v1/books | jq '.'
-
-curl http://localhost/api/v1/books | jq '.'
-
-sudo docker logs nginx
-						</code></pre>
+					<section id="docker-flow-proxy-user-diag">
+						<h4>Deployment</h4>
+						<h2>Docker Flow: Proxy</h2>
+						<img src="../img/docker-flow-proxy/user.png"/>
 					</section>
 					<section id="proxy-cleanup">
 						<h4>Proxy Service</h4>
 						<h2>Cleanup</h2>
-						<pre><code data-trim contenteditable>
-exit
+						<pre><code data-trim contenteditable>exit
 
-vagrant halt proxy
-						</code></pre>
+vagrant halt proxy</code></pre>
 					</section>
 				</section>
 				<section data-background="img/background/deployment-pipeline.png">
@@ -910,106 +887,67 @@ vagrant halt proxy
 					<section id="dp-late-provision">
 						<h4>Deployment Pipeline: The Late Stages</h4>
 						<h2>Provision Production</h2>
-						<pre><code data-trim contenteditable>
-vagrant up prod
+						<pre><code data-trim contenteditable>vagrant up prod
 
 vagrant ssh cd
 
 cd /vagrant/ansible
 
-cat prod2.yml
-
-ansible-playbook prod2.yml -i hosts/prod
-
-exit
-						</code></pre>
+ansible-playbook prod2.yml -i hosts/prod --skip-tags "nginx"</code></pre>
 					</section>
 					<section id="dp-late-run">
 						<h4>Deployment Pipeline: The Late Stages</h4>
 						<h2>Run Containers</h2>
-						<pre><code data-trim contenteditable>
-vagrant ssh prod
+						<pre><code data-trim contenteditable>export DOCKER_HOST=tcp://prod:2375
 
-sudo docker start vagrant_db_1
+cd ~/go-demo
 
-sudo docker start vagrant_app_1
+docker-compose up -d db app
 
-curl 10.100.198.201:8500/v1/catalog/service/books-ms \
-	| jq '.'
-						</code></pre>
+curl prod:8500/v1/catalog/service/go-demo \
+    | jq '.'</code></pre>
 						Open <a href="http://10.100.198.201:8500/ui">http://10.100.198.201:8500/ui</a>.
 					</section>
 					<section id="dp-late-proxy">
 						<h4>Deployment Pipeline: The Late Stages</h4>
-						<h2>Update the Proxy Service</h2>
-						<pre><code data-trim contenteditable>
-curl http://localhost/api/v1/books
+						<h2>Reconfigure the Proxy</h2>
+						<pre><code data-trim contenteditable>curl -i prod/demo/hello
 
-sudo wget https://raw.githubusercontent.com/vfarcic\
-/books-ms/master/nginx-includes.conf \
-	-O /data/nginx/includes/books-ms.conf
+docker run -d \
+    --name docker-flow-proxy \
+    -e CONSUL_ADDRESS=10.100.198.201:8500 \
+    -p 80:80 -p 8081:8080 \
+    vfarcic/docker-flow-proxy
 
-cat /data/nginx/includes/books-ms.conf
+curl "prod:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
+    | jq '.'
 
-sudo wget https://raw.githubusercontent.com/vfarcic\
-/books-ms/master/nginx-upstreams.ctmpl \
-	-O /data/nginx/upstreams/books-ms.ctmpl
-
-cat /data/nginx/upstreams/books-ms.ctmpl
-
-sudo consul-template \
-	-consul localhost:8500 \
-	-template "/data/nginx/upstreams/books-ms.ctmpl:\
-/data/nginx/upstreams/books-ms.conf:\
-docker kill -s HUP nginx" \
-	-once
-
-cat /data/nginx/upstreams/books-ms.conf
-
-curl http://localhost/api/v1/books \
-	| jq '.'
-
-exit
-						</code></pre>
+curl -i prod/demo/hello</code></pre>
 					</section>
 					<section id="dp-late-intef">
 						<h4>Deployment Pipeline: The Late Stages</h4>
 						<h2>Run Integration Tests</h2>
-						<pre><code data-trim contenteditable>
-vagrant ssh cd
+						<pre><code data-trim contenteditable>cat docker-compose-test.yml
 
-curl http://10.100.198.201/api/v1/books \
-	| jq '.'
+unset DOCKER_HOST
 
-cd ~/books-ms
+export HOST_IP=10.100.198.201
 
-cat docker-compose-dev.yml
+docker-compose \
+    -f docker-compose-test.yml \
+    run --rm production
 
-sudo docker-compose \
-	-f docker-compose-dev.yml \
-	run --rm \
-	-e DOMAIN=http://10.100.198.201 \
-	integ
-
-sudo docker push 10.100.198.200:5000/books-ms-tests
-						</code></pre>
+# docker push vfarcic/go-demo</code></pre>
 					</section>
 					<section id="dp-later-clean-up">
-						<h4>Automating the Deployment Pipeline</h4>
+						<h4>Deployment Pipeline: The Late Stages</h4>
 						<h2>Clean Up</h2>
-						<pre><code data-trim contenteditable>
-exit
+						<pre><code data-trim contenteditable>export DOCKER_HOST=tcp://prod:2375
 
-vagrant ssh prod
+docker-compose down
 
-cd ~
-
-sudo docker-compose stop app db
-
-sudo docker-compose rm -f app db
-
-exit
-						</code></pre>
+curl "prod:8081/v1/docker-flow-proxy/remove?serviceName=go-demo" \
+    | jq '.'</code></pre>
 					</section>
 					<section id="dp-late-checklist">
 						<h4>Deployment Pipeline: The Late Stages</h4>
@@ -1030,259 +968,145 @@ exit
 						<h4>Deployment Pipeline: The Late Stages</h4>
 						<h2>Problems</h2>
 						<ol>
-							<li class="fragment">Not automated</li>
 							<li class="fragment">Downtime</li>
 							<li class="fragment">Not scalable</li>
 							<li class="fragment">Not failure tolerant</li>
 							<li class="fragment">Difficult to monitor</li>
+							<li class="fragment">Not automated</li>
 						</ol>
 					</section>
 				</section>
-				<section data-background="img/background/deployment-pipeline.png">
-					<section id="dp-auto" data-transition="fade-in slide-out">
-						<h2>Automating the Deployment Pipeline</h2>
-						<img src="img/cd-pipeline-docker-no-ansible.png" style="width: 85%; height: 85%;" class="fragment">
-					</section>
-					<section id="dp-auto-ansible" data-transition="fade-in slide-out">
-						<h2>Automating the Deployment Pipeline</h2>
-						<img src="img/cd-pipeline-docker-ansible.png" style="width: 85%; height: 85%;">
-					</section>
-					<section id="dp-auto-nodes" data-transition="fade-in slide-out">
-						<h2>Automating the Deployment Pipeline</h2>
-						<img src="img/cd-pipeline-docker-nodes.png" style="width: 65%; height: 65%;">
-					</section>
-					<section id="dp-auto-problems" data-transition="fade-in">
-						<h2>Automating the Deployment Pipeline</h2>
-						<img src="img/cd-pipeline-docker-problems.png" style="width: 85%; height: 85%;">
-					</section>
-					<section id="dp-auto-code">
-						<h4>Automating the Deployment Pipeline</h4>
-						<h2>Checking Out the Code</h2>
-						<pre><code data-trim contenteditable>
-vagrant ssh cd
-
-cd ~/books-ms
-
-sudo git pull
-						</code></pre>
-					</section>
-					<section id="dp-auto-playbook">
-						<h4>Automating the Deployment Pipeline</h4>
-						<h2>Ansible Playbook</h2>
-						<pre><code data-trim contenteditable>
-cat /vagrant/ansible/service.yml
-
-cat /vagrant/ansible/roles/service/tasks/main.yml
-
-cat /vagrant/ansible/roles/service/tasks/pre-deployment.yml
-
-cat /vagrant/ansible/roles/service/tasks/deployment.yml
-
-cat /vagrant/ansible/roles/service/defaults/main.yml
-
-cat /vagrant/ansible/roles/service/tasks/post-deployment.yml
-
-cat /vagrant/ansible/group_vars/all
-						</code></pre>
-					</section>
-					<section id="dp-auto-run-pipeline">
-						<h4>Automating the Deployment Pipeline</h4>
-						<h2>Running the Deployment Pipeline</h2>
-						<pre><code data-trim contenteditable>
-ansible-playbook /vagrant/ansible/service.yml \
-	-i /vagrant/ansible/hosts/prod \
-	--extra-vars "repo_dir=$PWD service_name=books-ms"
-
-curl http://10.100.198.201/api/v1/books \
-    | jq '.'
-						</code></pre>
-					</section>
-					<section id="dp-auto-clean-up">
-						<h4>Automating the Deployment Pipeline</h4>
-						<h2>Clean Up</h2>
-						<pre><code data-trim contenteditable>
-exit
-
-vagrant ssh prod
-
-cd /data/books-ms
-
-sudo docker-compose stop app db
-
-sudo docker-compose rm -f app db
-
-exit
-						</code></pre>
-					</section>
-				</section>
 				<section data-background="img/background/blue-green.png">
+					<section id="deployment-standard" data-transition="fade-in slide-out">
+						<h2>Standard Deployment</h2>
+					</section>
+					<section id="deployment-standard-1" data-transition="fade-in slide-out">
+						<h2>Standard Deployment</h2>
+						<img src="img/deployment/deployment-standard-1.png" style="width: 60%; height: 60%;">
+					</section>
+					<section id="deployment-standard-2" data-transition="fade-in slide-out">
+						<h2>Standard Deployment</h2>
+						<img src="img/deployment/deployment-standard-2.png" style="width: 60%; height: 60%;">
+					</section>
 					<section id="bg" data-transition="fade-in slide-out">
 						<h2>Blue-Green Deployment</h2>
-						<h4>&nbsp;</h4>
-						<img src="img/bg/blue-green-containers-only.png" class="fragment">
 					</section>
-					<section id="bg-blue" data-transition="fade-in slide-out">
-						<h4>Blue-Green Deployment</h4>
-						<h2>Deploy Blue</h2>
-						<img src="img/bg/blue-green-containers-deploy-blue.png">
+					<section id="bg-1" data-transition="fade-in slide-out">
+						<h2>Blue-Green Deployment</h2>
+						<img src="img/deployment/deployment-bg-1.png" style="width: 60%; height: 60%;">
 					</section>
-					<section id="bg-integ-blue" data-transition="fade-in slide-out">
-						<h4>Blue-Green Deployment</h4>
-						<h2>Integrate Blue</h2>
-						<img src="img/bg/blue-green-containers-integrate-blue.png">
+					<section id="bg-2" data-transition="fade-in slide-out">
+						<h2>Blue-Green Deployment</h2>
+						<img src="img/deployment/deployment-bg-2.png" style="width: 60%; height: 60%;">
 					</section>
-					<section id="bg-green" data-transition="fade-in slide-out">
-						<h4>Blue-Green Deployment</h4>
-						<h2>Deploy Green</h2>
-						<img src="img/bg/blue-green-containers-deploy-green.png">
+					<section id="bg-3" data-transition="fade-in slide-out">
+						<h2>Blue-Green Deployment</h2>
+						<img src="img/deployment/deployment-bg-3.png" style="width: 60%; height: 60%;">
 					</section>
-					<section id="bg-integ-green" data-transition="fade-in slide-out">
-						<h4>Blue-Green Deployment</h4>
-						<h2>Integrate Green</h2>
-						<img src="img/bg/blue-green-containers-integrate-green.png">
+					<section id="bg-4" data-transition="fade-in slide-out">
+						<h2>Blue-Green Deployment</h2>
+						<img src="img/deployment/deployment-bg-4.png" style="width: 60%; height: 60%;">
 					</section>
-					<section id="bg-remove-blue" data-transition="fade-in slide-out">
-						<h4>Blue-Green Deployment</h4>
-						<h2>Remove Blue</h2>
-						<img src="img/bg/blue-green-containers-remove-blue.png">
-					</section>
-					<section id="bg-get-color" data-transition="fade-in slide-out">
-						<h4>Blue-Green Deployment</h4>
-						<h2>Get the Current Color</h2>
-						<img src="img/bg/blue-green-containers-get-color.png">
-					</section>
-					<section id="bg-put-color" data-transition="fade-in">
-						<h4>Blue-Green Deployment</h4>
-						<h2>Put the Current Color</h2>
-						<img src="img/bg/blue-green-containers-put-color.png">
-					</section>
-					<section id="bg-combination">
-						<h4>Blue-Green Deployment</h4>
-						<h2>Combinations</h2>
-						<ul>
-							<li class="fragment">The First Run</li>
-							<li class="fragment">After the First Run</li>
-							<li class="fragment">Pre-deployment tests failed</li>
-							<li class="fragment">Pre-integration tests failed</li>
-							<li class="fragment">Post-integration tests failed</li>
-						</ul>
-					</section>
-					<section id="bg-flow">
-						<h4>Blue-Green Deployment</h4>
-						<h2>The Flow</h2>
-						<img src="img/bg/blue-green-flow.png">
-					</section>
-					<section id="bg-playbook">
-						<h4>Blue-Green Deployment</h4>
-						<h2>Playbook</h2>
-                    	<pre><code data-trim contenteditable>
-vagrant ssh cd
+					<section id="bg-code-1">
+						<h2>Blue-Green Deployment</h2>
+                        <pre><code data-trim contenteditable>cat docker-compose-bg.yml
 
-cat /vagrant/ansible/service-bg.yml
+export NEXT_COLOR=blue
 
-cat /vagrant/ansible/roles/service-bg/tasks/main.yml
+VERSION=:1.0 docker-compose -f docker-compose-bg.yml \
+    up -d db app-${NEXT_COLOR}
 
-cat /vagrant/ansible/roles/service-bg/tasks/pre-deployment.yml
-
-cat /vagrant/ansible/roles/service-bg/tasks/deployment.yml
-
-cat /vagrant/ansible/roles/service-bg/tasks/copy.yml
-
-cat /vagrant/ansible/roles/service-bg/defaults/main.yml
-
-cat /vagrant/ansible/roles/service-bg/files/get-color.sh
-
-cat /vagrant/ansible/roles/service-bg/tasks/post-deployment.yml
-
-cat /vagrant/ansible/roles/service-bg/tasks/nginx.yml
-
-cat /vagrant/ansible/roles/service-bg/tasks/rollback.yml
-
-cat /vagrant/ansible/roles/service-bg/tasks/main.yml
-						</code></pre>
-					</section>
-					<section id="bg-run">
-						<h4>Blue-Green Deployment</h4>
-						<h2>Running the Playbook</h2>
-							<pre><code data-trim contenteditable>
-cd ~/books-ms
-
-ansible-playbook /vagrant/ansible/service-bg.yml \
-    -i /vagrant/ansible/hosts/prod \
-    --extra-vars "repo_dir=$PWD service_name=books-ms" \
-    --skip-tags "build,push,pull" \
-    -vv
-
-curl 10.100.198.201:8500/v1/catalog/services \
+curl "prod:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo-${NEXT_COLOR}&servicePath=/demo" \
     | jq '.'
 
-curl http://10.100.198.201:8500/v1/kv/books-ms/color?raw
+curl -i prod/demo/hello
 
-curl 10.100.198.201/api/v1/books | jq '.'
-						</code></pre>
+docker-compose -f docker-compose-bg.yml logs
+
+curl -XPUT -d $NEXT_COLOR prod:8500/v1/kv/go-demo/color</code></pre>
 					</section>
-					<section id="bg-fail-pre-deployment">
-						<h4>Blue-Green Deployment</h4>
-						<h2>Failing Pre-Deployment Tests</h2>
-							<pre><code data-trim contenteditable>
-ansible-playbook /vagrant/ansible/service-bg.yml \
-    -i /vagrant/ansible/hosts/prod \
-    --extra-vars "repo_dir=$PWD service_name=books-ms fail_pre_deployment_tests=true" \
-    --skip-tags "build,push,pull" \
-    -vv
+					<section id="bg-diag-1">
+						<h2>Blue-Green Deployment</h2>
+						<img src="img/docker-flow-proxy/docker-flow-proxy-deployment-bg-single-server-1.png" style="width: 70%; height: 70%;"/>
+					</section>
+					<section id="bg-code-2">
+						<h2>Blue-Green Deployment</h2>
+                        <pre><code data-trim contenteditable>COLOR=$(curl prod:8500/v1/kv/go-demo/color?raw)
 
-curl 10.100.198.201:8500/v1/catalog/services \
+NEXT_COLOR=$(if [[ "$COLOR" == "blue" ]]; then echo "green"
+else echo "blue"; fi)
+
+VERSION=:1.1 docker-compose -f docker-compose-bg.yml \
+    up -d db app-${NEXT_COLOR}
+
+docker-compose -f docker-compose-bg.yml ps
+
+curl -i prod/demo/hello
+
+docker-compose -f docker-compose-bg.yml logs</code></pre>
+					</section>
+					<section id="bg-diag-2">
+						<h2>Blue-Green Deployment</h2>
+						<img src="img/docker-flow-proxy/docker-flow-proxy-deployment-bg-single-server-2.png" style="width: 70%; height: 70%;"/>
+					</section>
+					<section id="bg-code-3">
+						<h2>Blue-Green Deployment</h2>
+                        <pre><code data-trim contenteditable>curl "prod:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo-${NEXT_COLOR}&servicePath=/demo" \
     | jq '.'
 
-curl http://10.100.198.201:8500/v1/kv/books-ms/color?raw
-
-curl 10.100.198.201/api/v1/books | jq '.'
-							</code></pre>
-					</section>
-					<section id="bg-fail-pre-integration">
-						<h4>Blue-Green Deployment</h4>
-						<h2>Failing Pre-Integration Tests</h2>
-							<pre><code data-trim contenteditable>
-ansible-playbook /vagrant/ansible/service-bg.yml \
-    -i /vagrant/ansible/hosts/prod \
-    --extra-vars "repo_dir=$PWD service_name=books-ms proxy_url=http://1.2.3.4" \
-    --skip-tags "build,push,pull" \
-    -vv
-
-curl 10.100.198.201:8500/v1/catalog/services \
+curl "prod:8081/v1/docker-flow-proxy/remove?serviceName=go-demo-${COLOR}" \
     | jq '.'
 
-curl http://10.100.198.201:8500/v1/kv/books-ms/color?raw
+curl -XPUT -d $NEXT_COLOR prod:8500/v1/kv/go-demo/color
 
-curl 10.100.198.201/api/v1/books | jq '.'
-							</code></pre>
+curl -i prod/demo/hello # Repeat
+
+docker-compose -f docker-compose-bg.yml logs
+
+docker-compose -f docker-compose-bg.yml stop app-${COLOR}
+
+docker-compose -f docker-compose-bg.yml ps</code></pre>
 					</section>
-					<section id="bg-fail-post-integration">
-						<h4>Blue-Green Deployment</h4>
-						<h2>Failing Post-Integration Tests</h2>
-							<pre><code data-trim contenteditable>
-ansible-playbook /vagrant/ansible/service-bg.yml \
-    -i /vagrant/ansible/hosts/prod \
-    --extra-vars "repo_dir=$PWD service_name=books-ms proxy_url2=http://1.2.3.4" \
-    --skip-tags "build,push,pull" \
-    -vv
-
-curl 10.100.198.201:8500/v1/catalog/services \
-    | jq '.'
-
-curl http://10.100.198.201:8500/v1/kv/books-ms/color?raw
-
-curl 10.100.198.201/api/v1/books | jq '.'
-							</code></pre>
+					<section id="bg-diag-3">
+						<h2>Blue-Green Deployment</h2>
+						<img src="img/docker-flow-proxy/docker-flow-proxy-deployment-bg-single-server-3.png" style="width: 70%; height: 70%;"/>
 					</section>
-					<section id="bg-cleaup">
-						<h4>Blue-Green Deployment</h4>
-						<h2>Cleaning Up</h2>
-							<pre><code data-trim contenteditable>
-exit
+					<section id="bg-code-4">
+						<h2>Blue-Green Deployment</h2>
+                        <pre><code data-trim contenteditable>docker-compose -f docker-compose-bg.yml down
 
-vagrant halt prod
-							</code></pre>
+curl "prod:8081/v1/docker-flow-proxy/remove?serviceName=go-demo-${NEXT_COLOR}" \
+    | jq '.'</code></pre>
+					</section>
+					<section id="df-code-1">
+						<h2>Docker Flow</h2>
+						<pre><code data-trim contenteditable>export FLOW_PROXY_HOST=10.100.198.201
+
+export FLOW_PROXY_RECONF_PORT=8081
+
+export FLOW_CONSUL_ADDRESS=http://10.100.198.201:8500
+
+export FLOW_PROXY_DOCKER_HOST=tcp://10.100.198.201:2375
+
+docker-flow --flow=deploy --flow=proxy --flow=stop-old
+
+docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+
+curl -i prod/demo/hello</code></pre>
+					</section>
+					<section id="df-code-2">
+						<h2>Docker Flow</h2>
+                            <pre><code data-trim contenteditable>docker-flow --flow=deploy --flow=proxy --flow=stop-old
+
+docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+
+curl -i prod/demo/hello</code></pre>
+					</section>
+					<section id="df-code-3">
+						<h2>Clean Up</h2>
+                            <pre><code data-trim contenteditable>exit
+
+vagrant destroy -f prod</code></pre>
 					</section>
 				</section>
 				<section data-background="../img/background/scaling.png">
