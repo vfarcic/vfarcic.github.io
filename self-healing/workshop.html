@@ -714,7 +714,7 @@ curl -i localhost/demo/hello</code></pre>
                     <section id="redeployment-df-1">
                         <h4>Redeployment</h4>
                         <h2>Docker Flow</h2>
-                        <img src="img/architecture/docker-flow-first-deployment-flow.png"/>
+                        <img src="../img/docker-flow/docker-flow-first-deployment-flow.png"/>
                     </section>
                     <section id="redeployment-df-code-2">
                         <h4>Redeployment</h4>
@@ -728,7 +728,7 @@ curl -i localhost/demo/hello</code></pre>
                     <section id="redeployment-df-2">
                         <h4>Redeployment</h4>
                         <h2>Docker Flow</h2>
-                        <img src="img/architecture/docker-flow-second-deployment-flow.png"/>
+                        <img src="../img/docker-flow/docker-flow-second-deployment-flow.png"/>
                     </section>
                     <section id="redeployment-df-code-3">
                         <h4>Redeployment</h4>
@@ -746,7 +746,7 @@ docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"</code></pre>
                     <section id="redeployment-df-3">
                         <h4>Redeployment</h4>
                         <h2>Docker Flow</h2>
-                        <img src="img/architecture/docker-flow-scaling-flow.png"/>
+                        <img src="../img/docker-flow/docker-flow-scaling-flow.png"/>
                     </section>
                     <section id="redeployment-jenkins-setup-code">
                         <h4>Redeployment</h4>
@@ -1161,7 +1161,9 @@ sudo killall -HUP consul</code></pre>
                 <section>
                     <section id="cleanup">
                         <h1>Cleanup</h1>
-						<pre><code data-trim contenteditable>vagrant destroy -f</code></pre>
+						<pre><code data-trim contenteditable>exit
+
+vagrant destroy -f</code></pre>
                     </section>
                 </section>
 			</div>
