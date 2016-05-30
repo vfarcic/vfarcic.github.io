@@ -272,7 +272,7 @@
                         <h4>Deployment</h4>
                         <h1 class="fragment">Service discovery</h1>
                         <h1 class="fragment">==</h1>
-                        <h1 class="fragment">Distributed storage +&nbsp;registration +&nbsp;discovery</h1>
+                        <h1 class="fragment">Registry +&nbsp;registration +&nbsp;discovery</h1>
                     </section>
                     <section id="deploy-bg-diag">
                         <h2>Deployment (revisited)</h2>
@@ -298,7 +298,114 @@
                         <img src="img/diag/cd-flow-post-deployment-tests.png" style="width: 80%; height: 80%;">
                     </section>
                 </section>
-                <!--TODO: Continue from "Rolling Back and Cleaning Up"-->
+                <section data-background="../img/background/jenkins.png">
+                    <section id="rollback-1">
+                        <h1>Rollback</h1>
+                        <h2 class="fragment">Only if the flow fails</h2>
+                        <h2 class="fragment">Afterwards, only roll forward</h2>
+                    </section>
+                    <section id="rollback-2">
+                        <h1>Rollback</h1>
+                        <h2 class="fragment">Failed flow</h2>
+                        <h2 class="fragment">==</h2>
+                        <h2 class="fragment">Unchanged production</h2>
+                    </section>
+                    <section id="rollback-3">
+                        <h1>Rollback</h1>
+                        <h2 class="fragment">Pre-deployment tests</h2>
+                        <h2 class="fragment">==</h2>
+                        <h2 class="fragment">No action</h2>
+                    </section>
+                    <section id="rollback-4">
+                        <h1>Rollback</h1>
+                        <h2 class="fragment">Pre-integration tests</h2>
+                        <h3 class="fragment">Proxy still configured with the old release</h3>
+                        <h3 class="fragment">Stop the new release</h3>
+                        <h3 class="fragment">Remove service data</h3>
+                    </section>
+                    <section id="rollback-5">
+                        <h1>Rollback</h1>
+                        <h2 class="fragment">Post-integration tests</h2>
+                        <h3 class="fragment">Proxy configured with the new release</h3>
+                        <h3 class="fragment">Reconfigure the proxy</h3>
+                        <h3 class="fragment">Stop the new release</h3>
+                        <h3 class="fragment">Update service data</h3>
+                    </section>
+                    <section id="rollback-diag">
+                        <h1>Rollback</h1>
+                        <img src="img/diag/cd-flow-rollback-cleanup.png">
+                    </section>
+                    <section id="rollback-6">
+                        <h1>Rollback</h1>
+                        <h2 class="fragment">Databases?</h2>
+                        <h3 class="fragment">Backward compatibility</h3>
+                        <h3 class="fragment">Short iterations</h3>
+                    </section>
+                </section>
+                <section data-background="../img/background/summary.png">
+                    <section id="where-to-run">
+                        <h1>Where to run?</h1>
+                        <h2 class="fragment">In production, if necessary</h2>
+                        <h2 class="fragment">No SSH</h2>
+                    </section>
+                    <section id="where-to-run-diag">
+                        <h1>Where to run?</h1>
+                        <img src="img/diag/cd-flow.png">
+                    </section>
+                </section>
+                <section data-background="../img/background/the_end.jpg">
+                    <section id="the-end-almost-again">
+                        <h1>The End</h1>
+                    </section>
+                </section>
+                <section data-background="../img/background/monitoring.jpg">
+                    <section id="self-healing">
+                        <h1 class="fragment">Monitor</h1>
+                        <h1 class="fragment">React</h1>
+                        <h1 class="fragment">Prevent</h1>
+                        <h1 class="fragment">Automate</h1>
+                    </section>
+                </section>
+                <section data-background="../img/background/tools.jpg">
+                    <section id="tools">
+                        <h1>Tools & architecture</h1>
+                    </section>
+                    <section id="tools-architecture">
+                        <h3>Architecture</h3>
+                        <h1 class="fragment">Microservices</h1>
+                        <h1 class="fragment">Immutable deployments</h1>
+                        <h1 class="fragment">Containers<label class="fragment"> (or VMs)</label></h1>
+                    </section>
+                    <section id="tools-proxy">
+                        <h2>Tools</h2>
+                        <h1 class="fragment">Proxy</h1>
+                        <div>
+                            <img src="../img/products/apache.png" class="fragment" style="width: 30%; height: 30%;">
+                        </div>
+                        <div>
+                            <img src="../img/products/nginx.png" class="fragment" style="width: 40%; height: 40%; background-color: white;">
+                            <img src="../img/products/haproxy.png" class="fragment" style="width: 40%; height: 40%; background-color: white;">
+                        </div>
+                        <h1 class="fragment"><a href="https://github.com/vfarcic/docker-flow-proxy">Docker Flow: Proxy</a></h1>
+                    </section>
+                    <section id="tools-cluster">
+                        <h3>Tools</h3>
+                        <h2 class="fragment">Cluster orchestrator</h2>
+                        <div>
+                            <img src="../img/products/mesos.jpg" class="fragment" style="width: 30%; height: 30%;">
+                            <img src="../img/products/kubernetes.png" class="fragment" style="width: 30%; height: 30%;">
+                            <img src="../img/products/swarm.png" class="fragment" style="width: 30%; height: 30%; background-color: white;">
+                        </div>
+                    </section>
+                    <section id="tools-orchestrator">
+                        <h2>Tools</h2>
+                        <h1 class="fragment">Orchestrator</h1>
+                        <div>
+                            <img src="../img/products/jenkins.png" class="fragment" style="background-color: white;">
+                        </div>
+                        <h1 class="fragment"><a href="https://github.com/vfarcic/docker-flow">Docker Flow</a></h1>
+                    </section>
+                </section>
                 <section data-background="../img/background/the_end.jpg">
                     <section id="the-end-blog">
                         <h2>Viktor Farcic</h2>
