@@ -185,7 +185,7 @@
                             <li class="fragment">Build</li>
                             <li class="fragment">Deploy</li>
                         </ul>
-                        <img class="fragment" src="img/diag/cd-flow-simple.png">
+                        <img class="fragment" src="../img/cd-flow/cd-flow-simple.png">
                     </section>
                 </section>
                 <section data-background="../img/background/jenkins.png">
@@ -212,25 +212,59 @@
                     </section>
                     <section id="test-diag">
                         <h1>Testing</h1>
-                        <img src="img/diag/cd-flow-pre-deployment-tests.png">
+                        <img src="../img/cd-flow/cd-flow-pre-deployment-tests.png">
                     </section>
                 </section>
                 <section data-background="../img/background/jenkins.png">
                     <section id="build">
                         <h1>Building</h1>
+                        <ul>
+                            <li class="fragment">We know how to do it</li>
+                            <li class="fragment">Infrastructure?</li>
+                        </ul>
                     </section>
                     <section id="build-diag">
                         <h1>Building</h1>
-                        <img src="img/diag/cd-flow-build.png" style="width: 50%; height: 50%;">
+                        <img src="../img/cd-flow/cd-flow-build.png" style="width: 50%; height: 50%;">
                     </section>
                 </section>
                 <section data-background="../img/background/jenkins.png">
                     <section id="deploy">
                         <h1>Deployment</h1>
+                        <ul>
+                            <li class="fragment">It's a cluster, not a server</li>
+                            <li class="fragment">Infrastructure?</li>
+                        </ul>
                     </section>
                     <section id="deploy-diag">
                         <h1>Deployment</h1>
-                        <img src="img/diag/cd-flow-deploy.png" style="width: 50%; height: 50%;">
+                        <img src="../img/cd-flow/cd-flow-deploy.png" style="width: 50%; height: 50%;">
+                    </section>
+                </section>
+                <section data-background="../img/background/jenkins.png">
+                    <section id="jenkins">
+                        <h1>Jenkins Pipeline</h1>
+                        <h3 class="fragment">CD defined as code</h3>
+                        <pre class="fragment"><code data-trim contenteditable>node("cd") {
+    git "https://github.com/vfarcic/go-demo.git"
+
+    stage "test"
+    sh "docker-compose -f docker-compose-test.yml run --rm unit"
+
+    stage "build"
+    sh "docker build -t vfarcic/go-demo ."
+
+    stage "deploy"
+    withEnv(['DOCKER_HOST=tcp://swarm-master:2375']) {
+        sh "docker-compose up -d"
+        sh "docker-compose ps"
+    }
+}</code></pre>
+                    </section>
+                    <section id="jenkins-screen">
+                        <h1>Jenkins Pipeline</h1>
+                        <h3>CD defined as code</h3>
+                        <img src="img/jenkins-pipeline-1.png">
                     </section>
                 </section>
                 <section data-background="../img/background/the_end.jpg">
@@ -276,7 +310,7 @@
                     </section>
                     <section id="deploy-bg-diag">
                         <h2>Deployment (revisited)</h2>
-                        <img src="img/diag/cd-flow-deploy-bg.png" style="width: 80%; height: 80%;">
+                        <img src="../img/cd-flow/cd-flow-deploy-bg.png" style="width: 80%; height: 80%;">
                     </section>
                 </section>
                 <section data-background="../img/background/jenkins.png">
@@ -295,7 +329,7 @@
                     </section>
                     <section id="test-integ-diag">
                         <h1>Testing (revisited)</h1>
-                        <img src="img/diag/cd-flow-post-deployment-tests.png" style="width: 80%; height: 80%;">
+                        <img src="../img/cd-flow/cd-flow-post-deployment-tests.png" style="width: 80%; height: 80%;">
                     </section>
                 </section>
                 <section data-background="../img/background/jenkins.png">
@@ -333,7 +367,7 @@
                     </section>
                     <section id="rollback-diag">
                         <h1>Rollback</h1>
-                        <img src="img/diag/cd-flow-rollback-cleanup.png">
+                        <img src="../img/cd-flow/cd-flow-rollback-cleanup.png">
                     </section>
                     <section id="rollback-6">
                         <h1>Rollback</h1>
@@ -350,7 +384,7 @@
                     </section>
                     <section id="where-to-run-diag">
                         <h1>Where to run?</h1>
-                        <img src="img/diag/cd-flow.png">
+                        <img src="../img/cd-flow/cd-flow.png">
                     </section>
                 </section>
                 <section data-background="../img/background/the_end.jpg">

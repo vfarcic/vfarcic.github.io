@@ -21,6 +21,14 @@ body:after {
   top: -20px;
   right: -50px;}
 
+/*Start New*/
+.red {
+  color: #ff2c2d; }
+
+.green {
+  color: #17ff2e; }
+/*End New*/
+
 .reveal {
   font-family: 'Source Sans Pro', Helvetica, sans-serif;
   font-size: 38px;

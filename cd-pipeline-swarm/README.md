@@ -9,7 +9,7 @@ Continuous Delivery, Continuous Deployment, CD, Docker, DevOps, Docker Swarm, Do
 
 Many of us have already experimented with Docker - for example, running one of the pre-built images from Docker Hub. It is possible that your team might have recognized the benefits that Docker, in conjunction with experimentation, provides in building microservices and the advantages the technology could bring to development, testing, integration, and, ultimately, production.
 
-However, you must create a comprehensive build pipeline before deploying any containers into a live environment.
+However, you must create a comprehensive deployment pipeline before deploying any containers into a live environment.
 
 Integrating containers into a continuous-delivery pipeline is far from easy. Along with the benefits Docker brings, there are challenges both technological and process related. This presentation attempts to outline the steps you need to take for a fully automated Jenkins pipeline that continuously builds, tests, and deploys microservices into a Docker Swarm cluster.
 
