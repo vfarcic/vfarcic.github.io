@@ -287,18 +287,21 @@ docker-compose down</code></pre>
                     </section>
                     <section id="deploy-problems">
                         <h4>Deployment</h4>
-                        <h2 class="fragment">Problems?</h2>
-                        <h3 class="fragment">Batteries included but removable</h3>
-                        <h3 class="fragment">Swarm does not support/include</h3>
+                        <h2>Problems</h2>
                         <ul>
-                            <li class="fragment">Blue-green deployment</li>
-                            <li class="fragment">Service discovery</li>
-                            <li class="fragment">Dynamic proxy</li>
+                            <li class="fragment">Batteries included but removable</li>
+                            <li class="fragment">Swarm does not support/include...
+                                <ul>
+                                    <li class="fragment">Blue-green deployment</li>
+                                    <li class="fragment">Service discovery</li>
+                                    <li class="fragment">Dynamic proxy</li>
+                                </ul>
+                            </li>
                         </ul>
                     </section>
                     <section id="deploy-what">
                         <h4>Deployment</h4>
-                        <h2 class="fragment">What needs to be done</h2>
+                        <h2>What needs to be done</h2>
                         <ul>
                             <li class="fragment">Different targets for blue and green releases</li>
                             <li class="fragment">Figure out which color to deploy</li>
@@ -309,7 +312,7 @@ docker-compose down</code></pre>
                     </section>
                     <section id="deploy-how">
                         <h4>Deployment</h4>
-                        <h2 class="fragment">How it can be done</h2>
+                        <h2>How can it be done</h2>
                         <ul>
                             <li class="fragment">Registrator (<a href="https://github.com/gliderlabs/registrator">https://github.com/gliderlabs/registrator</a>)</li>
                             <li class="fragment">Consul (<a href="https://www.consul.io/">https://www.consul.io/</a>)</li>
@@ -317,7 +320,20 @@ docker-compose down</code></pre>
                             <li class="fragment">Docker Flow: Proxy (<a href="https://github.com/vfarcic/docker-flow-proxy">https://github.com/vfarcic/docker-flow-proxy</a>)</li>
                         </ul>
                     </section>
-                    <!--TODO: Continue-->
+                    <section id="deploy-pipeline">
+                        <h4>Deployment</h4>
+                        <h3>CD defined as code</h3>
+                        <div>
+                            <a href="http://10.100.198.200:8080/job/go-demo-2/configure">http://10.100.198.200:8080/job/go-demo-2/configure</a>
+                        </div>
+                        <div>
+                            <a href="http://10.100.198.200:8080/job/go-demo-2">http://10.100.198.200:8080/job/go-demo-2</a>
+                        </div>
+                        <div>
+                            Press the <strong>Build</strong> button
+                        </div>
+                        <pre><code data-trim contenteditable>curl -i cd/demo/hello</code></pre>
+                    </section>
                 </section>
                 <section data-background="../img/background/jenkins.png">
                     <section id="test-integ-1">
@@ -336,6 +352,44 @@ docker-compose down</code></pre>
                     <section id="test-integ-diag">
                         <h1>Testing (revisited)</h1>
                         <img src="../img/cd-flow/cd-flow-post-deployment-tests.png" style="width: 80%; height: 80%;">
+                    </section>
+                    <section id="test-problems">
+                        <h1>Testing (revisited)</h1>
+                        <h2>Problems</h2>
+                        <ul>
+                            <li class="fragment">Where are my services?</li>
+                            <li class="fragment">Parallel execution?</li>
+                        </ul>
+                    </section>
+                    <section id="test-what">
+                        <h1>Testing (revisited)</h1>
+                        <h2>What needs to be done</h2>
+                        <ul>
+                            <li class="fragment">Discover the addresses</li>
+                            <li class="fragment">Run tests for each instance</li>
+                        </ul>
+                    </section>
+                    <section id="test-how">
+                        <h1>Testing (revisited)</h1>
+                        <h2>How can it be done</h2>
+                        <ul>
+                            <li class="fragment">Request info from Consul</li>
+                            <li class="fragment">Leverage Pipeline's step <code>parallel</code></li>
+                        </ul>
+                    </section>
+                    <section id="test-pipeline">
+                        <h1>Testing (revisited)</h1>
+                        <h3>CD defined as code</h3>
+                        <div>
+                            <a href="http://10.100.198.200:8080/job/go-demo-3/configure">http://10.100.198.200:8080/job/go-demo-3/configure</a>
+                        </div>
+                        <div>
+                            <a href="http://10.100.198.200:8080/job/go-demo-3">http://10.100.198.200:8080/job/go-demo-3</a>
+                        </div>
+                        <div>
+                            Press the <strong>Build</strong> button
+                        </div>
+                        <pre><code data-trim contenteditable>curl -i cd/demo/hello</code></pre>
                     </section>
                 </section>
                 <section data-background="../img/background/jenkins.png">
