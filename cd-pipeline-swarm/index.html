@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Continuously deploying containers with Jenkins Pipeline to a Docker Swarm cluster</title>
+		<title>Continuously Deploying Containers with Jenkins Pipeline To a Docker Swarm Cluster</title>
 
 		<meta name="author" content="Viktor Farcic">
 
@@ -40,7 +40,7 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section id="cover" data-background="../img/background/health.png">
-					<h2>Continuously deploying containers with Jenkins Pipeline to a Docker Swarm cluster</h2>
+					<h2>Continuously Deploying Containers with Jenkins Pipeline To a Docker Swarm Cluster</h2>
                     <hr/>
 					<h2>
 						<a href="http://technologyconversations.com/about/">Viktor Farcic</a>
@@ -156,8 +156,9 @@ cd go-demo</code></pre>
                         <ul>
                             <li class="fragment">Unreliable</li>
                             <li class="fragment">Do not prove much</li>
-                            <li class="fragment">TDD == development process</li>
+                            <li class="fragment">Without TDD == too late</li>
                             <li class="fragment">TDD != testing technique</li>
+                            <li class="fragment">TDD == development process</li>
                         </ul>
                     </section>
                     <section id="test-functional">
@@ -174,6 +175,11 @@ cd go-demo</code></pre>
 
 ll</code></pre>
                     </section>
+                    <section id="test-video">
+                        <div>
+                        <script type="text/javascript" src="https://asciinema.org/a/48549.js" id="asciicast-48549" async preload="true"></script>
+                        </div>
+                    </section>
                     <section id="test-diag">
                         <h1>Testing</h1>
                         <img src="../img/cd-flow/cd-flow-pre-deployment-tests.png">
@@ -184,7 +190,8 @@ ll</code></pre>
                         <h1>Building</h1>
                         <ul>
                             <li class="fragment">We know how to do it</li>
-                            <li class="fragment">Infrastructure?</li>
+                            <li class="fragment">Self-sufficient?</li>
+                            <li class="fragment">Immutable?</li>
                         </ul>
                     </section>
                     <section id="build-run">
@@ -192,6 +199,11 @@ ll</code></pre>
                         <pre><code data-trim contenteditable>docker build -t vfarcic/go-demo .
 
 # docker push vfarcic/go-demo</code></pre>
+                    </section>
+                    <section id="build-video">
+                        <div>
+                            <script type="text/javascript" src="https://asciinema.org/a/48551.js" id="asciicast-48551" async preload="true"></script>
+                        </div>
                     </section>
                     <section id="build-diag">
                         <h1>Building</h1>
@@ -218,16 +230,41 @@ docker-compose ps
 
 docker-compose down</code></pre>
                     </section>
+                    <section id="deploy-video">
+                        <div>
+                            <script type="text/javascript" src="https://asciinema.org/a/48552.js" id="asciicast-48552" async preload="true"></script>
+                        </div>
+                    </section>
                     <section id="deploy-diag">
                         <h1>Deployment</h1>
                         <img src="../img/cd-flow/cd-flow-deploy.png" style="width: 50%; height: 50%;">
                     </section>
                 </section>
                 <section data-background="../img/background/jenkins.png">
-                    <section id="jenkins">
+                    <section id="jenkins-groovy">
                         <h1>Jenkins Pipeline</h1>
-                        <h3 class="fragment">CD defined as code</h3>
-                        <div class="fragment">
+                        <h3>CD defined as code</h3>
+                        <pre class="fragment"><code data-trim contenteditable>node("cd") {
+  git "https://github.com/vfarcic/go-demo.git"
+
+  stage "pre-dep-tests"
+  sh "docker-compose -f docker-compose-test.yml run --rm unit"
+
+  stage "build"
+  sh "docker build -t vfarcic/go-demo ."
+  // sh "docker push vfarcic/go-demo"
+
+  stage "deploy"
+  withEnv(['DOCKER_HOST=tcp://swarm-master:2375']) {
+    sh "docker-compose up -d"
+    sh "docker-compose ps"
+  }
+}</code></pre>
+                    </section>
+                    <section id="jenkins-ui">
+                        <h1>Jenkins Pipeline</h1>
+                        <h3>CD defined as code</h3>
+                        <div>
                             <div>
                                 <a href="http://10.100.198.200:8080/job/go-demo-1/configure">http://10.100.198.200:8080/job/go-demo-1/configure</a>
                             </div>
@@ -238,6 +275,10 @@ docker-compose down</code></pre>
                                 Press the <strong>Build</strong> button
                             </div>
                         </div>
+                        <pre class="fragment"><code data-trim contenteditable>docker-compose -p go-demo-1 down</code></pre>
+                    </section>
+                    <section id="jenkins-video">
+                        <iframe width="840" height="630" src="https://www.youtube.com/embed/Rps9dsaoWH4" frameborder="0" allowfullscreen></iframe>
                     </section>
                 </section>
                 <section data-background="../img/background/the_end.jpg">
@@ -320,7 +361,17 @@ docker-compose down</code></pre>
                             <li class="fragment">Docker Flow: Proxy (<a href="https://github.com/vfarcic/docker-flow-proxy">https://github.com/vfarcic/docker-flow-proxy</a>)</li>
                         </ul>
                     </section>
-                    <section id="deploy-pipeline">
+                    <section id="deploy-pipeline-groovy">
+                        <h1>Jenkins Pipeline</h1>
+                        <h3>CD defined as code</h3>
+                        <pre class="fragment"><code data-trim contenteditable>...
+  stage "deploy"
+  withEnv(envs) {
+    sh "docker-flow -p go-demo --flow=deploy --flow=proxy --flow=stop-old"
+  }
+...</code></pre>
+                    </section>
+                    <section id="deploy-pipeline-ui">
                         <h4>Deployment</h4>
                         <h3>CD defined as code</h3>
                         <div>
@@ -333,6 +384,9 @@ docker-compose down</code></pre>
                             Press the <strong>Build</strong> button
                         </div>
                         <pre><code data-trim contenteditable>curl -i cd/demo/hello</code></pre>
+                    </section>
+                    <section id="deploy-pipeline-video">
+                        <iframe width="840" height="630" src="https://www.youtube.com/embed/iF69iP8TVYk" frameborder="0" allowfullscreen></iframe>
                     </section>
                 </section>
                 <section data-background="../img/background/jenkins.png">
@@ -377,7 +431,35 @@ docker-compose down</code></pre>
                             <li class="fragment">Leverage Pipeline's step <code>parallel</code></li>
                         </ul>
                     </section>
-                    <section id="test-pipeline">
+                    <section id="test-pipeline-groovy">
+                        <h1>Jenkins Pipeline</h1>
+                        <h3>CD defined as code</h3>
+                        <pre class="fragment"><code data-trim contenteditable>...
+  stage "deploy"
+  withEnv(envs) {
+    sh "docker-flow -p go-demo --flow=deploy --scale=\"${SCALE}\""
+  }
+
+  stage "pre-integ-tests"
+  def addresses = getAddresses(consul)
+  def tests = [:]
+  for (address in addresses) {
+    def host = "${address.ServiceAddress}:${address.ServicePort}"
+    def index = "${address.CreateIndex}"
+    tests[index] = { sh "HOST_IP=${host} docker-compose -p go-demo-tests-${index} -f docker-compose-test.yml run --rm production" }
+  }
+  parallel tests
+
+  stage "integrate"
+  withEnv(envs) {
+    sh "docker-flow -p go-demo --flow=proxy --flow=stop-old"
+  }
+
+  stage "post-integ-tests"
+  sh "HOST_IP=${proxy} docker-compose -f docker-compose-test.yml run --rm production"
+                            ...</code></pre>
+                    </section>
+                    <section id="test-pipeline-ui">
                         <h1>Testing (revisited)</h1>
                         <h3>CD defined as code</h3>
                         <div>
@@ -390,6 +472,9 @@ docker-compose down</code></pre>
                             Press the <strong>Build</strong> button
                         </div>
                         <pre><code data-trim contenteditable>curl -i cd/demo/hello</code></pre>
+                    </section>
+                    <section id="test-pipeline-video">
+                        <iframe width="840" height="630" src="https://www.youtube.com/embed/CBt3IrBoZlw" frameborder="0" allowfullscreen></iframe>
                     </section>
                 </section>
                 <section data-background="../img/background/jenkins.png">
@@ -448,59 +533,13 @@ docker-compose down</code></pre>
                     </section>
                 </section>
                 <section data-background="../img/background/the_end.jpg">
-                    <section id="the-end-almost-again">
-                        <h1>The End</h1>
+                    <section id="the-end-cb">
+                        <h2>Viktor Farcic</h2>
+                        <hr/>
+                        <figure>
+                            <a href="https://www.cloudbees.com"><img src="../img/cloudbees-big.png" style="background-color: white;"/></a>
+                        </figure>
                     </section>
-                </section>
-                <section data-background="../img/background/monitoring.jpg">
-                    <section id="self-healing">
-                        <h1 class="fragment">Monitor</h1>
-                        <h1 class="fragment">React</h1>
-                        <h1 class="fragment">Prevent</h1>
-                        <h1 class="fragment">Automate</h1>
-                    </section>
-                </section>
-                <section data-background="../img/background/tools.jpg">
-                    <section id="tools">
-                        <h1>Tools & architecture</h1>
-                    </section>
-                    <section id="tools-architecture">
-                        <h3>Architecture</h3>
-                        <h1 class="fragment">Microservices</h1>
-                        <h1 class="fragment">Immutable deployments</h1>
-                        <h1 class="fragment">Containers<label class="fragment"> (or VMs)</label></h1>
-                    </section>
-                    <section id="tools-proxy">
-                        <h2>Tools</h2>
-                        <h1 class="fragment">Proxy</h1>
-                        <div>
-                            <img src="../img/products/apache.png" class="fragment" style="width: 30%; height: 30%;">
-                        </div>
-                        <div>
-                            <img src="../img/products/nginx.png" class="fragment" style="width: 40%; height: 40%; background-color: white;">
-                            <img src="../img/products/haproxy.png" class="fragment" style="width: 40%; height: 40%; background-color: white;">
-                        </div>
-                        <h1 class="fragment"><a href="https://github.com/vfarcic/docker-flow-proxy">Docker Flow: Proxy</a></h1>
-                    </section>
-                    <section id="tools-cluster">
-                        <h3>Tools</h3>
-                        <h2 class="fragment">Cluster orchestrator</h2>
-                        <div>
-                            <img src="../img/products/mesos.jpg" class="fragment" style="width: 30%; height: 30%;">
-                            <img src="../img/products/kubernetes.png" class="fragment" style="width: 30%; height: 30%;">
-                            <img src="../img/products/swarm.png" class="fragment" style="width: 30%; height: 30%; background-color: white;">
-                        </div>
-                    </section>
-                    <section id="tools-orchestrator">
-                        <h2>Tools</h2>
-                        <h1 class="fragment">Orchestrator</h1>
-                        <div>
-                            <img src="../img/products/jenkins.png" class="fragment" style="background-color: white;">
-                        </div>
-                        <h1 class="fragment"><a href="https://github.com/vfarcic/docker-flow">Docker Flow</a></h1>
-                    </section>
-                </section>
-                <section data-background="../img/background/the_end.jpg">
                     <section id="the-end-blog">
                         <h2>Viktor Farcic</h2>
                         <hr/>

@@ -432,7 +432,7 @@ docker-compose exec db ping -c 1 app</code></pre>
 					<section id="dp-running-ping">
 						<h4>Deployment Pipeline: Initial Stages</h4>
 						<h2>Running containers</h2>
-						<pre><code data-trim contenteditable>curl localhost:$PORT/demo/hello
+						<pre><code data-trim contenteditable>curl -i localhost:$PORT/demo/hello
 
 curl -XPUT localhost:$PORT/demo/person?name=Viktor
 
