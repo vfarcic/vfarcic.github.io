@@ -80,6 +80,15 @@
                         </a>
                     </section>
                 </section>
+                <section data-background="../img/background/train.png">
+                    <section id="cd" data-transition="fade-in slide-out">
+                        <h1>Continuous Deployment</h1>
+                        <hr/>
+                        <h1 class="fragment">Every commit to production</h1>
+                        <hr/>
+                        <h1 class="fragment">Nirvana</h1>
+                    </section>
+                </section>
                 <section data-background="../img/background/containers.png">
                     <section id="what" data-transition="fade-in slide-out">
                         <h1 class="fragment">Docker Containers</h1>
@@ -110,7 +119,7 @@
                         <h1 class="fragment">Cluster cannot be managed manually</h1>
                     </section>
                 </section>
-                <section>
+                <section data-background="../img/background/setup.jpg">
                     <section id="setup">
                         <h1>Setup</h1>
                         <div>Requirements: Vagrant</div>
@@ -176,9 +185,7 @@ cd go-demo</code></pre>
 ll</code></pre>
                     </section>
                     <section id="test-video">
-                        <div>
-                        <script type="text/javascript" src="https://asciinema.org/a/48549.js" id="asciicast-48549" async preload="true"></script>
-                        </div>
+                        <a href="https://asciinema.org/a/48549" target="_blank"><img src="https://asciinema.org/a/48549.png" width="1030"/></a>
                     </section>
                     <section id="test-diag">
                         <h1>Testing</h1>
@@ -201,9 +208,7 @@ ll</code></pre>
 # docker push vfarcic/go-demo</code></pre>
                     </section>
                     <section id="build-video">
-                        <div>
-                            <script type="text/javascript" src="https://asciinema.org/a/48551.js" id="asciicast-48551" async preload="true"></script>
-                        </div>
+                        <a href="https://asciinema.org/a/48551" target="_blank"><img src="https://asciinema.org/a/48551.png" width="1030"/></a>
                     </section>
                     <section id="build-diag">
                         <h1>Building</h1>
@@ -231,9 +236,7 @@ docker-compose ps
 docker-compose down</code></pre>
                     </section>
                     <section id="deploy-video">
-                        <div>
-                            <script type="text/javascript" src="https://asciinema.org/a/48552.js" id="asciicast-48552" async preload="true"></script>
-                        </div>
+                        <a href="https://asciinema.org/a/48552" target="_blank"><img src="https://asciinema.org/a/48552.png" width="1030"/></a>
                     </section>
                     <section id="deploy-diag">
                         <h1>Deployment</h1>
@@ -471,7 +474,9 @@ docker-compose down</code></pre>
                         <div>
                             Press the <strong>Build</strong> button
                         </div>
-                        <pre><code data-trim contenteditable>curl -i cd/demo/hello</code></pre>
+                        <pre><code data-trim contenteditable>docker ps -a
+
+curl -i cd/demo/hello</code></pre>
                     </section>
                     <section id="test-pipeline-video">
                         <iframe width="840" height="630" src="https://www.youtube.com/embed/CBt3IrBoZlw" frameborder="0" allowfullscreen></iframe>
@@ -521,7 +526,7 @@ docker-compose down</code></pre>
                         <h3 class="fragment">Short iterations</h3>
                     </section>
                 </section>
-                <section data-background="../img/background/summary.png">
+                <section data-background="../img/background/jenkins.png">
                     <section id="where-to-run">
                         <h1>Where to run?</h1>
                         <h2 class="fragment">In production, if necessary</h2>
@@ -530,6 +535,14 @@ docker-compose down</code></pre>
                     <section id="where-to-run-diag">
                         <h1>Where to run?</h1>
                         <img src="../img/cd-flow/cd-flow.png">
+                    </section>
+                </section>
+                <section data-background="../img/background/summary.png">
+                    <section id="why">
+                        <h1>Parting words</h1>
+                        <h2 class="fragment">Docker == immutability</h2>
+                        <h2 class="fragment">Pipeline == CD as code</h2>
+                        <h2 class="fragment">Swarm == cluster</h2>
                     </section>
                 </section>
                 <section data-background="../img/background/the_end.jpg">
