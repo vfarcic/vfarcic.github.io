@@ -383,6 +383,8 @@ ps aux | grep jav[a] | awk '{print $2}' | xargs kill
 
 cd ms-lifecycle
 
+vagrant plugin install vagrant-cachier
+
 vagrant up cd --provision
 
 vagrant ssh cd</code></pre>
@@ -745,7 +747,7 @@ cat /tmp/example.conf</code></pre>
 vagrant destroy -f serv-disc-01 serv-disc-02 serv-disc-03</code></pre>
 					</section>
 				</section>
-				<section data-background="img/background/proxy.png">
+				<section data-background="../img/background/proxy.png">
 					<section id="proxy">
 						<h2>Proxy Service</h2>
 						<img src="img/ms/microservices.png" class="fragment">
@@ -976,36 +978,36 @@ curl "prod:8081/v1/docker-flow-proxy/remove?serviceName=go-demo" \
 						</ol>
 					</section>
 				</section>
-				<section data-background="img/background/blue-green.png">
+				<section data-background="../img/background/blue-green.png">
 					<section id="deployment-standard" data-transition="fade-in slide-out">
 						<h2>Standard Deployment</h2>
 					</section>
 					<section id="deployment-standard-1" data-transition="fade-in slide-out">
 						<h2>Standard Deployment</h2>
-						<img src="img/deployment/deployment-standard-1.png" style="width: 60%; height: 60%;">
+						<img src="../img/deployment/deployment-standard-1.png" style="width: 60%; height: 60%;">
 					</section>
 					<section id="deployment-standard-2" data-transition="fade-in slide-out">
 						<h2>Standard Deployment</h2>
-						<img src="img/deployment/deployment-standard-2.png" style="width: 60%; height: 60%;">
+						<img src="../img/deployment/deployment-standard-2.png" style="width: 60%; height: 60%;">
 					</section>
 					<section id="bg" data-transition="fade-in slide-out">
 						<h2>Blue-Green Deployment</h2>
 					</section>
 					<section id="bg-1" data-transition="fade-in slide-out">
 						<h2>Blue-Green Deployment</h2>
-						<img src="img/deployment/deployment-bg-1.png" style="width: 60%; height: 60%;">
+						<img src="../img/deployment/deployment-bg-1.png" style="width: 60%; height: 60%;">
 					</section>
 					<section id="bg-2" data-transition="fade-in slide-out">
 						<h2>Blue-Green Deployment</h2>
-						<img src="img/deployment/deployment-bg-2.png" style="width: 60%; height: 60%;">
+						<img src="../img/deployment/deployment-bg-2.png" style="width: 60%; height: 60%;">
 					</section>
 					<section id="bg-3" data-transition="fade-in slide-out">
 						<h2>Blue-Green Deployment</h2>
-						<img src="img/deployment/deployment-bg-3.png" style="width: 60%; height: 60%;">
+						<img src="../img/deployment/deployment-bg-3.png" style="width: 60%; height: 60%;">
 					</section>
 					<section id="bg-4" data-transition="fade-in slide-out">
 						<h2>Blue-Green Deployment</h2>
-						<img src="img/deployment/deployment-bg-4.png" style="width: 60%; height: 60%;">
+						<img src="../img/deployment/deployment-bg-4.png" style="width: 60%; height: 60%;">
 					</section>
 					<section id="bg-code-1">
 						<h2>Blue-Green Deployment</h2>

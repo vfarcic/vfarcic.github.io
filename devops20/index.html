@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>The DevOps 2.0 Toolkit</title>
+
+		<meta name="author" content="Viktor Farcic">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="../css/reveal.css">
+		<link rel="stylesheet" href="../css/theme/viktor.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<!--<link rel="stylesheet" href="lib/css/zenburn.css">-->
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<header style="position: absolute;top: 50px; left: 100px; z-index:500; font-size:100px;background-color: rgba(0,0,0,0.5)"></header>
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section id="cover" data-background="../img/background/tools.jpg">
+					<h3>The </h3>
+                    <h1>DevOps 2.0 Toolkit</h1>
+                    <hr/>
+					<h2>
+						<a href="http://technologyconversations.com/about/">Viktor Farcic</a>
+                    </h2>
+                    <hr/>
+                    <h4>
+                        <a href="https://twitter.com/vfarcic">@vfarcic</a>
+                    </h4>
+                    <h4>
+						<a href="http://technologyconversations.com">TechnologyConversations.com</a>
+                    </h4>
+                    <h4>
+                        <a href="https://www.cloudbees.com">CloudBees.com</a>
+					</h4>
+				</section>
+                <section data-background="../img/background/about-me.jpg">
+                    <section id="about-me">
+                        <h2>Viktor Farcic</h2>
+                        <img src="../img/viktor.jpg" style="width: 50%; height: 50%;" />
+                    </section>
+                    <section id="about-company">
+                        <a href="https://www.cloudbees.com">
+                            <img src="../img/cloudbees-big.png" style="background-color: white;" />
+                        </a>
+                    </section>
+                    <section id="about-docker">
+                        <a href="https://www.docker.com/community/docker-captains">
+                            <img src="../img/docker-captain.png" style="width: 50%; height: 50%;" />
+                        </a>
+                    </section>
+                    <section id="about-books">
+                        <a href="https://leanpub.com/the-devops-2-toolkit">
+                            <img src="../img/devops2.png" style="float: left; width: 40%; height: 40%;" />
+                        </a>
+                        <a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">
+                            <img src="../img/tdd.jpg" style="float: right; width: 40%; height: 40%;" />
+                        </a>
+                    </section>
+                </section>
+                <section data-background="../img/background/truth.jpg">
+                    <section id="truth-agile">
+                        <h1>Facing the truth</h1>
+                        <hr/>
+                        <h3 class="fragment">Agile changed the way we develop software</h3>
+                        <h3 class="fragment">... but it failed to change how we deliver it</h3>
+                    </section>
+                </section>
+                <section data-background="../img/background/devops.jpg">
+                    <section id="what">
+                        <h1>What is DevOps?</h1>
+                        <hr/>
+                        <h3>A cross-disciplinary community of practice dedicated to the study of <span class="fragment grow highlight-current-green">building</span>, <span class="fragment grow highlight-current-green">evolving</span> and <span class="fragment grow highlight-current-green">operating</span> <span class="fragment grow highlight-current-green">rapidly-changing</span> <span class="fragment grow highlight-current-green">resilient systems</span> at <span class="fragment grow highlight-current-green">scale</span>.</h3>
+                    </section>
+                    <section id="culture-and-tech">
+                        <h1>What is DevOps?</h1>
+                        <hr/>
+                        <h3>It is as much cultural as technological change</h3>
+                        <h3 class="fragment">... but not today</h3>
+                    </section>
+                    <section id="why">
+                        <h1>Why DevOps 2.0?</h1>
+                        <hr/>
+                        <h3 class="fragment">DevOps united and automated</h3>
+                        <h3 class="fragment">... but it failed to change</h3>
+                        <h3 class="fragment">2.0 introduces a change to processes, tools, and architecture</h3>
+                        <h3 class="fragment">... and enables continuous deployment and self-healing</h3>
+                    </section>
+                </section>
+                <section data-background="../img/background/tools.jpg">
+                    <section id="toolkit">
+                        <h1>The Toolkit</h1>
+                        <hr/>
+                        <ul>
+                            <li class="fragment">Configuration management and provisioning</li>
+                            <li class="fragment">Immutable deployments</li>
+                            <li class="fragment">Service discovery</li>
+                            <li class="fragment">Dynamic proxies</li>
+                            <li class="fragment">Zero-downtime continuous deployment</li>
+                            <li class="fragment">Cluster management</li>
+                            <li class="fragment">Self-healing</li>
+                            <li class="fragment">Centralized monitoring and logging</li>
+                            <li class="fragment">... and much more</li>
+                        </ul>
+                    </section>
+                    <section id="toolkit-automation">
+                        <h1>The Toolkit</h1>
+                        <hr/>
+                        <h3>Everything fully automated without human intervention</h3>
+                        <h3 class="fragment">Machines take over after a commit to CVS</h3>
+                    </section>
+                    <section id="toolkit-expectation">
+                        <h1>The Toolkit</h1>
+                        <hr/>
+                        <h3>Not a workshop</h3>
+                        <h3 class="fragment">Pointers and leads</h3>
+                    </section>
+                </section>
+                <section data-background="../img/background/configuration-management.png">
+                    <section id="cm">
+                        <h1>Configuration Management</h1>
+                        <hr/>
+                        <ul>
+                            <li class="fragment">Manual?</li>
+                            <li class="fragment">SSH?</li>
+                            <li class="fragment">Operators == bottleneck</li>
+                            <li class="fragment">Self-service</li>
+                            <li class="fragment">Self-healing</li>
+                            <li class="fragment">Automated</li>
+                            <li class="fragment">Proactive</li>
+                        </ul>
+                    </section>
+                    <section id="cm-tools">
+                        <h3>Configuration Management</h3>
+                        <hr/>
+                        <table>
+                            <div>
+                                <a href="https://cfengine.com/"><img src="../img/products/cfengine.png" style="background-color: white; width: 20%; height: 20%;"></a>
+                                <a class="fragment" href="https://puppet.com/"><img src="../img/products/puppet.png" style="background-color: white; width: 20%; height: 20%;"></a>
+                                <a class="fragment" href="https://www.chef.io"><img src="../img/products/chef.png" style="background-color: white; width: 20%; height: 20%;"></a>
+                                <a class="fragment" href="https://www.ansible.com/"><img src="../img/products/ansible.png" style="background-color: white; width: 20%; height: 20%;"></a>
+                            </div>
+                            <div>
+                                <a class="fragment" href="https://www.packer.io/"><img src="../img/products/packer.png" style="width: 40%; height: 40%;"></a>
+                                <a class="fragment" href="https://www.terraform.io/"><img src="../img/products/terraform.png" style="width: 20%; height: 20%;"></a>
+                            </div>
+                        </table>
+                    </section>
+                    <section id="cm-change">
+                        <h1>Configuration Management</h1>
+                        <hr/>
+                        <ul>
+                            <li>Timeframe changed</li>
+                            <li class="fragment">Scope changed</li>
+                            <li class="fragment">Clusters changed</li>
+                        </ul>
+                    </section>
+                    <section id="cm-demo">
+                        <h1>Configuration Management</h1>
+                        <hr/>
+                        <pre><code data-trim contenteditable>git clone https://github.com/vfarcic/ms-lifecycle.git
+
+cd ms-lifecycle
+
+vagrant up cd swarm-master swarm-node-1 swarm-node-2
+
+vagrant ssh cd
+
+ansible-playbook /vagrant/ansible/swarm.yml \
+    -i /vagrant/ansible/hosts/prod</code></pre>
+                    </section>
+                    <section id="cm-demo-expl">
+                        <h1>Configuration Management</h1>
+                        <hr/>
+                        <div>
+                            Configuration, common programs, Docker, Docker Flow, Consul Template, Registry, Consul, Swarm master, Swarm nodes, Registrator, ...
+                        </div>
+                        <h3 class="fragment">A fully operating cluster</h3>
+                    </section>
+                    <section id="cm-problems">
+                        <h1>Configuration Management</h1>
+                        <h3 class="fragment">Not for deploying applications</h3>
+                        <h3 class="fragment">... what to use?</h3>
+                    </section>
+                </section>
+                <section data-background="../img/background/containers.png">
+                    <section id="mutable">
+                        <h1>Mutable Deployments</h1>
+                        <hr/>
+                        <ul>
+                            <li class="fragment">Infrastructure hell</li>
+                            <li class="fragment">Unreliable testing</li>
+                            <li class="fragment">Unexpected production behaviour</li>
+                        </ul>
+                    </section>
+                    <section id="immutable">
+                        <h1>Immutable Deployments</h1>
+                        <hr/>
+                        <ul>
+                            <li class="fragment">Reliable</li>
+                            <li class="fragment">Works everywhere the same</li>
+                            <li class="fragment">Why aren't we all doing it?</li>
+                        </ul>
+                    </section>
+                    <section id="immutable-why-not">
+                        <h1>Immutable Deployments</h1>
+                        <hr/>
+                        <ul>
+                            <li class="fragment">VMs<span class="fragment"> are slow</span></li>
+                            <li class="fragment">VMs use too much resources</li>
+                            <li class="fragment">Containers<span class="fragment"> too complicated</span></li>
+                        </ul>
+                    </section>
+                    <section id="docker">
+                        <h1>Docker</h1>
+                        <hr/>
+                        <ul>
+                            <li class="fragment">Immutable</li>
+                            <li class="fragment">Isolation</li>
+                            <li class="fragment">Fast</li>
+                            <li class="fragment">Lightweight</li>
+                            <li class="fragment">Self-sufficient</li>
+                            <li class="fragment">No infrastructure</li>
+                            <li class="fragment">...</li>
+                        </ul>
+                    </section>
+                    <section id="docker-demo">
+                        <h1>Docker</h1>
+                        <hr/>
+                        <pre><code data-trim contenteditable>git clone https://github.com/vfarcic/go-demo.git
+
+cd go-demo
+
+docker-compose -f docker-compose-test.yml run --rm unit
+
+docker build -t vfarcic/go-demo .
+
+docker-compose up -d db app
+
+docker-compose ps
+
+docker-compose down</code></pre>
+                    </section>
+                    <section id="docker-problems">
+                        <h1>Docker</h1>
+                        <hr/>
+                        <h3>Does not schedule deployment to a cluster</h3>
+                        <h3 class="fragment">... what to use?</h3>
+                    </section>
+                </section>
+                <section data-background="../img/background/scaling.png">
+                    <section id="cluster">
+                        <h1>Cluster Management</h1>
+                        <hr/>
+                        <ul>
+                            <li class="fragment">Pets vs cattle</li>
+                            <li class="fragment">SSH should be illegal</li>
+                            <li class="fragment">Dynamic</li>
+                            <li class="fragment">Elastic</li>
+                            <li class="fragment">Automated</li>
+                            <li class="fragment">Self-healing</li>
+                        </ul>
+                    </section>
+                    <section id="cluster-tools">
+                        <h1>Cluster Management</h1>
+                        <hr/>
+                        <div>
+                            <a href="http://mesos.apache.org/"><img src="../img/products/mesos.jpg" class="fragment" style="width: 30%; height: 30%;"/></a>
+                            <a href="http://kubernetes.io/" class="fragment"><img src="../img/products/kubernetes.png" style="width: 30%; height: 30%;"/></a>
+                            <a href="https://www.docker.com/products/docker-swarm" class="fragment"><img src="../img/products/swarm.png" style="width: 30%; height: 30%; background-color: white;"/></a>
+                        </div>
+                    </section>
+                    <section id="cluster-demo">
+                        <h1>Cluster Management</h1>
+                        <hr/>
+                        <pre><code data-trim contenteditable>export DOCKER_HOST=tcp://swarm-master:2375
+
+docker info
+
+docker-compose up -d db app
+
+docker-compose ps
+
+docker ps -a
+
+docker-compose scale app=3
+
+docker-compose ps
+
+docker-compose exec app ping -c 1 db</code></pre>
+                    </section>
+                    <section id="cluster-demo-expl">
+                        <h1>Cluster Management</h1>
+                        <hr/>
+                        <ul>
+                            <li>No service/application dependencies</li>
+                            <li class="fragment">It's a cluster, not individual servers</li>
+                            <li class="fragment">Almost instant</li>
+                            <li class="fragment">Scale/descale effortlessly</li>
+                            <li class="fragment">Software Defined Network (SDN)</li>
+                        </ul>
+                    </section>
+                    <section id="cluster-problems">
+                        <h1>Cluster Management</h1>
+                        <hr/>
+                        <h3>We don't know, in advance, where will the services run</h3>
+                        <h3 class="fragment">... how to configure services?</h3>
+                    </section>
+                </section>
+                <section data-background="../img/background/service-discovery.png">
+                    <section id="sc">
+                        <h1>Service Discovery</h1>
+                        <hr/>
+                        <ul>
+                            <li class="fragment">Where are my services?</li>
+                            <li class="fragment">Static configuration?</li>
+                            <li class="fragment">Service discovery
+                                <ul>
+                                    <li class="fragment">Registry</li>
+                                    <li class="fragment">Registration</li>
+                                    <li class="fragment">Templating</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+                    <section id="sc-registry">
+                        <h3>Service Discovery</h3>
+                        <h1>Registry</h1>
+                        <hr/>
+                        <div>
+                            <a href="https://zookeeper.apache.org/" class="fragment"><img src="../img/products/zookeeper.png" style="width: 30%; height: 30%; background-color: white;"/></a>
+                            <a href="https://github.com/coreos/etcd" class="fragment"><img src="../img/products/etcd.png" style="width: 30%; height: 30%; background-color: white;"/></a>
+                            <a href="https://www.consul.io/" class="fragment"><img src="../img/products/consul.jpg" style="width: 30%; height: 30%;"/></a>
+                        </div>
+                    </section>
+                    <section id="sc-registration">
+                        <h3>Service Discovery</h3>
+                        <h1>Registration & Templating</h1>
+                        <hr/>
+                        <ul class="fragment">
+                            <li><a href="https://github.com/gliderlabs/registrator">Registrator</a></li>
+                            <li class="fragment"><a href="https://github.com/kelseyhightower/confd">confD</a></li>
+                            <li class="fragment"><a href="https://github.com/hashicorp/consul-template">Consul Template</a></li>
+                        </ul>
+                        <h3 class="fragment">Avoid coupling</h3>
+                    </section>
+                    <section id="sc-demo">
+                        <h1>Service Discovery</h1>
+                        <hr/>
+                        <pre><code data-trim contenteditable>docker ps
+
+docker logs swarm-node-1/registrator
+
+curl swarm-master:8500/v1/catalog/service/go-demo | jq '.'</code></pre>
+                    </section>
+                    <section id="sc-problems">
+                        <h1>Service Discovery</h1>
+                        <hr/>
+                        <h3>We have the data, but we do not want to couple and our users do not want to request it from Consul</h3>
+                        <h3 class="fragment">... how do we make services accessible?</h3>
+                    </section>
+                </section>
+                <section data-background="../img/background/proxy.png">
+                    <section id="proxy">
+                        <h1>Dynamic Proxy</h1>
+                        <ul>
+                            <li class="fragment">Hardware proxy?</li>
+                            <li class="fragment">Proxy service</li>
+                        </ul>
+                    </section>
+                    <section id="proxy-products">
+                        <h1>Dynamic Proxy</h1>
+                        <div>
+                            <a href="http://www.apache.org/" class="fragment"><img src="../img/products/apache.png" style="width: 30%; height: 30%;"></a>
+                        </div>
+                        <div>
+                            <a href="http://nginx.org/" class="fragment"><img src="../img/products/nginx.png" style="width: 40%; height: 40%; background-color: white;"></a>
+                            <a href="http://www.haproxy.org/" class="fragment"><img src="../img/products/haproxy.png" style="width: 40%; height: 40%; background-color: white;"></a>
+                        </div>
+                        <div class="fragment">
+                            <h1>
+                                <a href="https://github.com/vfarcic/docker-flow-proxy">Docker Flow: Proxy</a>
+                            </h1>
+                            <small><a href="https://github.com/vfarcic/docker-flow-proxy">https://github.com/vfarcic/docker-flow-proxy</a></small>
+                        </div>
+                    </section>
+                    <section id="proxy-demo">
+                        <h1>Dynamic Proxy</h1>
+                        <hr/>
+                        <pre><code data-trim contenteditable>curl -i cd/demo/hello
+
+sudo docker run -d \
+  --name docker-flow-proxy \
+  -e CONSUL_ADDRESS=10.100.192.200:8500 \
+  -p 80:80 -p 8081:8080 \
+  vfarcic/docker-flow-proxy
+
+curl "cd:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" | jq '.'
+
+curl -i cd/demo/hello
+
+docker-compose down
+
+curl "cd:8081/v1/docker-flow-proxy/remove?serviceName=go-demo" | jq '.'</code></pre>
+                    </section>
+                    <section id="proxy-problems">
+                        <h1>Dynamic Proxy</h1>
+                        <hr/>
+                        <h3>Now we can reach any service, anywhere</h3>
+                        <h3 class="fragment">... but how do we deploy without downtime?</h3>
+                    </section>
+                </section>
+                <section data-background="../img/background/blue-green.png">
+                    <section id="blue-green">
+                        <h1>Zero Downtime</h1>
+                        <ul>
+                            <li class="fragment">Replace the old release with the new one?</li>
+                            <li class="fragment">Rolling updates</li>
+                            <li class="fragment">Blue-green deployment</li>
+                        </ul>
+                    </section>
+                    <section id="deployment-standard" data-transition="fade-in slide-out">
+                        <h2>Standard Deployment</h2>
+                    </section>
+                    <section id="deployment-standard-1" data-transition="fade-in slide-out">
+                        <h2>Standard Deployment</h2>
+                        <img src="../img/deployment/deployment-standard-1.png" style="width: 60%; height: 60%;">
+                    </section>
+                    <section id="deployment-standard-2" data-transition="fade-in slide-out">
+                        <h2>Standard Deployment</h2>
+                        <img src="../img/deployment/deployment-standard-2.png" style="width: 60%; height: 60%;">
+                    </section>
+                    <section id="bg" data-transition="fade-in slide-out">
+                        <h2>Blue-Green Deployment</h2>
+                    </section>
+                    <section id="bg-1" data-transition="fade-in slide-out">
+                        <h2>Blue-Green Deployment</h2>
+                        <img src="../img/deployment/deployment-bg-1.png" style="width: 60%; height: 60%;">
+                    </section>
+                    <section id="bg-2" data-transition="fade-in slide-out">
+                        <h2>Blue-Green Deployment</h2>
+                        <img src="../img/deployment/deployment-bg-2.png" style="width: 60%; height: 60%;">
+                    </section>
+                    <section id="bg-3" data-transition="fade-in slide-out">
+                        <h2>Blue-Green Deployment</h2>
+                        <img src="../img/deployment/deployment-bg-3.png" style="width: 60%; height: 60%;">
+                    </section>
+                    <section id="bg-4" data-transition="fade-in slide-out">
+                        <h2>Blue-Green Deployment</h2>
+                        <img src="../img/deployment/deployment-bg-4.png" style="width: 60%; height: 60%;">
+                    </section>
+                    <section id="df-code-1">
+                        <h2>Docker Flow</h2>
+                        <small><a href="https://github.com/vfarcic/docker-flow">https://github.com/vfarcic/docker-flow</a></small>
+						<pre><code data-trim contenteditable>export FLOW_PROXY_HOST=10.100.198.200 && export FLOW_PROXY_RECONF_PORT=8081 && export FLOW_CONSUL_ADDRESS=http://10.100.192.200:8500 && export FLOW_PROXY_DOCKER_HOST=tcp://10.100.198.200:2375
+
+docker-flow --flow=deploy --flow=proxy --flow=stop-old
+
+docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+
+curl -i cd/demo/hello
+
+docker-flow --flow=deploy --flow=proxy --flow=stop-old
+
+docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"</code></pre>
+                    </section>
+                    <section id="bg-problems">
+                        <h1>Blue-Green Deployment</h1>
+                        <h3>Now there is no downtime caused by deployment process</h3>
+                        <h3 class="fragment">... but there's much more to it than only deployment</h3>
+                    </section>
+                </section>
+                <!--TODO: Continue-->
+                <!--CD-->
+                <!--Self-healing-->
+                <!--Centralized monitoring and logging-->
+                <!--Architecture-->
+                <section data-background="../img/background/the_end.jpg">
+                    <section id="the-end-company">
+                        <h2>Viktor Farcic</h2>
+                        <hr/>
+                        <a href="https://www.cloudbees.com">
+                            <img src="../img/cloudbees-big.png" style="background-color: white;" />
+                        </a>
+                    </section>
+                    <section id="the-end-blog">
+                        <h2>Viktor Farcic</h2>
+                        <hr/>
+                        <h3><a href="https://twitter.com/vfarcic">@vfarcic</a></h3>
+                        <hr/>
+                        <figure>
+                            <img src="../img/qr/technology-conversations.jpg"/>
+                        </figure>
+                        <h3><a href="http://technologyconversations.com">TechnologyConversations.com</a></h3>
+                    </section>
+                    <section id="the-end-book">
+                        <h2>Viktor Farcic</h2>
+                        <hr/>
+                        <div>
+                            <figure style="width: 30%; height: 30%; float: left;">
+                                <img src="../img/qr/devops2-amazon.jpg"/>
+                                <figcaption><a href="http://www.amazon.com/dp/B01BJ4V66M">Amazon</a></figcaption>
+                            </figure>
+                            <figure style="width: 30%; height: 30%; float: right;">
+                                <img src="../img/qr/devops2-leanpub.jpg"/>
+                                <figcaption><a href="https://leanpub.com/the-devops-2-toolkit">LeanPub</a></figcaption>
+                            </figure>
+                            <a href="https://leanpub.com/the-devops-2-toolkit">
+                                <img src="../img/devops2.png" style="width: 30%; height: 30%;" />
+                            </a>
+                        </div>
+                    </section>
+                </section>
+			</div>
+
+		</div>
+
+		<script src="../lib/js/head.min.js"></script>
+		<script src="../js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+//					{ src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../plugin/zoom-js/zoom.js', async: true },
+					{ src: '../plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
