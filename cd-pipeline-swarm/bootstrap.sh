@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-set -e
+set +e
 
 git clone https://github.com/vfarcic/ms-lifecycle.git
+
+set -e
 
 cd ms-lifecycle
 
