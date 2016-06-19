@@ -231,7 +231,7 @@ ansible-playbook /vagrant/ansible/swarm.yml \
                         <ul>
                             <li class="fragment">VMs<span class="fragment"> are slow</span></li>
                             <li class="fragment">VMs use too much resources</li>
-                            <li class="fragment">Containers<span class="fragment"> too complicated</span></li>
+                            <li class="fragment">Containers are too complicated</li>
                         </ul>
                     </section>
                     <section id="docker">
@@ -386,6 +386,7 @@ curl swarm-master:8500/v1/catalog/service/go-demo | jq '.'</code></pre>
                 <section data-background="../img/background/proxy.png">
                     <section id="proxy">
                         <h1>Dynamic Proxy</h1>
+                        <hr/>
                         <ul>
                             <li class="fragment">Hardware proxy?</li>
                             <li class="fragment">Proxy service</li>
@@ -393,6 +394,7 @@ curl swarm-master:8500/v1/catalog/service/go-demo | jq '.'</code></pre>
                     </section>
                     <section id="proxy-products">
                         <h1>Dynamic Proxy</h1>
+                        <hr/>
                         <div>
                             <a href="http://www.apache.org/" class="fragment"><img src="../img/products/apache.png" style="width: 30%; height: 30%;"></a>
                         </div>
@@ -435,7 +437,8 @@ curl "cd:8081/v1/docker-flow-proxy/remove?serviceName=go-demo" | jq '.'</code></
                 </section>
                 <section data-background="../img/background/blue-green.png">
                     <section id="blue-green">
-                        <h1>Zero Downtime</h1>
+                        <h1>Zero Downtime Deployment</h1>
+                        <hr/>
                         <ul>
                             <li class="fragment">Replace the old release with the new one?</li>
                             <li class="fragment">Rolling updates</li>
@@ -443,38 +446,45 @@ curl "cd:8081/v1/docker-flow-proxy/remove?serviceName=go-demo" | jq '.'</code></
                         </ul>
                     </section>
                     <section id="deployment-standard" data-transition="fade-in slide-out">
-                        <h2>Standard Deployment</h2>
+                        <h1>Standard Deployment</h1>
                     </section>
                     <section id="deployment-standard-1" data-transition="fade-in slide-out">
                         <h2>Standard Deployment</h2>
+                        <hr/>
                         <img src="../img/deployment/deployment-standard-1.png" style="width: 60%; height: 60%;">
                     </section>
                     <section id="deployment-standard-2" data-transition="fade-in slide-out">
                         <h2>Standard Deployment</h2>
+                        <hr/>
                         <img src="../img/deployment/deployment-standard-2.png" style="width: 60%; height: 60%;">
                     </section>
                     <section id="bg" data-transition="fade-in slide-out">
-                        <h2>Blue-Green Deployment</h2>
+                        <h1>Blue-Green Deployment</h1>
                     </section>
                     <section id="bg-1" data-transition="fade-in slide-out">
                         <h2>Blue-Green Deployment</h2>
+                        <hr/>
                         <img src="../img/deployment/deployment-bg-1.png" style="width: 60%; height: 60%;">
                     </section>
                     <section id="bg-2" data-transition="fade-in slide-out">
                         <h2>Blue-Green Deployment</h2>
+                        <hr/>
                         <img src="../img/deployment/deployment-bg-2.png" style="width: 60%; height: 60%;">
                     </section>
                     <section id="bg-3" data-transition="fade-in slide-out">
                         <h2>Blue-Green Deployment</h2>
+                        <hr/>
                         <img src="../img/deployment/deployment-bg-3.png" style="width: 60%; height: 60%;">
                     </section>
                     <section id="bg-4" data-transition="fade-in slide-out">
                         <h2>Blue-Green Deployment</h2>
+                        <hr/>
                         <img src="../img/deployment/deployment-bg-4.png" style="width: 60%; height: 60%;">
                     </section>
                     <section id="df-code-1">
-                        <h2>Docker Flow</h2>
+                        <h1>Docker Flow</h1>
                         <small><a href="https://github.com/vfarcic/docker-flow">https://github.com/vfarcic/docker-flow</a></small>
+                        <hr/>
 						<pre><code data-trim contenteditable>export FLOW_PROXY_HOST=10.100.198.200 && export FLOW_PROXY_RECONF_PORT=8081 && export FLOW_CONSUL_ADDRESS=http://10.100.192.200:8500 && export FLOW_PROXY_DOCKER_HOST=tcp://10.100.198.200:2375
 
 docker-flow --flow=deploy --flow=proxy --flow=stop-old
@@ -489,15 +499,124 @@ docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"</code></pre>
                     </section>
                     <section id="bg-problems">
                         <h1>Blue-Green Deployment</h1>
+                        <hr/>
                         <h3>Now there is no downtime caused by deployment process</h3>
                         <h3 class="fragment">... but there's much more to it than only deployment</h3>
                     </section>
                 </section>
-                <!--TODO: Continue-->
-                <!--CD-->
-                <!--Self-healing-->
-                <!--Centralized monitoring and logging-->
-                <!--Architecture-->
+                <section data-background="../img/background/continuous-deployment.png">
+                    <section id="ci">
+                        <h1>Continuous Integration</h1>
+                        <hr/>
+                        <ul>
+                            <li class="fragment green">Automated integration flow</li>
+                            <li class="fragment green">Merge to main branch often (at least once a day)</li>
+                            <li class="fragment green">Fixing failed flow has the highest priority</li>
+                            <li class="fragment red">Unclear status</li>
+                            <li class="fragment red">Not a "production ready" process</li>
+                        </ul>
+                    </section>
+                    <section id="cd-1">
+                        <h1>Continuous Delivery</h1>
+                        <hr/>
+                        <h3>You're doing it when...</h3>
+                        <ul>
+                            <li class="fragment">you are already doing continuous integration</li>
+                            <li class="fragment">your software is deployable throughout its life-cycle</li>
+                            <li class="fragment">your team prioritizes keeping the software deployable</li>
+                            <li class="fragment">anybody can get fast, automated feedback on the production readiness</li>
+                            <li class="fragment">you can perform push-button deployments</li>
+                        </ul>
+                    </section>
+                    <section id="cd-2">
+                        <h1>Continuous Delivery</h1>
+                        <hr/>
+                        <h3>Means that...</h3>
+                        <ul>
+                            <li class="fragment">every commit to VCS that passed the flow <span class="fragment grow highlight-current-green">can be deployed</span> to production</li>
+                            <li class="fragment">pressing the button to deploy to production is the <span class="fragment grow highlight-current-green">only manual action</span></li>
+                        </ul>
+                    </section>
+                    <section id="cd-tools">
+                        <h1>CD Tools</h1>
+                        <hr/>
+                        <ul>
+                            <li class="fragment">Ability to define (sometimes) complex flows</li>
+                            <li class="fragment">Flows defined as code</li>
+                            <li class="fragment">Team's autonomy</li>
+                            <li class="fragment">Decentralization</li>
+                        </ul>
+                    </section>
+                    <section id="cd-setup-code">
+                        <h1>Jenkins Setup</h1>
+                        <hr/>
+                        <pre><code data-trim contenteditable>ansible-playbook /vagrant/ansible/jenkins-node-swarm.yml \
+    -i /vagrant/ansible/hosts/prod
+
+ansible-playbook /vagrant/ansible/jenkins.yml \
+    -c local
+
+git clone http://10.100.198.200:8080/workflowLibs.git /tmp/workflowLibs
+
+cd /tmp/workflowLibs
+
+git checkout -b master
+
+mkdir vars
+
+cp ~/go-demo/jenkins/vars/dockerFlowWorkshop.groovy \
+    /tmp/workflowLibs/vars/dockerFlow.groovy
+
+git config --global user.name "vfarcic"
+
+git add --all && git commit -a -m "Docker Flow"
+
+git push --set-upstream origin master</code></pre>
+                    </section>
+                    <section id="cd-code">
+                        <h1>Jenkinsfile</h1>
+                        <hr/>
+                        <pre><code data-trim contenteditable>def serviceName = "go-demo"
+
+node("cd") {
+  checkout scm
+
+  stage "Unit Tests"
+  sh "docker-compose -f docker-compose-test.yml run --rm unit"
+
+  stage "Build"
+  sh "docker build -t vfarcic/go-demo ."
+  // sh "docker push vfarcic/go-demo"
+
+  stage "Deploy"
+  dockerFlow(serviceName, ["deploy", "proxy", "stop-old"])
+
+  stage "Production Tests"
+  withEnv(["HOST_IP=10.100.198.200"]) {
+  sh "docker-compose -f docker-compose-test.yml run --rm production"
+}</code></pre>
+                    </section>
+                    <section id="cd-ui">
+                        <h1>Deployment With Jenkins</h1>
+                        <hr/>
+                        <div><a href="http://10.100.198.200:8080">http://10.100.198.200:8080</a> &gt; New Item</div>
+                        <div>Item Name: go-demo; Type: Multibranch Pipeline &gt; OK</div>
+                        <div>Add Source &gt; Git</div>
+                        <div>Project Repository: https://github.com/vfarcic/go-demo.git &gt; Save</div>
+                        <div><a href="http://10.100.198.200:8080/job/go-demo/branch/master/">http://10.100.198.200:8080/job/go-demo/branch/master/</a></div>
+                        <div><a href="http://10.100.198.200:8080/job/go-demo/branch/master/lastBuild/console">http://10.100.198.200:8080/job/go-demo/branch/master/lastBuild/console</a></div>
+                    </section>
+                </section>
+                <section data-background="../img/background/summary.png">
+                    <h1>What Else?</h1>
+                    <ul>
+                        <li class="fragment">Self-healing</li>
+                        <li class="fragment">Centralized monitoring and logging</li>
+                        <li class="fragment">Architecture</li>
+                        <li class="fragment">Culture</li>
+                        <li class="fragment">...</li>
+                    </ul>
+                </section>
                 <section data-background="../img/background/the_end.jpg">
                     <section id="the-end-company">
                         <h2>Viktor Farcic</h2>
@@ -532,6 +651,14 @@ docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"</code></pre>
                                 <img src="../img/devops2.png" style="width: 30%; height: 30%;" />
                             </a>
                         </div>
+                    </section>
+                </section>
+                <section>
+                    <section data-background="../img/background/cleanup.jpg">
+                        <h1>Cleanup</h1>
+                        <pre><code data-trim contenteditable>exit
+
+vagrant destroy -f</code></pre>
                     </section>
                 </section>
 			</div>
