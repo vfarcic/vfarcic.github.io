@@ -119,31 +119,31 @@
                         <h1 class="fragment">Cluster cannot be managed manually</h1>
                     </section>
                 </section>
-                <section data-background="../img/background/setup.jpg">
-                    <section id="setup">
-                        <h1>Setup</h1>
-                        <div>Requirements: Vagrant</div>
-						<pre><code data-trim contenteditable>git clone https://github.com/vfarcic/ms-lifecycle.git
+                <!--<section data-background="../img/background/setup.jpg">-->
+                    <!--<section id="setup">-->
+                        <!--<h1>Setup</h1>-->
+                        <!--<div>Requirements: Vagrant</div>-->
+						<!--<pre><code data-trim contenteditable>git clone https://github.com/vfarcic/ms-lifecycle.git-->
 
-cd ms-lifecycle
+<!--cd ms-lifecycle-->
 
-vagrant plugin install vagrant-cachier
+<!--vagrant plugin install vagrant-cachier-->
 
-vagrant up cd swarm-master swarm-node-1 swarm-node-2
+<!--vagrant up cd swarm-master swarm-node-1 swarm-node-2-->
 
-vagrant ssh cd
+<!--vagrant ssh cd-->
 
-ansible-playbook /vagrant/ansible/swarm.yml -i /vagrant/ansible/hosts/prod
+<!--ansible-playbook /vagrant/ansible/swarm.yml -i /vagrant/ansible/hosts/prod-->
 
-ansible-playbook /vagrant/ansible/jenkins-node-swarm.yml -i /vagrant/ansible/hosts/prod
+<!--ansible-playbook /vagrant/ansible/jenkins-node-swarm.yml -i /vagrant/ansible/hosts/prod-->
 
-ansible-playbook /vagrant/ansible/jenkins.yml -c local
+<!--ansible-playbook /vagrant/ansible/jenkins.yml -c local-->
 
-git clone https://github.com/vfarcic/go-demo.git
+<!--git clone https://github.com/vfarcic/go-demo.git-->
 
-cd go-demo</code></pre>
-                    </section>
-                </section>
+<!--cd go-demo</code></pre>-->
+                    <!--</section>-->
+                <!--</section>-->
                 <section data-background="../img/background/jenkins.png">
                     <section id="cd-steps" data-transition="fade-in slide-out">
                         <h1>CD Steps</h1>
