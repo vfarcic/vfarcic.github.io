@@ -176,6 +176,7 @@
                             <li>Timeframe changed</li>
                             <li class="fragment">Scope changed</li>
                             <li class="fragment">Clusters changed</li>
+                            <li class="fragment">Repeatable, automated, and fast provisioning</li>
                         </ul>
                     </section>
                     <section id="cm-demo">
@@ -267,13 +268,13 @@ docker-compose down</code></pre>
                     <section id="docker-problems">
                         <h1>Docker</h1>
                         <hr/>
-                        <h3>Does not schedule deployment to a cluster</h3>
+                        <h3>Does not schedule deployments to a cluster</h3>
                         <h3 class="fragment">... what to use?</h3>
                     </section>
                 </section>
                 <section data-background="../img/background/scaling.png">
                     <section id="cluster">
-                        <h1>Cluster Management</h1>
+                        <h1>Cluster Orchestration</h1>
                         <hr/>
                         <ul>
                             <li class="fragment">Pets vs cattle</li>
@@ -285,7 +286,7 @@ docker-compose down</code></pre>
                         </ul>
                     </section>
                     <section id="cluster-tools">
-                        <h1>Cluster Management</h1>
+                        <h1>Cluster Orchestration</h1>
                         <hr/>
                         <div>
                             <a href="http://mesos.apache.org/"><img src="../img/products/mesos.jpg" class="fragment" style="width: 30%; height: 30%;"/></a>
@@ -294,7 +295,7 @@ docker-compose down</code></pre>
                         </div>
                     </section>
                     <section id="cluster-demo">
-                        <h1>Cluster Management</h1>
+                        <h1>Cluster Orchestration</h1>
                         <hr/>
                         <pre><code data-trim contenteditable>export DOCKER_HOST=tcp://swarm-master:2375
 
@@ -313,7 +314,7 @@ docker-compose ps
 docker-compose exec app ping -c 1 db</code></pre>
                     </section>
                     <section id="cluster-demo-expl">
-                        <h1>Cluster Management</h1>
+                        <h1>Cluster Orchestration</h1>
                         <hr/>
                         <ul>
                             <li>No service/application dependencies</li>
@@ -324,7 +325,7 @@ docker-compose exec app ping -c 1 db</code></pre>
                         </ul>
                     </section>
                     <section id="cluster-problems">
-                        <h1>Cluster Management</h1>
+                        <h1>Cluster Orchestration</h1>
                         <hr/>
                         <h3>We don't know, in advance, where will the services run</h3>
                         <h3 class="fragment">... how to configure services?</h3>

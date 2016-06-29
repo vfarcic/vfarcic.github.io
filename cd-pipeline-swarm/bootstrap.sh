@@ -8,7 +8,7 @@ set -e
 
 cd ms-lifecycle
 
-vagrant up cd swarm-master swarm-node-1 swarm-node-2
+vagrant up --provision cd swarm-master swarm-node-1 swarm-node-2
 
 vagrant ssh cd -c "ansible-playbook /vagrant/ansible/swarm.yml -i /vagrant/ansible/hosts/prod"
 
