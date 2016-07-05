@@ -15,7 +15,7 @@ Integrating containers into a continuous-delivery pipeline is far from easy. Alo
 
 ### Bio
 
-**Viktor Farcic** is a Senior Consultant at **CloudBees**.
+**Viktor Farcic** is a Senior Consultant at **[CloudBees](https://www.cloudbees.com/)**, a member of the **[Docker Captains](https://www.docker.com/community/docker-captains)** group, and books author.
 
 He coded using a plethora of languages starting with Pascal (yes, he is old), Basic (before it got Visual prefix), ASP (before it got .Net suffix), C, C++, Perl, Python, ASP.Net, Visual Basic, C#, JavaScript, Java, Scala, etc. He never worked with Fortran. His current favorite is **Go**.
 
@@ -32,3 +32,12 @@ Contact Details:
 * Skype: vfarcic
 * LinkedIn: https://www.linkedin.com/in/viktorfarcic
 * Blog: http://technologyconversations.com/
+
+Learning Outcomes
+=================
+
+* Continuous Delivery/Deployment processes and steps
+* Docker containers
+* Docker Swarm orchestration
+* Jenkins
+* Jenkins Pipeline

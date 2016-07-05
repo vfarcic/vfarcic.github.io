@@ -14,12 +14,12 @@ body {
   background: #222;
   background-color: #222; }
 
-body:after {
-  content: url(../../img/company.png);
-  transform: scale(.7);
-  position: fixed;
-  top: -20px;
-  right: -50px;}
+/*body:after {*/
+  /*content: url(../../img/company.png);*/
+  /*transform: scale(.7);*/
+  /*position: fixed;*/
+  /*top: -20px;*/
+  /*right: -50px;}*/
 
 /*Start New*/
 .red {
