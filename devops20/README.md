@@ -1,14 +1,31 @@
 The DevOps 2.0 Toolkit
 ======================
 
-Abstract
---------
+Abstract: Talk
+--------------
 
 Agile changed the way we develop software, but it failed to change the way we deliver it. As a result of facing new challenges, we got DevOps. We got a cross-disciplinary community of practice dedicated to the study of building, evolving and operating rapidly changing resilient systems at scale.
 
 DevOps is as much a cultural as technological change. While it united diverse teams and professionals and thought us how to automate all repetitive steps in our processes, it failed to introduce a real difference in the software landscape we use. Hence, DevOps 2.0 emerged with a drastic change in our methods, tools, and architecture. Finally, we have everything we need to build scalable, fault-tolerant, and self-healing systems delivered to production through continuous deployment.
 
 This talk focuses on architectural changes and new tools we should adopt to be able to tackle the problems presented by a demand for modern, responsive, fault tolerant, and elastic systems. It is based on the material published in [The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices](https://www.amazon.com/dp/B01BJ4V66M) book.
+
+Abstract: Workshop
+------------------
+
+Agile changed the way we develop software, but it failed to change the way we deliver it. As a result of facing new challenges, we got DevOps. We got a cross-disciplinary community of practice dedicated to the study of building, evolving and operating rapidly changing resilient systems at scale.
+
+DevOps is as much a cultural as technological change. While it united diverse teams and professionals and thought us how to automate all repetitive steps in our processes, it failed to introduce a real difference in the software landscape we use. Hence, DevOps 2.0 emerged with a drastic change in our methods, tools, and architecture. Finally, we have everything we need to build scalable, fault-tolerant, and self-healing systems delivered to production through continuous deployment.
+
+This workshop focuses on architectural changes and new tools we should adopt to be able to tackle the problems presented by a demand for modern, responsive, fault tolerant, and elastic systems. It is based on the material published in [The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices](https://www.amazon.com/dp/B01BJ4V66M) book.
+
+The workshop will go through the whole **microservices development lifecycle**. We'll start from the very beginning. We'll define and design architecture. From there on we'll move from requirements, technological choices and development environment setup, through coding and testing all the way until the final deployment to production. We won't stop there. Once our new services are up and running we'll see how to maintain them, scale them depending on resource utilization and response time, recover them in case of failures and create central monitoring and notifications system. We'll try to balance the need for creative manual work and the need to automate as much of the process as possible.
+
+This will be a journey through all the aspects of the lives of microservices and everything that surrounds them. We'll see how microservices fit into continuous deployment and immutable containers concepts and why the best results are obtained when those three are combined into one unique framework.
+
+During the workshop we'll explore tools like Docker, Docker Swarm, Docker Compose, Ansible, Consul, etcd, confd, Registrator, nginx, HAProxy, ElasticSearch, LogStash, Kibana, and so on.
+
+Some of the topics that will be explored are as follows.
 
 Learning Outcomes
 =================
