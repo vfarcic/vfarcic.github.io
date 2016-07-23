@@ -1,7 +1,7 @@
 The DevOps 2.0 Toolkit
 ======================
 
-When Agile appeared, it solved (some of the) problems we were facing at that time. It changed the idea that months long iterations were the way to go. We learned that delivering often provides numerous benefits. It taught us to organize teams around the idea of having all the skills required to deliver iterations, as oposed to horizontal departments organized around technical skills (developers, testers, managers, and so on). It thought us that automated testing and continuous integration we the best way to move fast and deliver often. Test-driven development, pair-programming, daily stand-ups, and so on. We changed a lot since waterfall days.
+When Agile appeared, it solved (some of) the problems we were facing at that time. It changed the idea that months long iterations were the way to go. We learned that delivering often provides numerous benefits. It taught us to organize teams around the idea of having all the skills required to deliver iterations, as oposed to horizontal departments organized around technical skills (developers, testers, managers, and so on). It thought us that automated testing and continuous integration we the best way to move fast and deliver often. Test-driven development, pair-programming, daily stand-ups, and so on. We changed a lot since waterfall days.
 
 **Agile changed the way we develop software, but it failed to change how we deliver it.**
 
@@ -63,11 +63,93 @@ There must be a place where information is stored. That must be a kind of a ligh
 
 Next, we need a way to register information whenever a new service is deployed, scaled, or stopped. *[Registrator](https://github.com/gliderlabs/registrator)* is one of those. It monitors Docker events and puts or removed data from a Registry of choice. If one of the cluster orchestration tool are adopted, they tend to have registration process incorporated.
 
-Finally, we need a way to change a configurations whenever data in the registry is updated. There are plenty of tools in this area, *confd* and *Consul Template* being just a few. This can quickly turn into an endeavour that is too complicated to maintain. Another approach is to incorporate discovery into our services. That should be avoided when possible since it introduces too much coupling. Both approaches to discovery are slowly fading in favour of software defined networks (SDN). The idea is that SDNs are created around services that form a group so that all the communication is going without any predefined values. Instead finding out where the database is, let SDN have a target called DB. That way, your service would not need to know anything but network endpoint.
+Finally, we need a way to change a configurations whenever data in the registry is updated. There are plenty of tools in this area, [confd](TODO) and [Consul Template](TODO) being just a few. This can quickly turn into an endeavour that is too complicated to maintain. Another approach is to incorporate discovery into our services. That should be avoided when possible since it introduces too much coupling. Both approaches to discovery are slowly fading in favour of software defined networks (SDN). The idea is that SDNs are created around services that form a group so that all the communication is going without any predefined values. Instead finding out where the database is, let SDN have a target called DB. That way, your service would not need to know anything but network endpoint.
 
 Service discovery creates another question. What should we do with a proxy?
 
 Dynamic Proxies
 ---------------
 
-TODO: Continue from [http://localhost:8080/devops20/index.html#/proxy](http://localhost:8080/devops20/index.html#/proxy)
+The decline of hardware proxies started a long time ago. They were too expensive and inflexible even before cloud computing become mainstream. These days, almost all proxies are based on software. The major difference is what we expect from it. While, until recently, we could define all redirection as static configuration files, that changed in favour of more dynamic solutions. Since our services are being constantly deployed, redeployed, scaled, and, in general, moved around, proxy needs to be capable of updating itself with this ever changing end-point locations.
+
+We cannot wait for a operator to update configuration with a new service we are about to deploy. We cannot expect him to monitor the system 24/7 and react to a service being scaled as a result of increased traffic. We cannot hope that he will be fast enough to catch a node failure which results in all services being automatically rescheduled to a healthy node. Even if we could expect such tasks to be performed by humans, the cost would be too high since an increase in the number of services we're offering would mean an increase in workforce required for monitoring and reactive actions. Even if such a cost is not an issue, we are slow. We cannot react as fast as machines can do and that discrepancy between a change in the system and proxy reconfiguration could result in performance issues at best.
+
+Among software based proxies, [Apache](TODO) ruled the scene for a long time. Today, age shows its face. It is rarely the weapon of choice due to its inability to perform well under stress and relative inflexibility. Newer tools like **[nginx](TODO) and [HAProxy](TODO) took over**. They are capable of handling a wast amount of concurrent requests without posing a serios stress on server resources.
+
+Even *nginx* and *HAProxy* are not enough by themselves. They were designed with static configuration in mind and require us to add additional tools to the mix. An example would be a combination of a templating tools like [Consul Template](TODO) that can monitor changes in service registry, modify proxy configurations, and reload them.
+
+Today, we are seeing another another shift. Normally, we would use proxy services not only to redirect requests but, also, to perform load balancing among all instances of a single service. **With the emergence of Docker Swarm shipped with the Docker Engine release v1.12, load balancing (LB) is moved towards software defined network (SDN)**. Instead performing LB among all instances, a proxy would redirect a request to an SDN end-point which, in turn, would perform load balancing.
+
+Services architecture is switching towards microservices, as a result, deployment and scheduling processes and tools are changing, and, with them, proxies and expectations we have from them as well. The deployment frequency is becoming higher and higher and that poses another question. How do we deploy often without any downtime?
+
+Zero-Downtime Deployment
+------------------------
+
+In most cases, we employ the deployment strategies that replace the current release with the new one. The old release is stopped, and the new one is deployed in its place. Such a set of actions produces an downtime. During a (hopefully) short period neither release is running. As a result, there is a millisecond, second, a minute, or even longer period of time during which our service is inaccessible. In todays market, such a strategy is inaccessible. If we are not operational, our users will go somewhere else. Even if they don't, downtime produces all other kinds of undesirable effect. Money is lost, support team is overwhelmed with calls, reputation is damaged, and so on. We are expected to be operational 24/7. That's part of the reason why iterations were long in the past. If we are going to have a downtime produced by a deployment of a new release, better not do it often. However, today, we cannot afford not to do release software often. Our users expect frequent improvements. Even if they don't, we do. Short iterations proved its value. Today, we are seeing a constant redefinition of what *short* means. While, not so long ago, short meant months or weeks, today it means multiple times a day. The ultimate goal? Every commit is deployed to production. If deployments produce downtime, the previous sentence could be translated to *every commit produces downtime*. We don't want that. So, how can we avoid deployment downtime? Or, to put it in other words, how can we accomplish **zero-downtime deployments**?
+
+Over time, **two approaches proved to be the most reliable way to accomplish zero-downtime deployments; blue-green and rolling updates**.
+
+In its essence, the idea behind blue-green deployments is that at least one release is running at any given moment. The process is as follows. We deploy the first release (we'll call it *blue*) and configure the proxy to redirect all requests to it. When the time comes, we deploy the second release (we'll call it *green*) in parallel with the previous (*blue*). At this moment, proxy is still redirecting all requests to the *blue* release. Once our newly deployed service is running we can proceed with automated testing or any other type of deployment validation. Once we're convinced that the new release is not only running but also performing as expected, we can reconfigure the proxy to redirect all requests to it. Only once this process is finished and all previously initiated requests received their responses, we can stop the old (*blue*) release. The process would be repeated over and over again with each new release. The third release would be *blue*, the fourth, *green*, and so on.
+
+**The idea behind rolling updates is to gradually upgrade the release, one, or a few instances at the time**. Let's say that we have five instances of a service running release one. When deploying release two, we would replace one instance of the previous release and monitor the outcome during some time. As the result, we would have one instance of the release two and four instances of the release two. Later on, if no anomaly is detected, we would repeat the process and end up having two instances running the release two and three instances running the release one. We would continue with the same process until all instances are running the new release. If an anomaly is detected, instances running the new release would be stopped and the old release would be rolled back.
+
+The important thing to note is that both processes assume that new release is, as a minimum, compatible with the previous. This is most evident in APIs. Since both methods assume that two releases will run at the same time, we cannot guarantee which one will be accessed by a user.
+
+Needless to say, those processes are easiest to implement when architecture is oriented towards microservices. That does not mean that *blue-green deployment* and *rolling updates* do not work with other types of architecture. They do. The major difference is that the smaller the service, the faster the process. Needless to say that smaller services require less resources. This is especially true in case of *blue-green deployments* which, during a short period of time, duplicate resource usage.
+
+The advantage of *blue-green deployments* is that we can test the deployment before making it available to the general public. On the other hand, *rolling updates* might be more appropriate if a service is scaled to a large number of instances.
+
+Now that there is no downtime caused by the deployment process, the door opens for the implementation of *continuous deployments*.
+
+Continuous Integration, Delivery, And Deployment
+------------------------------------------------
+
+We cannot discuss continuous deployment without, briefly, going through the concepts behind continuous integration.
+
+Continuous integration (CI) is represented by an automated integration flow. Every commit is detected by the CI tool of choice, code is checked out from the version control, and the integration flow is initiated. If any of the steps in the flow fails, the team prioritizes fixing the broken build over any other activity. In order for continuous integration to be truly continuous, the team must merge into the main branch often (at least once a day, if not more often) or, even better, commit directly to it. Without such a strategy, we have automated, but not continuous integration.
+
+**The problem with continuous integration is that there is no clear objective. We know where it starts (with each commit), but we don't know where it ends.** The process assumes that there are manual actions after the automated flow but it does not specify where the automation ends and humans take over. As a result, many companies jumped into the CI train without obtaining tangible results. Part of testing continued being manual and time to marked did not decrease as much as hoped. After all, the overal speed is the speed of the slowest. We CI we start fast only to end with a crawl. Don't take me wrong. CI provides a lot of benefits. It's just that they are not enough for what is expected from us today. Simply put **continuous integration is not a process that produces production ready software**. It only gets us half-way there.
+
+Then came continuous delivery. You're doing continuous delivery when:
+
+* You are already doing continuous integration. Continuous delivery is an extended version of the automation required for CI.
+* Each build that passed the whole flow is deployable. With continuous delivery, anyone can press a button and deploy any build to production. The decision whether to deploy or not is not technical. All (green) builds are production ready. We might or might not deploy based on a decision when should a certain feature be available to our users.
+* The team prioritized keeping software deployable. If a build fails, fixing the problem is done before anything else.
+* Anybody can get fast and automated feedback on the production readiness.
+* Software can be deployed by pressing a single button.
+
+If any of those points are not fully fulfilled, you are not doing continuous delivery. You are, most likely, still in continuous integration phase.
+
+This poses a question what continuous deployment is.
+
+**While, continuous delivery means that every commit can be deployed to production, continuous deployment result in every commit being deployed to production**. There no button to push. There is no decision to make. Every commit that passed the automated flow is deployed to production.
+
+Now that we have definitions and understand the goals of continuous delivery or deployment, let us try to, briefly, define what should we expect from the tools.
+
+CD, often, results in complex set of steps. There are many things to be done if the process will be robust enough to give us enough confidence to deploy to production without human intervention. So, the tool of choice needs to be able to define complex flows. Such flows are difficult, and sometimes even impossible to define through UIs. They need to be expressed as code.
+
+Another thing to note is that the tool should not prevent team's autonomy. If a team that produces commits that are automatically deployed (or ready to be deployed )to production is not autonomous, the continuous ceases to exist. They (members of a team) need to have the ability to define and maintain the definition of the CD flow so that, whenever it requires changes, they can implement them without waiting for someone else to do them. If autonomy is the key, the tool cannot have the flows centralized. The code that defines a flow should reside in the same repository as the code of the service (or the application) the team is maintaining.
+
+If, to the list of those features, we add the need that the tool should be capable of operating under a large scale, there are only a few products available today. One of them is, without a doubt, Jenkins. It's
+
+Are We Done Now?
+----------------
+
+Are we, finally, done with an overview of the modern DevOps toolkit that should reside in our toolbelt? Not even close! Once we adopt all the tools and practices we discussed, there is still much to do.
+
+Automating the process all the way until deployments to production is only half of the story. We need to evaluate (and automate) processes that will make sure that our software continues running and behaves as desired? Such a system would need to exert some level of self-healing, not much different than the processes that perform similar functions in our bodies. We are constantly attacked by viruses, our cells are dying, we are getting hurt... To cut long story short, if our bodies would not be able to self-heal, we would not last a day. And, yet, we, and life itself, continue to persist no matter what happens. We should learn from ourselves (and evolution) and apply those lessons to the systems we're building.
+
+We haven't touched the cultural and architectural changes required by the adoption of new processes and technology. The subject is so vast that it requires much more than a series of posts.
+
+Even though we only scratched the surface, I hope you got some ideas and a possible direction to take.
+
+The DevOps 2.0 Toolkit
+----------------------
+
+<a href="http://www.amazon.com/dp/B01BJ4V66M" rel="attachment wp-att-3017"><img src="https://technologyconversations.files.wordpress.com/2014/04/the-devops-2-0-toolkit.png?w=188" alt="The DevOps 2.0 Toolkit" width="188" height="300" class="alignright size-medium wp-image-3017" /></a>If you liked this article, you might be interested in [The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices](http://www.amazon.com/dp/B01BJ4V66M) book.
+
+The book is about different techniques that help us architect software in a better and more efficient way with *microservices* packed as *immutable containers*, *tested* and *deployed continuously* to servers that are *automatically provisioned* with *configuration management* tools. It's about fast, reliable and continuous deployments with *zero-downtime* and ability to *roll-back*. It's about *scaling* to any number of servers, the design of *self-healing systems* capable of recuperation from both hardware and software failures and about *centralized logging and monitoring* of the cluster.
+
+In other words, this book envelops the full *microservices development and deployment lifecycle* using some of the latest and greatest practices and tools. We'll use *Docker, Ansible, Ubuntu, Docker Swarm and Docker Compose, Consul, etcd, Registrator, confd, Jenkins, nginx*, and so on. We'll go through many practices and, even more, tools.
+
+The book is available from Amazon ([Amazon.com](http://www.amazon.com/dp/B01BJ4V66M) and other worldwide sites) and [LeanPub](https://leanpub.com/the-devops-2-toolkit).
