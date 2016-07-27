@@ -15,10 +15,10 @@ By adding operations into existing (Agile) practices and teams, DevOps united, p
 
 DevOps 2.0 is a reset. It tries to redefine (almost) everything we do and provide benefits modern tools and processes provide. It introduces changes to processes, tools, and architecture. It enables continuous deployment at scale and self-healing systems.
 
-Today, I'll focus on tools which, consequently, influence processes and architecture. Or, is it the other way around? It's hard to say. Most likely each has an equal impact on the others. Never the less, today's focus are tools.
+In this blog series, I'll focus on tools which, consequently, influence processes and architecture. Or, is it the other way around? It's hard to say. Most likely each has an equal impact on the others. Never the less, today's focus are tools.
 
-Configuration Management
-------------------------
+Configuration Management (The DevOps 2.0 Toolkit)
+-------------------------------------------------
 
 Configuration management (CM) or provisioning tools have been around for quite some time. They are one of the first types of tools adopted by operation teams. They removed the idea that servers provisioning and applications deployment should be manual. Everything, from installing base OS, through infrastructure setup, all the way until deployment of services we are developing, moved into the hands of tools like CFEngine, Puppet, and Chef. They removed operations from being the bottleneck. Later on, they evolved into the self-service idea where operators could prepare scripts in advance and developers would need only to select how many instances of a particular type they want. Due to the promise theory, those tools are based on, by running them periodically we got self-healing in its infancy.
 
@@ -30,8 +30,8 @@ For those, and other reasons, adoption of simpler (but equally powerful) tools b
 
 The real question is why did Docker take away deployment from CM tools?
 
-Containers and Immutable Deployments
-------------------------------------
+Containers and Immutable Deployments (The DevOps 2.0 Toolkit)
+-------------------------------------------------------------
 
 Even though CM alleviated some of the infrastructure problems, it did not make them go away. The problem is still there, only in a smaller measure. Even though it is now defined as code and automated, infrastructure hell continuous to haunt us. Too many, often conflicting dependencies quickly become a nightmare to manage. As a result, we tended to define standards. You can use only JDK7. Web server must be JBoss. These are the mandatory libraries. And so on, and so forth. The problem with such standards is that they are an innovation killer. They prevent us from trying new things (at least during working hours).
 
@@ -45,8 +45,8 @@ The solution to those, and a few other problems, lies in immutable deployments. 
 
 However, Docker itself proved not to be enough. Today, we do not run things on servers but inside clusters and we need more than containers to manage such deployments.
 
-Cluster Orchestration
----------------------
+Cluster Orchestration (The DevOps 2.0 Toolkit)
+----------------------------------------------
 
 When I was an apprentice, I was thought to treat servers as pets. I would treat them with care. I would make sure that they are healthy and well fed. If one of them gets sick, finding the cure was of utmost priority. I even gave them names. One was Garfield, and the other was Gandalf. Most companies I worked for had a theme for naming their servers. Mythical creatures, comic book characters, animals, and so on. Today, when working with clusters, the approach is different. Cloud changed it all. Pets become cattle. When one of them gets sick, we kill them. We know that there's almost an infinite number of healthy specimens so curing a sick one is a waste of time. When something goes wrong, destroy it and create a new one. Our applications are built with scaling and fault tolerance in mind, so a temporary loss of a single node is not a problem. This approach goes hand in hand with a change in architecture.
 
@@ -56,8 +56,8 @@ With microservices packed inside containers and deployed to a cluster, there is 
 
 While solving some of the problems, cluster orchestration tools created new ones. Namely, if we don't know, in advance, where will our services run, how to we configure them?
 
-Service Discovery
------------------
+Service Discovery (The DevOps 2.0 Toolkit)
+------------------------------------------
 
 Service discovery is the answer to the problem of trying to configuration our services when they are deployed to clusters. In particular, the problem is caused by a high level of dynamism and elasticity. Services are not, anymore, deployed to a particular server but somewhere within a cluster. We are not specifying the destination but the requirement. Deploy anywhere as long as there is the specified amount of CPUs and memory, certain type of hard disk, and so on.
 
@@ -73,8 +73,8 @@ Finally, we need a way to change configurations whenever data in the registry is
 
 Service discovery creates another question. What should we do with a proxy?
 
-Dynamic Proxies
----------------
+Dynamic Proxies (The DevOps 2.0 Toolkit)
+----------------------------------------
 
 The decline of hardware proxies started a long time ago. They were too expensive and inflexible even before cloud computing become mainstream. These days, almost all proxies are based on software. The major difference is what we expect from them. While, until recently, we could define all redirections as static configuration files, that changed in favor of more dynamic solutions. Since our services are being constantly deployed, redeployed, scaled, and, in general, moved around, the proxy needs to be capable of updating itself with this ever changing end-point locations.
 
@@ -90,8 +90,8 @@ Services architecture is switching towards microservices and, as a result, deplo
 
 The deployment frequency is becoming higher and higher, and that poses another question. How do we deploy often without any downtime?
 
-Zero-Downtime Deployment
-------------------------
+Zero-Downtime Deployment (The DevOps 2.0 Toolkit)
+-------------------------------------------------
 
 In most cases, we employ the deployment strategies that result in the current release being replaced with the new one. The old release is stopped, and the new one is deployed in its place. Such a set of actions produces downtime. During a (hopefully) short period neither release is running. As a result, there is a millisecond, second, a minute, or even a longer period during which our service is inaccessible. In today's market, such a strategy is unacceptable. If our software is not operational, our users will go somewhere else. Even if they don't, downtime produces all other kinds of undesirable effect. Money is lost, the support team is overwhelmed with calls, reputation is damaged, and so on. We are expected to be uo and running 24/7. That's the part of the reason why iterations were long in the past. If we are going to have a downtime produced by a deployment of a new release, better not do it often. However, today we cannot afford not to do release software often. Our users expect constant improvements. Even if they don't, we do. Short iterations proved its value on all levels. Today, we see a continuous redefinition of what *short* means. While, not so long ago, short meant months or weeks, today it means multiple times a day. The ultimate goal? Every commit deployed to production. If deployments produce downtime, the previous sentence could be translated to *every commit creates downtime*. We don't want that. So, how can we avoid deployment downtime? Or, to put it in other words, how can we accomplish **zero-downtime deployments**?
 
@@ -113,8 +113,8 @@ The advantage of *blue-green deployments* is that we can test the deployment bef
 
 Now that there is no downtime caused by the deployment process, the door opens for the implementation of *continuous deployments*.
 
-Continuous Integration, Delivery, And Deployment
-------------------------------------------------
+Continuous Integration, Delivery, And Deployment (The DevOps 2.0 Toolkit)
+-------------------------------------------------------------------------
 
 We cannot discuss continuous deployment without, briefly, going through the concepts behind continuous integration.
 
@@ -144,8 +144,8 @@ Another thing to note is that the tool should not prevent team's autonomy. If a 
 
 If we add the need for the tool to be capable of operating on a large scale, there are only a few products available today. One of them is, without a doubt, [Jenkins](https://jenkins.io/) combined with the [Pipeline](https://jenkins.io/solutions/pipeline/) defined as [Jenkinsfile](https://jenkins.io/doc/pipeline/jenkinsfile/). Is it the only product that exerts the features we require from a modern CD tool? That's hard to say since new tools are emerging on almost daily basis. What is true is that Jenkins proved itself over and over again. It, in a way, defined CI processes and, today, continues leading the CD movement.
 
-Are We Done Now?
-----------------
+Are We Done Now? (The DevOps 2.0 Toolkit)
+-----------------------------------------
 
 Are we, finally, done with an overview of the modern DevOps toolkit that should reside in our toolbelt? Not even close! Once we adopt all the tools and practices we discussed, there is still much to do.
 
@@ -158,7 +158,7 @@ Even though we only scratched the surface, I hope you got some ideas and a possi
 The DevOps 2.0 Toolkit
 ----------------------
 
-<a href="http://www.amazon.com/dp/B01BJ4V66M" rel="attachment wp-att-3017"><img src="https://technologyconversations.files.wordpress.com/2014/04/the-devops-2-0-toolkit.png?w=188" alt="The DevOps 2.0 Toolkit" width="188" height="300" class="alignright size-medium wp-image-3017" /></a>If you liked this article, you might be interested in [The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices](http://www.amazon.com/dp/B01BJ4V66M) book.
+If you liked this article, you might be interested in [The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices](http://www.amazon.com/dp/B01BJ4V66M) book.
 
 The book is about different techniques that help us architect software in a better and more efficient way with *microservices* packed as *immutable containers*, *tested* and *deployed continuously* to servers that are *automatically provisioned* with *configuration management* tools. It's about fast, reliable and continuous deployments with *zero-downtime* and ability to *roll-back*. It's about *scaling* to any number of servers, the design of *self-healing systems* capable of recuperation from both hardware and software failures and about *centralized logging and monitoring* of the cluster.
 
