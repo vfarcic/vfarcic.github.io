@@ -1,9 +1,9 @@
 Service Discovery: The Key to Distributed Services
 ==================================================
 
-C> *It does not take much strength to do things, but it requires a great deal of strength to decide what to do*
-C>
-C> -- Elbert Hubbard
+> *It does not take much strength to do things, but it requires a great deal of strength to decide what to do*
+>
+> -- Elbert Hubbard
 
 The more services we have, the bigger the chance for a conflict to occur if we are using predefined ports. After all, there can be no two services listening on the same port. Managing an accurate list of all the ports used by, let's say, a hundred services is a challenge in itself. Add to that list the databases those services need and the number grows even more. For that reason, we should deploy services without specifying ports and letting Docker assign random ones for us. The only problem is that we need to discover the port number and let others know about it.
 
