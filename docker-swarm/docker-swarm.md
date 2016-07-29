@@ -53,8 +53,7 @@ With the machines up and running we can proceed and set up the Swarm cluster.
 eval $(docker-machine env node-1)
 
 docker swarm init \
-    --secret my-secret \
-    --auto-accept worker \
+    --advertise-addr $(docker-machine ip node-1) \
     --listen-addr $(docker-machine ip node-1):2377
 ```
 
@@ -62,21 +61,35 @@ The first command set environment variables so that local Docker Engine is point
 
 Let's add the other two nodes to the cluster.
 
+As a way to increase security, a new node can be added to the cluster only if it contains the token generated when Swarm was initialized. The token was printed as a result of the `docker swarm init` commmand. You can copy and paste the code from the output or use the `join-token` command.
+
 ```bash
+docker swarm join-token -q worker
+```
+
+The output is as follows.
+
+```
+SWMTKN-1-24hd6kvr8ihzu7mtklhwj6p6hi1mv1uw6ohf2axtw9ada02hot-6ttad3td76xwvnctjnt3m0u41
+```
+
+Please note that this token was generated on my machine and, in your case, it will be different.
+
+Let's put the token into an environment variable and add the other two nodes as workers.
+
+```bash
+TOKEN=$(docker swarm join-token -q worker)
+
 eval $(docker-machine env node-2)
 
-docker swarm join \
-    --secret my-secret \
-    $(docker-machine ip node-1):2377
+docker swarm join --token $TOKEN $(docker-machine ip node-1):2377
 
 eval $(docker-machine env node-3)
 
-docker swarm join \
-    --secret my-secret \
-    $(docker-machine ip node-1):2377
+docker swarm join --token $TOKEN $(docker-machine ip node-1):2377
 ```
 
-The other two machines joined the cluster as agents. We can confirm that by sending the `node ls` command to the *Leader* node (*node-1*).
+The other two machines joined the cluster as workers. We can confirm that by sending the `node ls` command to the *Leader* node (*node-1*).
 
 ```bash
 eval $(docker-machine env node-1)
@@ -209,21 +222,21 @@ c8tjeq1hofjp  go-demo-db  1/1       mongo
 
 As we can see, five out of five replicas of the *go-demo* container are running.
 
-The `service tasks` command provides more detailed information about a single service.
+The `service ps` command provides more detailed information about a single service.
 
 ```bash
-docker service tasks go-demo
+docker service ps go-demo
 ```
 
 The output is as follows.
 
 ```
-ID                         NAME       SERVICE  IMAGE            LAST STATE          DESIRED STATE  NODE
-a88mn3nyk94rewpmumf8on6z6  go-demo.1  go-demo  vfarcic/go-demo  Running 59 minutes  Running        node-3
-71x73ng63vi2w1408ld0miz43  go-demo.2  go-demo  vfarcic/go-demo  Running 4 minutes   Running        node-2
-22lyubpnt8mt9wtjkvd6bmgdj  go-demo.3  go-demo  vfarcic/go-demo  Running 4 minutes   Running        node-2
-b7689aieyfdrea8lbvecn8gzl  go-demo.4  go-demo  vfarcic/go-demo  Running 4 minutes   Running        node-1
-7p6yt3rrxn7d5tssqr3ln9aye  go-demo.5  go-demo  vfarcic/go-demo  Running 4 minutes   Running        node-3
+ID                         NAME       IMAGE            NODE    DESIRED STATE  CURRENT STATE               ERROR
+40jasxwg45kg0p1ulht39904o  go-demo.1  vfarcic/go-demo  node-3  Running        Running about a minute ago
+08mghas13b99e9bb4rsols77o  go-demo.2  vfarcic/go-demo  node-2  Running        Running 51 seconds ago
+bus2hm8y6a113lnemrz5ke0yn  go-demo.3  vfarcic/go-demo  node-2  Running        Running 51 seconds ago
+8vae12ugrrrakevey74p7hhsq  go-demo.4  vfarcic/go-demo  node-1  Running        Running 53 seconds ago
+99uura8n1tgjtjk4tqp49mszz  go-demo.5  vfarcic/go-demo  node-3  Running        Running about a minute ago
 ```
 
 We can see that the *go-demo* service is running five instances distributed across the three nodes. Since they all belong to the same *go-demo* network, they can communicate with each other no matter where they run inside the cluster. At the same time, none of them is accessible from "outside".
@@ -243,24 +256,26 @@ To test a failure scenario, we'll destroy one of the nodes.
 docker-machine rm -f node-3
 ```
 
-Swarm needs a bit of time until it detects that the node is down. Once it does, it will reschedule containers. We can monitor the situation through the `service tasks` command.
+Swarm needs a bit of time until it detects that the node is down. Once it does, it will reschedule containers. We can monitor the situation through the `service ps` command.
 
 ```bash
-docker service tasks go-demo
+docker service ps go-demo
 ```
 
 The output (after rescheduling) is as follows.
 
 ```bash
 ID                         NAME       SERVICE  IMAGE            LAST STATE              DESIRED STATE  NODE
-7l8hrsov8hl7lehn3eggyqsgq  go-demo.1  go-demo  vfarcic/go-demo  Running About a minute  Running        node-1
-71x73ng63vi2w1408ld0miz43  go-demo.2  go-demo  vfarcic/go-demo  Running About an hour   Running        node-2
-22lyubpnt8mt9wtjkvd6bmgdj  go-demo.3  go-demo  vfarcic/go-demo  Running About an hour   Running        node-2
-b7689aieyfdrea8lbvecn8gzl  go-demo.4  go-demo  vfarcic/go-demo  Running About an hour   Running        node-1
-9lwwl4up0j3u1aiz6ut5fcgk8  go-demo.5  go-demo  vfarcic/go-demo  Running About a minute  Running        node-2
+czbpu8lrhds1wx0ml4vhv65s1  go-demo.1      vfarcic/go-demo  node-2  Running        Running 13 seconds ago
+40jasxwg45kg0p1ulht39904o   \_ go-demo.1  vfarcic/go-demo  node-3  Shutdown       Running about a minute ago
+08mghas13b99e9bb4rsols77o  go-demo.2      vfarcic/go-demo  node-2  Running        Running about a minute ago
+bus2hm8y6a113lnemrz5ke0yn  go-demo.3      vfarcic/go-demo  node-2  Running        Running about a minute ago
+8vae12ugrrrakevey74p7hhsq  go-demo.4      vfarcic/go-demo  node-1  Running        Running about a minute ago
+cnbwfraw6jbkfzf9ufdv970bg  go-demo.5      vfarcic/go-demo  node-1  Running        Running 13 seconds ago
+99uura8n1tgjtjk4tqp49mszz   \_ go-demo.5  vfarcic/go-demo  node-3  Shutdown       Running about a minute ago
 ```
 
-As you can see, after a short period of time, Swarm rescheduled containers among healthy nodes (*node-1* and *node-2*). If, your output still shows that some instances are running on the *node-3*, please wait for a few moments and repeat the `service tasks` command.
+As you can see, after a short period of time, Swarm rescheduled containers among healthy nodes (*node-1* and *node-2*) and changed the state of those that were running inside the failed node to *Shutdown*. If, your output still shows that some instances are running on the *node-3*, please wait for a few moments and repeat the `service ps` command.
 
 What Now?
 ---------
