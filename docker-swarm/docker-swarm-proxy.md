@@ -52,6 +52,8 @@ Deploying Services To The Cluster
 To experiment the new Docker Swarm networking, we'll start by creating two networks.
 
 ```bash
+eval $(docker-machine env node-1)
+
 docker network create --driver overlay proxy
 
 docker network create --driver overlay go-demo
@@ -63,7 +65,6 @@ We'll start with the database. Since it is not public-facing, there is no need t
 
 ```bash
 docker service create --name go-demo-db \
-  -p 27017 \
   --network go-demo \
   mongo
 ```
@@ -72,7 +73,6 @@ With the database up and running, we can deploy the back-end. Since we want our 
 
 ```bash
 docker service create --name go-demo \
-  -p 8080 \
   -e DB=go-demo-db \
   --network go-demo \
   --network proxy \
@@ -83,7 +83,7 @@ docker service create --name go-demo \
 
 Now both containers are running somewhere inside the cluster and are able to communicate with each other through the *go-demo* network. Let's bring the proxy into the mix. We'll use [HAProxy](http://www.haproxy.org/). The principles we'll explore are the same no matter which one will be your choice.
 
-Please note that we did not specify external ports. That means the neither containers are accessible from outside the *go-demo* network.
+Please note that we did not specify ports. That means the neither containers are accessible from outside the *go-demo* network.
 
 Setting Up a Proxy Service
 --------------------------
@@ -107,7 +107,7 @@ docker service create --name proxy \
     vfarcic/docker-flow-proxy
 ```
 
-We opened ports *80* and *443* that will serve Internet traffic (*HTTP* and *HTTPS*). The third port is *8080*. We'll use it to send configurations requests to the proxy. Further on, we specified that it should belong to the *proxy* network. That way, since *go-demo* is also attached to the same network, the proxy can access it through the SDN.
+We opened ports *80* and *443* that will serve Internet traffic (*HTTP* and *HTTPS*). The third port is *8080*. We'll use it to send configuration requests to the proxy. Further on, we specified that it should belong to the *proxy* network. That way, since *go-demo* is also attached to the same network, the proxy can access it through the SDN.
 
 Unlike other containers that will be accessible through the proxy, we cannot allow this one to be deployed on a random node. That would pose difficulties when setting up the DNS. So, we want to be sure that it is running on a predetermined node. To accomplish that, we used the `--constraint` argument that specified the hostname of the destination server. Please note that the proxy is one of the very few services (if any) that should run on a particular server. We should let Swarm decide where to deploy services. That does not mean that we shouldn't use constraints, but that they should be limited to resources we need. We should specify how many CPUs a service needs, how much memory, and so on. In other words, you should know where the proxy is so that you can set up DNS records and let Swarm decide where to run for all other services.
 
