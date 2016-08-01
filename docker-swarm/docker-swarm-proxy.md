@@ -1,7 +1,7 @@
 Integrating Proxy With Docker Swarm (Tour Around Docker 1.12 Series)
 ====================================================================
 
-> This article continues where [Introduction To The New Swarm](TODO) left. I will assume that you have at least a basic knowledge how Swarm in Docker v1.12+ works. If you don't, please read the previous article first.
+> This article continues where [Docker Swarm Introduction](https://technologyconversations.com/2016/07/29/docker-swarm-introduction-tour-around-docker-1-12-series/) left. I will assume that you have at least a basic knowledge how Swarm in Docker v1.12+ works. If you don't, please read the previous article first.
 
 The fact that we can deploy any number of services inside a Swarm cluster does not mean that they are accessible to our users. We already saw that the new Swarm networking made it easy for services to communicate with each other.
 
@@ -16,7 +16,7 @@ The examples that follow assume that you have [Docker Machine](https://www.docke
 
 > If you are a Windows user, please run all the examples from *Git Bash* (installed through *Docker Toolbox*).
 
-I won't go into details of the environment setup. It is the same as explained in the [Introduction To The New Swarm](TODO) article. We'll set up three nodes that they will form a Swarm cluster.
+I won't go into details of the environment setup. It is the same as explained in the [Docker Swarm Introduction](https://technologyconversations.com/2016/07/29/docker-swarm-introduction-tour-around-docker-1-12-series/) article. We'll set up three nodes that they will form a Swarm cluster.
 
 ```
 docker-machine create -d virtualbox node-1
@@ -249,4 +249,4 @@ That concludes the exploration of some of the new Swarm and networking features 
 
 Is this everything there is to know to run a Swarm cluster successfully? Not even close! What we explored by now (in this and the previous article) is only the beginning. There are quite a few questions waiting to be answered. What happened to Docker Compose? How do we deploy new releases without downtime? Are there any additional tools we should use?
 
-I'll try to give answers to those and quite a few other questions in future articles. The next one will be dedicated to TODO.
+I'll try to give answers to those and quite a few other questions in future articles. The next one will be dedicated to *Distributed Application Bundles*.
