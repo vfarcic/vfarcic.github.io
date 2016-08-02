@@ -16,7 +16,7 @@ The examples that follow assume that you have [Docker Machine](https://www.docke
 
 > If you are a Windows user, please run all the examples from *Git Bash* (installed through *Docker Toolbox*).
 
-I won't go into details of the environment setup. It is the same as explained in the [Docker Swarm Introduction](https://technologyconversations.com/2016/07/29/docker-swarm-introduction-tour-around-docker-1-12-series/) article. We'll set up three nodes that they will form a Swarm cluster.
+I won't go into details of the environment setup. It is the same as explained in the [Docker Swarm Introduction](https://technologyconversations.com/2016/07/29/docker-swarm-introduction-tour-around-docker-1-12-series/) article. We'll set up three nodes that will form a Swarm cluster.
 
 ```
 docker-machine create -d virtualbox node-1
@@ -215,7 +215,7 @@ Before we start load balancing explanation, let's create a few more instances of
 ```bash
 eval $(docker-machine env node-1)
 
-docker service update --replicas 5 go-demo
+docker service scale go-demo=5
 ```
 
 Within a few moments, five instances of the *go-demo* service will be running.
