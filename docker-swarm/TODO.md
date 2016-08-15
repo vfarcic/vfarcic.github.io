@@ -1,7 +1,6 @@
 TODO
 ====
 
-* Bundle
 * Healthchecks
 * Logging
 * Stack and deploy
@@ -11,3 +10,4 @@ TODO
 * Logging (http://view.dckr.info:8080/#138)
 * Docker for AWS
 * Docker for Azure
+* Drain

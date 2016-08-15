@@ -13,10 +13,11 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
-		<link rel="stylesheet" href="../css/reveal.css">
-		<link rel="stylesheet" href="../css/theme/viktor-harbur.css" id="theme">
+        <link rel="stylesheet" href="../css/reveal.css">
+        <link rel="stylesheet" href="../css/theme/black.css" id="theme">
+        <link rel="stylesheet" href="../css/theme/vfarcic.css">
 
-		<link rel="stylesheet" href="../lib/css/zenburn.css">
+		<!--<link rel="stylesheet" href="../lib/css/zenburn.css">-->
 
 		<!-- Printing and PDF exports -->
 		<script>
@@ -41,21 +42,18 @@
 				<section id="cover" data-background="../img/background/swarm.jpg">
 					<h1>Scaling and Clustering with Docker Swarm</h1>
 					<hr/>
-					<h3>
-						<a href="http://technologyconversations.com/about/" style=" width: 50%">Viktor Farcic</a>
-						<a href="https://harbur.io" style="float: right; width: 50%">Dimitris Kapanidis</a>
-					</h3>
+					<h2>
+						<a href="http://technologyconversations.com/about/">Viktor Farcic</a>
+					</h2>
 					<hr/>
 					<h4>
-						<a href="https://twitter.com/vfarcic" style="width: 50%">@vfarcic</a>
-						<a href="https://twitter.com/spiddy" style="float: right; width: 50%">@spiddy</a>
+						<a href="https://twitter.com/vfarcic">@vfarcic</a>
 					</h4>
 					<h4>
-						<a href="https://www.cloudbees.com" style="width: 50%">CloudBees.com</a>
-						<a href="https://harbur.io" style="float: right; width: 50%">harbur.io</a>
+						<a href="http://technologyconversations.com">TechnologyConversations.com</a>
 					</h4>
 					<h4>
-						<a href="http://technologyconversations.com" style="float: left; width: 65%">TechnologyConversations.com</a>
+						<a href="https://www.cloudbees.com">CloudBees.com</a>
 					</h4>
 				</section>
                 <section data-background="../img/background/about-me.jpg">
@@ -77,25 +75,6 @@
                         </a>
                     </section>
                 </section>
-								<section data-background="../img/background/about-me.jpg">
-                    <section id="about-dk">
-                        <h2>Dimitris Kapanidis</h2>
-                        <img src="../img/dimitris.jpg" style="width: 50%; height: 50%;" />
-                    </section>
-                    <section id="about-harbur">
-                        <a href="https://www.harbur.io">
-                            <img src="../img/harbur.png" style="background-color: white;" />
-                        </a>
-                    </section>
-										<section id="about-harbur-2">
-											<h2>Use Case</h2>
-                        <a href="https://www.harbur.io/work/onebox/index.html">
-                            <img src="../img/onebox.jpg" style="background-color: white;" />
-                        </a>
-												<h2>Technologies</h2>
-	                            <img src="../img/onebox-badges.png" style="border: 0px;background: none;box-shadow: 0 0 0; background-color:none" />
-                    </section>
-                </section>
                 <section data-background="../img/background/scaling.png">
                     <section id="scaling">
                         <h1>Scaling</h1>
@@ -114,11 +93,11 @@
 					<section id="clustering">
 						<h1>Clustering</h1>
 						<div class="fragment">
-							<img src="img/servers.png" style="border:0px"/>
+							<img src="../img/servers.png" style="border:0px"/>
 						</div>
-					</section>
-					<section id="clstering-2">
-							<img src="img/cluster.png" style="border:0px"/>
+						<div class="fragment">
+							<img src="../img/cluster.png" style="border:0px"/>
+						</div>
 					</section>
 				</section>
 				<section data-background="../img/background/tools.jpg" style="border:0px">
@@ -131,180 +110,195 @@
 						</div>
 					</section>
 				</section>
-				<section data-background="../img/background/swarm.jpg">
-					<section id="swarm-cluster" data-transition="none">
-					<h1>Swarm Cluster</h1>
-				</section>
-					<section id="swarm-consul" data-transition="none">
-							<img src="img/swarm-consul.png" style="width:80%; border:0px"/>
-					</section>
-					<section id="swarm-master-nodes" data-transition="none">
-							<img src="img/swarm-master-nodes.png" style="width:80%; border:0px"/>
-					</section>
-					<section id="swarm-first-container" data-transition="none">
-							<img src="img/swarm-first-container.png"  style="width:80%; border:0px"/>
-					</section>
-					<section id="swarm-second-container" data-transition="none">
-							<img src="img/swarm-second-container.png"  style="width:80%; border:0px"/>
-					</section>
-					<section id="swarm-nodes-full" data-transition="none">
-							<img src="img/swarm-nodes-full.png" style="width:80%; border:0px"/>
-					</section>
-					<section id="swarm-new-node" data-transition="none">
-							<img src="img/swarm-new-node.png" style="width:80%; border:0px"/>
-					</section>
-					<section id="swarm-failed-node" data-transition="none">
-							<img src="img/swarm-failed-node.png" style="width:80%; border:0px"/>
-					</section>
-					<section id="swarm-registrator" data-transition="none">
-							<img src="img/registrator.png" style="width:80%; border:0px"/>
-					</section>
-				</section>
+                <section data-background="../img/background/swarm.jpg">
+                    <h1>Docker 1.12+</h1>
+                    <ul>
+                        <li class="fragment">Service</li>
+                        <li class="fragment">Service Discovery</li>
+                        <li class="fragment">Failover</li>
+                        <li class="fragment">Networking</li>
+                        <li class="fragment">Rolling Updates</li>
+                    </ul>
+                </section>
 				<section data-background="../img/background/demo.jpg">
-					<section id="demo-provisioning">
-						<h2>Demonstration</h2>
+                    <section id="demo">
+                        <h1>Demo Time</h1>
+                    </section>
+					<section id="swarm-provisioning">
 						<h1>Provisioning</h1>
-						<pre><code data-trim contenteditable>
-git clone https://github.com/vfarcic/books-ms.git
+						<pre><code data-trim contenteditable>wget https://test.docker.com/builds/Linux/x86_64/docker-1.12.1-rc1.tgz
 
-git clone https://github.com/vfarcic/ms-lifecycle.git
+for i in 1 2 3; do
+    docker-machine create -d virtualbox swarm-$i
 
-cd ms-lifecycle
+    docker-machine scp docker-1.12.1-rc1.tgz swarm-$i:/tmp/.
 
-vagrant up cd swarm-master swarm-node-1 swarm-node-2 --provision
+    docker-machine ssh swarm-$i
 
-vagrant ssh cd
+    # cd /tmp/ && tar xzf docker-1.12.1-rc1.tgz && sudo mv docker/* /usr/local/bin && sudo /etc/init.d/docker restart && exit
+done
 
-ansible-playbook /vagrant/ansible/swarm.yml \
-    -i /vagrant/ansible/hosts/prod
 
-docker pull vfarcic/books-ms
+eval $(docker-machine env swarm-1)
 
-docker tag vfarcic/books-ms 10.100.198.200:5000/books-ms
+docker swarm init --advertise-addr $(docker-machine ip swarm-1)
 
-docker push 10.100.198.200:5000/books-ms
-						</code></pre>
+TOKEN=$(docker swarm join-token -q worker)
+
+for i in 2 3; do
+  eval $(docker-machine env swarm-$i)
+
+  docker swarm join --token $TOKEN --advertise-addr $(docker-machine ip swarm-$i) $(docker-machine ip swarm-1):2377
+done</code></pre>
 					</section>
-					<section id="demo-info">
-						<h2>Demonstration</h2>
+					<section id="swarm-info">
 						<h1>Cluster Info</h1>
-						<pre><code data-trim contenteditable>
-export DOCKER_HOST=tcp://10.100.192.200:2375
+						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
 
-docker info
-
-docker images
-
-docker ps -a
-						</code></pre>
+docker node ls</code></pre>
 					</section>
-					<section id="demo-links">
-						<h2>Demonstration</h2>
-						<h1>Deploying with links</h1>
-						<pre><code data-trim contenteditable>
-cd ~/books-ms
-
-cat docker-compose.yml
-
-docker-compose up -d app
-
-docker ps --filter name=books --format "table {{.Names}}"
-
-docker-compose down
-						</code></pre>
+					<section id="swarm-info-img">
+						<h1>Cluster Info</h1>
+						<img src="img/swarm-nodes.png">
 					</section>
-					<section id="demo-network">
-						<h2>Demo</h2>
+					<section id="swarm-network">
 						<h1>Networking</h1>
-						<pre><code data-trim contenteditable>
-cat docker-compose-swarm-v2.yml
+						<pre><code data-trim contenteditable>docker network create --driver overlay proxy
 
-docker-compose -f docker-compose-swarm-v2.yml up -d db app
+docker network create --driver overlay go-demo
 
-docker network ls
-
-docker exec -it booksms_app_1 ping books-ms-db
-
-docker ps --filter name=books --format "table {{.Names}}"
-						</code></pre>
+docker network ls</code></pre>
 					</section>
-					<section id="demo-testing">
-						<h2>Demonstration</h2>
-						<h1>Testing</h1>
-						<pre><code data-trim contenteditable>
-curl swarm-master:8500/v1/catalog/service/books-ms | jq '.'
-
-ADDRESS=`curl \
-    swarm-master:8500/v1/catalog/service/books-ms \
-    | jq -r '.[0].ServiceAddress + ":" + (.[0].ServicePort | tostring)'`
-
-curl -H 'Content-Type: application/json' -X PUT -d \
-    '{"_id": 2,
-    "title": "My Second Book",
-    "author": "John Doe",
-    "description": "A bit better book"}' \
-    $ADDRESS/api/v1/books | jq '.'
-
-curl $ADDRESS/api/v1/books | jq '.'
-						</code></pre>
+					<section id="swarm-network-img">
+						<h1>Networking</h1>
+						<img src="img/swarm-nodes-sdn-go-demo-proxy.png">
 					</section>
-					<section id="demo-scaling">
-						<h2>Demonstration</h2>
+					<section id="swarm-service">
+						<h1>Service</h1>
+						<pre><code data-trim contenteditable>docker service create --name go-demo-db \
+    --network go-demo --reserve-memory 100m mongo
+
+docker service ls
+
+docker service create --name go-demo -e DB=go-demo-db \
+    --network go-demo --network proxy \
+    --reserve-memory 50m vfarcic/go-demo
+
+docker service ps go-demo
+
+docker service inspect go-demo</code></pre>
+					</section>
+					<section id="swarm-service-img">
+						<h1>Service</h1>
+						<img src="img/swarm-go-demo.png">
+					</section>
+					<section id="swarm-network-test">
+						<h1>Global Service</h1>
+						<pre><code data-trim contenteditable>docker service create --name util \
+    --network go-demo --network proxy \
+    --mode global alpine sleep 1000000000
+
+docker service ps util
+
+ID=$(docker ps -q --filter label=com.docker.swarm.service.name=util)
+
+docker exec -it $ID apk add --update drill
+
+docker exec -it $ID drill go-demo
+
+docker exec -it $ID drill go-demo-db</code></pre>
+					</section>
+					<section id="swarm-scale">
 						<h1>Scaling</h1>
-						<pre><code data-trim contenteditable>
-docker-compose -f docker-compose-swarm-v2.yml scale app=3
+						<pre><code data-trim contenteditable>docker service scale go-demo=5
 
-docker ps --filter name=books --format "table {{.Names}}"
-
-docker-compose -f docker-compose-swarm-v2.yml scale app=2
-
-docker ps --filter name=books --format "table {{.Names}}"
-
-docker-compose down
-						</code></pre>
+docker service ps go-demo</code></pre>
 					</section>
-					<section id="demo-scheduling-cpu">
-						<h2>Demonstration</h2>
-						<h1>Scheduling CPU</h1>
-						<pre><code data-trim contenteditable>
-docker info
-
-docker run -d --cpu-shares 1 --name db1 mongo
-
-docker info
-
-docker run -d --cpu-shares 1 --name db2 mongo
-
-docker info
-
-docker ps --filter name=db --format "table {{.Names}}"
-
-docker run -d --cpu-shares 1 --name db3 mongo
-
-docker rm -f db1 db2
-						</code></pre>
+					<section id="swarm-scale-img">
+                        <h1>Scaling</h1>
+						<img src="img/swarm-go-demo-scaled.png">
 					</section>
-					<section id="demo-scheduling-memory">
-						<h2>Demonstration</h2>
-						<h1>Scheduling Memory</h1>
-						<pre><code data-trim contenteditable>
-docker run -d --cpu-shares 1 -m 1g --name db1 mongo
+					<section id="swarm-failover">
+						<h1>Failover</h1>
+						<pre><code data-trim contenteditable>docker-machine rm -f swarm-3
 
-docker info
-
-docker run -d -m 100m --name db2 mongo
-
-docker run -d -m 100m --name db3 mongo
-
-docker run -d -m 100m --name db4 mongo
-
-docker info
-
-docker ps --filter name=db --format "table {{.Names}}"
-
-docker rm -f db1 db2 db3 db4
-						</code></pre>
+docker service ps go-demo</code></pre>
 					</section>
+					<section id="swarm-adding-nodes">
+						<h1>Adding Nodes</h1>
+						<pre><code data-trim contenteditable>docker-machine create -d virtualbox swarm-4
+
+docker-machine scp docker-1.12.1-rc1.tgz swarm-4:/tmp/.
+
+docker-machine ssh swarm-4
+
+# cd /tmp/ && tar xzf docker-1.12.1-rc1.tgz && sudo mv docker/* /usr/local/bin && sudo /etc/init.d/docker restart && exit
+
+eval $(docker-machine env swarm-4)
+
+docker swarm join --token $TOKEN --advertise-addr $(docker-machine ip swarm-4) $(docker-machine ip swarm-1):2377
+
+eval $(docker-machine env swarm-1)
+
+docker service ps util</code></pre>
+					</section>
+					<section id="swarm-proxy">
+						<h1>Reverse Proxy</h1>
+						<pre><code data-trim contenteditable>wget https://raw.githubusercontent.com/vfarcic/docker-flow-proxy/master/docker-compose.yml
+
+export DOCKER_IP=$(docker-machine ip swarm-1)
+
+docker-compose up -d consul-server
+
+docker service create --name proxy -p 80:80 -p 443:443 \
+    -p 8080:8080 --network proxy -e MODE=swarm --replicas 3 \
+    -e CONSUL_ADDRESS=$(docker-machine ip swarm-1):8500 \
+    vfarcic/docker-flow-proxy
+
+docker service ps proxy</code></pre>
+					</section>
+					<section id="swarm-proxy-img">
+						<h1>Reverse Proxy</h1>
+						<img src="img/proxy-scaled.png">
+					</section>
+					<section id="swarm-proxy-test">
+						<h1>Reverse Proxy</h1>
+						<pre><code data-trim contenteditable>curl "$(docker-machine ip swarm-1):8080/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo&port=8080&distribute=true"
+
+for i in {1..10}; do
+    curl -i $(docker-machine ip swarm-1)/demo/hello
+done</code></pre>
+					</section>
+					<section id="swarm-proxy-flow-img-1" data-transition="fade-in">
+						<h1>Networking</h1>
+						<img src="img/proxy-scaled-dns.png">
+					</section>
+					<section id="swarm-proxy-flow-img-2" data-transition="fade-in">
+						<h1>Networking</h1>
+						<img src="img/proxy-scaled-routing-mesh.png">
+					</section>
+					<section id="swarm-proxy-flow-img-3" data-transition="fade-in">
+						<h1>Networking</h1>
+						<img src="img/proxy-scaled-routing-proxy.png">
+					</section>
+					<section id="swarm-proxy-flow-img-4" data-transition="fade-in">
+						<h1>Networking</h1>
+						<img src="img/proxy-scaled-proxy-sdn.png">
+					</section>
+					<section id="swarm-proxy-flow-img-5" data-transition="fade-in">
+						<h1>Networking</h1>
+						<img src="img/proxy-scaled-request-to-service.png">
+					</section>
+                    <section id="swarm-updates">
+                        <h1>Service Updates</h1>
+						<pre><code data-trim contenteditable>docker service update --image vfarcic/go-demo:1.1 --update-delay 5s go-demo
+
+docker service ps go-demo</code></pre>
+                    </section>
+                    <section id="swarm-cleanup">
+                        <h1>Cleanup</h1>
+						<pre><code data-trim contenteditable>docker-machine rm -f swarm-1 swarm-2 swarm-4</code></pre>
+                    </section>
 				</section>
 				<section id="qa" data-background="../img/background/questions.jpg">
 				</section>
