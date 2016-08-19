@@ -254,12 +254,6 @@ docker push $(docker-machine ip registry):5000/go-demo:1.0</code></pre>
     docker-machine create -d virtualbox \
         --engine-insecure-registry $(docker-machine ip registry):5000 \
         swarm-test-$i
-
-    docker-machine scp docker-1.12.1-rc1.tgz swarm-test-$i:/tmp/.
-
-    docker-machine ssh swarm-test-$i
-
-    # cd /tmp/ && tar xzf docker-1.12.1-rc1.tgz && sudo mv docker/* /usr/local/bin && sudo /etc/init.d/docker restart && exit
 done</code></pre>
                     </section>
                     <section id="cd-cluster">
@@ -377,12 +371,6 @@ cd ..</code></pre>
                         <hr/>
                         <pre><code data-trim contenteditable>for i in 1 2 3; do
     docker-machine create -d virtualbox swarm-$i
-
-    docker-machine scp docker-1.12.1-rc1.tgz swarm-$i:/tmp/.
-
-    docker-machine ssh swarm-$i
-
-    # cd /tmp/ && tar xzf docker-1.12.1-rc1.tgz && sudo mv docker/* /usr/local/bin && sudo /etc/init.d/docker restart && exit
 done</code></pre>
                     </section>
                     <section id="cdp-cluster">
@@ -532,12 +520,6 @@ curl -i $(docker-machine ip swarm-1)/demo/hello</code></pre>
                         <!--<hr/>-->
                         <!--<pre><code data-trim contenteditable>docker-machine create -d virtualbox swarm-4-->
 
-<!--docker-machine scp docker-1.12.1-rc1.tgz swarm-4:/tmp/.-->
-
-<!--docker-machine ssh swarm-4-->
-
-<!--# cd /tmp/ && tar xzf docker-1.12.1-rc1.tgz && sudo mv docker/* /usr/local/bin && sudo /etc/init.d/docker restart && exit-->
-
 <!--TOKEN=$(docker swarm join-token -q manager)-->
 
 <!--eval $(docker-machine env swarm-4)-->
@@ -636,12 +618,6 @@ docker-machine ssh swarm-test-1
 
 sudo mkdir -p /workspace && sudo chmod 777 /workspace && exit
 
-docker-machine scp docker-1.12.1-rc1.tgz swarm-test-1:/tmp/.
-
-docker-machine ssh swarm-test-1
-
-# cd /tmp/ && tar xzf docker-1.12.1-rc1.tgz && sudo mv docker/* /usr/local/bin && sudo /etc/init.d/docker restart && exit
-
 eval $(docker-machine env swarm-test-1)
 
 docker swarm init --advertise-addr $(docker-machine ip swarm-test-1)</code></pre>
@@ -674,12 +650,6 @@ open http://$(docker-machine ip swarm-1):8082/jenkins/computer/</code></pre>
 docker-machine ssh swarm-test-2
 
 sudo mkdir -p /workspace && sudo chmod 777 /workspace && exit
-
-docker-machine scp docker-1.12.1-rc1.tgz swarm-test-2:/tmp/.
-
-docker-machine ssh swarm-test-2
-
-# cd /tmp/ && tar xzf docker-1.12.1-rc1.tgz && sudo mv docker/* /usr/local/bin && sudo /etc/init.d/docker restart && exit
 
 TOKEN=$(docker swarm join-token -q worker)
 
