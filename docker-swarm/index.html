@@ -126,18 +126,9 @@
                     </section>
 					<section id="swarm-provisioning">
 						<h1>Provisioning</h1>
-						<pre><code data-trim contenteditable>wget https://test.docker.com/builds/Linux/x86_64/docker-1.12.1-rc1.tgz
-
-for i in 1 2 3; do
+						<pre><code data-trim contenteditable>for i in 1 2 3; do
     docker-machine create -d virtualbox swarm-$i
-
-    docker-machine scp docker-1.12.1-rc1.tgz swarm-$i:/tmp/.
-
-    docker-machine ssh swarm-$i
-
-    # cd /tmp/ && tar xzf docker-1.12.1-rc1.tgz && sudo mv docker/* /usr/local/bin && sudo /etc/init.d/docker restart && exit
 done
-
 
 eval $(docker-machine env swarm-1)
 
@@ -227,12 +218,6 @@ docker service ps go-demo</code></pre>
 					<section id="swarm-adding-nodes">
 						<h1>Adding Nodes</h1>
 						<pre><code data-trim contenteditable>docker-machine create -d virtualbox swarm-4
-
-docker-machine scp docker-1.12.1-rc1.tgz swarm-4:/tmp/.
-
-docker-machine ssh swarm-4
-
-# cd /tmp/ && tar xzf docker-1.12.1-rc1.tgz && sudo mv docker/* /usr/local/bin && sudo /etc/init.d/docker restart && exit
 
 eval $(docker-machine env swarm-4)
 
