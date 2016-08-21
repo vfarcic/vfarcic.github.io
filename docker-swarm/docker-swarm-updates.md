@@ -1,5 +1,5 @@
-Zero-Downtime Deployments to Docker Swarm (Tour Around Docker 1.12 Series)
-==========================================================================
+Zero-Downtime Deployments To a Docker Swarm Cluster (Tour Around Docker 1.12 Series)
+====================================================================================
 
 ![Docker Swarm](img/swarm.png)
 
@@ -31,7 +31,7 @@ The examples that follow assume that you have [Docker Machine](https://www.docke
 
 > If you are a Windows user, please run all the examples from *Git Bash* (installed through *Docker Toolbox*).
 
-I won't go into details of the environment setup. It is the same as explained in the [Docker Swarm Introduction](https://technologyconversations.com/2016/07/29/docker-swarm-introduction-tour-around-docker-1-12-series/) article. We'll set up three nodes that will form a Swarm cluster.
+We'll set up three nodes that will form a Swarm cluster. Please note that I won't go into details of the setup. It is the same as explained in the [Docker Swarm Introduction](https://technologyconversations.com/2016/07/29/docker-swarm-introduction-tour-around-docker-1-12-series/) article.
 
 ```
 docker-machine create -d virtualbox node-1
@@ -55,15 +55,17 @@ docker swarm join --token $TOKEN $(docker-machine ip node-1):2377
 eval $(docker-machine env node-3)
 
 docker swarm join --token $TOKEN $(docker-machine ip node-1):2377
-```
 
-Now that we have the Swarm cluster, we can deploy a service.
+eval $(docker-machine env node-1)
+
+docker node ls
+```
 
 ![Docker Swarm cluster with three nodes](img/swarm-nodes.png)
 
-```bash
-eval $(docker-machine env node-1)
+Now that we have the Swarm cluster, we can deploy a service.
 
+```bash
 docker network create --driver overlay proxy
 
 docker network create --driver overlay go-demo
@@ -84,6 +86,8 @@ Let's wait until both services are running. We can confirm their status by execu
 ```bash
 docker service ls # Wait until all services are running
 ```
+
+Both services should, after a while, have replicas set to *1/1*. If they're not, please wait a while longer.
 
 Now that we have a working Swarm cluster and two services running, we can explore the ways to deploy a new release of the the *go-demo*.
 
@@ -107,6 +111,12 @@ Since rolling updates assume that there are, at least, two instances of a servic
 docker service scale go-demo=2
 ```
 
+We can confirm that both instances are running by executing the `service ps` command.
+
+```bash
+docker service ps go-demo
+```
+
 Now that we have two instances of the release *1.0*, we can update it to *1.1*.
 
 ```bash
@@ -118,15 +128,22 @@ docker service ps go-demo
 The output of `service ps` command is as follows.
 
 ```
-TODO
+ID                         NAME           IMAGE                NODE    DESIRED STATE  CURRENT STATE                     ERROR
+6ao2lnk4qbfyu8nyakgd8khjm  go-demo.1      vfarcic/go-demo:1.1  node-3  Ready          Preparing less than a second ago
+36cciqrl70zpg85ydhvip838k   \_ go-demo.1  vfarcic/go-demo:1.0  node-2  Shutdown       Running about a minute ago
+4pgiixl8rs7ujrmtr24aqw58n  go-demo.2      vfarcic/go-demo:1.0  node-3  Running        Running about a minute ago
 ```
 
-As you can see, one of the instances was stopped and Swarm started bringing up the new release in its place. During this time, the second instance of the old release is still running and users should not experience any downtime. In the worst case scenario, during this short period, the might notice that the service is slower. After all, performance is bound to drop if only 50% of our designed capacity is operational.
+As you can see, one of the instances was shit down and Swarm started bringing up the new release in its place. During this time, the second instance of the old release is still running and users should not experience any downtime. In the worst case scenario, during this short period, the might notice that the service is slower. After all, performance is bound to drop if only 50% of our designed capacity is operational.
 
 A few moments later, once the first instance of the new release is running, Swarm will repeat the process with the second instance. If we repeat the `docker service ps go-demo` command, the output should be as follows.
 
 ```
-TODO
+ID                         NAME           IMAGE                NODE    DESIRED STATE  CURRENT STATE                    ERROR
+6ao2lnk4qbfyu8nyakgd8khjm  go-demo.1      vfarcic/go-demo:1.1  node-3  Running        Running 2 seconds ago
+36cciqrl70zpg85ydhvip838k   \_ go-demo.1  vfarcic/go-demo:1.0  node-2  Shutdown       Shutdown 4 seconds ago
+0z7d5m1oeek2n2k16eia862mh  go-demo.2      vfarcic/go-demo:1.1  node-2  Running        Starting less than a second ago
+4pgiixl8rs7ujrmtr24aqw58n   \_ go-demo.2  vfarcic/go-demo:1.0  node-3  Shutdown       Shutdown 1 seconds ago
 ```
 
 If, for whatever reason, we'd like to rollback the release, we can run the same command again. Let's revert to the release *1.0*.
@@ -138,8 +155,16 @@ docker service update --image vfarcic/go-demo:1.0 go-demo
 A few moments later, the output of the `docker service ps go-demo` command should be as follows.
 
 ```
-TODO
+ID                         NAME           IMAGE                NODE    DESIRED STATE  CURRENT STATE              ERROR
+8vd6bmfxw0azmp9x7q1s9ovk6  go-demo.1      vfarcic/go-demo:1.0  node-2  Running        Running 10 seconds ago
+6ao2lnk4qbfyu8nyakgd8khjm   \_ go-demo.1  vfarcic/go-demo:1.1  node-3  Shutdown       Shutdown 11 seconds ago
+36cciqrl70zpg85ydhvip838k   \_ go-demo.1  vfarcic/go-demo:1.0  node-2  Shutdown       Shutdown 3 minutes ago
+0x99b6s5it0aobghpi0mufjwi  go-demo.2      vfarcic/go-demo:1.0  node-3  Running        Running 7 seconds ago
+6fmjtnhc6xxqoqh55cv7ymq7u   \_ go-demo.2  vfarcic/go-demo:1.1  node-2  Shutdown       Shutdown 9 seconds ago
+55j39je5ogyx6g929iqsqwa87   \_ go-demo.2  vfarcic/go-demo:1.0  node-2  Shutdown       Shutdown 3 minutes ago
 ```
+
+As you can see, Swarm reverted our service to release *1.0*. All we had to do is send an `update` command specifying the previous release as image.
 
 There are a few additional arguments we can use to fine tune our update process. We can, for example, use `--update-parallelism` and `--update-delay`.
 
@@ -149,10 +174,22 @@ Before we try them out, let's scale our service to six instances. That number wi
 docker service scale go-demo=6
 ```
 
-After a few moments, we should have six instances of the *go-demo* service. As before, we can use the `docker service ps go-demo` to see the result. The output should be as follows.
+After a few moments, we should have six instances of the *go-demo* service. As before, we can use the `service ps` to see the result. The output should be as follows. This time, we'll list only services with the *desired state* set to *running*. Please run the command that follows.
+
+```bash
+docker service ps -f desired-state=Running go-demo
+```
+
+The output is as follows.
 
 ```
-TODO
+ID                         NAME       IMAGE                NODE    DESIRED STATE  CURRENT STATE          ERROR
+8vd6bmfxw0azmp9x7q1s9ovk6  go-demo.1  vfarcic/go-demo:1.0  node-2  Running        Running 5 minutes ago
+6iq1fr4hb09dibcdntihzy5l6  go-demo.2  vfarcic/go-demo:1.0  node-3  Running        Running 3 minutes ago
+753h053jwz5u5cmxa20o6ch9x  go-demo.3  vfarcic/go-demo:1.0  node-3  Running        Running 2 minutes ago
+0u1rpubcscde991rv1dyrq7yk  go-demo.4  vfarcic/go-demo:1.0  node-2  Running        Running 2 minutes ago
+1l3bsva3y1mkgg3gy7t26qeej  go-demo.5  vfarcic/go-demo:1.0  node-1  Running        Running 2 minutes ago
+az186cg2qc7u68yn3u649tti8  go-demo.6  vfarcic/go-demo:1.0  node-1  Running        Running 2 minutes ago
 ```
 
 Now that we have six instances up and running, we can, for example, update two instances at the time and create a delay of 10 seconds between each iteration. The command is as follows.
@@ -168,28 +205,48 @@ docker service update \
 Let's execute the `service ps` command a couple of times and see the result.
 
 ```bash
-docker service ps go-demo
+docker service ps -f desired-state=Running go-demo
 ```
 
 The output is as follows.
 
 ```
-TODO
+ID                         NAME       IMAGE                NODE    DESIRED STATE  CURRENT STATE                   ERROR
+8vd6bmfxw0azmp9x7q1s9ovk6  go-demo.1  vfarcic/go-demo:1.0  node-2  Running        Running 7 minutes ago
+6iq1fr4hb09dibcdntihzy5l6  go-demo.2  vfarcic/go-demo:1.0  node-3  Running        Running 5 minutes ago
+753h053jwz5u5cmxa20o6ch9x  go-demo.3  vfarcic/go-demo:1.0  node-3  Running        Running 4 minutes ago
+dbwe8wakxeygzqm46ib3oy4o3  go-demo.4  vfarcic/go-demo:1.1  node-3  Running        Running less than a second ago
+bv3lz21vpy1pqi7ikiood8opu  go-demo.5  vfarcic/go-demo:1.1  node-2  Running        Running less than a second ago
+az186cg2qc7u68yn3u649tti8  go-demo.6  vfarcic/go-demo:1.0  node-1  Running        Running 4 minutes ago
 ```
 
 If we repeat the `service ps` command 10 seconds after the first two instances are running, the output will be as follows.
 
 ```
-TODO
+ID                         NAME       IMAGE                NODE    DESIRED STATE  CURRENT STATE           ERROR
+8vd6bmfxw0azmp9x7q1s9ovk6  go-demo.1  vfarcic/go-demo:1.0  node-2  Running        Running 7 minutes ago
+c0znaatnbpocrx7ype6x9bibl  go-demo.2  vfarcic/go-demo:1.1  node-1  Running        Running 2 seconds ago
+1zcixr0xiw9i2pvs3vwzixsyn  go-demo.3  vfarcic/go-demo:1.1  node-2  Running        Running 2 seconds ago
+dbwe8wakxeygzqm46ib3oy4o3  go-demo.4  vfarcic/go-demo:1.1  node-3  Running        Running 15 seconds ago
+bv3lz21vpy1pqi7ikiood8opu  go-demo.5  vfarcic/go-demo:1.1  node-2  Running        Running 15 seconds ago
+az186cg2qc7u68yn3u649tti8  go-demo.6  vfarcic/go-demo:1.0  node-1  Running        Running 5 minutes ago
 ```
 
 Finally, after the third round of updates, the `service ps` output is as follows.
 
 ```
-TODO
+ID                         NAME       IMAGE                NODE    DESIRED STATE  CURRENT STATE                   ERROR
+2444ozyv65sjbb2khhfrtzt66  go-demo.1  vfarcic/go-demo:1.1  node-3  Running        Running less than a second ago
+c0znaatnbpocrx7ype6x9bibl  go-demo.2  vfarcic/go-demo:1.1  node-1  Running        Running 13 seconds ago
+1zcixr0xiw9i2pvs3vwzixsyn  go-demo.3  vfarcic/go-demo:1.1  node-2  Running        Running 13 seconds ago
+dbwe8wakxeygzqm46ib3oy4o3  go-demo.4  vfarcic/go-demo:1.1  node-3  Running        Running 26 seconds ago
+bv3lz21vpy1pqi7ikiood8opu  go-demo.5  vfarcic/go-demo:1.1  node-2  Running        Running 26 seconds ago
+2f8vmidev3oyjc7e4jkdpsqd9  go-demo.6  vfarcic/go-demo:1.1  node-3  Running        Preparing 3 seconds ago
 ```
 
-Is there an alternative to zero-downtime deployments?
+By observing the image and the current state of those outputs, we can see that Swarm updated two instances at a time and waited for ten seconds before starting the next iteration.
+
+Now that we know Docker Swarm *rolling updates* basics, the natural question is whether there is an alternative. Is there another way to deploy services to a Swarm cluster and do the process without producing any downtime?
 
 Blue-Green Deployment
 ---------------------
@@ -211,3 +268,18 @@ Docker Update Implications
 --------------------------
 
 The new option to run `docker update` commands, means that our deployment process should change. Now we can create a service once (the first release). All sequential releases do not need to know anything about the service. All we have to do is update the image. Docker Swarm will take care of the rest. This means that we can greatly simplify our deployment scripts. All there is to do is run a single `docker update --image [IMAGE_NAME_AND_TAG]` command. Docker already simplified our continuous delivery or deployment flows. With the new Swarm mode introduced in version 1.12, simple just become even simpler.
+
+What Now?
+---------
+
+That concludes the exploration of zero-downtime deployments to a Swarm cluster. In particular, we explored *rolling updates* and compared it to the *blue-green deployment* process.
+
+Is this everything there is to know to run a Swarm cluster successfully? Not even close! What we explored by now (in this and the previous articles) is only the beginning. There are quite a few other questions waiting to be answered.
+
+The next article will be dedicated to *health checks*.
+
+Before you leave, please free your resources by removing the machines we created.
+
+```bash
+docker-machine rm -f node-1 node-2 node-3
+```
