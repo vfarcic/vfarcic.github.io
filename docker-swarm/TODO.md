@@ -1,6 +1,7 @@
 TODO
 ====
 
+* Jenkins
 * Healthchecks
 * Logging
 * Stack and deploy
