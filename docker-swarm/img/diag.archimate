@@ -67,7 +67,7 @@
       <child xsi:type="archimate:DiagramObject" id="6db1a75e" textAlignment="2" archimateElement="b0246926">
         <bounds x="36" y="96" width="229" height="157"/>
         <child xsi:type="archimate:DiagramObject" id="9bf286c6" textAlignment="2" fillColor="#ff7f00" archimateElement="aa5c1756">
-          <bounds x="12" y="120" width="133" height="25"/>
+          <bounds x="12" y="120" width="145" height="25"/>
         </child>
         <child xsi:type="archimate:DiagramObject" id="0978aa46" textAlignment="2" archimateElement="d34e395a">
           <bounds x="24" y="48" width="133" height="25"/>
@@ -95,7 +95,7 @@
       <child xsi:type="archimate:DiagramObject" id="8f373a2c" textAlignment="2" archimateElement="735efd92">
         <bounds x="288" y="96" width="229" height="157"/>
         <child xsi:type="archimate:DiagramObject" id="76336727" textAlignment="2" fillColor="#ff7f00" archimateElement="8b99f9ad">
-          <bounds x="12" y="120" width="133" height="25"/>
+          <bounds x="12" y="120" width="145" height="25"/>
         </child>
         <child xsi:type="archimate:DiagramObject" id="db3fc004" fontColor="#ffffff" textAlignment="2" fillColor="#0000ff" archimateElement="3c3e0ec8">
           <bounds x="12" y="72" width="133" height="25"/>
@@ -114,7 +114,7 @@
       <child xsi:type="archimate:DiagramObject" id="e8822443" textAlignment="2" archimateElement="d5482b71">
         <bounds x="540" y="96" width="229" height="157"/>
         <child xsi:type="archimate:DiagramObject" id="00214e70" textAlignment="2" fillColor="#ff7f00" archimateElement="8b99f9ad">
-          <bounds x="12" y="120" width="133" height="25"/>
+          <bounds x="12" y="120" width="145" height="25"/>
         </child>
         <child xsi:type="archimate:DiagramObject" id="0bde1af8" textAlignment="2" archimateElement="d34e395a">
           <bounds x="24" y="36" width="133" height="25"/>

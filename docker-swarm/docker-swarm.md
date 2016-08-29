@@ -106,11 +106,11 @@ c2tykql7a2zd8tj0b88geu45i    node-2    Accepted    Ready   Active
 ejsjwyw5y92560179pk5drid4    node-3    Accepted    Ready   Active
 ```
 
-The star tells us which node we can currently using. The *manager status* indicates that the *node-1* is the *leader*.
+The star tells us which node we are currently using. The *manager status* indicates that the *node-1* is the *leader*.
 
 ![Docker Swarm cluster with three nodes](img/swarm-nodes.png)
 
-In a production environment, we would probably set more than one node to be a leader and, thus, avoid deployment downtime if one of them fails. For the purpose of this demo, having one leader should suffice.
+In a production environment, we would probably set more than one node to be a manager and, thus, avoid deployment downtime if one of them fails. For the purpose of this demo, having one manager should suffice.
 
 Deploying Container To The Cluster
 ----------------------------------
@@ -149,7 +149,6 @@ Let's start by deploying the *mongo* container somewhere within the cluster. Usu
 
 ```bash
 docker service create --name go-demo-db \
-  -p 27017 \
   --network go-demo \
   mongo
 ```
@@ -248,7 +247,7 @@ What happens if one of the containers is stopped or if the entire node fails? Af
 Failover
 --------
 
-Fortunately, failover strategies are part of Docker Swarm. Remember, when we execute a `service` command, we are not telling Swarm what to do but the state we desire. In turn, Swarm will do it's best to maintain the specified state no matter what happens.
+Fortunately, failover strategies are part of Docker Swarm. Remember, when we execute a `service` command, we are not telling Swarm what to do but the state we desire. In turn, Swarm will do its best to maintain the specified state no matter what happens.
 
 To test a failure scenario, we'll destroy one of the nodes.
 
@@ -275,7 +274,7 @@ cnbwfraw6jbkfzf9ufdv970bg  go-demo.5      vfarcic/go-demo  node-1  Running      
 99uura8n1tgjtjk4tqp49mszz   \_ go-demo.5  vfarcic/go-demo  node-3  Shutdown       Running about a minute ago
 ```
 
-As you can see, after a short period of time, Swarm rescheduled containers among healthy nodes (*node-1* and *node-2*) and changed the state of those that were running inside the failed node to *Shutdown*. If, your output still shows that some instances are running on the *node-3*, please wait for a few moments and repeat the `service ps` command.
+As you can see, after a short period of time, Swarm rescheduled containers among healthy nodes (*node-1* and *node-2*) and changed the state of those that were running inside the failed node to *Shutdown*. If your output still shows that some instances are running on the *node-3*, please wait for a few moments and repeat the `service ps` command.
 
 What Now?
 ---------
