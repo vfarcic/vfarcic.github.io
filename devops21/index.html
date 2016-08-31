@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>The DevOps 2.1 Toolkit</title>
+
+		<meta name="author" content="Viktor Farcic">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="../css/reveal.css">
+        <link rel="stylesheet" href="../css/theme/black.css" id="theme">
+        <link rel="stylesheet" href="../css/theme/vfarcic.css">
+
+		<!--<link rel="stylesheet" href="../lib/css/zenburn.css">-->
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<header style="position: absolute;top: 50px; left: 100px; z-index:500; font-size:100px;background-color: rgba(0,0,0,0.5)"></header>
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section id="cover" data-background="../img/background/swarm.jpg">
+					<h1>The DevOps 2.1 Toolkit</h1>
+					<h4>Building, testing, deploying, and monitoring services inside Docker Swarm clusters</h4>
+					<hr/>
+					<h2>
+						<a href="http://technologyconversations.com/about/">Viktor Farcic</a>
+					</h2>
+					<hr/>
+					<h4>
+						<a href="https://twitter.com/vfarcic">@vfarcic</a>
+					</h4>
+					<h4>
+						<a href="http://technologyconversations.com">TechnologyConversations.com</a>
+					</h4>
+					<h4>
+						<a href="https://www.cloudbees.com">CloudBees.com</a>
+					</h4>
+				</section>
+                <section data-background="../img/background/about-me.jpg">
+                    <section id="about-me">
+                        <h2>Viktor Farcic</h2>
+                        <img src="../img/viktor.jpg" style="width: 50%; height: 50%;" />
+                    </section>
+                    <section id="about-company">
+                        <a href="https://www.cloudbees.com">
+                            <img src="../img/company-big.png" style="background-color: white;" />
+                        </a>
+                    </section>
+                    <section id="about-books">
+                        <a href="https://leanpub.com/the-devops-2-toolkit">
+                            <img src="../img/devops2.png" style="float: left; width: 40%; height: 40%;" />
+                        </a>
+                        <a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">
+                            <img src="../img/tdd.jpg" style="float: right; width: 40%; height: 40%;" />
+                        </a>
+                    </section>
+                </section>
+				<section data-background="../img/background/containers.png">
+					<section id="docker">
+						<h1>Docker Containers</h1>
+						<ul>
+							<li class="fragment">Portable</li>
+							<li class="fragment">Low resource usage</li>
+							<li class="fragment">Scalable</li>
+							<li class="fragment">Isolation</li>
+							<li class="fragment">Self-sufficient</li>
+							<li class="fragment">Immutable</li>
+						</ul>
+					</section>
+					<section id="docker-eco">
+						<h1>Docker Ecosystem</h1>
+						<ul>
+							<li class="fragment">Docker Engine</li>
+							<li class="fragment">Docker Compose</li>
+							<li class="fragment">Docker Machine</li>
+							<li class="fragment">Docker Registry</li>
+						</ul>
+					</section>
+					<section id="docker-cd">
+						<h1>Continuous Deployment</h1>
+						<h3 class="fragment">Every commit is deployed to production</h3>
+					</section>
+				</section>
+				<section data-background="../img/background/demo.jpg">
+					<section id="docker-demo">
+						<h2>Demo Time</h2>
+						<h1 class="fragment">CI with Docker</h1>
+					</section>
+					<section id="docker-node">
+						<h1>Code & Server</h1>
+						<pre><code data-trim contenteditable>git clone https://github.com/vfarcic/go-demo.git
+
+cd go-demo
+
+docker-machine create -d virtualbox go-demo
+
+eval $(docker-machine env go-demo)</code></pre>
+					</section>
+					<section id="docker-unit">
+						<h1>Unit Tests & Build</h1>
+						<pre><code data-trim contenteditable>cat docker-compose-test-local.yml
+
+docker-compose -f docker-compose-test.yml run --rm unit
+
+ll | grep go-demo</code></pre>
+					</section>
+					<section id="docker-build">
+						<h1>Building Images</h1>
+						<pre><code data-trim contenteditable>cat Dockerfile
+
+docker-compose -f docker-compose-test-local.yml build app
+
+docker images</code></pre>
+					</section>
+					<section id="docker-staging">
+						<h1>Staging tests</h1>
+						<pre><code data-trim contenteditable>cat docker-compose-test-local.yml
+
+docker-compose -f docker-compose-test-local.yml up -d staging-dep
+
+docker-compose -f docker-compose-test-local.yml ps
+
+docker-compose -f docker-compose-test-local.yml run --rm staging
+
+docker-compose -f docker-compose-test-local.yml down
+
+docker-compose -f docker-compose-test-local.yml ps</code></pre>
+					</section>
+					<section id="docker-registry">
+						<h1>Registry</h1>
+						<pre><code data-trim contenteditable>cat docker-compose-local.yml
+
+docker-compose -f docker-compose-local.yml up -d registry
+
+docker pull alpine
+
+docker tag alpine localhost:5000/alpine
+
+docker push localhost:5000/alpine
+
+docker tag go-demo localhost:5000/go-demo:1.0
+
+docker push localhost:5000/go-demo:1.0
+
+ll docker/registry/v2/repositories/go-demo</code></pre>
+					</section>
+					<section id="docker-cleanup">
+						<h1>Cleanup</h1>
+						<pre><code data-trim contenteditable>docker-machine rm -f go-demo</code></pre>
+					</section>
+				</section>
+                <section data-background="../img/background/swarm.jpg">
+					<section id="swarm">
+						<h1>Docker 1.12+</h1>
+						<ul>
+							<li class="fragment">Service</li>
+							<li class="fragment">Service Discovery</li>
+							<li class="fragment">Failover</li>
+							<li class="fragment">Networking</li>
+							<li class="fragment">Rolling Updates</li>
+						</ul>
+					</section>
+                </section>
+				<section data-background="../img/background/demo.jpg">
+                    <section id="swarm-demo">
+						<h2>Demo Time</h2>
+						<div class="fragment">
+							<h1>Setting Up</h1>
+							<h1>a Swarm Cluster</h1>
+							<h1>and</h1>
+							<h1>Running Services</h1>
+						</div>
+                    </section>
+					<section id="swarm-provisioning">
+						<h1>Provisioning</h1>
+						<pre><code data-trim contenteditable>for i in 1 2 3; do
+    docker-machine create -d virtualbox swarm-$i
+done
+
+eval $(docker-machine env swarm-1)
+
+docker swarm init --advertise-addr $(docker-machine ip swarm-1)
+
+TOKEN=$(docker swarm join-token -q worker)
+
+for i in 2 3; do
+  eval $(docker-machine env swarm-$i)
+
+  docker swarm join --token $TOKEN --advertise-addr $(docker-machine ip swarm-$i) $(docker-machine ip swarm-1):2377
+done</code></pre>
+					</section>
+					<section id="swarm-info">
+						<h1>Cluster Info</h1>
+						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
+
+docker node ls</code></pre>
+					</section>
+					<section id="swarm-info-img">
+						<h1>Cluster Info</h1>
+						<img src="../img/swarm/swarm-nodes.png">
+					</section>
+					<section id="swarm-network">
+						<h1>Networking</h1>
+						<pre><code data-trim contenteditable>docker network create --driver overlay proxy
+
+docker network create --driver overlay go-demo
+
+docker network ls</code></pre>
+					</section>
+					<section id="swarm-network-img">
+						<h1>Networking</h1>
+						<img src="../img/swarm/swarm-nodes-sdn-go-demo-proxy.png">
+					</section>
+					<section id="swarm-service">
+						<h1>Service</h1>
+						<pre><code data-trim contenteditable>docker service create --name go-demo-db \
+    --network go-demo --reserve-memory 100m mongo
+
+docker service ls
+
+docker service create --name go-demo -e DB=go-demo-db \
+    --network go-demo --network proxy \
+    --reserve-memory 50m vfarcic/go-demo
+
+docker service ps go-demo
+
+docker service inspect go-demo</code></pre>
+					</section>
+					<section id="swarm-service-img">
+						<h1>Service</h1>
+						<img src="../img/swarm/swarm-go-demo.png">
+					</section>
+					<section id="swarm-network-test">
+						<h1>Global Service</h1>
+						<pre><code data-trim contenteditable>docker service create --name util \
+    --network go-demo --network proxy \
+    --mode global alpine sleep 1000000000
+
+docker service ps util
+
+ID=$(docker ps -q --filter label=com.docker.swarm.service.name=util)
+
+docker exec -it $ID apk add --update drill
+
+docker exec -it $ID drill go-demo
+
+docker exec -it $ID drill go-demo-db</code></pre>
+					</section>
+					<section id="swarm-scale">
+						<h1>Scaling</h1>
+						<pre><code data-trim contenteditable>docker service scale go-demo=5
+
+docker service ps go-demo</code></pre>
+					</section>
+					<section id="swarm-scale-img">
+                        <h1>Scaling</h1>
+						<img src="../img/swarm/swarm-go-demo-scaled.png">
+					</section>
+					<section id="swarm-failover">
+						<h1>Failover</h1>
+						<pre><code data-trim contenteditable>docker-machine rm -f swarm-3
+
+docker service ps go-demo</code></pre>
+					</section>
+					<section id="swarm-adding-nodes">
+						<h1>Adding Nodes</h1>
+						<pre><code data-trim contenteditable>docker-machine create -d virtualbox swarm-4
+
+eval $(docker-machine env swarm-4)
+
+docker swarm join --token $TOKEN --advertise-addr $(docker-machine ip swarm-4) $(docker-machine ip swarm-1):2377
+
+eval $(docker-machine env swarm-1)
+
+docker service ps util</code></pre>
+					</section>
+					<section id="swarm-proxy">
+						<h1>Reverse Proxy</h1>
+						<pre><code data-trim contenteditable>wget -O docker-compose-proxy.yml \
+    https://raw.githubusercontent.com/vfarcic/docker-flow-proxy/master/docker-compose.yml
+
+export DOCKER_IP=$(docker-machine ip swarm-1)
+
+docker-compose -f docker-compose-proxy.yml up -d consul-server
+
+docker service create --name proxy -p 80:80 -p 443:443 \
+    -p 8080:8080 --network proxy -e MODE=swarm --replicas 3 \
+    -e CONSUL_ADDRESS=$(docker-machine ip swarm-1):8500 \
+    vfarcic/docker-flow-proxy
+
+docker service ps proxy</code></pre>
+					</section>
+					<section id="swarm-proxy-img">
+						<h1>Reverse Proxy</h1>
+						<img src="../img/swarm/proxy-scaled.png">
+					</section>
+					<section id="swarm-proxy-test">
+						<h1>Reverse Proxy</h1>
+						<pre><code data-trim contenteditable>curl "$(docker-machine ip swarm-1):8080/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo&port=8080&distribute=true"
+
+for i in {1..10}; do
+    curl -i $(docker-machine ip swarm-1)/demo/hello
+done</code></pre>
+					</section>
+					<section id="swarm-proxy-flow-img-1" data-transition="fade-in">
+						<h1>Networking</h1>
+						<img src="../img/swarm/proxy-scaled-dns.png">
+					</section>
+					<section id="swarm-proxy-flow-img-2" data-transition="fade-in">
+						<h1>Networking</h1>
+						<img src="../img/swarm/proxy-scaled-routing-mesh.png">
+					</section>
+					<section id="swarm-proxy-flow-img-3" data-transition="fade-in">
+						<h1>Networking</h1>
+						<img src="../img/swarm/proxy-scaled-routing-proxy.png">
+					</section>
+					<section id="swarm-proxy-flow-img-4" data-transition="fade-in">
+						<h1>Networking</h1>
+						<img src="../img/swarm/proxy-scaled-proxy-sdn.png">
+					</section>
+					<section id="swarm-proxy-flow-img-5" data-transition="fade-in">
+						<h1>Networking</h1>
+						<img src="../img/swarm/proxy-scaled-request-to-service.png">
+					</section>
+                    <section id="swarm-updates">
+                        <h1>Service Updates</h1>
+						<pre><code data-trim contenteditable>docker service update --image vfarcic/go-demo:1.1 --update-delay 5s go-demo
+
+docker service ps go-demo</code></pre>
+                    </section>
+				</section>
+				<section data-background="../img/background/jenkins.png">
+					<section id="jenkins">
+						<h1>Jenkins</h1>
+						<h3 class="fragment">CI/CD Orchestration</h3>
+						<ul>
+							<li class="fragment">Jenkins master</li>
+							<li class="fragment">Jenkins agents</li>
+							<li class="fragment">Jenkins pipeline</li>
+						</ul>
+					</section>
+				</section>
+				<section data-background="../img/background/demo.jpg">
+					<section id="jenkins-demo">
+						<h2>Demo Time</h2>
+						<div class="fragment">
+							<h1>Running Jenkins</h1>
+							<h1>Inside a Cluster</h1>
+						</div>
+					</section>
+					<section id="jenkins-service">
+						<h1>Jenkins Service</h1>
+						<pre><code data-trim contenteditable>mkdir -p docker/jenkins
+
+docker service create --name jenkins --reserve-memory 300m \
+    -p 8082:8080 -p 50000:50000 \
+    -e JENKINS_OPTS="--prefix=/jenkins" \
+    --mount "type=bind,source=$PWD/docker/jenkins,target=/var/jenkins_home" \
+    jenkins:alpine
+
+docker service ps jenkins
+
+cat docker/jenkins/secrets/initialAdminPassword
+
+open http://$(docker-machine ip swarm-1):8082/jenkins</code></pre>
+					</section>
+					<section id="jenkins-setup">
+						<h1>Jenkins Setup</h1>
+						<ul>
+							<li class="fragment">Type the <code>Administrator password</code></li>
+							<li class="fragment">Select <code>Install suggested plugins</code></li>
+							<li class="fragment">Type <code>admin</code> as both <code>user</code> and <code>password</code>.</li>
+							<li class="fragment">Fill in the rest of the fields and press <code>Save And Finish</code>.</li>
+							<li class="fragment">Click <code>Start Using Jenkins</code></li>
+						</ul>
+					</section>
+					<section id="jenkins-failover">
+						<h1>Jenkins Failover</h1>
+						<pre><code data-trim contenteditable>NODE=$(docker service ps -f desired-state=running jenkins | tail +2 | awk '{print $4}')
+
+eval $(docker-machine env $NODE)
+
+docker rm -f $(docker ps -qa -f "ancestor=jenkins:alpine")
+
+eval $(docker-machine env swarm-1)
+
+docker service ps jenkins
+
+open http://$(docker-machine ip swarm-1):8082/jenkins</code></pre>
+					</section>
+					<section id="jenkins-agent-cluster">
+						<h1>Agents Cluster</h1>
+						<pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8082/jenkins/pluginManager/available
+
+# Select *Self-Organizing Swarm Plug-in Modules*
+# Click *Install without restart*
+
+docker-machine create -d virtualbox swarm-test-1
+
+docker-machine ssh swarm-test-1
+
+sudo mkdir -p /workspace && sudo chmod 777 /workspace && exit
+
+eval $(docker-machine env swarm-test-1)
+
+docker swarm init \
+    --advertise-addr $(docker-machine ip swarm-test-1)</code></pre>
+					</section>
+					<section id="jenkins-agent">
+						<h1>Jenkins Agent</h1>
+						<pre><code data-trim contenteditable>export USER=admin && export PASSWORD=admin
+
+docker service create --name jenkins-agent \
+    -e COMMAND_OPTIONS="-master http://$(docker-machine ip swarm-1):8082/jenkins -username $USER -password $PASSWORD -labels 'docker' -executors 5" \
+    --mode global \
+    --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
+    --mount "type=bind,source=/workspace,target=/workspace" \
+    --mount "type=bind,source=$HOME/.docker/machine/machines,target=/machines" \
+    vfarcic/jenkins-swarm-agent
+
+docker service ps jenkins-agent
+
+open http://$(docker-machine ip swarm-1):8082/jenkins/computer/</code></pre>
+					</section>
+					<section id="jenkins-agent-node-add">
+						<h1>Adding Agent Nodes</h1>
+						<pre><code data-trim contenteditable>docker-machine create -d virtualbox swarm-test-2
+
+docker-machine ssh swarm-test-2
+
+sudo mkdir -p /workspace && sudo chmod 777 /workspace && exit
+
+TOKEN=$(docker swarm join-token -q worker)
+
+eval $(docker-machine env swarm-test-2)
+
+docker swarm join --token $TOKEN \
+    --advertise-addr $(docker-machine ip swarm-test-2) \
+    $(docker-machine ip swarm-test-1):2377</code></pre>
+					</section>
+					<section id="jenkins-agent-add">
+						<h1>Adding Agent Nodes</h1>
+						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-test-1)
+
+docker service ps jenkins-agent
+
+open http://$(docker-machine ip swarm-1):8082/jenkins/computer</code></pre>
+					</section>
+					<section id="jenkins-registry">
+						<h1>Registry Service</h1>
+						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
+
+docker service create --name registry -p 5000:5000 \
+    --mount "type=bind,source=$PWD,target=/var/lib/registry" \
+    --reserve-memory 100m registry
+
+docker service ps registry</code></pre>
+					</section>
+					<section id="jenkins-env">
+						<h1>Env. Variables</h1>
+						<pre><code data-trim contenteditable>docker-machine ip swarm-1
+
+open http://$(docker-machine ip swarm-1):8082/jenkins/configure</code></pre>
+						<ul>
+							<li>Click <code>Environment Variables</code></li>
+							<li>Click <code>Add</code></li>
+							<li>Type <code>PROD_IP</code> as <code>Name</code></li>
+							<li>Paste the output as <code>Value</code></li>
+							<li>Click <code>Add</code></li>
+							<li>Type <code>PROD_NAME</code> as <code>Name</code></li>
+							<li>Type <code>swarm-1</code> as <code>Value</code></li>
+							<li>Click <code>Save</code></li>
+						</ul>
+					</section>
+					<section id="jenkins-job-code">
+						<h1>Pipeline Job</h1>
+						<pre><code data-trim contenteditable>node("docker") {
+
+  git "https://github.com/vfarcic/go-demo.git"
+
+  stage("Unit"
+  sh "docker-compose -f docker-compose-test.yml run --rm unit"
+  sh "docker build -t go-demo ."
+
+  stage("Staging") {
+    try {
+      sh "docker-compose -f docker-compose-test-local.yml up -d staging-dep"
+      sh 'HOST_IP=localhost docker-compose -f docker-compose-test-local.yml run --rm staging'
+    } catch(e) {
+      error "Staging failed"
+    } finally {
+      sh "docker-compose -f docker-compose-test-local.yml down"
+    }
+  }
+
+  stage("Publish") {
+    sh "docker tag go-demo localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
+    sh "docker push localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
+  }
+
+  stage("Prod-like") {
+    echo "A production-like cluster is yet to be created"
+    /*
+    withEnv([
+      "DOCKER_TLS_VERIFY=1",
+      "DOCKER_HOST=tcp://${env.PROD_LIKE_IP}:2376",
+      "DOCKER_CERT_PATH=/machines/${env.PROD_LIKE_NAME}"
+    ]) {
+      sh "docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo"
+      sh "HOST_IP=${env.TEST_IP} docker-compose -f docker-compose-test-local.yml run --rm production"
+    }
+    */
+  }
+
+  stage("Production") {
+    withEnv([
+      "DOCKER_TLS_VERIFY=1",
+      "DOCKER_HOST=tcp://${env.PROD_IP}:2376",
+      "DOCKER_CERT_PATH=/machines/${env.PROD_NAME}"
+    ]) {
+      sh "docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo"
+    }
+    sh "HOST_IP=${env.PROD_IP} docker-compose -f docker-compose-test-local.yml run --rm production"
+  }
+}</code></pre>
+					</section>
+					<section id="jenkins-job">
+						<h1>Pipeline Job</h1>
+						<ul>
+							<li>Click <code>New Item</code></li>
+							<li>Type <code>go-demo</code>, select <code>Pipeline</code>, click <code>OK</code></li>
+							<li>Paste the code into the <code>Pipeline Script</code> field</li>
+							<li>Click the <code>Save</code> button</li>
+						</ul>
+						<pre><code data-trim contenteditable>open "http://$(docker-machine ip swarm-1):8082/jenkins/job/go-demo"</code></pre>
+						<ul>
+							<li>Click <code>Build Now</code></li>
+						</ul>
+					</section>
+					<section id="jenkins-job-log">
+						<h1>Job Log</h1>
+						<pre><code data-trim contenteditable>open "http://$(docker-machine ip swarm-1):8082/jenkins/job/go-demo/lastBuild/console"
+
+open "http://$(docker-machine ip swarm-1):8082/jenkins/job/go-demo"
+
+eval $(docker-machine env swarm-1)
+
+docker service ps -f desired-state=running go-demo</code></pre>
+					</section>
+					<section id="jenkins-cleanup">
+						<h1>Cleanup</h1>
+						<pre><code data-trim contenteditable>docker-machine rm -f \
+    swarm-1 swarm-2 swarm-4 swarm-test-1 swarm-test-2</code></pre>
+					</section>
+				</section>
+				<section  data-background="../img/background/the_end.jpg">
+					<section id="the-end-blog">
+						<h2>Viktor Farcic</h2>
+						<hr/>
+						<h3><a href="https://twitter.com/vfarcic">@vfarcic</a></h3>
+						<hr/>
+						<figure>
+							<img src="../img/qr/technology-conversations.jpg"/>
+						</figure>
+						<h3><a href="http://technologyconversations.com">TechnologyConversations.com</a></h3>
+					</section>
+					<section id="the-end-book">
+						<h2>Viktor Farcic</h2>
+						<hr/>
+						<div>
+							<figure style="width: 30%; height: 30%; float: left;">
+								<img src="../img/qr/devops2-amazon.jpg"/>
+								<figcaption><a href="http://www.amazon.com/dp/B01BJ4V66M">Amazon</a></figcaption>
+							</figure>
+							<figure style="width: 30%; height: 30%; float: right;">
+								<img src="../img/qr/devops2-leanpub.jpg"/>
+								<figcaption><a href="https://leanpub.com/the-devops-2-toolkit">LeanPub</a></figcaption>
+							</figure>
+							<a href="https://leanpub.com/the-devops-2-toolkit">
+								<img src="../img/devops2.png" style="width: 30%; height: 30%;" />
+							</a>
+						</div>
+					</section>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="../lib/js/head.min.js"></script>
+		<script src="../js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+//					{ src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../plugin/zoom-js/zoom.js', async: true },
+					{ src: '../plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
