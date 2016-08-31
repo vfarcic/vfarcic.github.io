@@ -79,6 +79,7 @@
 				<section data-background="../img/background/containers.png">
 					<section id="docker">
 						<h1>Docker Containers</h1>
+						<hr/>
 						<ul>
 							<li class="fragment">Portable</li>
 							<li class="fragment">Low resource usage</li>
@@ -87,9 +88,11 @@
 							<li class="fragment">Self-sufficient</li>
 							<li class="fragment">Immutable</li>
 						</ul>
+						<img src="../img/products/docker.png" style="background-color: white;">
 					</section>
 					<section id="docker-eco">
 						<h1>Docker Ecosystem</h1>
+						<hr/>
 						<ul>
 							<li class="fragment">Docker Engine</li>
 							<li class="fragment">Docker Compose</li>
@@ -99,16 +102,19 @@
 					</section>
 					<section id="docker-cd">
 						<h1>Continuous Deployment</h1>
+						<hr/>
 						<h3 class="fragment">Every commit is deployed to production</h3>
 					</section>
 				</section>
 				<section data-background="../img/background/demo.jpg">
 					<section id="docker-demo">
-						<h2>Demo Time</h2>
+						<h1>Demo Time</h1>
+						<hr/>
 						<h1 class="fragment">CI with Docker</h1>
 					</section>
 					<section id="docker-node">
 						<h1>Code & Server</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>git clone https://github.com/vfarcic/go-demo.git
 
 cd go-demo
@@ -119,6 +125,7 @@ eval $(docker-machine env go-demo)</code></pre>
 					</section>
 					<section id="docker-unit">
 						<h1>Unit Tests & Build</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>cat docker-compose-test-local.yml
 
 docker-compose -f docker-compose-test.yml run --rm unit
@@ -127,6 +134,7 @@ ll | grep go-demo</code></pre>
 					</section>
 					<section id="docker-build">
 						<h1>Building Images</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>cat Dockerfile
 
 docker-compose -f docker-compose-test-local.yml build app
@@ -135,6 +143,7 @@ docker images</code></pre>
 					</section>
 					<section id="docker-staging">
 						<h1>Staging tests</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>cat docker-compose-test-local.yml
 
 docker-compose -f docker-compose-test-local.yml up -d staging-dep
@@ -149,6 +158,7 @@ docker-compose -f docker-compose-test-local.yml ps</code></pre>
 					</section>
 					<section id="docker-registry">
 						<h1>Registry</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>cat docker-compose-local.yml
 
 docker-compose -f docker-compose-local.yml up -d registry
@@ -167,12 +177,14 @@ ll docker/registry/v2/repositories/go-demo</code></pre>
 					</section>
 					<section id="docker-cleanup">
 						<h1>Cleanup</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>docker-machine rm -f go-demo</code></pre>
 					</section>
 				</section>
                 <section data-background="../img/background/swarm.jpg">
 					<section id="swarm">
 						<h1>Docker 1.12+</h1>
+						<hr/>
 						<ul>
 							<li class="fragment">Service</li>
 							<li class="fragment">Service Discovery</li>
@@ -184,7 +196,8 @@ ll docker/registry/v2/repositories/go-demo</code></pre>
                 </section>
 				<section data-background="../img/background/demo.jpg">
                     <section id="swarm-demo">
-						<h2>Demo Time</h2>
+						<h1>Demo Time</h1>
+						<hr/>
 						<div class="fragment">
 							<h1>Setting Up</h1>
 							<h1>a Swarm Cluster</h1>
@@ -194,6 +207,7 @@ ll docker/registry/v2/repositories/go-demo</code></pre>
                     </section>
 					<section id="swarm-provisioning">
 						<h1>Provisioning</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>for i in 1 2 3; do
     docker-machine create -d virtualbox swarm-$i
 done
@@ -212,16 +226,19 @@ done</code></pre>
 					</section>
 					<section id="swarm-info">
 						<h1>Cluster Info</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
 
 docker node ls</code></pre>
 					</section>
 					<section id="swarm-info-img">
 						<h1>Cluster Info</h1>
+						<hr/>
 						<img src="../img/swarm/swarm-nodes.png">
 					</section>
 					<section id="swarm-network">
 						<h1>Networking</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>docker network create --driver overlay proxy
 
 docker network create --driver overlay go-demo
@@ -230,10 +247,12 @@ docker network ls</code></pre>
 					</section>
 					<section id="swarm-network-img">
 						<h1>Networking</h1>
+						<hr/>
 						<img src="../img/swarm/swarm-nodes-sdn-go-demo-proxy.png">
 					</section>
 					<section id="swarm-service">
 						<h1>Service</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>docker service create --name go-demo-db \
     --network go-demo --reserve-memory 100m mongo
 
@@ -249,10 +268,12 @@ docker service inspect go-demo</code></pre>
 					</section>
 					<section id="swarm-service-img">
 						<h1>Service</h1>
+						<hr/>
 						<img src="../img/swarm/swarm-go-demo.png">
 					</section>
 					<section id="swarm-network-test">
 						<h1>Global Service</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>docker service create --name util \
     --network go-demo --network proxy \
     --mode global alpine sleep 1000000000
@@ -269,22 +290,26 @@ docker exec -it $ID drill go-demo-db</code></pre>
 					</section>
 					<section id="swarm-scale">
 						<h1>Scaling</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>docker service scale go-demo=5
 
 docker service ps go-demo</code></pre>
 					</section>
 					<section id="swarm-scale-img">
                         <h1>Scaling</h1>
+						<hr/>
 						<img src="../img/swarm/swarm-go-demo-scaled.png">
 					</section>
 					<section id="swarm-failover">
 						<h1>Failover</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>docker-machine rm -f swarm-3
 
 docker service ps go-demo</code></pre>
 					</section>
 					<section id="swarm-adding-nodes">
 						<h1>Adding Nodes</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>docker-machine create -d virtualbox swarm-4
 
 eval $(docker-machine env swarm-4)
@@ -297,6 +322,7 @@ docker service ps util</code></pre>
 					</section>
 					<section id="swarm-proxy">
 						<h1>Reverse Proxy</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>wget -O docker-compose-proxy.yml \
     https://raw.githubusercontent.com/vfarcic/docker-flow-proxy/master/docker-compose.yml
 
@@ -313,10 +339,12 @@ docker service ps proxy</code></pre>
 					</section>
 					<section id="swarm-proxy-img">
 						<h1>Reverse Proxy</h1>
+						<hr/>
 						<img src="../img/swarm/proxy-scaled.png">
 					</section>
 					<section id="swarm-proxy-test">
 						<h1>Reverse Proxy</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>curl "$(docker-machine ip swarm-1):8080/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo&port=8080&distribute=true"
 
 for i in {1..10}; do
@@ -325,26 +353,32 @@ done</code></pre>
 					</section>
 					<section id="swarm-proxy-flow-img-1" data-transition="fade-in">
 						<h1>Networking</h1>
+						<hr/>
 						<img src="../img/swarm/proxy-scaled-dns.png">
 					</section>
 					<section id="swarm-proxy-flow-img-2" data-transition="fade-in">
 						<h1>Networking</h1>
+						<hr/>
 						<img src="../img/swarm/proxy-scaled-routing-mesh.png">
 					</section>
 					<section id="swarm-proxy-flow-img-3" data-transition="fade-in">
 						<h1>Networking</h1>
+						<hr/>
 						<img src="../img/swarm/proxy-scaled-routing-proxy.png">
 					</section>
 					<section id="swarm-proxy-flow-img-4" data-transition="fade-in">
 						<h1>Networking</h1>
+						<hr/>
 						<img src="../img/swarm/proxy-scaled-proxy-sdn.png">
 					</section>
 					<section id="swarm-proxy-flow-img-5" data-transition="fade-in">
 						<h1>Networking</h1>
+						<hr/>
 						<img src="../img/swarm/proxy-scaled-request-to-service.png">
 					</section>
                     <section id="swarm-updates">
                         <h1>Service Updates</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>docker service update --image vfarcic/go-demo:1.1 --update-delay 5s go-demo
 
 docker service ps go-demo</code></pre>
@@ -353,17 +387,21 @@ docker service ps go-demo</code></pre>
 				<section data-background="../img/background/jenkins.png">
 					<section id="jenkins">
 						<h1>Jenkins</h1>
-						<h3 class="fragment">CI/CD Orchestration</h3>
+						<hr/>
 						<ul>
-							<li class="fragment">Jenkins master</li>
-							<li class="fragment">Jenkins agents</li>
-							<li class="fragment">Jenkins pipeline</li>
+							<li class="fragment">Continuous Integration</li>
+							<li class="fragment">Continuous Delivery</li>
+							<li class="fragment">Continuous Deployment</li>
+							<li class="fragment">Orchestrator</li>
+							<li class="fragment">Awesome</li>
 						</ul>
+						<img src="../img/products/jenkins.png" style="background-color: white;" />
 					</section>
 				</section>
 				<section data-background="../img/background/demo.jpg">
 					<section id="jenkins-demo">
-						<h2>Demo Time</h2>
+						<h1>Demo Time</h1>
+						<hr/>
 						<div class="fragment">
 							<h1>Running Jenkins</h1>
 							<h1>Inside a Cluster</h1>
@@ -371,6 +409,7 @@ docker service ps go-demo</code></pre>
 					</section>
 					<section id="jenkins-service">
 						<h1>Jenkins Service</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>mkdir -p docker/jenkins
 
 docker service create --name jenkins --reserve-memory 300m \
@@ -387,6 +426,7 @@ open http://$(docker-machine ip swarm-1):8082/jenkins</code></pre>
 					</section>
 					<section id="jenkins-setup">
 						<h1>Jenkins Setup</h1>
+						<hr/>
 						<ul>
 							<li class="fragment">Type the <code>Administrator password</code></li>
 							<li class="fragment">Select <code>Install suggested plugins</code></li>
@@ -397,6 +437,7 @@ open http://$(docker-machine ip swarm-1):8082/jenkins</code></pre>
 					</section>
 					<section id="jenkins-failover">
 						<h1>Jenkins Failover</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>NODE=$(docker service ps -f desired-state=running jenkins | tail +2 | awk '{print $4}')
 
 eval $(docker-machine env $NODE)
@@ -411,6 +452,7 @@ open http://$(docker-machine ip swarm-1):8082/jenkins</code></pre>
 					</section>
 					<section id="jenkins-agent-cluster">
 						<h1>Agents Cluster</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8082/jenkins/pluginManager/available
 
 # Select *Self-Organizing Swarm Plug-in Modules*
@@ -429,6 +471,7 @@ docker swarm init \
 					</section>
 					<section id="jenkins-agent">
 						<h1>Jenkins Agent</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>export USER=admin && export PASSWORD=admin
 
 docker service create --name jenkins-agent \
@@ -445,6 +488,7 @@ open http://$(docker-machine ip swarm-1):8082/jenkins/computer/</code></pre>
 					</section>
 					<section id="jenkins-agent-node-add">
 						<h1>Adding Agent Nodes</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>docker-machine create -d virtualbox swarm-test-2
 
 docker-machine ssh swarm-test-2
@@ -461,6 +505,7 @@ docker swarm join --token $TOKEN \
 					</section>
 					<section id="jenkins-agent-add">
 						<h1>Adding Agent Nodes</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-test-1)
 
 docker service ps jenkins-agent
@@ -469,6 +514,7 @@ open http://$(docker-machine ip swarm-1):8082/jenkins/computer</code></pre>
 					</section>
 					<section id="jenkins-registry">
 						<h1>Registry Service</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
 
 docker service create --name registry -p 5000:5000 \
@@ -479,6 +525,7 @@ docker service ps registry</code></pre>
 					</section>
 					<section id="jenkins-env">
 						<h1>Env. Variables</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>docker-machine ip swarm-1
 
 open http://$(docker-machine ip swarm-1):8082/jenkins/configure</code></pre>
@@ -495,13 +542,15 @@ open http://$(docker-machine ip swarm-1):8082/jenkins/configure</code></pre>
 					</section>
 					<section id="jenkins-job-code">
 						<h1>Pipeline Job</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>node("docker") {
 
   git "https://github.com/vfarcic/go-demo.git"
 
-  stage("Unit"
-  sh "docker-compose -f docker-compose-test.yml run --rm unit"
-  sh "docker build -t go-demo ."
+  stage("Unit") {
+    sh "docker-compose -f docker-compose-test.yml run --rm unit"
+    sh "docker build -t go-demo ."
+  }
 
   stage("Staging") {
     try {
@@ -547,6 +596,7 @@ open http://$(docker-machine ip swarm-1):8082/jenkins/configure</code></pre>
 					</section>
 					<section id="jenkins-job">
 						<h1>Pipeline Job</h1>
+						<hr/>
 						<ul>
 							<li>Click <code>New Item</code></li>
 							<li>Type <code>go-demo</code>, select <code>Pipeline</code>, click <code>OK</code></li>
@@ -560,6 +610,7 @@ open http://$(docker-machine ip swarm-1):8082/jenkins/configure</code></pre>
 					</section>
 					<section id="jenkins-job-log">
 						<h1>Job Log</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>open "http://$(docker-machine ip swarm-1):8082/jenkins/job/go-demo/lastBuild/console"
 
 open "http://$(docker-machine ip swarm-1):8082/jenkins/job/go-demo"
@@ -570,6 +621,7 @@ docker service ps -f desired-state=running go-demo</code></pre>
 					</section>
 					<section id="jenkins-cleanup">
 						<h1>Cleanup</h1>
+						<hr/>
 						<pre><code data-trim contenteditable>docker-machine rm -f \
     swarm-1 swarm-2 swarm-4 swarm-test-1 swarm-test-2</code></pre>
 					</section>

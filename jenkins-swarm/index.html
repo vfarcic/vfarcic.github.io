@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>The DevOps 2.0 Toolkit</title>
+		<title>Continuous Deployment with Jenkins and Docker Swarm</title>
 
 		<meta name="author" content="Viktor Farcic">
 
@@ -43,13 +43,17 @@
 				<section id="cover" data-background="../img/background/tools.jpg">
                     <h2>Continuous Deployment with Jenkins and Docker Swarm</h2>
                     <hr/>
-					<h3>
-						<a href="http://technologyconversations.com/about/">Viktor Farcic</a>
-                    </h3>
+                    <h3><a href="http://technologyconversations.com/about/">Viktor Farcic</a></h3>
                     <hr/>
-                    <h3>
+                    <h4>
+                        <a href="https://twitter.com/vfarcic">@vfarcic</a>
+                    </h4>
+                    <h4>
+                        <a href="http://technologyconversations.com">TechnologyConversations.com</a>
+                    </h4>
+                    <h4>
                         <a href="https://www.cloudbees.com">CloudBees.com</a>
-					</h3>
+                    </h4>
 				</section>
                 <section data-background="../img/background/about-me.jpg">
                     <section id="about-me">
@@ -84,6 +88,73 @@
                         <h1 class="fragment">Docker?</h1>
                     </section>
                 </section>
+                <section data-background="../img/background/containers.png">
+                    <section id="docker">
+                        <h1>Docker</h1>
+                        <hr/>
+                        <h3 class="fragment">Docker Engine</h3>
+                        <h3 class="fragment">Docker Machine</h3>
+                        <h3 class="fragment">Docker Compose</h3>
+                        <h3 class="fragment">Docker Registry</h3>
+                    </section>
+                    <section id="docker-engine">
+                        <h3>Docker</h3>
+                        <h1>Docker Engine</h1>
+                        <hr/>
+                        <ul>
+                            <img src="../img/products/docker-engine.png" style="float: right; width: 50%; height: 50%; background-color: white;">
+                            <li class="fragment">Immutable</li>
+                            <li class="fragment">Isolation</li>
+                            <li class="fragment">Fast</li>
+                            <li class="fragment">Lightweight</li>
+                            <li class="fragment">Self-sufficient</li>
+                            <li class="fragment">No infrastructure</li>
+                        </ul>
+                    </section>
+                    <section id="docker-machine">
+                        <h3>Docker</h3>
+                        <h1>Docker Machine</h1>
+                        <hr/>
+                        <ul>
+                            <img src="../img/products/docker-machine.png" style="float: right; width: 50%; height: 50%; background-color: white;">
+                            <li class="fragment">Lightweight VM</li>
+                            <li class="fragment">Optimized for Docker</li>
+                            <li class="fragment">VirtualBox, AWS, Azure, Digital Ocean, ...</li>
+                        </ul>
+                    </section>
+                    <section id="docker-compose">
+                        <h3>Docker</h3>
+                        <h1>Docker Compose</h1>
+                        <hr/>
+                        <ul>
+                            <img src="../img/products/docker-compose.png" style="float: right; width: 35%; height: 35%; background-color: white;">
+                            <li class="fragment">Short term memory</li>
+                            <li class="fragment">YML</li>
+                            <li class="fragment">Groups services into a project</li>
+                        </ul>
+                    </section>
+                    <section id="docker-registry">
+                        <h3>Docker</h3>
+                        <h1>Docker Registry</h1>
+                        <hr/>
+                        <ul>
+                            <img src="../img/products/docker-registry.png" style="float: right; width: 40%; height: 40%; background-color: white;">
+                            <li class="fragment">Because containers need to be stored somewhere</li>
+                            <li class="fragment">Because containers need to be retrieved from somewhere</li>
+                        </ul>
+                    </section>
+                    <section id="swarm">
+                        <h1>Docker Swarm</h1>
+                        <hr/>
+                        <ul>
+                            <img src="../img/products/docker-engine.png" style="float: right; width: 50%; height: 50%; background-color: white;">
+                            <li class="fragment">Cluster orchestration</li>
+                            <li class="fragment">Deployment</li>
+                            <li class="fragment">Networking</li>
+                            <li class="fragment">Failover</li>
+                        </ul>
+                    </section>
+                </section>
                 <section data-background="../img/background/manual.jpg">
                     <section id="cdp">
                         <h1>Continuous Deployment</h1>
@@ -107,11 +178,6 @@
                         <pre><code data-trim contenteditable>for i in 1 2 3; do
     docker-machine create -d virtualbox swarm-$i
 
-    docker-machine scp docker-1.12.1-rc1.tgz swarm-$i:/tmp/.
-
-    docker-machine ssh swarm-$i
-
-    # cd /tmp/ && tar xzf docker-1.12.1-rc1.tgz && sudo mv docker/* /usr/local/bin && sudo /etc/init.d/docker restart && exit
 done</code></pre>
                     </section>
                     <section id="cdp-cluster">
@@ -261,12 +327,6 @@ curl -i $(docker-machine ip swarm-1)/demo/hello</code></pre>
                         <!--<hr/>-->
                         <!--<pre><code data-trim contenteditable>docker-machine create -d virtualbox swarm-4-->
 
-<!--docker-machine scp docker-1.12.1-rc1.tgz swarm-4:/tmp/.-->
-
-<!--docker-machine ssh swarm-4-->
-
-<!--# cd /tmp/ && tar xzf docker-1.12.1-rc1.tgz && sudo mv docker/* /usr/local/bin && sudo /etc/init.d/docker restart && exit-->
-
 <!--TOKEN=$(docker swarm join-token -q manager)-->
 
 <!--eval $(docker-machine env swarm-4)-->
@@ -365,12 +425,6 @@ docker-machine ssh swarm-test-1
 
 sudo mkdir -p /workspace && sudo chmod 777 /workspace && exit
 
-docker-machine scp docker-1.12.1-rc1.tgz swarm-test-1:/tmp/.
-
-docker-machine ssh swarm-test-1
-
-# cd /tmp/ && tar xzf docker-1.12.1-rc1.tgz && sudo mv docker/* /usr/local/bin && sudo /etc/init.d/docker restart && exit
-
 eval $(docker-machine env swarm-test-1)
 
 docker swarm init --advertise-addr $(docker-machine ip swarm-test-1)</code></pre>
@@ -403,12 +457,6 @@ open http://$(docker-machine ip swarm-1):8082/jenkins/computer/</code></pre>
 docker-machine ssh swarm-test-2
 
 sudo mkdir -p /workspace && sudo chmod 777 /workspace && exit
-
-docker-machine scp docker-1.12.1-rc1.tgz swarm-test-2:/tmp/.
-
-docker-machine ssh swarm-test-2
-
-# cd /tmp/ && tar xzf docker-1.12.1-rc1.tgz && sudo mv docker/* /usr/local/bin && sudo /etc/init.d/docker restart && exit
 
 TOKEN=$(docker swarm join-token -q worker)
 
@@ -481,40 +529,45 @@ docker-machine ip swarm-1</code></pre>
                         <h3>Continuous Deployment</h3>
                         <h1>Jenkins Pipeline Job</h1>
                         <hr/>
-                        <pre><code data-trim contenteditable>node("docker") {
+						<pre><code data-trim contenteditable>node("docker") {
 
   git "https://github.com/vfarcic/go-demo.git"
 
-  stage "Unit"
-  sh "docker-compose -f docker-compose-test.yml run --rm unit"
-  sh "docker build -t go-demo ."
-
-  stage "Staging"
-  try {
-    sh "docker-compose -f docker-compose-test-local.yml up -d staging-dep"
-    sh 'HOST_IP=localhost docker-compose -f docker-compose-test-local.yml run --rm staging'
-  } catch(e) {
-    error "Staging failed"
-  } finally {
-    sh "docker-compose -f docker-compose-test-local.yml down"
+  stage("Unit") {
+    sh "docker-compose -f docker-compose-test.yml run --rm unit"
+    sh "docker build -t go-demo ."
   }
 
-  stage "Publish"
-  sh "docker tag go-demo localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
-  sh "docker push localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
+  stage("Staging") {
+    try {
+      sh "docker-compose -f docker-compose-test-local.yml up -d staging-dep"
+      sh 'HOST_IP=localhost docker-compose -f docker-compose-test-local.yml run --rm staging'
+    } catch(e) {
+      error "Staging failed"
+    } finally {
+      sh "docker-compose -f docker-compose-test-local.yml down"
+    }
+  }
 
-  stage "Prod-like"
-  echo "A production-like cluster is yet to be created"
+  stage("Publish") {
+    sh "docker tag go-demo localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
+    sh "docker push localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
+  }
 
-  stage "Production"
-  withEnv([
-    "DOCKER_TLS_VERIFY=1",
-    "DOCKER_HOST=tcp://${env.PROD_IP}:2376",
-    "DOCKER_CERT_PATH=/machines/${env.PROD_NAME}"
+  stage("Prod-like") {
+    echo "A production-like cluster is yet to be created"
+  }
+
+  stage("Production") {
+    withEnv([
+      "DOCKER_TLS_VERIFY=1",
+      "DOCKER_HOST=tcp://${env.PROD_IP}:2376",
+      "DOCKER_CERT_PATH=/machines/${env.PROD_NAME}"
     ]) {
-    sh "docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo"
+      sh "docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo"
+    }
+    sh "HOST_IP=${env.PROD_IP} docker-compose -f docker-compose-test-local.yml run --rm production"
   }
-  sh "HOST_IP=${env.PROD_IP} docker-compose -f docker-compose-test-local.yml run --rm production"
 }</code></pre>
                     </section>
                     <section id="jenkins-job-confirmation">
