@@ -1,7 +1,7 @@
 Zero-Downtime Deployments To a Docker Swarm Cluster (Tour Around Docker 1.12 Series)
 ====================================================================================
 
-![Docker Swarm](img/swarm.png)
+![Docker Swarm](../img/swarm/swarm.png)
 
 If this is your first contact with the new Docker Swarm (version 1.12+), please read [Docker Swarm Introduction](https://technologyconversations.com/2016/07/29/docker-swarm-introduction-tour-around-docker-1-12-series/) and [Integrating Proxy With Docker Swarm](https://technologyconversations.com/2016/08/01/integrating-proxy-with-docker-swarm-tour-around-docker-1-12-series/) articles. I will assume that you have (at least) a basic understanding of how to deploy Docker services to a Swarm cluster.
 
@@ -61,7 +61,7 @@ eval $(docker-machine env node-1)
 docker node ls
 ```
 
-![Docker Swarm cluster with three nodes](img/swarm-nodes.png)
+![Docker Swarm cluster with three nodes](../img/swarm/swarm-nodes.png)
 
 Now that we have the Swarm cluster up and running, we can deploy a service.
 
@@ -114,7 +114,7 @@ We can confirm that both instances are running by executing the `service ps` com
 docker service ps go-demo
 ```
 
-![go-demo service scaled to two instances](img/swarm-update-01.png)
+![go-demo service scaled to two instances](../img/swarm/swarm-update-01.png)
 
 Now that we have two instances of the release *1.0*, we can update it to *1.1*.
 
@@ -135,7 +135,7 @@ ID                         NAME           IMAGE                NODE    DESIRED S
 
 As you can see, one of the instances was shut down, and Swarm started bringing up the new release in its place. During this time, the second instance of the old release is still running, and users should not experience any downtime. In the worst case scenario, they might notice that the service is slower during this short period. After all, performance is bound to drop if only 50% of our designed capacity is operational.
 
-![One of the instances updated with the new release](img/swarm-update-02.png)
+![One of the instances updated with the new release](../img/swarm/swarm-update-02.png)
 
 A few moments later, once the first instance of the new release is running, Swarm will repeat the process with the second. If we repeat the `docker service ps go-demo` command, the output should be as follows.
 
@@ -147,7 +147,7 @@ ID                         NAME           IMAGE                NODE    DESIRED S
 4pgiixl8rs7ujrmtr24aqw58n   \_ go-demo.2  vfarcic/go-demo:1.0  node-3  Shutdown       Shutdown 1 seconds ago
 ```
 
-![Both of the instances updated with the new release](img/swarm-update-03.png)
+![Both of the instances updated with the new release](../img/swarm/swarm-update-03.png)
 
 If, for whatever reason, we'd like to rollback the release, we can run the same command again (only with time with the old image). Let's revert to the release *1.0*.
 
@@ -169,7 +169,7 @@ ID                         NAME           IMAGE                NODE    DESIRED S
 
 As you can see, Swarm reverted our service to release *1.0*. All we had to do is send an `update` command specifying the previous release as image.
 
-![All instances reverted to the previous release](img/swarm-update-04.png)
+![All instances reverted to the previous release](../img/swarm/swarm-update-04.png)
 
 There are a few additional arguments we can use to fine tune our update process. We can, for example, use `--update-parallelism` and `--update-delay`.
 
@@ -197,7 +197,7 @@ ID                         NAME       IMAGE                NODE    DESIRED STATE
 az186cg2qc7u68yn3u649tti8  go-demo.6  vfarcic/go-demo:1.0  node-1  Running        Running 2 minutes ago
 ```
 
-![The service scaled to six instances](img/swarm-update-05.png)
+![The service scaled to six instances](../img/swarm/swarm-update-05.png)
 
 Now that we have six instances up and running, we can, for example, update two at the time and create a delay of 10 seconds between each iteration. The command is as follows.
 
@@ -227,7 +227,7 @@ bv3lz21vpy1pqi7ikiood8opu  go-demo.5  vfarcic/go-demo:1.1  node-2  Running      
 az186cg2qc7u68yn3u649tti8  go-demo.6  vfarcic/go-demo:1.0  node-1  Running        Running 4 minutes ago
 ```
 
-![The first iteration with two instances updated with the new release](img/swarm-update-06.png)
+![The first iteration with two instances updated with the new release](../img/swarm/swarm-update-06.png)
 
 If we repeat the `service ps` command 10 seconds after the first two instances are running, the output will be as follows.
 
@@ -241,7 +241,7 @@ bv3lz21vpy1pqi7ikiood8opu  go-demo.5  vfarcic/go-demo:1.1  node-2  Running      
 az186cg2qc7u68yn3u649tti8  go-demo.6  vfarcic/go-demo:1.0  node-1  Running        Running 5 minutes ago
 ```
 
-![The second iteration with four instances updated with the new release](img/swarm-update-07.png)
+![The second iteration with four instances updated with the new release](../img/swarm/swarm-update-07.png)
 
 Finally, after the third round of updates, the `service ps` output is as follows.
 
@@ -255,7 +255,7 @@ bv3lz21vpy1pqi7ikiood8opu  go-demo.5  vfarcic/go-demo:1.1  node-2  Running      
 2f8vmidev3oyjc7e4jkdpsqd9  go-demo.6  vfarcic/go-demo:1.1  node-3  Running        Preparing 3 seconds ago
 ```
 
-![The last iteration with all instances updated with the new release](img/swarm-update-08.png)
+![The last iteration with all instances updated with the new release](../img/swarm/swarm-update-08.png)
 
 By observing the image and the current state of those outputs, we can see that Swarm updated two instances at a time and waited for ten seconds before starting the next iteration.
 

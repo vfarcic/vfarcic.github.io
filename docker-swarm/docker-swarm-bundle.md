@@ -46,7 +46,7 @@ eval $(docker-machine env node-3)
 docker swarm join --token $TOKEN $(docker-machine ip node-1):2377
 ```
 
-![Docker Swarm cluster with three nodes](img/swarm-nodes.png)
+![Docker Swarm cluster with three nodes](../img/swarm/swarm-nodes.png)
 
 Now that we have the Swarm cluster, we can deploy a service using a *dab* file.
 

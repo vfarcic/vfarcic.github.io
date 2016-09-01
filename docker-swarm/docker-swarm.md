@@ -1,7 +1,7 @@
 Docker Swarm Introduction (Tour Around Docker 1.12 Series)
 ==========================================================
 
-![Docker Swarm](img/swarm.png)
+![Docker Swarm](../img/swarm/swarm.png)
 
 Docker just published a new Docker Engine v1.12. It is the most significant release since v1.9. Back then, we got Docker networking that, finally, made containers ready for use in clusters. With v1.12, Docker is reinventing itself with a whole new approach to cluster orchestration. Say goodbye to Swarm as a separate container that depends on an external data registry and welcome the **new Docker Swarm**. Everything you'll need to manage your cluster is now incorporated into Docker Engine. Swarm is there. Service discovery is there. Improved networking is there.
 
@@ -45,7 +45,7 @@ node-3   -        virtualbox   Running   tcp://192.168.99.102:2376           v1.
 
 Please note that Docker version **MUST** be 1.12 or higher. If it isn't, please update your Docker Machine version, destroy the VMs, and start over.
 
-![Machines running Docker Engines](img/nodes.png)
+![Machines running Docker Engines](../img/swarm/nodes.png)
 
 With the machines up and running we can proceed and set up the Swarm cluster.
 
@@ -108,7 +108,7 @@ ejsjwyw5y92560179pk5drid4    node-3    Accepted    Ready   Active
 
 The star tells us which node we are currently using. The *manager status* indicates that the *node-1* is the *leader*.
 
-![Docker Swarm cluster with three nodes](img/swarm-nodes.png)
+![Docker Swarm cluster with three nodes](../img/swarm/swarm-nodes.png)
 
 In a production environment, we would probably set more than one node to be a manager and, thus, avoid deployment downtime if one of them fails. For the purpose of this demo, having one manager should suffice.
 
@@ -141,7 +141,7 @@ eafx9zd0czuu        ingress             overlay             swarm
 
 As you can see, we have two networks that have the *swarm* scope. The one named *ingress* was created by default when we set up the cluster. The second (*go-demo*) was created with the `network create` command. We'll assign all containers that constitute the *go-demo* service to that network.
 
-![Docker Swarm cluster with Docker network (SDN)](img/swarm-nodes-sdn.png)
+![Docker Swarm cluster with Docker network (SDN)](../img/swarm/swarm-nodes-sdn.png)
 
 The *go-demo* service requires two containers. Data will be stored in MongoDB. The back-end that uses that DB is defined as *vfarcic/go-demo* container.
 
@@ -190,7 +190,7 @@ There's nothing new about that command. Internally, it exposes port 8080 and it 
 
 At this point, we have two containers (*mongo* and *go-demo*) running inside the cluster and communicating with each other through the *go-demo* network. Please note that none of them is (yet) accessible from outside the network. At this point, your users do not have access to the service API. We'll discuss this in more details in the next article. Until then, I'll give you only a hint: *you need a proxy* capable of utilizing the new Swarm networking.
 
-![Docker Swarm cluster containers communicating through the go-demo SDN](img/swarm-nodes-single-container.png)
+![Docker Swarm cluster containers communicating through the go-demo SDN](../img/swarm/swarm-nodes-single-container.png)
 
 What happens if we want to scale one of the containers?
 
@@ -240,7 +240,7 @@ bus2hm8y6a113lnemrz5ke0yn  go-demo.3  vfarcic/go-demo  node-2  Running        Ru
 
 We can see that the *go-demo* service is running five instances distributed across the three nodes. Since they all belong to the same *go-demo* network, they can communicate with each other no matter where they run inside the cluster. At the same time, none of them is accessible from "outside".
 
-![Docker Swarm cluster with go-demo service scaled to five replicas](img/swarm-nodes-replicas.png)
+![Docker Swarm cluster with go-demo service scaled to five replicas](../img/swarm/swarm-nodes-replicas.png)
 
 What happens if one of the containers is stopped or if the entire node fails? After all, processes and nodes do fail sooner or later. Nothing is perfect, and we need to be prepared for such situations.
 
