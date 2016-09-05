@@ -39,7 +39,7 @@
 			<header style="position: absolute;top: 50px; left: 100px; z-index:500; font-size:100px;background-color: rgba(0,0,0,0.5)"></header>
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
-				<section id="cover" data-background="../img/background/swarm.jpg">
+				<section id="cover" data-background="../img/background/tools.jpg">
 					<h1>The DevOps 2.1 Toolkit</h1>
 					<h4>Building, testing, deploying, and monitoring services inside Docker Swarm clusters</h4>
 					<hr/>
@@ -76,6 +76,13 @@
                         </a>
                     </section>
                 </section>
+                <section data-background="../img/background/continuous-deployment.png">
+                    <section id="cdd">
+                        <h1>Continuous Deployment</h1>
+                        <hr/>
+                        <h3 class="fragment">Every commit is deployed to production</h3>
+                    </section>
+                </section>
 				<section data-background="../img/background/containers.png">
 					<section id="docker">
 						<h1>Docker Containers</h1>
@@ -98,17 +105,13 @@
 							<li class="fragment">Docker Compose</li>
 							<li class="fragment">Docker Machine</li>
 							<li class="fragment">Docker Registry</li>
+							<li class="fragment">Docker Swarm</li>
 						</ul>
 					</section>
-					<section id="docker-cd">
-						<h1>Continuous Deployment</h1>
-						<hr/>
-						<h3 class="fragment">Every commit is deployed to production</h3>
-					</section>
 				</section>
-				<section data-background="../img/background/demo.jpg">
+				<section data-background="../img/background/manual.jpg">
 					<section id="docker-demo">
-						<h1>Demo Time</h1>
+						<h1>Hands-On Time</h1>
 						<hr/>
 						<h1 class="fragment">CI with Docker</h1>
 					</section>
@@ -156,9 +159,9 @@ docker-compose -f docker-compose-test-local.yml down
 
 docker-compose -f docker-compose-test-local.yml ps</code></pre>
 					</section>
-					<section id="docker-registry">
-						<h1>Registry</h1>
-						<hr/>
+                    <section id="docker-registry">
+                        <h1>Registry</h1>
+                        <hr/>
 						<pre><code data-trim contenteditable>cat docker-compose-local.yml
 
 docker-compose -f docker-compose-local.yml up -d registry
@@ -174,7 +177,7 @@ docker tag go-demo localhost:5000/go-demo:1.0
 docker push localhost:5000/go-demo:1.0
 
 ll docker/registry/v2/repositories/go-demo</code></pre>
-					</section>
+                    </section>
 					<section id="docker-cleanup">
 						<h1>Cleanup</h1>
 						<hr/>
@@ -194,9 +197,9 @@ ll docker/registry/v2/repositories/go-demo</code></pre>
 						</ul>
 					</section>
                 </section>
-				<section data-background="../img/background/demo.jpg">
+				<section data-background="../img/background/manual.jpg">
                     <section id="swarm-demo">
-						<h1>Demo Time</h1>
+						<h1>Hands-On Time</h1>
 						<hr/>
 						<div class="fragment">
 							<h1>Setting Up</h1>
@@ -383,6 +386,15 @@ done</code></pre>
 
 docker service ps go-demo</code></pre>
                     </section>
+                    <section id="swarm-registry">
+                        <h1>Registry Service</h1>
+                        <hr/>
+						<pre><code data-trim contenteditable>docker service create --name registry -p 5000:5000 \
+    --mount "type=bind,source=$PWD,target=/var/lib/registry" \
+    --reserve-memory 100m registry
+
+docker service ps registry</code></pre>
+                    </section>
 				</section>
 				<section data-background="../img/background/jenkins.png">
 					<section id="jenkins">
@@ -398,9 +410,9 @@ docker service ps go-demo</code></pre>
 						<img src="../img/products/jenkins.png" style="background-color: white;" />
 					</section>
 				</section>
-				<section data-background="../img/background/demo.jpg">
+				<section data-background="../img/background/manual.jpg">
 					<section id="jenkins-demo">
-						<h1>Demo Time</h1>
+						<h1>Hands-On Time</h1>
 						<hr/>
 						<div class="fragment">
 							<h1>Running Jenkins</h1>
@@ -420,9 +432,9 @@ docker service create --name jenkins --reserve-memory 300m \
 
 docker service ps jenkins
 
-cat docker/jenkins/secrets/initialAdminPassword
+open http://$(docker-machine ip swarm-1):8082/jenkins
 
-open http://$(docker-machine ip swarm-1):8082/jenkins</code></pre>
+cat docker/jenkins/secrets/initialAdminPassword</code></pre>
 					</section>
 					<section id="jenkins-setup">
 						<h1>Jenkins Setup</h1>
@@ -515,7 +527,7 @@ open http://$(docker-machine ip swarm-1):8082/jenkins/computer</code></pre>
 					<section id="jenkins-registry">
 						<h1>Registry Service</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
+						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-test-1)
 
 docker service create --name registry -p 5000:5000 \
     --mount "type=bind,source=$PWD,target=/var/lib/registry" \
@@ -526,9 +538,9 @@ docker service ps registry</code></pre>
 					<section id="jenkins-env">
 						<h1>Env. Variables</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>docker-machine ip swarm-1
+						<pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8082/jenkins/configure
 
-open http://$(docker-machine ip swarm-1):8082/jenkins/configure</code></pre>
+docker-machine ip swarm-1</code></pre>
 						<ul>
 							<li>Click <code>Environment Variables</code></li>
 							<li>Click <code>Add</code></li>
@@ -619,12 +631,6 @@ eval $(docker-machine env swarm-1)
 
 docker service ps -f desired-state=running go-demo</code></pre>
 					</section>
-					<section id="jenkins-cleanup">
-						<h1>Cleanup</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker-machine rm -f \
-    swarm-1 swarm-2 swarm-4 swarm-test-1 swarm-test-2</code></pre>
-					</section>
 				</section>
 				<section  data-background="../img/background/the_end.jpg">
 					<section id="the-end-blog">
@@ -655,6 +661,17 @@ docker service ps -f desired-state=running go-demo</code></pre>
 						</div>
 					</section>
 				</section>
+                <section>
+                    <section data-background="../img/background/cleanup.jpg">
+                        <h1>Cleanup</h1>
+                        <pre><code data-trim contenteditable>docker-machine rm -f \
+    swarm-1 swarm-2 swarm-4 swarm-test-1 swarm-test-2
+
+cd ..
+
+rm -rf go-demo</code></pre>
+                    </section>
+                </section>
 			</div>
 
 		</div>
