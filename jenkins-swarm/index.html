@@ -81,11 +81,11 @@
                 </section>
                 <section data-background="../img/background/questions.jpg">
                     <section id="what">
+                        <h1 class="fragment">Docker?</h1>
+                        <hr/>
                         <h1 class="fragment">CD?</h1>
                         <hr/>
                         <h1 class="fragment">Jenkins?</h1>
-                        <hr/>
-                        <h1 class="fragment">Docker?</h1>
                     </section>
                 </section>
                 <section data-background="../img/background/containers.png">
@@ -96,6 +96,7 @@
                         <h3 class="fragment">Docker Machine</h3>
                         <h3 class="fragment">Docker Compose</h3>
                         <h3 class="fragment">Docker Registry</h3>
+                        <h3 class="fragment">Docker Swarm</h3>
                     </section>
                     <section id="docker-engine">
                         <h3>Docker</h3>
@@ -103,6 +104,7 @@
                         <hr/>
                         <ul>
                             <img src="../img/products/docker-engine.png" style="float: right; width: 50%; height: 50%; background-color: white;">
+                            <li class="fragment">Runs containers</li>
                             <li class="fragment">Immutable</li>
                             <li class="fragment">Isolation</li>
                             <li class="fragment">Fast</li>
@@ -154,34 +156,16 @@
                             <li class="fragment">Failover</li>
                         </ul>
                     </section>
-                </section>
-                <section data-background="../img/background/manual.jpg">
-                    <section id="cdp">
-                        <h1>Continuous Deployment</h1>
-                        <hr/>
-                        <ul>
-                            <li class="fragment">Checkout the code</li>
-                            <li class="fragment">Run unit tests</li>
-                            <li class="fragment">Build</li>
-                            <li class="fragment">Run functional tests</li>
-                            <li class="fragment">Push to registry</li>
-                            <li class="fragment">Deploy to production-like cluster</li>
-                            <li class="fragment">Run production-like tests</li>
-                            <li class="fragment">Deploy to production cluster</li>
-                            <li class="fragment">Run production tests</li>
-                        </ul>
-                    </section>
-                    <section id="cdp-nodes">
-                        <h3>Continuous Deployment</h3>
+                    <section id="swarm-nodes">
+                        <h3>Docker Swarm</h3>
                         <h1>Nodes Setup</h1>
                         <hr/>
                         <pre><code data-trim contenteditable>for i in 1 2 3; do
-    docker-machine create -d virtualbox swarm-$i
-
+  docker-machine create -d virtualbox swarm-$i
 done</code></pre>
                     </section>
                     <section id="cdp-cluster">
-                        <h3>Continuous Deployment</h3>
+                        <h3>Docker Swarm</h3>
                         <h1>Cluster Setup</h1>
                         <hr/>
                         <pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
@@ -191,19 +175,19 @@ docker swarm init --advertise-addr $(docker-machine ip swarm-1)
 TOKEN=$(docker swarm join-token -q manager)
 
 for i in 2 3; do
-    eval $(docker-machine env swarm-$i)
-    docker swarm join --token $TOKEN \
-        --advertise-addr $(docker-machine ip swarm-$i) \
-        $(docker-machine ip swarm-1):2377
+  eval $(docker-machine env swarm-$i)
+  docker swarm join --token $TOKEN \
+    --advertise-addr $(docker-machine ip swarm-$i) \
+    $(docker-machine ip swarm-1):2377
 done
 
 eval $(docker-machine env swarm-1)
 
 docker node ls</code></pre>
                     </section>
-                    <section id="cdp-registry">
-                        <h3>Continuous Deployment</h3>
-                        <h1>Docker Registry</h1>
+                    <section id="swarm-registry">
+                        <h3>Docker Swarm</h3>
+                        <h1>Registry</h1>
                         <hr/>
                         <pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
 
@@ -211,144 +195,83 @@ docker service create --name registry -p 5000:5000 \
     --mount "type=bind,source=$PWD,target=/var/lib/registry" \
     --reserve-memory 100m registry
 
-docker service ps registry
-
-docker pull localhost:5000/go-demo:1.0</code></pre>
+docker service ps registry</code></pre>
                     </section>
-                    <section id="cdp-service-create">
-                        <h3>Continuous Deployment</h3>
-                        <h1>Create a Service</h1>
+                    <section id="swarm-service-create">
+                        <h3>Docker Swarm</h3>
+                        <h1>Create Services</h1>
                         <hr/>
-                        <pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
-
-docker network create --driver overlay proxy
+                        <pre><code data-trim contenteditable>docker network create --driver overlay proxy
 
 docker network create --driver overlay go-demo
 
-docker service create --name go-demo-db --network go-demo \
-    --reserve-memory 200m mongo
+docker service create --name go-demo-db --network go-demo mongo
+
+docker service ls
 
 docker service create --name go-demo -e DB=go-demo-db \
-    --network go-demo --network proxy --reserve-memory 100m \
-    --replicas 3 localhost:5000/go-demo:1.0
+    --network go-demo --network proxy vfarcic/go-demo
 
 docker service ps go-demo</code></pre>
                     </section>
-                    <section id="cdp-service-registry">
-                        <h3>Continuous Deployment</h3>
-                        <h1>Service Registry</h1>
-                        <hr/>
-                        <pre><code data-trim contenteditable>export HOST_IP=$(docker-machine ip swarm-1)
-
-docker-compose -f compose/consul.yml up -d consul-server
-
-open http://$(docker-machine ip swarm-1):8500</code></pre>
-                    </section>
-                    <section id="cdp-proxy">
-                        <h3>Continuous Deployment</h3>
+                    <section id="swarm-proxy">
+                        <h3>Docker Swarm</h3>
                         <h1>Reverse Proxy</h1>
                         <hr/>
                         <pre><code data-trim contenteditable>docker service create --name proxy \
     -p 80:80 -p 443:443 -p 8080:8080 --network proxy \
-    -e MODE=swarm -e CONSUL_ADDRESS=$(docker-machine ip swarm-1):8500 \
-    --reserve-memory 50m --replicas 2 vfarcic/docker-flow-proxy
+    -e MODE=swarm vfarcic/docker-flow-proxy
 
 docker service ps proxy
 
-curl "$(docker-machine ip swarm-1):8080/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo&port=8080&distribute=true"
+curl "$(docker-machine ip swarm-1):8080/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo&port=8080"
 
 curl -i $(docker-machine ip swarm-1)/demo/hello</code></pre>
-                    </section>
-                    <section id="cdp-prod-tests">
-                        <h3>Continuous Deployment</h3>
-                        <h1>Production Tests</h1>
-                        <hr/>
-                        <pre><code data-trim contenteditable>docker-machine create -d virtualbox \
-    --engine-insecure-registry $(docker-machine ip swarm-1):5000 base
-
-eval $(docker-machine env base)
-
-export HOST_IP=$(docker-machine ip swarm-1)
-
-cd go-demo
-
-docker-compose -f docker-compose-test-local.yml run --rm production
-
-cd ..</code></pre>
-                    </section>
-                    <section id="cdp-new-release">
-                        <h3>Continuous Deployment</h3>
-                        <h1>Create A New Release</h1>
-                        <hr/>
-                        <pre><code data-trim contenteditable>eval $(docker-machine env base)
-
-docker pull $(docker-machine ip swarm-1):5000/go-demo:1.0
-
-docker tag $(docker-machine ip swarm-1):5000/go-demo:1.0 $(docker-machine ip swarm-1):5000/go-demo:1.1
-
-docker push $(docker-machine ip swarm-1):5000/go-demo:1.1</code></pre>
-                    </section>
-                    <section id="cdp-service-update">
-                        <h3>Continuous Deployment</h3>
-                        <h1>Update Production</h1>
-                        <hr/>
-                        <pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
-
-docker service ps go-demo
-
-docker service update --image localhost:5000/go-demo:1.1 \
-    --update-delay 10s go-demo
-
-docker service ps go-demo
-
-curl -i $(docker-machine ip swarm-1)/demo/hello</code></pre>
-                    </section>
-                    <section id="cdp-failover">
-                        <h3>Continuous Deployment</h3>
-                        <h1>Failover</h1>
-                        <hr/>
-                        <pre><code data-trim contenteditable>docker-machine rm -f swarm-3
-
-docker service ps proxy
-
-docker service ps registry
-
-docker service ps go-demo-db
-
-docker service ps go-demo
-
-docker service ls
-
-curl -i $(docker-machine ip swarm-1)/demo/hello</code></pre>
-                    </section>
-                    <!--<section id="cdp-new-node">-->
-                        <!--<h3>Continuous Deployment</h3>-->
-                        <!--<h1>New Node</h1>-->
-                        <!--<hr/>-->
-                        <!--<pre><code data-trim contenteditable>docker-machine create -d virtualbox swarm-4-->
-
-<!--TOKEN=$(docker swarm join-token -q manager)-->
-
-<!--eval $(docker-machine env swarm-4)-->
-
-<!--docker swarm join &#45;&#45;token $TOKEN &#45;&#45;advertise-addr $(docker-machine ip swarm-4) $(docker-machine ip swarm-1):2377-->
-
-<!--docker node ls</code></pre>-->
-                    <!--</section>-->
-                    <section id="cdp-what-now">
-                        <h3>Continuous Deployment</h3>
-                        <h1>Are We Done?</h1>
-                        <hr/>
-                        <h3 class="fragment">Automate Everything</h3>
-                    </section>
-                    <section id="cdp-cleanup">
-                        <h3>Continuous Deployment</h3>
-                        <h1>Cleanup</h1>
-                        <hr/>
-                        <pre><code data-trim contenteditable>docker-machine rm -f base</code></pre>
                     </section>
                 </section>
                 <section data-background="../img/background/continuous-deployment.png">
+                    <section id="cdp">
+                        <h1>Continuous Deployment</h1>
+                        <hr/>
+                        <ul>
+                            <li class="fragment">Checkout the code</li>
+                            <li class="fragment">Run unit tests</li>
+                            <li class="fragment">Build</li>
+                            <li class="fragment">Run functional tests</li>
+                            <li class="fragment">Push to the registry</li>
+                            <li class="fragment">Deploy to the production-like cluster</li>
+                            <li class="fragment">Run production-like tests</li>
+                            <li class="fragment">Deploy to the production cluster</li>
+                            <li class="fragment">Run production tests</li>
+                        </ul>
+                    </section>
+                    <section id="cdp-extra-reqs">
+                        <h3>Continuous Deployment</h3>
+                        <h1>Extra Reqs.</h1>
+                        <hr/>
+                        <ul>
+                            <li class="fragment">Freedom to code in any language</li>
+                            <li class="fragment">Freedom not to depend on a specific framework</li>
+                            <li class="fragment">Freedom not to depend on infrastructure</li>
+                            <li class="fragment">Immutable deployments</li>
+                            <li class="fragment">Minimal time in-between steps</li>
+                            <li class="fragment">Everything automated</li>
+                            <li class="fragment">Freedom to innovate</li>
+                        </ul>
+                    </section>
+                    <section id="cdp-why-extra-reqs">
+                        <h3>Continuous Deployment</h3>
+                        <h1>Why Extra Reqs?</h1>
+                        <hr/>
+                        <ul>
+                            <li class="fragment">I'm impatient</li>
+                            <li class="fragment">I hate handovers</li>
+                            <li class="fragment">I dislike to depend on others</li>
+                            <li class="fragment">I really hate doing the same tasks over and over</li>
+                        </ul>
+                    </section>
+                </section>
+                <section data-background="../img/background/jenkins.png">
                     <section id="jenkins">
                         <h1>Jenkins</h1>
                         <hr/>
@@ -367,7 +290,9 @@ curl -i $(docker-machine ip swarm-1)/demo/hello</code></pre>
                         <h3>Continuous Deployment</h3>
                         <h1>Jenkins Service</h1>
                         <hr/>
-                        <pre><code data-trim contenteditable>mkdir -p docker/jenkins
+                        <pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
+
+mkdir -p docker/jenkins
 
 docker service create --name jenkins --reserve-memory 300m \
     -p 8082:8080 -p 50000:50000 -e JENKINS_OPTS="--prefix=/jenkins" \
@@ -391,6 +316,16 @@ open http://$(docker-machine ip swarm-1):8082/jenkins</code></pre>
                             <li>Click "Start Using Jenkins"</li>
                         </ul>
                     </section>
+                    <section id="cdp-jenkins-swarm-plugin">
+                        <h3>Continuous Deployment</h3>
+                        <h1>Jenkins Swarm Plugin</h1>
+                        <hr/>
+                        <pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8082/jenkins/pluginManager/available</code></pre>
+                        <ul>
+                            <li>Select "Self-Organizing Swarm Plug-in Modules"</li>
+                            <li>Click "Install without restart"</li>
+                        </ul>
+                    </section>
                     <section id="cdp-jenkins-failover">
                         <h3>Continuous Deployment</h3>
                         <h1>Jenkins Failover</h1>
@@ -405,15 +340,6 @@ docker rm -f $(docker ps -qa -f "ancestor=jenkins:alpine")
 docker service ps jenkins
 
 open http://$(docker-machine ip swarm-1):8082/jenkins</code></pre>
-                    </section>
-                    <section id="cdp-jenkins-swarm-plugin">
-                        <h3>Continuous Deployment</h3>
-                        <h1>Jenkins Swarm Plugin</h1>
-                        <hr/>
-                        <pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8082/jenkins/pluginManager/available</code></pre>
-                        <ul>
-                            <li>Select "Self-Organizing Swarm Plug-in Modules" and click "Install without restart"</li>
-                        </ul>
                     </section>
                     <section id="cdp-jenkins-agent-cluster">
                         <h3>Continuous Deployment</h3>
@@ -458,14 +384,40 @@ docker-machine ssh swarm-test-2
 
 sudo mkdir -p /workspace && sudo chmod 777 /workspace && exit
 
-TOKEN=$(docker swarm join-token -q worker)
+TOKEN=$(docker swarm join-token -q manager)
 
 eval $(docker-machine env swarm-test-2)
 
-docker swarm join --token $TOKEN --advertise-addr $(docker-machine ip swarm-test-2) \
-    $(docker-machine ip swarm-test-1):2377
+docker swarm join --token $TOKEN --advertise-addr $(docker-machine ip swarm-test-2) $(docker-machine ip swarm-test-1):2377
+
+docker service ps jenkins-agent
 
 open http://$(docker-machine ip swarm-1):8082/jenkins/computer/</code></pre>
+                    </section>
+                    <section id="jenkins-config">
+                        <h3>Continuous Deployment</h3>
+                        <h1>Jenkins Config</h1>
+                        <hr/>
+                        <pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8082/jenkins/configure
+
+docker-machine ip swarm-1</code></pre>
+                        <ul>
+                            <li>Click "Environment Variables", click "Add"</li>
+                            <li>Type "PROD_IP" as "Name", paste the output as "Value"</li>
+                            <li>Click "Add"</li>
+                            <li>Type "PROD_NAME" as "Name", type "swarm-1" as "Value"</li>
+                            <li>Click "Save"</li>
+                        </ul>
+                    </section>
+                    <section id="cdp-jenkins-agent-registry">
+                        <h3>Continuous Deployment</h3>
+                        <h1>Registry</h1>
+                        <hr/>
+                        <pre><code data-trim contenteditable>docker service create --name registry -p 5000:5000 \
+    --mount "type=bind,source=$PWD,target=/var/lib/registry" \
+    --reserve-memory 100m registry
+
+docker service ps registry</code></pre>
                     </section>
                 </section>
                 <section data-background="../img/background/manual.jpg">
@@ -490,31 +442,6 @@ open http://$(docker-machine ip swarm-1):8082/jenkins/computer/</code></pre>
                         <div><span class="fragment">Automatically</span> <span class="green">run production-like tests</span></div>
                         <div><span class="fragment">Automatically</span> <span class="green">deploy to production cluster</span></div>
                         <div><span class="fragment">Automatically</span> <span class="green">run production tests</span></div>
-                    </section>
-                    <section id="jenkins-test-registry">
-                        <h3>Continuous Deployment</h3>
-                        <h1>Registry</h1>
-                        <hr/>
-                        <pre><code data-trim contenteditable>eval $(docker-machine env swarm-test-1)
-
-docker service create --name registry -p 5000:5000 \
-    --mount "type=bind,source=$PWD,target=/var/lib/registry" \
-    --reserve-memory 100m registry</code></pre>
-                    </section>
-                    <section id="jenkins-config">
-                        <h3>Continuous Deployment</h3>
-                        <h1>Jenkins Config</h1>
-                        <hr/>
-                        <pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8082/jenkins/configure
-
-docker-machine ip swarm-1</code></pre>
-                        <ul>
-                            <li>Click "Environment Variables", click "Add"</li>
-                            <li>Type "PROD_IP" as "Name", paste the output as "Value"</li>
-                            <li>Click "Add"</li>
-                            <li>Type "PROD_NAME" as "Name", type "swarm-1" as "Value"</li>
-                            <li>Click "Save"</li>
-                        </ul>
                     </section>
                     <section id="jenkins-job-new">
                         <h3>Continuous Deployment</h3>
@@ -541,7 +468,7 @@ docker-machine ip swarm-1</code></pre>
   stage("Staging") {
     try {
       sh "docker-compose -f docker-compose-test-local.yml up -d staging-dep"
-      sh 'HOST_IP=localhost docker-compose -f docker-compose-test-local.yml run --rm staging'
+      sh "HOST_IP=localhost docker-compose -f docker-compose-test-local.yml run --rm staging"
     } catch(e) {
       error "Staging failed"
     } finally {
@@ -618,7 +545,10 @@ docker service ps go-demo</code></pre>
                 <section>
                     <section data-background="../img/background/cleanup.jpg">
                         <h1>Cleanup</h1>
-                        <pre><code data-trim contenteditable>docker-machine rm -f $(docker-machine ls | tail +2 | awk '{print $1}')</code></pre>
+                        <pre><code data-trim contenteditable>docker-machine rm -f \
+    swarm-1 swarm-2 swarm-3 swarm-test-1 swarm-test-2
+
+rm -rf docker</code></pre>
                     </section>
                 </section>
 			</div>
