@@ -2,7 +2,7 @@
 
 set -e
 
-git clone https://github.com/vfarcic/go-demo.git
+git checkout https://github.com/vfarcic/go-demo.git
 
 cd go-demo
 
@@ -18,7 +18,7 @@ docker pull registry
 
 docker pull alpine
 
-for i in 1 2 3; do
+for i in 1 2 3 4; do
 
     docker-machine create -d virtualbox swarm-$i
 
@@ -40,7 +40,7 @@ for i in 1 2 3; do
 
     docker pull alpine
 
-    docker pull consul-server
+    docker pull consul
 
 done
 

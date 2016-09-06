@@ -317,7 +317,9 @@ docker service ps go-demo</code></pre>
 
 eval $(docker-machine env swarm-4)
 
-docker swarm join --token $TOKEN --advertise-addr $(docker-machine ip swarm-4) $(docker-machine ip swarm-1):2377
+docker swarm join --token $TOKEN \
+    --advertise-addr $(docker-machine ip swarm-4) \
+    $(docker-machine ip swarm-1):2377
 
 eval $(docker-machine env swarm-1)
 
