@@ -42,6 +42,8 @@ for i in 1 2 3 4; do
 
     docker pull consul
 
+    docker pull manomarks/visualizer
+
 done
 
 for i in 1 2; do
@@ -56,6 +58,17 @@ for i in 1 2; do
 
     docker pull mongo
 
+    docker pull manomarks/visualizer
+
 done
 
 echo "Well done!!!"
+
+docker run --name visualizer -d \
+    -p 8083:8083 \
+    -e HOST=$(docker-machine ip swarm-1) \
+    -e PORT=8083 \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    manomarks/visualizer
+
+

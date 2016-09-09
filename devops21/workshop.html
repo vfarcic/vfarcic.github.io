@@ -208,23 +208,42 @@ ll docker/registry/v2/repositories/go-demo</code></pre>
 							<h1>Running Services</h1>
 						</div>
                     </section>
+					<section id="swarm-nodes">
+						<h3>Docker Swarm</h3>
+						<h1>Nodes Setup</h1>
+						<hr/>
+                        <pre><code data-trim contenteditable>for i in 1 2 3; do
+    docker-machine create -d virtualbox swarm-$i
+done</code></pre>
+					</section>
+					<section id="swarm-visualizer">
+						<h3>Docker Swarm</h3>
+						<h1>Visualizer</h1>
+						<hr/>
+                        <pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
+
+docker run --name visualizer -d \
+    -p 8083:8083 \
+    -e HOST=$(docker-machine ip swarm-1) \
+    -e PORT=8083 \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    manomarks/visualizer
+
+open http://$(docker-machine ip swarm-1):8083</code></pre>
+					</section>
 					<section id="swarm-provisioning">
 						<h1>Provisioning</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>for i in 1 2 3; do
-    docker-machine create -d virtualbox swarm-$i
-done
-
-eval $(docker-machine env swarm-1)
-
-docker swarm init --advertise-addr $(docker-machine ip swarm-1)
+						<pre><code data-trim contenteditable>docker swarm init --advertise-addr $(docker-machine ip swarm-1)
 
 TOKEN=$(docker swarm join-token -q worker)
 
 for i in 2 3; do
-  eval $(docker-machine env swarm-$i)
+    eval $(docker-machine env swarm-$i)
 
-  docker swarm join --token $TOKEN --advertise-addr $(docker-machine ip swarm-$i) $(docker-machine ip swarm-1):2377
+    docker swarm join --token $TOKEN \
+        --advertise-addr $(docker-machine ip swarm-$i) \
+        $(docker-machine ip swarm-1):2377
 done</code></pre>
 					</section>
 					<section id="swarm-info">
@@ -483,6 +502,18 @@ eval $(docker-machine env swarm-test-1)
 docker swarm init \
     --advertise-addr $(docker-machine ip swarm-test-1)</code></pre>
 					</section>
+                    <section id="jenkins-agent-visualizer">
+                        <h1>Visualizer</h1>
+                        <hr/>
+                        <pre><code data-trim contenteditable>docker run --name visualizer -d \
+    -p 8083:8083 \
+    -e HOST=$(docker-machine ip swarm-test-1) \
+    -e PORT=8083 \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    manomarks/visualizer
+
+open http://$(docker-machine ip swarm-test-1):8083</code></pre>
+                    </section>
 					<section id="jenkins-agent">
 						<h1>Jenkins Agent</h1>
 						<hr/>
@@ -645,23 +676,34 @@ docker service ps -f desired-state=running go-demo</code></pre>
 						</figure>
 						<h3><a href="http://technologyconversations.com">TechnologyConversations.com</a></h3>
 					</section>
-					<section id="the-end-book">
-						<h2>Viktor Farcic</h2>
-						<hr/>
-						<div>
-							<figure style="width: 30%; height: 30%; float: left;">
-								<img src="../img/qr/devops2-amazon.jpg"/>
-								<figcaption><a href="http://www.amazon.com/dp/B01BJ4V66M">Amazon</a></figcaption>
-							</figure>
-							<figure style="width: 30%; height: 30%; float: right;">
-								<img src="../img/qr/devops2-leanpub.jpg"/>
-								<figcaption><a href="https://leanpub.com/the-devops-2-toolkit">LeanPub</a></figcaption>
-							</figure>
-							<a href="https://leanpub.com/the-devops-2-toolkit">
-								<img src="../img/devops2.png" style="width: 30%; height: 30%;" />
-							</a>
-						</div>
-					</section>
+                    <section id="the-end-book">
+                        <div>
+                            <figure style="width: 25%; height: 25%; float: left;">
+                                <img src="../img/qr/devops2-amazon.jpg"/>
+                                <figcaption><a href="http://www.amazon.com/dp/B01BJ4V66M">Amazon</a></figcaption>
+                            </figure>
+                            <figure style="width: 25%; height: 25%; float: right;">
+                                <img src="../img/qr/devops2-leanpub.jpg"/>
+                                <figcaption><a href="https://leanpub.com/the-devops-2-toolkit">LeanPub</a></figcaption>
+                            </figure>
+                            <a href="http://www.amazon.com/dp/B01BJ4V66M">
+                                <img src="../img/devops2.png" style="width: 30%; height: 30%;" />
+                            </a>
+                        </div>
+                        <hr/>
+                        <div>
+                            <figure style="width: 25%; height: 25%; float: left;">
+                                &nbsp;
+                            </figure>
+                            <figure style="width: 25%; height: 25%; float: right;">
+                                <img src="../img/qr/devops21-leanpub.png"/>
+                                <figcaption><a href="https://leanpub.com/the-devops-2-1-toolkit">LeanPub</a></figcaption>
+                            </figure>
+                            <a href="https://leanpub.com/the-devops-2-1-toolkit">
+                                <img src="../img/devops21.png" style="width: 30%; height: 30%;" />
+                            </a>
+                        </div>
+                    </section>
 				</section>
                 <section>
                     <section data-background="../img/background/cleanup.jpg">

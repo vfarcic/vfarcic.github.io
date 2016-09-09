@@ -18,6 +18,8 @@ for i in 1 2 3; do
 
     docker pull vfarcic/docker-flow-proxy
 
+    docker pull manomarks/visualizer
+
 done
 
 for i in 1 2; do
@@ -31,5 +33,7 @@ for i in 1 2; do
     docker pull registry
 
     docker pull mongo
+
+    docker pull manomarks/visualizer
 
 done
