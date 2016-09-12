@@ -16,6 +16,8 @@
     <element xsi:type="archimate:ApplicationService" id="b4a67d5f" name="load balancer"/>
     <element xsi:type="archimate:DataObject" id="5419f061" name="service registry"/>
     <element xsi:type="archimate:DataObject" id="f7ebac08" name="Consul"/>
+    <element xsi:type="archimate:DataObject" id="d208dd2f" name="Registry"/>
+    <element xsi:type="archimate:DataObject" id="cef4175f" name="Host volume"/>
   </folder>
   <folder name="Technology" id="a9a1f7b5" type="technology">
     <element xsi:type="archimate:Node" id="b0246926" name="node-1"/>
@@ -26,6 +28,9 @@
     <element xsi:type="archimate:Node" id="9a432693" name="swarm-cluster"/>
     <element xsi:type="archimate:CommunicationPath" id="78118e80" name="DNS"/>
     <element xsi:type="archimate:Network" id="b6f5b014" name="routing mesh"/>
+    <element xsi:type="archimate:Node" id="5a3065de" name="cd cluster"/>
+    <element xsi:type="archimate:Node" id="df345a5a" name="prod-like cluster"/>
+    <element xsi:type="archimate:Node" id="625cd187" name="production cluster"/>
   </folder>
   <folder name="Motivation" id="0d90cf59" type="motivation"/>
   <folder name="Implementation &amp; Migration" id="7e4bc2c8" type="implementation_migration"/>
@@ -60,6 +65,7 @@
     <element xsi:type="archimate:AssociationRelationship" id="fad95ea6" source="f7ebac08" target="f7ebac08"/>
     <element xsi:type="archimate:AssociationRelationship" id="cdc0bea2" source="9c4f6114" target="b6f5b014"/>
     <element xsi:type="archimate:FlowRelationship" id="6ec5fbb2" source="8ec8b15c" target="8ec8b15c"/>
+    <element xsi:type="archimate:AssociationRelationship" id="4a3e60d7" source="d208dd2f" target="cef4175f"/>
   </folder>
   <folder name="Views" id="1403e115" type="diagrams">
     <element xsi:type="archimate:ArchimateDiagramModel" id="2de5f20d" name="docker-nodes">
@@ -503,6 +509,25 @@
       <child xsi:type="archimate:DiagramObject" id="d23555b8" textAlignment="2" archimateElement="9c4f6114">
         <bounds x="96" y="60" width="97" height="25"/>
         <sourceConnection xsi:type="archimate:Connection" id="bee8a88a" source="d23555b8" target="482b6105" relationship="cdc0bea2"/>
+      </child>
+    </element>
+    <element xsi:type="archimate:ArchimateDiagramModel" id="4bc70394" name="cd-environment">
+      <child xsi:type="archimate:DiagramObject" id="1ddc6cb4" textAlignment="2" archimateElement="625cd187">
+        <bounds x="468" y="60" width="361" height="205"/>
+        <child xsi:type="archimate:DiagramObject" id="39ecb602" textAlignment="2" archimateElement="d208dd2f">
+          <bounds x="12" y="156" width="109" height="38"/>
+          <sourceConnection xsi:type="archimate:Connection" id="3b898158" source="39ecb602" target="5492fd04" relationship="4a3e60d7"/>
+        </child>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="aed9955a" textAlignment="2" archimateElement="5a3065de">
+        <bounds x="72" y="60" width="385" height="205"/>
+        <child xsi:type="archimate:DiagramObject" id="3ccd7953" textAlignment="2" archimateElement="d208dd2f">
+          <bounds x="12" y="156" width="109" height="38"/>
+          <sourceConnection xsi:type="archimate:Connection" id="0ee14413" source="3ccd7953" target="5492fd04" relationship="4a3e60d7"/>
+        </child>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="5492fd04" textAlignment="2" targetConnections="3b898158 0ee14413" archimateElement="cef4175f">
+        <bounds x="72" y="276" width="757" height="37"/>
       </child>
     </element>
   </folder>
