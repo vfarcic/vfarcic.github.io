@@ -2,7 +2,7 @@
 
 set -e
 
-git checkout https://github.com/vfarcic/go-demo.git
+git clone https://github.com/vfarcic/go-demo.git
 
 cd go-demo
 
