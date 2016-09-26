@@ -774,12 +774,12 @@ docker service ps -f desired-state=running go-demo</code></pre>
                 <section>
                     <section data-background="../img/background/cleanup.jpg">
                         <h1>Cleanup</h1>
-                        <pre><code data-trim contenteditable>docker-machine rm -f \
+                        <pre><code data-trim contenteditable>docker-machine rm -f go-demo \
     swarm-1 swarm-2 swarm-4 swarm-test-1 swarm-test-2
 
 cd ..
 
-rm -rf go-demo</code></pre>
+rm -rf go-demo docker-compose-proxy.yml</code></pre>
                     </section>
                 </section>
 			</div>
