@@ -89,14 +89,6 @@
                         </figure>
                     </section>
                 </section>
-                <!--<section data-background="../img/background/continuous-deployment.png">-->
-                    <!--<section id="cdd">-->
-                        <!--<h1>Continuous Deployment</h1>-->
-                        <!--<hr/>-->
-                        <!--<h3 class="fragment">Every commit is deployed to production</h3>-->
-                    <!--</section>-->
-                <!--</section>-->
-				<!--containers.png-->
 				<section data-background="../img/background/why.jpg">
 					<section id="docker">
 						<h1>Docker Containers</h1>
@@ -111,22 +103,71 @@
 						</ul>
 						<img src="../img/products/docker.png" style="background-color: white;">
 					</section>
-					<section id="docker-everything">
+				</section>
+				<section>
+					<section id="monolith" data-background="../img/background/monolith.png">
 						<h1>Changed everything</h1>
 						<hr/>
-						<ul>
-							<li class="fragment">Monoliths <label class="fragment">&gt; microservices</label></li>
-							<li class="fragment">Infrastructure <label class="fragment">&gt; no more</label></li>
-							<li class="fragment">Servers <label class="fragment">&gt; cluster</label></li>
-							<li class="fragment">Configurations <label class="fragment">&gt; service discovery</label></li>
-							<li class="fragment">Waterfall <label class="fragment">&gt; agile</label></li>
-							<li class="fragment">Agile <label class="fragment">&gt; DevOps</label></li>
-							<li class="fragment">DevOps <label class="fragment">&gt; truly self-sufficient teams</label></li>
-							<li class="fragment">Continuous deployment <label class="fragment"> finally</label><label class="fragment">, for everyone </label></li>
-							<li class="fragment">You are NOT a coder, a tester, or an operator</label></li>
-							<li class="fragment">You need to know everything <label class="fragment">&gt; and then specialize</label></label></li>
-						</ul>
+						<h3>Monoliths</h3>
+						<h3 class="fragment">become microservices</h3>
+						<h3 class="fragment">Why now?</h3>
 					</section>
+					<section id="infrastructure" data-background="../img/background/servers.jpg">
+						<h1>Changed everything</h1>
+						<hr/>
+						<h3>OS infrastructure</h3>
+						<h3 class="fragment">moves to containers</h3>
+						<h3 class="fragment">and becomes immutable</h3>
+						<h3 class="fragment">Consequences?</h3>
+					</section>
+					<section id="servers" data-background="../img/background/scaling.png">
+						<h1>Changed everything</h1>
+						<hr/>
+						<h3>Servers</h3>
+						<h3 class="fragment">become cluster</h3>
+						<h3 class="fragment">The result?</h3>
+					</section>
+					<section id="cluster" data-background="../img/background/truth.jpg">
+						<h1>Changed everything</h1>
+						<hr/>
+						<h3>Cluster</h3>
+						<h3 class="fragment">changes software architecture</h3>
+						<h3 class="fragment">into immutable, stateless services</h3>
+						<h3 class="fragment">that communicate through service discovery</h3>
+						<h3 class="fragment">The need for new processes!</h3>
+					</section>
+					<section id="agile" data-background="../img/background/agile.jpg">
+						<h1>Changed everything</h1>
+						<hr/>
+						<h3>Agile</h3>
+						<h3 class="fragment">changed how we develop software</h3>
+						<h3 class="fragment">but it failed to deliver it</h3>
+						<h3 class="fragment">It excluded operations!</h3>
+					</section>
+					<section id="devops" data-background="../img/background/devops21.jpg">
+						<h1>Changed everything</h1>
+						<hr/>
+						<h3>DevOps</h3>
+						<h3 class="fragment">is new agile</h3>
+						<h3 class="fragment">It enables teams to be in full control</h3>
+						<h3 class="fragment">The result?</h3>
+					</section>
+					<section id="cd" data-background="../img/background/continuous-deployment.png">
+						<h1>Changed everything</h1>
+						<hr/>
+						<h3>DevOps</h3>
+						<h3 class="fragment">enables continuous deployment</h3>
+					</section>
+					<section id="you" data-background="../img/background/truth.jpg">
+						<h1>Changed everything</h1>
+						<hr/>
+						<h3>You are NOT a coder,</h3>
+						<h3 class="fragment">a tester, or an operator</h3>
+						<h3 class="fragment">You need to know everything</h3>
+						<h3 class="fragment">and then specialize</h3>
+					</section>
+				</section>
+				<section data-background="../img/background/containers.png">
 					<section id="docker-eco">
 						<h1>Docker Ecosystem</h1>
 						<hr/>
@@ -228,7 +269,7 @@ docker service create --name go-demo -e DB=go-demo-db \
 
 docker service ps go-demo
 
-docker service inspect go-demo</code></pre>
+docker service inspect go-demo --pretty</code></pre>
 					</section>
 					<section id="swarm-service-img">
 						<h1>Service</h1>
