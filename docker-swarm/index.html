@@ -66,14 +66,23 @@
                             <img src="../img/company-big.png" style="background-color: white;" />
                         </a>
                     </section>
-                    <section id="about-books">
-                        <a href="https://leanpub.com/the-devops-2-toolkit">
-                            <img src="../img/devops2.png" style="float: left; width: 40%; height: 40%;" />
-                        </a>
-                        <a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">
-                            <img src="../img/tdd.jpg" style="float: right; width: 40%; height: 40%;" />
-                        </a>
-                    </section>
+					<section id="about-books">
+						<figure style="width: 30%; height: 30%; float: left;">
+							<a href="https://leanpub.com/the-devops-2-toolkit">
+								<img src="../img/devops2.png" />
+							</a>
+						</figure>
+						<figure style="width: 30%; height: 30%; float: left;">
+							<a href="https://leanpub.com/the-devops-2-1-toolkit">
+								<img src="../img/devops21.png" />
+							</a>
+						</figure>
+						<figure style="width: 30%; height: 30%; float: left;">
+							<a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">
+								<img src="../img/tdd.jpg" />
+							</a>
+						</figure>
+					</section>
                 </section>
                 <section data-background="../img/background/swarm.jpg">
                     <h1>Docker 1.12+</h1>
@@ -89,13 +98,29 @@
                     <section id="demo">
                         <h1>Demo Time</h1>
                     </section>
-					<section id="swarm-provisioning">
-						<h1>Provisioning</h1>
+					<section id="vm">
+						<h1>VMs</h1>
 						<pre><code data-trim contenteditable>for i in 1 2 3; do
-    docker-machine create -d virtualbox swarm-$i
-done
+  docker-machine create -d virtualbox swarm-$i
+done</code></pre>
+					</section>
+					<section id="swarm-visualizer">
+						<h1>Visualizer</h1>
+						<hr/>
+                        <pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
 
-eval $(docker-machine env swarm-1)
+docker run --name visualizer -d \
+  -p 8083:8083 \
+  -e HOST=$(docker-machine ip swarm-1) \
+  -e PORT=8083 \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  manomarks/visualizer
+
+open http://$(docker-machine ip swarm-1):8083</code></pre>
+					</section>
+					<section id="swarm-cluster">
+						<h1>Cluster</h1>
+						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
 
 docker swarm init --advertise-addr $(docker-machine ip swarm-1)
 
@@ -142,7 +167,7 @@ docker service create --name go-demo -e DB=go-demo-db \
 
 docker service ps go-demo
 
-docker service inspect go-demo</code></pre>
+docker service inspect go-demo --pretty</code></pre>
 					</section>
 					<section id="swarm-service-img">
 						<h1>Service</h1>
@@ -250,8 +275,6 @@ docker service ps go-demo</code></pre>
 						<pre><code data-trim contenteditable>docker-machine rm -f swarm-1 swarm-2 swarm-4</code></pre>
                     </section>
 				</section>
-				<section id="qa" data-background="../img/background/questions.jpg">
-				</section>
 				<section  data-background="../img/background/the_end.jpg">
 					<section id="the-end-blog">
 						<h2>Viktor Farcic</h2>
@@ -264,19 +287,30 @@ docker service ps go-demo</code></pre>
 						<h3><a href="http://technologyconversations.com">TechnologyConversations.com</a></h3>
 					</section>
 					<section id="the-end-book">
-						<h2>Viktor Farcic</h2>
-						<hr/>
 						<div>
-							<figure style="width: 30%; height: 30%; float: left;">
+							<figure style="width: 25%; height: 25%; float: left;">
 								<img src="../img/qr/devops2-amazon.jpg"/>
 								<figcaption><a href="http://www.amazon.com/dp/B01BJ4V66M">Amazon</a></figcaption>
 							</figure>
-							<figure style="width: 30%; height: 30%; float: right;">
+							<figure style="width: 25%; height: 25%; float: right;">
 								<img src="../img/qr/devops2-leanpub.jpg"/>
 								<figcaption><a href="https://leanpub.com/the-devops-2-toolkit">LeanPub</a></figcaption>
 							</figure>
-							<a href="https://leanpub.com/the-devops-2-toolkit">
+							<a href="http://www.amazon.com/dp/B01BJ4V66M">
 								<img src="../img/devops2.png" style="width: 30%; height: 30%;" />
+							</a>
+						</div>
+						<hr/>
+						<div>
+							<figure style="width: 25%; height: 25%; float: left;">
+								&nbsp;
+							</figure>
+							<figure style="width: 25%; height: 25%; float: right;">
+								<img src="../img/qr/devops21-leanpub.png"/>
+								<figcaption><a href="https://leanpub.com/the-devops-2-1-toolkit">LeanPub</a></figcaption>
+							</figure>
+							<a href="https://leanpub.com/the-devops-2-1-toolkit">
+								<img src="../img/devops21.png" style="width: 30%; height: 30%;" />
 							</a>
 						</div>
 					</section>
