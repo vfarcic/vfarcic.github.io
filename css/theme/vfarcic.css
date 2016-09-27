@@ -1,9 +1,8 @@
 body:after {
   content: url(../../img/company.png);
-  transform: scale(.7);
   position: fixed;
-  top: -20px;
-  right: -50px;}
+  top: -10px;
+  right: 0px;}
 
 .reveal {
   text-shadow:
