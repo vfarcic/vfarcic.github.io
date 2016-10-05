@@ -4,7 +4,11 @@ set -e
 
 for i in 1 2 3; do
 
+    set +e
+
     docker-machine create -d virtualbox swarm-$i
+
+    set -e
 
     eval $(docker-machine env swarm-$i)
 
@@ -24,7 +28,11 @@ done
 
 for i in 1 2; do
 
+    set +e
+
     docker-machine create -d virtualbox swarm-test-$i
+
+    set -e
 
     eval $(docker-machine env swarm-test-$i)
 
