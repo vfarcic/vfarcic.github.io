@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
 
-set -e
+set +e
 
 git clone https://github.com/vfarcic/go-demo.git
 
+set -e
+
 cd go-demo
 
+set +e
+
 docker-machine create -d virtualbox go-demo
+
+set -e
 
 eval $(docker-machine env go-demo)
 
