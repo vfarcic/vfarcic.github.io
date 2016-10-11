@@ -4,6 +4,18 @@ The DevOps 2.1 Toolkit
 Abstract: Workshop
 ------------------
 
+Agile changed the way we develop software, but it failed to change the way we deliver it. As a result of facing new challenges, we got DevOps. DevOps is a cross-disciplinary community, or practice, dedicated to the study of building, evolving and operating rapidly-changing, resilient systems at scale.
+
+DevOps is as much a cultural as a technological change. While it unites diverse teams and professionals and teaches us how to automate all repetitive steps in our processes, it fails to introduce a real difference in the software landscape we use. Hence, DevOps 2.0 is emerging with a drastic change in our methods, tools and architecture. Finally, we have everything we need to build scalable, fault-tolerant and self-healing systems delivered to production through continuous delivery and deployment.
+
+This workshop focuses on architectural changes and new tools we should adopt to be able to tackle the problems presented by a demand for modern, responsive, fault tolerant and elastic systems. It is based on the material published in [The DevOps 2.1 Toolkit: Building, testing, deploying, and monitoring services inside Docker Swarm clusters](https://leanpub.com/the-devops-2-1-toolkit).
+
+The workshop will go through the whole microservices development lifecycle. We’ll start from the very beginning. We’ll define and design architecture. From there on we’ll move from requirements, technological choices and development environment setup, through coding and testing all the way until the final deployment to production. We won’t stop there. Once our new services are up and running we’ll see how to maintain them, scale them depending on resource utilization and response time, and recover them in case of failures. We’ll try to balance the need for creative manual work and the need to automate as much of the process as possible.
+
+This will be a journey through the whole lifecycle of a microservice. The goal will be to design a fully automate continuous deployment (CDP) pipeline. We’ll see how microservices fit into CDP or deployment and immutable containers concepts and why the best results are obtained when those three are combined into one unique framework.
+
+During the workshop we’ll explore tools like Docker, Docker Swarm, Docker Compose, Jenkins, HAProxy, and a few others.
+
 We'll explore the practices and tools required to run a Swarm cluster. We'll go beyond a simple deployment. We'll explore how to create a continuous deployment process. We'll set up multiple clusters. One will be dedicated to testing and the other for production. We'll see how to accomplish zero-downtime deployments, what to do in case of a failover, how to run services at scale, how to monitor the systems, and how to make it heal itself. We'll explore the processes that will allow us to run the clusters on a laptop as well as on different cloud providers.
 
 Abstract: Webinar Jenkins
