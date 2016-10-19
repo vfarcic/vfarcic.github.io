@@ -141,10 +141,11 @@ TOKEN=$(docker swarm join-token -q manager)
 
 for i in 2 3; do
   eval $(docker-machine env swarm-$i)
+  docker swarm join --token $TOKEN --advertise-addr $(docker-machine ip swarm-$i) $(docker-machine ip swarm-1):2377
+done
 
-  docker swarm join --token $TOKEN \
-      --advertise-addr $(docker-machine ip swarm-$i) \
-      $(docker-machine ip swarm-1):2377
+for i in 1 2 3; do
+  docker node update --label-add type=manager swarm-$i
 done
 
 eval $(docker-machine env swarm-1)
@@ -176,7 +177,10 @@ docker service create --name go-demo-db --network go-demo mongo
 docker service ls
 
 docker service create --name go-demo -e DB=go-demo-db \
-    --network go-demo --network proxy vfarcic/go-demo
+  --network go-demo --network proxy --reserve-memory 100m \
+  --label com.df.notify=true --label com.df.distribute=true \
+  --label com.df.servicePath=/demo --label com.df.port=8080 \
+  --replicas 3 vfarcic/go-demo
 
 docker service ps go-demo</code></pre>
                     </section>
@@ -184,13 +188,20 @@ docker service ps go-demo</code></pre>
                         <h3>Docker Swarm</h3>
                         <h1>Reverse Proxy</h1>
                         <hr/>
-                        <pre><code data-trim contenteditable>docker service create --name proxy \
-    -p 80:80 -p 443:443 -p 8080:8080 --network proxy \
-    -e MODE=swarm vfarcic/docker-flow-proxy
+                        <pre><code data-trim contenteditable>docker service create --name swarm-listener \
+  --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
+  -e DF_NOTIF_CREATE_SERVICE_URL=http://proxy:8080/v1/docker-flow-proxy/reconfigure \
+  -e DF_NOTIF_REMOVE_SERVICE_URL=http://proxy:8080/v1/docker-flow-proxy/remove \
+  --constraint 'node.role==manager' --network proxy \
+  vfarcic/docker-flow-swarm-listener
+
+docker service create -e MODE=swarm -e LISTENER_ADDRESS=swarm-listener \
+  -p 80:80 -p 443:443 --network proxy \
+  --name proxy vfarcic/docker-flow-proxy
+
+docker service ps swarm-listener
 
 docker service ps proxy
-
-curl "$(docker-machine ip swarm-1):8080/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo&port=8080"
 
 curl -i $(docker-machine ip swarm-1)/demo/hello</code></pre>
                     </section>

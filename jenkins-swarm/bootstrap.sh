@@ -20,6 +20,8 @@ for i in 1 2 3; do
 
     docker pull vfarcic/go-demo
 
+    docker pull vfarcic/docker-flow-swarm-listener
+
     docker pull vfarcic/docker-flow-proxy
 
     docker pull manomarks/visualizer
@@ -45,3 +47,7 @@ for i in 1 2; do
     docker pull manomarks/visualizer
 
 done
+
+echo ""
+echo "Nodes were created and preloaded with images!!!"
+echo ""
