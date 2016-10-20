@@ -48,9 +48,9 @@ for i in 1 2 3 4; do
 
     docker pull vfarcic/docker-flow-proxy
 
-    docker pull alpine
+    docker pull vfarcic/docker-flow-swarm-listener
 
-    docker pull consul
+    docker pull alpine
 
     docker pull manomarks/visualizer
 
@@ -76,6 +76,8 @@ for i in 1 2; do
 
 done
 
-echo "Well done!!!"
+echo ""
+echo "Nodes were created and preloaded with images!!!"
+echo ""
 
 

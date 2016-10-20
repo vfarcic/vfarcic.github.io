@@ -190,9 +190,6 @@
             <bendpoint startX="216" startY="-12" endX="-138" endY="48"/>
           </sourceConnection>
         </child>
-        <child xsi:type="archimate:DiagramObject" id="e037563e" fontColor="#ffffff" textAlignment="2" fillColor="#ff0000" archimateElement="8ec8b15c">
-          <bounds x="311" y="108" width="120" height="25"/>
-        </child>
         <child xsi:type="archimate:DiagramObject" id="18015b2f" fontColor="#ffffff" textAlignment="2" fillColor="#996633" archimateElement="8ec8b15c">
           <bounds x="240" y="144" width="120" height="25"/>
         </child>
@@ -223,9 +220,6 @@
         </child>
         <child xsi:type="archimate:DiagramObject" id="db4bcf66" fontColor="#ffffff" textAlignment="2" fillColor="#996633" archimateElement="8ec8b15c">
           <bounds x="457" y="108" width="120" height="25"/>
-        </child>
-        <child xsi:type="archimate:DiagramObject" id="ac90ca3f" textAlignment="2" fillColor="#ff00ff" archimateElement="e00657d7">
-          <bounds x="143" y="108" width="120" height="25"/>
         </child>
         <child xsi:type="archimate:DiagramObject" id="fb2cb6fd" textAlignment="2" targetConnections="f610e2bf" fillColor="#00ff00" archimateElement="b6f5b014">
           <bounds x="12" y="36" width="565" height="25"/>

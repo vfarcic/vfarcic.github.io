@@ -340,8 +340,10 @@ docker network ls</code></pre>
 docker service ls
 
 docker service create --name go-demo -e DB=go-demo-db \
-    --network go-demo --network proxy \
-    --reserve-memory 50m vfarcic/go-demo
+  --network go-demo --network proxy --reserve-memory 50m \
+  --label com.df.notify=true --label com.df.distribute=true \
+  --label com.df.servicePath=/demo --label com.df.port=8080 \
+  vfarcic/go-demo
 
 docker service ps go-demo
 
@@ -406,33 +408,27 @@ docker service ps util</code></pre>
 					<section id="swarm-proxy">
 						<h1>Reverse Proxy</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>wget -O docker-compose-proxy.yml \
-    https://raw.githubusercontent.com/vfarcic/docker-flow-proxy/master/docker-compose.yml
+						<pre><code data-trim contenteditable>docker service create --name swarm-listener \
+  --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
+  -e DF_NOTIF_CREATE_SERVICE_URL=http://proxy:8080/v1/docker-flow-proxy/reconfigure \
+  -e DF_NOTIF_REMOVE_SERVICE_URL=http://proxy:8080/v1/docker-flow-proxy/remove \
+  --constraint 'node.role==manager' --network proxy \
+  vfarcic/docker-flow-swarm-listener
 
-export DOCKER_IP=$(docker-machine ip swarm-1)
+docker service create -e MODE=swarm -e LISTENER_ADDRESS=swarm-listener \
+  -p 80:80 -p 443:443 --network proxy --replicas 3 \
+  --name proxy vfarcic/docker-flow-proxy
 
-docker-compose -f docker-compose-proxy.yml up -d consul-server
+docker service ps swarm-listener
 
-docker service create --name proxy -p 80:80 -p 443:443 \
-    -p 8080:8080 --network proxy -e MODE=swarm --replicas 3 \
-    -e CONSUL_ADDRESS=$(docker-machine ip swarm-1):8500 \
-    vfarcic/docker-flow-proxy
+docker service ps proxy
 
-docker service ps proxy</code></pre>
+curl -i $(docker-machine ip swarm-1)/demo/hello</code></pre>
 					</section>
 					<section id="swarm-proxy-img">
 						<h1>Reverse Proxy</h1>
 						<hr/>
 						<img src="../img/swarm/proxy-scaled.png">
-					</section>
-					<section id="swarm-proxy-test">
-						<h1>Reverse Proxy</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>curl "$(docker-machine ip swarm-1):8080/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo&port=8080&distribute=true"
-
-for i in {1..10}; do
-    curl -i $(docker-machine ip swarm-1)/demo/hello
-done</code></pre>
 					</section>
 					<section id="swarm-proxy-flow-img-1" data-transition="fade-in">
 						<h1>Networking</h1>
@@ -774,7 +770,7 @@ docker service ps -f desired-state=running go-demo</code></pre>
                 <section>
                     <section data-background="../img/background/cleanup.jpg">
                         <h1>Cleanup</h1>
-                        <pre><code data-trim contenteditable>docker-machine rm -f go-demo \
+                        <pre><code data-trim contenteditable>docker-machine rm -f \
     swarm-1 swarm-2 swarm-4 swarm-test-1 swarm-test-2
 
 cd ..
