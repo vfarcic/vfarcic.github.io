@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>The DevOps 2.1 Toolkit</title>
+		<title>The DevOps 2.1 Toolkit: Workshop</title>
 
 		<meta name="author" content="Viktor Farcic">
 
@@ -720,10 +720,163 @@ eval $(docker-machine env swarm-1)
 docker service ps -f desired-state=running go-demo</code></pre>
 					</section>
 				</section>
+				<section data-background="../img/background/logs.png">
+					<section id="monitoring">
+						<h1>Monitoring</h1>
+						<hr/>
+						<ul>
+							<li class="fragment">Monitoring a single application <label class="fragment">is easy</label></li>
+							<li class="fragment">Monitoring services in single server <label class="fragment">is a bit harder</label></li>
+							<li class="fragment">Monitoring many services in a cluster <label class="fragment">requires a whole new way of thinking</label></li>
+						</ul>
+					</section>
+					<section id="what">
+						<h3>Monitoring</h3>
+						<h1>What Do We Need?</h1>
+						<hr/>
+						<h3 class="fragment">Historical and (near) realtime information about our system</h3>
+						<ul>
+							<li class="fragment">logs</li>
+							<li class="fragment">hardware utilization</li>
+							<li class="fragment">health checking</li>
+							<li class="fragment">network traffic</li>
+							<li class="fragment">...</li>
+						</ul>
+					</section>
+					<section id="what-2">
+						<h3>Monitoring</h3>
+						<h1>What Do We Need?</h1>
+						<hr/>
+						<h3 class="fragment">Decentralized data collectors</h3>
+						<h3 class="fragment">and centralized data storage</h3>
+					</section>
+				</section>
+				<section data-background="../img/background/logs.png">
+					<section id="logging">
+						<h1>Logging</h1>
+						<hr/>
+						<ul>
+							<li class="fragment">A way to parse data and send them to a central database in near real-time.</li>
+							<li class="fragment">The capacity of the database to handle near real-time data querying and analytics.</li>
+							<li class="fragment">A visual representation of the data through filtered tables, dashboards, and so on.</li>
+						</ul>
+					</section>
+					<section id="logging-tools">
+						<h3>Logging</h3>
+						<h1>Tools</h1>
+						<hr/>
+						<img src="../img/products/elk.png" class="fragment"/>
+						<h3 class="fragment">... or one of many other options</h3>
+					</section>
+				</section>
+				<section data-background="../img/background/manual.jpg">
+					<section id="logging-demo">
+						<h1>Hands-On Time</h1>
+						<hr/>
+						<h2 class="fragment">Ship logs</h2>
+						<h2 class="fragment">from any container</h2>
+						<h2 class="fragment">running anywhere inside the cluster</h2>
+					</section>
+					<section id="es-service">
+						<h1>Elastic Search Service</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
+
+docker network create --driver overlay elk
+
+docker service create --name elasticsearch --network elk \
+  -p 9200:9200 --reserve-memory 500m elasticsearch:2.4
+
+docker service ps elasticsearch</code></pre>
+					</section>
+					<section id="logstash-service">
+						<h1>Log Stash Service</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>mkdir -p docker/logstash
+
+cp conf/logstash.conf docker/logstash/logstash.conf
+
+cat docker/logstash/logstash.conf
+
+docker service create --name logstash \
+  --mount "type=bind,source=$PWD/docker/logstash,target=/conf" \
+  --network elk -e LOGSPOUT=ignore --reserve-memory 100m \
+  logstash:2.4 logstash -f /conf/logstash.conf
+
+docker service ps logstash</code></pre>
+					</section>
+					<section id="logstash-test">
+						<h1>Testing Log Stash</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>LOGSTASH_NODE=$(docker service ps logstash | tail +2 | awk '{print $4}')
+
+eval $(docker-machine env $LOGSTASH_NODE)
+
+LOGSTASH_ID=$(docker ps -q --filter "ancestor=logstash:2.4")
+
+docker logs $LOGSTASH_ID</code></pre>
+					</section>
+					<section id="logstash-test-2">
+						<h1>Testing Log Stash</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
+
+docker service create --name logger-test --network elk \
+  --restart-condition none \
+  debian logger -n logstash -P 51415 hello world
+
+eval $(docker-machine env $LOGSTASH_NODE)
+
+docker logs $LOGSTASH_ID
+
+eval $(docker-machine env swarm-1)
+
+docker service rm logger-test</code></pre>
+					</section>
+					<section id="logspout-service">
+						<h1>Log Spout Service</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker service create --name logspout \
+  --network elk --mode global -e SYSLOG_FORMAT=rfc3164 \
+  --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
+  gliderlabs/logspout syslog://logstash:51415
+
+docker service ps logspout</code></pre>
+					</section>
+					<section id="logspout-test">
+						<h1>Testing Log Spout</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker service create --name registry \
+  -p 5000:5000 --reserve-memory 100m \
+  --mount "type=bind,source=$PWD,target=/var/lib/registry" \
+  registry
+
+docker service ps registry
+
+eval $(docker-machine env $LOGSTASH_NODE)
+
+docker logs $LOGSTASH_ID</code></pre>
+					</section>
+					<section id="kibana-service">
+						<h1>Kibana Service</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker service create --name kibana \
+  --network elk --network proxy --reserve-memory 50m \
+  -e ELASTICSEARCH_URL=http://elasticsearch:9200 \
+  --label com.df.notify=true --label com.df.distribute=true \
+  --label com.df.servicePath=/app/kibana,/bundles,/elasticsearch \
+  --label com.df.port=5601 \
+  kibana:4.6
+
+docker service ps kibana
+
+open http://$(docker-machine ip swarm-1)/app/kibana</code></pre>
+					</section>
+				</section>
 				<section data-background="../img/people/eric-hoffer.jpg">
-					<section id="unlearn">
+					<section id="quote">
 						<blockquote>
-							"In a time of drastic change, it is the learners who inherit the future. The learned find themselves equipped to live in a world that no longer exists". –Eric Hoffer
+							"In a time of drastic change, it is the learners who inherit the future. The learned find themselves equipped to live in a world that no longer exists" –- Eric Hoffer
 						</blockquote>
 					</section>
 				</section>
