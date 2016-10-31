@@ -275,27 +275,12 @@ ll docker/registry/v2/repositories/go-demo</code></pre>
     docker-machine create -d virtualbox swarm-$i
 done</code></pre>
 					</section>
-					<section id="swarm-visualizer">
-						<h3>Docker Swarm</h3>
-						<h1>Visualizer</h1>
-						<hr/>
-                        <pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
-
-docker run --name visualizer -d \
-    -p 8083:8083 \
-    -e HOST=$(docker-machine ip swarm-1) \
-    -e PORT=8083 \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    manomarks/visualizer
-
-open http://$(docker-machine ip swarm-1):8083</code></pre>
-					</section>
 					<section id="swarm-provisioning">
 						<h1>Provisioning</h1>
 						<hr/>
 						<pre><code data-trim contenteditable>docker swarm init --advertise-addr $(docker-machine ip swarm-1)
 
-TOKEN=$(docker swarm join-token -q worker)
+TOKEN=$(docker swarm join-token -q manager)
 
 for i in 2 3; do
     eval $(docker-machine env swarm-$i)
@@ -306,9 +291,19 @@ for i in 2 3; do
 done</code></pre>
 					</section>
 					<section id="swarm-info">
+						<h3>Docker Swarm</h3>
 						<h1>Cluster Info</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
+                        <pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
+
+docker service create \
+  --name=visualizer \
+  --publish=8083:8080/tcp \
+  --constraint=node.role==manager \
+  --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+  manomarks/visualizer
+
+open http://$(docker-machine ip swarm-1):8083
 
 docker node ls</code></pre>
 					</section>
@@ -560,12 +555,12 @@ docker swarm init \
                     <section id="jenkins-agent-visualizer">
                         <h1>Visualizer</h1>
                         <hr/>
-                        <pre><code data-trim contenteditable>docker run --name visualizer -d \
-    -p 8083:8083 \
-    -e HOST=$(docker-machine ip swarm-test-1) \
-    -e PORT=8083 \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    manomarks/visualizer
+                        <pre><code data-trim contenteditable>docker service create \
+  --name=visualizer \
+  --publish=8083:8080/tcp \
+  --constraint=node.role==manager \
+  --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+  manomarks/visualizer
 
 open http://$(docker-machine ip swarm-test-1):8083</code></pre>
                     </section>
@@ -595,7 +590,7 @@ docker-machine ssh swarm-test-2
 
 sudo mkdir -p /workspace && sudo chmod 777 /workspace && exit
 
-TOKEN=$(docker swarm join-token -q worker)
+TOKEN=$(docker swarm join-token -q manager)
 
 eval $(docker-machine env swarm-test-2)
 
@@ -615,9 +610,7 @@ open http://$(docker-machine ip swarm-1):8082/jenkins/computer</code></pre>
 					<section id="jenkins-registry">
 						<h1>Registry Service</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-test-1)
-
-docker service create --name registry -p 5000:5000 \
+						<pre><code data-trim contenteditable>docker service create --name registry -p 5000:5000 \
     --mount "type=bind,source=$PWD,target=/var/lib/registry" \
     --reserve-memory 100m registry
 
@@ -719,8 +712,14 @@ eval $(docker-machine env swarm-1)
 
 docker service ps -f desired-state=running go-demo</code></pre>
 					</section>
+					<section data-background="../img/background/cleanup.jpg">
+						<h1>Cleanup</h1>
+                        <pre><code data-trim contenteditable>docker service rm jenkins
+
+docker-machine rm -f swarm-test-1 swarm-test-2</code></pre>
+					</section>
 				</section>
-				<section data-background="../img/background/logs.png">
+				<section data-background="../img/background/monitoring.jpg">
 					<section id="monitoring">
 						<h1>Monitoring</h1>
 						<hr/>
@@ -730,7 +729,7 @@ docker service ps -f desired-state=running go-demo</code></pre>
 							<li class="fragment">Monitoring many services in a cluster <label class="fragment">requires a whole new way of thinking</label></li>
 						</ul>
 					</section>
-					<section id="what">
+					<section id="monitoring-what">
 						<h3>Monitoring</h3>
 						<h1>What Do We Need?</h1>
 						<hr/>
@@ -740,33 +739,16 @@ docker service ps -f desired-state=running go-demo</code></pre>
 							<li class="fragment">hardware utilization</li>
 							<li class="fragment">health checking</li>
 							<li class="fragment">network traffic</li>
+							<li class="fragment">containers</li>
 							<li class="fragment">...</li>
 						</ul>
 					</section>
-					<section id="what-2">
+					<section id="monitoring-what-2">
 						<h3>Monitoring</h3>
 						<h1>What Do We Need?</h1>
 						<hr/>
 						<h3 class="fragment">Decentralized data collectors</h3>
 						<h3 class="fragment">and centralized data storage</h3>
-					</section>
-				</section>
-				<section data-background="../img/background/logs.png">
-					<section id="logging">
-						<h1>Logging</h1>
-						<hr/>
-						<ul>
-							<li class="fragment">A way to parse data and send them to a central database in near real-time.</li>
-							<li class="fragment">The capacity of the database to handle near real-time data querying and analytics.</li>
-							<li class="fragment">A visual representation of the data through filtered tables, dashboards, and so on.</li>
-						</ul>
-					</section>
-					<section id="logging-tools">
-						<h3>Logging</h3>
-						<h1>Tools</h1>
-						<hr/>
-						<img src="../img/products/elk.png" class="fragment"/>
-						<h3 class="fragment">... or one of many other options</h3>
 					</section>
 				</section>
 				<section data-background="../img/background/manual.jpg">
@@ -780,19 +762,31 @@ docker service ps -f desired-state=running go-demo</code></pre>
 					<section id="es-service">
 						<h1>Elastic Search Service</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
+						<pre><code data-trim contenteditable>docker-machine create -d virtualbox swarm-5
 
-docker network create --driver overlay elk
+TOKEN_WORKER=$(docker swarm join-token -q worker)
 
-docker service create --name elasticsearch --network elk \
-  -p 9200:9200 --reserve-memory 500m elasticsearch:2.4
+eval $(docker-machine env swarm-5)
+
+docker swarm join --token $TOKEN_WORKER \
+  --advertise-addr $(docker-machine ip swarm-5) \
+  $(docker-machine ip swarm-1):2377
+
+eval $(docker-machine env swarm-1)
+
+docker service create --name elasticsearch --network proxy \
+  -p 9200:9200 --reserve-memory 250m elasticsearch:2.4
 
 docker service ps elasticsearch</code></pre>
 					</section>
 					<section id="logstash-service">
 						<h1>Log Stash Service</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>mkdir -p docker/logstash
+						<pre><code data-trim contenteditable>cd ..
+
+git clone https://github.com/vfarcic/cloud-provisioning.git
+
+cd cloud-provisioning && mkdir -p docker/logstash
 
 cp conf/logstash.conf docker/logstash/logstash.conf
 
@@ -800,13 +794,23 @@ cat docker/logstash/logstash.conf
 
 docker service create --name logstash \
   --mount "type=bind,source=$PWD/docker/logstash,target=/conf" \
-  --network elk -e LOGSPOUT=ignore --reserve-memory 100m \
+  --network proxy -e LOGSPOUT=ignore --reserve-memory 100m \
   logstash:2.4 logstash -f /conf/logstash.conf
 
 docker service ps logstash</code></pre>
 					</section>
-					<section id="logstash-test">
-						<h1>Testing Log Stash</h1>
+					<section id="logspout-service">
+						<h1>Log Spout Service</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker service create --name logspout \
+  --network proxy --mode global -e SYSLOG_FORMAT=rfc3164 \
+  --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
+  gliderlabs/logspout syslog://logstash:51415
+
+docker service ps logspout</code></pre>
+					</section>
+					<section id="logspout-test">
+						<h1>Testing Log Spout</h1>
 						<hr/>
 						<pre><code data-trim contenteditable>LOGSTASH_NODE=$(docker service ps logstash | tail +2 | awk '{print $4}')
 
@@ -816,52 +820,13 @@ LOGSTASH_ID=$(docker ps -q --filter "ancestor=logstash:2.4")
 
 docker logs $LOGSTASH_ID</code></pre>
 					</section>
-					<section id="logstash-test-2">
-						<h1>Testing Log Stash</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
-
-docker service create --name logger-test --network elk \
-  --restart-condition none \
-  debian logger -n logstash -P 51415 hello world
-
-eval $(docker-machine env $LOGSTASH_NODE)
-
-docker logs $LOGSTASH_ID
-
-eval $(docker-machine env swarm-1)
-
-docker service rm logger-test</code></pre>
-					</section>
-					<section id="logspout-service">
-						<h1>Log Spout Service</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service create --name logspout \
-  --network elk --mode global -e SYSLOG_FORMAT=rfc3164 \
-  --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
-  gliderlabs/logspout syslog://logstash:51415
-
-docker service ps logspout</code></pre>
-					</section>
-					<section id="logspout-test">
-						<h1>Testing Log Spout</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service create --name registry \
-  -p 5000:5000 --reserve-memory 100m \
-  --mount "type=bind,source=$PWD,target=/var/lib/registry" \
-  registry
-
-docker service ps registry
-
-eval $(docker-machine env $LOGSTASH_NODE)
-
-docker logs $LOGSTASH_ID</code></pre>
-					</section>
 					<section id="kibana-service">
 						<h1>Kibana Service</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>docker service create --name kibana \
-  --network elk --network proxy --reserve-memory 50m \
+						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
+
+docker service create --name kibana \
+  --network proxy --reserve-memory 50m \
   -e ELASTICSEARCH_URL=http://elasticsearch:9200 \
   --label com.df.notify=true --label com.df.distribute=true \
   --label com.df.servicePath=/app/kibana,/bundles,/elasticsearch \
@@ -871,6 +836,115 @@ docker logs $LOGSTASH_ID</code></pre>
 docker service ps kibana
 
 open http://$(docker-machine ip swarm-1)/app/kibana</code></pre>
+					</section>
+					<section id="logging-cleanup">
+						<h1>Cleanup</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker service rm kibana</code></pre>
+					</section>
+				</section>
+				<section data-background="../img/background/manual.jpg">
+					<section id="metrics-demo">
+						<h1>Hands-On Time</h1>
+						<hr/>
+						<h2 class="fragment">Expose metrics from</h2>
+						<h2 class="fragment">hardware,</h2>
+						<h2 class="fragment">containers,</h2>
+						<h2 class="fragment">and the proxy</h2>
+					</section>
+					<section id="metrics-node">
+						<h1>Node Exporter</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
+
+docker service create --name node-exporter \
+  --mode global --network proxy \
+  --mount "type=bind,source=/proc,target=/host/proc" \
+  --mount "type=bind,source=/sys,target=/host/sys" \
+  --mount "type=bind,source=/,target=/rootfs" \
+  prom/node-exporter:0.12.0 -collector.procfs /host/proc -collector.sysfs /host/proc -collector.filesystem.ignored-mount-points "^/(sys|proc|dev|host|etc)($|/)"
+
+docker service ps node-exporter
+
+UTIL_ID=$(docker ps -q --filter label=com.docker.swarm.service.name=util)
+
+docker exec -it $UTIL_ID apk add --update curl
+
+docker exec -it $UTIL_ID curl http://node-exporter:9100/metrics</code></pre>
+					</section>
+					<section id="metrics-container">
+						<h1>Container Exporter</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker service create --name cadvisor \
+  --network proxy --mode global \
+  --mount "type=bind,source=/,target=/rootfs" \
+  --mount "type=bind,source=/var/run,target=/var/run" \
+  --mount "type=bind,source=/sys,target=/sys" \
+  --mount "type=bind,source=/var/lib/docker,target=/var/lib/docker" \
+  google/cadvisor:v0.24.1
+
+docker service ps cadvisor
+
+docker exec -it $UTIL_ID curl http://cadvisor:8080/metrics</code></pre>
+					</section>
+					<section id="metrics-proxy">
+						<h1>Proxy Exporter</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker service create --name proxy-exporter \
+  --network proxy \
+  prom/haproxy-exporter:v0.7.1 \
+  -haproxy.scrape-uri="http://admin:admin@proxy/admin?stats;csv"
+
+docker service ps proxy-exporter
+
+docker exec -it $UTIL_ID curl http://proxy-exporter:9101/metrics</code></pre>
+					</section>
+				</section>
+				<section data-background="../img/background/manual.jpg">
+					<section id="monitoring-demo">
+						<h1>Hands-On Time</h1>
+						<hr/>
+						<h2 class="fragment">Execute ad-hoc queries</h2>
+						<h2 class="fragment">and create dashboards</h2>
+					</section>
+					<section id="monitoring-prometheus">
+						<h1>Prometheus</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>cat conf/prometheus.yml
+
+docker service create --name prometheus \
+  --network proxy -p 9090:9090 \
+  --mount "type=bind,source=$PWD/conf/prometheus.yml,target=/etc/prometheus/prometheus.yml" \
+  prom/prometheus:v1.2.1
+
+docker service ps prometheus
+
+open http://$(docker-machine ip swarm-1):9090
+
+# rate(haproxy_frontend_http_requests_total{job="proxy"}[1m])
+
+for i in {1..20}; do
+  sleep 0.$[ (((($RANDOM % 10) + 1) * 100)) ]s && curl $(docker-machine ip swarm-1)/demo/hello
+done</code></pre>
+					</section>
+					<section id="monitoring-grafana">
+						<h1>Grafana</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker service create --name grafana \
+  --network proxy -p 3000:3000 grafana/grafana:3.1.1
+
+docker service ps grafana
+
+open http://$(docker-machine ip swarm-1):3000
+
+# DS: http://prometheus:9090
+# DS: http://elasticsearch:9200
+
+open https://grafana.net/dashboards/704
+
+open https://grafana.net/dashboards/405
+
+open https://grafana.net/dashboards/609</code></pre>
 					</section>
 				</section>
 				<section data-background="../img/people/eric-hoffer.jpg">

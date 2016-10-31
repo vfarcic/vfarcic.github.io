@@ -24,7 +24,7 @@ docker pull registry
 
 docker pull alpine
 
-for i in 1 2 3 4; do
+for i in 1 2 3 4 5; do
 
     set +e
 
@@ -38,7 +38,7 @@ for i in 1 2 3 4; do
 
     docker pull jenkins:alpine
 
-    docker pull mongo
+    docker pull mongo:3.2.10
 
     docker pull vfarcic/go-demo
 
@@ -53,6 +53,18 @@ for i in 1 2 3 4; do
     docker pull alpine
 
     docker pull manomarks/visualizer
+
+    docker pull elasticsearch:2.4
+
+    docker pull prom/node-exporter:0.12.0
+
+    docker pull google/cadvisor:v0.24.1
+
+    docker pull prom/haproxy-exporter:v0.7.1
+
+    docker pull prom/prometheus:v1.2.1
+
+    docker pull grafana/grafana:3.1.1
 
 done
 
