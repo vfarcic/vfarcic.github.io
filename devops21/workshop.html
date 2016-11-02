@@ -278,7 +278,9 @@ done</code></pre>
 					<section id="swarm-provisioning">
 						<h1>Provisioning</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>docker swarm init --advertise-addr $(docker-machine ip swarm-1)
+						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
+
+docker swarm init --advertise-addr $(docker-machine ip swarm-1)
 
 TOKEN=$(docker swarm join-token -q manager)
 
@@ -294,9 +296,7 @@ done</code></pre>
 						<h3>Docker Swarm</h3>
 						<h1>Cluster Info</h1>
 						<hr/>
-                        <pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
-
-docker service create \
+                        <pre><code data-trim contenteditable>docker service create \
   --name=visualizer \
   --publish=8083:8080/tcp \
   --constraint=node.role==manager \
