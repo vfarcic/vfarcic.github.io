@@ -13,3 +13,30 @@
 [ ] Prevent any type of scripts from running in Pipeline (Daniel)
 [ ] Display BlueOcean (Erik)
 [ ] Every team has their own master. They maintain it, they are responsible (Daniel)
+[ ] (Aurius)
+
+GitHub features
+Use Maven
+Could not make releases from branches
+Using Maven STM
+Almost switched to Travis
+
+
+Jenkins introduced streams
+Interested in streams integration with GitHub
+How to make release process work with Streams?
+Make a special tag on GitHub and make a release?
+Trigger release by using Streams?
+Integrate with Gradle as well?
+
+Will send Git repo and XML file
+
+Maintains his own Jenkins
+
+There's too much configuration
+Even LTS releases are not stable
+How do you manage multiple projects/teams with a single server
+
+Provide references
+
+Provide some basic stuff as well
