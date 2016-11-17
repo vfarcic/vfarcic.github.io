@@ -185,7 +185,7 @@ docker service ps jenkins-oc</code></pre>
 						<pre><code data-trim contenteditable>for i in 1 2; do
   mkdir -p docker/jenkins-$i
 
-  docker service create --name jenkins-$i
+  docker service create --name jenkins-$i \
     --network jenkins -p 808$i:8080 -p 5000$i:50000 \
     --constraint 'node.labels.env == prod' --reserve-memory 300m \
     --mount "type=bind,source=$PWD/docker/jenkins-$i,target=/var/jenkins_home" \
