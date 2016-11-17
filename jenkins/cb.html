@@ -175,7 +175,7 @@ docker service create --name jenkins-oc \
   --network jenkins -p 8090:8080 -p 50000:50000 \
   --constraint 'node.labels.env == prod' --reserve-memory 300m \
   --mount "type=bind,source=$PWD/docker/jenkins-oc,target=/var/jenkins_home" \
-  cloudbees/jenkins-operations-center
+  cloudbees/jenkins-operations-center:latest
 
 docker service ps jenkins-oc</code></pre>
 					</section>
@@ -189,31 +189,46 @@ docker service ps jenkins-oc</code></pre>
     --network jenkins -p 808$i:8080 -p 5000$i:50000 \
     --constraint 'node.labels.env == prod' --reserve-memory 300m \
     --mount "type=bind,source=$PWD/docker/jenkins-$i,target=/var/jenkins_home" \
-    cloudbees/jenkins-enterprise
+    cloudbees/jenkins-enterprise:latest
 done
 
 docker service ps jenkins-1
 
 docker service ps jenkins-2</code></pre>
 					</section>
-					<section id="jenkins-oc-register">
-						<h1>Registering in CJOC</h1>
+					<section id="jenkins-oc-setup">
+						<h1>Setting Up CJOC</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>cat docker/jenkins-oc/secrets/initialAdminPassword
+						<pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8090
 
-open http://$(docker-machine ip swarm-1):8090
+cat docker/jenkins-oc/secrets/initialAdminPassword # CJOC password
 
 cat license-key.secret
 
 cat license-cert.secret
 
-echo http://$(docker-machine ip swarm-1):8081
+# Choose "Install Suggested Plugins"
 
-cat docker/jenkins-1/secrets/initialAdminPassword
+# Use admin/admin as user/pass</code></pre>
+					</section>
+					<section id="jenkins-oc-masters">
+						<h1>Setting Up CJOC</h1>
+						<hr/>
+						<pre><code data-trim contenteditable># Create a new "Client Master" job "jenkins-1"
+
+echo http://$(docker-machine ip swarm-1):8081 # Master address
+
+cat docker/jenkins-1/secrets/initialAdminPassword # Master password
+
+# Install suggested plugins
+
+# Create a new "Client Master" job "jenkins-2"
 
 echo http://$(docker-machine ip swarm-1):8082
 
-cat docker/jenkins-2/secrets/initialAdminPassword</code></pre>
+cat docker/jenkins-2/secrets/initialAdminPassword # Master password
+
+# Install suggested plugins</code></pre>
 					</section>
 					<section id="jenkins-oc-plugins">
 						<h1>installing Plugins</h1>
@@ -222,10 +237,10 @@ cat docker/jenkins-2/secrets/initialAdminPassword</code></pre>
 							<li>Create new <code>Cluster Operations</code> job</li>
 							<li><code>Add Operation</code> > <code>Masters</code></li>
 							<li>Check <code>From Operations Center Root</code></li>
-							<li><code>Add Step</code> > <code>Install Plugin</code></li>
+							<li><code>Add Step</code> &gt; <code>Install Plugin</code></li>
 							<li>Plugin ID = <code>swarm</code></li>
 							<li>Version = <code>2.2</code></li>
-							<li><code>Save</code> > <code>Run</code></li>
+							<li><code>Save</code> &gt; <code>Run</code></li>
 						</ul>
 					</section>
 					<section id="jenkins-agents-1">
@@ -249,11 +264,11 @@ export PASSWORD=admin</code></pre>
 						<pre><code data-trim contenteditable>docker service create --name jenkins-agent \
   --mode global --constraint 'node.labels.env == test' \
   --network jenkins \
-  -e COMMAND_OPTIONS="-master http://jenkins-1:8080 -username $USER -password $PASSWORD -labels 'docker' -executors 5" \
+  -e COMMAND_OPTIONS="-master http://jenkins-1:8081 -username $USER -password $PASSWORD -labels 'docker' -executors 5" \
   --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
   --mount "type=bind,source=$HOME/.docker/machine/machines,target=/machines" \
   --mount "type=bind,source=/workspace,target=/workspace" \
-  vfarcic/jenkins-swarm-agent
+  vfarcic/jenkins-swarm-agent:latest
 
 open http://$(docker-machine ip swarm-1):8081/computer/
 
