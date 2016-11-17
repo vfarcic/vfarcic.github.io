@@ -142,13 +142,10 @@
 				</section>
 				<section data-background="../img/background/manual.jpg">
 					<section id="jenkins-demo">
-						<h1>Hands-On Time</h1>
+						<h1>Running Jenkins</h1>
+						<h1>Inside a</h1>
+						<h1>Swarm Cluster</h1>
 						<hr/>
-						<div class="fragment">
-							<h3>Running Jenkins</h3>
-							<h3>Inside a</h3>
-							<h3>Swarm Cluster</h3>
-						</div>
 					</section>
 					<section id="jenkins-cluster">
 						<h1>Creating a Cluster</h1>
@@ -170,7 +167,9 @@ curl -i $(docker-machine ip swarm-1)/demo/hello</code></pre>
 					<section id="jenkins-oc-services">
 						<h1>Creating CJOC Service</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>mkdir -p docker/jenkins-oc
+						<pre><code data-trim contenteditable>docker network create --driver overlay jenkins
+
+mkdir -p docker/jenkins-oc
 
 docker service create --name jenkins-oc \
   --network jenkins -p 8090:8080 -p 50000:50000 \
@@ -183,9 +182,7 @@ docker service ps jenkins-oc</code></pre>
 					<section id="jenkins-services">
 						<h1>Creating Jenkins Services</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>docker network create --driver overlay jenkins
-
-for i in 1 2; do
+						<pre><code data-trim contenteditable>for i in 1 2; do
   mkdir -p docker/jenkins-$i
 
   docker service create --name jenkins-$i
@@ -202,21 +199,21 @@ docker service ps jenkins-2</code></pre>
 					<section id="jenkins-oc-register">
 						<h1>Registering in CJOC</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>cat docker/jenkins-oc/secrets/initialAdminPassword | pbcopy
+						<pre><code data-trim contenteditable>cat docker/jenkins-oc/secrets/initialAdminPassword
 
 open http://$(docker-machine ip swarm-1):8090
 
-cat license-key.secret | pbcopy
+cat license-key.secret
 
-cat license-cert.secret | pbcopy
+cat license-cert.secret
 
-echo http://$(docker-machine ip swarm-1):8081 | pbcopy
+echo http://$(docker-machine ip swarm-1):8081
 
-cat docker/jenkins-1/secrets/initialAdminPassword | pbcopy
+cat docker/jenkins-1/secrets/initialAdminPassword
 
-echo http://$(docker-machine ip swarm-1):8082 | pbcopy
+echo http://$(docker-machine ip swarm-1):8082
 
-cat docker/jenkins-2/secrets/initialAdminPassword | pbcopy</code></pre>
+cat docker/jenkins-2/secrets/initialAdminPassword</code></pre>
 					</section>
 					<section id="jenkins-oc-plugins">
 						<h1>installing Plugins</h1>
@@ -265,7 +262,7 @@ docker service ps jenkins-agent</code></pre>
 					<section id="jenkins-env">
 						<h1>DRY</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>docker-machine ip swarm-1 | pbcopy
+						<pre><code data-trim contenteditable>docker-machine ip swarm-1
 
 open http://$(docker-machine ip swarm-1):8081/configure</code></pre>
 					</section>
@@ -376,7 +373,7 @@ open https://github.com/vfarcic/go-demo/blob/artifactory/Jenkinsfile
 
 open http://$(docker-machine ip swarm-1):8081/configure
 
-echo http://$(docker-machine ip swarm-1):8091/artifactory | pbcopy</code></pre>
+echo http://$(docker-machine ip swarm-1):8091/artifactory</code></pre>
 					</section>
 					<section id="jenkinsfile-artifactory-run">
 						<h1>Running</h1>

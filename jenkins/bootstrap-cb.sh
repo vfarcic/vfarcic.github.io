@@ -50,7 +50,11 @@ for i in 1 2 3 4 5; do
     done
 done
 
+set +e
+
 git clone https://github.com/vfarcic/go-demo.git
+
+set -e
 
 for i in 4 5; do
     eval $(docker-machine env swarm-$i)
