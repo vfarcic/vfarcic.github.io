@@ -140,12 +140,21 @@
 						<h4 class="fragment">45 minutes?</h4>
 					</section>
 				</section>
+				<section data-background="../img/background/jenkins.png">
+					<section id="cjoc-masters">
+						<h1>CJOC</h1>
+						<hr/>
+						<h2 class="fragment">A central place to manage all masters</h2>
+						<h2 class="fragment">... because there might be too many</h2>
+					</section>
+				</section>
 				<section data-background="../img/background/manual.jpg">
 					<section id="jenkins-demo">
-						<h1>Running Jenkins</h1>
-						<h1>Inside a</h1>
-						<h1>Swarm Cluster</h1>
+						<h1>Hands-On Time</h1>
 						<hr/>
+						<div class="fragment">
+							<h3>Setting Up CJOC and masters</h3>
+						</div>
 					</section>
 					<section id="jenkins-cluster">
 						<h1>Creating a Cluster</h1>
@@ -207,9 +216,9 @@ cat license-key.secret
 
 cat license-cert.secret
 
-# Choose "Install Suggested Plugins"
+# Use admin/admin as user/pass
 
-# Use admin/admin as user/pass</code></pre>
+# Choose "Install Suggested Plugins"</code></pre>
 					</section>
 					<section id="jenkins-oc-masters">
 						<h1>Setting Up CJOC</h1>
@@ -264,7 +273,7 @@ export PASSWORD=admin</code></pre>
 						<pre><code data-trim contenteditable>docker service create --name jenkins-agent \
   --mode global --constraint 'node.labels.env == test' \
   --network jenkins \
-  -e COMMAND_OPTIONS="-master http://jenkins-1:8081 -username $USER -password $PASSWORD -labels 'docker' -executors 5" \
+  -e COMMAND_OPTIONS="-master http://jenkins-1:8080 -username $USER -password $PASSWORD -labels 'docker' -executors 5" \
   --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
   --mount "type=bind,source=$HOME/.docker/machine/machines,target=/machines" \
   --mount "type=bind,source=/workspace,target=/workspace" \
@@ -277,14 +286,25 @@ docker service ps jenkins-agent</code></pre>
 					<section id="jenkins-env">
 						<h1>DRY</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>docker-machine ip swarm-1
+						<pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8081/configure
 
-open http://$(docker-machine ip swarm-1):8081/configure</code></pre>
+docker-machine ip swarm-1 # Env. var PROD_ID
+
+# PROD_NAME = swarm-1</code></pre>
 					</section>
 					<section id="prod-services">
 						<h1>Production Services</h1>
 						<hr/>
 						<pre><code data-trim contenteditable>docker service ps go-demo</code></pre>
+					</section>
+					<section id="jenkins-pipeline-create">
+						<h1>Jenkins Pipeline</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8081/newJob
+
+# Name it "go-demo"
+
+# Select "Pipeline" as job type</code></pre>
 					</section>
 					<section id="jenkins-pipeline">
 						<h1>Jenkins Pipeline</h1>
@@ -337,14 +357,6 @@ open http://$(docker-machine ip swarm-1):8081/configure</code></pre>
 						<pre><code data-trim contenteditable>docker service ps go-demo</code></pre>
 					</section>
 				</section>
-				<section data-background="../img/background/the_end.jpg">
-					<section id="the-end-almost-again">
-						<h1>The End</h1>
-						<hr/>
-						<h1 class="fragment">I did it!</h1>
-						<h1 class="fragment">Do I have more time?</h1>
-					</section>
-				</section>
 				<section data-background="../img/background/jenkins.png">
 					<section id="jenkinsfile">
 						<h1>Jenkinsfile</h1>
@@ -369,36 +381,216 @@ open http://$(docker-machine ip swarm-1):8081/configure</code></pre>
 
 open https://github.com/vfarcic/go-demo/blob/master/Jenkinsfile
 
-docker service ps go-demo</code></pre>
+open http://$(docker-machine ip swarm-1):8081/newJob
+
+# Name it "go-demo-mb"
+
+# Select "Multibranch Pipeline" as job type
+
+# Add Source > GitHub
+
+# Owner = vfarcic
+
+# Repository = go-demo</code></pre>
 					</section>
-					<section id="jenkinsfile-artifactory">
-						<h1>Adding Artifactory</h1>
+				</section>
+				<section data-background="../img/background/jenkins.png">
+					<section id="artifactory">
+						<h1>Artifactory</h1>
+						<hr/>
+						<h2 class="fragment">In case you need to store stuff...</h2>
+					</section>
+				</section>
+				<section data-background="../img/background/manual.jpg">
+					<section id="artifactory-demo">
+						<h1>Hands-On Time</h1>
+						<hr/>
+						<div class="fragment">
+							<h3>Storing artifacts in Artifactory</h3>
+						</div>
+					</section>
+					<section id="artifactory-service">
+						<h1>Artifactory Service</h1>
 						<hr/>
 						<pre><code data-trim contenteditable>docker service create --name artifactory \
   --constraint 'node.labels.env == prod' -p 8091:8081 \
-  docker.bintray.io/jfrog/artifactory-oss
+  docker.bintray.io/jfrog/artifactory-oss:latest
 
 docker service ps artifactory
 
 open http://$(docker-machine ip swarm-1):8091/artifactory/webapp/#/admin/repository/local/new
 
-open http://$(docker-machine ip swarm-1):8081/pluginManager/available
+# Use admin/password as user/pass
 
-open https://github.com/vfarcic/go-demo/blob/artifactory/Jenkinsfile
+# Add "Generic" repository called "go-demo"</code></pre>
+					</section>
+					<section id="jenkins-artifactory">
+						<h1>Artifactory in Jenkins</h1>
+						<hr/>
+					<pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8081/pluginManager/available
+
+# Install "Artifactory Plugin"
 
 open http://$(docker-machine ip swarm-1):8081/configure
 
-echo http://$(docker-machine ip swarm-1):8091/artifactory</code></pre>
+# Artifactory servers > Add
+
+# Server ID = artifactory-1
+
+# Username/Password = admin/password
+
+echo http://$(docker-machine ip swarm-1):8091/artifactory # URL</code></pre>
 					</section>
 					<section id="jenkinsfile-artifactory-run">
 						<h1>Running</h1>
 						<hr/>
-							<pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8091/artifactory/webapp/#/artifacts/browse/tree/General/go-demo</code></pre>
+							<pre><code data-trim contenteditable>open https://github.com/vfarcic/go-demo/blob/artifactory/Jenkinsfile
+
+open http://$(docker-machine ip swarm-1):8081/job/go-demo-mb/job/artifactory/
+
+open http://$(docker-machine ip swarm-1):8091/artifactory/webapp/#/artifacts/browse/tree/General/go-demo</code></pre>
 					</section>
 				</section>
+				<section data-background="../img/background/jenkins.png">
+					<section id="rbac">
+						<h1>RBAC</h1>
+						<hr/>
+						<h2 class="fragment">When you have trust issues...</h2>
+					</section>
+				</section>
+				<section data-background="../img/background/manual.jpg">
+					<section id="rbac-demo">
+						<h1>Hands-On Time</h1>
+						<hr/>
+						<div class="fragment">
+							<h3>Securing Jenkins with RBAC</h3>
+						</div>
+					</section>
+					<section id="rbac-setup">
+						<h1>RBAC Setup</h1>
+						<hr/>
+							<pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8081/pluginManager/available
+
+# Install the "Mock Security Realm" plugin
+
+open http://$(docker-machine ip swarm-1):8081/configureSecurity
+
+# Select "Enable Security"
+
+# Select "Mock Security Realm"
+
+# Specify "god admin", "admin admin" and "developer devs" as users and groups
+
+# Select "Role-based matrix authorization strategy"</code></pre>
+					</section>
+					<section id="rbac-roles">
+						<h1>RBAC Setup</h1>
+						<hr/>
+							<pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8081/plugin/nectar-rbac/manage/
+# Add "administrator" role and select all permissions
+# Add "developer" role and select "Overall Read", "Job Build & Read" permissions
+open http://$(docker-machine ip swarm-1):8081/groups/newGroup
+# Type "admins" as "Group name"
+# Select "Granted" to "administrator"
+# Click "Add user/group" and type "admin"
+# Click "Back to Groups" &gt; "New Group"
+# Type "developers" as "Group name"
+# Select "Granted" to "developer"
+# Click "Add user/group" and type "dev"
+open http://$(docker-machine ip swarm-1):8081/plugin/nectar-rbac/manage/
+# Deselect all permissions to "authenticated"
+# Explore logging in as "dev" or "admin"</code></pre>
+					</section>
+				</section>
+				<section data-background="../img/background/jenkins.png">
+					<section id="folders">
+						<h1>Folders</h1>
+						<hr/>
+						<h2 class="fragment">Things should be organized...</h2>
+					</section>
+				</section>
+				<section data-background="../img/background/manual.jpg">
+					<section id="folders-demo">
+						<h1>Hands-On Time</h1>
+						<hr/>
+						<div class="fragment">
+							<h3>Organizing Jenkins jobs through folders</h3>
+						</div>
+					</section>
+					<section id="folders-setup">
+						<h1>Folders Setup</h1>
+						<hr/>
+							<pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8081
+
+# Click "New Item"
+
+# Name if "my-folder" and select "Folder" as type
+
+open http://$(docker-machine ip swarm-1):8081/job/go-demo/
+
+# Click "Move/Copy/Promote", write "/my-folder" as "Destination", click "Move"</code></pre>
+					</section>
+				</section>
+				<section data-background="../img/background/jenkins.png">
+					<section id="input">
+						<h1>Input</h1>
+						<hr/>
+						<h2 class="fragment">Because you have trust issues...</h2>
+					</section>
+				</section>
+				<section data-background="../img/background/manual.jpg">
+					<section id="input-demo">
+						<h1>Hands-On Time</h1>
+						<hr/>
+						<div class="fragment">
+							<h3>Waiting for a confirmation</h3>
+						</div>
+					</section>
+					<section id="input-setup">
+						<h1>Input step in a pipeline</h1>
+						<hr/>
+							<pre><code data-trim contenteditable>open https://github.com/vfarcic/go-demo/blob/trust-issues/Jenkinsfile</code></pre>
+					</section>
+				</section>
+				<section data-background="../img/background/jenkins.png">
+					<section id="notifications">
+						<h1>Notifications</h1>
+						<hr/>
+						<h2 class="fragment">To stop you from doing something else...</h2>
+					</section>
+				</section>
+				<section data-background="../img/background/manual.jpg">
+					<section id="notifications-demo">
+						<h1>Hands-On Time</h1>
+						<hr/>
+						<div class="fragment">
+							<h3>Sending email on buil failure</h3>
+						</div>
+					</section>
+					<section id="notifications-setup">
+						<h1>SMTP Service</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker service create --name postfix --network jenkins -p 25:25 \
+    -e maildomain=mail.acme.com -e smtp_user=admin:admin \
+    catatnight/postfix:latest
+
+open http://$(docker-machine ip swarm-1):8081/configure
+
+# SMTP server = postfix
+# User Name / Password = admin/admin
+# SMTP Port = 25
+
+open https://github.com/vfarcic/go-demo/blob/notif/Jenkinsfile
+
+open http://$(docker-machine ip swarm-1):8081/job/go-demo-mb/job/notif/</code></pre>
+					</section>
+				</section>
+				<!--TODO: Manifest file (https://drive.google.com/drive/search?q=QCon%20presentation)-->
+				<!--TODO: Demonstration of release tagging with Nexus-->
+				<!--TODO: Best Practice for Pipeline Development-->
 				<section data-background="../img/background/best-practices.jpg">
-					<section id="best-practices">
-						<h1>Best Practices</h1>
+					<section id="jenkins-best-practices">
+						<h1>Jenkins Best Practices</h1>
 						<ul>
 							<li class="fragment">Always secure Jenkins</li>
 							<li class="fragment">Don't build on the master</li>
@@ -413,6 +605,20 @@ echo http://$(docker-machine ip swarm-1):8091/artifactory</code></pre>
 							<li class="fragment">Use Jenkinsfile</li>
 						</ul>
 					</section>
+                    <section id="pipeline-best-practices">
+                        <h1>Pipeline Best Practices</h1>
+                        <ul>
+                            <li class="fragment">Treat pipelines as code</li>
+                            <li class="fragment">Always work inside stages</li>
+                            <li class="fragment">Do all material work inside nodes</li>
+                            <li class="fragment">Run steps in parallel</li>
+                            <li class="fragment">Define nodes inside parallel steps</li>
+                            <li class="fragment">Don't use input inside a node</li>
+                            <li class="fragment">Wrap inputs with timeouts</li>
+                            <li class="fragment">Use <code>withEnv</code> instead global env. vars</li>
+                            <li class="fragment">Use <code>stash</code>/<code>unstash</code> to share files between nodes</li>
+                        </ul>
+                    </section>
 				</section>
 				<section data-background="../img/background/the_end.jpg">
 					<section id="the-end-blog">

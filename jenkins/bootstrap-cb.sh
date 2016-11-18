@@ -15,6 +15,7 @@ docker pull docker.bintray.io/jfrog/artifactory-oss
 docker pull vfarcic/jenkins-swarm-agent
 docker pull golang:1.6
 docker pull mongo:3.2.10
+docker pull catatnight/postfix:latest
 
 mkdir -p ~/docker/images
 
@@ -29,6 +30,7 @@ docker save docker.bintray.io/jfrog/artifactory-oss:latest -o ~/docker/images/ar
 docker save vfarcic/jenkins-swarm-agent:latest -o ~/docker/images/jenkins-swarm-agent.tar
 docker save golang:1.6 -o ~/docker/images/golang.tar
 docker save mongo:3.2.10 -o ~/docker/images/mongo_3_2_10.tar
+docker save catatnight/postfix:latest -o ~/docker/images/postfix.tar
 
 for i in 1 2 3 4 5; do
     docker-machine create -d virtualbox swarm-$i
@@ -44,7 +46,8 @@ for i in 1 2 3 4 5; do
         artifactory-oss \
         jenkins-swarm-agent \
         golang \
-        mongo_3_2_10
+        mongo_3_2_10 \
+        postfix
     do
         docker load -i $HOME/docker/images/$p.tar
     done
@@ -127,9 +130,9 @@ docker service create --name swarm-listener \
   vfarcic/docker-flow-swarm-listener
 
 docker service create -e MODE=swarm -e LISTENER_ADDRESS=swarm-listener \
+    --name proxy \
     --constraint 'node.labels.env == prod' \
     -p 80:80 -p 443:443 --network proxy --replicas 3 \
-    --name proxy \
     vfarcic/docker-flow-proxy
 
 docker node ls
