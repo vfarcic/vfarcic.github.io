@@ -9,8 +9,8 @@ docker pull mongo
 docker pull vfarcic/go-demo
 docker pull vfarcic/docker-flow-swarm-listener
 docker pull vfarcic/docker-flow-proxy
-docker pull cloudbees/jenkins-enterprise
-docker pull cloudbees/jenkins-operations-center
+docker pull cloudbees/jenkins-enterprise:2.7.21.1
+docker pull cloudbees/jenkins-operations-center:2.7.21.1
 docker pull docker.bintray.io/jfrog/artifactory-oss
 docker pull vfarcic/jenkins-swarm-agent
 docker pull golang:1.6
@@ -24,8 +24,8 @@ docker save mongo:latest -o ~/docker/images/mongo.tar
 docker save vfarcic/go-demo:latest -o ~/docker/images/go-demo.tar
 docker save vfarcic/docker-flow-swarm-listener:latest -o ~/docker/images/docker-flow-swarm-listener.tar
 docker save vfarcic/docker-flow-proxy:latest -o ~/docker/images/docker-flow-proxy.tar
-docker save cloudbees/jenkins-enterprise:latest -o ~/docker/images/jenkins-enterprise.tar
-docker save cloudbees/jenkins-operations-center:latest -o ~/docker/images/jenkins-operations-center.tar
+docker save cloudbees/jenkins-enterprise:2.7.21.1 -o ~/docker/images/jenkins-enterprise.tar
+docker save cloudbees/jenkins-operations-center:2.7.21.1 -o ~/docker/images/jenkins-operations-center.tar
 docker save docker.bintray.io/jfrog/artifactory-oss:latest -o ~/docker/images/artifactory-oss.tar
 docker save vfarcic/jenkins-swarm-agent:latest -o ~/docker/images/jenkins-swarm-agent.tar
 docker save golang:1.6 -o ~/docker/images/golang.tar

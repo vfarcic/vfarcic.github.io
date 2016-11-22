@@ -184,7 +184,7 @@ docker service create --name jenkins-oc \
   --network jenkins -p 8090:8080 -p 50000:50000 \
   --constraint 'node.labels.env == prod' --reserve-memory 300m \
   --mount "type=bind,source=$PWD/docker/jenkins-oc,target=/var/jenkins_home" \
-  cloudbees/jenkins-operations-center:latest
+  cloudbees/jenkins-operations-center:2.7.21.1
 
 docker service ps jenkins-oc</code></pre>
 					</section>
@@ -198,7 +198,7 @@ docker service ps jenkins-oc</code></pre>
     --network jenkins -p 808$i:8080 -p 5000$i:50000 \
     --constraint 'node.labels.env == prod' --reserve-memory 300m \
     --mount "type=bind,source=$PWD/docker/jenkins-$i,target=/var/jenkins_home" \
-    cloudbees/jenkins-enterprise:latest
+    cloudbees/jenkins-enterprise:2.7.21.1
 done
 
 docker service ps jenkins-1
@@ -392,6 +392,35 @@ open http://$(docker-machine ip swarm-1):8081/newJob
 # Owner = vfarcic
 
 # Repository = go-demo</code></pre>
+					</section>
+				</section>
+				<section data-background="../img/background/jenkins.png">
+					<section id="global-library">
+						<h1>Global Library</h1>
+						<hr/>
+						<h2 class="fragment">To not repeat yourself...</h2>
+					</section>
+				</section>
+				<section data-background="../img/background/manual.jpg">
+					<section id="global-library-demo">
+						<h1>Hands-On Time</h1>
+						<hr/>
+						<div class="fragment">
+							<h3>Defining global functions</h3>
+						</div>
+					</section>
+					<section id="global-library-job">
+						<h1>Global Functions</h1>
+						<hr/>
+					<pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8081/configure
+
+# Global Pipeline Libraries > Add
+# Name = my-lib
+# Default Version = master
+# Legacy SCM > Git
+# Repository URL = https://github.com/vfarcic/go-demo.git
+
+open http://$(docker-machine ip swarm-1):8081/job/go-demo-mb/job/global-lib/</code></pre>
 					</section>
 				</section>
 				<section data-background="../img/background/jenkins.png">
