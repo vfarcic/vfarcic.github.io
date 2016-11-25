@@ -18,9 +18,6 @@ We'll explore the practices and tools required to run Jenkins inside a Swarm clu
 
 The examples will set up Jenkins master in a way that it is fault tolerant and create a dynamic cluster for running agents. Once Jenkins is up and running, we'll use Pipeline to define a continuous deployment flow for one of the services.
 
-## Abstract: Monitoring
-
-
 # Learning Outcomes
 
 * DevOps: A cross-disciplinary community of practice dedicated to the study of building, evolving and operating rapidly-changing resilient systems at scale.
