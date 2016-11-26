@@ -11,7 +11,7 @@ General Introduction to Devops and its best practices from your point of view, a
 * Configuration management
 * Continues delivery
 * Continues deployment and Gray release/gated launch
-* Monitoring and feedback
+* Monitoring and feedback - [The DevOps 2.0 Toolkit: Monitoring Swarm Services](http://vfarcic.github.ui/devops21/monitoring.html)
 * Tool set/tool chain - [The DevOps 2.0 Toolkit](http://vfarcic.github.ui/devops20/index.html), [The DevOps 2.1 Toolkit](http://vfarcic.github.ui/devops21/index.html)
 * DevOps assessment model
 
