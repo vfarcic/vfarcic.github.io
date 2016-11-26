@@ -7,13 +7,13 @@
 General Introduction to Devops and its best practices from your point of view, and it will be nice if the following topics can be covered:
 
 * DevOps process
-* Micro services architecture in DevOps context.
-* Configuration management.
-* Continues delivery.
-* Continues deployment and Gray release/gated launch.
-* Monitoring and feedback.
-* Tool set/tool chain.
-* DevOps assessment model.
+* Micro services architecture in DevOps context
+* Configuration management
+* Continues delivery
+* Continues deployment and Gray release/gated launch
+* Monitoring and feedback
+* Tool set/tool chain - [The DevOps 2.0 Toolkit](http://vfarcic.github.ui/devops20/index.html), [The DevOps 2.1 Toolkit](http://vfarcic.github.ui/devops21/index.html)
+* DevOps assessment model
 
 ### Day 2
 
@@ -26,7 +26,7 @@ Deep dive on DevOps key practices on following topics
 
 ### Day 3
 
-Morning，meeting with Huawei senior executives，afternoon，Meeting with Huawei tool team to talk about the devops tool design.
+Morning，meeting with Huawei senior executives，afternoon，meeting with Huawei tool team to talk about the devops tool design.
 
 ### Day 4
 
@@ -40,7 +40,7 @@ Anything you particularly want to bring up, a topic propose by you.
 
 ### Process
 
-* What is the industry-wide development process for DevOps? Please divide into sub-microservices and single-mode development
+* What is the industry-wide development process for DevOps? Please divide into sub-microservices and single-mode development.
 
 ### Team
 
@@ -58,7 +58,7 @@ Anything you particularly want to bring up, a topic propose by you.
 
 ### Tool
 
-* What the recommendation for DevOps tools? What are its particular advantages?
+* What is the recommendation for DevOps tools? What are its particular advantages?
 
 ### Other
 

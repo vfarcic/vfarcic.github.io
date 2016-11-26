@@ -153,6 +153,97 @@
 						<h3 class="fragment">and then specialize</h3>
 					</section>
 				</section>
+				<section data-background="../img/background/manual.jpg">
+					<section id="swarm-demo">
+						<h1>Hands-On Time</h1>
+						<hr/>
+						<div class="fragment">
+							<h1>Setting Up</h1>
+							<h1>a Swarm Cluster</h1>
+							<h1>and</h1>
+							<h1>Running Services</h1>
+						</div>
+					</section>
+					<section id="swarm-nodes">
+						<h3>Docker Swarm</h3>
+						<h1>Nodes Setup</h1>
+						<hr/>
+                        <pre><code data-trim contenteditable>for i in 1 2 3 4 5; do
+  docker-machine create -d virtualbox swarm-$i
+done
+
+docker-machine ls</code></pre>
+					</section>
+					<section id="swarm-provisioning-managers">
+						<h1>Provisioning</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
+
+docker swarm init --advertise-addr $(docker-machine ip swarm-1)
+
+TOKEN=$(docker swarm join-token -q manager)
+
+for i in 2 3; do
+  eval $(docker-machine env swarm-$i)
+
+  docker swarm join --token $TOKEN \
+    --advertise-addr $(docker-machine ip swarm-$i) \
+    $(docker-machine ip swarm-1):2377
+done</code></pre>
+					</section>
+					<section id="swarm-provisioning-workers">
+						<h1>Provisioning</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>TOKEN=$(docker swarm join-token -q worker)
+
+for i in 4 5; do
+  eval $(docker-machine env swarm-$i)
+
+  docker swarm join --token $TOKEN \
+    --advertise-addr $(docker-machine ip swarm-$i) \
+    $(docker-machine ip swarm-1):2377
+done</code></pre>
+					</section>
+					<section id="swarm-network">
+						<h1>Networking</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker network create --driver overlay proxy
+
+docker network create --driver overlay go-demo
+
+docker network ls</code></pre>
+					</section>
+					<section id="swarm-service">
+						<h1>Service</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker service create --name go-demo-db \
+  --network go-demo --reserve-memory 100m mongo
+
+docker service create --name go-demo -e DB=go-demo-db \
+  --network go-demo --network proxy --reserve-memory 50m \
+  --label com.df.notify=true --label com.df.distribute=true \
+  --label com.df.servicePath=/demo --label com.df.port=8080 \
+  vfarcic/go-demo</code></pre>
+					</section>
+					<section id="swarm-proxy">
+						<h1>Reverse Proxy</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker service create --name swarm-listener \
+  --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
+  -e DF_NOTIF_CREATE_SERVICE_URL=http://proxy:8080/v1/docker-flow-proxy/reconfigure \
+  -e DF_NOTIF_REMOVE_SERVICE_URL=http://proxy:8080/v1/docker-flow-proxy/remove \
+  --constraint 'node.role==manager' --network proxy \
+  vfarcic/docker-flow-swarm-listener
+
+docker service create -e MODE=swarm -e LISTENER_ADDRESS=swarm-listener \
+  -p 80:80 -p 443:443 --network proxy --replicas 3 \
+  --name proxy vfarcic/docker-flow-proxy
+
+docker service ls
+
+curl -i $(docker-machine ip swarm-1)/demo/hello</code></pre>
+					</section>
+				</section>
 				<section data-background="../img/background/logs.png">
 					<section id="monitoring">
 						<h1>Monitoring</h1>
@@ -306,6 +397,136 @@ docker service ps kibana
 open http://$(docker-machine ip swarm-1)/app/kibana</code></pre>
 					</section>
 				</section>
+				<section data-background="../img/background/metrics.jpg">
+					<section id="metrics">
+						<h1>Metrics</h1>
+						<hr/>
+						<ul>
+							<li class="fragment">A way to get hardware and software metrics</li>
+							<li class="fragment">Without coupling with services</li>
+							<li class="fragment">A way to query metrics</li>
+							<li class="fragment">A way to visualize metrics</li>
+							<li class="fragment">A way to alert based on metrics</li>
+						</ul>
+					</section>
+					<section id="metrics-tools">
+						<h3>Tools</h3>
+						<hr/>
+						<div>
+							<img src="../img/products/nagios.png" class="fragment" style="width: 30%; height: 30%; background-color: white;"/>
+							<img src="../img/products/icinga.png" class="fragment" style="width: 30%; height: 30%; background-color: white;"/>
+							<br/>
+							<img src="../img/products/elastic.png" class="fragment" style="width: 30%; height: 30%; background-color: white;"/>
+							<img src="../img/products/kibana.png" class="fragment" style="width: 30%; height: 30%; background-color: black;"/>
+							<br/>
+							<img src="../img/products/prometheus.png" class="fragment" style="width: 40%; height: 40%; background-color: black;"/>
+						</div>
+					</section>
+				</section>
+				<section data-background="../img/background/manual.jpg">
+					<section id="metrics-demo">
+						<h1>Hands-On Time</h1>
+						<hr/>
+						<h2 class="fragment">Expose metrics from</h2>
+						<h2 class="fragment">hardware,</h2>
+						<h2 class="fragment">containers,</h2>
+						<h2 class="fragment">and the proxy</h2>
+					</section>
+					<section id="metrics-node">
+						<h1>Node Exporter</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
+
+docker service create --name node-exporter \
+  --mode global --network proxy \
+  --mount "type=bind,source=/proc,target=/host/proc" \
+  --mount "type=bind,source=/sys,target=/host/sys" \
+  --mount "type=bind,source=/,target=/rootfs" \
+  prom/node-exporter:0.12.0 -collector.procfs /host/proc -collector.sysfs /host/proc -collector.filesystem.ignored-mount-points "^/(sys|proc|dev|host|etc)($|/)"
+
+docker service ps node-exporter
+
+UTIL_ID=$(docker ps -q --filter label=com.docker.swarm.service.name=util)
+
+docker exec -it $UTIL_ID apk add --update curl
+
+docker exec -it $UTIL_ID curl http://node-exporter:9100/metrics</code></pre>
+					</section>
+					<section id="metrics-container">
+						<h1>Container Exporter</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker service create --name cadvisor \
+  --network proxy --mode global \
+  --mount "type=bind,source=/,target=/rootfs" \
+  --mount "type=bind,source=/var/run,target=/var/run" \
+  --mount "type=bind,source=/sys,target=/sys" \
+  --mount "type=bind,source=/var/lib/docker,target=/var/lib/docker" \
+  google/cadvisor:v0.24.1
+
+docker service ps cadvisor
+
+docker exec -it $UTIL_ID curl http://cadvisor:8080/metrics</code></pre>
+					</section>
+					<section id="metrics-proxy">
+						<h1>Proxy Exporter</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker service create --name proxy-exporter \
+  --network proxy \
+  prom/haproxy-exporter:v0.7.1 \
+  -haproxy.scrape-uri="http://admin:admin@proxy/admin?stats;csv"
+
+docker service ps proxy-exporter
+
+docker exec -it $UTIL_ID curl http://proxy-exporter:9101/metrics</code></pre>
+					</section>
+				</section>
+				<section data-background="../img/background/manual.jpg">
+					<section id="monitoring-demo">
+						<h1>Hands-On Time</h1>
+						<hr/>
+						<h2 class="fragment">Execute ad-hoc queries</h2>
+						<h2 class="fragment">and create dashboards</h2>
+					</section>
+					<section id="monitoring-prometheus">
+						<h1>Prometheus</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>cat conf/prometheus.yml
+
+docker service create --name prometheus \
+  --network proxy -p 9090:9090 \
+  --mount "type=bind,source=$PWD/conf/prometheus.yml,target=/etc/prometheus/prometheus.yml" \
+  prom/prometheus:v1.2.1
+
+docker service ps prometheus
+
+open http://$(docker-machine ip swarm-1):9090
+
+# rate(haproxy_frontend_http_requests_total{job="proxy"}[1m])
+
+for i in {1..20}; do
+  sleep 0.$[ (((($RANDOM % 10) + 1) * 100)) ]s && curl $(docker-machine ip swarm-1)/demo/hello
+done</code></pre>
+					</section>
+					<section id="monitoring-grafana">
+						<h1>Grafana</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker service create --name grafana \
+  --network proxy -p 3000:3000 grafana/grafana:3.1.1
+
+docker service ps grafana
+
+open http://$(docker-machine ip swarm-1):3000
+
+# DS: http://prometheus:9090
+# DS: http://elasticsearch:9200
+
+open https://grafana.net/dashboards/704
+
+open https://grafana.net/dashboards/405
+
+open https://grafana.net/dashboards/609</code></pre>
+					</section>
+				</section>
 				<section data-background="../img/people/alan-kay.jpg">
 					<section id="quote">
 						<blockquote>
@@ -357,11 +578,7 @@ open http://$(docker-machine ip swarm-1)/app/kibana</code></pre>
                     <section data-background="../img/background/cleanup.jpg">
                         <h1>Cleanup</h1>
                         <pre><code data-trim contenteditable>docker-machine rm -f \
-    swarm-1 swarm-2 swarm-4 swarm-test-1 swarm-test-2
-
-cd ..
-
-rm -rf go-demo docker-compose-proxy.yml</code></pre>
+    swarm-1 swarm-2 swarm-3 swarm-4 swarm-5</code></pre>
                     </section>
                 </section>
 			</div>
