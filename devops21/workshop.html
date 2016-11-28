@@ -174,23 +174,48 @@
 						<hr/>
 						<h1 class="fragment">CI with Docker</h1>
 					</section>
+					<section id="prerequisites">
+						<h1>Prerequisites</h1>
+						<hr/>
+						<ul>
+							<li>AWS account</li>
+							<li>Docker</li>
+							<li>Docker Machine</li>
+							<li>AWS CLI</li>
+						</ul>
+					</section>
 					<section id="docker-node">
 						<h1>Code & Server</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>git clone https://github.com/vfarcic/go-demo.git
+						<pre><code data-trim contenteditable>export AWS_ACCESS_KEY_ID=[...]
 
-cd go-demo
+export AWS_SECRET_ACCESS_KEY=[...]
 
-docker-machine create -d virtualbox go-demo
+export AWS_DEFAULT_REGION=us-east-1
+
+export AWS_ZONE=b
+
+docker-machine create --driver amazonec2 \
+  --amazonec2-zone ${AWS_ZONE} go-demo
 
 eval $(docker-machine env go-demo)</code></pre>
 					</section>
 					<section id="docker-unit">
 						<h1>Unit Tests & Build</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>cat docker-compose-test-local.yml
+						<pre><code data-trim contenteditable>docker-machine ssh go-demo
 
-docker-compose -f docker-compose-test.yml run --rm unit
+sudo curl -L "https://github.com/docker/compose/releases/download/1.8.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+sudo chmod +x /usr/local/bin/docker-compose
+
+git clone https://github.com/vfarcic/go-demo.git
+
+cd go-demo
+
+cat docker-compose-test-local.yml
+
+sudo docker-compose -f docker-compose-test.yml run --rm unit
 
 ll | grep go-demo</code></pre>
 					</section>
@@ -199,48 +224,52 @@ ll | grep go-demo</code></pre>
 						<hr/>
 						<pre><code data-trim contenteditable>cat Dockerfile
 
-docker-compose -f docker-compose-test-local.yml build app
+sudo docker-compose -f docker-compose-test-local.yml build app
 
-docker images</code></pre>
+sudo docker images</code></pre>
 					</section>
 					<section id="docker-staging">
 						<h1>Staging tests</h1>
 						<hr/>
 						<pre><code data-trim contenteditable>cat docker-compose-test-local.yml
 
-docker-compose -f docker-compose-test-local.yml up -d staging-dep
+sudo docker-compose -f docker-compose-test-local.yml \
+  up -d staging-dep
 
-docker-compose -f docker-compose-test-local.yml ps
+sudo docker-compose -f docker-compose-test-local.yml ps
 
-docker-compose -f docker-compose-test-local.yml run --rm staging
+sudo docker-compose -f docker-compose-test-local.yml \
+  run --rm staging
 
-docker-compose -f docker-compose-test-local.yml down
+sudo docker-compose -f docker-compose-test-local.yml down
 
-docker-compose -f docker-compose-test-local.yml ps</code></pre>
+sudo docker-compose -f docker-compose-test-local.yml ps</code></pre>
 					</section>
                     <section id="docker-registry">
                         <h1>Registry</h1>
                         <hr/>
 						<pre><code data-trim contenteditable>cat docker-compose-local.yml
 
-docker-compose -f docker-compose-local.yml up -d registry
+sudo docker-compose -f docker-compose-local.yml up -d registry
 
-docker pull alpine
+sudo docker pull alpine
 
-docker tag alpine localhost:5000/alpine
+sudo docker tag alpine localhost:5000/alpine
 
-docker push localhost:5000/alpine
+sudo docker push localhost:5000/alpine
 
-docker tag go-demo localhost:5000/go-demo:1.0
+sudo docker tag go-demo localhost:5000/go-demo:1.0
 
-docker push localhost:5000/go-demo:1.0
+sudo docker push localhost:5000/go-demo:1.0
 
 ll docker/registry/v2/repositories/go-demo</code></pre>
                     </section>
 					<section id="docker-cleanup">
 						<h1>Cleanup</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>docker-machine rm -f go-demo</code></pre>
+						<pre><code data-trim contenteditable>exit
+
+docker-machine rm -f go-demo</code></pre>
 					</section>
 				</section>
                 <section data-background="../img/background/swarm.jpg">
@@ -267,45 +296,52 @@ ll docker/registry/v2/repositories/go-demo</code></pre>
 							<h1>Running Services</h1>
 						</div>
                     </section>
-					<section id="swarm-nodes">
+					<section id="swarm-prereq">
 						<h3>Docker Swarm</h3>
-						<h1>Nodes Setup</h1>
+						<h1>Cluster Setup</h1>
 						<hr/>
-                        <pre><code data-trim contenteditable>for i in 1 2 3; do
-    docker-machine create -d virtualbox swarm-$i
-done</code></pre>
+                        <pre><code data-trim contenteditable>aws ec2 create-key-pair --key-name devops21 \
+  | jq -r '.KeyMaterial' >devops21.pem
+
+mv devops21.pem $HOME/.ssh/devops21.pem
+
+chmod 400 $HOME/.ssh/devops21.pem
+
+export KEY_PATH=$HOME/.ssh/devops21.pem</code></pre>
 					</section>
-					<section id="swarm-provisioning">
-						<h1>Provisioning</h1>
+					<section id="swarm-stack">
+						<h3>Docker Swarm</h3>
+						<h1>Cluster Setup</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
+                        <pre><code data-trim contenteditable>aws cloudformation create-stack \
+  --template-url https://docker-for-aws.s3.amazonaws.com/aws/beta/aws-v1.13.0-rc2-beta12.json \
+  --stack-name swarm --capabilities CAPABILITY_IAM --parameters \
+  ParameterKey=KeyName,ParameterValue=devops21 \
+  ParameterKey=InstanceType,ParameterValue=t2.micro \
+  ParameterKey=ManagerInstanceType,ParameterValue=t2.micro \
+  ParameterKey=ManagerSize,ParameterValue=3 \
+  ParameterKey=ClusterSize,ParameterValue=2
 
-docker swarm init --advertise-addr $(docker-machine ip swarm-1)
+aws cloudformation describe-stacks --stack-name swarm \
+  | jq '.Stacks[0].Outputs'
 
-TOKEN=$(docker swarm join-token -q manager)
-
-for i in 2 3; do
-    eval $(docker-machine env swarm-$i)
-
-    docker swarm join --token $TOKEN \
-        --advertise-addr $(docker-machine ip swarm-$i) \
-        $(docker-machine ip swarm-1):2377
-done</code></pre>
+MANAGER_IP=[...]</code></pre>
 					</section>
 					<section id="swarm-info">
 						<h3>Docker Swarm</h3>
 						<h1>Cluster Info</h1>
 						<hr/>
-                        <pre><code data-trim contenteditable>docker service create \
-  --name=visualizer \
-  --publish=8083:8080/tcp \
-  --constraint=node.role==manager \
+                        <pre><code data-trim contenteditable>ssh -i $KEY_PATH docker@$MANAGER_IP
+
+DNS=[...]
+
+docker node ls
+
+docker service create --name=visualizer \
+  --publish=8083:8080/tcp --constraint=node.role==manager \
   --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
-  manomarks/visualizer
-
-open http://$(docker-machine ip swarm-1):8083
-
-docker node ls</code></pre>
+  manomarks/visualizer</code></pre>
+						<li><a href="http://$DNS:9090">http://$DNS:8083</a></li>
 					</section>
 					<section id="swarm-info-img">
 						<h1>Cluster Info</h1>
@@ -381,24 +417,25 @@ docker service ps go-demo</code></pre>
 					<section id="swarm-failover">
 						<h1>Failover</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>docker-machine rm -f swarm-3
+						<pre><code data-trim contenteditable>docker rm -f $(docker ps | grep go-demo \
+  | tail -1 | awk '{print $1}')
 
 docker service ps go-demo</code></pre>
+						<ul>
+							<li><a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:sort=tag:Name">https://console.aws.amazon.com/ec2/v2/home?#Instances:sort=tag:Name</a></li>
+							<li>Remove one instance</li>
+						</ul>
+						<pre><code data-trim contenteditable>docker service ps go-demo
+
+docker node ls</code></pre>
 					</section>
 					<section id="swarm-adding-nodes">
 						<h1>Adding Nodes</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>docker-machine create -d virtualbox swarm-4
-
-eval $(docker-machine env swarm-4)
-
-docker swarm join --token $TOKEN \
-    --advertise-addr $(docker-machine ip swarm-4) \
-    $(docker-machine ip swarm-1):2377
-
-eval $(docker-machine env swarm-1)
-
-docker service ps util</code></pre>
+						<ul>
+							<li><a href="https://console.aws.amazon.com/ec2/autoscaling/home?#AutoScalingGroups:view=details">https://console.aws.amazon.com/ec2/autoscaling/home?#AutoScalingGroups:view=details</a></li>
+						</ul>
+						<pre><code data-trim contenteditable>docker node ls</code></pre>
 					</section>
 					<section id="swarm-proxy">
 						<h1>Reverse Proxy</h1>
@@ -414,11 +451,9 @@ docker service create -e MODE=swarm -e LISTENER_ADDRESS=swarm-listener \
   -p 80:80 -p 443:443 --network proxy --replicas 3 \
   --name proxy vfarcic/docker-flow-proxy
 
-docker service ps swarm-listener
-
 docker service ps proxy
 
-curl -i $(docker-machine ip swarm-1)/demo/hello</code></pre>
+curl -i "$DNS/demo/hello"</code></pre>
 					</section>
 					<section id="swarm-proxy-img">
 						<h1>Reverse Proxy</h1>
@@ -453,7 +488,10 @@ curl -i $(docker-machine ip swarm-1)/demo/hello</code></pre>
                     <section id="swarm-updates">
                         <h1>Service Updates</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>docker service update --image vfarcic/go-demo:1.1 --update-delay 5s go-demo
+						<pre><code data-trim contenteditable>ssh -i $KEY_PATH docker@$MANAGER_IP
+
+docker service update --image vfarcic/go-demo:1.1 \
+  --update-delay 5s go-demo
 
 docker service ps go-demo</code></pre>
                     </section>
@@ -777,89 +815,85 @@ docker-machine rm -f swarm-test-1 swarm-test-2</code></pre>
 						<h2 class="fragment">from any container</h2>
 						<h2 class="fragment">running anywhere inside the cluster</h2>
 					</section>
+					<section id="cloud-watch">
+						<h1>CloudWatch</h1>
+						<hr/>
+						<ul>
+							<li><a href="https://console.aws.amazon.com/cloudwatch">https://console.aws.amazon.com/cloudwatch</a></li>
+						</ul>
+					</section>
 					<section id="es-service">
 						<h1>Elastic Search Service</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>docker-machine create -d virtualbox swarm-5
-
-TOKEN_WORKER=$(docker swarm join-token -q worker)
-
-eval $(docker-machine env swarm-5)
-
-docker swarm join --token $TOKEN_WORKER \
-  --advertise-addr $(docker-machine ip swarm-5) \
-  $(docker-machine ip swarm-1):2377
-
-eval $(docker-machine env swarm-1)
-
-docker service create --name elasticsearch --network proxy \
-  -p 9200:9200 --reserve-memory 250m elasticsearch:2.4
+						<pre><code data-trim contenteditable>docker service create --name elasticsearch --network proxy \
+   -p 9200:9200 --reserve-memory 250m elasticsearch:2.4
 
 docker service ps elasticsearch</code></pre>
 					</section>
-					<section id="logstash-service">
-						<h1>Log Stash Service</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>cd ..
+					<!--TODO: Uncomment-->
+					<!--<section id="logstash-service">-->
+						<!--<h1>Log Stash Service</h1>-->
+						<!--<hr/>-->
+						<!--<pre><code data-trim contenteditable>cd ..-->
 
-git clone https://github.com/vfarcic/cloud-provisioning.git
+<!--git clone https://github.com/vfarcic/cloud-provisioning.git-->
 
-cd cloud-provisioning && mkdir -p docker/logstash
+<!--cd cloud-provisioning && mkdir -p docker/logstash-->
 
-cp conf/logstash.conf docker/logstash/logstash.conf
+<!--cp conf/logstash.conf docker/logstash/logstash.conf-->
 
-cat docker/logstash/logstash.conf
+<!--cat docker/logstash/logstash.conf-->
 
-docker service create --name logstash \
-  --mount "type=bind,source=$PWD/docker/logstash,target=/conf" \
-  --network proxy -e LOGSPOUT=ignore --reserve-memory 100m \
-  logstash:2.4 logstash -f /conf/logstash.conf
+<!--docker service create &#45;&#45;name logstash \-->
+  <!--&#45;&#45;mount "type=bind,source=$PWD/docker/logstash,target=/conf" \-->
+  <!--&#45;&#45;network proxy -e LOGSPOUT=ignore &#45;&#45;reserve-memory 100m \-->
+  <!--logstash:2.4 logstash -f /conf/logstash.conf-->
 
-docker service ps logstash</code></pre>
-					</section>
-					<section id="logspout-service">
-						<h1>Log Spout Service</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service create --name logspout \
-  --network proxy --mode global -e SYSLOG_FORMAT=rfc3164 \
-  --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
-  gliderlabs/logspout syslog://logstash:51415
+<!--docker service ps logstash</code></pre>-->
+					<!--</section>-->
+					<!--<section id="logspout-service">-->
+						<!--<h1>Log Spout Service</h1>-->
+						<!--<hr/>-->
+						<!--<pre><code data-trim contenteditable>docker service create &#45;&#45;name logspout \-->
+  <!--&#45;&#45;network proxy &#45;&#45;mode global -e SYSLOG_FORMAT=rfc3164 \-->
+  <!--&#45;&#45;mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \-->
+  <!--gliderlabs/logspout syslog://logstash:51415-->
 
-docker service ps logspout</code></pre>
-					</section>
-					<section id="logspout-test">
-						<h1>Testing Log Spout</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>LOGSTASH_NODE=$(docker service ps logstash | tail +2 | awk '{print $4}')
+<!--docker service ps logspout</code></pre>-->
+					<!--</section>-->
+					<!--<section id="logspout-test">-->
+						<!--<h1>Testing Log Spout</h1>-->
+						<!--<hr/>-->
+						<!--<pre><code data-trim contenteditable>LOGSTASH_NODE=$(docker service ps logstash | tail +2 | awk '{print $4}')-->
 
-eval $(docker-machine env $LOGSTASH_NODE)
+<!--eval $(docker-machine env $LOGSTASH_NODE)-->
 
-LOGSTASH_ID=$(docker ps -q --filter "ancestor=logstash:2.4")
+<!--LOGSTASH_ID=$(docker ps -q &#45;&#45;filter "ancestor=logstash:2.4")-->
 
-docker logs $LOGSTASH_ID</code></pre>
-					</section>
-					<section id="kibana-service">
-						<h1>Kibana Service</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
+<!--docker logs $LOGSTASH_ID</code></pre>-->
+					<!--</section>-->
+					<!--<section id="kibana-service">-->
+						<!--<h1>Kibana Service</h1>-->
+						<!--<hr/>-->
+						<!--<pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)-->
 
-docker service create --name kibana \
-  --network proxy --reserve-memory 50m \
-  -e ELASTICSEARCH_URL=http://elasticsearch:9200 \
-  --label com.df.notify=true --label com.df.distribute=true \
-  --label com.df.servicePath=/app/kibana,/bundles,/elasticsearch \
-  --label com.df.port=5601 \
-  kibana:4.6
+<!--docker service create &#45;&#45;name kibana \-->
+  <!--&#45;&#45;network proxy &#45;&#45;reserve-memory 50m \-->
+  <!-- -e ELASTICSEARCH_URL=http://elasticsearch:9200 \-->
+  <!--&#45;&#45;label com.df.notify=true &#45;&#45;label com.df.distribute=true \-->
+  <!--&#45;&#45;label com.df.servicePath=/app/kibana,/bundles,/elasticsearch \-->
+  <!--&#45;&#45;label com.df.port=5601 \-->
+  <!--kibana:4.6-->
 
-docker service ps kibana
+<!--docker service ps kibana-->
 
-open http://$(docker-machine ip swarm-1)/app/kibana</code></pre>
-					</section>
-					<section id="logging-cleanup">
-						<h1>Cleanup</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service rm kibana</code></pre>
-					</section>
+<!--open http://$(docker-machine ip swarm-1)/app/kibana</code></pre>-->
+					<!--</section>-->
+					<!--<section id="logging-cleanup">-->
+						<!--<h1>Cleanup</h1>-->
+						<!--<hr/>-->
+						<!--<pre><code data-trim contenteditable>docker service rm kibana</code></pre>-->
+					<!--</section>-->
 				</section>
 				<section data-background="../img/background/metrics.jpg">
 					<section id="metrics">
@@ -899,16 +933,26 @@ open http://$(docker-machine ip swarm-1)/app/kibana</code></pre>
 					<section id="metrics-node">
 						<h1>Node Exporter</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
-
-docker service create --name node-exporter \
-  --mode global --network proxy \
+						<pre><code data-trim contenteditable>docker service create \
+  --name node-exporter \
+  --mode global \
+  --network proxy \
   --mount "type=bind,source=/proc,target=/host/proc" \
   --mount "type=bind,source=/sys,target=/host/sys" \
   --mount "type=bind,source=/,target=/rootfs" \
-  prom/node-exporter:0.12.0 -collector.procfs /host/proc -collector.sysfs /host/proc -collector.filesystem.ignored-mount-points "^/(sys|proc|dev|host|etc)($|/)"
-
-docker service ps node-exporter
+  --mount "type=bind,source=/etc/hostname,target=/etc/host_hostname" \
+  -e HOST_HOSTNAME=/etc/host_hostname \
+  basi/node-exporter:v0.1.1 \
+  -collector.procfs /host/proc \
+  -collector.sysfs /host/proc \
+  -collector.filesystem.ignored-mount-points "^/(sys|proc|dev|host|etc)($|/)" \
+  -collector.textfile.directory /etc/node-exporter/ \
+  -collectors.enabled="conntrack,diskstats,entropy,filefd,filesystem,loadavg,mdadm,meminfo,netdev,netstat,stat,textfile,time,vmstat,ipvs"</code></pre>
+					</section>
+					<section id="metrics-node-2">
+						<h1>Node Exporter</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker service ps node-exporter
 
 UTIL_ID=$(docker ps -q --filter label=com.docker.swarm.service.name=util)
 
@@ -931,18 +975,6 @@ docker service ps cadvisor
 
 docker exec -it $UTIL_ID curl http://cadvisor:8080/metrics</code></pre>
 					</section>
-					<section id="metrics-proxy">
-						<h1>Proxy Exporter</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service create --name proxy-exporter \
-  --network proxy \
-  prom/haproxy-exporter:v0.7.1 \
-  -haproxy.scrape-uri="http://admin:admin@proxy/admin?stats;csv"
-
-docker service ps proxy-exporter
-
-docker exec -it $UTIL_ID curl http://proxy-exporter:9101/metrics</code></pre>
-					</section>
 				</section>
 				<section data-background="../img/background/manual.jpg">
 					<section id="monitoring-demo">
@@ -954,22 +986,17 @@ docker exec -it $UTIL_ID curl http://proxy-exporter:9101/metrics</code></pre>
 					<section id="monitoring-prometheus">
 						<h1>Prometheus</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>cat conf/prometheus.yml
-
-docker service create --name prometheus \
+						<pre><code data-trim contenteditable>docker service create --name prometheus \
   --network proxy -p 9090:9090 \
-  --mount "type=bind,source=$PWD/conf/prometheus.yml,target=/etc/prometheus/prometheus.yml" \
-  prom/prometheus:v1.2.1
+  vfarcic/prometheus-devops21
 
-docker service ps prometheus
-
-open http://$(docker-machine ip swarm-1):9090
-
-# rate(haproxy_frontend_http_requests_total{job="proxy"}[1m])
-
-for i in {1..20}; do
-  sleep 0.$[ (((($RANDOM % 10) + 1) * 100)) ]s && curl $(docker-machine ip swarm-1)/demo/hello
-done</code></pre>
+docker service ps prometheus</code></pre>
+						<ul>
+							<li><a href="http://$DNS:9090">http://$DNS:9090</a></li>
+							<li>irate(node_cpu{mode="idle"}[5m])</li>
+							<li>container_memory_usage_bytes{id!="/"}</li>
+							<li>container_memory_usage_bytes{container_label_com_docker_swarm_service_name="cadvisor"}</li>
+						</ul>
 					</section>
 					<section id="monitoring-grafana">
 						<h1>Grafana</h1>
@@ -977,18 +1004,15 @@ done</code></pre>
 						<pre><code data-trim contenteditable>docker service create --name grafana \
   --network proxy -p 3000:3000 grafana/grafana:3.1.1
 
-docker service ps grafana
-
-open http://$(docker-machine ip swarm-1):3000
-
-# DS: http://prometheus:9090
-# DS: http://elasticsearch:9200
-
-open https://grafana.net/dashboards/704
-
-open https://grafana.net/dashboards/405
-
-open https://grafana.net/dashboards/609</code></pre>
+docker service ps grafana</code></pre>
+						<ul>
+							<li><a href="http://$DNS:3000">http://$DNS:3000</a></li>
+							<li>DS: http://prometheus:9090</li>
+							<li>DS: http://elasticsearch:9200</li>
+							<li><a href="https://grafana.net/dashboards/704">https://grafana.net/dashboards/704</a></li>
+							<li><a href="https://grafana.net/dashboards/405">https://grafana.net/dashboards/705</a></li>
+							<li><a href="https://grafana.net/dashboards/609">https://grafana.net/dashboards/609</a></li>
+						</ul>
 					</section>
 				</section>
 				<section data-background="../img/people/eric-hoffer.jpg">
@@ -1041,14 +1065,9 @@ open https://grafana.net/dashboards/609</code></pre>
                 <section>
                     <section data-background="../img/background/cleanup.jpg">
                         <h1>Cleanup</h1>
-                        <pre><code data-trim contenteditable>docker-machine rm -f swarm-test-1 swarm-test-2 \
-    swarm-1 swarm-2 swarm-3 swarm-4 swarm-5
+                        <pre><code data-trim contenteditable>exit
 
-cd ..
-
-rm -rf cloud-provisioning/docker
-
-rm -rf go-demo/docker</code></pre>
+aws cloudformation delete-stack --stack-name swarm</code></pre>
                     </section>
                 </section>
 			</div>

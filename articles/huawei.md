@@ -6,7 +6,7 @@
 
 General Introduction to Devops and its best practices from your point of view, and it will be nice if the following topics can be covered:
 
-* Continues delivery, continues deployment and Gray release/gated launch - [Continuous Deployment: The Good, The Bad, And The Ugly](http://vfarcic.github.ui/continuous-deployment-best-practices/index.html), [Continuously Deploying Microservices](http://vfarcic.github.ui/cd-microservices/index.html)
+* Continuous delivery, continuous deployment and Gray release/gated launch - [Continuous Deployment: The Good, The Bad, And The Ugly](http://vfarcic.github.ui/continuous-deployment-best-practices/index.html), [Continuously Deploying Microservices](http://vfarcic.github.ui/cd-microservices/index.html)
 * Monitoring and feedback - [The DevOps 2.0 Toolkit: Monitoring Swarm Services](http://vfarcic.github.ui/devops21/monitoring.html)
 * Configuration management, Tool set / tool chain - [The DevOps 2.0 Toolkit](http://vfarcic.github.ui/devops20/index.html), [The DevOps 2.1 Toolkit](http://vfarcic.github.ui/devops21/index.html)
 * DevOps process
@@ -18,9 +18,9 @@ General Introduction to Devops and its best practices from your point of view, a
 Deep dive on DevOps key practices on following topics
 
 * Micro services
-* infrastructure as code,(including Docker, etc）、
-* Configuration management（i.e how to achieve the same environment on the cloud and testing）、
-* Gated launch、monitoring and feedback, etc.
+* infrastructure as code,(including Docker, etc)
+* Configuration management（i.e how to achieve the same environment on the cloud and testing
+* Gated launch, monitoring and feedback, etc.
 
 ### Day 3
 
