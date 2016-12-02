@@ -488,9 +488,7 @@ curl -i "$DNS/demo/hello"</code></pre>
                     <section id="swarm-updates">
                         <h1>Service Updates</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>ssh -i $KEY_PATH docker@$MANAGER_IP
-
-docker service update --image vfarcic/go-demo:1.1 \
+						<pre><code data-trim contenteditable>docker service update --image vfarcic/go-demo:1.1 \
   --update-delay 5s go-demo
 
 docker service ps go-demo</code></pre>
