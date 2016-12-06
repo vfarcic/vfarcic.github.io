@@ -1,12 +1,22 @@
 # The DevOps 2.1 Toolkit: Continuously Deploying Microservices To a Swarm Cluster
 
+## Abstract: Talk
+
+This talk focuses on architectural changes and new tools we should adopt to be able to tackle the problems presented by a demand for modern, responsive, fault tolerant and elastic systems. It is based on the material published in [The DevOps 2.1 Toolkit: Building, testing, deploying, and monitoring services inside Docker Swarm clusters](https://leanpub.com/the-devops-2-1-toolkit).
+
+The talk will go through the whole microservices development lifecycle. We’ll start from the very beginning. We’ll define and design architecture. From there on we’ll move from requirements, technological choices and development environment setup, through coding and testing all the way until the final deployment to production. We won’t stop there. Once our new services are up and running we’ll see how to maintain them, scale them depending on resource utilization and response time, and recover them in case of failures. We’ll try to balance the need for creative manual work and the need to automate as much of the process as possible.
+
+The goal will be to design a fully automate continuous deployment (CDP) pipeline. We’ll see how microservices fit into CDP and immutable containers concepts and why the best results are obtained when those three are combined into one unique framework.
+
+During the talk we’ll explore tools like Docker, Docker Swarm, Docker Compose, Jenkins, HAProxy, and a few others.
+
 ## Abstract: Workshop
 
 This workshop focuses on architectural changes and new tools we should adopt to be able to tackle the problems presented by a demand for modern, responsive, fault tolerant and elastic systems. It is based on the material published in [The DevOps 2.1 Toolkit: Building, testing, deploying, and monitoring services inside Docker Swarm clusters](https://leanpub.com/the-devops-2-1-toolkit).
 
 The workshop will go through the whole microservices development lifecycle. We’ll start from the very beginning. We’ll define and design architecture. From there on we’ll move from requirements, technological choices and development environment setup, through coding and testing all the way until the final deployment to production. We won’t stop there. Once our new services are up and running we’ll see how to maintain them, scale them depending on resource utilization and response time, and recover them in case of failures. We’ll try to balance the need for creative manual work and the need to automate as much of the process as possible.
 
-This will be a journey through the whole lifecycle of a microservice. The goal will be to design a fully automate continuous deployment (CDP) pipeline. We’ll see how microservices fit into CDP or deployment and immutable containers concepts and why the best results are obtained when those three are combined into one unique framework.
+The goal will be to design a fully automate continuous deployment (CDP) pipeline. We’ll see how microservices fit into CDP and immutable containers concepts and why the best results are obtained when those three are combined into one unique framework.
 
 During the workshop we’ll explore tools like Docker, Docker Swarm, Docker Compose, Jenkins, HAProxy, and a few others.
 
