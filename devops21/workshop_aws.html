@@ -90,21 +90,6 @@
                         </figure>
                     </section>
                 </section>
-				<section data-background="../img/background/why.jpg">
-					<section id="docker">
-						<h1>Docker Containers</h1>
-						<hr/>
-						<ul>
-							<li class="fragment">Portable <label class="fragment">== anything, anywhere</label></li>
-							<li class="fragment">Low resource usage <label class="fragment">== VMs are obese</label></li>
-							<li class="fragment">Scalable <label class="fragment">== it's not 1999</label></li>
-							<li class="fragment">Isolation <label class="fragment">== processes</label></li>
-							<li class="fragment">Self-sufficient <label class="fragment">== no infrastructure dependencies</label></li>
-							<li class="fragment">Immutable <label class="fragment">== laptop == staging == production</label></li>
-						</ul>
-						<img src="../img/products/docker.png" style="background-color: white;">
-					</section>
-				</section>
 				<section>
 					<section id="monolith" data-background="../img/background/monolith.png">
 						<h1>Changed everything</h1>
@@ -168,24 +153,40 @@
 						<h3 class="fragment">and then specialize</h3>
 					</section>
 				</section>
+				<section data-background="../img/background/servers.jpg">
+					<section id="infra">
+						<h1>Infrastructure</h1>
+						<hr/>
+						<ul>
+							<li class="fragment">Pets vs cattle</li>
+							<li class="fragment">Immutable</li>
+							<li class="fragment">Dynamic</li>
+							<li class="fragment">Elastic</li>
+							<li class="fragment">Automated</li>
+							<li class="fragment">Self-healing</li>
+						</ul>
+					</section>
+				</section>
 				<section data-background="../img/background/manual.jpg">
-					<section id="docker-demo">
+					<section id="infra-demo">
 						<h1>Hands-On Time</h1>
 						<hr/>
-						<h1 class="fragment">CI with Docker</h1>
+						<h1 class="fragment">Immutable</h1>
+						<h1 class="fragment">infrastructure</h1>
+						<h1 class="fragment">as code</h1>
 					</section>
 					<section id="prerequisites">
 						<h1>Prerequisites</h1>
 						<hr/>
 						<ul>
 							<li>AWS account</li>
-							<li>Docker</li>
-							<li>Docker Machine</li>
 							<li>AWS CLI</li>
+							<li>Packer</li>
+							<li>Terraform</li>
 						</ul>
 					</section>
-					<section id="docker-node">
-						<h1>Code & Server</h1>
+					<section id="packer">
+						<h1>Build images</h1>
 						<hr/>
 						<pre><code data-trim contenteditable>export AWS_ACCESS_KEY_ID=[...]
 
@@ -193,21 +194,62 @@ export AWS_SECRET_ACCESS_KEY=[...]
 
 export AWS_DEFAULT_REGION=us-east-1
 
-export AWS_ZONE=b
+git clone https://github.com/vfarcic/cloud-provisioning.git
 
-docker-machine create --driver amazonec2 \
-  --amazonec2-zone ${AWS_ZONE} go-demo
+cd cloud-provisioning/terraform/aws-full
 
-eval $(docker-machine env go-demo)</code></pre>
+aws ec2 create-key-pair --key-name devops21 \
+  | jq -r '.KeyMaterial' >devops21.pem
+
+packer build -machine-readable packer-ubuntu-docker-compose.json \
+  | tee packer-ubuntu-docker-compose.log</code></pre>
+					</section>
+					<section id="terraform">
+						<h1>Create VM Instances</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>export TF_VAR_aws_access_key=[...]
+
+export TF_VAR_aws_secret_key=[...]
+
+export TF_VAR_aws_default_region=us-east-1
+
+export TF_VAR_ci_ami_id=$(grep 'artifact,0,id' \
+  packer-ubuntu-docker-compose.log | cut -d, -f6 | cut -d: -f2)
+
+terraform plan -target aws_instance.ci -var ci_count=1
+
+terraform apply -target aws_instance.ci -var ci_count=1
+
+ssh -i devops21.pem ubuntu@$(terraform output ci_public_ip) docker version
+
+ssh -i devops21.pem ubuntu@$(terraform output ci_public_ip) docker-compose version</code></pre>
+					</section>
+				</section>
+				<section data-background="../img/background/why.jpg">
+					<section id="docker">
+						<h1>Docker Containers</h1>
+						<hr/>
+						<ul>
+							<li class="fragment">Portable <label class="fragment">== anything, anywhere</label></li>
+							<li class="fragment">Low resource usage <label class="fragment">== VMs are obese</label></li>
+							<li class="fragment">Scalable <label class="fragment">== it's not 1999</label></li>
+							<li class="fragment">Isolation <label class="fragment">== processes</label></li>
+							<li class="fragment">Self-sufficient <label class="fragment">== no infrastructure dependencies</label></li>
+							<li class="fragment">Immutable <label class="fragment">== laptop == staging == production</label></li>
+						</ul>
+						<img src="../img/products/docker.png" style="background-color: white;">
+					</section>
+				</section>
+				<section data-background="../img/background/manual.jpg">
+					<section id="docker-demo">
+						<h1>Hands-On Time</h1>
+						<hr/>
+						<h1 class="fragment">CI with Docker</h1>
 					</section>
 					<section id="docker-unit">
 						<h1>Unit Tests & Build</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>docker-machine ssh go-demo
-
-sudo curl -L "https://github.com/docker/compose/releases/download/1.8.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-
-sudo chmod +x /usr/local/bin/docker-compose
+						<pre><code data-trim contenteditable>ssh -i devops21.pem ubuntu@$(terraform output ci_public_ip)
 
 git clone https://github.com/vfarcic/go-demo.git
 
@@ -269,7 +311,7 @@ ll docker/registry/v2/repositories/go-demo</code></pre>
 						<hr/>
 						<pre><code data-trim contenteditable>exit
 
-docker-machine rm -f go-demo</code></pre>
+terraform destroy -target aws_instance.ci -force</code></pre>
 					</section>
 				</section>
                 <section data-background="../img/background/swarm.jpg">
@@ -298,55 +340,55 @@ docker-machine rm -f go-demo</code></pre>
                     </section>
 					<section id="swarm-prereq">
 						<h3>Docker Swarm</h3>
-						<h1>Cluster Setup</h1>
+						<h1>Initialize</h1>
 						<hr/>
-                        <pre><code data-trim contenteditable>aws ec2 create-key-pair --key-name devops21 \
-  | jq -r '.KeyMaterial' >devops21.pem
+                        <pre><code data-trim contenteditable>packer build -machine-readable packer-ubuntu-docker-rexray.json \
+  | tee packer-ubuntu-docker-rexray.log
 
-mv devops21.pem $HOME/.ssh/devops21.pem
+export TF_VAR_swarm_ami_id=$(grep 'artifact,0,id' \
+  packer-ubuntu-docker-rexray.log | cut -d, -f6 | cut -d: -f2)
 
-chmod 400 $HOME/.ssh/devops21.pem
+terraform plan -target aws_instance.swarm-manager \
+  -var swarm_init=true -var swarm_managers=1
 
-export KEY_PATH=$HOME/.ssh/devops21.pem</code></pre>
+terraform apply -target aws_instance.swarm-manager \
+  -var swarm_init=true -var swarm_managers=1 -var rexray=true
+
+ssh -i devops21.pem ubuntu@$(terraform output \
+  swarm_manager_1_public_ip) docker node ls</code></pre>
 					</section>
 					<section id="swarm-stack">
 						<h3>Docker Swarm</h3>
-						<h1>Cluster Setup</h1>
+						<h1>Add Nodes</h1>
 						<hr/>
-                        <pre><code data-trim contenteditable>aws cloudformation create-stack \
-  --template-url https://docker-for-aws.s3.amazonaws.com/aws/beta/aws-v1.13.0-rc2-beta12.json \
-  --stack-name swarm --capabilities CAPABILITY_IAM --parameters \
-  ParameterKey=KeyName,ParameterValue=devops21 \
-  ParameterKey=InstanceType,ParameterValue=t2.micro \
-  ParameterKey=ManagerInstanceType,ParameterValue=t2.micro \
-  ParameterKey=ManagerSize,ParameterValue=3 \
-  ParameterKey=ClusterSize,ParameterValue=2
+                        <pre><code data-trim contenteditable>export TF_VAR_swarm_manager_token=$(ssh -i devops21.pem \
+  ubuntu@$(terraform output swarm_manager_1_public_ip) \
+  docker swarm join-token -q manager)
 
-aws cloudformation describe-stacks --stack-name swarm \
-  | jq '.Stacks[0].Outputs'
+export TF_VAR_swarm_manager_ip=$(terraform \
+  output swarm_manager_1_private_ip)
 
-MANAGER_IP=[...]</code></pre>
+terraform apply -target aws_instance.swarm-manager -var rexray=true
+
+ssh -i devops21.pem ubuntu@$(terraform \
+  output swarm_manager_1_public_ip) docker node ls</code></pre>
 					</section>
-					<section id="swarm-info">
+					<section id="swarm-visualizer">
 						<h3>Docker Swarm</h3>
-						<h1>Cluster Info</h1>
+						<h1>Visualizer</h1>
 						<hr/>
-                        <pre><code data-trim contenteditable>ssh -i $KEY_PATH docker@$MANAGER_IP
+                        <pre><code data-trim contenteditable>terraform output swarm_manager_1_public_ip
 
-DNS=[...]
-
-docker node ls
+ssh -i devops21.pem ubuntu@$(terraform \
+  output swarm_manager_1_public_ip)
 
 docker service create --name=visualizer \
-  --publish=8083:8080/tcp --constraint=node.role==manager \
+  --publish=9090:8080/tcp --constraint=node.role==manager \
   --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
   manomarks/visualizer</code></pre>
-						<li><a href="http://$DNS:9090">http://$DNS:8083</a></li>
-					</section>
-					<section id="swarm-info-img">
-						<h1>Cluster Info</h1>
-						<hr/>
-						<img src="../img/swarm/swarm-nodes.png">
+						<ul>
+							<li><a href="http://[IP]:9090">http://[IP]:9090</a></li>
+						</ul>
 					</section>
 					<section id="swarm-network">
 						<h1>Networking</h1>
@@ -357,18 +399,11 @@ docker network create --driver overlay go-demo
 
 docker network ls</code></pre>
 					</section>
-					<section id="swarm-network-img">
-						<h1>Networking</h1>
-						<hr/>
-						<img src="../img/swarm/swarm-nodes-sdn-go-demo-proxy.png">
-					</section>
 					<section id="swarm-service">
 						<h1>Service</h1>
 						<hr/>
 						<pre><code data-trim contenteditable>docker service create --name go-demo-db \
     --network go-demo --reserve-memory 100m mongo
-
-docker service ls
 
 docker service create --name go-demo -e DB=go-demo-db \
   --network go-demo --network proxy --reserve-memory 50m \
@@ -376,14 +411,18 @@ docker service create --name go-demo -e DB=go-demo-db \
   --label com.df.servicePath=/demo --label com.df.port=8080 \
   vfarcic/go-demo
 
+docker service ls
+
 docker service ps go-demo
 
 docker service inspect go-demo --pretty</code></pre>
 					</section>
-					<section id="swarm-service-img">
-						<h1>Service</h1>
+					<section id="swarm-scale">
+						<h1>Scaling</h1>
 						<hr/>
-						<img src="../img/swarm/swarm-go-demo.png">
+						<pre><code data-trim contenteditable>docker service scale go-demo=5
+
+docker service ps go-demo</code></pre>
 					</section>
 					<section id="swarm-network-test">
 						<h1>Global Service</h1>
@@ -394,25 +433,16 @@ docker service inspect go-demo --pretty</code></pre>
 
 docker service ps util
 
-ID=$(docker ps -q --filter label=com.docker.swarm.service.name=util)
+ID=$(docker ps -q \
+  --filter label=com.docker.swarm.service.name=util)
 
 docker exec -it $ID apk add --update drill
 
+docker exec -it $ID drill go-demo-db
+
 docker exec -it $ID drill go-demo
 
-docker exec -it $ID drill go-demo-db</code></pre>
-					</section>
-					<section id="swarm-scale">
-						<h1>Scaling</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service scale go-demo=5
-
-docker service ps go-demo</code></pre>
-					</section>
-					<section id="swarm-scale-img">
-                        <h1>Scaling</h1>
-						<hr/>
-						<img src="../img/swarm/swarm-go-demo-scaled.png">
+docker exec -it $ID drill tasks.go-demo</code></pre>
 					</section>
 					<section id="swarm-failover">
 						<h1>Failover</h1>
@@ -421,21 +451,6 @@ docker service ps go-demo</code></pre>
   | tail -1 | awk '{print $1}')
 
 docker service ps go-demo</code></pre>
-						<ul>
-							<li><a href="https://console.aws.amazon.com/ec2/v2/home?#Instances:sort=tag:Name">https://console.aws.amazon.com/ec2/v2/home?#Instances:sort=tag:Name</a></li>
-							<li>Remove one instance</li>
-						</ul>
-						<pre><code data-trim contenteditable>docker service ps go-demo
-
-docker node ls</code></pre>
-					</section>
-					<section id="swarm-adding-nodes">
-						<h1>Adding Nodes</h1>
-						<hr/>
-						<ul>
-							<li><a href="https://console.aws.amazon.com/ec2/autoscaling/home?#AutoScalingGroups:view=details">https://console.aws.amazon.com/ec2/autoscaling/home?#AutoScalingGroups:view=details</a></li>
-						</ul>
-						<pre><code data-trim contenteditable>docker node ls</code></pre>
 					</section>
 					<section id="swarm-proxy">
 						<h1>Reverse Proxy</h1>
@@ -451,9 +466,12 @@ docker service create -e MODE=swarm -e LISTENER_ADDRESS=swarm-listener \
   -p 80:80 -p 443:443 --network proxy --replicas 3 \
   --name proxy vfarcic/docker-flow-proxy
 
-docker service ps proxy
+docker service ls
 
-curl -i "$DNS/demo/hello"</code></pre>
+docker service ps proxy</code></pre>
+						<ul>
+							<li><a href="http://[IP]">http://[IP]/demo/hello</a></li>
+						</ul>
 					</section>
 					<section id="swarm-proxy-img">
 						<h1>Reverse Proxy</h1>
@@ -494,14 +512,35 @@ curl -i "$DNS/demo/hello"</code></pre>
 docker service ps go-demo</code></pre>
                     </section>
                     <section id="swarm-registry">
-                        <h1>Registry Service</h1>
+                        <h1>Network Volumes</h1>
                         <hr/>
-						<pre><code data-trim contenteditable>docker service create --name registry -p 5000:5000 \
-    --mount "type=bind,source=$PWD,target=/var/lib/registry" \
-    --reserve-memory 100m registry
+						<pre><code data-trim contenteditable>docker volume ls
 
-docker service ps registry</code></pre>
+docker service create --name registry -p 5000:5000 \
+  --mount "type=volume,source=registry,target=/var/lib/registry,volume-driver=rexray" \
+  --reserve-memory 100m registry
+
+docker volume ls
+
+docker service ps registry
+
+docker tag vfarcic/go-demo localhost:5000/go-demo
+
+docker push localhost:5000/go-demo</code></pre>
                     </section>
+					<section id="swarm-volume-failover">
+						<h1>Network Volumes</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker service rm registry
+
+docker service create --name registry -p 5000:5000 \
+  --mount "type=volume,source=registry,target=/var/lib/registry,volume-driver=rexray" \
+  --reserve-memory 100m registry
+
+docker service ps registry
+
+docker pull localhost:5000/go-demo</code></pre>
+					</section>
 				</section>
 				<section data-background="../img/background/jenkins.png">
 					<section id="jenkins">
@@ -529,119 +568,68 @@ docker service ps registry</code></pre>
 					<section id="jenkins-service">
 						<h1>Jenkins Service</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>mkdir -p docker/jenkins
+						<pre><code data-trim contenteditable>docker service create --name jenkins \
+  -e JENKINS_OPTS="--prefix=/jenkins" \
+  --mount "type=volume,source=jenkins,target=/var/jenkins_home,volume-driver=rexray" \
+  --label com.df.notify=true --label com.df.distribute=true \
+  --label com.df.servicePath=/jenkins --label com.df.port=8080 \
+  --network proxy jenkins:2.7.4-alpine
 
-docker service create --name jenkins --reserve-memory 300m \
-    -p 8082:8080 -p 50000:50000 \
-    -e JENKINS_OPTS="--prefix=/jenkins" \
-    --mount "type=bind,source=$PWD/docker/jenkins,target=/var/jenkins_home" \
-    jenkins:alpine
-
-docker service ps jenkins
-
-open http://$(docker-machine ip swarm-1):8082/jenkins
-
-cat docker/jenkins/secrets/initialAdminPassword</code></pre>
+docker service ps jenkins</code></pre>
+						<ul>
+							<li><a href="http://[IP]/jenkins">http://[IP]/jenkins</a></li>
+						</ul>
 					</section>
 					<section id="jenkins-setup">
 						<h1>Jenkins Setup</h1>
 						<hr/>
+						<pre><code data-trim contenteditable>docker run -it --rm \
+  --volume-driver rexray -v jenkins:/var/jenkins_home \
+  alpine cat /var/jenkins_home/secrets/initialAdminPassword
+
+# Copy the password
+
+docker service rm jenkins-pass</code></pre>
 						<ul>
-							<li class="fragment">Type the <code>Administrator password</code></li>
-							<li class="fragment">Select <code>Install suggested plugins</code></li>
-							<li class="fragment">Type <code>admin</code> as both <code>user</code> and <code>password</code>.</li>
-							<li class="fragment">Fill in the rest of the fields and press <code>Save And Finish</code>.</li>
-							<li class="fragment">Click <code>Start Using Jenkins</code></li>
+							<li>Type the <code>Administrator password</code></li>
+							<li>Select <code>Install suggested plugins</code></li>
+							<li>Type <code>admin</code> as both <code>user</code> and <code>password</code>.</li>
+							<li>Fill in the rest of the fields and press <code>Save And Finish</code>.</li>
+							<li>Click <code>Start Using Jenkins</code></li>
 						</ul>
 					</section>
 					<section id="jenkins-failover">
 						<h1>Jenkins Failover</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>NODE=$(docker service ps -f desired-state=running jenkins | tail +2 | awk '{print $4}')
+						<ul>
+							<li>Enter the node where Jenkins is running</li>
+						</ul>
+						<pre><code data-trim contenteditable>docker rm -f $(docker ps -qa -f "ancestor=jenkins:2.7.4-alpine")
 
-eval $(docker-machine env $NODE)
-
-docker rm -f $(docker ps -qa -f "ancestor=jenkins:alpine")
-
-eval $(docker-machine env swarm-1)
-
-docker service ps jenkins
-
-open http://$(docker-machine ip swarm-1):8082/jenkins</code></pre>
+docker service ps jenkins</code></pre>
+						<ul>
+							<li><a href="http://[IP]/jenkins">http://[IP]/jenkins</a></li>
+						</ul>
 					</section>
-					<section id="jenkins-agent-cluster">
-						<h1>Agents Cluster</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8082/jenkins/pluginManager/available
-
-# Select *Self-Organizing Swarm Plug-in Modules*
-# Click *Install without restart*
-
-docker-machine create -d virtualbox swarm-test-1
-
-docker-machine ssh swarm-test-1
-
-sudo mkdir -p /workspace && sudo chmod 777 /workspace && exit
-
-eval $(docker-machine env swarm-test-1)
-
-docker swarm init \
-    --advertise-addr $(docker-machine ip swarm-test-1)</code></pre>
-					</section>
-                    <section id="jenkins-agent-visualizer">
-                        <h1>Visualizer</h1>
-                        <hr/>
-                        <pre><code data-trim contenteditable>docker service create \
-  --name=visualizer \
-  --publish=8083:8080/tcp \
-  --constraint=node.role==manager \
-  --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
-  manomarks/visualizer
-
-open http://$(docker-machine ip swarm-test-1):8083</code></pre>
-                    </section>
+					<!--TODO: Continue-->
 					<section id="jenkins-agent">
-						<h1>Jenkins Agent</h1>
+						<h1>Jenkins Agents</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>export USER=admin && export PASSWORD=admin
+						<ul>
+							<li><a href="http://[IP]/jenkins/pluginManager/available">http://[IP]/jenkins/pluginManager/available</a></li>
+							<li>Select <code>Self-Organizing Swarm Plug-in Modules</code></li>
+							<li>Click <code>Install without restart</code></li>
+						</ul>
+						<pre><code data-trim contenteditable>docker service create --name jenkins-agent \
+  -e COMMAND_OPTIONS="-master http://jenkins:8080/jenkins -username admin -password admin -labels 'docker' -executors 5" \
+  --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
+  --mount "type=bind,source=/workspace,target=/workspace" \
+  --mode global --network proxy vfarcic/jenkins-swarm-agent
 
-docker service create --name jenkins-agent \
-    -e COMMAND_OPTIONS="-master http://$(docker-machine ip swarm-1):8082/jenkins -username $USER -password $PASSWORD -labels 'docker' -executors 5" \
-    --mode global \
-    --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
-    --mount "type=bind,source=/workspace,target=/workspace" \
-    --mount "type=bind,source=$HOME/.docker/machine/machines,target=/machines" \
-    vfarcic/jenkins-swarm-agent
-
-docker service ps jenkins-agent
-
-open http://$(docker-machine ip swarm-1):8082/jenkins/computer/</code></pre>
-					</section>
-					<section id="jenkins-agent-node-add">
-						<h1>Adding Agent Nodes</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker-machine create -d virtualbox swarm-test-2
-
-docker-machine ssh swarm-test-2
-
-sudo mkdir -p /workspace && sudo chmod 777 /workspace && exit
-
-TOKEN=$(docker swarm join-token -q manager)
-
-eval $(docker-machine env swarm-test-2)
-
-docker swarm join --token $TOKEN \
-    --advertise-addr $(docker-machine ip swarm-test-2) \
-    $(docker-machine ip swarm-test-1):2377</code></pre>
-					</section>
-					<section id="jenkins-agent-add">
-						<h1>Adding Agent Nodes</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-test-1)
-
-docker service ps jenkins-agent
-
-open http://$(docker-machine ip swarm-1):8082/jenkins/computer</code></pre>
+docker service ps jenkins-agent</code></pre>
+						<ul>
+							<li><a href="http://[IP]/jenkins">http://[IP]/jenkins/computer</a></li>
+						</ul>
 					</section>
 					<section id="jenkins-registry">
 						<h1>Registry Service</h1>

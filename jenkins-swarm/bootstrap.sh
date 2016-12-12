@@ -38,11 +38,13 @@ for i in 1 2; do
 
     eval $(docker-machine env swarm-test-$i)
 
+    docker pull golang:1.6
+
     docker pull vfarcic/jenkins-swarm-agent
 
     docker pull registry
 
-    docker pull mongo
+    docker pull mongo:3.2.10
 
     docker pull manomarks/visualizer
 
