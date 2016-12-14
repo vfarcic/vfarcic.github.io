@@ -533,7 +533,7 @@ docker push localhost:5000/go-demo</code></pre>
 						<hr/>
 						<pre><code data-trim contenteditable>docker service ps registry
 
-IP=[...]
+IP=[...]  # Manager private IP
 
 docker -H tcp://$IP:2375 rm -f \
   $(docker -H tcp://$IP:2375 ps -qa -f "ancestor=registry")
@@ -588,9 +588,7 @@ docker service ps jenkins</code></pre>
   --volume-driver rexray -v jenkins:/var/jenkins_home \
   alpine cat /var/jenkins_home/secrets/initialAdminPassword
 
-# Copy the password
-
-docker service rm jenkins-pass</code></pre>
+# Copy the password</code></pre>
 						<ul>
 							<li>Type the <code>Administrator password</code></li>
 							<li>Select <code>Install suggested plugins</code></li>
@@ -604,7 +602,7 @@ docker service rm jenkins-pass</code></pre>
 						<hr/>
 						<pre><code data-trim contenteditable>docker service ps jenkins
 
-IP=[...]
+IP=[...]  # Manager private IP
 
 docker -H tcp://$IP:2375 rm -f $(docker \
   -H tcp://$IP:2375 ps -qa -f "ancestor=jenkins:2.7.4-alpine")
@@ -667,7 +665,7 @@ ssh -i devops21.pem ubuntu@$(terraform \
 ssh -i devops21.pem ubuntu@$(terraform \
   output test_swarm_manager_1_public_ip)
 
-export JENKINS_IP=[...]
+export JENKINS_IP=[...] # Manager private IP
 
 docker service create --name jenkins-agent \
   -e COMMAND_OPTIONS="-master http://$JENKINS_IP/jenkins -username admin -password admin -labels 'docker' -executors 5" \
@@ -877,7 +875,7 @@ docker service ps logspout</code></pre>
 					<section id="logspout-test">
 						<h1>Testing Log Spout</h1>
 						<hr/>
-						<pre><code data-trim contenteditable>IP=[...]
+						<pre><code data-trim contenteditable>IP=[...]  # Logstash private IP
 
 docker -H tcp://$IP:2375 logs -f $(docker \
   -H tcp://$IP:2375 ps -qa -f "ancestor=vfarcic/logstash-devops21")</code></pre>

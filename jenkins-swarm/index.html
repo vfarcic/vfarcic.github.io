@@ -115,87 +115,107 @@
                         <h3 class="fragment">Docker Registry</h3>
                         <h3 class="fragment">Docker Swarm</h3>
                     </section>
-                    <section id="swarm-nodes">
-                        <h3>Docker Swarm</h3>
-                        <h1>Nodes Setup</h1>
+                    <section id="pre-reqs">
+                        <h1>Prerequisites</h1>
                         <hr/>
-                        <pre><code data-trim contenteditable>for i in 1 2 3; do
-    docker-machine create -d virtualbox swarm-$i
-done</code></pre>
+                        <pre><code data-trim contenteditable>git clone https://github.com/vfarcic/cloud-provisioning.git
+
+cd cloud-provisioning/terraform/aws-full
+
+export AWS_ACCESS_KEY_ID=[...]
+
+export AWS_SECRET_ACCESS_KEY=[...]
+
+export AWS_DEFAULT_REGION=us-east-1
+
+aws ec2 create-key-pair --key-name devops21 | jq -r '.KeyMaterial' >devops21.pem
+
+packer build -machine-readable packer-ubuntu-docker-compose.json \
+  | tee packer-ubuntu-docker-compose.log</code></pre>
+                    </section>
+                    <section id="swarm-init">
+                        <h3>Docker Swarm</h3>
+                        <h1>Initialize</h1>
+                        <hr/>
+                        <pre><code data-trim contenteditable>export TF_VAR_aws_access_key=[...]
+
+export TF_VAR_aws_secret_key=[...]
+
+export TF_VAR_aws_default_region=us-east-1
+
+export TF_VAR_swarm_ami_id=$(grep 'artifact,0,id' \
+  packer-ubuntu-docker-rexray.log | cut -d, -f6 | cut -d: -f2)
+
+terraform apply -target aws_instance.swarm-manager \
+  -var swarm_init=true -var swarm_managers=1 -var rexray=true
+
+ssh -i devops21.pem ubuntu@$(terraform output \
+  swarm_manager_1_public_ip) docker node ls</code></pre>
+                    </section>
+                    <section id="swarm-stack">
+                        <h3>Docker Swarm</h3>
+                        <h1>Add Nodes</h1>
+                        <hr/>
+                        <pre><code data-trim contenteditable>export TF_VAR_swarm_manager_token=$(ssh -i devops21.pem \
+  ubuntu@$(terraform output swarm_manager_1_public_ip) \
+  docker swarm join-token -q manager)
+
+export TF_VAR_swarm_manager_ip=$(terraform \
+  output swarm_manager_1_private_ip)
+
+terraform apply -target aws_instance.swarm-manager -var rexray=true
+
+ssh -i devops21.pem ubuntu@$(terraform \
+  output swarm_manager_1_public_ip) docker node ls</code></pre>
                     </section>
                     <section id="swarm-visualizer">
                         <h3>Docker Swarm</h3>
                         <h1>Visualizer</h1>
                         <hr/>
-                        <pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
+                        <pre><code data-trim contenteditable>terraform output swarm_manager_1_public_ip
 
-docker run --name visualizer -d \
-    -p 8083:8083 \
-    -e HOST=$(docker-machine ip swarm-1) \
-    -e PORT=8083 \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    manomarks/visualizer
+ssh -i devops21.pem ubuntu@$(terraform \
+  output swarm_manager_1_public_ip)
 
-open http://$(docker-machine ip swarm-1):8083</code></pre>
+docker service create --name=visualizer \
+  --publish=9090:8080/tcp --constraint=node.role==manager \
+  --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+  manomarks/visualizer</code></pre>
+                        <ul>
+                            <li><a href="http://[IP]:9090">http://[IP]:9090</a></li>
+                        </ul>
                     </section>
-                    <section id="cdp-cluster">
-                        <h3>Docker Swarm</h3>
-                        <h1>Cluster Setup</h1>
+                    <section id="swarm-network">
+                        <h1>Networking</h1>
                         <hr/>
-                        <pre><code data-trim contenteditable>docker swarm init --advertise-addr $(docker-machine ip swarm-1)
-
-TOKEN=$(docker swarm join-token -q manager)
-
-for i in 2 3; do
-  eval $(docker-machine env swarm-$i)
-  docker swarm join --token $TOKEN --advertise-addr $(docker-machine ip swarm-$i) $(docker-machine ip swarm-1):2377
-done
-
-for i in 1 2 3; do
-  docker node update --label-add type=manager swarm-$i
-done
-
-eval $(docker-machine env swarm-1)
-
-docker node ls</code></pre>
-                    </section>
-                    <section id="swarm-registry">
-                        <h3>Docker Swarm</h3>
-                        <h1>Registry</h1>
-                        <hr/>
-                        <pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
-
-docker service create --name registry -p 5000:5000 \
-    --mount "type=bind,source=$PWD,target=/var/lib/registry" \
-    --reserve-memory 100m registry
-
-docker service ps registry</code></pre>
-                    </section>
-                    <section id="swarm-service-create">
-                        <h3>Docker Swarm</h3>
-                        <h1>Create Services</h1>
-                        <hr/>
-                        <pre><code data-trim contenteditable>docker network create --driver overlay proxy
+						<pre><code data-trim contenteditable>docker network create --driver overlay proxy
 
 docker network create --driver overlay go-demo
 
-docker service create --name go-demo-db --network go-demo mongo
+docker network ls</code></pre>
+                    </section>
+                    <section id="swarm-service">
+                        <h1>Service</h1>
+                        <hr/>
+						<pre><code data-trim contenteditable>docker service create --name go-demo-db \
+  --network go-demo --reserve-memory 100m mongo
+
+docker service create --name go-demo -e DB=go-demo-db \
+  --network go-demo --network proxy --reserve-memory 50m \
+  --label com.df.notify=true --label com.df.distribute=true \
+  --label com.df.servicePath=/demo --label com.df.port=8080 \
+  vfarcic/go-demo
 
 docker service ls
 
-docker service create --name go-demo -e DB=go-demo-db \
-  --network go-demo --network proxy --reserve-memory 100m \
-  --label com.df.notify=true --label com.df.distribute=true \
-  --label com.df.servicePath=/demo --label com.df.port=8080 \
-  --replicas 3 vfarcic/go-demo
+docker service ps go-demo
 
-docker service ps go-demo</code></pre>
+docker service inspect go-demo --pretty</code></pre>
                     </section>
                     <section id="swarm-proxy">
-                        <h3>Docker Swarm</h3>
                         <h1>Reverse Proxy</h1>
                         <hr/>
-                        <pre><code data-trim contenteditable>docker service create --name swarm-listener \
+						<pre><code data-trim contenteditable>docker service create --name swarm-listener \
   --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
   -e DF_NOTIF_CREATE_SERVICE_URL=http://proxy:8080/v1/docker-flow-proxy/reconfigure \
   -e DF_NOTIF_REMOVE_SERVICE_URL=http://proxy:8080/v1/docker-flow-proxy/remove \
@@ -203,14 +223,24 @@ docker service ps go-demo</code></pre>
   vfarcic/docker-flow-swarm-listener
 
 docker service create -e MODE=swarm -e LISTENER_ADDRESS=swarm-listener \
-  -p 80:80 -p 443:443 --network proxy \
+  -p 80:80 -p 443:443 --network proxy --replicas 3 \
   --name proxy vfarcic/docker-flow-proxy
 
-docker service ps swarm-listener
+docker service ls
 
-docker service ps proxy
+docker service ps proxy</code></pre>
+                        <ul>
+                            <li><a href="http://[IP]">http://[IP]/demo/hello</a></li>
+                        </ul>
+                    </section>
+                    <section id="swawrm-registry">
+                        <h1>Registry Service</h1>
+                        <hr/>
+						<pre><code data-trim contenteditable>docker service create --name registry -p 5000:5000 \
+  --mount "type=volume,source=registry,target=/var/lib/registry,volume-driver=rexray" \
+  --reserve-memory 100m registry
 
-curl -i $(docker-machine ip swarm-1)/demo/hello</code></pre>
+docker service ps registry</code></pre>
                     </section>
                 </section>
                 <section data-background="../img/background/continuous-deployment.png">
@@ -270,151 +300,130 @@ curl -i $(docker-machine ip swarm-1)/demo/hello</code></pre>
                     </section>
                 </section>
                 <section data-background="../img/background/manual.jpg">
-                    <section id="cdp-jenkins-service">
-                        <h3>Continuous Deployment</h3>
+                    <section id="jenkins-service">
                         <h1>Jenkins Service</h1>
                         <hr/>
-                        <pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
-
-mkdir -p docker/jenkins
-
-docker service create --name jenkins --reserve-memory 300m \
-    -p 8082:8080 -p 50000:50000 -e JENKINS_OPTS="--prefix=/jenkins" \
-    --mount "type=bind,source=$PWD/docker/jenkins,target=/var/jenkins_home" \
-    jenkins:alpine
+                            <pre><code data-trim contenteditable>docker service create --name jenkins \
+  -e JENKINS_OPTS="--prefix=/jenkins" \
+  --mount "type=volume,source=jenkins,target=/var/jenkins_home,volume-driver=rexray" \
+  --label com.df.notify=true --label com.df.distribute=true \
+  --label com.df.servicePath=/jenkins --label com.df.port=8080 \
+  -p 50000:50000 --network proxy jenkins:2.7.4-alpine
 
 docker service ps jenkins</code></pre>
+                        <ul>
+                            <li><a href="http://[IP]/jenkins">http://[IP]/jenkins</a></li>
+                        </ul>
                     </section>
-                    <section id="cdp-jenkins-setup">
-                        <h3>Continuous Deployment</h3>
+                    <section id="jenkins-setup">
                         <h1>Jenkins Setup</h1>
                         <hr/>
-                        <pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8082/jenkins
+						<pre><code data-trim contenteditable>docker run -it --rm \
+  --volume-driver rexray -v jenkins:/var/jenkins_home \
+  alpine cat /var/jenkins_home/secrets/initialAdminPassword
 
-cat docker/jenkins/secrets/initialAdminPassword</code></pre>
+# Copy the password</code></pre>
                         <ul>
-                            <li>Paste the output</li>
-                            <li>Select "Install suggested plugins"</li>
-                            <li>Type "admin" as both user and password.</li>
-                            <li>Fill in the rest of the fields and press "Save And Finish".</li>
-                            <li>Click "Start Using Jenkins"</li>
+                            <li>Type the <code>Administrator password</code></li>
+                            <li>Select <code>Install suggested plugins</code></li>
+                            <li>Type <code>admin</code> as both <code>user</code> and <code>password</code>.</li>
+                            <li>Fill in the rest of the fields and press <code>Save And Finish</code>.</li>
+                            <li>Click <code>Start Using Jenkins</code></li>
                         </ul>
                     </section>
-                    <section id="cdp-jenkins-swarm-plugin">
-                        <h3>Continuous Deployment</h3>
-                        <h1>Jenkins Swarm Plugin</h1>
-                        <hr/>
-                        <pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8082/jenkins/pluginManager/available</code></pre>
-                        <ul>
-                            <li>Select "Self-Organizing Swarm Plug-in Modules"</li>
-                            <li>Click "Install without restart"</li>
-                        </ul>
-                    </section>
-                    <section id="cdp-jenkins-failover">
-                        <h3>Continuous Deployment</h3>
+                    <section id="jenkins-failover">
                         <h1>Jenkins Failover</h1>
                         <hr/>
-                        <pre><code data-trim contenteditable>NODE=$(docker service ps -f desired-state=running jenkins \
-    | tail +2 | awk '{print $4}')
+						<pre><code data-trim contenteditable>docker service ps jenkins
 
-eval $(docker-machine env $NODE)
+IP=[...] # Manager private IP
 
-docker rm -f $(docker ps -qa -f "ancestor=jenkins:alpine")
+docker -H tcp://$IP:2375 rm -f $(docker \
+  -H tcp://$IP:2375 ps -qa -f "ancestor=jenkins:2.7.4-alpine")
 
 docker service ps jenkins
 
-open http://$(docker-machine ip swarm-1):8082/jenkins</code></pre>
-                    </section>
-                    <section id="cdp-jenkins-agent-cluster">
-                        <h3>Continuous Deployment</h3>
-                        <h1>Agents Cluster</h1>
-                        <hr/>
-                        <pre><code data-trim contenteditable>docker-machine create -d virtualbox swarm-test-1
-
-docker-machine ssh swarm-test-1
-
-sudo mkdir -p /workspace && sudo chmod 777 /workspace && exit
-
-eval $(docker-machine env swarm-test-1)
-
-docker swarm init --advertise-addr $(docker-machine ip swarm-test-1)</code></pre>
-                    </section>
-                    <section id="cdp-jenkins-agent-visualizer">
-                        <h3>Continuous Deployment</h3>
-                        <h1>Visualizer</h1>
-                        <hr/>
-                        <pre><code data-trim contenteditable>docker run --name visualizer -d \
-    -p 8083:8083 \
-    -e HOST=$(docker-machine ip swarm-test-1) \
-    -e PORT=8083 \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    manomarks/visualizer
-
-open http://$(docker-machine ip swarm-test-1):8083</code></pre>
-                    </section>
-                    <section id="cdp-jenkins-agent-container">
-                        <h3>Continuous Deployment</h3>
-                        <h1>Agent Container</h1>
-                        <hr/>
-                        <pre><code data-trim contenteditable>mkdir -p docker/jenkins/workspace
-
-export USER=admin && export PASSWORD=admin
-
-docker service create --name jenkins-agent \
-    -e COMMAND_OPTIONS="-master http://$(docker-machine ip swarm-1):8082/jenkins -username $USER -password $PASSWORD -labels 'docker' -executors 5" \
-    --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
-    --mount "type=bind,source=/workspace,target=/workspace" \
-    --mount "type=bind,source=$HOME/.docker/machine/machines,target=/machines" \
-    --mode global vfarcic/jenkins-swarm-agent
-
-docker service ps jenkins-agent
-
-open http://$(docker-machine ip swarm-1):8082/jenkins/computer/</code></pre>
-                    </section>
-                    <section id="cdp-jenkins-agent-more">
-                        <h3>Continuous Deployment</h3>
-                        <h1>More Agents</h1>
-                        <hr/>
-                        <pre><code data-trim contenteditable>docker-machine create -d virtualbox swarm-test-2
-
-docker-machine ssh swarm-test-2
-
-sudo mkdir -p /workspace && sudo chmod 777 /workspace && exit
-
-TOKEN=$(docker swarm join-token -q manager)
-
-eval $(docker-machine env swarm-test-2)
-
-docker swarm join --token $TOKEN --advertise-addr $(docker-machine ip swarm-test-2) $(docker-machine ip swarm-test-1):2377
-
-docker service ps jenkins-agent
-
-open http://$(docker-machine ip swarm-1):8082/jenkins/computer/</code></pre>
-                    </section>
-                    <section id="jenkins-config">
-                        <h3>Continuous Deployment</h3>
-                        <h1>Jenkins Config</h1>
-                        <hr/>
-                        <pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8082/jenkins/configure
-
-docker-machine ip swarm-1</code></pre>
+exit</code></pre>
                         <ul>
-                            <li>Click "Environment Variables", click "Add"</li>
-                            <li>Type "PROD_IP" as "Name", paste the output as "Value"</li>
-                            <li>Click "Add"</li>
-                            <li>Type "PROD_NAME" as "Name", type "swarm-1" as "Value"</li>
-                            <li>Click "Save"</li>
+                            <li><a href="http://[IP]/jenkins">http://[IP]/jenkins</a></li>
                         </ul>
                     </section>
-                    <section id="cdp-jenkins-agent-registry">
-                        <h3>Continuous Deployment</h3>
-                        <h1>Registry</h1>
+                    <section id="jenkins-swarm-plugin">
+                        <h3>Jenkins Agents</h3>
+                        <h1>Jenkins Swarm Plugin</h1>
                         <hr/>
-                        <pre><code data-trim contenteditable>docker service create --name registry -p 5000:5000 \
-    --mount "type=bind,source=$PWD,target=/var/lib/registry" \
-    --reserve-memory 100m registry
+                        <ul>
+                            <li><a href="http://[IP]/jenkins/pluginManager/available">http://[IP]/jenkins/pluginManager/available</a></li>
+                            <li>Select <code>Self-Organizing Swarm Plug-in Modules</code></li>
+                            <li>Click <code>Install without restart</code></li>
+                        </ul>
+                    </section>
+                    <section id="jenkins-agents-cluster-nodes">
+                        <h3>Jenkins Agents</h3>
+                        <h1>Cluster</h1>
+                        <hr/>
+                        <pre><code data-trim contenteditable>terraform apply -target aws_instance.test-swarm-manager \
+  -var swarm_init=true -var test_swarm_managers=1 -var rexray=true
 
-docker service ps registry</code></pre>
+export TF_VAR_test_swarm_manager_token=$(ssh -i devops21.pem \
+  ubuntu@$(terraform output test_swarm_manager_1_public_ip) \
+  docker swarm join-token -q manager)
+
+export TF_VAR_test_swarm_manager_ip=$(terraform \
+  output test_swarm_manager_1_private_ip)
+
+terraform apply -target aws_instance.test-swarm-manager \
+  -var rexray=true
+
+ssh -i devops21.pem ubuntu@$(terraform \
+  output test_swarm_manager_1_public_ip) docker node ls</code></pre>
+                    </section>
+                    <section id="jenkins-test-cluster">
+                        <h3>Jenkins Agents</h3>
+                        <h1>Service</h1>
+                        <hr/>
+						<pre><code data-trim contenteditable>terraform output swarm_manager_1_public_ip
+
+ssh -i devops21.pem ubuntu@$(terraform \
+  output test_swarm_manager_1_public_ip)
+
+export JENKINS_IP=[...] # Manager private IP
+
+docker service create --name jenkins-agent \
+  -e COMMAND_OPTIONS="-master http://$JENKINS_IP/jenkins -username admin -password admin -labels 'docker' -executors 5" \
+  --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
+  --mount "type=bind,source=/workspace,target=/workspace" \
+  --mode global vfarcic/jenkins-swarm-agent
+
+docker service ps jenkins-agent</code></pre>
+                        <ul>
+                            <li><a href="http://[IP]/jenkins/computer">http://[IP]/jenkins/computer</a></li>
+                        </ul>
+                    </section>
+                    <section id="jenkins-registry">
+                        <h1>Registry Service</h1>
+                        <hr/>
+						<pre><code data-trim contenteditable>docker service create --name registry -p 5000:5000 \
+  --mount "type=volume,source=registry,target=/var/lib/registry,volume-driver=rexray" \
+  --reserve-memory 100m registry
+
+docker service ps registry
+
+exit
+
+terraform output swarm_manager_1_private_ip</code></pre>
+                    </section>
+                    <section id="jenkins-env">
+                        <h1>Env. Variables</h1>
+                        <hr/>
+                        <ul>
+                            <li><a href="http://[IP]/jenkins/configure">http://[IP]/jenkins/configure</a></li>
+                            <li>Click <code>Environment Variables</code></li>
+                            <li>Click <code>Add</code></li>
+                            <li>Type <code>PROD_IP</code> as <code>Name</code></li>
+                            <li>Paste the output as <code>Value</code></li>
+                            <li>Click <code>Save</code></li>
+                        </ul>
                     </section>
                 </section>
                 <section data-background="../img/background/manual.jpg">
@@ -484,9 +493,7 @@ docker service ps registry</code></pre>
 
   stage("Production") {
     withEnv([
-      "DOCKER_TLS_VERIFY=1",
-      "DOCKER_HOST=tcp://${env.PROD_IP}:2376",
-      "DOCKER_CERT_PATH=/machines/${env.PROD_NAME}"
+      "DOCKER_HOST=tcp://${env.PROD_IP}:2375"
     ]) {
       sh "docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo"
     }
@@ -498,9 +505,8 @@ docker service ps registry</code></pre>
                         <h3>Continuous Deployment</h3>
                         <h1>Jenkins Pipeline Job</h1>
                         <hr/>
-                        <pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
-
-docker service ps go-demo</code></pre>
+                        <pre><code data-trim contenteditable>ssh -i devops21.pem ubuntu@$(terraform \
+  output swarm_manager_1_public_ip) docker service ps go-demo</code></pre>
                     </section>
                 </section>
                 <section data-background="../img/background/the_end.jpg">
@@ -553,10 +559,16 @@ docker service ps go-demo</code></pre>
                 <section>
                     <section data-background="../img/background/cleanup.jpg">
                         <h1>Cleanup</h1>
-                        <pre><code data-trim contenteditable>docker-machine rm -f \
-    swarm-1 swarm-2 swarm-3 swarm-test-1 swarm-test-2
+                        <pre><code data-trim contenteditable>ssh -i devops21.pem ubuntu@$(terraform \
+  output swarm_manager_1_public_ip)
 
-rm -rf docker</code></pre>
+docker service rm jenkins registry
+
+docker volume rm registry jenkins
+
+exit
+
+terraform destroy -force</code></pre>
                     </section>
                 </section>
 			</div>
