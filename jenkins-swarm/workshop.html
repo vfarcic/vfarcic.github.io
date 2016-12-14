@@ -626,9 +626,7 @@ docker swarm init --advertise-addr $(docker-machine ip swarm-test-1)</code></pre
                         <h3>Continuous Deployment</h3>
                         <h1>Agent Container</h1>
                         <hr/>
-                        <pre><code data-trim contenteditable>mkdir -p docker/jenkins/workspace
-
-export USER=admin && export PASSWORD=admin
+                        <pre><code data-trim contenteditable>export USER=admin && export PASSWORD=admin
 
 docker service create --name jenkins-agent \
     -e COMMAND_OPTIONS="-master http://$(docker-machine ip swarm-1):8082/jenkins -username $USER -password $PASSWORD -labels 'docker' -executors 5" \
