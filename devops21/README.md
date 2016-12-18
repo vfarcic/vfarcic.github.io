@@ -8,8 +8,6 @@ The talk will go through the whole microservices development lifecycle. We’ll 
 
 The goal is to design a fully automated continuous deployment (CDP) pipeline. We’ll see how microservices fit into CDP and immutable containers concepts and why the best results are obtained when those three are combined into one unique framework.
 
-During the talk we’ll explore tools like Docker, Docker Swarm, Docker Compose, Jenkins, HAProxy, and a few others.
-
 ## Abstract: Talk CDP
 
 Docker changed the way we are implementing continuous deployment processes. It enables us to simplify and speed up the process and, through immutability, guarantee that services we are testing will reach production unchanged.
@@ -35,6 +33,10 @@ We'll explore the practices and tools required to run a Swarm cluster. We'll go 
 We'll explore the practices and tools required to run Jenkins inside a Swarm cluster. We'll go beyond a simple deployment. We'll explore how to create a continuous deployment process. We'll set up multiple clusters. One will be dedicated to testing and the other for production. We'll see how to accomplish zero-downtime deployments, what to do in case of a failover, how to run services at scale, how to monitor the systems, and how to make it heal itself. We'll explore the processes that will allow us to run the clusters on a laptop as well as on different cloud providers.
 
 The examples will set up Jenkins master in a way that it is fault tolerant and create a dynamic cluster for running agents. Once Jenkins is up and running, we'll use Pipeline to define a continuous deployment flow for one of the services.
+
+### Pitch: Workshop
+
+The workshop walks the audience through some of the best practices we're facing when working on distributed systems at scale.
 
 # Learning Outcomes
 

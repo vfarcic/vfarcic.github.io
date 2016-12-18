@@ -54,6 +54,10 @@ Learning Outcomes
 * Architecture: needs to change towards smaller services
 * Culture: needs to follow technological changes (and vice versa)
 
+### Pitch
+
+The talk describes best practices we're facing when working on distributed systems at scale.
+
 ### Bio
 
 **Viktor Farcic** is a Senior Consultant at **[CloudBees](https://www.cloudbees.com/)**, a member of the **[Docker Captains](https://www.docker.com/community/docker-captains)** group, and books author.
