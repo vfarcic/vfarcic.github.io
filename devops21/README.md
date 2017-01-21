@@ -1,4 +1,5 @@
 # The DevOps 2.1 Toolkit: Continuously Deploying Microservices To a Swarm Cluster
+# Microservices Lifecycle Explained Through Docker And Continuous Deployment
 
 ## Abstract: Talk
 
