@@ -46,499 +46,78 @@
 						 data-charset="iso-8859-15"
 						 data-background="../img/background/devops21.jpg">
 				</section>
-                <section data-background="../img/background/about-me.jpg">
-                    <section id="about-me">
-                        <h2>Viktor Farcic</h2>
-                        <img src="../img/viktor.jpg" style="width: 50%; height: 50%;" />
-                    </section>
-                    <section id="about-company">
-                        <a href="https://www.cloudbees.com">
-                            <img src="../img/company-big.png" style="background-color: white;" />
-                        </a>
-                    </section>
-                    <section id="about-docker">
-                        <a href="https://www.docker.com/community/docker-captains">
-                            <img src="../img/docker-captain.png" style="width: 50%; height: 50%;" />
-                        </a>
-                    </section>
-                    <section id="about-books">
-                        <figure style="width: 30%; height: 30%; float: left;">
-                            <a href="https://leanpub.com/the-devops-2-toolkit">
-                                <img src="../img/devops2.png" />
-                            </a>
-                        </figure>
-                        <figure style="width: 30%; height: 30%; float: left;">
-                            <a href="https://leanpub.com/the-devops-2-1-toolkit">
-                                <img src="../img/devops21.png" />
-                            </a>
-                        </figure>
-                        <figure style="width: 30%; height: 30%; float: left;">
-                            <a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">
-                                <img src="../img/tdd.jpg" />
-                            </a>
-                        </figure>
-                    </section>
-                </section>
-				<section>
-					<section id="berserker" data-background="../img/background/berserker.jpg">
-						<h1>Berserker</h1>
-						<hr/>
-						<h3 class="fragment">An ancient Norse warrior who fought in a wild frenzy</h3>
-					</section>
+				<section id="about-me"
+						 data-markdown="about-me.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/about-me.jpg">
 				</section>
-				<section>
-					<section id="monolith" data-background="../img/background/monolith.png">
-						<h1>Changed everything</h1>
-						<hr/>
-						<h3>Monoliths</h3>
-						<h3 class="fragment">become microservices</h3>
-						<h3 class="fragment">Why now?</h3>
-					</section>
-					<section id="infrastructure" data-background="../img/background/servers.jpg">
-						<h1>Changed everything</h1>
-						<hr/>
-						<h3>OS infrastructure</h3>
-						<h3 class="fragment">moves to containers</h3>
-						<h3 class="fragment">and becomes immutable</h3>
-						<h3 class="fragment">Consequences?</h3>
-					</section>
-					<section id="servers" data-background="../img/background/scaling.png">
-						<h1>Changed everything</h1>
-						<hr/>
-						<h3>Servers</h3>
-						<h3 class="fragment">become cluster</h3>
-						<h3 class="fragment">The result?</h3>
-					</section>
-					<section id="cluster" data-background="../img/background/truth.jpg">
-						<h1>Changed everything</h1>
-						<hr/>
-						<h3>Cluster</h3>
-						<h3 class="fragment">changes software architecture</h3>
-						<h3 class="fragment">into immutable, stateless services</h3>
-						<h3 class="fragment">that communicate through service discovery</h3>
-						<h3 class="fragment">The need for new processes!</h3>
-					</section>
-					<section id="agile" data-background="../img/background/agile.jpg">
-						<h1>Changed everything</h1>
-						<hr/>
-						<h3>Agile</h3>
-						<h3 class="fragment">changed how we develop software</h3>
-						<h3 class="fragment">but it failed to deliver it</h3>
-						<h3 class="fragment">It excluded operations!</h3>
-					</section>
-					<section id="devops" data-background="../img/background/devops21.jpg">
-						<h1>Changed everything</h1>
-						<hr/>
-						<h3>DevOps</h3>
-						<h3 class="fragment">is new agile</h3>
-						<h3 class="fragment">It enables teams to be in full control</h3>
-						<h3 class="fragment">The result?</h3>
-					</section>
-					<section id="cd" data-background="../img/background/continuous-deployment.png">
-						<h1>Changed everything</h1>
-						<hr/>
-						<h3>DevOps</h3>
-						<h3 class="fragment">enables continuous deployment</h3>
-					</section>
-					<section id="you" data-background="../img/background/truth.jpg">
-						<h1>Changed everything</h1>
-						<hr/>
-						<h3>You are NOT a coder,</h3>
-						<h3 class="fragment">a tester, or an operator</h3>
-						<h3 class="fragment">You need to know everything</h3>
-						<h3 class="fragment">and then specialize</h3>
-					</section>
+				<section id="berserker"
+						 data-markdown="berserker.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/berserker.jpg">
 				</section>
-				<section data-background="../img/background/servers.jpg">
-					<section id="infra">
-						<h1>Infrastructure</h1>
-						<hr/>
-						<ul>
-							<li class="fragment">Pets vs cattle</li>
-							<li class="fragment">Immutable</li>
-							<li class="fragment">Dynamic</li>
-							<li class="fragment">Elastic</li>
-							<li class="fragment">Automated</li>
-							<li class="fragment">Self-healing</li>
-						</ul>
-					</section>
+				<section id="devops"
+						 data-markdown="devops.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15">
 				</section>
-				<section data-background="../img/background/manual.jpg">
-					<section id="infra-demo">
-						<h1>Hands-On Time</h1>
-						<hr/>
-						<h1 class="fragment">Immutable</h1>
-						<h1 class="fragment">infrastructure</h1>
-						<h1 class="fragment">as code</h1>
-					</section>
-					<section id="prerequisites">
-						<h1>Prerequisites</h1>
-						<hr/>
-						<ul>
-							<li>AWS account</li>
-							<li>AWS CLI</li>
-							<li>Packer</li>
-							<li>Terraform</li>
-						</ul>
-					</section>
-					<section id="packer">
-						<h1>Build images</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>export AWS_ACCESS_KEY_ID=[...]
-
-export AWS_SECRET_ACCESS_KEY=[...]
-
-export AWS_DEFAULT_REGION=us-east-1
-
-git clone https://github.com/vfarcic/cloud-provisioning.git
-
-cd cloud-provisioning/terraform/aws-full
-
-aws ec2 create-key-pair --key-name devops21 \
-  | jq -r '.KeyMaterial' >devops21.pem
-
-packer build -machine-readable packer-ubuntu-docker-compose.json \
-  | tee packer-ubuntu-docker-compose.log</code></pre>
-					</section>
-					<section id="terraform">
-						<h1>Create VM Instances</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>export TF_VAR_aws_access_key=[...]
-
-export TF_VAR_aws_secret_key=[...]
-
-export TF_VAR_aws_default_region=us-east-1
-
-export TF_VAR_ci_ami_id=$(grep 'artifact,0,id' \
-  packer-ubuntu-docker-compose.log | cut -d, -f6 | cut -d: -f2)
-
-terraform plan -target aws_instance.ci -var ci_count=1
-
-terraform apply -target aws_instance.ci -var ci_count=1
-
-ssh -i devops21.pem ubuntu@$(terraform output ci_public_ip) docker version
-
-ssh -i devops21.pem ubuntu@$(terraform output ci_public_ip) docker-compose version</code></pre>
-					</section>
+				<section id="infra"
+						 data-markdown="infra.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/servers.jpg">
 				</section>
-				<section data-background="../img/background/why.jpg">
-					<section id="docker">
-						<h1>Docker Containers</h1>
-						<hr/>
-						<ul>
-							<li class="fragment">Portable <label class="fragment">== anything, anywhere</label></li>
-							<li class="fragment">Low resource usage <label class="fragment">== VMs are obese</label></li>
-							<li class="fragment">Scalable <label class="fragment">== it's not 1999</label></li>
-							<li class="fragment">Isolation <label class="fragment">== processes</label></li>
-							<li class="fragment">Self-sufficient <label class="fragment">== no infrastructure dependencies</label></li>
-							<li class="fragment">Immutable <label class="fragment">== laptop == staging == production</label></li>
-						</ul>
-						<img src="../img/products/docker.png" style="background-color: white;">
-					</section>
+				<section id="infra-demo"
+						 data-markdown="infra-demo.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/manual.jpg">
 				</section>
-				<section data-background="../img/background/manual.jpg">
-					<section id="docker-demo">
-						<h1>Hands-On Time</h1>
-						<hr/>
-						<h1 class="fragment">CI with Docker</h1>
-					</section>
-					<section id="docker-unit">
-						<h1>Unit Tests & Build</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>ssh -i devops21.pem ubuntu@$(terraform output ci_public_ip)
-
-git clone https://github.com/vfarcic/go-demo.git
-
-cd go-demo
-
-cat docker-compose-test-local.yml
-
-sudo docker-compose -f docker-compose-test.yml run --rm unit
-
-ll | grep go-demo</code></pre>
-					</section>
-					<section id="docker-build">
-						<h1>Building Images</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>cat Dockerfile
-
-sudo docker-compose -f docker-compose-test-local.yml build app
-
-sudo docker images</code></pre>
-					</section>
-					<section id="docker-staging">
-						<h1>Staging tests</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>cat docker-compose-test-local.yml
-
-sudo docker-compose -f docker-compose-test-local.yml \
-  up -d staging-dep
-
-sudo docker-compose -f docker-compose-test-local.yml ps
-
-sudo docker-compose -f docker-compose-test-local.yml \
-  run --rm staging
-
-sudo docker-compose -f docker-compose-test-local.yml down
-
-sudo docker-compose -f docker-compose-test-local.yml ps</code></pre>
-					</section>
-                    <section id="docker-registry">
-                        <h1>Registry</h1>
-                        <hr/>
-						<pre><code data-trim contenteditable>cat docker-compose-local.yml
-
-sudo docker-compose -f docker-compose-local.yml up -d registry
-
-sudo docker pull alpine
-
-sudo docker tag alpine localhost:5000/alpine
-
-sudo docker push localhost:5000/alpine
-
-sudo docker tag go-demo localhost:5000/go-demo:1.0
-
-sudo docker push localhost:5000/go-demo:1.0
-
-ll docker/registry/v2/repositories/go-demo</code></pre>
-                    </section>
-					<section id="docker-cleanup">
-						<h1>Cleanup</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>exit
-
-terraform destroy -target aws_instance.ci -force</code></pre>
-					</section>
+				<section id="docker"
+						 data-markdown="docker.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/why.jpg">
 				</section>
-                <section data-background="../img/background/swarm.jpg">
-					<section id="swarm">
-						<h1>Docker 1.12+</h1>
-						<hr/>
-						<ul>
-							<li class="fragment">Service</li>
-							<li class="fragment">Service Discovery</li>
-							<li class="fragment">Failover</li>
-							<li class="fragment">Networking</li>
-							<li class="fragment">Rolling Updates</li>
-						</ul>
-					</section>
-                </section>
-				<section data-background="../img/background/manual.jpg">
-                    <section id="swarm-demo">
-						<h1>Hands-On Time</h1>
-						<hr/>
-						<div class="fragment">
-							<h1>Setting Up</h1>
-							<h1>a Swarm Cluster</h1>
-							<h1>and</h1>
-							<h1>Running Services</h1>
-						</div>
-                    </section>
-					<section id="swarm-prereq">
-						<h3>Docker Swarm</h3>
-						<h1>Initialize</h1>
-						<hr/>
-                        <pre><code data-trim contenteditable>packer build -machine-readable packer-ubuntu-docker-rexray.json \
-  | tee packer-ubuntu-docker-rexray.log
-
-export TF_VAR_swarm_ami_id=$(grep 'artifact,0,id' \
-  packer-ubuntu-docker-rexray.log | cut -d, -f6 | cut -d: -f2)
-
-terraform plan -target aws_instance.swarm-manager \
-  -var swarm_init=true -var swarm_managers=1
-
-terraform apply -target aws_instance.swarm-manager \
-  -var swarm_init=true -var swarm_managers=1 -var rexray=true
-
-ssh -i devops21.pem ubuntu@$(terraform output \
-  swarm_manager_1_public_ip) docker node ls</code></pre>
-					</section>
-					<section id="swarm-stack">
-						<h3>Docker Swarm</h3>
-						<h1>Add Nodes</h1>
-						<hr/>
-                        <pre><code data-trim contenteditable>export TF_VAR_swarm_manager_token=$(ssh -i devops21.pem \
-  ubuntu@$(terraform output swarm_manager_1_public_ip) \
-  docker swarm join-token -q manager)
-
-export TF_VAR_swarm_manager_ip=$(terraform \
-  output swarm_manager_1_private_ip)
-
-terraform apply -target aws_instance.swarm-manager -var rexray=true
-
-ssh -i devops21.pem ubuntu@$(terraform \
-  output swarm_manager_1_public_ip) docker node ls</code></pre>
-					</section>
-					<section id="swarm-visualizer">
-						<h3>Docker Swarm</h3>
-						<h1>Visualizer</h1>
-						<hr/>
-                        <pre><code data-trim contenteditable>terraform output swarm_manager_1_public_ip
-
-ssh -i devops21.pem ubuntu@$(terraform \
-  output swarm_manager_1_public_ip)
-
-docker service create --name=visualizer \
-  --publish=9090:8080/tcp --constraint=node.role==manager \
-  --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
-  manomarks/visualizer</code></pre>
-						<ul>
-							<li><a href="http://[IP]:9090">http://[IP]:9090</a></li>
-						</ul>
-					</section>
-					<section id="swarm-network">
-						<h1>Networking</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker network create --driver overlay proxy
-
-docker network create --driver overlay go-demo
-
-docker network ls</code></pre>
-					</section>
-					<section id="swarm-service">
-						<h1>Service</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service create --name go-demo-db \
-    --network go-demo --reserve-memory 100m mongo
-
-docker service create --name go-demo -e DB=go-demo-db \
-  --network go-demo --network proxy --reserve-memory 50m \
-  --label com.df.notify=true --label com.df.distribute=true \
-  --label com.df.servicePath=/demo --label com.df.port=8080 \
-  vfarcic/go-demo
-
-docker service ls
-
-docker service ps go-demo
-
-docker service inspect go-demo --pretty</code></pre>
-					</section>
-					<section id="swarm-scale">
-						<h1>Scaling</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service scale go-demo=5
-
-docker service ps go-demo</code></pre>
-					</section>
-					<section id="swarm-network-test">
-						<h1>Global Service</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service create --name util \
-    --network go-demo --network proxy \
-    --mode global alpine sleep 1000000000
-
-docker service ps util
-
-ID=$(docker ps -q \
-  --filter label=com.docker.swarm.service.name=util)
-
-docker exec -it $ID apk add --update drill
-
-docker exec -it $ID drill go-demo-db
-
-docker exec -it $ID drill go-demo
-
-docker exec -it $ID drill tasks.go-demo</code></pre>
-					</section>
-					<section id="swarm-failover">
-						<h1>Failover</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker rm -f $(docker ps | grep go-demo \
-  | tail -1 | awk '{print $1}')
-
-docker service ps go-demo</code></pre>
-					</section>
-					<section id="swarm-proxy">
-						<h1>Reverse Proxy</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service create --name swarm-listener \
-  --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
-  -e DF_NOTIF_CREATE_SERVICE_URL=http://proxy:8080/v1/docker-flow-proxy/reconfigure \
-  -e DF_NOTIF_REMOVE_SERVICE_URL=http://proxy:8080/v1/docker-flow-proxy/remove \
-  --constraint 'node.role==manager' --network proxy \
-  vfarcic/docker-flow-swarm-listener
-
-docker service create -e MODE=swarm -e LISTENER_ADDRESS=swarm-listener \
-  -p 80:80 -p 443:443 --network proxy --replicas 3 \
-  --name proxy vfarcic/docker-flow-proxy
-
-docker service ls
-
-docker service ps proxy</code></pre>
-						<ul>
-							<li><a href="http://[IP]">http://[IP]/demo/hello</a></li>
-						</ul>
-					</section>
-					<section id="swarm-proxy-img">
-						<h1>Networking</h1>
-						<hr/>
-						<img src="../img/swarm/proxy-scaled.png">
-					</section>
-					<section id="swarm-proxy-flow-img-1" data-transition="fade-in">
-						<h1>Networking</h1>
-						<hr/>
-						<img src="../img/swarm/proxy-scaled-dns.png">
-					</section>
-					<section id="swarm-proxy-flow-img-2" data-transition="fade-in">
-						<h1>Networking</h1>
-						<hr/>
-						<img src="../img/swarm/proxy-scaled-routing-mesh.png">
-					</section>
-					<section id="swarm-proxy-flow-img-3" data-transition="fade-in">
-						<h1>Networking</h1>
-						<hr/>
-						<img src="../img/swarm/proxy-scaled-routing-proxy.png">
-					</section>
-					<section id="swarm-proxy-flow-img-4" data-transition="fade-in">
-						<h1>Networking</h1>
-						<hr/>
-						<img src="../img/swarm/proxy-scaled-proxy-sdn.png">
-					</section>
-					<section id="swarm-proxy-flow-img-5" data-transition="fade-in">
-						<h1>Networking</h1>
-						<hr/>
-						<img src="../img/swarm/proxy-scaled-request-to-service.png">
-					</section>
-                    <section id="swarm-updates">
-                        <h1>Service Updates</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service update --image vfarcic/go-demo:1.1 \
-  --update-delay 5s go-demo
-
-docker service ps go-demo</code></pre>
-                    </section>
-                    <section id="swarm-registry">
-                        <h1>Network Volumes</h1>
-                        <hr/>
-						<pre><code data-trim contenteditable>docker volume ls
-
-docker service create --name registry -p 5000:5000 \
-  --mount "type=volume,source=registry,target=/var/lib/registry,volume-driver=rexray" \
-  --reserve-memory 100m registry
-
-docker volume ls
-
-docker service ps registry
-
-docker tag vfarcic/go-demo localhost:5000/go-demo
-
-docker push localhost:5000/go-demo</code></pre>
-                    </section>
-					<section id="swarm-volume-failover">
-						<h1>Network Volumes</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service ps registry
-
-IP=[...]  # Manager private IP
-
-docker -H tcp://$IP:2375 rm -f \
-  $(docker -H tcp://$IP:2375 ps -qa -f "ancestor=registry")
-
-docker service ps registry
-
-docker pull localhost:5000/go-demo</code></pre>
-					</section>
+				<section id="docker-demo"
+						 data-markdown="docker-demo.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/manual.jpg">
 				</section>
+				<section id="swarm"
+						 data-markdown="swarm.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/swarm.jpg">
+				</section>
+				<section id="swarm-demo"
+						 data-markdown="swarm-demo.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/manual.jpg">
+				</section>
+				<!--TODO: Continue review-->
 				<section data-background="../img/background/jenkins.png">
 					<section id="jenkins">
 						<h1>Jenkins</h1>
@@ -1067,7 +646,7 @@ docker service ps grafana</code></pre>
                 <section>
                     <section data-background="../img/background/cleanup.jpg">
                         <h1>Cleanup</h1>
-                        <pre><code data-trim contenteditable>docker volume rm registry
+                        <pre><code data-trim contenteditable>docker volume rm registry_main
 
 exit
 
