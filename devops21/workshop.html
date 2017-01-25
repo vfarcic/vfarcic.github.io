@@ -117,542 +117,86 @@
 						 data-charset="iso-8859-15"
 						 data-background="../img/background/manual.jpg">
 				</section>
-				<!--TODO: Continue review-->
-				<section data-background="../img/background/jenkins.png">
-					<section id="jenkins">
-						<h1>Jenkins</h1>
-						<hr/>
-						<ul>
-							<li class="fragment">Continuous Integration</li>
-							<li class="fragment">Continuous Delivery</li>
-							<li class="fragment">Continuous Deployment</li>
-							<li class="fragment">Orchestrator</li>
-							<li class="fragment">Awesome</li>
-						</ul>
-						<img src="../img/products/jenkins.png" style="background-color: white;" />
-					</section>
+				<section id="jenkins"
+						 data-markdown="jenkins.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/jenkins.png">
 				</section>
-				<section data-background="../img/background/manual.jpg">
-					<section id="jenkins-demo">
-						<h1>Hands-On Time</h1>
-						<hr/>
-						<div class="fragment">
-							<h1>Running Jenkins</h1>
-							<h1>Inside a Cluster</h1>
-						</div>
-					</section>
-					<section id="jenkins-service">
-						<h1>Jenkins Service</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service create --name jenkins \
-  -e JENKINS_OPTS="--prefix=/jenkins" \
-  --mount "type=volume,source=jenkins,target=/var/jenkins_home,volume-driver=rexray" \
-  --label com.df.notify=true --label com.df.distribute=true \
-  --label com.df.servicePath=/jenkins --label com.df.port=8080 \
-  -p 50000:50000 --network proxy jenkins:2.7.4-alpine
-
-docker service ps jenkins</code></pre>
-						<ul>
-							<li><a href="http://[IP]/jenkins">http://[IP]/jenkins</a></li>
-						</ul>
-					</section>
-					<section id="jenkins-setup">
-						<h1>Jenkins Setup</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker run -it --rm \
-  --volume-driver rexray -v jenkins:/var/jenkins_home \
-  alpine cat /var/jenkins_home/secrets/initialAdminPassword
-
-# Copy the password</code></pre>
-						<ul>
-							<li>Type the <code>Administrator password</code></li>
-							<li>Select <code>Install suggested plugins</code></li>
-							<li>Type <code>admin</code> as both <code>user</code> and <code>password</code>.</li>
-							<li>Fill in the rest of the fields and press <code>Save And Finish</code>.</li>
-							<li>Click <code>Start Using Jenkins</code></li>
-						</ul>
-					</section>
-					<section id="jenkins-failover">
-						<h1>Jenkins Failover</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service ps jenkins
-
-IP=[...]  # Manager private IP
-
-docker -H tcp://$IP:2375 rm -f $(docker \
-  -H tcp://$IP:2375 ps -qa -f "ancestor=jenkins:2.7.4-alpine")
-
-docker service ps jenkins
-
-exit</code></pre>
-						<ul>
-							<li><a href="http://[IP]/jenkins">http://[IP]/jenkins</a></li>
-						</ul>
-					</section>
-					<section id="jenkins-swarm-plugin">
-						<h3>Jenkins Agents</h3>
-						<h1>Jenkins Swarm Plugin</h1>
-						<hr/>
-						<ul>
-							<li><a href="http://[IP]/jenkins/pluginManager/available">http://[IP]/jenkins/pluginManager/available</a></li>
-							<li>Select <code>Self-Organizing Swarm Plug-in Modules</code></li>
-							<li>Click <code>Install without restart</code></li>
-						</ul>
-					</section>
-					<section id="jenkins-agents-cluster-init">
-						<h3>Jenkins Agents</h3>
-						<h1>Initialize Cluster</h1>
-						<hr/>
-                        <pre><code data-trim contenteditable>terraform plan -target aws_instance.test-swarm-manager \
-  -var swarm_init=true -var test_swarm_managers=1
-
-terraform apply -target aws_instance.test-swarm-manager \
-  -var swarm_init=true -var test_swarm_managers=1 -var rexray=true
-
-ssh -i devops21.pem ubuntu@$(terraform output \
-  test_swarm_manager_1_public_ip) docker node ls</code></pre>
-					</section>
-					<section id="jenkins-agents-cluster-nodes">
-						<h3>Jenkins Agents</h3>
-						<h1>Add Nodes</h1>
-						<hr/>
-                        <pre><code data-trim contenteditable>export TF_VAR_test_swarm_manager_token=$(ssh -i devops21.pem \
-  ubuntu@$(terraform output test_swarm_manager_1_public_ip) \
-  docker swarm join-token -q manager)
-
-export TF_VAR_test_swarm_manager_ip=$(terraform \
-  output test_swarm_manager_1_private_ip)
-
-terraform plan -target aws_instance.test-swarm-manager
-
-terraform apply -target aws_instance.test-swarm-manager \
-  -var rexray=true
-
-ssh -i devops21.pem ubuntu@$(terraform \
-  output test_swarm_manager_1_public_ip) docker node ls</code></pre>
-					</section>
-					<section id="jenkins-test-cluster">
-						<h3>Jenkins Agents</h3>
-						<h1>Service</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>terraform output swarm_manager_1_private_ip
-
-ssh -i devops21.pem ubuntu@$(terraform \
-  output test_swarm_manager_1_public_ip)
-
-export JENKINS_IP=[...] # Manager private IP
-
-docker service create --name jenkins-agent \
-  -e COMMAND_OPTIONS="-master http://$JENKINS_IP/jenkins -username admin -password admin -labels 'docker' -executors 5" \
-  --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
-  --mount "type=bind,source=/workspace,target=/workspace" \
-  --mode global vfarcic/jenkins-swarm-agent
-
-docker service ps jenkins-agent</code></pre>
-						<ul>
-							<li><a href="http://[IP]/jenkins/computer">http://[IP]/jenkins/computer</a></li>
-						</ul>
-					</section>
-					<section id="jenkins-registry">
-						<h1>Registry Service</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service create --name registry -p 5000:5000 \
-  --mount "type=volume,source=registry,target=/var/lib/registry,volume-driver=rexray" \
-  --reserve-memory 100m registry
-
-docker service ps registry
-
-docker pull localhost:5000/go-demo
-
-exit
-
-terraform output swarm_manager_1_private_ip</code></pre>
-					</section>
-					<section id="jenkins-env">
-						<h1>Env. Variables</h1>
-						<hr/>
-						<ul>
-							<li><a href="http://[IP]/jenkins/configure">http://[IP]/jenkins/configure</a></li>
-							<li>Click <code>Environment Variables</code></li>
-							<li>Click <code>Add</code></li>
-							<li>Type <code>PROD_IP</code> as <code>Name</code></li>
-							<li>Paste the output as <code>Value</code></li>
-							<li>Click <code>Save</code></li>
-						</ul>
-					</section>
-					<section id="jenkins-job-code">
-						<h1>Pipeline Job</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>node("docker") {
-
-  git "https://github.com/vfarcic/go-demo.git"
-
-  stage("Unit") {
-    sh "docker-compose -f docker-compose-test.yml run --rm unit"
-    sh "docker build -t go-demo ."
-  }
-
-  stage("Staging") {
-    try {
-      sh "docker-compose -f docker-compose-test-local.yml up -d staging-dep"
-      sh 'HOST_IP=localhost docker-compose -f docker-compose-test-local.yml run --rm staging'
-    } catch(e) {
-      error "Staging failed"
-    } finally {
-      sh "docker-compose -f docker-compose-test-local.yml down"
-    }
-  }
-
-  stage("Publish") {
-    sh "docker tag go-demo localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
-    sh "docker push localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
-  }
-
-  stage("Prod-like") {
-    echo "A production-like cluster is yet to be created"
-    /*
-    withEnv([
-      "DOCKER_HOST=tcp://${env.PROD_LIKE_IP}:2375"
-    ]) {
-      sh "docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo"
-      sh "HOST_IP=${env.TEST_IP} docker-compose -f docker-compose-test-local.yml run --rm production"
-    }
-    */
-  }
-
-  stage("Production") {
-    withEnv([
-      "DOCKER_HOST=tcp://${env.PROD_IP}:2375"
-    ]) {
-      sh "docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo"
-    }
-    sh "HOST_IP=${env.PROD_IP} docker-compose -f docker-compose-test-local.yml run --rm production"
-  }
-}</code></pre>
-					</section>
-					<section id="jenkins-job">
-						<h1>Pipeline Job</h1>
-						<hr/>
-						<ul>
-							<li>Click <code>New Item</code></li>
-							<li>Type <code>go-demo</code>, select <code>Pipeline</code>, click <code>OK</code></li>
-							<li>Paste the code into the <code>Pipeline Script</code> field</li>
-							<li>Click the <code>Save</code> button</li>
-							<li><a href="http://[IP]/jenkins/job/go-demo">http://[IP]/jenkins/job/go-demo</a></li>
-							<li>Click <code>Build Now</code></li>
-						</ul>
-					</section>
-					<section id="jenkins-job-log">
-						<h1>Job Result</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>ssh -i devops21.pem ubuntu@$(terraform \
-  output swarm_manager_1_public_ip) docker service ps go-demo
-
-curl $(terraform output swarm_manager_1_public_ip)/demo/hello</code></pre>
-					</section>
-					<section data-background="../img/background/cleanup.jpg">
-						<h1>Cleanup</h1>
-                        <pre><code data-trim contenteditable>ssh -i devops21.pem ubuntu@$(terraform \
-  output swarm_manager_1_public_ip) docker service rm jenkins
-
-ssh -i devops21.pem ubuntu@$(terraform \
-  output swarm_manager_1_public_ip) docker volume rm jenkins</code></pre>
-					</section>
+				<section id="jenkins-demo"
+						 data-markdown="jenkins-demo.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/manual.jpg">
 				</section>
-				<section data-background="../img/background/monitoring.jpg">
-					<section id="monitoring">
-						<h1>Monitoring</h1>
-						<hr/>
-						<ul>
-							<li class="fragment">Monitoring a single application <label class="fragment">is easy</label></li>
-							<li class="fragment">Monitoring services in single server <label class="fragment">is a bit harder</label></li>
-							<li class="fragment">Monitoring many services in a cluster <label class="fragment">requires a whole new way of thinking</label></li>
-						</ul>
-					</section>
-					<section id="monitoring-what">
-						<h3>Monitoring</h3>
-						<h1>What Do We Need?</h1>
-						<hr/>
-						<h3 class="fragment">Historical and (near) realtime information about our system</h3>
-						<ul>
-							<li class="fragment">logs</li>
-							<li class="fragment">hardware utilization</li>
-							<li class="fragment">health checking</li>
-							<li class="fragment">network traffic</li>
-							<li class="fragment">containers</li>
-							<li class="fragment">...</li>
-						</ul>
-					</section>
-					<section id="monitoring-what-2">
-						<h3>Monitoring</h3>
-						<h1>What Do We Need?</h1>
-						<hr/>
-						<h3 class="fragment">Decentralized data collectors</h3>
-						<h3 class="fragment">and centralized data storage</h3>
-					</section>
+				<section id="monitoring"
+						 data-markdown="monitoring.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/monitoring.jpg">
 				</section>
-				<section data-background="../img/background/logs.png">
-					<section id="logging">
-						<h1>Logging</h1>
-						<hr/>
-						<ul>
-							<li class="fragment">A way to parse data and send them to a central database in near real-time.</li>
-							<li class="fragment">The capacity of the database to handle near real-time data querying and analytics.</li>
-							<li class="fragment">A visual representation of the data through filtered tables, dashboards, and so on.</li>
-						</ul>
-					</section>
-					<section id="logging-tools">
-						<h3>Logging</h3>
-						<h1>Tools</h1>
-						<hr/>
-						<img src="../img/products/elk.png" class="fragment"/>
-						<h3 class="fragment">... or one of many other options</h3>
-					</section>
+				<section id="logging"
+						 data-markdown="logging.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/logs.png">
 				</section>
-				<section data-background="../img/background/manual.jpg">
-					<section id="logging-demo">
-						<h1>Hands-On Time</h1>
-						<hr/>
-						<h2 class="fragment">Ship logs</h2>
-						<h2 class="fragment">from any container</h2>
-						<h2 class="fragment">running anywhere inside the cluster</h2>
-					</section>
-					<section id="es-service">
-						<h1>Elastic Search Service</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>ssh -i devops21.pem ubuntu@$(terraform \
-  output swarm_manager_1_public_ip)
-
-docker service create --name elasticsearch --network proxy \
-   --reserve-memory 250m elasticsearch:2.4
-
-docker service ps elasticsearch</code></pre>
-					</section>
-					<section id="logstash-service">
-						<h1>Log Stash Service</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service create --name logstash \
-  --network proxy -e LOGSPOUT=ignore --reserve-memory 100m \
-  vfarcic/logstash-devops21 logstash -f /conf/logstash.conf
-
-docker service ps logstash</code></pre>
-					</section>
-					<section id="logspout-service">
-						<h1>Log Spout Service</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service create --name logspout \
-  --network proxy --mode global -e SYSLOG_FORMAT=rfc3164 \
-  --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
-  gliderlabs/logspout syslog://logstash:51415
-
-docker service ps logspout</code></pre>
-					</section>
-					<section id="logspout-test">
-						<h1>Testing Log Spout</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>IP=[...]  # Logstash private IP
-
-docker -H tcp://$IP:2375 logs -f $(docker \
-  -H tcp://$IP:2375 ps -qa -f "ancestor=vfarcic/logstash-devops21")</code></pre>
-					</section>
-					<section id="kibana-service">
-						<h1>Kibana Service</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service create --name kibana \
-  --network proxy --reserve-memory 50m \
-   -e ELASTICSEARCH_URL=http://elasticsearch:9200 \
-  --label com.df.notify=true --label com.df.distribute=true \
-  --label com.df.servicePath=/app/kibana,/bundles,/elasticsearch \
-  --label com.df.port=5601 \
-  kibana:4.6
-
-docker service ps kibana</code></pre>
-						<ul>
-							<li><a href="http://[IP]/app/kibana">http://[IP]/app/kibana</a></li>
-						</ul>
-					</section>
-					<section id="logging-cleanup">
-						<h1>Cleanup</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service rm kibana</code></pre>
-					</section>
+				<section id="logging-demo"
+						 data-markdown="logging-demo.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/manual.jpg">
 				</section>
-				<section data-background="../img/background/metrics.jpg">
-					<section id="metrics">
-						<h1>Metrics</h1>
-						<hr/>
-						<ul>
-							<li class="fragment">A way to get hardware and software metrics</li>
-							<li class="fragment">Without coupling with services</li>
-							<li class="fragment">A way to query metrics</li>
-							<li class="fragment">A way to visualize metrics</li>
-							<li class="fragment">A way to alert based on metrics</li>
-						</ul>
-					</section>
-					<section id="metrics-tools">
-						<h3>Tools</h3>
-						<hr/>
-						<div>
-							<img src="../img/products/nagios.png" class="fragment" style="width: 30%; height: 30%; background-color: white;"/>
-							<img src="../img/products/icinga.png" class="fragment" style="width: 30%; height: 30%; background-color: white;"/>
-							<br/>
-							<img src="../img/products/elastic.png" class="fragment" style="width: 30%; height: 30%; background-color: white;"/>
-							<img src="../img/products/kibana.png" class="fragment" style="width: 30%; height: 30%; background-color: black;"/>
-							<br/>
-							<img src="../img/products/prometheus.png" class="fragment" style="width: 40%; height: 40%; background-color: black;"/>
-						</div>
-					</section>
+				<section id="metrics"
+						 data-markdown="metrics.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/metrics.jpg">
 				</section>
-				<section data-background="../img/background/manual.jpg">
-					<section id="metrics-demo">
-						<h1>Hands-On Time</h1>
-						<hr/>
-						<h2 class="fragment">Expose metrics from</h2>
-						<h2 class="fragment">hardware,</h2>
-						<h2 class="fragment">containers,</h2>
-						<h2 class="fragment">and the proxy</h2>
-					</section>
-					<section id="metrics-node">
-						<h1>Node Exporter</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service create \
-  --name node-exporter \
-  --mode global \
-  --network proxy \
-  --mount "type=bind,source=/proc,target=/host/proc" \
-  --mount "type=bind,source=/sys,target=/host/sys" \
-  --mount "type=bind,source=/,target=/rootfs" \
-  --mount "type=bind,source=/etc/hostname,target=/etc/host_hostname" \
-  -e HOST_HOSTNAME=/etc/host_hostname \
-  basi/node-exporter:v0.1.1 \
-  -collector.procfs /host/proc \
-  -collector.sysfs /host/proc \
-  -collector.filesystem.ignored-mount-points "^/(sys|proc|dev|host|etc)($|/)" \
-  -collector.textfile.directory /etc/node-exporter/ \
-  -collectors.enabled="conntrack,diskstats,entropy,filefd,filesystem,loadavg,mdadm,meminfo,netdev,netstat,stat,textfile,time,vmstat,ipvs"</code></pre>
-					</section>
-					<section id="metrics-node-2">
-						<h1>Node Exporter</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service ps node-exporter
-
-UTIL_ID=$(docker ps -q --filter label=com.docker.swarm.service.name=util)
-
-docker exec -it $UTIL_ID apk add --update curl
-
-docker exec -it $UTIL_ID curl http://node-exporter:9100/metrics</code></pre>
-					</section>
-					<section id="metrics-container">
-						<h1>Container Exporter</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service create --name cadvisor \
-  --network proxy --mode global \
-  --mount "type=bind,source=/,target=/rootfs" \
-  --mount "type=bind,source=/var/run,target=/var/run" \
-  --mount "type=bind,source=/sys,target=/sys" \
-  --mount "type=bind,source=/var/lib/docker,target=/var/lib/docker" \
-  google/cadvisor:v0.24.1
-
-docker service ps cadvisor
-
-docker exec -it $UTIL_ID curl http://cadvisor:8080/metrics</code></pre>
-					</section>
+				<section id="metrics-demo"
+						 data-markdown="metrics-demo.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/manual.jpg">
 				</section>
-				<section data-background="../img/background/manual.jpg">
-					<section id="monitoring-demo">
-						<h1>Hands-On Time</h1>
-						<hr/>
-						<h2 class="fragment">Execute ad-hoc queries</h2>
-						<h2 class="fragment">and create dashboards</h2>
-					</section>
-					<section id="monitoring-prometheus">
-						<h1>Prometheus</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service create --name prometheus \
-  --network proxy -p 9091:9090 vfarcic/prometheus-devops21
-
-docker service ps prometheus</code></pre>
-						<ul>
-							<li><a href="http://$DNS:9091">http://$DNS:9091</a></li>
-							<li>irate(node_cpu{mode="idle"}[5m])</li>
-							<li>container_memory_usage_bytes{id!="/"}</li>
-							<li>container_memory_usage_bytes{container_label_com_docker_swarm_service_name="cadvisor"}</li>
-						</ul>
-					</section>
-					<section id="monitoring-grafana">
-						<h1>Grafana</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service create --name grafana \
-  --network proxy -p 3000:3000 grafana/grafana:3.1.1
-
-docker service ps grafana</code></pre>
-						<ul>
-							<li><a href="http://$DNS:3000">http://$DNS:3000</a></li>
-							<li>DS: http://prometheus:9090</li>
-							<li>DS: http://elasticsearch:9200</li>
-							<li><a href="https://grafana.net/dashboards/704">https://grafana.net/dashboards/704</a></li>
-							<li><a href="https://grafana.net/dashboards/405">https://grafana.net/dashboards/705</a></li>
-							<li><a href="https://grafana.net/dashboards/609">https://grafana.net/dashboards/609</a></li>
-						</ul>
-					</section>
+				<section id="quote"
+						 data-markdown="quote.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/people/eric-hoffer.jpg">
 				</section>
-				<section data-background="../img/people/eric-hoffer.jpg">
-					<section id="quote">
-						<blockquote>
-							"In a time of drastic change, it is the learners who inherit the future. The learned find themselves equipped to live in a world that no longer exists" –- Eric Hoffer
-						</blockquote>
-					</section>
+				<section id="the-end"
+						 data-markdown="the-end.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/the_end.jpg">
 				</section>
-				<section  data-background="../img/background/the_end.jpg">
-					<section id="the-end-blog">
-						<h2>Viktor Farcic</h2>
-						<hr/>
-						<h3><a href="https://twitter.com/vfarcic">@vfarcic</a></h3>
-						<hr/>
-						<figure>
-							<img src="../img/qr/technology-conversations.jpg"/>
-						</figure>
-						<h3><a href="http://technologyconversations.com">TechnologyConversations.com</a></h3>
-					</section>
-                    <section id="the-end-book">
-                        <div>
-                            <figure style="width: 25%; height: 25%; float: left;">
-                                <img src="../img/qr/devops2-amazon.jpg"/>
-                                <figcaption><a href="http://www.amazon.com/dp/B01BJ4V66M">Amazon</a></figcaption>
-                            </figure>
-                            <figure style="width: 25%; height: 25%; float: right;">
-                                <img src="../img/qr/devops2-leanpub.jpg"/>
-                                <figcaption><a href="https://leanpub.com/the-devops-2-toolkit">LeanPub</a></figcaption>
-                            </figure>
-                            <a href="http://www.amazon.com/dp/B01BJ4V66M">
-                                <img src="../img/devops2.png" style="width: 30%; height: 30%;" />
-                            </a>
-                        </div>
-                        <hr/>
-                        <div>
-                            <figure style="width: 25%; height: 25%; float: left;">
-                                &nbsp;
-                            </figure>
-                            <figure style="width: 25%; height: 25%; float: right;">
-                                <img src="../img/qr/devops21-leanpub.png"/>
-                                <figcaption><a href="https://leanpub.com/the-devops-2-1-toolkit">LeanPub</a></figcaption>
-                            </figure>
-                            <a href="https://leanpub.com/the-devops-2-1-toolkit">
-                                <img src="../img/devops21.png" style="width: 30%; height: 30%;" />
-                            </a>
-                        </div>
-                    </section>
+				<section id="the-end-cleanup"
+						 data-markdown="cleanup.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/cleanup.jpg">
 				</section>
-                <section>
-                    <section data-background="../img/background/cleanup.jpg">
-                        <h1>Cleanup</h1>
-                        <pre><code data-trim contenteditable>docker volume rm registry_main
-
-exit
-
-terraform destroy -force</code></pre>
-                    </section>
-                </section>
 			</div>
 
 		</div>

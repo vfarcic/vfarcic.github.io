@@ -189,7 +189,7 @@ docker stack ps proxy
 
 exit
 
-open "http://$(terraform output \
+curl "http://$(terraform output \
     swarm_manager_1_public_ip)/demo/hello"
 ```
 
@@ -260,11 +260,11 @@ docker stack ps go-demo
 ---
 
 ```bash
-curl -o registry-rexray-stack.yml \
+curl -o registry.yml \
     https://raw.githubusercontent.com/vfarcic/\
-cloud-provisioning/master/compose/registry-rexray-stack.yml
+docker-flow-stacks/master/registry/registry-rexray.yml
 
-docker stack deploy -c registry-rexray-stack.yml registry
+docker stack deploy -c registry.yml registry
 
 docker volume ls
 
@@ -294,4 +294,6 @@ docker -H tcp://$IP:2375 rm -f \
 docker stack ps registry
 
 docker pull localhost:5000/go-demo
+
+exit
 ```
