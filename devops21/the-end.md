@@ -26,7 +26,8 @@
 ---
 
 <figure style="width: 22%; height: 22%; float: left;">
-    &nbsp;
+    <img src="../img/qr/devops21-amazon.jpg"/>
+    <figcaption><a href="https://www.amazon.com/dp/1542468914">Amazon</a></figcaption>
 </figure>
 <figure style="width: 22%; height: 22%; float: right;">
     <img src="../img/qr/devops21-leanpub.png"/>
