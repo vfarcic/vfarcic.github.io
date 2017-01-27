@@ -40,6 +40,11 @@ export TF_VAR_aws_default_region=us-east-1
 
 # Build images
 
+![The flow of the Packer process](img/cloud-architecture-images.png)
+
+
+# Build images
+
 ---
 
 ```bash
@@ -55,6 +60,11 @@ cat packer-ubuntu-docker-compose.json
 packer build -machine-readable packer-ubuntu-docker-compose.json \
   | tee packer-ubuntu-docker-compose.log
 ```
+
+
+# Create VM Instances
+
+![The flow of the Terraform process](img/cloud-architecture-instances.png)
 
 
 # Create VM Instances

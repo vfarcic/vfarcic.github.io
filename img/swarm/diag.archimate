@@ -631,5 +631,6 @@
         </child>
       </child>
     </element>
+    <element xsi:type="archimate:ArchimateDiagramModel" id="8993c47b" name="cloud-architecture"/>
   </folder>
 </archimate:model>
