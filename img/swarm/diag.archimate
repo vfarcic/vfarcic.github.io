@@ -68,12 +68,13 @@
     <element xsi:type="archimate:FlowRelationship" id="a104f414" source="aa5c1756" target="f82c2338"/>
     <element xsi:type="archimate:FlowRelationship" id="22925512" source="f82c2338" target="d34e395a"/>
     <element xsi:type="archimate:FlowRelationship" id="5c4eb80c" source="f82c2338" target="3c3e0ec8"/>
-    <element xsi:type="archimate:AccessRelationship" id="b9a01432" source="aa5c1756" target="5419f061"/>
+    <element xsi:type="archimate:AccessRelationship" id="b9a01432" source="aa5c1756" target="5419f061" accessType="1"/>
     <element xsi:type="archimate:AccessRelationship" id="8794a5f8" source="8ec8b15c" target="f7ebac08" accessType="3"/>
     <element xsi:type="archimate:AssociationRelationship" id="fad95ea6" source="f7ebac08" target="f7ebac08"/>
     <element xsi:type="archimate:AssociationRelationship" id="cdc0bea2" source="9c4f6114" target="b6f5b014"/>
     <element xsi:type="archimate:FlowRelationship" id="6ec5fbb2" source="8ec8b15c" target="8ec8b15c"/>
     <element xsi:type="archimate:AssociationRelationship" id="4a3e60d7" source="d208dd2f" target="cef4175f"/>
+    <element xsi:type="archimate:AccessRelationship" id="5a4e0a22" source="8b99f9ad" target="5419f061"/>
   </folder>
   <folder name="Views" id="1403e115" type="diagrams">
     <element xsi:type="archimate:ArchimateDiagramModel" id="2de5f20d" name="docker-nodes">
@@ -170,10 +171,10 @@
           </sourceConnection>
         </child>
       </child>
-      <child xsi:type="archimate:DiagramObject" id="20e8c278" textAlignment="2" targetConnections="25d53040 b65cad10 3bfb45ac e263bcf7 832ae259 8922deb5" fillColor="#00ff00" archimateElement="56954d1b">
+      <child xsi:type="archimate:DiagramObject" id="20e8c278" textAlignment="2" targetConnections="25d53040 e263bcf7 b65cad10 8922deb5 3bfb45ac 832ae259" fillColor="#00ff00" archimateElement="56954d1b">
         <bounds x="36" y="276" width="733" height="25"/>
       </child>
-      <child xsi:type="archimate:DiagramObject" id="330dd17c" textAlignment="2" targetConnections="cacbe733 68efdd65 0a98179e bf47c661 ef44ac71 46d235d1" fillColor="#00ff00" archimateElement="67bbe7c5">
+      <child xsi:type="archimate:DiagramObject" id="330dd17c" textAlignment="2" targetConnections="bf47c661 cacbe733 68efdd65 46d235d1 0a98179e ef44ac71" fillColor="#00ff00" archimateElement="67bbe7c5">
         <bounds x="36" y="48" width="733" height="25"/>
       </child>
       <child xsi:type="archimate:DiagramObject" id="a8aab1d7" fontColor="#ffffff" textAlignment="2" fillColor="#996633" archimateElement="8ec8b15c">
@@ -328,7 +329,7 @@
     <element xsi:type="archimate:ArchimateDiagramModel" id="f92c3241" name="swarm-without-service-registry">
       <child xsi:type="archimate:DiagramObject" id="9676009e" textAlignment="2" archimateElement="b0246926">
         <bounds x="36" y="96" width="229" height="157"/>
-        <child xsi:type="archimate:DiagramObject" id="608fcd82" textAlignment="2" targetConnections="253fe581 ceff1449 16832495" fillColor="#ff7f00" archimateElement="aa5c1756">
+        <child xsi:type="archimate:DiagramObject" id="608fcd82" textAlignment="2" targetConnections="253fe581 16832495 ceff1449" fillColor="#ff7f00" archimateElement="aa5c1756">
           <bounds x="12" y="84" width="145" height="25"/>
           <sourceConnection xsi:type="archimate:Connection" id="aad897b8" source="608fcd82" target="dee73e81" relationship="7ce730c5"/>
           <sourceConnection xsi:type="archimate:Connection" id="c29381ee" source="608fcd82" target="17da7168" relationship="a104f414"/>
@@ -364,7 +365,7 @@
       </child>
       <child xsi:type="archimate:DiagramObject" id="6f5a4781" textAlignment="2" archimateElement="d5482b71">
         <bounds x="540" y="96" width="229" height="157"/>
-        <child xsi:type="archimate:DiagramObject" id="80a7090a" textAlignment="2" targetConnections="d978e6c5 d522cb4b" fillColor="#ff7f00" archimateElement="8b99f9ad">
+        <child xsi:type="archimate:DiagramObject" id="80a7090a" textAlignment="2" targetConnections="d978e6c5 d522cb4b" fillColor="#ffff00" archimateElement="8b99f9ad">
           <bounds x="12" y="84" width="145" height="25"/>
           <sourceConnection xsi:type="archimate:Connection" id="6ac393e7" source="80a7090a" target="decaa3e1" relationship="d8afaa57"/>
         </child>
@@ -392,8 +393,8 @@
       </child>
       <child xsi:type="archimate:Note" id="e671df89" textAlignment="1">
         <bounds x="288" y="264" width="229" height="49"/>
-        <sourceConnection id="d522cb4b" source="e671df89" target="80a7090a"/>
         <sourceConnection id="63b22d60" source="e671df89" target="dee73e81"/>
+        <sourceConnection id="d522cb4b" source="e671df89" target="80a7090a"/>
         <sourceConnection id="16832495" source="e671df89" target="608fcd82"/>
         <content>Swarm nodes translate received tasks to Docker Engine commands.</content>
       </child>
@@ -411,6 +412,7 @@
         <child xsi:type="archimate:DiagramObject" id="64229e8f" textAlignment="2" targetConnections="72174dd0" fillColor="#ff7f00" archimateElement="aa5c1756">
           <bounds x="12" y="84" width="145" height="25"/>
           <sourceConnection xsi:type="archimate:Connection" id="a00f0b5f" source="64229e8f" target="45cedb8e" relationship="b9a01432"/>
+          <sourceConnection id="f3091cb8" source="64229e8f" target="fc72d006"/>
         </child>
         <child xsi:type="archimate:DiagramObject" id="08294e85" textAlignment="2" archimateElement="d34e395a">
           <bounds x="72" y="36" width="97" height="25"/>
@@ -423,6 +425,7 @@
         <bounds x="288" y="96" width="229" height="157"/>
         <child xsi:type="archimate:DiagramObject" id="d697dd2e" textAlignment="2" fillColor="#ff7f00" archimateElement="aa5c1756">
           <bounds x="12" y="84" width="145" height="25"/>
+          <sourceConnection id="f6cfc2de" source="d697dd2e" target="50676de0"/>
         </child>
         <child xsi:type="archimate:DiagramObject" id="90b17455" textAlignment="2" archimateElement="d34e395a">
           <bounds x="12" y="48" width="97" height="25"/>
@@ -436,8 +439,10 @@
       </child>
       <child xsi:type="archimate:DiagramObject" id="933e36b1" textAlignment="2" archimateElement="d5482b71">
         <bounds x="540" y="96" width="229" height="157"/>
-        <child xsi:type="archimate:DiagramObject" id="70b4b2c2" textAlignment="2" fillColor="#ff7f00" archimateElement="8b99f9ad">
+        <child xsi:type="archimate:DiagramObject" id="70b4b2c2" textAlignment="2" fillColor="#ffff00" archimateElement="8b99f9ad">
           <bounds x="12" y="84" width="145" height="25"/>
+          <sourceConnection id="956a6ba9" source="70b4b2c2" target="62e1a4da"/>
+          <sourceConnection xsi:type="archimate:Connection" id="1d5126ab" source="70b4b2c2" target="45cedb8e" relationship="5a4e0a22"/>
         </child>
         <child xsi:type="archimate:DiagramObject" id="8f6cbec8" textAlignment="2" archimateElement="3c3e0ec8">
           <bounds x="96" y="36" width="120" height="25"/>
@@ -450,7 +455,7 @@
         <bounds x="36" y="55" width="86" height="26"/>
         <sourceConnection xsi:type="archimate:Connection" id="72174dd0" source="521b46eb" target="64229e8f" relationship="d0297d2b"/>
       </child>
-      <child xsi:type="archimate:DiagramObject" id="45cedb8e" textAlignment="2" targetConnections="a00f0b5f" archimateElement="5419f061">
+      <child xsi:type="archimate:DiagramObject" id="45cedb8e" textAlignment="2" targetConnections="a00f0b5f 1d5126ab" archimateElement="5419f061">
         <bounds x="288" y="41" width="229" height="40"/>
       </child>
       <child xsi:type="archimate:Note" id="0ef3b4a2" textAlignment="1">
@@ -458,9 +463,17 @@
         <sourceConnection id="102af4a0" source="0ef3b4a2" target="521b46eb"/>
         <content>A user sends a request with the desired state to one of the Swarm managers.</content>
       </child>
-      <child xsi:type="archimate:Note" id="fc72d006" textAlignment="1">
-        <bounds x="36" y="264" width="185" height="61"/>
-        <content>Swarm manager gets the cluster information from the service registry.</content>
+      <child xsi:type="archimate:Note" id="fc72d006" textAlignment="1" targetConnections="f3091cb8">
+        <bounds x="36" y="264" width="229" height="85"/>
+        <content>Swarm manager gets the cluster information from the service registry, creates a set of tasks, and dispaches them to Swarm workers (managers in this context act as workers as well).</content>
+      </child>
+      <child xsi:type="archimate:Note" id="50676de0" textAlignment="1" targetConnections="f6cfc2de">
+        <bounds x="288" y="264" width="229" height="85"/>
+        <content>Swarm workers translate the tasks into commands and send them to the local Docker Engine which, in turn, runs or stops containers.</content>
+      </child>
+      <child xsi:type="archimate:Note" id="62e1a4da" textAlignment="1" targetConnections="956a6ba9">
+        <bounds x="540" y="267" width="229" height="80"/>
+        <content>Swarm workers continuously monitor Docker events and update the service registry.</content>
       </child>
     </element>
     <element xsi:type="archimate:ArchimateDiagramModel" id="639d2a2e" name="proxy-scaled-service-view">

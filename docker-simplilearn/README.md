@@ -12,7 +12,7 @@ Please take a look and let me know what you think. If we agree to proceed, I'll 
 
 # Notes about the agreement
 
-You will not own the material I produce. You will be granted rights to create training using the raw material. That training can be used only on simplilearn.com. I used variations of the material before and will continue using it in the future in any form I find suitable. That might include other trainings (unrelated with SimpliLearn.com).
+You will not own the material I produce. You will be granted rights to create training using the raw material. I used variations of the material before and will continue using it in the future in any form I find suitable. That might include other trainings (unrelated with SimpliLearn.com).
 
 I have the final say on the material and content of the training. You can suggest modifications but I am under no obligation to do them. The same applies to the scope and length of the training. I will take your suggestions in consideration.
 
