@@ -142,8 +142,7 @@ ssh -i devops21.pem ubuntu@$(terraform \
 ```bash
 terraform output swarm_manager_1_private_ip
 
-ssh -i devops21.pem ubuntu@$(terraform \
-    output test_swarm_manager_1_public_ip)
+ssh -i devops21.pem ubuntu@$(terraform output test_swarm_manager_1_public_ip)
 
 export JENKINS_IP=[...] # Manager private IP
 
@@ -156,8 +155,7 @@ docker stack deploy -c jenkins-agent.yml jenkins-agent
 
 exit
 
-open "http://$(terraform output swarm_manager_1_public_ip)/\
-jenkins/computer"
+open "http://$(terraform output swarm_manager_1_public_ip)/jenkins/computer"
 ```
 
 
@@ -173,7 +171,7 @@ ssh -i devops21.pem ubuntu@$(terraform \
 
 curl -o registry.yml \
     https://raw.githubusercontent.com/vfarcic/\
-docker-flow-stacks/master/registry/registry-rexray.yml
+docker-flow-stacks/master/docker/registry-rexray.yml
 
 docker stack deploy -c registry.yml registry
 
@@ -210,50 +208,48 @@ jenkins/configure"
 ---
 
 ```groovy
-node("docker") {
-
-  git "https://github.com/vfarcic/go-demo.git"
-
-  stage("Unit") {
-    sh "docker-compose -f docker-compose-test.yml run --rm unit"
-    sh "docker build -t go-demo ."
+pipeline {
+  agent {
+    label "docker"
   }
-
-  stage("Staging") {
-    try {
-      sh "docker-compose -f docker-compose-test-local.yml up -d staging-dep"
-      sh 'HOST_IP=localhost docker-compose -f docker-compose-test-local.yml run --rm staging'
-    } catch(e) {
-      error "Staging failed"
-    } finally {
+  stages {
+    stage("Unit") {
+      steps {
+        git "https://github.com/vfarcic/go-demo.git"
+        sh "docker-compose -f docker-compose-test.yml run --rm unit"
+        sh "docker build -t go-demo ."
+      }
+    }
+    stage("Staging") {
+      steps {
+        sh "docker-compose -f docker-compose-test-local.yml up -d staging-dep"
+        sh 'HOST_IP=localhost docker-compose -f docker-compose-test-local.yml run --rm staging'
+      }
+    }
+    stage("Publish") {
+      steps {
+        sh "docker tag go-demo localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
+        sh "docker push localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
+      }
+    }
+    stage("Prod-like") {
+      steps {
+        echo "A production-like cluster is yet to be created"
+        // sh "DOCKER_HOST=tcp://${env.PROD_LIKE_IP}:2375 docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo_main"
+        // sh "HOST_IP=${env.TEST_IP} docker-compose -f docker-compose-test-local.yml run --rm production"
+      }
+    }
+    stage("Production") {
+      steps {
+        sh "DOCKER_HOST=tcp://${env.PROD_IP}:2375 docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo_main"
+        sh "HOST_IP=${env.PROD_IP} docker-compose -f docker-compose-test-local.yml run --rm production"
+      }
+    }
+  }
+  post {
+    always {
       sh "docker-compose -f docker-compose-test-local.yml down"
     }
-  }
-
-  stage("Publish") {
-    sh "docker tag go-demo localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
-    sh "docker push localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
-  }
-
-  stage("Prod-like") {
-    echo "A production-like cluster is yet to be created"
-    /*
-    withEnv([
-      "DOCKER_HOST=tcp://${env.PROD_LIKE_IP}:2375"
-    ]) {
-      sh "docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo_main"
-      sh "HOST_IP=${env.TEST_IP} docker-compose -f docker-compose-test-local.yml run --rm production"
-    }
-    */
-  }
-
-  stage("Production") {
-    withEnv([
-      "DOCKER_HOST=tcp://${env.PROD_IP}:2375"
-    ]) {
-      sh "docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo_main"
-    }
-    sh "HOST_IP=${env.PROD_IP} docker-compose -f docker-compose-test-local.yml run --rm production"
   }
 }
 ```

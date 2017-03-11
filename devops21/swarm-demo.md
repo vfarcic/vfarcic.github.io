@@ -29,7 +29,7 @@ packer build -machine-readable packer-ubuntu-docker-rexray.json \
 
 ```bash
 export TF_VAR_swarm_ami_id=$(grep 'artifact,0,id' \
-  packer-ubuntu-docker-rexray.log | cut -d, -f6 | cut -d: -f2)
+  packer-ubuntu-docker-rexray.log | cut -d: -f2)
 
 cat swarm.tf
 
@@ -193,6 +193,8 @@ curl "http://$(terraform output \
     swarm_manager_1_public_ip)/demo/hello"
 ```
 
+[Docker Flow Proxy: http://proxy.dockerflow.com/](http://proxy.dockerflow.com/)
+
 
 # Networking
 
@@ -248,9 +250,6 @@ cat go-demo-stack.yml
 
 TAG=:1.1 docker stack deploy -c go-demo-stack.yml go-demo
 
-docker service update --image vfarcic/go-demo:1.1 \
-  --update-delay 5s go-demo_main
-
 docker stack ps go-demo
 ```
 
@@ -262,13 +261,13 @@ docker stack ps go-demo
 ```bash
 curl -o registry.yml \
     https://raw.githubusercontent.com/vfarcic/\
-docker-flow-stacks/master/registry/registry-rexray.yml
+docker-flow-stacks/master/docker/registry-rexray.yml
 
 docker stack deploy -c registry.yml registry
 
-docker volume ls
-
 docker stack ps registry
+
+docker volume ls
 
 docker pull vfarcic/go-demo
 

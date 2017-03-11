@@ -31,6 +31,8 @@ ll | grep go-demo
 ```bash
 cat Dockerfile
 
+cat docker-compose-test-local.yml
+
 docker-compose -f docker-compose-test-local.yml build app
 
 docker images

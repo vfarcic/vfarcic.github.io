@@ -3,7 +3,7 @@
 
 ## Abstract: Talk
 
-This talk focuses on architectural changes and new tools we should adopt to be able to tackle the problems presented by a demand for modern, responsive, fault tolerant and elastic systems. It is based on the material published in [The DevOps 2.1 Toolkit: Building, testing, deploying, and monitoring services inside Docker Swarm clusters](https://leanpub.com/the-devops-2-1-toolkit).
+The talk focuses on architectural changes and new tools we should adopt to be able to tackle the problems presented by a demand for modern, responsive, fault tolerant and elastic systems. It is based on the material published in [The DevOps 2.1 Toolkit: Building, testing, deploying, and monitoring services inside Docker Swarm clusters](https://leanpub.com/the-devops-2-1-toolkit).
 
 The talk will go through the whole microservices development lifecycle. We’ll start from the very beginning and define and design architecture. From there on we’ll move from requirements, technological choices and development environment setup, through coding and testing all the way until the final deployment to production. We won’t stop there. Once our new services are up and running we’ll see how to maintain them, scale them depending on resource utilization and response time, and recover them in case of failures. We’ll try to balance the need for creative manual work and the need to automate as much of the process as possible.
 
@@ -47,11 +47,18 @@ The examples will set up Jenkins master in a way that it is fault tolerant and c
 
 The workshop walks the audience through some of the best practices we're facing when working on distributed systems at scale.
 
-# Learning Outcomes
+## Requirements
+
+This workshop contains a vast amount of topics and will be performed at a very fast pace. The recommendation is to observe the commands I will be executing and concentrate on understanding the logic behind them. Everything will be posted online after the workshop and you will be able to repeat it later on at your own pace. If you agree with the recommendation, you will not be required to bring anything.
+
+On the other hand, you are welcome to follow along and try to reproduce everything during the workshop. If you choose that approach, you will need a laptop with [Git](https://git-scm.com/), GitBash (only if using Windows), [Terraform](https://www.terraform.io/), [Packer](https://www.packer.io/), [jq](https://stedolan.github.io/jq/), and an SSH client installed. If you are a Windows user, please make sure that your Git client is configured to check out the code *AS-IS*. Otherwise, Windows might change carriage returns to the Windows format. You will also need an [AWS account](https://aws.amazon.com/) and [AWS CLI](https://aws.amazon.com/cli/). Please note that it should be free from any customizations and limitations your company might have introduced. If in doubt, please use your personal account.
+
+## Learning Outcomes
 
 * DevOps: A cross-disciplinary community of practice dedicated to the study of building, evolving and operating rapidly-changing resilient systems at scale.
 * The DevOps Toolkit
 
+  * Containers
   * Configuration management and provisioning
   * Immutable deployments
   * Service discovery

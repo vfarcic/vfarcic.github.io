@@ -13,10 +13,13 @@
 
 ---
 
-* AWS account
-* AWS CLI
-* Packer
-* Terraform
+* [Git](https://git-scm.com/)
+* [AWS account](https://aws.amazon.com/)
+* [AWS CLI](https://aws.amazon.com/cli/)
+* [Packer](https://www.packer.io/)
+* [Terraform](https://www.terraform.io/)
+* [jq](https://stedolan.github.io/jq/)
+* GitBash (if Windows)
 
 
 # Environment variables
@@ -40,7 +43,7 @@ export TF_VAR_aws_default_region=us-east-1
 
 # Build images
 
-![The flow of the Packer process](img/cloud-architecture-images.png)
+![The flow of the Packer process](../img/diags/cloud-architecture-images.png)
 
 
 # Build images
@@ -55,6 +58,8 @@ cd cloud-provisioning/terraform/aws-full
 aws ec2 create-key-pair --key-name devops21 \
   | jq -r '.KeyMaterial' >devops21.pem
 
+chmod 400 devops21.pem
+
 cat packer-ubuntu-docker-compose.json
 
 packer build -machine-readable packer-ubuntu-docker-compose.json \
@@ -64,7 +69,7 @@ packer build -machine-readable packer-ubuntu-docker-compose.json \
 
 # Create VM Instances
 
-![The flow of the Terraform process](img/cloud-architecture-instances.png)
+![The flow of the Terraform process](../img/diags/cloud-architecture-instances.png)
 
 
 # Create VM Instances
@@ -73,7 +78,7 @@ packer build -machine-readable packer-ubuntu-docker-compose.json \
 
 ```bash
 export TF_VAR_ci_ami_id=$(grep 'artifact,0,id' \
-  packer-ubuntu-docker-compose.log | cut -d, -f6 | cut -d: -f2)
+  packer-ubuntu-docker-compose.log | cut -d: -f2)
 
 cat docker.tf
 
