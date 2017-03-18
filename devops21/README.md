@@ -29,6 +29,16 @@ During the workshop we’ll explore tools like Docker, Docker Swarm, Docker Comp
 
 We'll explore the practices and tools required to run a Swarm cluster. We'll go beyond a simple deployment. We'll explore how to create a continuous deployment process. We'll set up multiple clusters. One will be dedicated to testing and the other for production. We'll see how to accomplish zero-downtime deployments, what to do in case of a failover, how to run services at scale, how to monitor the systems, and how to make it heal itself. We'll explore the processes that will allow us to run the clusters on a laptop as well as on different cloud providers.
 
+## Schedule: Workshop
+
+* Introduction to DevOps
+* Immutable infrastructure as code
+* Continuous integration with Docker
+* Setting up a Swarm cluster and running services
+* Running Jenkins inside a cluster
+* Centralized logging
+* Monitoring metrics
+
 ## Abstract: Worshop (Short)
 
 The workshop will go through the whole microservices development lifecycle. We’ll start from the very beginning and define and design architecture. From there on we’ll do some coding and testing all the way until the final deployment to production. Once our new services are up and running we’ll see how to maintain them, scale them, and recover them in case of failures.
