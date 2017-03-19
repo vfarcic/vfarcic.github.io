@@ -15,7 +15,8 @@
 ssh -i devops21.pem ubuntu@$(terraform \
   output swarm_manager_1_public_ip)
 
-curl -o jenkins.yml https://raw.githubusercontent.com/vfarcic/\
+curl -o jenkins.yml \
+    https://raw.githubusercontent.com/vfarcic/\
 docker-flow-stacks/master/jenkins/jenkins-rexray-df-proxy.yml
 
 cat jenkins.yml

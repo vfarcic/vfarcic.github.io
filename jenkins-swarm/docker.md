@@ -26,10 +26,11 @@ export AWS_SECRET_ACCESS_KEY=[...]
 
 export AWS_DEFAULT_REGION=us-east-1
 
-aws ec2 create-key-pair --key-name devops21 | jq -r '.KeyMaterial' >devops21.pem
+aws ec2 create-key-pair --key-name devops21 \
+    | jq -r '.KeyMaterial' >devops21.pem
 
-packer build -machine-readable packer-ubuntu-docker-compose.json \
-  | tee packer-ubuntu-docker-compose.log
+packer build -machine-readable packer-ubuntu-docker-rexray.json \
+  | tee packer-ubuntu-docker-rexray.log
 ```
 
 
@@ -95,10 +96,17 @@ docker service create --name=visualizer \
   --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
   manomarks/visualizer
 
+curl -o portainer.yml \
+    https://raw.githubusercontent.com/vfarcic\
+/docker-flow-stacks/master/docker/portainer.yml
+
+docker stack deploy -c portainer.yml portainer
+
 exit
 
 open "http://$(terraform output swarm_manager_1_public_ip):9090"
 ```
+
 
 ### Docker Swarm
 
@@ -152,11 +160,7 @@ curl -o proxy.yml \
 
 docker stack deploy -c proxy.yml proxy
 
-docker stack ls
-
-docker stack services go-demo
-
-docker stack ps go-demo
+docker stack ps proxy
 
 exit
 
@@ -167,7 +171,7 @@ open "http://$(terraform output \
 
 ### Docker Swarm
 
-# Registry Stack
+# Persistent Storage
 
 ---
 
@@ -178,6 +182,8 @@ ssh -i devops21.pem ubuntu@$(terraform \
 curl -o registry.yml \
     https://raw.githubusercontent.com/vfarcic/\
 docker-flow-stacks/master/docker/registry-rexray.yml
+
+cat registry.yml
 
 docker stack deploy -c registry.yml registry
 
