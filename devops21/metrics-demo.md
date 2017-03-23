@@ -71,7 +71,7 @@ open "http://$(terraform output swarm_manager_1_public_ip):9091"
 ---
 
 ```bash
-open "http://$(terraform output swarm_manager_1_public_ip):3000"
+open "http://$(terraform output swarm_manager_1_public_ip)/grafana/"
 ```
 
 * User/pass admin/admin

@@ -22,7 +22,7 @@ docker-flow-stacks/master/logging/logging-df-proxy.yml
 
 cat logging.yml
 
-docker stack deploy -c elk.yml logging
+docker stack deploy -c logging.yml logging
 
 docker stack ps logging
 ```

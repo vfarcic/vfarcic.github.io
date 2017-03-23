@@ -96,12 +96,6 @@ docker service create --name=visualizer \
   --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
   manomarks/visualizer
 
-curl -o portainer.yml \
-    https://raw.githubusercontent.com/vfarcic\
-/docker-flow-stacks/master/docker/portainer.yml
-
-docker stack deploy -c portainer.yml portainer
-
 exit
 
 open "http://$(terraform output swarm_manager_1_public_ip):9090"
