@@ -85,6 +85,7 @@ jenkins/pluginManager/available"
 ```
 
 * Select *Self-Organizing Swarm Plug-in Modules*
+* Select *Blue Ocean*
 * Click *Install without restart*
 
 
@@ -229,7 +230,9 @@ pipeline {
     }
     stage("Publish") {
       steps {
+        sh "docker tag go-demo localhost:5000/go-demo"
         sh "docker tag go-demo localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
+        sh "docker push localhost:5000/go-demo"
         sh "docker push localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
       }
     }
@@ -295,5 +298,5 @@ ssh -i devops21.pem ubuntu@$(terraform \
   output swarm_manager_1_public_ip) docker volume rm jenkins_main
 
 ssh -i devops21.pem ubuntu@$(terraform \
-  output swarm_manager_1_public_ip) docker volume rm registry_main
+  output swarm_manager_1_public_ip) docker volume rm registry
 ```
