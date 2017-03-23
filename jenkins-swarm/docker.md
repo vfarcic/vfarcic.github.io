@@ -175,15 +175,23 @@ ssh -i devops21.pem ubuntu@$(terraform \
 
 curl -o registry.yml \
     https://raw.githubusercontent.com/vfarcic/\
-docker-flow-stacks/master/docker/registry-rexray.yml
+docker-flow-stacks/master/docker/registry-rexray-external.yml
 
 cat registry.yml
+
+docker volume create -d rexray registry
+
+docker volume ls
 
 docker stack deploy -c registry.yml registry
 
 docker stack ps registry
 
-docker volume ls
+docker pull vfarcic/go-demo
+
+docker tag vfarcic/go-demo localhost:5000/go-demo
+
+docker push localhost:5000/go-demo
 
 exit
 ```

@@ -261,13 +261,15 @@ docker stack ps go-demo
 ```bash
 curl -o registry.yml \
     https://raw.githubusercontent.com/vfarcic/\
-docker-flow-stacks/master/docker/registry-rexray.yml
+docker-flow-stacks/master/docker/registry-rexray-external.yml
+
+docker volume create -d rexray registry
+
+docker volume ls
 
 docker stack deploy -c registry.yml registry
 
 docker stack ps registry
-
-docker volume ls
 
 docker pull vfarcic/go-demo
 
