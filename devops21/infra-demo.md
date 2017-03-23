@@ -17,7 +17,7 @@
 * [AWS account](https://aws.amazon.com/)
 * [AWS CLI](https://aws.amazon.com/cli/)
 * [Packer](https://www.packer.io/)
-* [Terraform](https://www.terraform.io/)
+* [Terraform v0.8.5](https://github.com/hashicorp/terraform/releases/tag/v0.8.5)
 * [jq](https://stedolan.github.io/jq/)
 * GitBash (if Windows)
 
