@@ -18,7 +18,7 @@ ssh -i devops21.pem ubuntu@$(terraform \
 curl -o metrics.yml https://raw.githubusercontent.com/vfarcic/\
 docker-flow-stacks/master/metrics/prometheus-grafana-df-proxy.yml
 
-docker stack deploy -c metrics.yml metrics
+USER=admin PASS=admin docker stack deploy -c metrics.yml metrics
 
 docker stack ps metrics
 ```
