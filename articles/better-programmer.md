@@ -4,7 +4,7 @@
 
 **Q:** Why did you get into this industry?
 
-I've been in this industry for around 25 years. I'm not even sure why and how I ended up in IT. I was impressed with computers since I was eight and most of the things I did involve them one way or another, from writing the first accounting system for my high school all the way to teaching programming at university.
+I've been in this industry for around 25 years. I'm not even sure why and how I ended up in IT. I was impressed with computers since I was eight and most of the things I did involve them one way or another, from writing the first accounting system for my high school, through working in many small and big companies, all the way to teaching programming at a university.
 
 **Q:** When you see posts that say “how to become a better programmer” what do you think? What tips come to mind?
 
