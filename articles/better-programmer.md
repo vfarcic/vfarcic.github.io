@@ -4,7 +4,7 @@
 
 **Q:** Why did you get into this industry?
 
-I've been in this industry for around 25 years. I'm not even sure why and how I ended up in IT. I was impressed with computers since I was eight and most of the things I did involve them one way or another, from distributing pirate software all the way to teaching programming at school and university.
+I've been in this industry for around 25 years. I'm not even sure why and how I ended up in IT. I was impressed with computers since I was eight and most of the things I did involve them one way or another, from writing the first accounting system for my high school all the way to teaching programming at university.
 
 **Q:** When you see posts that say “how to become a better programmer” what do you think? What tips come to mind?
 
@@ -24,7 +24,7 @@ I've been in this industry for around 25 years. I'm not even sure why and how I 
 
 **Q:** Do you feel pressured to work all the time? How demanding is your job and how demanding is coding, software, etc?
 
-**A:** I am under a lot of pressure. We all are. Our industry is changing so fast that keeping up is very hard. It's a race, and many are falling behind. Trying to stay in is hard, and it requires a lot of discipline and time. Luckily, I am fortunate not to experience pressures that many others are experiencing. CloudBees is a company that believes in people. There is a lot of trust and, as a result, there is no management pressure. Nobody breads behind my neck and asks for status every hour or insists on working 29 hours a day. In other words, I receive no pressure from my company but from the industry itself. It's hard to keep your head above water when winds are constantly changing direction.
+**A:** I am under a lot of pressure. We all are. Our industry is changing so fast that keeping up is very hard. It's a race, and many are falling behind. Trying to stay in is hard, and it requires a lot of discipline and time. Luckily, I am fortunate not to experience pressures that many others are experiencing. CloudBees is a company that believes in people. There is a lot of trust and, as a result, there is no management pressure. Nobody is breathing down my neck and asking for status every hour or insists on working 29 hours a day. In other words, I receive no pressure from my company but from the industry itself. It's hard to keep your head above water when winds are constantly changing direction.
 
 **Q:** If you could learn one new technology, language, etc. what would you want to learn and why? (Ex: Ruby on Rails, or deep learning)
 
