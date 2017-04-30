@@ -149,9 +149,13 @@ ssh -i devops21.pem ubuntu@$(terraform output test_swarm_manager_1_public_ip)
 export JENKINS_IP=[...] # Manager private IP
 
 curl -o jenkins-agent.yml https://raw.githubusercontent.com/vfarcic/\
-docker-flow-stacks/master/jenkins/jenkins-swarm-agent.yml
+docker-flow-stacks/master/jenkins/jenkins-swarm-agent-secrets.yml
 
 cat jenkins-agent.yml
+
+echo "admin" | docker secret create jenkins-user -
+
+echo "admin" | docker secret create jenkins-pass -
 
 docker stack deploy -c jenkins-agent.yml jenkins-agent
 
