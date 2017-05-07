@@ -15,6 +15,21 @@
 
 ---
 
+* [Git](https://git-scm.com/)
+* [AWS account](https://aws.amazon.com/)
+* [AWS CLI](https://aws.amazon.com/cli/)
+* [Packer](https://www.packer.io/)
+* [Terraform](https://www.terraform.io/downloads.html)
+* [jq](https://stedolan.github.io/jq/)
+* GitBash (if Windows)
+
+
+### Docker Swarm
+
+# Image (AMI)
+
+---
+
 ```bash
 git clone https://github.com/vfarcic/cloud-provisioning.git
 
@@ -53,6 +68,8 @@ export TF_VAR_swarm_ami_id=$(grep 'artifact,0,id' \
 terraform apply -target aws_instance.swarm-manager \
   -var swarm_init=true -var swarm_managers=1 -var rexray=true
 
+terraform refresh
+
 ssh -i devops21.pem ubuntu@$(terraform output \
   swarm_manager_1_public_ip) docker node ls
 ```
@@ -74,6 +91,8 @@ export TF_VAR_swarm_manager_ip=$(terraform \
 
 terraform apply -target aws_instance.swarm-manager -var rexray=true
 
+terraform refresh
+
 ssh -i devops21.pem ubuntu@$(terraform \
   output swarm_manager_1_public_ip) docker node ls
 ```
@@ -86,8 +105,6 @@ ssh -i devops21.pem ubuntu@$(terraform \
 ---
 
 ```bash
-terraform output swarm_manager_1_public_ip
-
 ssh -i devops21.pem ubuntu@$(terraform \
   output swarm_manager_1_public_ip)
 
@@ -186,7 +203,16 @@ docker volume ls
 docker stack deploy -c registry.yml registry
 
 docker stack ps registry
+```
 
+
+### Docker Swarm
+
+# Persistent Storage
+
+---
+
+```bash
 docker pull vfarcic/go-demo
 
 docker tag vfarcic/go-demo localhost:5000/go-demo

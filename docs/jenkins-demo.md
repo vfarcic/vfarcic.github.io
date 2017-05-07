@@ -104,6 +104,8 @@ terraform plan -target aws_instance.test-swarm-manager \
 terraform apply -target aws_instance.test-swarm-manager \
   -var swarm_init=true -var test_swarm_managers=1 -var rexray=true
 
+terraform refresh
+
 ssh -i devops21.pem ubuntu@$(terraform output \
   test_swarm_manager_1_public_ip) docker node ls
 ```
@@ -125,10 +127,10 @@ export TF_VAR_test_swarm_manager_token=$(ssh -i devops21.pem \
 export TF_VAR_test_swarm_manager_ip=$(terraform \
   output test_swarm_manager_1_private_ip)
 
-terraform plan -target aws_instance.test-swarm-manager
-
 terraform apply -target aws_instance.test-swarm-manager \
   -var rexray=true
+
+terraform refresh
 
 ssh -i devops21.pem ubuntu@$(terraform \
   output test_swarm_manager_1_public_ip) docker node ls
@@ -158,7 +160,16 @@ echo "admin" | docker secret create jenkins-user -
 echo "admin" | docker secret create jenkins-pass -
 
 docker stack deploy -c jenkins-agent.yml jenkins-agent
+```
 
+
+### Jenkins Agents
+
+# Service
+
+---
+
+```bash
 exit
 
 open "http://$(terraform output swarm_manager_1_public_ip)/jenkins/computer"
@@ -183,7 +194,7 @@ docker stack deploy -c registry.yml registry
 
 docker stack ps registry
 
-docker pull localhost:5000/go-demo
+docker image pull localhost:5000/go-demo
 
 exit
 ```
