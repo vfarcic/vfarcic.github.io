@@ -24,5 +24,3 @@
         <img src="../img/tdd.jpg" />
     </a>
 </figure>
-
-
