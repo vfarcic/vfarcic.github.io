@@ -26,6 +26,8 @@
 
 # Creating a Continuous Deployment Pipeline
 
+## Introduction
+
 ## Exploring Continuous Deployment Pipeline Steps
 
 ### Unit Testing
@@ -42,6 +44,8 @@
 
 # Running Production Clusters
 
+## Introduction
+
 ## Creating a Cluster Using Docker For AWS
 
 ## Running Services In Production
@@ -52,6 +56,8 @@
 
 # Logging And Monitoring Docker Clusters
 
+## Introduction
+
 ## Setting Up Centralized Logging
 
 ## Setting Up Metrics Storage
@@ -61,3 +67,9 @@
 ## Setting Up Dashboards
 
 # Creating Self-Healing Systems
+
+## Introduction
+
+## TBD
+
+
