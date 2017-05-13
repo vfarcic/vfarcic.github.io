@@ -1,11 +1,63 @@
-Docker Ecosystem
-================
+# Introduction to Docker
 
-Talk Abstract
--------------
+## Introduction
 
-Docker started by redefining the way we package our applications and services. With time, it became much more than that. It built an ecosystem that envelops many different aspects of the application lifecycle.
+## Running Containers Based On Community Images
 
-In this talk, we will explore the fast-growing Docker ecosystem. We'll see benefits we can gain from Docker Engine, Hub, Registry, Compose, Swarm, Notary, Machine, and other tools.
+## Building Docker Images
 
-However, Docker ecosystem is not only a set of tools. It truly redefines the processes we use in software development. Without changing the way we architecture, deploy and deliver software, Docker adoption will provide only a fraction of the benefits. We'll explore some of those processes and changes we should consider as well as decisions we should make in an attempt to deliver more reliable software faster and cheaper.
+## Running Docker Services
+
+# Running Docker Services
+
+## Introduction
+
+## Creating A Docker Swarm Cluster Using Docker Machine
+
+## Deploying Docker Stacks
+
+## Exploring Docker Networking
+
+## Creating Infrastructure Services
+
+## Exploring Failover
+
+## Integrating Services With A Proxy
+
+# Creating a Continuous Deployment Pipeline
+
+## Exploring Continuous Deployment Pipeline Steps
+
+### Unit Testing
+
+### Building
+
+### Setting Up Docker Registry And Pushing Images
+
+### Functional Testing
+
+### Rolling Updates
+
+### Production Testing
+
+# Running Production Clusters
+
+## Creating a Cluster Using Docker For AWS
+
+## Running Services In Production
+
+## Exploring Stateful Services And Network Volumes
+
+## Employing Continuous Deployment In Production Clusters
+
+# Logging And Monitoring Docker Clusters
+
+## Setting Up Centralized Logging
+
+## Setting Up Metrics Storage
+
+## Setting Up Metrics Exporters
+
+## Setting Up Dashboards
+
+# Creating Self-Healing Systems
