@@ -8,7 +8,7 @@ On the other hand, you are welcome to follow along and try to reproduce everythi
 * [AWS account](https://aws.amazon.com/)
 * [AWS CLI](https://aws.amazon.com/cli/)
 * [Packer](https://www.packer.io/)
-* [Terraform v0.8.5](https://github.com/hashicorp/terraform/releases/tag/v0.8.5)
+* [Terraform](https://www.terraform.io/downloads.html)
 * [jq](https://stedolan.github.io/jq/)
 * GitBash (if Windows)
 

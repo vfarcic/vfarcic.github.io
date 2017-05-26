@@ -17,7 +17,7 @@
 * [AWS account](https://aws.amazon.com/)
 * [AWS CLI](https://aws.amazon.com/cli/)
 * [Packer](https://www.packer.io/)
-* [Terraform v0.8.5](https://github.com/hashicorp/terraform/releases/tag/v0.8.5)
+* [Terraform](https://www.terraform.io/downloads.html)
 * [jq](https://stedolan.github.io/jq/)
 * GitBash (if Windows)
 
@@ -85,6 +85,8 @@ cat docker.tf
 terraform plan -target aws_instance.ci -var ci_count=1
 
 terraform apply -target aws_instance.ci -var ci_count=1
+
+terraform refresh
 
 ssh -i devops21.pem ubuntu@$(terraform output ci_public_ip) \
     docker version
