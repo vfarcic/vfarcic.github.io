@@ -1,0 +1,22 @@
+.reveal {
+  text-shadow:
+          -1px -1px 0 #000,
+          1px -1px 0 #000,
+          -1px 1px 0 #000,
+          1px 1px 0 #000;
+}
+
+.red {
+  color: #ff2c2d; }
+
+.green {
+  color: #17ff2e; }
+
+.reveal pre code {
+    display: block;
+    padding: 5px;
+    overflow: auto;
+    max-height: 400px;
+    word-wrap: normal;
+    background: #3F3F3F;
+    color: #DCDCDC; }
