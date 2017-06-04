@@ -1,4 +1,10 @@
-# Docker Hub (SC)
+# Running Docker Containers Based On Community Images
+
+
+# Docker Hub
+
+
+## Docker Hub
 
 * Navigate through Docker Hub
 * Search for `mongo` image
@@ -7,18 +13,24 @@
 * Walk through available tags
 
 
-# Getting Help (TC)
+# Getting Help
+
+
+## Getting Help
 
 ```bash
 docker help
 
-docker container help
+docker container --help
 
 docker container run --help
 ```
 
 
-# Running Containers (TC)
+# Running Containers
+
+
+## Running Containers
 
 ```bash
 docker container run --rm mongo
@@ -38,12 +50,12 @@ docker container ls -a
 ```
 
 
-# Running Detached Containers (TC)
+## Running Containers
 
 ```bash
 mkdir -p /tmp/mongo
 
-docker container run -d --rm --name mongo \
+docker container run -d --name mongo \
     -p 27017:27017 \
     -v /tmp/mongo:/data/db \
     mongo
@@ -60,7 +72,10 @@ docker container ls -a
 ```
 
 
-# Using Docker Compose (TC)
+# Using Docker Compose
+
+
+## Using Docker Compose
 
 ```bash
 docker-compose up --help
@@ -77,7 +92,7 @@ docker-compose ps
 ```
 
 
-# Testing Docker Compose (TC)
+## Using Docker Compose
 
 ```bash
 docker container inspect godemo_app_1 | jq '.'
@@ -89,7 +104,7 @@ curl localhost:$PORT/demo/hello
 ```
 
 
-# Destroying Compose Project (TC)
+## Using Docker Compose
 
 ```bash
 docker-compose ps
@@ -98,3 +113,12 @@ docker-compose down
 
 docker-compose ps
 ```
+
+
+## Using Docker Compose
+
+```bash
+docker-compose --help
+```
+
+* Compose file reference ([https://docs.docker.com/compose/compose-file/](https://docs.docker.com/compose/compose-file/))
