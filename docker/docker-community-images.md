@@ -27,17 +27,21 @@ docker container run --help
 ```
 
 
-# Running Containers
+# Operating Containers
+
+Going through basic container operations like running, listing, stopping, removing, and inspecting
 
 
-## Running Containers
+## Operating Containers
 
 ```bash
 docker container run --rm mongo
 
 # Press ctrl+C
 
-docker container run -d --rm --name mongo \
+docker container ls -a
+
+docker container run -d --name mongo \
     mongo
 
 docker container stop mongo
@@ -47,12 +51,13 @@ docker container ls -a
 docker container rm mongo
 
 docker container ls -a
-```
 
+docker container run -d --name mongo \
+    -p 27017:27017 \
+    mongo
 
-## Running Containers
+docker container rm mongo
 
-```bash
 mkdir -p /tmp/mongo
 
 docker container run -d --name mongo \

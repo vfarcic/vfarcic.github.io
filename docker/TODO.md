@@ -1,30 +1,52 @@
 # Cover
 
-TODO: Video
+TODO
 
 # About Me
 
-TODO: Video
+TODO
 
 # Prerequisites
 
-TODO: Video
+TODO
 
 # Introduction To Docker
 
-TODO: Video
+TODO
 
 # Running Docker Containers Based On Community Images
 
-TODO: Video
+TODO
+
+## Docker Hub
+
+TODO
+
+## Getting Help
+
+TODO
+
+## Operating Containers
+
+### Intro
+
+TODO
+
+### Commands
+
+TODO
+
+## Using Docker Compose
+
+TODO
 
 # Managing Docker Images
 
-TODO: Video
+TODO
 
 # Running Docker Swarm Services (A Taste)
 
-TODO: Video
+TODO
 
 # Running Docker Swarm Services
 
