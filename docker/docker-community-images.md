@@ -41,8 +41,11 @@ docker container run --rm mongo
 
 docker container ls -a
 
-docker container run -d --name mongo \
-    mongo
+docker container run -d --name mongo mongo
+
+docker container ls
+
+docker container logs mongo
 
 docker container stop mongo
 
@@ -53,31 +56,32 @@ docker container rm mongo
 docker container ls -a
 
 docker container run -d --name mongo \
-    -p 27017:27017 \
-    mongo
+    -p 8081:27017 mongo
 
-docker container rm mongo
+docker container rm -f mongo
 
 mkdir -p /tmp/mongo
 
 docker container run -d --name mongo \
-    -p 27017:27017 \
-    -v /tmp/mongo:/data/db \
-    mongo
+    -p 27017 mongo
 
 docker container ls
+
+docker container run -d --name mongo \
+    -p 27017 -v /tmp/mongo:/data/db \
+    mongo
 
 ls -l /tmp/mongo
 
 docker container inspect mongo
 
 docker container rm -f mongo
-
-docker container ls -a
 ```
 
 
 # Using Docker Compose
+
+Defining Docker services in YAML format and executing Docker commands through Docker Compose.
 
 
 ## Using Docker Compose
