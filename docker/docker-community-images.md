@@ -50,26 +50,33 @@ docker container logs mongo
 docker container stop mongo
 
 docker container ls -a
+```
 
+
+## Operating Containers
+
+```bash
 docker container rm mongo
 
 docker container ls -a
 
-docker container run -d --name mongo \
-    -p 8081:27017 mongo
+docker container run -d --name mongo -p 8081:27017 mongo
 
 docker container rm -f mongo
 
 mkdir -p /tmp/mongo
 
-docker container run -d --name mongo \
-    -p 27017 mongo
+docker container run -d --name mongo -p 27017 mongo
 
 docker container ls
+```
 
-docker container run -d --name mongo \
-    -p 27017 -v /tmp/mongo:/data/db \
-    mongo
+
+## Operating Containers
+
+```bash
+docker container run -d --name mongo -p 27017 \
+    -v /tmp/mongo:/data/db mongo
 
 ls -l /tmp/mongo
 
