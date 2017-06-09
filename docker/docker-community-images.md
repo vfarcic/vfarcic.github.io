@@ -94,8 +94,6 @@ Defining Docker services in YAML format and executing Docker commands through Do
 ## Using Docker Compose
 
 ```bash
-docker-compose up --help
-
 git clone https://github.com/vfarcic/go-demo.git
 
 cd go-demo
@@ -105,12 +103,7 @@ cat docker-compose.yml
 docker-compose up -d
 
 docker-compose ps
-```
 
-
-## Using Docker Compose
-
-```bash
 docker container inspect godemo_app_1 | jq '.'
 
 PORT=$(docker container inspect godemo_app_1 \
@@ -134,7 +127,7 @@ docker-compose ps
 ## Using Docker Compose
 
 ```bash
-docker-compose --help
+docker-compose help
 ```
 
 * Compose file reference ([https://docs.docker.com/compose/compose-file/](https://docs.docker.com/compose/compose-file/))
