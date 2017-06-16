@@ -1,3 +1,5 @@
+# Automating Jenkins Docker Setup
+
 Jenkins is, by far, the most used CI/CD tool in the market. That comes as no surprise since it's been around for a while, it has one of the biggest open source communities, it has enterprise version for those who need it, and it is straightforward to extend it to suit (almost) anyone's needs.
 
 Products that dominate the market for years tend to be stable and very feature rich. Jenkins is no exception. However, with age come some downsides as well. In the case of Jenkins, automation setup is one of the things that has a lot to be desired. If you need Jenkins to serve as an orchestrator of your automation and tasks, you'll find it to be effortless to use. But, if you need to automate Jenkins itself, you'll realize that it is not as smooth as you'd expect from modern tools. Never the less, Jenkins setup can be automated, and we'll go through one possible solution.
