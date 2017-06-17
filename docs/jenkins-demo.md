@@ -16,8 +16,8 @@ ssh -i devops21.pem ubuntu@$(terraform \
   output swarm_manager_1_public_ip)
 
 curl -o jenkins.yml \
-    https://raw.githubusercontent.com/vfarcic/\
-docker-flow-stacks/master/jenkins/vfarcic-jenkins-rexray-df-proxy.yml
+    https://raw.githubusercontent.com/vfarcic/docker-flow-stacks\
+/master/jenkins/vfarcic-jenkins-rexray-df-proxy.yml
 
 cat jenkins.yml
 
@@ -28,7 +28,14 @@ echo "admin" | docker secret create jenkins-pass -
 docker stack deploy -c jenkins.yml jenkins
 
 docker stack ps jenkins
+```
 
+
+# Jenkins Setup
+
+---
+
+```bash
 exit
 
 open "http://$(terraform output swarm_manager_1_public_ip)/jenkins"
