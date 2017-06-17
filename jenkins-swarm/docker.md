@@ -150,10 +150,6 @@ cat go-demo.yml
 
 docker stack deploy -c go-demo.yml go-demo
 
-docker stack ls
-
-docker stack services go-demo
-
 docker stack ps go-demo
 ```
 

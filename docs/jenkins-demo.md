@@ -17,9 +17,13 @@ ssh -i devops21.pem ubuntu@$(terraform \
 
 curl -o jenkins.yml \
     https://raw.githubusercontent.com/vfarcic/\
-docker-flow-stacks/master/jenkins/jenkins-rexray-df-proxy.yml
+docker-flow-stacks/master/jenkins/vfarcic-jenkins-rexray-df-proxy.yml
 
 cat jenkins.yml
+
+echo "admin" | docker secret create jenkins-user -
+
+echo "admin" | docker secret create jenkins-pass -
 
 docker stack deploy -c jenkins.yml jenkins
 

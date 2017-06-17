@@ -1,4 +1,4 @@
-# The DevOps Toolkit 2.2 Is Born
+# The DevOps Toolkit Series Continues: 2.2 Is Born
 
 What follows is the preface to *The DevOps Toolkit 2.2* book.
 
@@ -10,4 +10,10 @@ So, for now, the objectives are to go beyond a simple setup of a cluster, servic
 
 You've been warned! I don't know where this book is going nor whether I will manage to fulfill my self-defined objectives. I'll do my best to outline the steps towards a self-adapting and self-healing system in the same way as I am exploring them myself.
 
-TODO: Link to The DevOps Toolkit 2.2
+# The DevOps 2.2 Toolkit: Self-Healing Docker Clusters
+
+If you liked this article, you might be interested in **[The DevOps 2.2 Toolkit: Self-Healing Docker Clusters](https://leanpub.com/the-devops-2-2-toolkit)** book. The book goes beyond Docker and schedulers and tries to explore ways for building self-adaptive and self-healing Docker clusters. If you are a Docker user and want to explore advanced techniques for creating clusters and managing services, this book might be just what you're looking for.
+
+The book is still under development. If you choose to become early reader and influence the direction of the book, please get a copy from [LeanPub](https://leanpub.com/the-devops-2-2-toolkit). You will receive notifications whenever a new chapter is added.
+
+Give the book a try and let me know what you think.
