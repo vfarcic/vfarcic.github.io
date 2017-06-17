@@ -19,14 +19,14 @@ curl -o jenkins.yml \
     https://raw.githubusercontent.com/vfarcic/docker-flow-stacks\
 /master/jenkins/vfarcic-jenkins-rexray-df-proxy.yml
 
-cat jenkins.yml
-
 echo "admin" | docker secret create jenkins-user -
 
 echo "admin" | docker secret create jenkins-pass -
 
 docker stack deploy -c jenkins.yml jenkins
 
+cat jenkins.yml
+
 docker stack ps jenkins
 ```
 
@@ -40,64 +40,6 @@ exit
 
 open "http://$(terraform output swarm_manager_1_public_ip)/jenkins"
 ```
-
-
-# Jenkins Setup
-
----
-
-```bash
-ssh -i devops21.pem ubuntu@$(terraform \
-  output swarm_manager_1_public_ip)
-
-docker run -it --rm \
-  --volume-driver rexray -v jenkins_main:/var/jenkins_home \
-  alpine cat /var/jenkins_home/secrets/initialAdminPassword
-
-# Copy the password
-```
-
-* Paste the *Administrator password*
-* Select *Install suggested plugins*
-* Type *admin* as both *user* and *password*
-* Fill in the rest of the fields and press *Save And Finish*
-* Click *Start Using Jenkins*
-
-
-# Jenkins Failover
-
----
-
-```bash
-docker stack ps jenkins
-
-IP=[...]  # Manager private IP
-
-docker -H tcp://$IP:2375 rm -f $(docker -H tcp://$IP:2375 \
-    ps -qa -f label=com.docker.swarm.service.name=jenkins_main)
-
-docker stack ps jenkins
-
-exit
-
-open "http://$(terraform output swarm_manager_1_public_ip)/jenkins"
-```
-
-
-### Jenkins Agents
-
-# Jenkins Swarm Plugin
-
----
-
-```bash
-open "http://$(terraform output swarm_manager_1_public_ip)/\
-jenkins/pluginManager/available"
-```
-
-* Select *Self-Organizing Swarm Plug-in Modules*
-* Select *Blue Ocean*
-* Click *Install without restart*
 
 
 ### Jenkins Agents
@@ -109,16 +51,10 @@ jenkins/pluginManager/available"
 ```bash
 cat test-swarm.tf
 
-terraform plan -target aws_instance.test-swarm-manager \
-  -var swarm_init=true -var test_swarm_managers=1
-
 terraform apply -target aws_instance.test-swarm-manager \
   -var swarm_init=true -var test_swarm_managers=1 -var rexray=true
 
 terraform refresh
-
-ssh -i devops21.pem ubuntu@$(terraform output \
-  test_swarm_manager_1_public_ip) docker node ls
 ```
 
 
@@ -129,8 +65,6 @@ ssh -i devops21.pem ubuntu@$(terraform output \
 ---
 
 ```bash
-cat test-swarm.tf
-
 export TF_VAR_test_swarm_manager_token=$(ssh -i devops21.pem \
   ubuntu@$(terraform output test_swarm_manager_1_public_ip) \
   docker swarm join-token -q manager)
@@ -140,8 +74,6 @@ export TF_VAR_test_swarm_manager_ip=$(terraform \
 
 terraform apply -target aws_instance.test-swarm-manager \
   -var rexray=true
-
-terraform refresh
 
 ssh -i devops21.pem ubuntu@$(terraform \
   output test_swarm_manager_1_public_ip) docker node ls
@@ -202,10 +134,6 @@ curl -o registry.yml \
 docker-flow-stacks/master/docker/registry-rexray-external.yml
 
 docker stack deploy -c registry.yml registry
-
-docker stack ps registry
-
-docker image pull localhost:5000/go-demo
 
 exit
 ```
@@ -305,6 +233,29 @@ ssh -i devops21.pem ubuntu@$(terraform \
   output swarm_manager_1_public_ip) docker stack ps go-demo
 
 curl $(terraform output swarm_manager_1_public_ip)/demo/hello
+```
+
+
+# Jenkins Failover
+
+---
+
+```bash
+ssh -i devops21.pem ubuntu@$(terraform \
+  output swarm_manager_1_public_ip)
+
+docker stack ps jenkins
+
+IP=[...]  # Manager private IP
+
+docker -H tcp://$IP:2375 rm -f $(docker -H tcp://$IP:2375 \
+    ps -qa -f label=com.docker.swarm.service.name=jenkins_main)
+
+docker stack ps jenkins
+
+exit
+
+open "http://$(terraform output swarm_manager_1_public_ip)/jenkins"
 ```
 
 
