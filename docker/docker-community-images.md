@@ -75,15 +75,33 @@ docker container ls
 ## Operating Containers
 
 ```bash
-docker container run -d --name mongo -p 27017 \
-    -v /tmp/mongo:/data/db mongo
+docker container rm -f mongo
 
-ls -l /tmp/mongo
+docker container run -d --name mongo -p 27017 \
+    -v /Users/vfarcic/mongo:/data/db mongo
+
+ls -l $PWD/mongo
 
 docker container inspect mongo
 
 docker container rm -f mongo
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # Using Docker Compose
@@ -105,7 +123,12 @@ cat docker-compose.yml
 docker-compose up -d
 
 docker-compose ps
+```
 
+
+## Using Docker Compose
+
+```bash
 docker container inspect godemo_app_1 | jq '.'
 
 PORT=$(docker container inspect godemo_app_1 \
