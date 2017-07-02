@@ -200,7 +200,11 @@ pipeline {
     stage("Production") {
       steps {
         sh "DOCKER_HOST=tcp://${env.PROD_IP}:2375 docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo_main"
-        sh "HOST_IP=${env.PROD_IP} docker-compose -f docker-compose-test-local.yml run --rm production"
+        try {
+          sh "HOST_IP=${env.PROD_IP} docker-compose -f docker-compose-test-local.yml run --rm production-loop"
+        } catch (e) {
+          sh "DOCKER_HOST=tcp://${env.PROD_IP}:2375 docker service update --rollback go-demo"
+        }
       }
     }
   }
