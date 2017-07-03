@@ -1,5 +1,8 @@
 # Managing Docker Images
 
+* Build
+* Store
+* Pull & Run
 
 # Building Images
 
@@ -71,4 +74,11 @@ docker image pull localhost:5000/registry
 
 docker container rm -f registry
 ```
+
+
+# Running Images From The Private Registry
+
+## Running Images From The Private Registry
+
+TODO
 

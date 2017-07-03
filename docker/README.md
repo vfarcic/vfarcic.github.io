@@ -1,75 +1,75 @@
-# Introduction to Docker
+# Introduction to Docker (PENDING)
 
-## Introduction
+## Introduction (PENDING)
 
-## Running Containers Based On Community Images
+## Running Containers Based On Community Images (DONE)
 
-## Building Docker Images
+## Building Docker Images (PENDING)
 
-## Running Docker Services
+## Running Docker Services (PENDING)
 
-# Running Docker Services
+# Running Docker Services (PENDING)
 
-## Introduction
+## Introduction (PENDING)
 
-## Creating A Docker Swarm Cluster Using Docker Machine
+## Creating A Docker Swarm Cluster Using Docker Machine (PENDING)
 
-## Deploying Docker Stacks
+## Deploying Docker Stacks (PENDING)
 
-## Exploring Docker Networking
+## Exploring Docker Networking (PENDING)
 
-## Creating Infrastructure Services
+## Creating Infrastructure Services (PENDING)
 
-## Exploring Failover
+## Exploring Failover (PENDING)
 
-## Integrating Services With A Proxy
+## Integrating Services With A Proxy (PENDING)
 
-# Creating a Continuous Deployment Pipeline
+# Creating a Continuous Deployment Pipeline (PENDING)
 
-## Introduction
+## Introduction (PENDING)
 
-## Exploring Continuous Deployment Pipeline Steps
+## Exploring Continuous Deployment Pipeline Steps (PENDING)
 
-### Unit Testing
+### Unit Testing (PENDING)
 
-### Building
+### Building (PENDING)
 
-### Setting Up Docker Registry And Pushing Images
+### Setting Up Docker Registry And Pushing Images (PENDING)
 
-### Functional Testing
+### Functional Testing (PENDING)
 
-### Rolling Updates
+### Rolling Updates (PENDING)
 
-### Production Testing
+### Production Testing (PENDING)
 
-# Running Production Clusters
+# Running Production Clusters (PENDING)
 
-## Introduction
+## Introduction (PENDING)
 
-## Creating a Cluster Using Docker For AWS
+## Creating a Cluster Using Docker For AWS (PENDING)
 
-## Running Services In Production
+## Running Services In Production (PENDING)
 
-## Exploring Stateful Services And Network Volumes
+## Exploring Stateful Services And Network Volumes (PENDING)
 
-## Employing Continuous Deployment In Production Clusters
+## Employing Continuous Deployment In Production Clusters (PENDING)
 
-# Logging And Monitoring Docker Clusters
+# Logging And Monitoring Docker Clusters (PENDING)
 
-## Introduction
+## Introduction (PENDING)
 
-## Setting Up Centralized Logging
+## Setting Up Centralized Logging (PENDING)
 
-## Setting Up Metrics Storage
+## Setting Up Metrics Storage (PENDING)
 
-## Setting Up Metrics Exporters
+## Setting Up Metrics Exporters (PENDING)
 
-## Setting Up Dashboards
+## Setting Up Dashboards (PENDING)
 
-# Creating Self-Healing Systems
+# Creating Self-Healing Systems (PENDING)
 
-## Introduction
+## Introduction (PENDING)
 
-## TBD
+## TBD (PENDING)
 
 
