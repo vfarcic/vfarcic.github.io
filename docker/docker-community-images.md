@@ -64,8 +64,6 @@ docker container run -d --name mongo -p 8081:27017 mongo
 
 docker container rm -f mongo
 
-mkdir -p /tmp/mongo
-
 docker container run -d --name mongo -p 27017 mongo
 
 docker container ls
@@ -77,6 +75,8 @@ docker container ls
 ```bash
 docker container rm -f mongo
 
+mkdir -p /tmp/mongo
+
 docker container run -d --name mongo -p 27017 \
     -v /Users/vfarcic/mongo:/data/db mongo
 
@@ -86,22 +86,6 @@ docker container inspect mongo
 
 docker container rm -f mongo
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # Using Docker Compose
