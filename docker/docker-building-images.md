@@ -18,6 +18,8 @@ cd go-demo
 cat Dockerfile
 
 docker image build -t go-demo .
+
+docker image ls
 ```
 
 
@@ -78,6 +80,7 @@ docker container rm -f registry
 
 
 # Running Images From The Private Registry
+
 
 ## Running Images From The Private Registry
 

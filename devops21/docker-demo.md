@@ -5,22 +5,20 @@
 # CI with Docker
 
 
-# Unit Tests & Build
+# Building Images
 
 ---
 
 ```bash
-ssh -i devops21.pem ubuntu@$(terraform output ci_public_ip)
-
 git clone https://github.com/vfarcic/go-demo.git
 
 cd go-demo
 
-cat docker-compose-test-local.yml
+cat Dockerfile
 
-docker-compose -f docker-compose-test.yml run --rm unit
+docker image build -t go-demo .
 
-ll | grep go-demo
+docker image ls
 ```
 
 
@@ -29,26 +27,24 @@ ll | grep go-demo
 ---
 
 ```bash
-cat Dockerfile
+cat Dockerfile.big
 
-cat docker-compose-test-local.yml
+docker image build -f Dockerfile.big -t go-demo .
 
-docker-compose -f docker-compose-test-local.yml build app
-
-docker images
+docker image ls
 ```
 
 
-# Combining Testing and Building
+## Building Images
 
 ---
 
 ```bash
-git checkout multi-stage-builds
+cat Dockerfile.multistage
 
-cat Dockerfile
+docker image build -f Dockerfile.multistage -t go-demo .
 
-docker image build -t go-demo .
+docker image ls
 ```
 
 
