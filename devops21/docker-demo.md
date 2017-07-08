@@ -39,6 +39,19 @@ docker images
 ```
 
 
+# Combining Testing and Building
+
+---
+
+```bash
+git checkout multi-stage-builds
+
+cat Dockerfile
+
+docker image build -t go-demo .
+```
+
+
 # Staging tests
 
 ---

@@ -171,9 +171,8 @@ pipeline {
   stages {
     stage("Unit") {
       steps {
-        git "https://github.com/vfarcic/go-demo.git"
-        sh "docker-compose -f docker-compose-test.yml run --rm unit"
-        sh "docker build -t go-demo ."
+        git url: "https://github.com/vfarcic/go-demo.git", branch: "multi-stage-builds"
+        sh "docker image build -t go-demo ."
       }
     }
     stage("Staging") {
@@ -184,10 +183,10 @@ pipeline {
     }
     stage("Publish") {
       steps {
-        sh "docker tag go-demo localhost:5000/go-demo"
-        sh "docker tag go-demo localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
-        sh "docker push localhost:5000/go-demo"
-        sh "docker push localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
+        sh "docker image tag go-demo localhost:5000/go-demo"
+        sh "docker image tag go-demo localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
+        sh "docker image push localhost:5000/go-demo"
+        sh "docker image push localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
       }
     }
     stage("Prod-like") {
