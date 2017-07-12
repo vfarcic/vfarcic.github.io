@@ -26,22 +26,6 @@ docker image build -t go-demo .
 ```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Building Images
 
 ```bash
@@ -54,6 +38,7 @@ docker image build -t go-demo .
 
 docker image ls
 ```
+
 
 ## Building Images
 
