@@ -75,8 +75,31 @@ docker image ls
 ```bash
 docker image tag go-demo vfarcic/go-demo
 
+docker login
+
 docker image push vfarcic/go-demo
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## Storing Images
