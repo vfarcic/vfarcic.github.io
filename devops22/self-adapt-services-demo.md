@@ -107,8 +107,8 @@ receivers:
 ---
 
 ```bash
-DOMAIN=$(docker-machine ip swarm-1) docker stack deploy \
-    -c stacks/docker-flow-monitor-slack.yml monitor
+DOMAIN=$(docker-machine ip swarm-1) GLOBAL_SCRAPE_INTERVAL=1s \
+    docker stack deploy -c stacks/docker-flow-monitor-slack.yml monitor
 
 docker service update \
     --label-add com.df.alertIf.1=@node_mem_limit:0.01 \

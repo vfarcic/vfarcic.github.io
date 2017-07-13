@@ -20,6 +20,7 @@ open "http://$(docker-machine ip swarm-1)/monitor/alerts"
 
 docker service update \
     --label-add "com.df.alertIf.1=@node_mem_limit:0.01" \
+    --label-add "com.df.alertFor=5s" \
     exporter_node-exporter
 
 open "http://$(docker-machine ip swarm-1)/monitor/alerts"
@@ -100,8 +101,8 @@ receivers:
 ---
 
 ```bash
-DOMAIN=$(docker-machine ip swarm-1) docker stack deploy \
-    -c stacks/docker-flow-monitor-slack.yml monitor
+DOMAIN=$(docker-machine ip swarm-1) GLOBAL_SCRAPE_INTERVAL=1s \
+    docker stack deploy -c stacks/docker-flow-monitor-slack.yml monitor
 
 open "http://$(docker-machine ip swarm-1)/monitor/flags"
 
@@ -112,6 +113,9 @@ docker service update \
     go-demo_main
 
 open "http://$(docker-machine ip swarm-1)/monitor/alerts"
+
+
+open "https://devops20.slack.com/messages/C59EWRE2K/"
 
 docker service update \
     --label-add "com.df.alertIf=@service_mem_limit:0.8" \

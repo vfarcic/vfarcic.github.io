@@ -14,8 +14,8 @@ cat stacks/docker-flow-monitor-proxy.yml
 
 docker network create -d overlay monitor
 
-DOMAIN=$(docker-machine ip swarm-1) docker stack deploy \
-    -c stacks/docker-flow-monitor-proxy.yml monitor
+DOMAIN=$(docker-machine ip swarm-1) GLOBAL_SCRAPE_INTERVAL=1s \
+    docker stack deploy -c stacks/docker-flow-monitor-proxy.yml monitor
 
 docker stack ps monitor
 
