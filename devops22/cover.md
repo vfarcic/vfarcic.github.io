@@ -1,4 +1,4 @@
-## The DevOps 2.1 Toolkit
+## The DevOps 2.2 Toolkit
 
 # Workshop
 
