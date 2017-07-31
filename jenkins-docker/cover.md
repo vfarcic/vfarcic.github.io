@@ -1,4 +1,6 @@
-# Accelerating Docker Adoption With Jenkins
+## The DevOps 2.1 Toolkit
+
+# Jenkins
 
 ---
 

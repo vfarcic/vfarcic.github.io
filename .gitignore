@@ -6,4 +6,5 @@ ms-lifecycle
 /jenkins/go-demo
 /jenkins/docker
 *.secret
+/secrets
 *.pem
