@@ -8,14 +8,11 @@ Note:
 Create a second cluster for CD and deploy a few Jenkins agents using Jenkins Swarm Plugin.
 
 
-## Registry
+## Node Failure
 
 ---
 
 TODO
-
-Note:
-Deploy a registry, build an image, push it and pull it to/from the registry
 
 
 ## Multi-stage builds
@@ -26,6 +23,30 @@ TODO
 
 Note:
 Show how unit tests and artifact builds can be done as part of the build of a Docker image without sacrificing the final size.
+
+
+## Functional Tests
+
+---
+
+TODO
+
+
+## Registry
+
+---
+
+TODO
+
+Note:
+Deploy a registry, build an image, push it and pull it to/from the registry
+
+
+## Publishing
+
+---
+
+TODO
 
 
 ## Rolling Updates
@@ -66,3 +87,10 @@ TODO
 
 Note:
 Create a CJE cluster and demonstrate some of its key features. Show how easy it is to set it up and administer it. Show how it provides much more features than when creating a custom solution on top of schedulers.
+
+
+## DevOps 2.2
+
+---
+
+TODO
