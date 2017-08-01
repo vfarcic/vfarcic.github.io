@@ -1,4 +1,4 @@
-# Jenkins Service
+# Jenkins Master
 
 ---
 
