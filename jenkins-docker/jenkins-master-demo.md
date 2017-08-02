@@ -66,7 +66,7 @@ Unlike most other Docker workshops, this one will use Jenkins for most of the ex
 ---
 
 ```bash
-docker service create --name jenkins -p 8080:8080 jenkins:lts-alpine
+docker service create --name jenkins -p 8080:8080 jenkins:alpine
 
 docker service ps jenkins
 

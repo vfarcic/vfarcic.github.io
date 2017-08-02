@@ -1,13 +1,3 @@
-## Multi-stage builds
-
----
-
-TODO
-
-Note:
-Show how unit tests and artifact builds can be done as part of the build of a Docker image without sacrificing the final size.
-
-
 ## Functional Tests
 
 ---

@@ -89,13 +89,13 @@ Note:
 There's no need to spend much time explaining what Jenkins is since only Jenkins users will opt for this workshop. Instead, we can use it to promote new stuff like Blue Ocean, CJE, and so on.
 
 
-## DevOps == Jenkins?
+## What Is Jenkins?
 
 ---
 
-## DevOps != Jenkins
-
 ## Jenkins == tasks executor
+## Jenkins == automation
+## DevOps == Automation + much more
 
 
 ## What Is Docker?

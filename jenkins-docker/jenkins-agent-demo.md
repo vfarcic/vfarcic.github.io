@@ -61,4 +61,6 @@ open "http://$CLUSTER_DNS/jenkins/computer"
 ssh -i workshop.pem docker@$CLUSTER_IP
 
 docker service scale jenkins-agent_main=1
+
+exit
 ```

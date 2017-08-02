@@ -29,7 +29,7 @@ docker image build -t go-demo .
 ## Building Images
 
 ```bash
-docker container run -it --rm -v $PWD:/tmp -w /tmp golang:1.6 \
+docker container run -it --rm -v $PWD:/tmp -w /tmp golang:1.7 \
   sh -c "go get -d -v -t && go build -v -o go-demo"
 
 ls -l
