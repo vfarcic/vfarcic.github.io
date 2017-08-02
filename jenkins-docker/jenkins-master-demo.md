@@ -27,7 +27,7 @@ docker container run -d --name jenkins -p 8080:8080 jenkins:alpine
 
 docker container ls # Wait until it is up and running
 
-PRIVATE_IP=[...]
+PRIVATE_IP=[...] # e.g. 172.31.21.216
 
 curl -i "http://$PRIVATE_IP:8080"
 
@@ -35,6 +35,7 @@ docker container rm -f jenkins
 
 docker container ls
 ```
+
 
 ## Running Containers
 
