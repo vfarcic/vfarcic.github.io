@@ -20,7 +20,7 @@ for i in 1 2 3 4; do
 
     docker pull vfarcic/go-demo:1.1
 
-    docker pull manomarks/visualizer
+    docker pull dockersamples/visualizer
 
 done
 

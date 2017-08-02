@@ -1,20 +1,3 @@
-## Jenkins agents
-
----
-
-TODO
-
-Note:
-Create a second cluster for CD and deploy a few Jenkins agents using Jenkins Swarm Plugin.
-
-
-## Node Failure
-
----
-
-TODO
-
-
 ## Multi-stage builds
 
 ---

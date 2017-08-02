@@ -84,7 +84,7 @@ ssh -i devops21.pem ubuntu@$(terraform \
 docker service create --name=visualizer \
   --publish=9090:8080/tcp --constraint=node.role==manager \
   --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
-  manomarks/visualizer
+  dockersamples/visualizer
 
 exit
 

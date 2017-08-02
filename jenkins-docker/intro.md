@@ -11,6 +11,7 @@
 * SSH client (e.g. [Putty](http://www.putty.org/))
 * SSH key named `workshop` in AWS and locally (see [Amazon EC2 Key Pairs](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html))
 * `0400` permissions on the `workshop.pem` key (if not Windows)
+* [Git](https://git-scm.com/) & GitBash (if Windows)
 
 Note:
 AWS account must be private, not corporate. Otherwise, we might have to deal with customizations that would prevent attendees to follow the workshop. We could use http://labs.play-with-docker.com/, but that would prevent us from running CJE (everything else should be OK).

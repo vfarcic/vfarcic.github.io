@@ -5,53 +5,25 @@
 # Jenkins Agent Services
 
 
-## Creating a Testing Cluster
+## Running Jenkins Agents
 
 ---
-
-* Open [Docker Community Edition for AWS](https://store.docker.com/editions/community/docker-ce-aws)
-* Click the `Get Docker` button
-* Click the `Next` button
-* Type `do-not-test-in-production` as the `Stack name`
-* Change the `Number of Swarm worker nodes` to `0`
-* Select `workshop` as your SSH key in `Which SSH key to use`
-* Select `yes` as `Enable daily resource cleanup`
-* Select `no` as `Use Cloudwatch for container logging`
-
-
-## Creating a Testing Cluster
-
----
-
-* Select `yes` as `Create EFS prerequsities for CloudStor`
-* Choose `t2.small` as `Swarm manager instance type`
-* Click the `Next` button
-* Click the `Next` button
-* Select `I acknowledge that AWS CloudFormation might create IAM resources`
-* Click the `Create button`
-
-
-## Entering The Cluster
-
----
-
-* Click the `Output` tab in CloudFormation Stacks screen
-* Copy `DefaultDNSTarget`
 
 ```bash
-TEST_CLUSTER_DNS=[...]
-```
+ssh -i workshop.pem docker@$CLUSTER_IP
 
-* Click the link next to *Managers*
-* Select any of the nodes
-* Copy of `IPv4 Public IP` IP
+curl -o jenkins-agent.yml https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/jenkins/vfarcic-jenkins-agent.yml
 
-```bash
-TEST_CLUSTER_IP=[...]
+cat jenkins-agent.yml
 
-ssh -i workshop.pem docker@$TEST_CLUSTER_IP
+export JENKINS_URL=[...] # e.g. http://[INTERNAL_IP]/jenkins
 
-docker node ls
+LABEL=prod \
+    docker stack deploy -c jenkins-agent.yml jenkins-agent-prod
+
+exit
+
+open "http://$CLUSTER_DNS/jenkins/computer"
 ```
 
 
@@ -60,16 +32,33 @@ docker node ls
 ---
 
 ```bash
-curl -o jenkins.yml https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/jenkins/vfarcic-jenkins-agent.yml
+ssh -i workshop.pem docker@$CLUSTER_IP
 
-echo "admin" | docker secret create jenkins-user -
+export JENKINS_URL=[...] # e.g. http://[INTERNAL_IP]/jenkins
 
-echo "admin" | docker secret create jenkins-pass -
+LABEL=test \
+    docker stack deploy -c jenkins-agent.yml jenkins-agent
 
-export JENKINS_URL=[...]
+exit
 
-LABEL=test docker stack deploy -c jenkins.yml jenkins
+open "http://$CLUSTER_DNS/jenkins/computer"
 ```
 
-TODO: Continue
 
+## Scaling Jenkins Agents
+
+---
+
+```bash
+ssh -i workshop.pem docker@$CLUSTER_IP
+
+docker service scale jenkins-agent_main=2
+
+exit
+
+open "http://$CLUSTER_DNS/jenkins/computer"
+
+ssh -i workshop.pem docker@$CLUSTER_IP
+
+docker service scale jenkins-agent_main=1
+```

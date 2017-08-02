@@ -24,7 +24,7 @@ for i in 1 2 3; do
 
     docker pull vfarcic/docker-flow-proxy
 
-    docker pull manomarks/visualizer
+    docker pull dockersamples/visualizer
 
 done
 
@@ -46,7 +46,7 @@ for i in 1 2; do
 
     docker pull mongo:3.2.10
 
-    docker pull manomarks/visualizer
+    docker pull dockersamples/visualizer
 
 done
 

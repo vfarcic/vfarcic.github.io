@@ -66,11 +66,9 @@ Unlike most other Docker workshops, this one will use Jenkins for most of the ex
 ---
 
 ```bash
-docker service create --name jenkins -p 8080:8080 jenkins:alpine
+docker service create --name jenkins -p 8080:8080 jenkins:lts-alpine
 
 docker service ps jenkins
-
-docker service logs jenkins # Copy the password
 
 exit
 
@@ -95,19 +93,10 @@ docker stack deploy -c jenkins.yml jenkins
 
 docker stack ps jenkins
 
-docker service logs jenkins_main
-
 exit
 
 open "http://$CLUSTER_DNS:8080/jenkins"
-```
 
-
-## Running Jenkins Stack
-
----
-
-```bash
 ssh -i workshop.pem docker@$CLUSTER_IP
 
 docker stack rm jenkins
@@ -141,8 +130,6 @@ curl -o jenkins.yml https://raw.githubusercontent.com/vfarcic/docker-flow-stacks
 cat jenkins.yml
 
 docker stack deploy -c jenkins.yml jenkins
-
-docker service logs jenkins_main # Copy the password
 
 exit
 
@@ -201,7 +188,7 @@ docker stack deploy -c jenkins.yml jenkins
 ```
 
 
-## Simulate Failure
+## Running Jenkins Without Manual Setup
 
 ---
 
@@ -209,7 +196,14 @@ docker stack deploy -c jenkins.yml jenkins
 exit
 
 open "http://$CLUSTER_DNS/jenkins"
+```
 
+
+## Simulate Failure
+
+---
+
+```bash
 # Create a job
 
 open "http://$CLUSTER_DNS/jenkins/exit"
@@ -253,6 +247,4 @@ open "http://$CLUSTER_DNS/jenkins"
 open "http://$CLUSTER_DNS/jenkins/exit"
 
 open "http://$CLUSTER_DNS/jenkins"
-
-ssh -i workshop.pem docker@$CLUSTER_IP
 ```
