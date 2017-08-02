@@ -5,27 +5,14 @@
 # Jenkins Master Service
 
 
-## Entering The Cluster
+## Preparing
 
 ---
 
-* Click the `Output` tab in CloudFormation Stacks screen
-* Copy `DefaultDNSTarget`
-
 ```bash
-CLUSTER_DNS=[...]
-```
+export CLUSTER_DNS=[...]
 
-* Click the link next to *Managers*
-* Select any of the nodes
-* Copy of `IPv4 Public IP` IP
-
-```bash
-CLUSTER_IP=[...]
-
-ssh -i workshop.pem docker@$CLUSTER_IP
-
-docker node ls
+export CLUSTER_IP=[...]
 ```
 
 
@@ -34,6 +21,8 @@ docker node ls
 ---
 
 ```bash
+ssh -i workshop.pem docker@$CLUSTER_IP
+
 docker container run -d --name jenkins -p 8080:8080 jenkins:alpine
 
 docker container ls # Wait until it is up and running
@@ -47,17 +36,12 @@ docker container rm -f jenkins
 docker container ls
 ```
 
-Note:
-Unlike most other Docker workshops, this one will use Jenkins for most of the examples while still providing enough knowledge how Docker works. We'll run a single Jenkins master and confirm that it works by opening it from a browser.
-
-
 ## Running Containers
 
 ---
 
 * No high availability
-* Not fault tolerant
-* Cannot scale
+* No fault tolerance
 * It's not 2014
 
 
@@ -199,7 +183,7 @@ open "http://$CLUSTER_DNS/jenkins"
 ```
 
 
-## Simulate Failure
+## Simulating Failure
 
 ---
 
@@ -233,7 +217,7 @@ docker stack deploy -c jenkins.yml jenkins
 ```
 
 
-## Simulate Failure
+## Simulating Failure
 
 ---
 
