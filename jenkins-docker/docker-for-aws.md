@@ -1,21 +1,33 @@
 # Docker for AWS
 
+---
+
 
 ## Prerequisites
 
 ---
 
-* [Docker](https://www.docker.com/)
 * [Docker Hub](https://hub.docker.com/) account
+* [Docker](https://www.docker.com/)
 * [AWS account](https://aws.amazon.com/)
 * SSH client (e.g. [Putty](http://www.putty.org/))
-* SSH key named `workshop` in AWS and locally (see [Amazon EC2 Key Pairs](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html))
-* `0400` permissions on the `workshop.pem` key (if not Windows)
 * [Git](https://git-scm.com/) & GitBash (if Windows)
-* If Windows, `open` will not work
 
-Note:
-AWS account must be private, not corporate. Otherwise, we might have to deal with customizations that would prevent attendees to follow the workshop. We could use http://labs.play-with-docker.com/, but that would prevent us from running CJE (everything else should be OK).
+
+## Creating AWS Key Pair
+
+---
+
+* Open [AWS Console](console.aws.amazon.com).
+* Click the `EC2` link
+* Click the `Key Pairs` link
+* Click the `Create Key Pair` button
+* Name it `workshop`
+* Click the `Create` button
+
+```bash
+chmod 0400 workshop.pem
+```
 
 
 ## Creating a Docker Cluster

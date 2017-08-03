@@ -239,4 +239,4 @@ open "http://$CLUSTER_DNS/jenkins"
 
 ---
 
-# []
+# Gist [https://goo.gl/uRGgkM](https://goo.gl/uRGgkM)

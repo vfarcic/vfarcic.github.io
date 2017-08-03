@@ -4,33 +4,22 @@
 
 TODO
 
-## Creating A Docker Swarm Cluster Using Docker Machine
 
-TODO
 
-## Creating Docker Services
 
-TODO
 
-## Deploying Docker Stacks
 
-TODO
 
-## Exploring Docker Networking
 
-TODO
 
-## Creating Infrastructure Services
 
-TODO
 
-## Exploring Failover
 
-TODO
 
-## Integrating Services With A Proxy
 
-TODO
+
+
+
 
 # Creating a Continuous Deployment Pipeline
 
