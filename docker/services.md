@@ -8,6 +8,9 @@
 * A group of containers
 * Fault tolerant
 * Scalable
+* Service discovery & networking
+* Resource based allocation
+* And much more
 
 
 ## Deploying Services
@@ -84,6 +87,8 @@ docker network create -d overlay proxy
 docker stack deploy -c go-demo.yml go-demo
 
 docker stack ps go-demo
+
+open "http://$(docker-machine ip swarm-1):9090"
 ```
 
 
@@ -105,6 +110,8 @@ docker container ls -q -f label="com.docker.swarm.service.name=util"
 
 ID=$(docker container ls -q \
   -f label="com.docker.swarm.service.name=util")
+
+open "http://$(docker-machine ip swarm-1):9090"
 ```
 
 

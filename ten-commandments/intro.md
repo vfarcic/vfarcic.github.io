@@ -41,4 +41,4 @@
 <!-- .slide: data-background="img/unicorn.jpg" -->
 ## Continuous Delivery
 
-# ...Or You're In A Very Small Minority
+# ...Or You're A Minority

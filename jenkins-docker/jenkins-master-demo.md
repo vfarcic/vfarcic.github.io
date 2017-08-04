@@ -233,10 +233,3 @@ open "http://$CLUSTER_DNS/jenkins/exit"
 
 open "http://$CLUSTER_DNS/jenkins"
 ```
-
-
-## Gist
-
----
-
-# Gist [https://goo.gl/uRGgkM](https://goo.gl/uRGgkM)

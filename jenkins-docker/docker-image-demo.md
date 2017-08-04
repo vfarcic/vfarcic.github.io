@@ -48,7 +48,7 @@ docker image ls
 ```
 
 
-# Building Images
+## Building Images
 
 ---
 
@@ -62,18 +62,26 @@ docker image ls
 ```
 
 
-# Pushing Images
+## Pushing Images
 
 ---
 
 ```bash
-docker image tag go-demo vfarcic/go-demo
+export DOCKER_HUB_USER=[...]
 
-docker image push vfarcic/go-demo
+docker image tag go-demo $DOCKER_HUB_USER/go-demo
+
+docker image push $DOCKER_HUB_USER/go-demo
+
+docker image tag go-demo $DOCKER_HUB_USER/go-demo:workshop
+
+docker image push $DOCKER_HUB_USER/go-demo:workshop
+
+open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo/tags"
 ```
 
 
-# Jenkins Credentials
+## Jenkins Credentials
 
 ---
 
@@ -81,6 +89,7 @@ docker image push vfarcic/go-demo
 open "http://$CLUSTER_DNS/jenkins/credentials"
 ```
 
+* Login with `admin`/`admin`
 * Click the `Jenkins` link
 * Click the `Global credentials` link
 * Click the `Add Credentials` link
@@ -89,7 +98,7 @@ open "http://$CLUSTER_DNS/jenkins/credentials"
 * Click the `OK` button
 
 
-# Jenkins Pipeline
+## Jenkins Pipeline
 
 ---
 
@@ -103,7 +112,7 @@ open "http://$CLUSTER_DNS/jenkins/view/all/newJob"
 * Type the Pipeline script from the next slide
 
 
-# Jenkins Pipeline
+## Jenkins Pipeline
 
 ---
 
@@ -148,9 +157,11 @@ pipeline {
 ```
 
 
-# Jenkins Pipeline
+## Jenkins Pipeline
 
 ---
+
+* Click the `Save` button
 
 ```bash
 open "http://$CLUSTER_DNS/jenkins/blue/organizations/jenkins/go-demo/activity"
@@ -159,3 +170,6 @@ open "http://$CLUSTER_DNS/jenkins/blue/organizations/jenkins/go-demo/activity"
 * Click the `Run` button
 * Click the row with the new build
 
+```bash
+open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo/tags"
+```

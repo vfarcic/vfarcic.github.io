@@ -29,7 +29,7 @@
 ---
 
 # Rearchitecture Your Pile Of \*\*\*\*
-# Into A Testable Code
+# Into Testable Code
 
 
 <!-- .slide: data-background="img/cover.jpg" -->
@@ -157,7 +157,7 @@
 
 ---
 
-# Master is the only one that matters
+# The master is the only one that matters
 
 
 <!-- .slide: data-background="img/heaven-or-hell.jpg" -->

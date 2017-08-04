@@ -16,6 +16,8 @@ curl -o jenkins-agent.yml https://raw.githubusercontent.com/vfarcic/docker-flow-
 
 cat jenkins-agent.yml
 
+docker node ls
+
 export JENKINS_URL=[...] # e.g. http://[INTERNAL_IP]/jenkins
 
 LABEL=prod \
@@ -32,12 +34,14 @@ open "http://$CLUSTER_DNS/jenkins/computer"
 ---
 
 ```bash
+echo $CLUSTER_DNS
+
 ssh -i workshop.pem docker@$CLUSTER_IP
 
-export JENKINS_URL=[...] # e.g. http://[INTERNAL_IP]/jenkins
+export JENKINS_URL=[...] # e.g. http://[PUBLIC_IP]/jenkins
 
 LABEL=test \
-    docker stack deploy -c jenkins-agent.yml jenkins-agent
+    docker stack deploy -c jenkins-agent.yml jenkins-agent-test
 
 exit
 
@@ -52,7 +56,7 @@ open "http://$CLUSTER_DNS/jenkins/computer"
 ```bash
 ssh -i workshop.pem docker@$CLUSTER_IP
 
-docker service scale jenkins-agent_main=2
+docker service scale jenkins-agent-test_main=2
 
 exit
 
@@ -60,7 +64,7 @@ open "http://$CLUSTER_DNS/jenkins/computer"
 
 ssh -i workshop.pem docker@$CLUSTER_IP
 
-docker service scale jenkins-agent_main=1
+docker service scale jenkins-agent-test_main=1
 
 exit
 ```

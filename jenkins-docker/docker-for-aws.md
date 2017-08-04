@@ -2,6 +2,10 @@
 
 ---
 
+[https://youtu.be/r5cofUYqnn8](https://youtu.be/r5cofUYqnn8)
+
+![](img/docker-for-aws-qr.png)
+
 
 ## Prerequisites
 
