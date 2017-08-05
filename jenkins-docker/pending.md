@@ -1,10 +1,3 @@
-## Functional Tests
-
----
-
-TODO
-
-
 ## Registry
 
 ---

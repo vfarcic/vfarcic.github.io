@@ -10,11 +10,13 @@
 ---
 
 ```bash
-git clone https://github.com/vfarcic/go-demo.git
+git clone https://github.com/vfarcic/go-demo-2.git
 
-cat go-demo/Dockerfile
+cd go-demo-2
 
-docker image build -t go-demo go-demo/.
+cat old/Dockerfile
+
+docker image build -f old/Dockerfile -t go-demo-2 .
 ```
 
 
@@ -24,25 +26,12 @@ docker image build -t go-demo go-demo/.
 
 ```bash
 docker container run -it --rm \
-  -v $PWD/go-demo:/tmp -w /tmp golang:1.7 \
-  sh -c "go get -d -v -t && go build -v -o go-demo"
+  -v $PWD:/tmp -w /tmp golang:1.7 \
+  sh -c "go get -d -v -t && go test --cover -v ./... --run UnitTest && go build -v -o go-demo"
 
-ls -l go-demo/
+ls -l
 
-docker image build -t go-demo go-demo/.
-
-docker image ls
-```
-
-
-## Building Images
-
----
-
-```bash
-cat go-demo/Dockerfile.big
-
-docker image build -f go-demo/Dockerfile.big -t go-demo go-demo/.
+docker image build -f old/Dockerfile -t go-demo-2 .
 
 docker image ls
 ```
@@ -53,10 +42,26 @@ docker image ls
 ---
 
 ```bash
-cat go-demo/Dockerfile.multistage
+cat old/Dockerfile.big
 
-docker image build -f go-demo/Dockerfile.multistage \
-  -t go-demo go-demo/.
+docker image build -f old/Dockerfile.big -t go-demo-2 .
+
+docker image ls
+```
+
+
+## Building Images
+
+---
+
+```bash
+cat Dockerfile
+
+docker image build -t go-demo-2 .
+
+docker image ls
+
+docker system prune -f
 
 docker image ls
 ```
@@ -69,15 +74,15 @@ docker image ls
 ```bash
 export DOCKER_HUB_USER=[...]
 
-docker image tag go-demo $DOCKER_HUB_USER/go-demo
+docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2
 
-docker image push $DOCKER_HUB_USER/go-demo
+docker image push $DOCKER_HUB_USER/go-demo-2
 
-docker image tag go-demo $DOCKER_HUB_USER/go-demo:workshop
+docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:beta
 
-docker image push $DOCKER_HUB_USER/go-demo:workshop
+docker image push $DOCKER_HUB_USER/go-demo-2:beta
 
-open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo/tags"
+open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo-2/tags"
 ```
 
 
@@ -106,7 +111,7 @@ open "http://$CLUSTER_DNS/jenkins/credentials"
 open "http://$CLUSTER_DNS/jenkins/view/all/newJob"
 ```
 
-* Type `go-demo` as the item name
+* Type `go-demo-2` as the item name
 * Select `Pipeline` as the item type
 * Click the `OK` button
 * Type the Pipeline script from the next slide
@@ -124,8 +129,11 @@ pipeline {
     label "test"
   }
   options {
-    buildDiscarder(logRotator(numToKeepStr: '2'))
+    buildDiscarder(logRotator(numToKeepStr: "2"))
     disableConcurrentBuilds()
+  }
+  environment {
+    HUB_USER = [...]
   }
   stages {
     stage("build") {
@@ -134,12 +142,8 @@ pipeline {
           def dateFormat = new SimpleDateFormat("yy.MM.dd")
           currentBuild.displayName = dateFormat.format(new Date()) + "-" + env.BUILD_NUMBER
         }
-        git "https://github.com/vfarcic/go-demo.git"
-        sh "docker image build -f Dockerfile.multistage -t vfarcic/go-demo ."
-      }
-    }
-    stage("release") {
-      steps {
+        git "https://github.com/vfarcic/go-demo-2.git"
+        sh "docker image build -t ${env.HUB_USER}/go-demo-2:beta-${env.BUILD_NUMBER} ."
         withCredentials([usernamePassword(
           credentialsId: "docker",
           usernameVariable: "USER",
@@ -147,9 +151,7 @@ pipeline {
         )]) {
           sh "docker login -u $USER -p $PASS"
         }
-        sh "docker push vfarcic/go-demo"
-        sh "docker image tag vfarcic/go-demo vfarcic/go-demo:${currentBuild.displayName}"
-        sh "docker push vfarcic/go-demo:${currentBuild.displayName}"
+        sh "docker push ${env.HUB_USER}/go-demo-2:beta-${env.BUILD_NUMBER}"
       }
     }
   }
@@ -164,12 +166,12 @@ pipeline {
 * Click the `Save` button
 
 ```bash
-open "http://$CLUSTER_DNS/jenkins/blue/organizations/jenkins/go-demo/activity"
+open "http://$CLUSTER_DNS/jenkins/blue/organizations/jenkins/go-demo-2/activity"
 ```
 
 * Click the `Run` button
 * Click the row with the new build
 
 ```bash
-open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo/tags"
+open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo-2/tags"
 ```

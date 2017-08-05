@@ -2,6 +2,15 @@
 
 ---
 
+[youtu.be/r5cofUYqnn8](https://youtu.be/r5cofUYqnn8)
+
+![](img/jenkins-master.png)
+
+
+# Jenkins Master
+
+---
+
 * It's a cluster, not servers
 * Fault tolerant
 * Mostly available

@@ -2,7 +2,7 @@
 
 ---
 
-[https://youtu.be/r5cofUYqnn8](https://youtu.be/r5cofUYqnn8)
+[youtu.be/r5cofUYqnn8](https://youtu.be/r5cofUYqnn8)
 
 ![](img/docker-for-aws-qr.png)
 
@@ -61,27 +61,3 @@ We'll use https://docs.docker.com/docker-for-aws/. It is a very simple way to cr
 * Click the `Next` button
 * Select `I acknowledge that AWS CloudFormation might create IAM resources`
 * Click the `Create button`
-
-
-## Entering The Cluster
-
----
-
-* Click the `Output` tab in CloudFormation Stacks screen
-* Copy `DefaultDNSTarget`
-
-```bash
-CLUSTER_DNS=[...]
-```
-
-* Click the link next to *Managers*
-* Select any of the nodes
-* Copy of `IPv4 Public IP` IP
-
-```bash
-CLUSTER_IP=[...]
-
-ssh -i workshop.pem docker@$CLUSTER_IP
-
-docker node ls
-```
