@@ -137,14 +137,14 @@ exit
 ---
 
 ```bash
-docker service update --image vfarcic/go-demo:17.08.02-6 \
+docker service update --image vfarcic/go-demo:1.6 \
   go-demo_main
 
-docker service ps go-demo_main
+watch "docker service ps -f desired-state=running go-demo_main"
 
 cat go-demo.yml
 
-docker service ps go-demo_main
+docker service ps -f desired-state=running go-demo_main
 
 docker service update --replicas 15 go-demo_main
 
@@ -161,8 +161,6 @@ docker service ps -f desired-state=running go-demo_main
 ---
 
 ```bash
-docker stack ps -f desired-state=running go-demo
-
 ID=$(docker container ls -q \
   -f label="com.docker.swarm.service.name=go-demo_main" | tail -n 1)
 
@@ -173,6 +171,8 @@ docker stack ps -f desired-state=running go-demo
 docker-machine rm -f swarm-4
 
 docker stack ps -f desired-state=running go-demo
+
+open "http://$(docker-machine ip swarm-1):9090"
 ```
 
 
@@ -181,6 +181,8 @@ docker stack ps -f desired-state=running go-demo
 ---
 
 ```bash
+docker service ls
+
 curl -o proxy.yml \
   https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/proxy/docker-flow-proxy.yml
 
@@ -201,5 +203,5 @@ cat go-demo.yml
 ---
 
 ```bash
-docker-machine rm -f swarm-1 swarm-2 swarm-3 swarm-4
+docker-machine rm -f swarm-1 swarm-2 swarm-3
 ```

@@ -1,30 +1,3 @@
-## Registry
-
----
-
-TODO
-
-Note:
-Deploy a registry, build an image, push it and pull it to/from the registry
-
-
-## Publishing
-
----
-
-TODO
-
-
-## Rolling Updates
-
----
-
-TODO
-
-Note:
-Deploy a demo service and perform an rolling update to a new release
-
-
 ## Jenkins Pipeline
 
 ---
@@ -33,6 +6,13 @@ TODO
 
 Note:
 Create a Jenkins pipeline that incorporates all the knowledge from previous exercises
+
+
+## Jenkinsfile
+
+---
+
+TODO
 
 
 ## Multi-Branch Pipeline

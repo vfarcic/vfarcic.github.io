@@ -74,10 +74,6 @@ docker image ls
 ```bash
 export DOCKER_HUB_USER=[...]
 
-docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2
-
-docker image push $DOCKER_HUB_USER/go-demo-2
-
 docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:beta
 
 docker image push $DOCKER_HUB_USER/go-demo-2:beta
@@ -138,10 +134,6 @@ pipeline {
   stages {
     stage("build") {
       steps {
-        script {
-          def dateFormat = new SimpleDateFormat("yy.MM.dd")
-          currentBuild.displayName = dateFormat.format(new Date()) + "-" + env.BUILD_NUMBER
-        }
         git "https://github.com/vfarcic/go-demo-2.git"
         sh "docker image build -t ${env.HUB_USER}/go-demo-2:beta-${env.BUILD_NUMBER} ."
         withCredentials([usernamePassword(

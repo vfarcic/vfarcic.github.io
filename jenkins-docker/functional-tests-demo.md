@@ -98,6 +98,8 @@ cd go-demo-2
 
 cat docker-compose.yml
 
+open "https://github.com/vfarcic/go-demo-2/blob/master/functional_test.go"
+
 SERVICE_PATH="/demo-test" HOST_IP=$CLUSTER_DNS \
   docker-compose run --rm functional-local
 ```
@@ -191,10 +193,6 @@ pipeline {
   stages {
     stage("build") {
       steps {
-        script {
-          def dateFormat = new SimpleDateFormat("yy.MM.dd")
-          currentBuild.displayName = dateFormat.format(new Date()) + "-" + env.BUILD_NUMBER
-        }
         git "https://github.com/vfarcic/go-demo-2.git"
         sh "docker image build -t ${env.HUB_USER}/go-demo-2:beta-${env.BUILD_NUMBER} ."
         withCredentials([usernamePassword(

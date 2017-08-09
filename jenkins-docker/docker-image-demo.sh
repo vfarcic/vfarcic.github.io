@@ -22,10 +22,6 @@ pipeline {
   stages {
     stage("build") {
       steps {
-        script {
-          def dateFormat = new SimpleDateFormat("yy.MM.dd")
-          currentBuild.displayName = dateFormat.format(new Date()) + "-" + env.BUILD_NUMBER
-        }
         git "https://github.com/vfarcic/go-demo-2.git"
         sh "docker image build -t ${env.HUB_USER}/go-demo-2:beta-${env.BUILD_NUMBER} ."
         withCredentials([usernamePassword(

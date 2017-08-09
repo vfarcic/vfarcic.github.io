@@ -18,6 +18,7 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: "2"))
     disableConcurrentBuilds()
   }
+  // This is new
   environment {
     SERVICE_PATH = "/demo-${env.BUILD_NUMBER}"
     HOST_IP = [...] // This is AWS DNS
@@ -26,12 +27,8 @@ pipeline {
   stages {
     stage("build") {
       steps {
-        script {
-          def dateFormat = new SimpleDateFormat("yy.MM.dd")
-          currentBuild.displayName = dateFormat.format(new Date()) + "-" + env.BUILD_NUMBER
-        }
         git "https://github.com/vfarcic/go-demo-2.git"
-        sh "docker image build -t ${env.HUB_USER}/go-demo-2:beta-${currentBuild.displayName} ."
+        sh "docker image build -t ${env.HUB_USER}/go-demo-2:beta-${env.BUILD_NUMBER} ."
         withCredentials([usernamePassword(
           credentialsId: "docker",
           usernameVariable: "USER",
@@ -39,21 +36,23 @@ pipeline {
         )]) {
           sh "docker login -u $USER -p $PASS"
         }
-        sh "docker push ${env.HUB_USER}/go-demo-2:beta-${currentBuild.displayName}"
+        sh "docker push ${env.HUB_USER}/go-demo-2:beta-${env.BUILD_NUMBER}"
       }
     }
+    // This is new
     stage("functional") {
       steps {
-        sh "TAG=beta-${currentBuild.displayName} docker stack deploy -c stack-test.yml go-demo-2-beta-${currentBuild.displayName}"
-        sh "docker image build -f Dockerfile.test -t ${env.HUB_USER}/go-demo-2-test:${currentBuild.displayName} ."
-        sh "docker image push ${env.HUB_USER}/go-demo-2-test:${currentBuild.displayName}"
+        sh "TAG=beta-${env.BUILD_NUMBER} docker stack deploy -c stack-test.yml go-demo-2-beta-${env.BUILD_NUMBER}"
+        sh "docker image build -f Dockerfile.test -t ${env.HUB_USER}/go-demo-2-test:${env.BUILD_NUMBER} ."
+        sh "docker image push ${env.HUB_USER}/go-demo-2-test:${env.BUILD_NUMBER}"
         sh "TAG=${env.BUILD_NUMBER} docker-compose -p go-demo-2-${env.BUILD_NUMBER} run --rm functional"
       }
     }
   }
+  // This is new
   post {
     always {
-      sh "docker stack rm go-demo-2-beta-${currentBuild.displayName}"
+      sh "docker stack rm go-demo-2-beta-${env.BUILD_NUMBER}"
       sh "docker system prune -f"
     }
   }
