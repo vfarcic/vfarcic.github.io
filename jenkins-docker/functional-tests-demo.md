@@ -17,7 +17,7 @@ curl -o go-demo-2.yml \
 
 cat go-demo-2.yml
 
-export HUB_USER=[...] TAG=[...] # Find the tag from Docker Hub
+TAG=[...] # Find the tag from Docker Hub
 
 docker stack deploy -c go-demo-2.yml go-demo-2
 
@@ -110,17 +110,15 @@ SERVICE_PATH="/demo-test" HOST_IP=$CLUSTER_DNS \
 ---
 
 ```bash
-HUB_USER=[...]
+docker image build -f Dockerfile.test -t $DOCKER_HUB_USER/go-demo-2-test:v1 .
 
-docker image build -f Dockerfile.test -t $HUB_USER/go-demo-2-test:v1 .
+docker image push $DOCKER_HUB_USER/go-demo-2-test:v1
 
-docker image push $HUB_USER/go-demo-2-test:v1
+docker image build -f Dockerfile.test -t $DOCKER_HUB_USER/go-demo-2-test:v2 .
 
-docker image build -f Dockerfile.test -t $HUB_USER/go-demo-2-test:v2 .
+docker image push $DOCKER_HUB_USER/go-demo-2-test:v2
 
-docker image push $HUB_USER/go-demo-2-test:v2
-
-open "https://hub.docker.com/r/$HUB_USER/go-demo-2-test/tags/"
+open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo-2-test/tags/"
 ```
 
 
@@ -188,13 +186,13 @@ pipeline {
   environment {
     SERVICE_PATH = "/demo-${env.BUILD_NUMBER}"
     HOST_IP = [...] // This is AWS DNS
-    HUB_USER = [...] // This is Docker Hub user
+    DOCKER_HUB_USER = [...] // This is Docker Hub user
   }
   stages {
     stage("build") {
       steps {
         git "https://github.com/vfarcic/go-demo-2.git"
-        sh "docker image build -t ${env.HUB_USER}/go-demo-2:beta-${env.BUILD_NUMBER} ."
+        sh "docker image build -t ${env.DOCKER_HUB_USER}/go-demo-2:beta-${env.BUILD_NUMBER} ."
         withCredentials([usernamePassword(
           credentialsId: "docker",
           usernameVariable: "USER",
@@ -202,15 +200,15 @@ pipeline {
         )]) {
           sh "docker login -u $USER -p $PASS"
         }
-        sh "docker push ${env.HUB_USER}/go-demo-2:beta-${env.BUILD_NUMBER}"
+        sh "docker push ${env.DOCKER_HUB_USER}/go-demo-2:beta-${env.BUILD_NUMBER}"
       }
     }
     // This is new
     stage("functional") {
       steps {
         sh "TAG=beta-${env.BUILD_NUMBER} docker stack deploy -c stack-test.yml go-demo-2-beta-${env.BUILD_NUMBER}"
-        sh "docker image build -f Dockerfile.test -t ${env.HUB_USER}/go-demo-2-test:${env.BUILD_NUMBER} ."
-        sh "docker image push ${env.HUB_USER}/go-demo-2-test:${env.BUILD_NUMBER}"
+        sh "docker image build -f Dockerfile.test -t ${env.DOCKER_HUB_USER}/go-demo-2-test:${env.BUILD_NUMBER} ."
+        sh "docker image push ${env.DOCKER_HUB_USER}/go-demo-2-test:${env.BUILD_NUMBER}"
         sh "TAG=${env.BUILD_NUMBER} docker-compose -p go-demo-2-${env.BUILD_NUMBER} run --rm functional"
       }
     }
