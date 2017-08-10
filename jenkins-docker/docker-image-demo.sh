@@ -17,13 +17,13 @@ pipeline {
     disableConcurrentBuilds()
   }
   environment {
-    HUB_USER = [...]
+    DOCKER_HUB_USER = [...]
   }
   stages {
     stage("build") {
       steps {
         git "https://github.com/vfarcic/go-demo-2.git"
-        sh "docker image build -t ${env.HUB_USER}/go-demo-2:beta-${env.BUILD_NUMBER} ."
+        sh "docker image build -t ${env.DOCKER_HUB_USER}/go-demo-2:beta-${env.BUILD_NUMBER} ."
         withCredentials([usernamePassword(
           credentialsId: "docker",
           usernameVariable: "USER",
@@ -31,7 +31,7 @@ pipeline {
         )]) {
           sh "docker login -u $USER -p $PASS"
         }
-        sh "docker push ${env.HUB_USER}/go-demo-2:beta-${env.BUILD_NUMBER}"
+        sh "docker push ${env.DOCKER_HUB_USER}/go-demo-2:beta-${env.BUILD_NUMBER}"
       }
     }
   }

@@ -6,7 +6,9 @@ export DOCKER_HUB_USER=[...]
 
 docker stack deploy -c go-demo-2.yml go-demo-2
 
-open "http://$CLUSTER_DNS/jenkins/blue/organizations/jenkins/go-demo-2/activity"
+exit
+
+open "http://$CLUSTER_DNS/jenkins/job/go-demo-2/configure"
 
 echo 'import java.text.SimpleDateFormat
 
@@ -45,6 +47,7 @@ pipeline {
         sh "TAG=beta-${env.BUILD_NUMBER} docker stack deploy -c stack-test.yml go-demo-2-beta-${env.BUILD_NUMBER}"
         sh "docker image build -f Dockerfile.test -t ${env.DOCKER_HUB_USER}/go-demo-2-test:${env.BUILD_NUMBER} ."
         sh "docker image push ${env.DOCKER_HUB_USER}/go-demo-2-test:${env.BUILD_NUMBER}"
+        sleep 10
         sh "TAG=${env.BUILD_NUMBER} docker-compose -p go-demo-2-${env.BUILD_NUMBER} run --rm functional"
       }
     }
@@ -59,3 +62,7 @@ pipeline {
 }' | pbcopy
 
 # TODO: Change [...]
+
+echo $CLUSTER_DNS
+
+open "http://$CLUSTER_DNS/jenkins/blue/organizations/jenkins/go-demo-2/activity"

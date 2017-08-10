@@ -23,9 +23,15 @@ watch "docker stack ps -f desired-state=running go-demo-2"
 ## Rolling Updates
 
 ```bash
-docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:1.0
+docker image pull $DOCKER_HUB_USER/go-demo-2
+
+docker image tag $DOCKER_HUB_USER/go-demo-2 $DOCKER_HUB_USER/go-demo-2:1.0
+
+docker login
 
 docker image push $DOCKER_HUB_USER/go-demo-2:1.0
+
+docker stack ps -f desired-state=running go-demo-2
 
 docker service update --image $DOCKER_HUB_USER/go-demo-2:1.0 go-demo-2_main
 
@@ -35,14 +41,18 @@ watch "docker stack ps -f desired-state=running go-demo-2"
 ## Testing Rolling Updates
 
 ```bash
-docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:2.0
+docker image tag $DOCKER_HUB_USER/go-demo-2 $DOCKER_HUB_USER/go-demo-2:2.0
 
 docker image push $DOCKER_HUB_USER/go-demo-2:2.0
 
 docker service update --image $DOCKER_HUB_USER/go-demo-2:2.0 go-demo-2_main
 
-for i in {1..2000}; do
-    curl -i "http://localhost/demo/hello"
+docker node ls
+
+PRIVATE_IP=[...]
+
+for i in {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; do
+    curl -i "http://$PRIVATE_IP/demo/hello"
 done
 
 docker stack ps -f desired-state=running go-demo-2
@@ -51,42 +61,60 @@ docker stack ps -f desired-state=running go-demo-2
 ## Testing Rolling Updates
 
 ```bash
-docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:3.0
+docker image tag $DOCKER_HUB_USER/go-demo-2 $DOCKER_HUB_USER/go-demo-2:3.0
 
 docker image push $DOCKER_HUB_USER/go-demo-2:3.0
 
+docker service update --image $DOCKER_HUB_USER/go-demo-2:3.0 go-demo-2_main
+
+exit
+
+curl -o docker-compose.yml https://raw.githubusercontent.com/vfarcic/go-demo-2/master/docker-compose.yml
+
 cat docker-compose.yml
 
-open "https://github.com/vfarcic/go-demo-2/blob/master/functional_test.go"
-
-docker service update --image $DOCKER_HUB_USER/go-demo-2:3.0 go-demo-2_main
+open "https://github.com/vfarcic/go-demo-2/blob/master/production_test.go"
 
 HOST_IP=$CLUSTER_DNS docker-compose run --rm production
 
-docker service ps -f desired-state=running go-demo-2_main | grep "$DOCKER_HUB_USER/go-demo-2:3.0" | wc -l
+ssh -i workshop.pem docker@$CLUSTER_IP
+
+docker stack ps -f desired-state=running go-demo-2
 ```
 
 ## Rolling Back
 
 ```bash
-docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:4.0
+export DOCKER_HUB_USER=[...]
+
+docker image tag $DOCKER_HUB_USER/go-demo-2 $DOCKER_HUB_USER/go-demo-2:4.0
 
 docker image push $DOCKER_HUB_USER/go-demo-2:4.0
 
 docker service update --image $DOCKER_HUB_USER/go-demo-2:4.0 go-demo-2_main
 
+exit
+
 HOST_IP=http://this-address-does-not-exist.com docker-compose run --rm production
+
+ssh -i workshop.pem docker@$CLUSTER_IP
 
 docker stack ps -f desired-state=running go-demo-2
 
 docker service update --rollback go-demo-2_main
 
 watch "docker stack ps -f desired-state=running go-demo-2"
+
+exit
 ```
 
 ## Jenkins Pipeline
 
 ---
+
+```bash
+open "http://$CLUSTER_DNS/jenkins/job/go-demo-2/configure"
+```
 
 ```groovy
 import java.text.SimpleDateFormat
@@ -130,7 +158,7 @@ pipeline {
     // This is new
     stage("release") {
       steps {
-        sh "docker image tag go-demo-2 ${env.DOCKER_HUB_USER}/go-demo-2:4.0:${env.BUILD_NUMBER}"
+        sh "docker image tag ${env.DOCKER_HUB_USER}/go-demo-2:beta-${env.BUILD_NUMBER} ${env.DOCKER_HUB_USER}/go-demo-2:${env.BUILD_NUMBER}"
         sh "docker image push $DOCKER_HUB_USER/go-demo-2:${env.BUILD_NUMBER}"
       }
     }
@@ -140,10 +168,14 @@ pipeline {
         label "prod"
       }
       steps {
-        try {
-          sh "docker service update --image $DOCKER_HUB_USER:5000/go-demo-2:${env.BUILD_NUMBER} go-demo_main"
-        } catch (e) {
-          sh "docker service update --rollback go-demo-2_main"
+        script {
+          try {
+            sh "docker service update --image $DOCKER_HUB_USER/go-demo-2:${env.BUILD_NUMBER} go-demo-2_main"
+            sh "TAG=${env.BUILD_NUMBER} docker-compose -p go-demo-2-${env.BUILD_NUMBER} run --rm production"
+          } catch (e) {
+            sh "docker service update --rollback go-demo-2_main"
+            error "Failed to update the service"
+          }
         }
       }
     }
@@ -159,4 +191,14 @@ pipeline {
 
 ```bash
 # NOTE: Replace [...]
+
+echo $CLUSTER_DNS
+
+open "http://$CLUSTER_DNS/jenkins/blue/organizations/jenkins/go-demo-2/activity"
+
+open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo-2/tags"
+
+ssh -i workshop.pem docker@$CLUSTER_IP
+
+docker stack ps -f desired-state=running go-demo-2
 ```

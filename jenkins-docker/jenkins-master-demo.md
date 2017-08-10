@@ -5,30 +5,6 @@
 # Jenkins Master Service
 
 
-## Entering The Cluster
-
----
-
-* Click the `Output` tab in CloudFormation Stacks screen
-* Copy `DefaultDNSTarget`
-
-```bash
-CLUSTER_DNS=[...]
-```
-
-* Click the link next to *Managers*
-* Select any of the nodes
-* Copy of `IPv4 Public IP` IP
-
-```bash
-CLUSTER_IP=[...]
-
-ssh -i workshop.pem docker@$CLUSTER_IP
-
-docker node ls
-```
-
-
 ## Running Containers
 
 ---
