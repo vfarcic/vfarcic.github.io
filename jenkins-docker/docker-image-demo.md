@@ -143,7 +143,7 @@ pipeline {
         )]) {
           sh "docker login -u $USER -p $PASS"
         }
-        sh "docker push ${env.HUB_USER}/go-demo-2:beta-${env.BUILD_NUMBER}"
+        sh "docker image push ${env.HUB_USER}/go-demo-2:beta-${env.BUILD_NUMBER}"
       }
     }
   }

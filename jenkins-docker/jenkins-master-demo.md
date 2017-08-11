@@ -154,11 +154,9 @@ echo "admin" | docker secret create jenkins-user -
 
 echo "admin" | docker secret create jenkins-pass -
 
-export TAG=workshop
-
 export HUB_USER=[...]
 
-docker stack deploy -c jenkins.yml jenkins
+TAG=workshop docker stack deploy -c jenkins.yml jenkins
 ```
 
 

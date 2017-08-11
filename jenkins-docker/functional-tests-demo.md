@@ -172,6 +172,40 @@ echo $CLUSTER_DNS
 ---
 
 ```groovy
+pipeline {
+...
+  environment {
+    SERVICE_PATH = "/demo-${env.BUILD_NUMBER}"
+    HOST_IP = [...] // This is AWS DNS
+    DOCKER_HUB_USER = [...] // This is Docker Hub user
+  }
+  stages {
+    ...
+    stage("functional") {
+      steps {
+        sh "TAG=beta-${env.BUILD_NUMBER} docker stack deploy -c stack-test.yml go-demo-2-beta-${env.BUILD_NUMBER}"
+        sh "docker image build -f Dockerfile.test -t ${env.DOCKER_HUB_USER}/go-demo-2-test:${env.BUILD_NUMBER} ."
+        sh "docker image push ${env.DOCKER_HUB_USER}/go-demo-2-test:${env.BUILD_NUMBER}"
+        sleep 10
+        sh "TAG=${env.BUILD_NUMBER} docker-compose -p go-demo-2-${env.BUILD_NUMBER} run --rm functional"
+      }
+    }
+  }
+  post {
+    always {
+      sh "docker stack rm go-demo-2-beta-${env.BUILD_NUMBER}"
+      sh "docker system prune -f"
+    }
+  }
+}
+```
+
+
+## Jenkins Pipeline
+
+---
+
+```groovy
 import java.text.SimpleDateFormat
 
 pipeline {
@@ -200,7 +234,7 @@ pipeline {
         )]) {
           sh "docker login -u $USER -p $PASS"
         }
-        sh "docker push ${env.DOCKER_HUB_USER}/go-demo-2:beta-${env.BUILD_NUMBER}"
+        sh "docker image push ${env.DOCKER_HUB_USER}/go-demo-2:beta-${env.BUILD_NUMBER}"
       }
     }
     // This is new
