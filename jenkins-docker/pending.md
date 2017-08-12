@@ -1,7 +1,3 @@
-## Global functions
-
-## Jenkins Pipeline
-
 ## Jenkinsfile
 
 ## Multi-Branch Pipeline
