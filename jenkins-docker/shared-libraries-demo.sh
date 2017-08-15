@@ -4,6 +4,7 @@ open "http://localhost/jenkins/configure"
 # Set `my-shared-library` as `Name`
 # Set `workshop` as `Default version`
 # Check `Load implicitly`
+# Check `Modern SCM`
 # Check `GitHub`
 # Set `vfarcic` as `Owner`
 # Set `jenkins-shared-libraries` as `Repository`

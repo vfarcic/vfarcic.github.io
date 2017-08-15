@@ -17,17 +17,21 @@ open "https://github.com/vfarcic/jenkins-shared-libraries/tree/workshop"
 
 ## Jenkins Shared Libraries
 
+---
+
 ```bash
 open "http://localhost/jenkins/configure"
 ```
+
 * Click `Global Pipeline Libraries` > `Add`
 * Set `my-shared-library` as `Name`
 * Set `workshop` as `Default version`
 * Check `Load implicitly`
+* Check `Modern SCM`
 * Check `GitHub`
 * Set `vfarcic` as `Owner`
 * Set `jenkins-shared-libraries` as `Repository`
-* Click `Save`
+* Click the `Save` button
 
 
 # Jenkins Pipeline

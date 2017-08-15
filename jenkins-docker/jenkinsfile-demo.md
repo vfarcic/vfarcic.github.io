@@ -1,0 +1,91 @@
+## Hands-On Time
+
+---
+
+# Pipeline in VCS
+
+
+## Jenkinsfile
+
+---
+
+```bash
+open "https://github.com/vfarcic/go-demo-2/blob/master/Jenkinsfile"
+
+ssh -i workshop.pem docker@$CLUSTER_IP
+
+echo "hostIp=$HOST_IP
+dockerHubUser=$DOCKER_HUB_USER
+" | docker secret create cluster-info.properties -
+
+docker service update --secret-add cluster-info.properties \
+    jenkins-agent-test_main
+
+exit
+```
+
+
+# Shared Library
+
+---
+
+```bash
+open "https://github.com/vfarcic/jenkins-shared-libraries/blob/workshop-mb/vars/dockerBuild.groovy"
+
+open "https://github.com/vfarcic/jenkins-shared-libraries/blob/workshop-mb/vars/dockerRelease.groovy"
+
+open "http://localhost/jenkins/configure"
+```
+
+* Scroll to `Global Pipeline Libraries`
+* Set `workshop-mb` as `Default version`
+* Click the `Save` button
+
+
+# Pipeline From SCM
+
+---
+
+```bash
+open "http://$CLUSTER_DNS/jenkins/view/all/newJob"
+```
+
+* Type `go-demo-2-scm` as job name
+* Select `Pipeline` as job type
+* Click the `OK` button
+* Change `Pipeline definition` to `Pipeline script from SCM`
+* Select `Git` as `SCM`
+* Type `https://github.com/vfarcic/go-demo-2.git` as `Repository URL`
+* Click the `Save` button
+
+
+# Master Branch
+
+---
+
+```bash
+open "http://$CLUSTER_DNS/jenkins/blue/organizations/jenkins/go-demo-2-scm/activity"
+```
+
+* Click the `Run` button
+
+```bash
+open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo-2/tags"
+```
+
+
+# All Branches
+
+---
+
+```bash
+open "http://$CLUSTER_DNS/jenkins/blue/pipelines"
+```
+
+* Click the `New Pipeline` button
+* Select `GitHub`
+* Enter the access token
+* Select `vfarcic` as repository organization
+* Choose `New Pipeline`
+* Type `go-demo-2` as repository
+* Click the `Create Pipeline` button

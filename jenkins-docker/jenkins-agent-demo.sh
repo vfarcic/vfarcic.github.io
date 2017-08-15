@@ -12,7 +12,7 @@ LABEL=prod docker stack deploy -c jenkins-agent.yml jenkins-agent-prod
 
 export JENKINS_URL=[...] # e.g. http://[PUBLIC_DNS]/jenkins
 
-LABEL=test docker stack deploy -c jenkins-agent.yml jenkins-agent-test
+LABEL=test EXECUTORS=3 docker stack deploy -c jenkins-agent.yml jenkins-agent-test
 
 docker service logs -f jenkins-agent-prod_main
 

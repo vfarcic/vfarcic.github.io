@@ -40,7 +40,7 @@ ssh -i workshop.pem docker@$CLUSTER_IP
 
 export JENKINS_URL=[...] # e.g. http://[PUBLIC_IP]/jenkins
 
-LABEL=test \
+LABEL=test EXECUTORS=3 \
     docker stack deploy -c jenkins-agent.yml jenkins-agent-test
 
 exit
