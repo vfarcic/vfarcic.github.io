@@ -7,7 +7,7 @@
 
 ---
 
-* Distribute alert to the rest of the system
+* Distribute alerts to the rest of the system
 * Dynamic
 * Grouping and delays
 

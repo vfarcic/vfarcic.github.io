@@ -61,9 +61,7 @@ cat stacks/docker-flow-proxy-mem.yml
 
 docker network create -d overlay proxy
 
-docker stack deploy \
-    -c stacks/docker-flow-proxy-mem.yml \
-    proxy
+docker stack deploy -c stacks/docker-flow-proxy-mem.yml proxy
 
 docker stack ps proxy
 ```

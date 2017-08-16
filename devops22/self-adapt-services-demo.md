@@ -23,9 +23,9 @@ docker stack deploy -c stacks/jenkins-scale.yml jenkins
 
 docker stack ps jenkins
 
-open "http://$(docker-machine ip swarm-1)/jenkins"
+open "http://$(docker-machine ip $NODE)/jenkins"
 
-open "http://$(docker-machine ip swarm-1)/jenkins/configure"
+open "http://$(docker-machine ip $NODE)/jenkins/configure"
 ```
 
 
@@ -34,18 +34,17 @@ open "http://$(docker-machine ip swarm-1)/jenkins/configure"
 ---
 
 ```bash
-open "http://$(docker-machine ip swarm-1)/jenkins/computer"
+open "http://$(docker-machine ip $NODE)/jenkins/computer"
 
-open "http://$(docker-machine ip swarm-1)/jenkins/job/\
-service-scale/configure"
+open "http://$(docker-machine ip $NODE)/jenkins/job/service-scale/configure"
 
-open "http://$(docker-machine ip swarm-1)/jenkins/blue/\
-organizations/jenkins/service-scale/activity"
+open "http://$(docker-machine ip $NODE)/jenkins/blue/organizations/jenkins/service-scale/activity"
 
 # Run > Fails
 
-curl -X POST "http://$(docker-machine ip swarm-1)/jenkins/job/service-scale\
-/buildWithParameters?token=DevOps22&service=go-demo_main&scale=1"
+curl -X POST "http://$(docker-machine ip $NODE)/jenkins/job/service-scale/buildWithParameters?token=DevOps22&service=go-demo_main&scale=1"
+
+open "http://$(docker-machine ip $NODE)/jenkins/blue/organizations/jenkins/service-scale/activity"
 
 docker stack ps -f desired-state=Running go-demo
 ```
@@ -56,13 +55,15 @@ docker stack ps -f desired-state=Running go-demo
 ---
 
 ```bash
-curl -X POST "http://$(docker-machine ip swarm-1)/jenkins/job/service-scale\
-/buildWithParameters?token=DevOps22&service=go-demo_main&scale=-1"
+curl -X POST "http://$(docker-machine ip $NODE)/jenkins/job/service-scale/buildWithParameters?token=DevOps22&service=go-demo_main&scale=-1"
+
+open "http://$(docker-machine ip $NODE)/jenkins/blue/organizations/jenkins/service-scale/activity"
 
 docker stack ps -f desired-state=Running go-demo
 
-curl -X POST "http://$(docker-machine ip swarm-1)/jenkins/job/service-scale\
-/buildWithParameters?token=DevOps22&service=go-demo_main&scale=3"
+curl -X POST "http://$(docker-machine ip $NODE)/jenkins/job/service-scale/buildWithParameters?token=DevOps22&service=go-demo_main&scale=3"
+
+open "http://$(docker-machine ip $NODE)/jenkins/blue/organizations/jenkins/service-scale/activity"
 
 open "https://devops20.slack.com/messages/C59EWRE2K/"
 ```
@@ -91,13 +92,13 @@ receivers:
     slack_configs:
       - send_resolved: true
         title: '[{{ .Status | toUpper }}] {{ .GroupLabels.service }} service is in danger!'
-        title_link: 'http://$(docker-machine ip swarm-1)/monitor/alerts'
+        title_link: 'http://$(docker-machine ip $NODE)/monitor/alerts'
         text: '{{ .CommonAnnotations.summary}}'
         api_url: 'https://hooks.slack.com/services/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'
   - name: 'jenkins-go-demo_main'
     webhook_configs:
       - send_resolved: false
-        url: 'http://$(docker-machine ip swarm-1)/jenkins/job/service-scale/buildWithParameters?token=DevOps22&service=go-demo_main&scale=1'
+        url: 'http://$(docker-machine ip $NODE)/jenkins/job/service-scale/buildWithParameters?token=DevOps22&service=go-demo_main&scale=1'
 " | docker secret create alert_manager_config -
 ```
 
@@ -107,14 +108,15 @@ receivers:
 ---
 
 ```bash
-DOMAIN=$(docker-machine ip swarm-1) GLOBAL_SCRAPE_INTERVAL=1s \
-    docker stack deploy -c stacks/docker-flow-monitor-slack.yml monitor
+DOMAIN=$(docker-machine ip $NODE) GLOBAL_SCRAPE_INTERVAL=1s \
+    docker stack deploy -c stacks/docker-flow-monitor-slack.yml \
+    monitor
 
 docker service update \
     --label-add com.df.alertIf.1=@node_mem_limit:0.01 \
     exporter_node-exporter
 
-open "http://$(docker-machine ip swarm-1)/monitor/alerts"
+open "http://$(docker-machine ip $NODE)/monitor/alerts"
 
 open "https://devops20.slack.com/messages/C59EWRE2K/"
 
@@ -132,6 +134,10 @@ docker service update \
 docker service update \
     --label-add com.df.alertIf=@service_mem_limit:0.01 \
     go-demo_main
+
+open "http://$(docker-machine ip $NODE)/monitor/alerts"
+
+open "http://$(docker-machine ip $NODE)/jenkins/blue/organizations/jenkins/service-scale/activity"
 
 docker service ps -f desired-state=Running go-demo_main
 
