@@ -5,7 +5,7 @@
 # Instrumenting Services
 
 
-# Counters
+## Counters
 
 ---
 
@@ -50,7 +50,7 @@ docker service logs proxy_swarm-listener
 ```
 
 
-# Counters
+## Counters
 
 ---
 
@@ -62,7 +62,7 @@ docker stack deploy -c stacks/docker-flow-proxy-mem.yml proxy
 ```
 
 
-# Gauges
+## Gauges
 
 ---
 
@@ -83,7 +83,7 @@ docker stack deploy -c stacks/go-demo-scale.yml go-demo
 ```
 
 
-# Histograms And Summaries
+## Histograms And Summaries
 
 ---
 
@@ -106,7 +106,7 @@ docker container exec -it $ID \
 ```
 
 
-# Histograms And Summaries
+## Histograms And Summaries
 
 ---
 

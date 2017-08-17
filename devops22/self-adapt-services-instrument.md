@@ -18,7 +18,7 @@
 ---
 
 ## [Prometheus Go client library](https://github.com/prometheus/client_golang)
-## Prometheus
-## Alertmanager
-## Jenkins
-## Slack
+## [Prometheus](https://prometheus.io/)
+## [Alertmanager](https://prometheus.io/docs/alerting/alertmanager/)
+## [Jenkins](https://jenkins.io/)
+## [Slack](https://slack.com/)

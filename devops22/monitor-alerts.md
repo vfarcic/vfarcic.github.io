@@ -1,7 +1,7 @@
-# Metrics
+# Metrics & Alerts
 
 
-### Metrics
+### Metrics & Alerts
 
 # Requirements
 
@@ -12,13 +12,15 @@
 * Stored efficiently
 * Powerful query language
 * Send alerts when thresholds are reached
+* Distribute alerts to the rest of the system
 
 
-### Metrics
+### Metrics & Alerts
 
 # The Choice
 
 ---
 
 ## [Prometheus](https://prometheus.io/)
+## [Alertmanager](https://prometheus.io/docs/alerting/alertmanager/)
 ## [Docker Flow Monitor](http://monitor.dockerflow.com/)

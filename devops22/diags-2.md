@@ -9,7 +9,7 @@
 <!-- .slide: data-background="img/scraping-instrumented-services.png" data-background-size="contain" -->
 
 
-<!-- .slide: data-background="img/alerts-to-slack.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/alerts-to-slack`.png" data-background-size="contain" -->
 
 
 <!-- .slide: data-background="img/alerts-to-jenkins-and-slack.png" data-background-size="contain" -->

@@ -18,4 +18,4 @@
 
 ---
 
-## Alertmanager
+## [Alertmanager](https://prometheus.io/docs/alerting/alertmanager/)
