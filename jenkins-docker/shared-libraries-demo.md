@@ -4,6 +4,9 @@
 
 # Reusing Code
 
+Note:
+shared-libraries-demo.sh
+
 
 ## Shared Libraries Repository
 
@@ -11,8 +14,8 @@
 open "https://github.com/vfarcic/jenkins-shared-libraries/tree/workshop"
 ```
 
-* Click `vars`
-* Click `hello.groovy`
+* Click *vars*
+* Click *hello.groovy*
 
 
 ## Jenkins Shared Libraries
@@ -20,29 +23,29 @@ open "https://github.com/vfarcic/jenkins-shared-libraries/tree/workshop"
 ---
 
 ```bash
-open "http://localhost/jenkins/configure"
+open "http://$CLUSTER_DNS/jenkins/configure"
 ```
 
-* Click `Global Pipeline Libraries` > `Add`
-* Set `my-shared-library` as `Name`
-* Set `workshop` as `Default version`
-* Check `Load implicitly`
-* Check `Modern SCM`
-* Check `GitHub`
-* Set `vfarcic` as `Owner`
-* Set `jenkins-shared-libraries` as `Repository`
-* Click the `Save` button
+* Click *Global Pipeline Libraries* > *Add*
+* Set *my-shared-library* as *Name*
+* Set *workshop* as *Default version*
+* Check *Load implicitly*
+* Check *Modern SCM*
+* Check *GitHub*
+* Set *vfarcic* as *Owner*
+* Set *jenkins-shared-libraries* as *Repository*
+* Click the *Save* button
 
 
 # Jenkins Pipeline
 
 ```bash
-open "http://localhost/jenkins/newJob"
+open "http://$CLUSTER_DNS/jenkins/newJob"
 ```
 
-* Set `hello` as `Name`
-* Select `Pipeline` as type
-* Click `OK`
+* Set *hello* as *Name*
+* Select *Pipeline* as type
+* Click *OK*
 
 ```groovy
 node() {
@@ -50,18 +53,18 @@ node() {
 }
 ```
 
-* Click `Save`
+* Click *Save*
 
 
 # Jenkins Pipeline
 
 ```bash
-open "http://localhost/jenkins/blue/organizations/jenkins/hello/activity"
+open "http://$CLUSTER_DNS/jenkins/blue/organizations/jenkins/hello/activity"
 ```
 
-* Click `Run`
+* Click *Run*
 * Click the latest build
-* Click `Print Message`
+* Click *Print Message*
 
 
 ## Shared Libraries Repository
@@ -104,13 +107,14 @@ pipeline {
     disableConcurrentBuilds()
   }
   environment {
-    HOST_IP = [...] // This is AWS DNS
-    DOCKER_HUB_USER = [...] // This is Docker Hub user
+    HOST_IP = "[...]" // This is AWS DNS
+    DOCKER_HUB_USER = "[...]" // This is Docker Hub user
   }
   stages {
     stage("checkout") {
       steps {
         git "https://github.com/vfarcic/go-demo-2.git"
+        stash name: "compose", includes: "docker-compose.yml"
       }
     }
     stage("build") {
@@ -133,6 +137,7 @@ pipeline {
         label "prod"
       }
       steps {
+        unstash "compose"
         dockerDeploy("go-demo-2", env.DOCKER_HUB_USER, env.HOST_IP, "/demo")
       }
     }
@@ -150,12 +155,14 @@ pipeline {
 
 ---
 
-* Replace [...]
+```bash
+echo $CLUSTER_DNS
+```
+
+* Replace *[...]*
 * Click the *Save* button
 
 ```bash
-echo $CLUSTER_DNS
-
 open "http://$CLUSTER_DNS/jenkins/blue/organizations/jenkins/go-demo-2/activity"
 
 open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo-2/tags"

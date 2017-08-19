@@ -4,6 +4,9 @@
 
 # Functional Testing
 
+Note:
+functional-tests-demo.sh
+
 
 ## Production Services
 
@@ -16,8 +19,6 @@ curl -o go-demo-2.yml \
   https://raw.githubusercontent.com/vfarcic/go-demo-2/master/stack.yml
 
 cat go-demo-2.yml
-
-TAG=[...] # Find the tag from Docker Hub
 
 docker stack deploy -c go-demo-2.yml go-demo-2
 
@@ -40,6 +41,8 @@ curl -o go-demo-2-test.yml \
   https://raw.githubusercontent.com/vfarcic/go-demo-2/master/stack-test.yml
 
 cat go-demo-2-test.yml
+
+TAG=[...] # Find the tag from Docker Hub
 
 SERVICE_PATH=/demo-test \
   docker stack deploy -c go-demo-2-test.yml go-demo-2-test
@@ -87,21 +90,27 @@ curl -i "http://$CLUSTER_DNS/demo-something-else/hello"
 ```
 
 
-## Running Functional Tests Locally
+## Building Functional Tests
 
 ---
 
 ```bash
-git clone https://github.com/vfarcic/go-demo-2.git
+open "https://github.com/vfarcic/go-demo-2/blob/master/functional_test.go"
+
+open "https://github.com/vfarcic/docker-flow-stacks/blob/master/docker/compose/Dockerfile"
 
 cd go-demo-2
 
-cat docker-compose.yml
+cat Dockerfile.test
 
-open "https://github.com/vfarcic/go-demo-2/blob/master/functional_test.go"
+cat run-functional.sh
 
-SERVICE_PATH="/demo-test" HOST_IP=$CLUSTER_DNS \
-  docker-compose run --rm functional-local
+DOCKER_HUB_USER=[...]
+
+docker image build -f Dockerfile.test \
+    -t $DOCKER_HUB_USER/go-demo-2-test:v1 .
+
+docker image push $DOCKER_HUB_USER/go-demo-2-test:v1
 ```
 
 
@@ -110,15 +119,9 @@ SERVICE_PATH="/demo-test" HOST_IP=$CLUSTER_DNS \
 ---
 
 ```bash
-docker image build -f Dockerfile.test -t $DOCKER_HUB_USER/go-demo-2-test:v1 .
-
-docker image push $DOCKER_HUB_USER/go-demo-2-test:v1
-
 docker image build -f Dockerfile.test -t $DOCKER_HUB_USER/go-demo-2-test:v2 .
 
 docker image push $DOCKER_HUB_USER/go-demo-2-test:v2
-
-open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo-2-test/tags/"
 ```
 
 
@@ -127,13 +130,21 @@ open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo-2-test/tags/"
 ---
 
 ```bash
-TAG=v1 SERVICE_PATH="/demo-test" HOST_IP=$CLUSTER_DNS \
-  docker-compose run --rm functional
+cat docker-compose.yml
 
-TAG=v2 SERVICE_PATH="/demo-something-else" HOST_IP=$CLUSTER_DNS \
-  docker-compose run --rm functional
+CLUSTER_DNS=[...]
 
-docker system prune -f
+docker container run --rm -it -v $PWD:/compose \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -e DOCKER_HUB_USER=$DOCKER_HUB_USER -e TAG=v1 \
+    -e SERVICE_PATH="/demo-test" -e HOST_IP=$CLUSTER_DNS \
+    vfarcic/compose docker-compose run --rm functional
+
+docker container run --rm -it -v $PWD:/compose \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -e DOCKER_HUB_USER=$DOCKER_HUB_USER -e TAG=v2 \
+    -e SERVICE_PATH="/demo-something-else" -e HOST_IP=$CLUSTER_DNS \
+    vfarcic/compose docker-compose run --rm functional
 ```
 
 
@@ -142,9 +153,7 @@ docker system prune -f
 ---
 
 ```bash
-cd ..
-
-ssh -i workshop.pem docker@$CLUSTER_IP
+docker system prune -f
 
 docker stack rm go-demo-2-test
 
@@ -176,8 +185,8 @@ pipeline {
 ...
   environment {
     SERVICE_PATH = "/demo-${env.BUILD_NUMBER}"
-    HOST_IP = [...] // This is AWS DNS
-    DOCKER_HUB_USER = [...] // This is Docker Hub user
+    HOST_IP = "[...]" // This is AWS DNS
+    DOCKER_HUB_USER = "[...]" // This is Docker Hub user
   }
   stages {
     ...
@@ -219,8 +228,8 @@ pipeline {
   // This is new
   environment {
     SERVICE_PATH = "/demo-${env.BUILD_NUMBER}"
-    HOST_IP = [...] // This is AWS DNS
-    DOCKER_HUB_USER = [...] // This is Docker Hub user
+    HOST_IP = "[...]" // This is AWS DNS
+    DOCKER_HUB_USER = "[...]" // This is Docker Hub user
   }
   stages {
     stage("build") {
@@ -263,14 +272,14 @@ pipeline {
 
 ---
 
-* Change `[...]`
-* Click the `Save` button
+* Change *[...]*
+* Click the *Save* button
 
 ```bash
 open "http://$CLUSTER_DNS/jenkins/blue/organizations/jenkins/go-demo-2/activity"
 ```
 
-* Click the `Run` button
+* Click the *Run* button
 * Click the row with the new build
 
 ```bash

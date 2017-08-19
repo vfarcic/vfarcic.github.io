@@ -6,17 +6,17 @@ curl -o jenkins-agent.yml https://raw.githubusercontent.com/vfarcic/docker-flow-
 
 docker node ls
 
-export JENKINS_URL=[...] # e.g. http://[INTERNAL_IP]/jenkins
+PRIVATE_IP=[...]
+
+export JENKINS_URL="http://$PRIVATE_IP/jenkins"
 
 LABEL=prod docker stack deploy -c jenkins-agent.yml jenkins-agent-prod
 
-export JENKINS_URL=[...] # e.g. http://[PUBLIC_DNS]/jenkins
+PUBLIC_IP=[...]
+
+export JENKINS_URL="http://$PUBLIC_IP/jenkins"
 
 LABEL=test EXECUTORS=3 docker stack deploy -c jenkins-agent.yml jenkins-agent-test
-
-docker service logs -f jenkins-agent-prod_main
-
-docker service logs -f jenkins-agent-test_main
 
 exit
 

@@ -4,6 +4,9 @@
 
 # Jenkins Agent Services
 
+Note:
+jenkins-agent-demo.sh
+
 
 ## Running Jenkins Agents
 
@@ -18,14 +21,14 @@ cat jenkins-agent.yml
 
 docker node ls
 
-export JENKINS_URL=[...] # e.g. http://[INTERNAL_IP]/jenkins
+PRIVATE_IP=[...]
+
+export JENKINS_URL="http://$PRIVATE_IP/jenkins"
 
 LABEL=prod \
     docker stack deploy -c jenkins-agent.yml jenkins-agent-prod
 
 exit
-
-open "http://$CLUSTER_DNS/jenkins/computer"
 ```
 
 
@@ -34,11 +37,15 @@ open "http://$CLUSTER_DNS/jenkins/computer"
 ---
 
 ```bash
+open "http://$CLUSTER_DNS/jenkins/computer"
+
 echo $CLUSTER_DNS
 
 ssh -i workshop.pem docker@$CLUSTER_IP
 
-export JENKINS_URL=[...] # e.g. http://[PUBLIC_IP]/jenkins
+PUBLIC_IP=[...]
+
+export JENKINS_URL="http://$PUBLIC_IP/jenkins"
 
 LABEL=test EXECUTORS=3 \
     docker stack deploy -c jenkins-agent.yml jenkins-agent-test

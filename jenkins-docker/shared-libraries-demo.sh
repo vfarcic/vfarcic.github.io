@@ -28,6 +28,7 @@ pipeline {
     stage("checkout") {
       steps {
         git "https://github.com/vfarcic/go-demo-2.git"
+        stash name: "compose", includes: "docker-compose.yml"
       }
     }
     stage("build") {
@@ -50,6 +51,7 @@ pipeline {
         label "prod"
       }
       steps {
+        unstash "compose"
         dockerDeploy("go-demo-2", env.DOCKER_HUB_USER, env.HOST_IP, "/demo")
       }
     }

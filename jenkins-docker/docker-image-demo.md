@@ -4,13 +4,19 @@
 
 # Docker Images
 
+Note:
+jenkins-image-demo.sh
+
 
 ## Building Images
 
 ---
 
 ```bash
-git clone https://github.com/vfarcic/go-demo-2.git
+ssh -i workshop.pem docker@$CLUSTER_IP
+
+docker container run --rm -it -v $PWD:/repos vfarcic/git \
+    git clone https://github.com/vfarcic/go-demo-2.git
 
 cd go-demo-2
 
@@ -27,7 +33,8 @@ docker image build -f old/Dockerfile -t go-demo-2 .
 ```bash
 docker container run -it --rm \
   -v $PWD:/tmp -w /tmp golang:1.7 \
-  sh -c "go get -d -v -t && go test --cover -v ./... --run UnitTest && go build -v -o go-demo"
+  sh -c "go get -d -v -t && \
+  go test --cover -v ./... --run UnitTest && go build -v -o go-demo"
 
 ls -l
 
@@ -78,6 +85,10 @@ docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:beta
 
 docker image push $DOCKER_HUB_USER/go-demo-2:beta
 
+exit
+
+export DOCKER_HUB_USER=[...]
+
 open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo-2/tags"
 ```
 
@@ -87,16 +98,14 @@ open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo-2/tags"
 ---
 
 ```bash
-open "http://$CLUSTER_DNS/jenkins/credentials"
+open "http://$CLUSTER_DNS/jenkins/credentials/store/system/domain/_/"
 ```
 
-* Login with `admin`/`admin`
-* Click the `Jenkins` link
-* Click the `Global credentials` link
-* Click the `Add Credentials` link
+* Login with *admin*/*admin*
+* Click the *Add Credentials* link
 * Type your Docker Hub username and password
-* Type `docker` as the `ID`
-* Click the `OK` button
+* Type *docker* as the *ID*
+* Click the *OK* button
 
 
 ## Jenkins Pipeline
@@ -107,9 +116,9 @@ open "http://$CLUSTER_DNS/jenkins/credentials"
 open "http://$CLUSTER_DNS/jenkins/view/all/newJob"
 ```
 
-* Type `go-demo-2` as the item name
-* Select `Pipeline` as the item type
-* Click the `OK` button
+* Type *go-demo-2* as the item name
+* Select *Pipeline* as the item type
+* Click the *OK* button
 * Type the Pipeline script from the next slide
 
 
@@ -129,7 +138,7 @@ pipeline {
     disableConcurrentBuilds()
   }
   environment {
-    HUB_USER = [...]
+    HUB_USER = "[...]"
   }
   stages {
     stage("build") {
@@ -155,13 +164,14 @@ pipeline {
 
 ---
 
-* Click the `Save` button
+* Change *[...]*
+* Click the *Save* button
 
 ```bash
 open "http://$CLUSTER_DNS/jenkins/blue/organizations/jenkins/go-demo-2/activity"
 ```
 
-* Click the `Run` button
+* Click the *Run* button
 * Click the row with the new build
 
 ```bash

@@ -22,12 +22,12 @@
 
 ---
 
-* Open [AWS Console](console.aws.amazon.com).
-* Click the `EC2` link
-* Click the `Key Pairs` link
-* Click the `Create Key Pair` button
-* Name it `workshop`
-* Click the `Create` button
+* Open [AWS Console](console.aws.amazon.com)
+* Click the *EC2* link
+* Click the *Key Pairs* link
+* Click the *Create Key Pair* button
+* Name it *workshop*
+* Click the *Create* button
 
 ```bash
 chmod 0400 workshop.pem
@@ -39,13 +39,13 @@ chmod 0400 workshop.pem
 ---
 
 * Open [Docker Community Edition for AWS](https://store.docker.com/editions/community/docker-ce-aws)
-* Click the `Get Docker` button
-* Click the `Next` button
-* Type `jenkins-is-cool` as the `Stack name`
-* Change the `Number of Swarm worker nodes` to `0`
-* Select `workshop` as your SSH key in `Which SSH key to use`
-* Select `yes` as `Enable daily resource cleanup`
-* Select `no` as `Use Cloudwatch for container logging`
+* Click the *Get Docker* button
+* Click the *Next* button
+* Type *jenkins-is-cool* as the *Stack name*
+* Change the *Number of Swarm worker nodes* to *0*
+* Select *workshop* as your SSH key in *Which SSH key to use*
+* Select *yes* as *Enable daily resource cleanup*
+* Select *no* as *Use Cloudwatch for container logging*
 
 Note:
 We'll use https://docs.docker.com/docker-for-aws/. It is a very simple way to create a Docker cluster. I put this at the very beginning, since the process, even though it is fully automated, takes around 15 minutes. We can go through theoretical slides that follow while clusters are being created.
@@ -55,20 +55,20 @@ We'll use https://docs.docker.com/docker-for-aws/. It is a very simple way to cr
 
 ---
 
-* Select `yes` as `Create EFS prerequsities for CloudStor`
-* Choose `t2.small` as `Swarm manager instance type`
-* Click the `Next` button
-* Click the `Next` button
-* Select `I acknowledge that AWS CloudFormation might create IAM resources`
-* Click the `Create button`
+* Select *yes* as *Create EFS prerequsities for CloudStor*
+* Choose *t2.small* as *Swarm manager instance type*
+* Click the *Next* button
+* Click the *Next* button
+* Select *I acknowledge that AWS CloudFormation might create IAM resources*
+* Click the *Create button*
 
 
 ## Entering The Cluster
 
 ---
 
-* Click the `Output` tab in CloudFormation Stacks screen
-* Copy `DefaultDNSTarget`
+* Click the *Output* tab in CloudFormation Stacks screen
+* Copy *DefaultDNSTarget*
 
 ```bash
 CLUSTER_DNS=[...]
@@ -76,7 +76,7 @@ CLUSTER_DNS=[...]
 
 * Click the link next to *Managers*
 * Select any of the nodes
-* Copy of `IPv4 Public IP` IP
+* Copy of *IPv4 Public IP* IP
 
 ```bash
 CLUSTER_IP=[...]

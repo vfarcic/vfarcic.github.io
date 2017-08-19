@@ -4,6 +4,9 @@
 
 # Jenkins Master Service
 
+Note:
+jenkins-master-demo.sh
+
 
 ## Running Containers
 
@@ -14,7 +17,7 @@ ssh -i workshop.pem docker@$CLUSTER_IP
 
 docker container run -d --name jenkins -p 8080:8080 jenkins:alpine
 
-docker container ls # Wait until it is up and running
+docker container ls
 
 PRIVATE_IP=[...] # e.g. 172.31.21.216
 
@@ -112,6 +115,26 @@ open "http://$CLUSTER_DNS/jenkins"
 ssh -i workshop.pem docker@$CLUSTER_IP
 
 docker stack rm jenkins
+
+exit
+```
+
+
+## Cloning Stacks
+
+---
+
+```bash
+open "https://github.com/vfarcic/docker-flow-stacks/blob/master/util/git/Dockerfile"
+
+ssh -i workshop.pem docker@$CLUSTER_IP
+
+docker container run --rm -it -v $PWD:/repos vfarcic/git \
+    git clone https://github.com/vfarcic/docker-flow-stacks
+
+docker container ls
+
+ls -l
 ```
 
 
@@ -120,10 +143,6 @@ docker stack rm jenkins
 ---
 
 ```bash
-exit
-
-git clone https://github.com/vfarcic/docker-flow-stacks
-
 cat docker-flow-stacks/jenkins/Dockerfile
 
 cat docker-flow-stacks/jenkins/security.groovy
@@ -135,6 +154,8 @@ DOCKER_HUB_USER=[...]
 docker image build -t $DOCKER_HUB_USER/jenkins:workshop \
     docker-flow-stacks/jenkins/.
 
+docker login
+
 docker image push $DOCKER_HUB_USER/jenkins:workshop
 ```
 
@@ -144,8 +165,6 @@ docker image push $DOCKER_HUB_USER/jenkins:workshop
 ---
 
 ```bash
-ssh -i workshop.pem docker@$CLUSTER_IP
-
 curl -o jenkins.yml https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/jenkins/vfarcic-jenkins-df-proxy.yml
 
 cat jenkins.yml
@@ -154,17 +173,9 @@ echo "admin" | docker secret create jenkins-user -
 
 echo "admin" | docker secret create jenkins-pass -
 
-export HUB_USER=[...]
+HUB_USER=$DOCKER_HUB_USER TAG=workshop \
+    docker stack deploy -c jenkins.yml jenkins
 
-TAG=workshop docker stack deploy -c jenkins.yml jenkins
-```
-
-
-## Running Jenkins Without Manual Setup
-
----
-
-```bash
 exit
 
 open "http://$CLUSTER_DNS/jenkins"
@@ -183,6 +194,8 @@ open "http://$CLUSTER_DNS/jenkins/exit"
 open "http://$CLUSTER_DNS/jenkins"
 
 ssh -i workshop.pem docker@$CLUSTER_IP
+
+docker stack ps jenkins
 
 docker stack rm jenkins
 ```
