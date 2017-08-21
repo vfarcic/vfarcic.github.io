@@ -22,8 +22,6 @@ docker image pull $DOCKER_HUB_USER/go-demo-2
 docker image tag $DOCKER_HUB_USER/go-demo-2 \
     $DOCKER_HUB_USER/go-demo-2:1.0
 
-docker login
-
 docker image push $DOCKER_HUB_USER/go-demo-2:1.0
 ```
 
@@ -92,13 +90,24 @@ exit
 
 open "https://github.com/vfarcic/go-demo-2/blob/master/production_test.go"
 
+echo $CLUSTER_DNS
+
 ssh -i workshop.pem docker@$CLUSTER_IP
 
-DOCKER_HUB_USER=[...] CLUSTER_DNS=[...]
+DOCKER_HUB_USER=[...]
+
+CLUSTER_DNS=[...]
 
 docker service update --image $DOCKER_HUB_USER/go-demo-2:3.0 \
     go-demo-2_main
+```
 
+
+## Testing Rolling Updates
+
+---
+
+```bash
 docker container run --rm -it -v $PWD/go-demo-2:/compose \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -e DOCKER_HUB_USER=$DOCKER_HUB_USER -e HOST_IP=$CLUSTER_DNS \

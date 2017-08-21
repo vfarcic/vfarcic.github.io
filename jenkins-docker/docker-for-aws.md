@@ -22,7 +22,7 @@
 
 ---
 
-* Open [AWS Console](console.aws.amazon.com)
+* Open [AWS Console](http://console.aws.amazon.com)
 * Click the *EC2* link
 * Click the *Key Pairs* link
 * Click the *Create Key Pair* button
@@ -56,7 +56,7 @@ We'll use https://docs.docker.com/docker-for-aws/. It is a very simple way to cr
 ---
 
 * Select *yes* as *Create EFS prerequsities for CloudStor*
-* Choose *t2.small* as *Swarm manager instance type*
+* Choose *t2.medium* as *Swarm manager instance type*
 * Click the *Next* button
 * Click the *Next* button
 * Select *I acknowledge that AWS CloudFormation might create IAM resources*
@@ -76,7 +76,7 @@ CLUSTER_DNS=[...]
 
 * Click the link next to *Managers*
 * Select any of the nodes
-* Copy of *IPv4 Public IP* IP
+* Copy *IPv4 Public IP* value
 
 ```bash
 CLUSTER_IP=[...]

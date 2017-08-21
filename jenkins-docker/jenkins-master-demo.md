@@ -120,7 +120,7 @@ exit
 ```
 
 
-## Cloning Stacks
+## Git In A Container
 
 ---
 
@@ -165,16 +165,15 @@ docker image push $DOCKER_HUB_USER/jenkins:workshop
 ---
 
 ```bash
-curl -o jenkins.yml https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/jenkins/vfarcic-jenkins-df-proxy.yml
-
-cat jenkins.yml
+cat docker-flow-stacks/jenkins/vfarcic-jenkins-df-proxy.yml
 
 echo "admin" | docker secret create jenkins-user -
 
 echo "admin" | docker secret create jenkins-pass -
 
-HUB_USER=$DOCKER_HUB_USER TAG=workshop \
-    docker stack deploy -c jenkins.yml jenkins
+HUB_USER=$DOCKER_HUB_USER TAG=workshop docker stack deploy \
+    -c docker-flow-stacks/jenkins/vfarcic-jenkins-df-proxy.yml \
+    jenkins
 
 exit
 
@@ -206,15 +205,15 @@ docker stack rm jenkins
 ---
 
 ```bash
-curl -o jenkins.yml https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/jenkins/vfarcic-jenkins-df-proxy-aws.yml
-
-cat jenkins.yml
+cat docker-flow-stacks/jenkins/vfarcic-jenkins-df-proxy-aws.yml
 
 export TAG=workshop
 
 export HUB_USER=[...]
 
-docker stack deploy -c jenkins.yml jenkins
+docker stack deploy \
+    -c docker-flow-stacks/jenkins/vfarcic-jenkins-df-proxy-aws.yml \
+    jenkins
 ```
 
 

@@ -15,12 +15,9 @@ functional-tests-demo.sh
 ```bash
 ssh -i workshop.pem docker@$CLUSTER_IP
 
-curl -o go-demo-2.yml \
-  https://raw.githubusercontent.com/vfarcic/go-demo-2/master/stack.yml
+cat go-demo-2/stack.yml
 
-cat go-demo-2.yml
-
-docker stack deploy -c go-demo-2.yml go-demo-2
+docker stack deploy -c go-demo-2/stack.yml go-demo-2
 
 docker stack ps go-demo-2
 
@@ -35,17 +32,16 @@ curl -i "http://$CLUSTER_DNS/demo/hello"
 ---
 
 ```bash
+open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo-2-test/tags"
+
 ssh -i workshop.pem docker@$CLUSTER_IP
 
-curl -o go-demo-2-test.yml \
-  https://raw.githubusercontent.com/vfarcic/go-demo-2/master/stack-test.yml
-
-cat go-demo-2-test.yml
+cat go-demo-2/stack-test.yml
 
 TAG=[...] # Find the tag from Docker Hub
 
-SERVICE_PATH=/demo-test \
-  docker stack deploy -c go-demo-2-test.yml go-demo-2-test
+SERVICE_PATH=/demo-test TAG=$TAG \
+  docker stack deploy -c go-demo-2/stack-test.yml go-demo-2-test
 
 docker stack ps -f desired-state=running go-demo-2-test
 ```
@@ -71,8 +67,8 @@ ssh -i workshop.pem docker@$CLUSTER_IP
 ---
 
 ```bash
-SERVICE_PATH=/demo-something-else \
-  docker stack deploy -c go-demo-2-test.yml go-demo-2-another-test
+SERVICE_PATH=/demo-something-else docker stack deploy \
+    -c go-demo-2/stack-test.yml go-demo-2-another-test
 
 docker stack ps -f desired-state=running go-demo-2-another-test
 
@@ -95,11 +91,11 @@ curl -i "http://$CLUSTER_DNS/demo-something-else/hello"
 ---
 
 ```bash
-open "https://github.com/vfarcic/go-demo-2/blob/master/functional_test.go"
-
-open "https://github.com/vfarcic/docker-flow-stacks/blob/master/docker/compose/Dockerfile"
+ssh -i workshop.pem docker@$CLUSTER_IP
 
 cd go-demo-2
+
+cat functional_test.go
 
 cat Dockerfile.test
 
@@ -119,9 +115,12 @@ docker image push $DOCKER_HUB_USER/go-demo-2-test:v1
 ---
 
 ```bash
-docker image build -f Dockerfile.test -t $DOCKER_HUB_USER/go-demo-2-test:v2 .
+docker image build -f Dockerfile.test \
+    -t $DOCKER_HUB_USER/go-demo-2-test:v2 .
 
 docker image push $DOCKER_HUB_USER/go-demo-2-test:v2
+
+exit
 ```
 
 
@@ -130,10 +129,25 @@ docker image push $DOCKER_HUB_USER/go-demo-2-test:v2
 ---
 
 ```bash
+open "https://github.com/vfarcic/docker-flow-stacks/blob/master/docker/compose/Dockerfile"
+
+echo $CLUSTER_DNS
+
+ssh -i workshop.pem docker@$CLUSTER_IP
+
+cd go-demo-2
+
 cat docker-compose.yml
 
 CLUSTER_DNS=[...]
+```
 
+
+## Running Functional Tests
+
+---
+
+```bash
 docker container run --rm -it -v $PWD:/compose \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -e DOCKER_HUB_USER=$DOCKER_HUB_USER -e TAG=v1 \
@@ -171,8 +185,6 @@ exit
 
 ```bash
 open "http://$CLUSTER_DNS/jenkins/job/go-demo-2/configure"
-
-echo $CLUSTER_DNS
 ```
 
 
@@ -271,6 +283,10 @@ pipeline {
 ## Jenkins Pipeline
 
 ---
+
+```bash
+echo $CLUSTER_DNS
+```
 
 * Change *[...]*
 * Click the *Save* button

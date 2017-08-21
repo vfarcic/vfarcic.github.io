@@ -15,9 +15,7 @@ jenkins-agent-demo.sh
 ```bash
 ssh -i workshop.pem docker@$CLUSTER_IP
 
-curl -o jenkins-agent.yml https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/jenkins/vfarcic-jenkins-agent.yml
-
-cat jenkins-agent.yml
+cat docker-flow-stacks/jenkins/vfarcic-jenkins-agent.yml
 
 docker node ls
 
@@ -25,8 +23,9 @@ PRIVATE_IP=[...]
 
 export JENKINS_URL="http://$PRIVATE_IP/jenkins"
 
-LABEL=prod \
-    docker stack deploy -c jenkins-agent.yml jenkins-agent-prod
+LABEL=prod EXECUTORS=2 docker stack deploy \
+    -c docker-flow-stacks/jenkins/vfarcic-jenkins-agent.yml \
+    jenkins-agent-prod
 
 exit
 ```
@@ -37,18 +36,17 @@ exit
 ---
 
 ```bash
-open "http://$CLUSTER_DNS/jenkins/computer"
-
 echo $CLUSTER_DNS
 
 ssh -i workshop.pem docker@$CLUSTER_IP
 
-PUBLIC_IP=[...]
+CLUSTER_DNS=[...]
 
-export JENKINS_URL="http://$PUBLIC_IP/jenkins"
+export JENKINS_URL="http://$CLUSTER_DNS/jenkins"
 
-LABEL=test EXECUTORS=3 \
-    docker stack deploy -c jenkins-agent.yml jenkins-agent-test
+LABEL=test EXECUTORS=3 docker stack deploy \
+    -c docker-flow-stacks/jenkins/vfarcic-jenkins-agent.yml \
+    jenkins-agent-test
 
 exit
 
