@@ -10,7 +10,9 @@
 ---
 
 ```bash
-cat stacks/jenkins-scale.yml
+curl -L -o jenkins.yml https://goo.gl/tCKG7Y
+
+cat jenkins.yml
 
 echo "admin" | docker secret create jenkins-user -
 
@@ -19,7 +21,7 @@ echo "admin" | docker secret create jenkins-pass -
 export SLACK_IP=$(ping -c 1 devops20.slack.com \
     | awk -F'[()]' '/PING/{print $2}')
 
-docker stack deploy -c stacks/jenkins-scale.yml jenkins
+docker stack deploy -c jenkins.yml jenkins
 
 docker stack ps jenkins
 ```

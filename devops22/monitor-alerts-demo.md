@@ -5,7 +5,7 @@
 # Metrics & Alerts
 
 
-# Monitor Stack
+## Monitor Stack
 
 ---
 
@@ -45,17 +45,19 @@ receivers:
 ```
 
 
-# Monitor Stack
+## Monitor Stack
 
 ---
 
 ```bash
-cat stacks/docker-flow-monitor-slack.yml
+curl -L -o monitor.yml https://goo.gl/6QRAof
+
+cat monitor.yml
 
 docker network create -d overlay monitor
 
 DOMAIN=$(docker-machine ip swarm-1) docker stack deploy \
-    -c stacks/docker-flow-monitor-slack.yml monitor
+    -c monitor.yml monitor
 
 docker stack ps -f desired-state=running monitor
 

@@ -12,10 +12,11 @@
 ```bash
 open "https://github.com/vfarcic/go-demo/blob/master/main.go"
 
-cat stacks/go-demo-instrument-alert-short.yml
+curl -L -o go-demo.yml https://goo.gl/6FU1Tt
 
-docker stack deploy \
-    -c stacks/go-demo-instrument-alert-short.yml go-demo
+cat stacks/go-demo.yml
+
+docker stack deploy -c go-demo.yml go-demo
 
 open "http://$(docker-machine ip swarm-1)/monitor/alerts"
 
