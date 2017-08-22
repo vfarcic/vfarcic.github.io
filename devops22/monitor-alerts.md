@@ -7,7 +7,7 @@
 
 ---
 
-* Collect from anywhere
+* Collect metrics from anywhere
 * Dynamic
 * Stored efficiently
 * Powerful query language

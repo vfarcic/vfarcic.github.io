@@ -16,7 +16,7 @@ cat proxy.yml
 
 docker network create -d overlay proxy
 
-docker stack deploy -c stacks/proxy.yml proxy
+docker stack deploy -c proxy.yml proxy
 
 docker stack ps proxy
 ```
