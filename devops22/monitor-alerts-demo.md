@@ -42,6 +42,8 @@ receivers:
       - send_resolved: false
         url: 'http://$(docker-machine ip swarm-1)/jenkins/job/service-scale/buildWithParameters?token=DevOps22&service=go-demo_main&scale=-1'
 " | docker secret create alert_manager_config -
+
+# https://goo.gl/G6dwUi
 ```
 
 

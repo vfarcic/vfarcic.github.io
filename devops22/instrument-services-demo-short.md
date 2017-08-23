@@ -5,16 +5,16 @@
 # Instrumenting Services
 
 
-## Histograms And Summaries
+## Histograms
 
 ---
 
 ```bash
-open "https://github.com/vfarcic/go-demo/blob/master/main.go"
+open "https://goo.gl/jc6aUx"
 
-curl -L -o go-demo.yml https://goo.gl/6FU1Tt
+curl -L -o go-demo.yml https://goo.gl/eoP7zE
 
-cat stacks/go-demo.yml
+cat go-demo.yml
 
 docker stack deploy -c go-demo.yml go-demo
 
