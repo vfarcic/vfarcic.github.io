@@ -4,13 +4,13 @@ export CLUSTER_IP=[...]
 
 ssh -i workshop.pem docker@$CLUSTER_IP
 
-curl -o proxy.yml https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/proxy/docker-flow-proxy.yml
+curl -L -o proxy.yml https://goo.gl/2XcNEK
 
 docker network create -d overlay proxy
 
 docker stack deploy -c proxy.yml proxy
 
-curl -o jenkins.yml https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/jenkins/vfarcic-jenkins-df-proxy-aws.yml
+curl -L -o jenkins.yml https://goo.gl/PDVJDb
 
 echo "admin" | docker secret create jenkins-user -
 

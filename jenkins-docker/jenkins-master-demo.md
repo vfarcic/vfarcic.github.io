@@ -4,9 +4,6 @@
 
 # Jenkins Master Service
 
-Note:
-jenkins-master-demo.sh
-
 
 ## Running Containers
 
@@ -62,7 +59,7 @@ docker service rm jenkins
 ---
 
 ```bash
-curl -o jenkins.yml https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/jenkins/jenkins.yml
+curl -L -o jenkins.yml https://goo.gl/xfkzFG
 
 cat jenkins.yml
 
@@ -85,7 +82,7 @@ docker stack rm jenkins
 ---
 
 ```bash
-curl -o proxy.yml https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/proxy/docker-flow-proxy.yml
+curl -L -o proxy.yml https://goo.gl/2XcNEK
 
 cat proxy.yml
 
@@ -102,7 +99,7 @@ docker stack ps proxy
 ---
 
 ```bash
-curl -o jenkins.yml https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/jenkins/jenkins-df-proxy.yml
+curl -L -o jenkins.yml https://goo.gl/SuD4nc
 
 cat jenkins.yml
 
@@ -125,7 +122,7 @@ exit
 ---
 
 ```bash
-open "https://github.com/vfarcic/docker-flow-stacks/blob/master/util/git/Dockerfile"
+open https://goo.gl/PyAzAg
 
 ssh -i workshop.pem docker@$CLUSTER_IP
 
@@ -143,16 +140,17 @@ ls -l
 ---
 
 ```bash
-cat docker-flow-stacks/jenkins/Dockerfile
+cd docker-flow-stacks/jenkins
 
-cat docker-flow-stacks/jenkins/security.groovy
+cat Dockerfile
 
-cat docker-flow-stacks/jenkins/plugins.txt
+cat security.groovy
+
+cat plugins.txt
 
 DOCKER_HUB_USER=[...]
 
-docker image build -t $DOCKER_HUB_USER/jenkins:workshop \
-    docker-flow-stacks/jenkins/.
+docker image build -t $DOCKER_HUB_USER/jenkins:workshop .
 
 docker login
 
@@ -165,15 +163,16 @@ docker image push $DOCKER_HUB_USER/jenkins:workshop
 ---
 
 ```bash
-cat docker-flow-stacks/jenkins/vfarcic-jenkins-df-proxy.yml
+cat vfarcic-jenkins-df-proxy.yml
 
 echo "admin" | docker secret create jenkins-user -
 
 echo "admin" | docker secret create jenkins-pass -
 
-HUB_USER=$DOCKER_HUB_USER TAG=workshop docker stack deploy \
-    -c docker-flow-stacks/jenkins/vfarcic-jenkins-df-proxy.yml \
-    jenkins
+export HUB_USER=[...]
+
+TAG=workshop docker stack deploy \
+    -c vfarcic-jenkins-df-proxy.yml jenkins
 
 exit
 
@@ -205,15 +204,14 @@ docker stack rm jenkins
 ---
 
 ```bash
-cat docker-flow-stacks/jenkins/vfarcic-jenkins-df-proxy-aws.yml
+cd docker-flow-stacks/jenkins
 
-export TAG=workshop
+cat vfarcic-jenkins-df-proxy-aws.yml
 
 export HUB_USER=[...]
 
-docker stack deploy \
-    -c docker-flow-stacks/jenkins/vfarcic-jenkins-df-proxy-aws.yml \
-    jenkins
+TAG=workshop docker stack deploy \
+    -c vfarcic-jenkins-df-proxy-aws.yml jenkins
 ```
 
 
