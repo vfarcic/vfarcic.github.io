@@ -2,7 +2,7 @@
 
 ---
 
-* As frequent as needed
+* As frequently as needed
 * No down-time
 * Test before, during, and after
 * Rollback

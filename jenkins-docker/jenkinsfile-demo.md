@@ -2,7 +2,7 @@
 
 ---
 
-# Pipeline in VCS
+# Pipeline in a Version Control System (VCS)
 
 
 ## Jenkinsfile
@@ -29,7 +29,7 @@ docker service update --secret-add cluster-info.properties \
 ```
 
 
-# Pipeline From SCM
+# Pipeline From Source Code Management (SCM)
 
 ---
 

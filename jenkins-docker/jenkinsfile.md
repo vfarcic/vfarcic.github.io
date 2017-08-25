@@ -1,4 +1,4 @@
-# Pipeline in VCS
+# Pipeline in a Version Control System (VCS)
 
 ---
 
