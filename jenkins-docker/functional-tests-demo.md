@@ -4,9 +4,6 @@
 
 # Functional Testing
 
-Note:
-functional-tests-demo.sh
-
 
 ## Production Services
 
@@ -32,7 +29,7 @@ curl -i "http://$CLUSTER_DNS/demo/hello"
 ---
 
 ```bash
-open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo-2-test/tags"
+open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo-2/tags"
 
 ssh -i workshop.pem docker@$CLUSTER_IP
 
@@ -129,7 +126,7 @@ exit
 ---
 
 ```bash
-open "https://github.com/vfarcic/docker-flow-stacks/blob/master/docker/compose/Dockerfile"
+open "https://goo.gl/1gVzzd"
 
 echo $CLUSTER_DNS
 
@@ -140,6 +137,8 @@ cd go-demo-2
 cat docker-compose.yml
 
 CLUSTER_DNS=[...]
+
+export DOCKER_HUB_USER=[...]
 ```
 
 
@@ -150,14 +149,12 @@ CLUSTER_DNS=[...]
 ```bash
 docker container run --rm -it -v $PWD:/compose \
     -v /var/run/docker.sock:/var/run/docker.sock \
-    -e DOCKER_HUB_USER=$DOCKER_HUB_USER -e TAG=v1 \
-    -e SERVICE_PATH="/demo-test" -e HOST_IP=$CLUSTER_DNS \
+    -e TAG=v1 -e SERVICE_PATH="/demo-test" -e HOST_IP=$CLUSTER_DNS \
     vfarcic/compose docker-compose run --rm functional
 
 docker container run --rm -it -v $PWD:/compose \
     -v /var/run/docker.sock:/var/run/docker.sock \
-    -e DOCKER_HUB_USER=$DOCKER_HUB_USER -e TAG=v2 \
-    -e SERVICE_PATH="/demo-something-else" -e HOST_IP=$CLUSTER_DNS \
+    -e TAG=v2 -e SERVICE_PATH="/demo-something-else" -e HOST_IP=$CLUSTER_DNS \
     vfarcic/compose docker-compose run --rm functional
 ```
 
@@ -167,13 +164,13 @@ docker container run --rm -it -v $PWD:/compose \
 ---
 
 ```bash
-docker system prune -f
-
 docker stack rm go-demo-2-test
 
 docker stack rm go-demo-2-another-test
 
 docker stack ls
+
+docker system prune -f
 
 exit
 ```

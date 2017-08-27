@@ -2,7 +2,7 @@
 
 ---
 
-# Pipeline in VCS
+# Pipeline in a Version Control System (VCS)
 
 
 ## Jenkinsfile
@@ -29,7 +29,7 @@ docker service update --secret-add cluster-info.properties \
 ```
 
 
-# Pipeline From SCM
+## Pipeline From Source Code Management (SCM)
 
 ---
 
@@ -37,12 +37,13 @@ docker service update --secret-add cluster-info.properties \
 open "http://$CLUSTER_DNS/jenkins/blue/pipelines"
 ```
 
+* Click the *New Pipeline* button
 * Select *Git*
 * Type *https://github.com/vfarcic/go-demo-2.git* as *Repository URL*
 * Click the *Save* button
 
 
-# Master Branch
+## Master Branch
 
 ---
 
@@ -59,15 +60,23 @@ open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo-2/tags"
 ```
 
 
-# Shared Library
+## Shared Library
 
 ---
 
 ```bash
-open "https://github.com/vfarcic/jenkins-shared-libraries/blob/workshop-mb/vars/dockerBuild.groovy"
+open "https://goo.gl/GWneBx"
+```
 
-open "https://github.com/vfarcic/jenkins-shared-libraries/blob/workshop-mb/vars/dockerRelease.groovy"
+* Open *dockerBuild.groovy*
+* Open *dockerRelease.groovy*
 
+
+## Shared Library
+
+---
+
+```
 open "http://$CLUSTER_DNS/jenkins/configure"
 ```
 
@@ -76,7 +85,7 @@ open "http://$CLUSTER_DNS/jenkins/configure"
 * Click the *Save* button
 
 
-# All Branches
+## Building All Branches
 
 ---
 

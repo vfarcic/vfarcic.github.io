@@ -4,9 +4,6 @@
 
 # Deploying To Production
 
-Note:
-rolling-updates-demo.sh
-
 
 ## Creating a Release
 
@@ -17,10 +14,7 @@ ssh -i workshop.pem docker@$CLUSTER_IP
 
 DOCKER_HUB_USER=[...]
 
-docker image pull $DOCKER_HUB_USER/go-demo-2
-
-docker image tag $DOCKER_HUB_USER/go-demo-2 \
-    $DOCKER_HUB_USER/go-demo-2:1.0
+docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:1.0
 
 docker image push $DOCKER_HUB_USER/go-demo-2:1.0
 ```
@@ -45,8 +39,7 @@ watch "docker stack ps -f desired-state=running go-demo-2"
 ---
 
 ```bash
-docker image tag $DOCKER_HUB_USER/go-demo-2 \
-  $DOCKER_HUB_USER/go-demo-2:2.0
+docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:2.0
 
 docker image push $DOCKER_HUB_USER/go-demo-2:2.0
 ```
@@ -74,8 +67,7 @@ watch "curl -i \"http://$PRIVATE_IP/demo/hello\" \
 ---
 
 ```bash
-docker image tag $DOCKER_HUB_USER/go-demo-2 \
-    $DOCKER_HUB_USER/go-demo-2:3.0
+docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:3.0
 
 docker image push $DOCKER_HUB_USER/go-demo-2:3.0
 ```
@@ -88,7 +80,7 @@ docker image push $DOCKER_HUB_USER/go-demo-2:3.0
 ```bash
 exit
 
-open "https://github.com/vfarcic/go-demo-2/blob/master/production_test.go"
+open "https://goo.gl/Eo1fAH"
 
 echo $CLUSTER_DNS
 
@@ -110,7 +102,7 @@ docker service update --image $DOCKER_HUB_USER/go-demo-2:3.0 \
 ```bash
 docker container run --rm -it -v $PWD/go-demo-2:/compose \
     -v /var/run/docker.sock:/var/run/docker.sock \
-    -e DOCKER_HUB_USER=$DOCKER_HUB_USER -e HOST_IP=$CLUSTER_DNS \
+    -e HOST_IP=$CLUSTER_DNS \
     vfarcic/compose docker-compose run --rm production
 ```
 
@@ -120,8 +112,7 @@ docker container run --rm -it -v $PWD/go-demo-2:/compose \
 ---
 
 ```bash
-docker image tag $DOCKER_HUB_USER/go-demo-2 \
-    $DOCKER_HUB_USER/go-demo-2:4.0
+docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:4.0
 
 docker image push $DOCKER_HUB_USER/go-demo-2:4.0
 
@@ -139,7 +130,7 @@ CLUSTER_DNS=http://this-address-does-not-exist.com
 
 docker container run --rm -it -v $PWD/go-demo-2:/compose \
     -v /var/run/docker.sock:/var/run/docker.sock \
-    -e DOCKER_HUB_USER=$DOCKER_HUB_USER -e HOST_IP=$CLUSTER_DNS \
+    -e HOST_IP=$CLUSTER_DNS \
     vfarcic/compose docker-compose run --rm production
 
 docker stack ps -f desired-state=running go-demo-2

@@ -3,7 +3,7 @@
 ---
 
 * Immutable
-* Inside a registry
+* Inside a Docker registry
 * Run services under test anywhere
 * Run any number of instances of services under test
 * Run tests anywhere

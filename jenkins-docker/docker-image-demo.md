@@ -4,9 +4,6 @@
 
 # Docker Images
 
-Note:
-jenkins-image-demo.sh
-
 
 ## Building Images
 
@@ -63,6 +60,8 @@ docker image ls
 
 ```bash
 cat Dockerfile
+
+sudo rm go-demo
 
 docker image build -t go-demo-2 .
 

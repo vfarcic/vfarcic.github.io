@@ -11,7 +11,7 @@ shared-libraries-demo.sh
 ## Shared Libraries Repository
 
 ```bash
-open "https://github.com/vfarcic/jenkins-shared-libraries/tree/workshop"
+open "https://goo.gl/UsDv3W"
 ```
 
 * Click *vars*
@@ -70,16 +70,14 @@ open "http://$CLUSTER_DNS/jenkins/blue/organizations/jenkins/hello/activity"
 ## Shared Libraries Repository
 
 ```bash
-open "https://github.com/vfarcic/jenkins-shared-libraries/blob/workshop/vars/dockerBuild.groovy"
-
-open "https://github.com/vfarcic/jenkins-shared-libraries/blob/workshop/vars/dockerFunctional.groovy"
-
-open "https://github.com/vfarcic/jenkins-shared-libraries/blob/workshop/vars/dockerRelease.groovy"
-
-open "https://github.com/vfarcic/jenkins-shared-libraries/blob/workshop/vars/dockerDeploy.groovy"
-
-open "https://github.com/vfarcic/jenkins-shared-libraries/blob/workshop/vars/dockerCleanup.groovy"
+open "https://goo.gl/aBnoch"
 ```
+
+* Open dockerBuild.groovy
+* Open dockerFunctional.groovy
+* Open dockerRelease.groovy
+* Open dockerDeploy.groovy
+* Open dockerCleanup.groovy
 
 
 ## Jenkins Pipeline

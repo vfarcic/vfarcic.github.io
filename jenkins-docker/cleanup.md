@@ -2,4 +2,4 @@
 
 ---
 
-# Do not forget to destroy the cluster
+## Do NOT forget to destroy the cluster
