@@ -4,9 +4,6 @@
 
 # Jenkins Agent Services
 
-Note:
-jenkins-agent-demo.sh
-
 
 ## Running Jenkins Agents
 
