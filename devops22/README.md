@@ -19,3 +19,9 @@ The problem with self-healing is that it does not take into the account constant
 How about converting adaptation into self-adaptation? Can we remove humans from the process and make a system that is **self-sufficient**?
 
 The goal of this workshop is to provide hands-on exercises that outline the steps required for a design of a **self-adapting** and **self-healing** system that will continue operating efficiently even when we are on vacations. We'll define goals and processes and explore quite a few tools (Docker, Prometheus, Alertmanager, Jenkins, AWS, and so on). The end-result of the workshop will be a base for a **self-sufficient** system that you'll be able to implement in your organization.
+
+## Abstract: Short
+
+Can we remove humans from the process and make a system that is **self-sufficient**?
+
+The goal of this talk is to try to outline the steps required for a design of a **self-adapting** and **self-healing** system that will continue operating efficiently even when we are on vacations.

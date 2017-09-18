@@ -39,415 +39,77 @@
 		<div class="reveal">
 			<header style="position: absolute;top: 50px; left: 100px; z-index:500; font-size:100px;background-color: rgba(0,0,0,0.5)"></header>
 			<div class="slides">
-				<section id="cover" data-background="../img/background/devops21.jpg">
-					<h1>The DevOps 2.1 Toolkit</h1>
-					<h4>Building, testing, deploying, and monitoring services inside Docker Swarm clusters</h4>
-					<hr/>
-					<h2>
-						<a href="http://technologyconversations.com/about/">Viktor Farcic</a>
-					</h2>
-					<hr/>
-					<h4>
-						<a href="https://twitter.com/vfarcic">@vfarcic</a>
-					</h4>
-					<h4>
-						<a href="http://technologyconversations.com">TechnologyConversations.com</a>
-					</h4>
-					<h4>
-						<a href="https://www.cloudbees.com">CloudBees.com</a>
-					</h4>
+				<section id="cover"
+						 data-markdown="cover.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/devops21.jpg">
 				</section>
-                <section data-background="../img/background/about-me.jpg">
-                    <section id="about-me">
-                        <h2>Viktor Farcic</h2>
-                        <img src="../img/viktor.jpg" style="width: 50%; height: 50%;" />
-                    </section>
-                    <section id="about-company">
-                        <a href="https://www.cloudbees.com">
-                            <img src="../img/company-big.png" style="background-color: white;" />
-                        </a>
-                    </section>
-                    <section id="about-docker">
-                        <a href="https://www.docker.com/community/docker-captains">
-                            <img src="../img/docker-captain.png" style="width: 50%; height: 50%;" />
-                        </a>
-                    </section>
-                    <section id="about-books">
-                        <figure style="width: 30%; height: 30%; float: left;">
-                            <a href="https://leanpub.com/the-devops-2-toolkit">
-                                <img src="../img/devops2.png" />
-                            </a>
-                        </figure>
-                        <figure style="width: 30%; height: 30%; float: left;">
-                            <a href="https://leanpub.com/the-devops-2-1-toolkit">
-                                <img src="../img/devops21.png" />
-                            </a>
-                        </figure>
-                        <figure style="width: 30%; height: 30%; float: left;">
-                            <a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">
-                                <img src="../img/tdd.jpg" />
-                            </a>
-                        </figure>
-                    </section>
-                </section>
-				<section data-background="../img/background/why.jpg">
-					<section id="docker">
-						<h1>Docker Containers</h1>
-						<hr/>
-						<ul>
-							<li class="fragment">Portable <label class="fragment">== anything, anywhere</label></li>
-							<li class="fragment">Low resource usage <label class="fragment">== VMs are obese</label></li>
-							<li class="fragment">Scalable <label class="fragment">== it's not 1999</label></li>
-							<li class="fragment">Isolation <label class="fragment">== processes</label></li>
-							<li class="fragment">Self-sufficient <label class="fragment">== no infrastructure dependencies</label></li>
-							<li class="fragment">Immutable <label class="fragment">== laptop == staging == production</label></li>
-						</ul>
-						<img src="../img/products/docker.png" style="background-color: white;">
-					</section>
+				<section id="about-me"
+						 data-markdown="../docs/about-me.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/about-me.jpg">
 				</section>
-				<section>
-					<section id="monolith" data-background="../img/background/monolith.png">
-						<h1>Changed everything</h1>
-						<hr/>
-						<h3>Monoliths</h3>
-						<h3 class="fragment">become microservices</h3>
-						<h3 class="fragment">Why now?</h3>
-					</section>
-					<section id="infrastructure" data-background="../img/background/servers.jpg">
-						<h1>Changed everything</h1>
-						<hr/>
-						<h3>OS infrastructure</h3>
-						<h3 class="fragment">moves to containers</h3>
-						<h3 class="fragment">and becomes immutable</h3>
-						<h3 class="fragment">Consequences?</h3>
-					</section>
-					<section id="servers" data-background="../img/background/scaling.png">
-						<h1>Changed everything</h1>
-						<hr/>
-						<h3>Servers</h3>
-						<h3 class="fragment">become cluster</h3>
-						<h3 class="fragment">The result?</h3>
-					</section>
-					<section id="cluster" data-background="../img/background/truth.jpg">
-						<h1>Changed everything</h1>
-						<hr/>
-						<h3>Cluster</h3>
-						<h3 class="fragment">changes software architecture</h3>
-						<h3 class="fragment">into immutable, stateless services</h3>
-						<h3 class="fragment">that communicate through service discovery</h3>
-						<h3 class="fragment">The need for new processes!</h3>
-					</section>
-					<section id="agile" data-background="../img/background/agile.jpg">
-						<h1>Changed everything</h1>
-						<hr/>
-						<h3>Agile</h3>
-						<h3 class="fragment">changed how we develop software</h3>
-						<h3 class="fragment">but it failed to deliver it</h3>
-						<h3 class="fragment">It excluded operations!</h3>
-					</section>
-					<section id="devops" data-background="../img/background/devops21.jpg">
-						<h1>Changed everything</h1>
-						<hr/>
-						<h3>DevOps</h3>
-						<h3 class="fragment">is new agile</h3>
-						<h3 class="fragment">It enables teams to be in full control</h3>
-						<h3 class="fragment">The result?</h3>
-					</section>
-					<section id="cd" data-background="../img/background/continuous-deployment.png">
-						<h1>Changed everything</h1>
-						<hr/>
-						<h3>DevOps</h3>
-						<h3 class="fragment">enables continuous deployment</h3>
-					</section>
-					<section id="you" data-background="../img/background/truth.jpg">
-						<h1>Changed everything</h1>
-						<hr/>
-						<h3>You are NOT a coder,</h3>
-						<h3 class="fragment">a tester, or an operator</h3>
-						<h3 class="fragment">You need to know everything</h3>
-						<h3 class="fragment">and then specialize</h3>
-					</section>
+				<section id="devops"
+						 data-markdown="../docs/devops.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15">
 				</section>
-				<section data-background="../img/background/containers.png">
-					<section id="docker-eco">
-						<h1>Docker Ecosystem</h1>
-						<hr/>
-						<ul>
-							<li class="fragment">Docker Engine</li>
-							<li class="fragment">Docker Compose</li>
-							<li class="fragment">Docker Machine</li>
-							<li class="fragment">Docker Registry</li>
-							<li class="fragment">Docker Swarm</li>
-						</ul>
-					</section>
+				<section id="docker"
+						 data-markdown="../docs/docker.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/why.jpg">
 				</section>
-				<section data-background="../img/background/manual.jpg">
-                    <section id="swarm-demo">
-						<h1>Hands-On Time</h1>
-						<hr/>
-						<div class="fragment">
-							<h1>Setting Up</h1>
-							<h1>a Swarm Cluster</h1>
-							<h1>and</h1>
-							<h1>Running Services</h1>
-						</div>
-                    </section>
-					<section id="swarm-nodes">
-						<h3>Docker Swarm</h3>
-						<h1>Nodes Setup</h1>
-						<hr/>
-                        <pre><code data-trim contenteditable>for i in 1 2 3; do
-    docker-machine create -d virtualbox swarm-$i
-done</code></pre>
-					</section>
-					<section id="swarm-visualizer">
-						<h3>Docker Swarm</h3>
-						<h1>Visualizer</h1>
-						<hr/>
-                        <pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
-
-docker run --name visualizer -d \
-    -p 8083:8083 \
-    -e HOST=$(docker-machine ip swarm-1) \
-    -e PORT=8083 \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    dockersamples/visualizer
-
-open http://$(docker-machine ip swarm-1):8083</code></pre>
-					</section>
-					<section id="swarm-provisioning">
-						<h1>Provisioning</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker swarm init --advertise-addr $(docker-machine ip swarm-1)
-
-TOKEN=$(docker swarm join-token -q worker)
-
-for i in 2 3; do
-    eval $(docker-machine env swarm-$i)
-
-    docker swarm join --token $TOKEN \
-        --advertise-addr $(docker-machine ip swarm-$i) \
-        $(docker-machine ip swarm-1):2377
-done</code></pre>
-					</section>
-					<section id="swarm-info">
-						<h1>Cluster Info</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>eval $(docker-machine env swarm-1)
-
-docker node ls</code></pre>
-					</section>
-					<section id="swarm-info-img">
-						<h1>Cluster Info</h1>
-						<hr/>
-						<img src="../img/swarm/swarm-nodes.png">
-					</section>
-					<section id="swarm-network">
-						<h1>Networking</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker network create --driver overlay proxy
-
-docker network create --driver overlay go-demo
-
-docker network ls</code></pre>
-					</section>
-					<section id="swarm-network-img">
-						<h1>Networking</h1>
-						<hr/>
-						<img src="../img/swarm/swarm-nodes-sdn-go-demo-proxy.png">
-					</section>
-					<section id="swarm-service">
-						<h1>Service</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service create --name go-demo-db \
-    --network go-demo --reserve-memory 100m mongo
-
-docker service ls
-
-docker service create --name go-demo -e DB=go-demo-db \
-    --network go-demo --network proxy \
-    --reserve-memory 50m vfarcic/go-demo
-
-docker service ps go-demo
-
-docker service inspect go-demo --pretty</code></pre>
-					</section>
-					<section id="swarm-service-img">
-						<h1>Service</h1>
-						<hr/>
-						<img src="../img/swarm/swarm-go-demo.png">
-					</section>
-					<section id="swarm-network-test">
-						<h1>Global Service</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service create --name util \
-    --network go-demo --network proxy \
-    --mode global alpine sleep 1000000000
-
-docker service ps util
-
-ID=$(docker ps -q --filter label=com.docker.swarm.service.name=util)
-
-docker exec -it $ID apk add --update drill
-
-docker exec -it $ID drill go-demo
-
-docker exec -it $ID drill go-demo-db</code></pre>
-					</section>
-					<section id="swarm-scale">
-						<h1>Scaling</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service scale go-demo=5
-
-docker service ps go-demo</code></pre>
-					</section>
-					<section id="swarm-scale-img">
-                        <h1>Scaling</h1>
-						<hr/>
-						<img src="../img/swarm/swarm-go-demo-scaled.png">
-					</section>
-					<section id="swarm-failover">
-						<h1>Failover</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker-machine rm -f swarm-3
-
-docker service ps go-demo</code></pre>
-					</section>
-					<section id="swarm-adding-nodes">
-						<h1>Adding Nodes</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker-machine create -d virtualbox swarm-4
-
-eval $(docker-machine env swarm-4)
-
-docker swarm join --token $TOKEN \
-    --advertise-addr $(docker-machine ip swarm-4) \
-    $(docker-machine ip swarm-1):2377
-
-eval $(docker-machine env swarm-1)
-
-docker service ps util</code></pre>
-					</section>
-					<section id="swarm-proxy">
-						<h1>Reverse Proxy</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>wget -O docker-compose-proxy.yml \
-    https://raw.githubusercontent.com/vfarcic/docker-flow-proxy/master/docker-compose.yml
-
-export DOCKER_IP=$(docker-machine ip swarm-1)
-
-docker-compose -f docker-compose-proxy.yml up -d consul-server
-
-docker service create --name proxy -p 80:80 -p 443:443 \
-    -p 8080:8080 --network proxy -e MODE=swarm --replicas 3 \
-    -e CONSUL_ADDRESS=$(docker-machine ip swarm-1):8500 \
-    vfarcic/docker-flow-proxy
-
-docker service ps proxy</code></pre>
-					</section>
-					<section id="swarm-proxy-img">
-						<h1>Reverse Proxy</h1>
-						<hr/>
-						<img src="../img/swarm/proxy-scaled.png">
-					</section>
-					<section id="swarm-proxy-test">
-						<h1>Reverse Proxy</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>curl "$(docker-machine ip swarm-1):8080/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo&port=8080&distribute=true"
-
-for i in {1..10}; do
-    curl -i $(docker-machine ip swarm-1)/demo/hello
-done</code></pre>
-					</section>
-					<section id="swarm-proxy-flow-img-1" data-transition="fade-in">
-						<h1>Networking</h1>
-						<hr/>
-						<img src="../img/swarm/proxy-scaled-dns.png">
-					</section>
-					<section id="swarm-proxy-flow-img-2" data-transition="fade-in">
-						<h1>Networking</h1>
-						<hr/>
-						<img src="../img/swarm/proxy-scaled-routing-mesh.png">
-					</section>
-					<section id="swarm-proxy-flow-img-3" data-transition="fade-in">
-						<h1>Networking</h1>
-						<hr/>
-						<img src="../img/swarm/proxy-scaled-routing-proxy.png">
-					</section>
-					<section id="swarm-proxy-flow-img-4" data-transition="fade-in">
-						<h1>Networking</h1>
-						<hr/>
-						<img src="../img/swarm/proxy-scaled-proxy-sdn.png">
-					</section>
-					<section id="swarm-proxy-flow-img-5" data-transition="fade-in">
-						<h1>Networking</h1>
-						<hr/>
-						<img src="../img/swarm/proxy-scaled-request-to-service.png">
-					</section>
-                    <section id="swarm-updates">
-                        <h1>Service Updates</h1>
-						<hr/>
-						<pre><code data-trim contenteditable>docker service update --image vfarcic/go-demo:1.1 --update-delay 5s go-demo
-
-docker service ps go-demo</code></pre>
-                    </section>
+				<section id="infra-demo"
+						 data-markdown="infra-aws-demo.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/manual.jpg">
 				</section>
-				<section data-background="../img/people/eric-hoffer.jpg">
-					<section id="unlearn">
-						<blockquote>
-							"In a time of drastic change, it is the learners who inherit the future. The learned find themselves equipped to live in a world that no longer exists". –Eric Hoffer
-						</blockquote>
-					</section>
+				<section id="service-demo"
+						 data-markdown="service-demo.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/manual.jpg">
 				</section>
-				<section  data-background="../img/background/the_end.jpg">
-					<section id="the-end-blog">
-						<h2>Viktor Farcic</h2>
-						<hr/>
-						<h3><a href="https://twitter.com/vfarcic">@vfarcic</a></h3>
-						<hr/>
-						<figure>
-							<img src="../img/qr/technology-conversations.jpg"/>
-						</figure>
-						<h3><a href="http://technologyconversations.com">TechnologyConversations.com</a></h3>
-					</section>
-                    <section id="the-end-book">
-                        <div>
-                            <figure style="width: 25%; height: 25%; float: left;">
-                                <img src="../img/qr/devops2-amazon.jpg"/>
-                                <figcaption><a href="http://www.amazon.com/dp/B01BJ4V66M">Amazon</a></figcaption>
-                            </figure>
-                            <figure style="width: 25%; height: 25%; float: right;">
-                                <img src="../img/qr/devops2-leanpub.jpg"/>
-                                <figcaption><a href="https://leanpub.com/the-devops-2-toolkit">LeanPub</a></figcaption>
-                            </figure>
-                            <a href="http://www.amazon.com/dp/B01BJ4V66M">
-                                <img src="../img/devops2.png" style="width: 30%; height: 30%;" />
-                            </a>
-                        </div>
-                        <hr/>
-                        <div>
-                            <figure style="width: 25%; height: 25%; float: left;">
-                                &nbsp;
-                            </figure>
-                            <figure style="width: 25%; height: 25%; float: right;">
-                                <img src="../img/qr/devops21-leanpub.png"/>
-                                <figcaption><a href="https://leanpub.com/the-devops-2-1-toolkit">LeanPub</a></figcaption>
-                            </figure>
-                            <a href="https://leanpub.com/the-devops-2-1-toolkit">
-                                <img src="../img/devops21.png" style="width: 30%; height: 30%;" />
-                            </a>
-                        </div>
-                    </section>
+				<section id="quote"
+						 data-markdown="quote.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/people/eric-hoffer.jpg">
 				</section>
-                <section>
-                    <section data-background="../img/background/cleanup.jpg">
-                        <h1>Cleanup</h1>
-                        <pre><code data-trim contenteditable>docker-machine rm -f go-demo \
-    swarm-1 swarm-2 swarm-4 swarm-test-1 swarm-test-2
-
-rm -rf go-demo docker-compose-proxy.yml</code></pre>
-                    </section>
-                </section>
+				<section id="the-end"
+						 data-markdown="../docs/the-end.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/the_end.jpg">
+				</section>
+				<section id="the-end-cleanup"
+						 data-markdown="cleanup-aws.md"
+						 data-separator="^\n\n\n"
+						 data-separator-vertical="^\n\n"
+						 data-separator-notes="^Note:"
+						 data-charset="iso-8859-15"
+						 data-background="../img/background/cleanup.jpg">
+				</section>
 			</div>
 
 		</div>
