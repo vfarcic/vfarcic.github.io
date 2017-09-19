@@ -1,14 +1,29 @@
-## Viktor Farcic
+## [@vfarcic](https://twitter.com/vfarcic)
 
 ---
 
-### [@vfarcic](https://twitter.com/vfarcic)
+[![](../img/products/twitter.jpg)](https://twitter.com/vfarcic)
+
+
+## [TechnologyConversations.com](http://technologyconversations.com)
 
 ---
 
 ![TechnologyConversations.com](../img/qr/technology-conversations.jpg)
 
-### [TechnologyConversations.com](http://technologyconversations.com)
+
+## [The DevOps Toolkit Series](https://www.youtube.com/channel/UCfz8x0lVzJpb_dgWm9kPVrw)
+
+---
+
+[![](../img/youtube.png)](https://www.youtube.com/channel/UCfz8x0lVzJpb_dgWm9kPVrw) ![](../img/qr/youtube.png)
+
+
+## [Getting Started With Docker](https://www.packtpub.com/application-development/getting-started-docker-112-video)
+
+---
+
+[![](../img/products/packt-video.png)](https://www.packtpub.com/application-development/getting-started-docker-112-video) ![](../img/qr/packt-video.png)
 
 
 <figure style="width: 12%; height: 12%; float: left;">
