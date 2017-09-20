@@ -1,6 +1,6 @@
 ## The DevOps 2.1 Toolkit
 
-# Rolling Updates
+# Zero-Downtime Deployments
 
 ---
 
