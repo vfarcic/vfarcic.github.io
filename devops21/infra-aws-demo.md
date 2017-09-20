@@ -30,6 +30,11 @@ export AWS_ACCESS_KEY_ID=[...]
 export AWS_SECRET_ACCESS_KEY=[...]
 
 export AWS_DEFAULT_REGION=us-east-1
+
+aws ec2 create-key-pair --key-name devops22 \
+  | jq -r '.KeyMaterial' >devops22.pem
+
+chmod 400 devops22.pem
 ```
 
 
@@ -97,3 +102,19 @@ ssh -i devops22.pem docker@$CLUSTER_IP
 
 
 ![](img/docker-for-aws-cluster.png)
+
+
+## Docker Flow Proxy
+
+---
+
+```bash
+curl -o proxy.yml \
+  https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/proxy/docker-flow-proxy.yml
+
+cat proxy.yml
+
+docker network create -d overlay proxy
+
+docker stack deploy -c proxy.yml proxy
+```
