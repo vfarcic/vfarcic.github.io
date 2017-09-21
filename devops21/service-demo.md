@@ -14,8 +14,6 @@ curl -o go-demo-2.yml https://raw.githubusercontent.com/vfarcic/go-demo-2/master
 
 cat go-demo-2.yml
 
-docker network create --driver overlay proxy
-
 docker stack deploy -c go-demo-2.yml go-demo-2
 
 docker stack ps go-demo-2
