@@ -22,6 +22,8 @@ exit
 
 open "http://$CLUSTER_DNS:8083"
 
+curl "http://$CLUSTER_DNS/demo/hello"
+
 ssh -i devops22.pem docker@$CLUSTER_IP
 ```
 
@@ -78,29 +80,6 @@ ssh -i devops22.pem docker@$CLUSTER_IP
 ```
 
 
-## Adding A Proxy
-
----
-
-```bash
-curl -o proxy.yml https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/proxy/docker-flow-proxy-secrets.yml
-
-cat proxy.yml
-
-echo "admin" | docker secret create dfp_stats_user -
-
-echo "admin" | docker secret create dfp_stats_pass -
-
-docker stack deploy -c proxy.yml proxy
-
-exit
-
-curl "http://$CLUSTER_DNS/demo/hello"
-
-ssh -i devops22.pem docker@$CLUSTER_IP
-```
-
-
 ## Building Images
 
 ---
@@ -128,7 +107,7 @@ docker login
 
 docker image push $DOCKER_HUB_USER/go-demo-2:latest
 
-docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:2.0
+docker image tag $DOCKER_HUB_USER/go-demo-2 $DOCKER_HUB_USER/go-demo-2:2.0
 
 docker image push $DOCKER_HUB_USER/go-demo-2:2.0
 ```
@@ -139,7 +118,7 @@ docker image push $DOCKER_HUB_USER/go-demo-2:2.0
 ---
 
 ```bash
-docker service update --image vfarcic/go-demo-2:2.0 go-demo-2_main
+docker service update --image $DOCKER_HUB_USER/go-demo-2:2.0 go-demo-2_main
 
 docker stack ps -f desired-state=running go-demo-2
 ```
