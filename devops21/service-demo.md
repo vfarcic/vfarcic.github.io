@@ -92,9 +92,7 @@ cd go-demo-2
 
 cat Dockerfile
 
-export DOCKER_HUB_USER=[...]
-
-docker image build -t $DOCKER_HUB_USER/go-demo-2 .
+docker image build -t vfarcic/go-demo-2 .
 ```
 
 
@@ -105,11 +103,11 @@ docker image build -t $DOCKER_HUB_USER/go-demo-2 .
 ```bash
 docker login
 
-docker image push $DOCKER_HUB_USER/go-demo-2:latest
+docker image push vfarcic/go-demo-2:latest
 
-docker image tag $DOCKER_HUB_USER/go-demo-2 $DOCKER_HUB_USER/go-demo-2:2.0
+docker image tag vfarcic/go-demo-2 vfarcic/go-demo-2:2.0
 
-docker image push $DOCKER_HUB_USER/go-demo-2:2.0
+docker image push vfarcic/go-demo-2:2.0
 ```
 
 
@@ -118,7 +116,7 @@ docker image push $DOCKER_HUB_USER/go-demo-2:2.0
 ---
 
 ```bash
-docker service update --image $DOCKER_HUB_USER/go-demo-2:2.0 go-demo-2_main
+docker service update --image vfarcic/go-demo-2:2.0 go-demo-2_main
 
 docker stack ps -f desired-state=running go-demo-2
 ```
