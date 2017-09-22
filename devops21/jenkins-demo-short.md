@@ -23,7 +23,7 @@ exit
 
 echo $CLUSTER_DNS
 
-ssh -i workshop.pem docker@$CLUSTER_IP
+ssh -i devops22.pem docker@$CLUSTER_IP
 
 CLUSTER_DNS=[...]
 ```
@@ -38,34 +38,31 @@ echo "hostIp=$CLUSTER_DNS
 dockerHubUser=vfarcic
 " | docker secret create cluster-info.properties -
 
-TAG=workshop AGENT_LABELS="test prod" \
+AGENT_LABELS="-labels test -labels prod" \
     docker stack deploy -c jenkins.yml jenkins
+
+docker stack ps jenkins
 
 exit
 
 open "https://github.com/vfarcic/go-demo-2/blob/master/Jenkinsfile"
 
+open "https://github.com/vfarcic/jenkins-shared-libraries/blob/master/vars/dockerDeploy.groovy"
+
 open "http://$CLUSTER_DNS/jenkins/computer"
 ```
 
 
-## Jenkins Shared Libraries
+## Credentials
 
 ---
 
 ```bash
-open "http://$CLUSTER_DNS/jenkins/configure"
+open "http://$CLUSTER_DNS/jenkins/credentials/store/system/domain/_/newCredentials"
 ```
 
-* Click *Global Pipeline Libraries* > *Add*
-* Set *my-shared-library* as *Name*
-* Set *workshop* as *Default version*
-* Check *Load implicitly*
-* Check *Modern SCM*
-* Check *GitHub*
-* Set *vfarcic* as *Owner*
-* Set *jenkins-shared-libraries* as *Repository*
-* Click the *Save* button
+* Type your Docker Hub *username* and *password*
+* Type *docker* as *ID*
 
 
 ## Building All Branches
@@ -90,5 +87,5 @@ open "http://$CLUSTER_DNS/jenkins/blue/pipelines"
 ---
 
 ```bash
-ssh -i workshop.pem docker@$CLUSTER_IP
+ssh -i devops22.pem docker@$CLUSTER_IP
 ```

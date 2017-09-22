@@ -10,7 +10,8 @@
 ---
 
 ```bash
-curl -o go-demo-2.yml https://raw.githubusercontent.com/vfarcic/go-demo-2/master/stack.yml
+curl -o go-demo-2.yml \
+  https://raw.githubusercontent.com/vfarcic/go-demo-2/master/stack.yml
 
 cat go-demo-2.yml
 
@@ -119,4 +120,6 @@ docker image push vfarcic/go-demo-2:2.0
 docker service update --image vfarcic/go-demo-2:2.0 go-demo-2_main
 
 docker stack ps -f desired-state=running go-demo-2
+
+cd ..
 ```
