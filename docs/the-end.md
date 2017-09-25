@@ -34,7 +34,7 @@
 
 ---
 
-## [DevOpsToolkitSeries.com](https://www.youtube.com/channel/UCfz8x0lVzJpb_dgWm9kPVrw)
+## [DevOpsToolkitSeries.com](http://www.devopstoolkitseries.com/)
 
 <figure style="width: 50%; height: 50%; float: left;">
     <img src="../img/devops-toolkit-series.png"/>

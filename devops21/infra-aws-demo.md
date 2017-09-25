@@ -77,6 +77,8 @@ CLUSTER_DNS=$(aws cloudformation describe-stacks \
 CLUSTER_IP=$(aws ec2 describe-instances | jq -r ".Reservations[] \
   .Instances[] | select(.SecurityGroups[].GroupName | \
   contains(\"devops22-ManagerVpcSG\")).PublicIpAddress" | tail -n 1)
+
+echo $CLUSTER_DNS
 ```
 
 
@@ -85,6 +87,8 @@ CLUSTER_IP=$(aws ec2 describe-instances | jq -r ".Reservations[] \
 ---
 
 ```bash
+echo "export CLUSTER_DNS=[...]">info
+
 ssh -i devops22.pem docker@$CLUSTER_IP
 
 docker node ls

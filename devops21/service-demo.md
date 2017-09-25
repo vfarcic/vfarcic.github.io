@@ -91,9 +91,13 @@ docker container run --rm -it -v $PWD:/repos vfarcic/git \
 
 cd go-demo-2
 
+ls -l
+
 cat Dockerfile
 
 docker image build -t vfarcic/go-demo-2 .
+
+cd ..
 ```
 
 
@@ -120,6 +124,4 @@ docker image push vfarcic/go-demo-2:2.0
 docker service update --image vfarcic/go-demo-2:2.0 go-demo-2_main
 
 docker stack ps -f desired-state=running go-demo-2
-
-cd ..
 ```

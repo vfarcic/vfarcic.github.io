@@ -14,17 +14,22 @@
 ---
 
 ```bash
-ssh -i devops21.pem ubuntu@$(terraform \
-  output swarm_manager_1_public_ip)
-
-curl -o logging.yml https://raw.githubusercontent.com/vfarcic/\
-docker-flow-stacks/master/logging/logging-df-proxy.yml
+curl -o logging.yml \
+  https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/logging/logging-df-proxy.yml
 
 cat logging.yml
 
-docker stack deploy -c logging.yml logging
+echo 'input {
+  syslog { port => 51415 }
+}
 
-docker stack ps logging
+output {
+  elasticsearch {
+    hosts => ["elasticsearch:9200"]
+  }
+}' | docker config create logstash.conf -
+
+docker stack deploy -c logging.yml logging
 ```
 
 
@@ -33,10 +38,11 @@ docker stack ps logging
 ---
 
 ```bash
+docker stack ps -f desired-state=running logging
+
 exit
 
-open "http://$(terraform output swarm_manager_1_public_ip)\
-/app/kibana"
+open "http://$CLUSTER_DNS/app/kibana"
 ```
 
 

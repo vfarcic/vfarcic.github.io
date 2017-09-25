@@ -7,16 +7,15 @@
 ## Execute ad-hoc queries and create dashboards
 
 
-# Metrics Stack
+## Metrics Stack
 
 ---
 
 ```bash
-ssh -i devops21.pem ubuntu@$(terraform \
-  output swarm_manager_1_public_ip)
+curl -o metrics.yml \
+  https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/metrics/prometheus-grafana-df-proxy.yml
 
-curl -o metrics.yml https://raw.githubusercontent.com/vfarcic/\
-docker-flow-stacks/master/metrics/prometheus-grafana-df-proxy.yml
+docker network create -d overlay logging_default
 
 USER=admin PASS=admin docker stack deploy -c metrics.yml metrics
 
@@ -24,7 +23,7 @@ docker stack ps metrics
 ```
 
 
-# Node Exporter
+## Node Exporter
 
 ---
 
@@ -42,7 +41,7 @@ docker exec -it $UTIL_ID \
 ```
 
 
-# Container Exporter
+## Container Exporter
 
 ---
 
@@ -51,14 +50,14 @@ docker exec -it $UTIL_ID curl http://metrics_cadvisor:8080/metrics
 ```
 
 
-# Prometheus
+## Prometheus
 
 ---
 
 ```bash
 exit
 
-open "http://$(terraform output swarm_manager_1_public_ip):9091"
+open "http://$CLUSTER_DNS:9091"
 ```
 
 * irate(node_cpu{mode="idle"}[5m])
@@ -66,12 +65,12 @@ open "http://$(terraform output swarm_manager_1_public_ip):9091"
 * container_memory_usage_bytes{container_label_com_docker_swarm_service_name="metrics_cadvisor"}
 
 
-# Grafana
+## Grafana
 
 ---
 
 ```bash
-open "http://$(terraform output swarm_manager_1_public_ip)/grafana/"
+open "http://$CLUSTER_DNS/grafana/"
 ```
 
 * User/pass admin/admin
@@ -80,3 +79,12 @@ open "http://$(terraform output swarm_manager_1_public_ip)/grafana/"
 * [https://grafana.net/dashboards/704](https://grafana.net/dashboards/704)
 * [https://grafana.net/dashboards/405](https://grafana.net/dashboards/405)
 * [https://grafana.net/dashboards/609](https://grafana.net/dashboards/609)
+
+
+## Going Back
+
+---
+
+```bash
+ssh -i devops22.pem docker@$CLUSTER_IP
+```

@@ -19,13 +19,11 @@ echo "admin" | docker secret create jenkins-user -
 
 echo "admin" | docker secret create jenkins-pass -
 
-exit
+source info
 
-echo $CLUSTER_DNS
-
-ssh -i devops22.pem docker@$CLUSTER_IP
-
-CLUSTER_DNS=[...]
+echo "hostIp=$CLUSTER_DNS
+dockerHubUser=vfarcic
+" | docker secret create cluster-info.properties -
 ```
 
 
@@ -34,10 +32,6 @@ CLUSTER_DNS=[...]
 ---
 
 ```bash
-echo "hostIp=$CLUSTER_DNS
-dockerHubUser=vfarcic
-" | docker secret create cluster-info.properties -
-
 AGENT_LABELS="-labels test -labels prod" \
     docker stack deploy -c jenkins.yml jenkins
 
@@ -47,17 +41,21 @@ exit
 
 open "https://github.com/vfarcic/go-demo-2/blob/master/Jenkinsfile"
 
-open "https://github.com/vfarcic/jenkins-shared-libraries/blob/master/vars/dockerDeploy.groovy"
+open "https://github.com/vfarcic/jenkins-shared-libraries/blob/master/vars/dockerRelease.groovy"
 
-open "http://$CLUSTER_DNS/jenkins/computer"
+open "http://$CLUSTER_DNS/jenkins"
 ```
 
+* Login using *admin* as *username* and *password*
 
-## Credentials
+
+## Agents & Credentials
 
 ---
 
 ```bash
+open "http://$CLUSTER_DNS/jenkins/computer"
+
 open "http://$CLUSTER_DNS/jenkins/credentials/store/system/domain/_/newCredentials"
 ```
 
@@ -88,4 +86,6 @@ open "http://$CLUSTER_DNS/jenkins/blue/pipelines"
 
 ```bash
 ssh -i devops22.pem docker@$CLUSTER_IP
+
+docker stack ps -f desired-state=running go-demo-2
 ```
