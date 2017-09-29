@@ -16,9 +16,9 @@
 
 ---
 
-## [Getting Started With Docker](https://www.packtpub.com/application-development/getting-started-docker-112-video)
+## [Getting Started With Docker](https://www.packtpub.com/application-development/getting-started-docker-video)
 
-[![](../img/products/packt-video.png)](https://www.packtpub.com/application-development/getting-started-docker-112-video) ![](../img/qr/packt-video.png)
+[![](../img/products/packt-video.png)](https://www.packtpub.com/application-development/getting-started-docker-video) ![](../img/qr/packt-video.png)
 
 
 ## Videos (YouTube)
