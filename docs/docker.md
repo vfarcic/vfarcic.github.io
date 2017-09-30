@@ -12,6 +12,7 @@
 <img src="../img/products/docker.png" style="background-color: white;">
 
 
+<!-- .slide: data-background="../img/products/moby.png" -->
 # Docker Ecosystem
 
 ---
@@ -22,5 +23,3 @@
 * Docker Registry<!-- .element: class="fragment" -->
 * Docker Swarm<!-- .element: class="fragment" -->
 * InfraKit<!-- .element: class="fragment" -->
-
-<img src="../img/products/docker.png" style="background-color: white;">

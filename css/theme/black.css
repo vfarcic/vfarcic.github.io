@@ -214,7 +214,6 @@ body {
 
 .reveal a:hover {
   color: #8dcffc;
-  text-shadow: none;
   border: none; }
 
 .reveal .roll span:after {

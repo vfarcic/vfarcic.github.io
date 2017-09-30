@@ -26,3 +26,18 @@ body:after {
     word-wrap: normal;
     background: #3F3F3F;
     color: #DCDCDC; }
+
+.reveal a {
+    color: #9edffa;
+    text-decoration: none;
+    -webkit-transition: color .15s ease;
+    -moz-transition: color .15s ease;
+    transition: color .15s ease; }
+
+.reveal a:hover {
+    color: #80d0fa;
+    border: none; }
+
+.reveal .roll span:after {
+    color: #fff;
+    background: #068de9; }
