@@ -2,303 +2,208 @@
 
 ---
 
-# Setting Up
-
-# a Swarm Cluster
-
-# and
-
-# Running Services
+# Managing Swarm Services
 
 
-# Build Image
+## Creating Services
 
 ---
 
 ```bash
-cat packer-ubuntu-docker-rexray.json
+source creds
 
-packer build -machine-readable packer-ubuntu-docker-rexray.json \
-  | tee packer-ubuntu-docker-rexray.log
-```
+docker network create -d overlay go-demo-2
 
+docker service create --name go-demo-2-db --network go-demo-2 mongo
 
-# Initialize
+docker service ps go-demo-2-db
 
----
+docker service create --name go-demo-2 --env DB=go-demo-2-db \
+    --network go-demo-2 -p 1234:8080 $DOCKER_HUB_USER/go-demo-2
 
-```bash
-export TF_VAR_swarm_ami_id=$(grep 'artifact,0,id' \
-  packer-ubuntu-docker-rexray.log | cut -d: -f2)
-
-cat swarm.tf
-
-terraform plan -target aws_instance.swarm-manager \
-  -var swarm_init=true -var swarm_managers=1
-
-terraform apply -target aws_instance.swarm-manager \
-  -var swarm_init=true -var swarm_managers=1 -var rexray=true
-
-terraform refresh
-
-ssh -i devops21.pem ubuntu@$(terraform output \
-  swarm_manager_1_public_ip) docker node ls
-```
-
-
-# Add Nodes
-
----
-
-```bash
-export TF_VAR_swarm_manager_token=$(ssh -i devops21.pem \
-  ubuntu@$(terraform output swarm_manager_1_public_ip) \
-  docker swarm join-token -q manager)
-
-export TF_VAR_swarm_manager_ip=$(terraform \
-  output swarm_manager_1_private_ip)
-
-cat swarm.tf
-
-terraform plan -target aws_instance.swarm-manager -var rexray=true
-
-terraform apply -target aws_instance.swarm-manager -var rexray=true
-
-terraform refresh
-
-ssh -i devops21.pem ubuntu@$(terraform \
-  output swarm_manager_1_public_ip) docker node ls
-```
-
-
-# Service
-
----
-
-```bash
-terraform output swarm_manager_1_public_ip
-
-ssh -i devops21.pem ubuntu@$(terraform \
-  output swarm_manager_1_public_ip)
-
-docker service create --name=visualizer \
-  --publish=9090:8080/tcp --constraint=node.role==manager \
-  --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
-  dockersamples/visualizer
+docker service ps go-demo-2
 
 exit
 
-open "http://$(terraform output swarm_manager_1_public_ip):9090"
+curl "http://$CLUSTER_DNS:1234/demo/hello"
 ```
 
 
-# Networking
+## Removing Services
 
 ---
 
 ```bash
-ssh -i devops21.pem ubuntu@$(terraform \
-  output swarm_manager_1_public_ip)
+ssh -i devops22.pem docker@$CLUSTER_IP
 
-docker network create --driver overlay proxy
+docker service rm go-demo-2
 
-docker network ls
+docker service rm go-demo-2-db
+
+docker system prune -f
 ```
 
 
-# Stack
+## Deploying Stacks
 
 ---
 
 ```bash
-curl -o go-demo-stack.yml \
-    https://raw.githubusercontent.com/\
-vfarcic/go-demo/master/docker-compose-stack.yml
+cd go-demo-2
 
-cat go-demo-stack.yml
+cat stack.yml
 
-docker stack deploy -c go-demo-stack.yml go-demo
+docker stack deploy -c stack.yml go-demo-2
 
-docker stack services go-demo
+docker stack services go-demo-2
 
-docker stack ps go-demo
+docker stack ps go-demo-2
 
-docker service inspect go-demo_main --pretty
+docker service inspect go-demo-2_main --pretty
 
-docker service inspect go-demo_main
+docker service inspect go-demo-2_main
 ```
 
 
-# Scaling
+## Scaling
 
 ---
 
 ```bash
-docker service scale go-demo_main=5
+docker service scale go-demo-2_main=5
 
-docker stack ps go-demo
+docker stack ps go-demo-2
 ```
 
 
-# Global Service
+## Deploying Global Services
 
 ---
 
 ```bash
 docker service create --name util \
-  --network go-demo_default --network proxy \
+  --network go-demo-2_default --network proxy \
   --mode global alpine sleep 1000000000
 
 docker service ps util
+```
+
+
+## Exploring Networking
+
+---
+
+```bash
+docker network ls
 
 ID=$(docker ps -q \
   --filter label=com.docker.swarm.service.name=util)
 
 docker exec -it $ID apk add --update drill
 
-docker exec -it $ID drill go-demo_db
+docker exec -it $ID drill go-demo-2_db
 
-docker exec -it $ID drill go-demo_main
+docker exec -it $ID drill go-demo-2_main
 
-docker exec -it $ID drill tasks.go-demo_main
+docker exec -it $ID drill tasks.go-demo-2_main
 ```
 
 
-# Failover
+## Failover
 
 ---
 
 ```bash
-docker container rm -f $(docker container ps | grep go-demo_main \
+docker container rm -f $(docker container ps | grep go-demo-2_main \
   | tail -1 | awk '{print $1}')
 
-docker stack ps go-demo
+docker stack ps go-demo-2
 ```
 
 
-# Reverse Proxy
+## Reverse Proxy
 
 ---
 
 ```bash
-curl -o proxy-stack.yml \
-    https://raw.githubusercontent.com/\
-vfarcic/docker-flow-proxy/master/docker-compose-stack.yml
+cat proxy.yml
 
-cat proxy-stack.yml
-
-docker stack deploy -c proxy-stack.yml proxy
+cat go-demo-2.yml
 
 docker stack ps proxy
 
 exit
 
-curl "http://$(terraform output \
-    swarm_manager_1_public_ip)/demo/hello"
+curl "http://$CLUSTER_DNS/demo/hello"
+
+ssh -i devops22.pem docker@$CLUSTER_IP
 ```
 
 [Docker Flow Proxy: http://proxy.dockerflow.com/](http://proxy.dockerflow.com/)
 
 
-# Networking
-
----
-
-![Proxy scaled](../img/swarm/proxy-scaled.png)
-
-
-# Networking
-
----
-
-![DNS](../img/swarm/proxy-scaled-dns.png)
-
-
-# Networking
-
----
-
-![Routing Mesh](../img/swarm/proxy-scaled-routing-mesh.png)
-
-
-# Networking
-
----
-
-![Routing mesh to proxy](../img/swarm/proxy-scaled-routing-proxy.png)
-
-
-# Networking
-
----
-
-![Proxy to proxy network](../img/swarm/proxy-scaled-proxy-sdn.png)
-
-
-# Networking
-
----
-
-![Proxy network to service](../img/swarm/proxy-scaled-request-to-service.png)
-
-
-# Service Updates
+## Rolling Updates
 
 ---
 
 ```bash
-ssh -i devops21.pem ubuntu@$(terraform \
-  output swarm_manager_1_public_ip)
+source creds
+
+cat go-demo-2/Dockerfile
 
 cat go-demo-stack.yml
 
-TAG=:1.1 docker stack deploy -c go-demo-stack.yml go-demo
+docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:2.0
 
-docker stack ps go-demo
+docker image push $DOCKER_HUB_USER/go-demo-2:2.0
+
+TAG=2.0 docker stack deploy -c go-demo-2.yml go-demo-2
+
+docker stack ps -f desired-state=running go-demo-2
 ```
 
 
-# Network Volumes
+## Rolling Updates
 
 ---
 
 ```bash
-curl -o registry.yml \
-    https://raw.githubusercontent.com/vfarcic/\
-docker-flow-stacks/master/docker/registry-rexray-external.yml
+docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:3.0
 
-docker volume create -d rexray registry
+docker image push $DOCKER_HUB_USER/go-demo-2:3.0
 
-docker volume ls
+docker service update --image $DOCKER_HUB_USER/go-demo-2:3.0 \
+    go-demo-2_main
 
-docker stack deploy -c registry.yml registry
-
-docker stack ps registry
-
-docker pull vfarcic/go-demo
-
-docker tag vfarcic/go-demo localhost:5000/go-demo
-
-docker push localhost:5000/go-demo
+docker stack ps -f desired-state=running go-demo-2
 ```
 
 
-# Failover With Network Volumes
+## Testing Rolling Updates
 
 ---
 
 ```bash
-docker stack ps registry
+docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:4.0
 
-IP=[...]  # Registry node IP
+docker image push $DOCKER_HUB_USER/go-demo-2:4.0
 
-docker -H tcp://$IP:2375 rm -f \
-  $(docker -H tcp://$IP:2375 ps -q \
-  -f label=com.docker.swarm.service.name=registry_main)
+docker service update --image $DOCKER_HUB_USER/go-demo-2:4.0 \
+  go-demo-2_main
 
-docker stack ps registry
+watch "curl -i 'http://$CLUSTER_DNS/demo/hello' \
+    && docker stack ps -f desired-state=running go-demo-2"
+```
 
-docker pull localhost:5000/go-demo
 
-exit
+## Rolling Back
+
+---
+
+```bash
+docker stack ps -f desired-state=running go-demo-2
+
+docker service update --rollback --update-parallelism 0 go-demo-2_main
+
+docker stack ps -f desired-state=running go-demo-2
 ```

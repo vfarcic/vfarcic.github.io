@@ -9,6 +9,15 @@
 # as code
 
 
+# Docker for AWS
+
+---
+
+[youtu.be/r5cofUYqnn8](https://youtu.be/r5cofUYqnn8)
+
+![](../img/qr/docker-for-aws.png)
+
+
 ## Prerequisites
 
 ---
@@ -79,6 +88,8 @@ CLUSTER_IP=$(aws ec2 describe-instances | jq -r ".Reservations[] \
   contains(\"devops22-ManagerVpcSG\")).PublicIpAddress" | tail -n 1)
 
 echo $CLUSTER_DNS
+
+echo $CLUSTER_IP
 ```
 
 
@@ -87,9 +98,11 @@ echo $CLUSTER_DNS
 ---
 
 ```bash
-echo "export CLUSTER_DNS=[...]">info
-
 ssh -i devops22.pem docker@$CLUSTER_IP
+
+echo "export CLUSTER_DNS=[...]
+export CLUSTER_IP=[...]
+export DOCKER_HUB_USER=[...]">creds
 
 docker node ls
 

@@ -4,41 +4,63 @@
 
 # Running Jenkins
 
-# Inside a Cluster
+# As a Docker Service
 
 
-# Jenkins Service
+## Running Jenkins
 
 ---
 
 ```bash
-ssh -i devops21.pem ubuntu@$(terraform \
-  output swarm_manager_1_public_ip)
-
-curl -o jenkins.yml \
-    https://raw.githubusercontent.com/vfarcic/docker-flow-stacks\
-/master/jenkins/vfarcic-jenkins-rexray-df-proxy.yml
-
-echo "admin" | docker secret create jenkins-user -
-
-echo "admin" | docker secret create jenkins-pass -
-
-docker stack deploy -c jenkins.yml jenkins
+curl -L -o jenkins.yml \
+    https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/jenkins/jenkins-df-proxy.yml
 
 cat jenkins.yml
 
-docker stack ps jenkins
+docker stack deploy -c jenkins.yml jenkins
+
+exit
+
+open "http://$CLUSTER_DNS/jenkins"
+
+ssh -i workshop.pem docker@$CLUSTER_IP
+
+docker stack rm jenkins
+
+exit
 ```
 
 
-# Jenkins Setup
+## Building Jenkins Image
 
 ---
 
 ```bash
-exit
+docker container run --rm -it -v $PWD:/repos vfarcic/git \
+    git clone https://github.com/vfarcic/docker-flow-stacks
 
-open "http://$(terraform output swarm_manager_1_public_ip)/jenkins"
+cd docker-flow-stacks/jenkins
+
+cat Dockerfile
+
+cat security.groovy
+
+cat plugins.txt
+```
+
+
+## Building Jenkins Image
+
+---
+
+```bash
+source creds
+
+docker image build -t $DOCKER_HUB_USER/jenkins:workshop .
+
+docker login
+
+docker image push $DOCKER_HUB_USER/jenkins:workshop
 ```
 
 

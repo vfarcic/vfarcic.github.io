@@ -4,7 +4,7 @@
 
 [youtu.be/r5cofUYqnn8](https://youtu.be/r5cofUYqnn8)
 
-![](img/jenkins-master.png)
+![](../img/qr/jenkins-master.png)
 
 
 # Jenkins Master

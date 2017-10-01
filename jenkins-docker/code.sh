@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 atom \
-    jenkins-master-demo.md \
-    jenkins-agent-demo.md \
+    ../docs/jenkins-master-demo.md \
+    ../docs/jenkins-agent-demo.md \
     docker-image-demo.md \
     functional-tests-demo.md \
     rolling-updates-demo.md \

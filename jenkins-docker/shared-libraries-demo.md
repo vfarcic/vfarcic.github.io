@@ -70,7 +70,7 @@ open "http://$CLUSTER_DNS/jenkins/blue/organizations/jenkins/hello/activity"
 ## Shared Libraries Repository
 
 ```bash
-open "https://goo.gl/aBnoch"
+open "https://github.com/vfarcic/jenkins-shared-libraries/tree/workshop/vars"
 ```
 
 * Open dockerBuild.groovy

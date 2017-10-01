@@ -59,7 +59,8 @@ docker service rm jenkins
 ---
 
 ```bash
-curl -L -o jenkins.yml https://goo.gl/xfkzFG
+curl -L -o jenkins.yml \
+    https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/jenkins/jenkins.yml
 
 cat jenkins.yml
 
@@ -77,29 +78,13 @@ docker stack rm jenkins
 ```
 
 
-## Running DFP Stack
-
----
-
-```bash
-curl -L -o proxy.yml https://goo.gl/2XcNEK
-
-cat proxy.yml
-
-docker network create -d overlay proxy
-
-docker stack deploy -c proxy.yml proxy
-
-docker stack ps proxy
-```
-
-
 ## Running Jenkins Through DFP
 
 ---
 
 ```bash
-curl -L -o jenkins.yml https://goo.gl/SuD4nc
+curl -L -o jenkins.yml \
+    https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/jenkins/jenkins-df-proxy.yml
 
 cat jenkins.yml
 
