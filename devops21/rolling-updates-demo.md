@@ -73,7 +73,7 @@ ssh -i devops22.pem docker@$CLUSTER_IP
 
 docker stack ps -f desired-state=running go-demo-2
 
-docker service update --rollback --update-parallelism 0 go-demo-2_main
+docker service update --rollback go-demo-2_main
 
 docker stack ps -f desired-state=running go-demo-2
 ```
