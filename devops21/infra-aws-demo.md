@@ -113,8 +113,6 @@ HTTP_PORT=8083 docker stack deploy -c visualizer.yml visualizer
 exit
 
 open "http://$CLUSTER_DNS:8083"
-
-ssh -i devops22.pem docker@$CLUSTER_IP
 ```
 
 
@@ -126,6 +124,8 @@ ssh -i devops22.pem docker@$CLUSTER_IP
 ---
 
 ```bash
+ssh -i devops22.pem docker@$CLUSTER_IP
+
 curl -o proxy.yml \
   https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/proxy/docker-flow-proxy.yml
 
