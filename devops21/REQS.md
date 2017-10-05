@@ -7,9 +7,7 @@ On the other hand, you are welcome to follow along and try to reproduce everythi
 * [Git](https://git-scm.com/)
 * [AWS account](https://aws.amazon.com/)
 * [AWS CLI](https://aws.amazon.com/cli/)
-* [Packer](https://www.packer.io/)
-* [Terraform](https://www.terraform.io/downloads.html)
 * [jq](https://stedolan.github.io/jq/)
-* GitBash (if Windows)
+* GitBash (if using Windows, it's installed with Git)
 
 If you are a Windows user, please make sure that your Git client is configured to check out the code *AS-IS*. Otherwise, Windows might change carriage returns to the Windows format. You will also need an [AWS account](https://aws.amazon.com/) and [AWS CLI](https://aws.amazon.com/cli/). Please note that it should be free from any customizations and limitations your company might have introduced. If in doubt, please use your personal account.
