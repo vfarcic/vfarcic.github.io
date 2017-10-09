@@ -34,7 +34,7 @@ docker container run -it --rm \
   go test --cover -v ./... --run UnitTest && \
   go build -v -o go-demo"
 
-ls -l
+ls -lt
 
 docker image build -f old/Dockerfile -t go-demo-2 .
 
@@ -71,6 +71,8 @@ docker image ls
 docker system prune -f
 
 docker image ls
+
+cd ..
 ```
 
 
@@ -92,4 +94,6 @@ exit
 export DOCKER_HUB_USER=[...]
 
 open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo-2/tags"
+
+ssh -i workshop.pem docker@$CLUSTER_IP
 ```

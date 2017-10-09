@@ -51,7 +51,7 @@ open "http://$CLUSTER_DNS/app/kibana"
 ---
 
 ```bash
-docker service rm logging_kibana
+ssh -i workshop.pem docker@$CLUSTER_IP
 
-exit
+docker service rm logging_kibana
 ```

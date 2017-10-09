@@ -40,10 +40,10 @@ export AWS_SECRET_ACCESS_KEY=[...]
 
 export AWS_DEFAULT_REGION=us-east-1
 
-aws ec2 create-key-pair --key-name devops22 \
-  | jq -r '.KeyMaterial' >devops22.pem
+aws ec2 create-key-pair --key-name workshop \
+  | jq -r '.KeyMaterial' >workshop.pem
 
-chmod 400 devops22.pem
+chmod 400 workshop.pem
 ```
 
 
@@ -59,7 +59,7 @@ aws cloudformation create-stack \
     --parameters \
     ParameterKey=ManagerSize,ParameterValue=3 \
     ParameterKey=ClusterSize,ParameterValue=0 \
-    ParameterKey=KeyName,ParameterValue=devops22 \
+    ParameterKey=KeyName,ParameterValue=workshop \
     ParameterKey=EnableSystemPrune,ParameterValue=yes \
     ParameterKey=EnableCloudWatchLogs,ParameterValue=no \
     ParameterKey=EnableCloudStorEfs,ParameterValue=yes \
@@ -98,11 +98,12 @@ echo $CLUSTER_IP
 ---
 
 ```bash
-ssh -i devops22.pem docker@$CLUSTER_IP
+ssh -i workshop.pem docker@$CLUSTER_IP
 
 echo "export CLUSTER_DNS=[...]
 export CLUSTER_IP=[...]
-export DOCKER_HUB_USER=[...]">creds
+export DOCKER_HUB_USER=[...]
+">creds
 
 docker node ls
 
@@ -124,7 +125,7 @@ open "http://$CLUSTER_DNS:8083"
 ---
 
 ```bash
-ssh -i devops22.pem docker@$CLUSTER_IP
+ssh -i workshop.pem docker@$CLUSTER_IP
 
 curl -o proxy.yml \
   https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/proxy/docker-flow-proxy.yml
@@ -135,3 +136,5 @@ docker network create -d overlay proxy
 
 docker stack deploy -c proxy.yml proxy
 ```
+
+## [proxy.dockerflow.com](http://proxy.dockerflow.com)

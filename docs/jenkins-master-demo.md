@@ -10,13 +10,12 @@
 ---
 
 ```bash
-ssh -i workshop.pem docker@$CLUSTER_IP
-
 docker container run -d --name jenkins -p 8080:8080 jenkins:alpine
 
 docker container ls
 
-PRIVATE_IP=[...] # e.g. 172.31.21.216
+PRIVATE_IP=$(docker inspect jenkins | \
+    jq -r '.[0].NetworkSettings.IPAddress')
 
 curl -i "http://$PRIVATE_IP:8080"
 
@@ -43,6 +42,8 @@ docker container ls
 docker service create --name jenkins -p 8080:8080 jenkins:alpine
 
 docker service ps jenkins
+
+docker service logs -f jenkins
 
 exit
 
@@ -125,6 +126,8 @@ ls -l
 ---
 
 ```bash
+source creds
+
 cd docker-flow-stacks/jenkins
 
 cat Dockerfile
@@ -132,8 +135,6 @@ cat Dockerfile
 cat security.groovy
 
 cat plugins.txt
-
-DOCKER_HUB_USER=[...]
 
 docker image build -t $DOCKER_HUB_USER/jenkins:workshop .
 
@@ -153,8 +154,6 @@ cat vfarcic-jenkins-df-proxy.yml
 echo "admin" | docker secret create jenkins-user -
 
 echo "admin" | docker secret create jenkins-pass -
-
-export HUB_USER=[...]
 
 TAG=workshop docker stack deploy \
     -c vfarcic-jenkins-df-proxy.yml jenkins
@@ -189,11 +188,11 @@ docker stack rm jenkins
 ---
 
 ```bash
+source creds
+
 cd docker-flow-stacks/jenkins
 
 cat vfarcic-jenkins-df-proxy-aws.yml
-
-export HUB_USER=[...]
 
 TAG=workshop docker stack deploy \
     -c vfarcic-jenkins-df-proxy-aws.yml jenkins
@@ -214,4 +213,6 @@ open "http://$CLUSTER_DNS/jenkins"
 open "http://$CLUSTER_DNS/jenkins/exit"
 
 open "http://$CLUSTER_DNS/jenkins"
+
+ssh -i workshop.pem docker@$CLUSTER_IP
 ```

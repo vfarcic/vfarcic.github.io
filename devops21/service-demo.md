@@ -25,7 +25,7 @@ open "http://$CLUSTER_DNS:8083"
 
 curl "http://$CLUSTER_DNS/demo/hello"
 
-ssh -i devops22.pem docker@$CLUSTER_IP
+ssh -i workshop.pem docker@$CLUSTER_IP
 ```
 
 
@@ -43,7 +43,7 @@ exit
 
 open "http://$CLUSTER_DNS:8083"
 
-ssh -i devops22.pem docker@$CLUSTER_IP
+ssh -i workshop.pem docker@$CLUSTER_IP
 ```
 
 
@@ -77,7 +77,7 @@ exit
 
 open "http://$CLUSTER_DNS:8083"
 
-ssh -i devops22.pem docker@$CLUSTER_IP
+ssh -i workshop.pem docker@$CLUSTER_IP
 ```
 
 

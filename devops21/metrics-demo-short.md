@@ -54,5 +54,5 @@ open "http://$CLUSTER_DNS/grafana/"
 ---
 
 ```bash
-ssh -i devops22.pem docker@$CLUSTER_IP
+ssh -i workshop.pem docker@$CLUSTER_IP
 ```

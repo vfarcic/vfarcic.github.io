@@ -34,7 +34,7 @@ curl "http://$CLUSTER_DNS:1234/demo/hello"
 ---
 
 ```bash
-ssh -i devops22.pem docker@$CLUSTER_IP
+ssh -i workshop.pem docker@$CLUSTER_IP
 
 docker service rm go-demo-2
 
@@ -118,6 +118,8 @@ docker container rm -f $(docker container ps | grep go-demo-2_main \
   | tail -1 | awk '{print $1}')
 
 docker stack ps go-demo-2
+
+cd ..
 ```
 
 
@@ -128,7 +130,7 @@ docker stack ps go-demo-2
 ```bash
 cat proxy.yml
 
-cat go-demo-2.yml
+cat go-demo-2/stack.yml
 
 docker stack ps proxy
 
@@ -136,10 +138,10 @@ exit
 
 curl "http://$CLUSTER_DNS/demo/hello"
 
-ssh -i devops22.pem docker@$CLUSTER_IP
+ssh -i workshop.pem docker@$CLUSTER_IP
 ```
 
-[Docker Flow Proxy: http://proxy.dockerflow.com/](http://proxy.dockerflow.com/)
+## [proxy.dockerflow.com](http://proxy.dockerflow.com)
 
 
 ## Rolling Updates
@@ -149,15 +151,17 @@ ssh -i devops22.pem docker@$CLUSTER_IP
 ```bash
 source creds
 
-cat go-demo-2/Dockerfile
+cd go-demo-2
 
-cat go-demo-stack.yml
+cat Dockerfile
+
+cat stack.yml
 
 docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:2.0
 
 docker image push $DOCKER_HUB_USER/go-demo-2:2.0
 
-TAG=2.0 docker stack deploy -c go-demo-2.yml go-demo-2
+TAG=2.0 docker stack deploy -c stack.yml go-demo-2
 
 docker stack ps -f desired-state=running go-demo-2
 ```
@@ -203,7 +207,7 @@ watch "curl -i 'http://$CLUSTER_DNS/demo/hello' \
 ```bash
 docker stack ps -f desired-state=running go-demo-2
 
-docker service update --rollback --update-parallelism 0 go-demo-2_main
+docker service update --rollback go-demo-2_main
 
 docker stack ps -f desired-state=running go-demo-2
 ```

@@ -146,21 +146,13 @@ exit
 open "http://$CLUSTER_DNS/jenkins/configure"
 ```
 
-* Click *Global Pipeline Libraries* > *Add*
-* Set *my-shared-library* as *Name*
-* Set *workshop* as *Default version*
-* Check *Load implicitly*
-* Check *Modern SCM*
-* Check *GitHub*
-* Set *vfarcic* as *Owner*
-* Set *jenkins-shared-libraries* as *Repository*
-* Click the *Save* button
+* Navigate to *Global Pipeline Libraries*
 
 
 ## Shared Libraries Repository
 
 ```bash
-open "https://github.com/vfarcic/jenkins-shared-libraries/tree/workshop/vars"
+open "https://github.com/vfarcic/jenkins-shared-libraries/tree/master/vars"
 ```
 
 * Open dockerBuild.groovy
@@ -177,13 +169,9 @@ open "https://github.com/vfarcic/jenkins-shared-libraries/tree/workshop/vars"
 ```bash
 open "https://github.com/vfarcic/go-demo-2/blob/master/Jenkinsfile"
 
-echo $CLUSTER_DNS
-
 ssh -i workshop.pem docker@$CLUSTER_IP
 
-CLUSTER_DNS=[...]
-
-DOCKER_HUB_USER=[...]
+source creds
 
 echo "hostIp=$CLUSTER_DNS
 dockerHubUser=$DOCKER_HUB_USER
@@ -191,6 +179,8 @@ dockerHubUser=$DOCKER_HUB_USER
 
 docker service update --secret-add cluster-info.properties \
     jenkins-agent-test_main
+
+exit
 ```
 
 

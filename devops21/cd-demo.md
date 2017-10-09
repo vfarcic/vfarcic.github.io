@@ -33,6 +33,8 @@ TAG=beta-1 SERVICE_PATH=/demo-beta-1 docker stack deploy \
 
 cat Dockerfile.test
 
+cat run-functional.sh
+
 docker image build -f Dockerfile.test \
     -t $DOCKER_HUB_USER/go-demo-2-test .
 
@@ -88,4 +90,6 @@ cat docker-compose.yml
 docker stack rm go-demo-2-beta-1
 
 docker system prune -f
+
+cd ..
 ```

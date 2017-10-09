@@ -12,14 +12,47 @@
 ---
 
 ```bash
+source creds
+
 curl -o metrics.yml \
-  https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/metrics/prometheus-grafana-df-proxy.yml
+  https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/metrics/docker-flow-monitor-full.yml
 
-docker network create -d overlay logging_default
+cat metrics.yml
 
-USER=admin PASS=admin docker stack deploy -c metrics.yml metrics
+docker network create -d overlay monitor
+```
 
-docker stack ps metrics
+
+## Metrics Stack
+
+---
+
+```bash
+echo "route:
+  repeat_interval: 30m
+  group_interval: 30m
+  receiver: 'slack'
+
+receivers:
+  - name: 'slack'
+    slack_configs:
+      - send_resolved: true
+        title: '[{{ .Status | toUpper }}] {{ .GroupLabels.service }} service is in danger!'
+        title_link: 'http://$CLUSTER_DNS/monitor/alerts'
+        text: '{{ .CommonAnnotations.summary}}'
+        api_url: 'https://hooks.slack.com/services/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'
+" | docker secret create alert_manager_config -
+```
+
+
+## Metrics Stack
+
+---
+
+```bash
+DOMAIN=$CLUSTER_DNS docker stack deploy -c metrics.yml metrics
+
+docker stack ps -f desired-state=running metrics
 ```
 
 
@@ -29,8 +62,7 @@ docker stack ps metrics
 
 ```bash
 docker service create --name util2 \
-  --network metrics_default \
-  --mode global alpine sleep 1000000000
+  --network monitor --mode global alpine sleep 1000000000
 
 UTIL_ID=$(docker ps -q -f label=com.docker.swarm.service.name=util2)
 
@@ -57,12 +89,14 @@ docker exec -it $UTIL_ID curl http://metrics_cadvisor:8080/metrics
 ```bash
 exit
 
-open "http://$CLUSTER_DNS:9091"
-```
+open "http://$CLUSTER_DNS/monitor"
 
-* irate(node_cpu{mode="idle"}[5m])
-* container_memory_usage_bytes{id!="/"}
-* container_memory_usage_bytes{container_label_com_docker_swarm_service_name="metrics_cadvisor"}
+# irate(node_cpu{mode="idle"}[5m])
+
+# container_memory_usage_bytes{container_label_com_docker_swarm_service_name!=""}
+
+# container_memory_usage_bytes{container_label_com_docker_swarm_service_name="metrics_cadvisor"}
+```
 
 
 ## Grafana
@@ -74,11 +108,20 @@ open "http://$CLUSTER_DNS/grafana/"
 ```
 
 * User/pass admin/admin
-* DS: http://metrics_prometheus:9090
+* DS: http://metrics_monitor:9090/monitor
 * DS: http://logging_elasticsearch:9200
 * [https://grafana.net/dashboards/704](https://grafana.net/dashboards/704)
 * [https://grafana.net/dashboards/405](https://grafana.net/dashboards/405)
 * [https://grafana.net/dashboards/609](https://grafana.net/dashboards/609)
+
+
+## Alerts
+
+---
+
+```bash
+open "http://$CLUSTER_DNS/monitor/alerts"
+```
 
 
 ## Going Back
@@ -86,5 +129,5 @@ open "http://$CLUSTER_DNS/grafana/"
 ---
 
 ```bash
-ssh -i devops22.pem docker@$CLUSTER_IP
+ssh -i workshop.pem docker@$CLUSTER_IP
 ```

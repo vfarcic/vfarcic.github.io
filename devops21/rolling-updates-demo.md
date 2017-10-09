@@ -25,7 +25,7 @@ exit
 
 curl -i "http://$CLUSTER_DNS/demo/hello"
 
-ssh -i devops22.pem docker@$CLUSTER_IP
+ssh -i workshop.pem docker@$CLUSTER_IP
 ```
 
 
@@ -69,7 +69,7 @@ watch "curl -i 'http://$CLUSTER_DNS/demo/hello'"
 ---
 
 ```bash
-ssh -i devops22.pem docker@$CLUSTER_IP
+ssh -i workshop.pem docker@$CLUSTER_IP
 
 docker stack ps -f desired-state=running go-demo-2
 
