@@ -108,7 +108,7 @@ exit
 ---
 
 ```bash
-open https://goo.gl/PyAzAg
+open https://github.com/vfarcic/docker-flow-stacks/blob/master/util/git/Dockerfile
 
 ssh -i workshop.pem docker@$CLUSTER_IP
 
@@ -138,7 +138,7 @@ cat plugins.txt
 
 docker image build -t $DOCKER_HUB_USER/jenkins:workshop .
 
-docker login
+docker login -u $DOCKER_HUB_USER
 
 docker image push $DOCKER_HUB_USER/jenkins:workshop
 ```

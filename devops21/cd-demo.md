@@ -28,6 +28,8 @@ docker image push $DOCKER_HUB_USER/go-demo-2:beta-1
 ---
 
 ```bash
+cat stack-test.yml
+
 TAG=beta-1 SERVICE_PATH=/demo-beta-1 docker stack deploy \
     -c stack-test.yml go-demo-2-beta-1
 
@@ -42,7 +44,14 @@ docker image push $DOCKER_HUB_USER/go-demo-2-test
 
 docker container run --rm -e HOST_IP=$CLUSTER_DNS \
     -e SERVICE_PATH=/demo-beta-1 $DOCKER_HUB_USER/go-demo-2-test
+```
 
+
+## Running Functional Tests
+
+---
+
+```bash
 cat docker-compose.yml
 ```
 

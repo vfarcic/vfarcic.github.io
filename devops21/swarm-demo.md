@@ -210,4 +210,6 @@ docker stack ps -f desired-state=running go-demo-2
 docker service update --rollback go-demo-2_main
 
 docker stack ps -f desired-state=running go-demo-2
+
+cd ..
 ```

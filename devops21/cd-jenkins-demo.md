@@ -184,6 +184,19 @@ exit
 ```
 
 
+## Cleanup
+
+---
+
+```bash
+exit
+
+open "http://$CLUSTER_DNS/jenkins/job/go-demo-2"
+```
+
+* Click the *Delete Pipeline* button
+
+
 ## Building All Branches
 
 ---
@@ -199,3 +212,12 @@ open "http://$CLUSTER_DNS/jenkins/blue/pipelines"
 * Choose *New Pipeline*
 * Type *go-demo-2* as repository
 * Click the *Create Pipeline* button
+
+
+## Going Back
+
+---
+
+```bash
+ssh -i workshop.pem docker@$CLUSTER_IP
+```
