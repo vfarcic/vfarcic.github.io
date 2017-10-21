@@ -19,7 +19,7 @@ docker service create --name go-demo-2-db --network go-demo-2 mongo
 docker service ps go-demo-2-db
 
 docker service create --name go-demo-2 --env DB=go-demo-2-db \
-    --network go-demo-2 -p 1234:8080 $DOCKER_HUB_USER/go-demo-2
+    --network go-demo-2 -p 1234:8080 $DOCKER_HUB_USER/go-demo-2:beta
 
 docker service ps go-demo-2
 

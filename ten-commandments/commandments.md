@@ -160,5 +160,29 @@
 # The master is the only one that matters
 
 
+<!-- .slide: data-background="img/god.jpg" -->
+# He Commanded...
+
+### I. Thou Shalt Be Agile<!-- .element: class="fragment" -->
+### II. Thou Shalt Refactor<!-- .element: class="fragment" -->
+### III. Thou Shalt Educate Everyone<!-- .element: class="fragment" -->
+### IV. Thou Shalt Be Small<!-- .element: class="fragment" -->
+### V. Thou Shalt Practice TDD<!-- .element: class="fragment" -->
+### VI. Thou Shalt Define Your CD Pipeline As Code<!-- .element: class="fragment" -->
+
+
+<!-- .slide: data-background="img/god.jpg" -->
+# He Commanded...
+
+### VII. Thou Shalt Have a Fast Pipeline<!-- .element: class="fragment" -->
+### VIII. Thou Shalt Consider Fixing a Failed Pipeline As Highest Priority<!-- .element: class="fragment" -->
+### IX. Thou Shalt Run The CD Pipeline Locally<!-- .element: class="fragment" -->
+### X. Thou Shalt Commit Only To The Master Branch<!-- .element: class="fragment" -->
+
+
+<!-- .slide: data-background="img/hell.jpg" -->
+# Or...
+
+
 <!-- .slide: data-background="img/heaven-or-hell.jpg" -->
 # What Now?
