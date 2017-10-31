@@ -1,4 +1,4 @@
-## The Ten Commandments Of
+## Ten Commandments Of
 # Continuous Delivery
 
 ---
