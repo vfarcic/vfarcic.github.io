@@ -25,7 +25,7 @@ docker container ls
 ```
 
 
-## Running Containers
+## Problems
 
 ---
 
@@ -43,7 +43,7 @@ docker service create --name jenkins -p 8080:8080 jenkins:alpine
 
 docker service ps jenkins
 
-docker service logs -f jenkins
+docker service logs jenkins
 
 exit
 
@@ -53,6 +53,13 @@ ssh -i workshop.pem docker@$CLUSTER_IP
 
 docker service rm jenkins
 ```
+
+
+## Problems
+
+---
+
+* Undocumented
 
 
 ## Running Jenkins Stack
@@ -79,6 +86,13 @@ docker stack rm jenkins
 ```
 
 
+## Problems
+
+---
+
+* Ports Exposed
+
+
 ## Running Jenkins Through DFP
 
 ---
@@ -101,6 +115,13 @@ docker stack rm jenkins
 
 exit
 ```
+
+
+## Problems
+
+---
+
+* Not Fully Automated
 
 
 ## Git In A Container
@@ -181,6 +202,13 @@ docker stack ps jenkins
 
 docker stack rm jenkins
 ```
+
+
+## Problems
+
+---
+
+* State is not preserved
 
 
 ## Preserving State

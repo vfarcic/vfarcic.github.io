@@ -12,7 +12,7 @@
 ```bash
 ssh -i workshop.pem docker@$CLUSTER_IP
 
-DOCKER_HUB_USER=[...]
+source creds
 
 docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:1.0
 
@@ -80,15 +80,11 @@ docker image push $DOCKER_HUB_USER/go-demo-2:3.0
 ```bash
 exit
 
-open "https://goo.gl/Eo1fAH"
-
-echo $CLUSTER_DNS
+open "https://github.com/vfarcic/go-demo-2/blob/master/production_test.go"
 
 ssh -i workshop.pem docker@$CLUSTER_IP
 
-DOCKER_HUB_USER=[...]
-
-CLUSTER_DNS=[...]
+source creds
 
 docker service update --image $DOCKER_HUB_USER/go-demo-2:3.0 \
     go-demo-2_main

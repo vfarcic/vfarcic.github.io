@@ -12,13 +12,9 @@
 ```bash
 open "https://github.com/vfarcic/go-demo-2/blob/master/Jenkinsfile"
 
-echo $CLUSTER_DNS
-
 ssh -i workshop.pem docker@$CLUSTER_IP
 
-CLUSTER_DNS=[...]
-
-DOCKER_HUB_USER=[...]
+source creds
 
 echo "hostIp=$CLUSTER_DNS
 dockerHubUser=$DOCKER_HUB_USER
@@ -34,12 +30,14 @@ docker service update --secret-add cluster-info.properties \
 ---
 
 ```bash
+exit
+
 open "http://$CLUSTER_DNS/jenkins/blue/pipelines"
 ```
 
 * Click the *New Pipeline* button
 * Select *Git*
-* Type *https://github.com/vfarcic/go-demo-2.git* as *Repository URL*
+* Type *ssh://github.com/vfarcic/go-demo-2.git* as *Repository URL*
 * Click the *Save* button
 
 

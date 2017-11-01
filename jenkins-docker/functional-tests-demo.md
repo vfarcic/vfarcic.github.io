@@ -126,7 +126,7 @@ exit
 ---
 
 ```bash
-open "https://goo.gl/1gVzzd"
+open "https://github.com/vfarcic/docker-flow-stacks/blob/master/docker/compose/Dockerfile"
 
 echo $CLUSTER_DNS
 
@@ -136,9 +136,7 @@ cd go-demo-2
 
 cat docker-compose.yml
 
-CLUSTER_DNS=[...]
-
-export DOCKER_HUB_USER=[...]
+source ../creds
 ```
 
 

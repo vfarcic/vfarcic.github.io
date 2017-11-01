@@ -8,16 +8,6 @@ Note:
 shared-libraries-demo.sh
 
 
-## Shared Libraries Repository
-
-```bash
-open "https://goo.gl/UsDv3W"
-```
-
-* Click *vars*
-* Click *hello.groovy*
-
-
 ## Jenkins Shared Libraries
 
 ---
@@ -26,51 +16,13 @@ open "https://goo.gl/UsDv3W"
 open "http://$CLUSTER_DNS/jenkins/configure"
 ```
 
-* Click *Global Pipeline Libraries* > *Add*
-* Set *my-shared-library* as *Name*
-* Set *workshop* as *Default version*
-* Check *Load implicitly*
-* Check *Modern SCM*
-* Check *GitHub*
-* Set *vfarcic* as *Owner*
-* Set *jenkins-shared-libraries* as *Repository*
-* Click the *Save* button
-
-
-# Jenkins Pipeline
-
-```bash
-open "http://$CLUSTER_DNS/jenkins/newJob"
-```
-
-* Set *hello* as *Name*
-* Select *Pipeline* as type
-* Click *OK*
-
-```groovy
-node() {
-    hello "Viktor"
-}
-```
-
-* Click *Save*
-
-
-# Jenkins Pipeline
-
-```bash
-open "http://$CLUSTER_DNS/jenkins/blue/organizations/jenkins/hello/activity"
-```
-
-* Click *Run*
-* Click the latest build
-* Click *Print Message*
+* Navigate to *Global Pipeline Libraries*
 
 
 ## Shared Libraries Repository
 
 ```bash
-open "https://github.com/vfarcic/jenkins-shared-libraries/tree/workshop/vars"
+open "https://github.com/vfarcic/jenkins-shared-libraries/tree/master/vars"
 ```
 
 * Open dockerBuild.groovy
