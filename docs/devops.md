@@ -5,7 +5,7 @@ Note:
 Everyone talks about DevOps. Many are trying to implement it but only a few succeeded to truly harness its power. The reason is simple. DevOps is a huge change in the way we work. It is a cultural and technological shift. Even though DevOps is not the main focus of this workshop, we have to quickly go through it since DevOps processes are very closely related to Docker and containers in general.
 
 
-<!-- .slide: data-background="../img/background/monolith.png" -->
+<!-- .slide: data-background="../img/background/monolith.jpeg" -->
 # Changed everything
 
 ---
