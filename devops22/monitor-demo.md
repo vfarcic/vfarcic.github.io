@@ -5,22 +5,72 @@
 # Monitoring
 
 
+# Prometheus
+
+---
+
+```bash
+curl -o prometheus.yml \
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/prometheus.yml
+
+cat prometheus.yml
+
+docker stack deploy -c prometheus.yml monitor
+
+exit
+
+open "http://$CLUSTER_DNS:9090"
+
+open "http://$CLUSTER_DNS:9090/config"
+
+ssh -i workshop.pem docker@$CLUSTER_IP
+```
+
+
+<!-- .slide: data-background="img/prometheus-config-image.png" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="img/prometheus-config-direct.png" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="img/prometheus-config-network-drive.png" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="img/dfm-env-vars.png" data-background-size="contain" -->
+
+
 # DF Monitor
 
 ---
 
 ```bash
-cat stacks/docker-flow-monitor-proxy.yml
+curl -o docker-flow-monitor-proxy.yml \
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/docker-flow-monitor-proxy.yml
+
+cat docker-flow-monitor-proxy.yml
+
+docker stack rm monitor
 
 docker network create -d overlay monitor
 
-DOMAIN=$(docker-machine ip swarm-1) GLOBAL_SCRAPE_INTERVAL=1s \
-    docker stack deploy -c stacks/docker-flow-monitor-proxy.yml \
-    monitor
+source creds
 
-docker stack ps monitor
+DOMAIN=$CLUSTER_DNS docker stack deploy -c docker-flow-monitor-proxy.yml monitor
+```
 
-open "http://$(docker-machine ip swarm-1)/monitor"
+
+# DF Monitor
+
+---
+
+```bash
+exit
+
+open "http://$CLUSTER_DNS/monitor/config"
+
+open "http://$CLUSTER_DNS/monitor/flags"
+
+ssh -i workshop.pem docker@$CLUSTER_IP
 ```
 
 
@@ -29,25 +79,33 @@ open "http://$(docker-machine ip swarm-1)/monitor"
 ---
 
 ```bash
-cat stacks/exporters-mem.yml
+curl -o exporters.yml \
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/exporters.yml
 
-docker stack deploy -c stacks/exporters-mem.yml exporter
+cat exporters.yml
 
-docker stack ps exporter
+docker stack deploy -c exporters.yml exporter
 
-open "http://$(docker-machine ip swarm-1)/monitor/config"
+exit
 
-open "http://$(docker-machine ip swarm-1)/monitor/targets"
+open "http://$CLUSTER_DNS/monitor/config"
+
+open "http://$CLUSTER_DNS/monitor/targets"
+
+ssh -i workshop.pem docker@$CLUSTER_IP
 ```
 
 
-# Metrics
+<!-- .slide: data-background="img/exporters-diag.png" data-background-size="contain" -->
+
+
+# Exploring Metrics
 
 ---
 
 ```bash
-docker service create --name util --network monitor \
-    --mode global alpine sleep 100000000
+docker service create --name util --network monitor --mode global \
+    alpine sleep 100000000
 
 ID=$(docker container ls -q \
     -f "label=com.docker.swarm.service.name=util")
@@ -60,35 +118,98 @@ docker container exec -it $ID curl cadvisor:8080/metrics
 ```
 
 
-## Querying Metrics
+# Querying Metrics
 
 ---
 
 ```bash
-open "http://$(docker-machine ip swarm-1)/monitor/graph"
+curl -o go-demo.yml \
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/go-demo.yml
 
-# container_memory_usage_bytes{container_label_com_docker_swarm_service_name!=""}
+docker stack deploy -c go-demo.yml go-demo
 
-docker stack deploy -c stacks/go-demo.yml go-demo
+exit
 
-docker stack ps -f desired-state=running go-demo
+open "http://$CLUSTER_DNS/monitor/graph"
 
-open "http://$(docker-machine ip swarm-1)/monitor/graph"
+# Execute `haproxy_backend_connections_total`
 
-# sum by (instance) (node_memory_MemFree)
+for ((n=0;n<200;n++)); do
+    curl "http://$CLUSTER_DNS/demo/hello"
+done
 ```
 
 
-## Defining Service Resources
+# Querying Metrics
 
 ---
 
 ```bash
-cat stacks/go-demo.yml
+# Execute `haproxy_backend_connections_total`
 
-# container_memory_usage_bytes{container_label_com_docker_swarm_service_name="go-demo_main"}
+# Execute `container_memory_usage_bytes{container_label_com_docker_swarm_service_name="go-demo_main"}`
 
-cat stacks/go-demo-mem.yml
+# Execute `sum by (instance) (node_memory_MemFree)`
 
-docker stack deploy -c stacks/go-demo-mem.yml go-demo
+# Execute `container_memory_usage_bytes{container_label_com_docker_stack_namespace="exporter"}`
+
+ssh -i workshop.pem docker@$CLUSTER_IP
+```
+
+
+# Service Constraints
+
+---
+
+```bash
+curl -o exporters-mem.yml \
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/exporters-mem.yml
+
+cat exporters-mem.yml
+
+docker stack deploy -c exporters-mem.yml exporter
+
+# Execute `container_memory_usage_bytes{container_label_com_docker_stack_namespace="go-demo"}`
+
+curl -o go-demo-mem.yml \
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/go-demo-mem.yml
+
+cat go-demo-mem.yml
+
+docker stack deploy -c go-demo-mem.yml go-demo
+```
+
+
+# Service Constraints
+
+---
+
+```bash
+curl -o docker-flow-monitor-mem.yml \
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/docker-flow-monitor-mem.yml
+
+cat docker-flow-monitor-mem.yml
+
+source creds
+
+DOMAIN=$CLUSTER_DNS docker stack deploy \
+    -c docker-flow-monitor-mem.yml monitor
+
+curl -o go-demo-mem.yml \
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/go-demo-mem.yml
+
+cat docker-flow-proxy-mem.yml
+
+docker stack deploy -c docker-flow-proxy-mem.yml proxy
+```
+
+
+# Using Memory Reservations and Limits in Prometheus
+
+---
+
+```bash
+# Execute `container_spec_memory_limit_bytes{container_label_com_docker_stack_namespace!=""}`
+
+# Execute `container_memory_usage_bytes{container_label_com_docker_stack_namespace!=""} / container_spec_memory_limit_bytes{container_label_com_docker_stack_namespace!=""} * 100`
 ```
