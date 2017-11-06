@@ -37,7 +37,7 @@ open "http://$CLUSTER_DNS/jenkins/blue/pipelines"
 
 * Click the *New Pipeline* button
 * Select *Git*
-* Type *ssh://github.com/vfarcic/go-demo-2.git* as *Repository URL*
+* Type *https://github.com/vfarcic/go-demo-2.git* as *Repository URL*
 * Click the *Save* button
 
 
@@ -56,31 +56,6 @@ open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo-2-test/tags"
 
 open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo-2/tags"
 ```
-
-
-## Shared Library
-
----
-
-```bash
-open "https://goo.gl/GWneBx"
-```
-
-* Open *dockerBuild.groovy*
-* Open *dockerRelease.groovy*
-
-
-## Shared Library
-
----
-
-```
-open "http://$CLUSTER_DNS/jenkins/configure"
-```
-
-* Scroll to *Global Pipeline Libraries*
-* Set *workshop-mb* as *Default version*
-* Click the *Save* button
 
 
 ## Building All Branches
