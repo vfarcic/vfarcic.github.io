@@ -5,133 +5,183 @@
 # Alerting
 
 
-## Prometheus
+## Creating Alerts
 
 ---
 
 ```bash
-cat stacks/exporters-alert.yml
+docker service update --label-add com.df.alertName=mem \
+    --label-add com.df.alertIf='container_memory_usage_bytes{container_label_com_docker_swarm_service_name="go-demo_main"} > 20000000' \
+    go-demo_main
 
-docker stack deploy -c stacks/exporters-alert.yml exporter
+exit
 
-open "http://$(docker-machine ip swarm-1)/monitor/rules"
+open "http://$CLUSTER_DNS/monitor/config"
 
-open "http://$(docker-machine ip swarm-1)/monitor/alerts"
+open "http://$CLUSTER_DNS/monitor/rules"
+
+open "http://$CLUSTER_DNS/monitor/alerts"
+
+open "http://$CLUSTER_DNS/monitor/graph"
+
+# container_memory_usage_bytes{container_label_com_docker_swarm_service_name="go-demo_main"}
+```
+
+
+## Creating Alerts
+
+---
+
+```bash
+ssh -i workshop.pem docker@$CLUSTER_IP
+
+docker service update --label-add com.df.alertName=mem \
+    --label-add com.df.alertIf='container_memory_usage_bytes{container_label_com_docker_swarm_service_name="go-demo_main"} > 1000000' \
+    go-demo_main
+
+exit
+
+open "http://$CLUSTER_DNS/monitor/alerts"
+```
+
+
+<!-- .slide: data-background="img/alerts-fire-diag.png" data-background-size="contain" -->
+
+
+## Creating Alerts
+
+---
+
+```bash
+open "http://$CLUSTER_DNS/monitor/graph"
+
+# container_spec_memory_limit_bytes{container_label_com_docker_swarm_service_name="go-demo_main"}
+
+# container_memory_usage_bytes{container_label_com_docker_swarm_service_name="go-demo_main"}
+
+ssh -i workshop.pem docker@$CLUSTER_IP
+
+docker service update --label-add com.df.alertName=mem_limit \
+    --label-add com.df.alertIf='container_memory_usage_bytes{container_label_com_docker_swarm_service_name="go-demo"}/container_spec_memory_limit_bytes{container_label_com_docker_swarm_service_name="go-demo"} > 0.8' \
+    go-demo_main
+
+exit
+
+open "http://$CLUSTER_DNS/monitor/alerts"
+```
+
+
+## Creating Multiple Alerts
+
+---
+
+```bash
+ssh -i workshop.pem docker@$CLUSTER_IP
 
 docker service update \
-    --label-add "com.df.alertIf.1=@node_mem_limit:0.01" \
-    --label-add "com.df.alertFor.1=5s" \
+    --label-add com.df.alertName.1=mem_load \
+    --label-add com.df.alertIf.1='(sum by (instance) (node_memory_MemTotal) - sum by (instance) (node_memory_MemFree + node_memory_Buffers + node_memory_Cached)) / sum by (instance) (node_memory_MemTotal) > 0.8' \
+    --label-add com.df.alertName.2=diskload \
+    --label-add com.df.alertIf.2='(node_filesystem_size{fstype="aufs"} - node_filesystem_free{fstype="aufs"}) / node_filesystem_size{fstype="aufs"} > 0.8' \
     exporter_node-exporter
 
-open "http://$(docker-machine ip swarm-1)/monitor/alerts"
+exit
+
+open "http://$CLUSTER_DNS/monitor/alerts"
+
+ssh -i workshop.pem docker@$CLUSTER_IP
 ```
 
 
-## Prometheus
+<!-- .slide: data-background="img/alerts-exporters-fire-diag.png" data-background-size="contain" -->
+
+
+## Postponing Alerts Firing
+
+---
+
+```bash
+curl -o go-demo.yml \
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/go-demo-alert-long.yml
+
+cat go-demo.yml
+
+docker stack deploy -c go-demo.yml go-demo
+
+exit
+
+open "http://$CLUSTER_DNS/monitor/alerts"
+
+ssh -i workshop.pem docker@$CLUSTER_IP
+```
+
+
+## Postponing Alerts Firing
 
 ---
 
 ```bash
 docker service update \
-    --label-add "com.df.alertIf.1=@node_mem_limit:0.8" \
-    --label-add "com.df.alertFor.1=30s" \
-    exporter_node-exporter
-
-open "http://$(docker-machine ip swarm-1)/monitor/alerts"
-```
-
-
-## Prometheus
-
----
-
-```bash
-cat stacks/go-demo-scale.yml
-
-docker stack deploy -c stacks/go-demo-scale.yml go-demo
-
-open "http://$(docker-machine ip swarm-1)/monitor/alerts"
-
-docker service update \
-    --label-add "com.df.alertIf=@service_mem_limit:0.01" \
-    --label-add "com.df.alertFor=5s" \
+    --label-add com.df.alertIf='container_memory_usage_bytes{container_label_com_docker_swarm_service_name="go-demo_main"}/container_spec_memory_limit_bytes{container_label_com_docker_swarm_service_name="go-demo_main"} > 0.05' \
     go-demo_main
 
-open "http://$(docker-machine ip swarm-1)/monitor/alerts"
+exit
+
+open "http://$CLUSTER_DNS/monitor/alerts"
+
+ssh -i workshop.pem docker@$CLUSTER_IP
 ```
 
 
-## Prometheus
+## Alert Labels And Annotations
 
 ---
 
 ```bash
-docker service update \
-    --label-add "com.df.alertIf=@service_mem_limit:0.8" \
-    --label-add "com.df.alertFor=30s" \
-    go-demo_main
+curl -o go-demo.yml \
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/go-demo-alert-info.yml
 
-open "http://$(docker-machine ip swarm-1)/monitor/alerts"
+cat go-demo.yml
+
+docker stack deploy -c go-demo.yml go-demo
+
+exit
+
+open "http://$CLUSTER_DNS/monitor/alerts"
+
+ssh -i workshop.pem docker@$CLUSTER_IP
 ```
 
 
-## Alertmanager
+## Using Shortcuts
 
 ---
 
 ```bash
-cat stacks/docker-flow-monitor-slack.yml
+curl -o go-demo.yml \
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/go-demo-alert.yml
 
-echo "route:
-  group_by: [service]
-  receiver: 'slack'
-  repeat_interval: 1h
+cat go-demo.yml
 
-receivers:
-  - name: 'slack'
-    slack_configs:
-      - send_resolved: true
-        title: '{{ .GroupLabels.service }} service is in danger!'
-        title_link: 'http://$(docker-machine ip swarm-1)/monitor/alerts'
-        text: '{{ .CommonAnnotations.summary}}'
-        api_url: 'https://hooks.slack.com/services/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'
-" | docker secret create alert_manager_config -
+docker stack deploy -c go-demo.yml go-demo
+
+curl -o exporters.yml \
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/exporters-alert.yml
+
+cat go-demo.yml
+
+docker stack deploy -c exporters.yml exporter
 ```
 
 
-## Alertmanager
+## Using Shortcuts
 
 ---
 
 ```bash
-DOMAIN=$(docker-machine ip swarm-1) GLOBAL_SCRAPE_INTERVAL=1s \
-    docker stack deploy -c stacks/docker-flow-monitor-slack.yml \
-    monitor
+exit
 
-open "http://$(docker-machine ip swarm-1)/monitor/flags"
+open "http://$CLUSTER_DNS/monitor/alerts"
 
-docker stack ps monitor
-
-docker service update \
-    --label-add "com.df.alertIf=@service_mem_limit:0.01" \
-    --label-add "com.df.alertFor=5s" \
-    go-demo_main
-
-open "http://$(docker-machine ip swarm-1)/monitor/alerts"
-```
-
-
-## Alertmanager
-
----
-
-```bash
-open "http://slack.devops20toolkit.com/"
-
-open "https://devops20.slack.com/messages/C59EWRE2K/"
-
-docker service update \
-    --label-add "com.df.alertIf=@service_mem_limit:0.8" \
-    --label-add "com.df.alertFor=30s" \
-    go-demo_main
+ssh -i workshop.pem docker@$CLUSTER_IP
 ```
