@@ -1,24 +1,24 @@
-# Self-Adapting Services
+# Self-Adapting Infra
 
 
-### Self-Adapting Services
+### Self-Adapting Infra
 
 # Requirements
 
 ---
 
 * Scalable
-* Small
 * React to changed conditions
 * Fully autonomous
 
 
-### Self-Adapting Services
+### Self-Adapting Infra
 
 # The Choice
 
 ---
 
+## Docker For AWS
 ## Prometheus
 ## Alertmanager
 ## Jenkins
