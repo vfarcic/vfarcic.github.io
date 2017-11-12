@@ -31,3 +31,6 @@
 
 
 <!-- .slide: data-background="img/self-sufficient-system-08.png" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="img/self-sufficient-system-09.png" data-background-size="contain" -->

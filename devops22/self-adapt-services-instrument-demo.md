@@ -10,17 +10,18 @@
 ---
 
 ```bash
-cat stacks/go-demo-instrument.yml
+curl -o go-demo.yml \
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/go-demo-instrument.yml
 
-docker stack deploy -c stacks/go-demo-instrument.yml go-demo
+cat stacks/go-demo.yml
 
-open "http://$(docker-machine ip $NODE)/monitor/config"
+docker stack deploy -c go-demo.yml go-demo
 
-open "http://$(docker-machine ip $NODE)/monitor/targets"
+exit
 
-open "http://$(docker-machine ip $NODE)/monitor/graph"
+open "http://$CLUSTER_DNS/monitor/config"
 
-# http_server_resp_time_sum / http_server_resp_time_count
+open "http://$CLUSTER_DNS/monitor/targets"
 ```
 
 
@@ -29,9 +30,13 @@ open "http://$(docker-machine ip $NODE)/monitor/graph"
 ---
 
 ```bash
+open "http://$CLUSTER_DNS/monitor/graph"
+
+# http_server_resp_time_sum / http_server_resp_time_count
+
 for i in {1..30}; do
     DELAY=$[ $RANDOM % 6000 ]
-    curl "http://$(docker-machine ip $NODE)/demo/hello?delay=$DELAY"
+    curl "http://$CLUSTER_DNS/demo/hello?delay=$DELAY"
 done
 
 # rate(http_server_resp_time_sum[5m]) / rate(http_server_resp_time_count[5m])
@@ -50,7 +55,7 @@ done
 
 ```bash
 for i in {1..100}; do
-    curl "http://$(docker-machine ip $NODE)/demo/random-error"
+    curl "http://$CLUSTER_DNS/demo/random-error"
 done
 
 # sum(rate(http_server_resp_time_count{code=~"^5..$"}[5m])) by (job)
@@ -100,7 +105,7 @@ receivers:
 ---
 
 ```bash
-DOMAIN=$(docker-machine ip $NODE) docker stack deploy \
+DOMAIN=$CLUSTER_DNS docker stack deploy \
     -c stacks/docker-flow-monitor-slack.yml monitor
 
 docker stack ps -f desired-state=running monitor
@@ -109,7 +114,7 @@ cat stacks/go-demo-instrument-alert.yml
 
 docker stack deploy -c stacks/go-demo-instrument-alert.yml go-demo
 
-open "http://$(docker-machine ip $NODE)/monitor/alerts"
+open "http://$CLUSTER_DNS/monitor/alerts"
 ```
 
 
@@ -120,12 +125,12 @@ open "http://$(docker-machine ip $NODE)/monitor/alerts"
 ```bash
 for i in {1..30}; do
     DELAY=$[ $RANDOM % 6000 ]
-    curl "http://$(docker-machine ip $NODE)/demo/hello?delay=$DELAY"
+    curl "http://$CLUSTER_DNS/demo/hello?delay=$DELAY"
 done
 
-open "http://$(docker-machine ip $NODE)/monitor/alerts"
+open "http://$CLUSTER_DNS/monitor/alerts"
 
-open "http://$(docker-machine ip $NODE)/jenkins/blue/organizations/jenkins/service-scale/activity"
+open "http://$CLUSTER_DNS/jenkins/blue/organizations/jenkins/service-scale/activity"
 
 docker stack ps -f desired-state=running go-demo
 ```
@@ -180,7 +185,7 @@ receivers:
 ---
 
 ```bash
-DOMAIN=$(docker-machine ip $NODE) docker stack deploy \
+DOMAIN=$CLUSTER_DNS docker stack deploy \
     -c stacks/docker-flow-monitor-slack.yml monitor
 
 cat stacks/go-demo-instrument-alert-short.yml
@@ -188,9 +193,9 @@ cat stacks/go-demo-instrument-alert-short.yml
 docker stack deploy -c stacks/go-demo-instrument-alert-short.yml \
     go-demo
 
-open "http://$(docker-machine ip $NODE)/monitor/alerts"
+open "http://$CLUSTER_DNS/monitor/alerts"
 
-open "http://$(docker-machine ip $NODE)/jenkins/blue/organizations/jenkins/service-scale/activity"
+open "http://$CLUSTER_DNS/jenkins/blue/organizations/jenkins/service-scale/activity"
 
 docker stack ps -f desired-state=running go-demo
 ```
@@ -206,13 +211,13 @@ cat stacks/go-demo-instrument-alert-short-2.yml
 docker stack deploy -c stacks/go-demo-instrument-alert-short-2.yml \
     go-demo
 
-open "http://$(docker-machine ip $NODE)/monitor/alerts"
+open "http://$CLUSTER_DNS/monitor/alerts"
 
 for i in {1..100}; do
-    curl "http://$(docker-machine ip $NODE)/demo/random-error"
+    curl "http://$CLUSTER_DNS/demo/random-error"
 done
 
-open "http://$(docker-machine ip $NODE)/monitor/alerts"
+open "http://$CLUSTER_DNS/monitor/alerts"
 
 open "https://devops20.slack.com/messages/C59EWRE2K/"
 ```
