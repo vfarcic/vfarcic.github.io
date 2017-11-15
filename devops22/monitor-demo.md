@@ -44,10 +44,10 @@ ssh -i workshop.pem docker@$CLUSTER_IP
 ---
 
 ```bash
-curl -o docker-flow-monitor-proxy.yml \
+curl -o monitor.yml \
     https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/docker-flow-monitor-proxy.yml
 
-cat docker-flow-monitor-proxy.yml
+cat monitor.yml
 
 docker stack rm monitor
 
@@ -55,7 +55,7 @@ docker network create -d overlay monitor
 
 source creds
 
-DOMAIN=$CLUSTER_DNS docker stack deploy -c docker-flow-monitor-proxy.yml monitor
+DOMAIN=$CLUSTER_DNS docker stack deploy -c monitor.yml monitor
 ```
 
 
@@ -162,21 +162,21 @@ ssh -i workshop.pem docker@$CLUSTER_IP
 ---
 
 ```bash
-curl -o exporters-mem.yml \
+curl -o exporters.yml \
     https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/exporters-mem.yml
 
-cat exporters-mem.yml
+cat exporters.yml
 
-docker stack deploy -c exporters-mem.yml exporter
+docker stack deploy -c exporters.yml exporter
 
 # Execute `container_memory_usage_bytes{container_label_com_docker_stack_namespace="go-demo"}`
 
-curl -o go-demo-mem.yml \
+curl -o go-demo.yml \
     https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/go-demo-mem.yml
 
-cat go-demo-mem.yml
+cat go-demo.yml
 
-docker stack deploy -c go-demo-mem.yml go-demo
+docker stack deploy -c go-demo.yml go-demo
 ```
 
 
@@ -185,22 +185,21 @@ docker stack deploy -c go-demo-mem.yml go-demo
 ---
 
 ```bash
-curl -o docker-flow-monitor-mem.yml \
+curl -o monitor.yml \
     https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/docker-flow-monitor-mem.yml
 
-cat docker-flow-monitor-mem.yml
+cat monitor.yml
 
 source creds
 
-DOMAIN=$CLUSTER_DNS docker stack deploy \
-    -c docker-flow-monitor-mem.yml monitor
+DOMAIN=$CLUSTER_DNS docker stack deploy -c monitor.yml monitor
 
-curl -o go-demo-mem.yml \
-    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/go-demo-mem.yml
+curl -o proxy.yml \
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/docker-flow-proxy-mem.yml
 
-cat docker-flow-proxy-mem.yml
+cat proxy.yml
 
-docker stack deploy -c docker-flow-proxy-mem.yml proxy
+docker stack deploy -c proxy.yml proxy
 ```
 
 
