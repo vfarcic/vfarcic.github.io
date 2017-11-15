@@ -168,7 +168,7 @@ docker stack deploy -c go-demo.yml go-demo
 curl -o exporters.yml \
     https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/exporters-alert.yml
 
-cat go-demo.yml
+cat exporters.yml
 
 docker stack deploy -c exporters.yml exporter
 ```

@@ -36,7 +36,7 @@ while [[ "$STATUS" != "CREATE_COMPLETE" ]]; do
 
     echo "Waiting for the cluster..."
 
-    sleep 5
+    sleep 10
 
     STATUS=$(aws cloudformation describe-stacks --stack-name devops22 | \
         jq -r ".Stacks[0].StackStatus")
@@ -211,8 +211,6 @@ docker stack deploy -c proxy.yml proxy
 # alert-demo.md #
 #################
 
-# TODO: Continue
-
 docker service update --label-add com.df.alertName=mem \
     --label-add com.df.alertIf='container_memory_usage_bytes{container_label_com_docker_swarm_service_name="go-demo_main"} > 20000000' \
     go-demo_main
@@ -316,7 +314,7 @@ docker stack deploy -c go-demo.yml go-demo
 curl -o exporters.yml \
     https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/exporters-alert.yml
 
-cat go-demo.yml
+cat exporters.yml
 
 docker stack deploy -c exporters.yml exporter
 
@@ -329,6 +327,8 @@ ssh -i workshop.pem docker@$CLUSTER_IP
 ########################
 # alert-humans-demo.md #
 ########################
+
+# TODO: Continue
 
 echo 'route:
   receiver: "slack"
@@ -445,8 +445,6 @@ docker container exec -it $CONTAINER_ID pkill go-demo
 docker stack ps -f desired-state=Running go-demo
 
 docker stack ps go-demo
-
-# TODO
 
 ###############################
 # self-adapt-services-demo.md #
