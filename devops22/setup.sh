@@ -5,6 +5,8 @@ export CLUSTER_IP=[...]
 export DOCKER_HUB_USER=[...]
 ">creds
 
+source creds
+
 curl -o visualizer.yml https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/web/docker-visualizer.yml
 
 HTTP_PORT=8083 docker stack deploy -c visualizer.yml visualizer
@@ -17,13 +19,32 @@ docker network create -d overlay proxy
 docker stack deploy -c proxy.yml proxy
 
 curl -o monitor.yml \
-    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/docker-flow-monitor-mem.yml
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/docker-flow-monitor-slack-9093.yml
 
-docker stack rm monitor
+echo "route:
+  group_by: [service]
+  repeat_interval: 1h
+  receiver: 'slack'
+  routes:
+  - match:
+      service: 'go-demo_main'
+    receiver: 'jenkins-go-demo_main'
+
+receivers:
+  - name: 'slack'
+    slack_configs:
+      - send_resolved: true
+        title: '[{{ .Status | toUpper }}] {{ .GroupLabels.service }} service is in danger!'
+        title_link: 'http://$CLUSTER_DNS/monitor/alerts'
+        text: '{{ .CommonAnnotations.summary}}'
+        api_url: 'https://hooks.slack.com/services/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'
+  - name: 'jenkins-go-demo_main'
+    webhook_configs:
+      - send_resolved: false
+        url: 'http://$CLUSTER_DNS/jenkins/job/service-scale/buildWithParameters?token=DevOps22&service=go-demo_main&scale=1'
+" | docker secret create alert_manager_config -
 
 docker network create -d overlay monitor
-
-source creds
 
 DOMAIN=$CLUSTER_DNS docker stack deploy -c monitor.yml monitor
 
@@ -33,6 +54,18 @@ curl -o exporters.yml \
 docker stack deploy -c exporters.yml exporter
 
 curl -o go-demo.yml \
-    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/go-demo-alert.yml
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/go-demo-scale.yml
 
 docker stack deploy -c go-demo.yml go-demo
+
+curl -o jenkins.yml \
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/jenkins.yml
+
+echo "admin" | docker secret create jenkins-user -
+
+echo "admin" | docker secret create jenkins-pass -
+
+export SLACK_IP=$(ping -c 1 devops20.slack.com \
+    | awk -F'[()]' '/PING/{print $2}')
+
+docker stack deploy -c jenkins.yml jenkins

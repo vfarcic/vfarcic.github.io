@@ -36,11 +36,13 @@ cat alert-manager.yml
 
 docker stack deploy -c alert-manager.yml alert-manager
 
-source creds
+exit
 
 curl -H "Content-Type: application/json" \
     -d '[{"labels":{"alertname":"My Fancy Alert"}}]' \
-    $CLUSTER_IP:9093/api/v1/alerts
+    $CLUSTER_DNS:9093/api/v1/alerts
+
+ssh -i workshop.pem docker@$CLUSTER_IP
 
 docker stack rm alert-manager
 ```
@@ -55,6 +57,8 @@ curl -o monitor.yml \
     https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/docker-flow-monitor-slack.yml
 
 cat monitor.yml
+
+source creds
 
 DOMAIN=$CLUSTER_DNS docker stack deploy -c monitor.yml monitor
 
@@ -134,11 +138,6 @@ receivers:
 ---
 
 ```bash
-curl -o monitor.yml \
-    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/docker-flow-monitor-slack.yml
-
-cat monitor.yml
-
 DOMAIN=$CLUSTER_DNS docker stack deploy -c monitor.yml monitor
 
 docker service update \
@@ -149,14 +148,7 @@ exit
 open "http://$CLUSTER_DNS/monitor/alerts"
 
 ssh -i workshop.pem docker@$CLUSTER_IP
-```
 
-
-## Alertmanager Templates
-
----
-
-```bash
 docker service update \
     --label-add com.df.alertIf=@service_mem_limit:0.8 \
     go-demo_main
