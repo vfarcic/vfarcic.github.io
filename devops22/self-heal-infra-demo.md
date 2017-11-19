@@ -10,8 +10,7 @@
 ---
 
 ```bash
-docker service create --name test \
-    --replicas 10 alpine sleep 1000000
+docker service create --name test --replicas 10 alpine sleep 1000000
 
 docker service ps test
 
@@ -41,7 +40,7 @@ CLUSTER_IP=$(aws ec2 describe-instances \
     | contains(\"devops22-ManagerVpcSG\")).PublicIpAddress" \
     | tail -n 1)
 
-ssh -i devops22.pem docker@$CLUSTER_IP
+ssh -i workshop.pem docker@$CLUSTER_IP
 
 docker node ls
 

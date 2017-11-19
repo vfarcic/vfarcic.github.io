@@ -13,7 +13,7 @@
 curl -o go-demo.yml \
     https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/go-demo-instrument.yml
 
-cat stacks/go-demo.yml
+cat go-demo.yml
 
 docker stack deploy -c go-demo.yml go-demo
 
@@ -61,6 +61,10 @@ done
 # sum(rate(http_server_resp_time_count{code=~"^5..$"}[5m])) by (job)
 
 # sum(rate(http_server_resp_time_count{code=~"^5..$"}[5m])) by (job) / sum(rate(http_server_resp_time_count[5m])) by (job)
+
+ssh -i workshop.pem docker@$CLUSTER_IP
+
+source creds
 ```
 
 
@@ -89,13 +93,13 @@ receivers:
     slack_configs:
       - send_resolved: true
         title: '[{{ .Status | toUpper }}] {{ .GroupLabels.service }} service is in danger!'
-        title_link: 'http://$(docker-machine ip swarm-1)/monitor/alerts'
+        title_link: 'http://$CLUSTER_DNS/monitor/alerts'
         text: '{{ .CommonAnnotations.summary}}'
         api_url: 'https://hooks.slack.com/services/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'
   - name: 'jenkins-go-demo_main-up'
     webhook_configs:
       - send_resolved: false
-        url: 'http://$(docker-machine ip swarm-1)/jenkins/job/service-scale/buildWithParameters?token=DevOps22&service=go-demo_main&scale=1'
+        url: 'http://$CLUSTER_DNS/jenkins/job/service-scale/buildWithParameters?token=DevOps22&service=go-demo_main&scale=1'
 " | docker secret create alert_manager_config -
 ```
 
@@ -105,14 +109,18 @@ receivers:
 ---
 
 ```bash
-DOMAIN=$CLUSTER_DNS docker stack deploy \
-    -c stacks/docker-flow-monitor-slack.yml monitor
+DOMAIN=$CLUSTER_DNS docker stack deploy -c monitor.yml monitor
 
 docker stack ps -f desired-state=running monitor
 
-cat stacks/go-demo-instrument-alert.yml
+curl -o go-demo.yml \
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/go-demo-instrument-alert.yml
 
-docker stack deploy -c stacks/go-demo-instrument-alert.yml go-demo
+cat go-demo.yml
+
+docker stack deploy -c go-demo.yml go-demo
+
+exit
 
 open "http://$CLUSTER_DNS/monitor/alerts"
 ```
@@ -131,6 +139,10 @@ done
 open "http://$CLUSTER_DNS/monitor/alerts"
 
 open "http://$CLUSTER_DNS/jenkins/blue/organizations/jenkins/service-scale/activity"
+
+ssh -i workshop.pem docker@$CLUSTER_IP
+
+source creds
 
 docker stack ps -f desired-state=running go-demo
 ```
@@ -165,17 +177,17 @@ receivers:
     slack_configs:
       - send_resolved: true
         title: '[{{ .Status | toUpper }}] {{ .GroupLabels.service }} service is in danger!'
-        title_link: 'http://$(docker-machine ip swarm-1)/monitor/alerts'
+        title_link: 'http://$CLUSTER_DNS/monitor/alerts'
         text: '{{ .CommonAnnotations.summary}}'
         api_url: 'https://hooks.slack.com/services/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'
   - name: 'jenkins-go-demo_main-up'
     webhook_configs:
       - send_resolved: false
-        url: 'http://$(docker-machine ip swarm-1)/jenkins/job/service-scale/buildWithParameters?token=DevOps22&service=go-demo_main&scale=1'
+        url: 'http://$CLUSTER_DNS/jenkins/job/service-scale/buildWithParameters?token=DevOps22&service=go-demo_main&scale=1'
   - name: 'jenkins-go-demo_main-down'
     webhook_configs:
       - send_resolved: false
-        url: 'http://$(docker-machine ip swarm-1)/jenkins/job/service-scale/buildWithParameters?token=DevOps22&service=go-demo_main&scale=-1'
+        url: 'http://$CLUSTER_DNS/jenkins/job/service-scale/buildWithParameters?token=DevOps22&service=go-demo_main&scale=-1'
 " | docker secret create alert_manager_config -
 ```
 
@@ -185,17 +197,29 @@ receivers:
 ---
 
 ```bash
-DOMAIN=$CLUSTER_DNS docker stack deploy \
-    -c stacks/docker-flow-monitor-slack.yml monitor
+DOMAIN=$CLUSTER_DNS docker stack deploy -c monitor.yml monitor
 
-cat stacks/go-demo-instrument-alert-short.yml
+curl -o go-demo.yml \
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/go-demo-instrument-alert-short.yml
 
-docker stack deploy -c stacks/go-demo-instrument-alert-short.yml \
-    go-demo
+cat go-demo.yml
+
+docker stack deploy -c go-demo.yml go-demo
+
+exit
 
 open "http://$CLUSTER_DNS/monitor/alerts"
 
 open "http://$CLUSTER_DNS/jenkins/blue/organizations/jenkins/service-scale/activity"
+```
+
+
+## Scaling Down
+
+---
+
+```bash
+ssh -i workshop.pem docker@$CLUSTER_IP
 
 docker stack ps -f desired-state=running go-demo
 ```
@@ -206,18 +230,31 @@ docker stack ps -f desired-state=running go-demo
 ---
 
 ```bash
-cat stacks/go-demo-instrument-alert-short-2.yml
+curl -o go-demo.yml \
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/go-demo-instrument-alert-short-2.yml
 
-docker stack deploy -c stacks/go-demo-instrument-alert-short-2.yml \
-    go-demo
+cat go-demo.yml
+
+docker stack deploy -c go-demo.yml go-demo
+
+exit
 
 open "http://$CLUSTER_DNS/monitor/alerts"
 
 for i in {1..100}; do
     curl "http://$CLUSTER_DNS/demo/random-error"
 done
+```
 
+
+## Error Notifications
+
+---
+
+```bash
 open "http://$CLUSTER_DNS/monitor/alerts"
 
 open "https://devops20.slack.com/messages/C59EWRE2K/"
+
+ssh -i workshop.pem docker@$CLUSTER_IP
 ```

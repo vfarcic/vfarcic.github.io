@@ -22,13 +22,19 @@ curl -o monitor.yml \
     https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/docker-flow-monitor-slack-9093.yml
 
 echo "route:
-  group_by: [service]
-  repeat_interval: 1h
+  group_by: [service,scale]
+  repeat_interval: 5m
+  group_interval: 5m
   receiver: 'slack'
   routes:
   - match:
       service: 'go-demo_main'
-    receiver: 'jenkins-go-demo_main'
+      scale: 'up'
+    receiver: 'jenkins-go-demo_main-up'
+  - match:
+      service: 'go-demo_main'
+      scale: 'down'
+    receiver: 'jenkins-go-demo_main-down'
 
 receivers:
   - name: 'slack'
@@ -38,10 +44,14 @@ receivers:
         title_link: 'http://$CLUSTER_DNS/monitor/alerts'
         text: '{{ .CommonAnnotations.summary}}'
         api_url: 'https://hooks.slack.com/services/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'
-  - name: 'jenkins-go-demo_main'
+  - name: 'jenkins-go-demo_main-up'
     webhook_configs:
       - send_resolved: false
         url: 'http://$CLUSTER_DNS/jenkins/job/service-scale/buildWithParameters?token=DevOps22&service=go-demo_main&scale=1'
+  - name: 'jenkins-go-demo_main-down'
+    webhook_configs:
+      - send_resolved: false
+        url: 'http://$CLUSTER_DNS/jenkins/job/service-scale/buildWithParameters?token=DevOps22&service=go-demo_main&scale=-1'
 " | docker secret create alert_manager_config -
 
 docker network create -d overlay monitor
@@ -54,7 +64,7 @@ curl -o exporters.yml \
 docker stack deploy -c exporters.yml exporter
 
 curl -o go-demo.yml \
-    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/go-demo-scale.yml
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/go-demo-instrument-alert-short-2.yml
 
 docker stack deploy -c go-demo.yml go-demo
 

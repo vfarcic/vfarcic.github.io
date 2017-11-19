@@ -90,7 +90,7 @@ docker service rm go-demo_main
 docker container exec -it $ID \
     curl "http://swarm-listener:8080/metrics"
 
-docker stack deploy -c stacks/go-demo-scale.yml go-demo
+docker stack deploy -c go-demo.yml go-demo
 ```
 
 

@@ -17,12 +17,12 @@ aws autoscaling describe-auto-scaling-groups | jq "."
 aws autoscaling describe-auto-scaling-groups \
     | jq -r ".AutoScalingGroups[] \
     | select(.AutoScalingGroupName \
-    | startswith(\"$STACK_NAME-NodeAsg-\")).AutoScalingGroupName"
+    | startswith(\"devops22-NodeAsg-\")).AutoScalingGroupName"
 
 aws autoscaling describe-auto-scaling-groups \
     | jq -r ".AutoScalingGroups[] \
     | select(.AutoScalingGroupName \
-    | startswith(\"$STACK_NAME-NodeAsg-\")).DesiredCapacity"
+    | startswith(\"devops22-NodeAsg-\")).DesiredCapacity"
 ```
 
 
@@ -34,7 +34,7 @@ aws autoscaling describe-auto-scaling-groups \
 ASG_NAME=$(aws autoscaling describe-auto-scaling-groups \
     | jq -r ".AutoScalingGroups[] \
     | select(.AutoScalingGroupName \
-    | startswith(\"$STACK_NAME-NodeAsg-\")).AutoScalingGroupName")
+    | startswith(\"devops22-NodeAsg-\")).AutoScalingGroupName")
 
 aws autoscaling update-auto-scaling-group \
     --auto-scaling-group-name $ASG_NAME --desired-capacity 1
@@ -52,12 +52,12 @@ aws autoscaling describe-auto-scaling-groups \
 ```bash
 aws ec2 describe-instances | jq -r ".Reservations[].Instances[] \
     | select(.SecurityGroups[].GroupName \
-    | startswith(\"$STACK_NAME-NodeVpcSG\")).InstanceId"
+    | startswith(\"devops22-NodeVpcSG\")).InstanceId"
 
 INSTANCE_ID=$(aws ec2 describe-instances | jq -r \
     ".Reservations[].Instances[] \
     | select(.SecurityGroups[].GroupName \
-    | startswith(\"$STACK_NAME-NodeVpcSG\")).InstanceId")
+    | startswith(\"devops22-NodeVpcSG\")).InstanceId")
 
 aws ec2 describe-instance-status --instance-ids $INSTANCE_ID \
     | jq -r ".InstanceStatuses[0].InstanceStatus.Status"
