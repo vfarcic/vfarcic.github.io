@@ -1,0 +1,1 @@
+Q: pros and cons of young/new and older DevOps specialists and what they bring to companies, looking at their skills and any potential knowledge gap

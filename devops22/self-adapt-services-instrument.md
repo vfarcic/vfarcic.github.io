@@ -1,7 +1,7 @@
-# Self-Adaptating Instrumented Services
+# Self-Adapting Instrumented Services
 
 
-### Self-Adaptating Instrumented Services
+### Self-Adapting Instrumented Services
 
 # Requirements
 
@@ -11,7 +11,7 @@
 * Tailor-made alerts
 
 
-### Self-Adaptating Instrumented Services
+### Self-Adapting Instrumented Services
 
 # The Choice
 

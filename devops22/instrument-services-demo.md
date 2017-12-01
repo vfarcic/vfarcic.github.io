@@ -44,7 +44,7 @@ docker service logs proxy_swarm-listener
 docker container exec -it $ID \
     curl "http://swarm-listener:8080/metrics"
 
-docker stack deploy -c stacks/docker-flow-proxy-mem.yml proxy
+docker stack deploy -c proxy.yml proxy
 ```
 
 

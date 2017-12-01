@@ -88,7 +88,7 @@
 # Thou Shalt Define Your CD Pipeline As Code
 
 
-<!-- .slide: data-background="img/pipeline.jpg" -->
+<!-- .slide: data-background="../img/background/pipeline.jpg" -->
 ## Thou Shalt Define Your CD Pipeline As Code
 
 ---

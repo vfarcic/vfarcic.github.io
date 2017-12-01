@@ -1,0 +1,63 @@
+version: "3.1"
+
+services:
+
+  monitor:
+    image: vfarcic/docker-flow-monitor
+    environment:
+      - LISTENER_ADDRESS=swarm-listener
+      - GLOBAL_SCRAPE_INTERVAL=${SCRAPE_INTERVAL:-10s}
+      - ARG_WEB_ROUTE-PREFIX=/monitor
+      - ARG_WEB_EXTERNAL-URL=http://${DOMAIN:-localhost}/monitor
+      - ARG_ALERTMANAGER_URL=http://alert-manager:9093
+    networks:
+      - proxy
+      - monitor
+    deploy:
+      labels:
+        - com.df.notify=true
+        - com.df.distribute=true
+        - com.df.servicePath=/monitor
+        - com.df.serviceDomain=${DOMAIN:-localhost}
+        - com.df.port=9090
+      resources:
+        reservations:
+          memory: 500M
+        limits:
+          memory: 800M
+
+  alert-manager:
+    image: prom/alertmanager
+    networks:
+      - monitor
+    secrets:
+      - alert_manager_config
+    command: -config.file=/run/secrets/alert_manager_config -storage.path=/alertmanager
+
+  swarm-listener:
+    image: vfarcic/docker-flow-swarm-listener
+    networks:
+      - monitor
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - DF_NOTIFY_CREATE_SERVICE_URL=http://monitor:8080/v1/docker-flow-monitor/reconfigure
+      - DF_NOTIFY_REMOVE_SERVICE_URL=http://monitor:8080/v1/docker-flow-monitor/remove
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+      resources:
+        reservations:
+          memory: 5M
+        limits:
+          memory: 10M
+
+networks:
+  monitor:
+    external: true
+  proxy:
+    external: true
+
+secrets:
+  alert_manager_config:
+    external: true

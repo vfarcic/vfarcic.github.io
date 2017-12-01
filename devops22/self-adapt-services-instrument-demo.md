@@ -2,7 +2,7 @@
 
 ---
 
-# Self-Adaptating Instrumented Services
+# Self-Adapting Instrumented Services
 
 
 ## Querying Response Time
