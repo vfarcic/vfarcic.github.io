@@ -28,15 +28,3 @@ docker stack ps go-demo
 
 
 <!-- .slide: data-background="img/swarm-services-failure.png" data-background-size="contain" -->
-
-
-# Node Failure
-
----
-
-```bash
-TODO
-```
-
-
-<!-- .slide: data-background="img/swarm-services-failure-node.png" data-background-size="contain" -->
