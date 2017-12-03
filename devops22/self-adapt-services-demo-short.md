@@ -5,17 +5,83 @@
 # Self-Adapting Services
 
 
+## Alertmanager
+
+---
+
+```bash
+docker service scale go-demo_main=3
+
+docker stack rm monitor
+
+docker secret rm alert_manager_config
+
+source creds
+```
+
+
+## Alertmanager
+
+---
+
+```bash
+echo "route:
+  group_by: [service,scale,type]
+  repeat_interval: 30m
+  group_interval: 30m
+  receiver: 'slack'
+  routes:
+  - match:
+      type: 'node'
+      scale: 'up'
+    receiver: 'jenkins-node-up'
+  - match:
+      type: 'node'
+      scale: 'down'
+    receiver: 'jenkins-node-down'
+  - match:
+      service: 'go-demo_main'
+      scale: 'up'
+    receiver: 'jenkins-go-demo_main-up'
+  - match:
+      service: 'go-demo_main'
+      scale: 'down'
+    receiver: 'jenkins-go-demo_main-down'
+
+receivers:
+  - name: 'slack'
+    slack_configs:
+      - send_resolved: true
+        title: '[{{ .Status | toUpper }}] {{ .GroupLabels.service }} service is in danger!'
+        title_link: 'http://$CLUSTER_DNS/monitor/alerts'
+        text: '{{ .CommonAnnotations.summary}}'
+        api_url: 'https://hooks.slack.com/services/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'
+  - name: 'jenkins-go-demo_main-up'
+    webhook_configs:
+      - send_resolved: false
+        url: 'http://$CLUSTER_DNS/jenkins/job/service-scale/buildWithParameters?token=DevOps22&service=go-demo_main&scale=1'
+  - name: 'jenkins-go-demo_main-down'
+    webhook_configs:
+      - send_resolved: false
+        url: 'http://$CLUSTER_DNS/jenkins/job/service-scale/buildWithParameters?token=DevOps22&service=go-demo_main&scale=-1'
+  - name: 'jenkins-node-up'
+    webhook_configs:
+      - send_resolved: false
+        url: 'http://$CLUSTER_DNS/jenkins/job/aws-scale/buildWithParameters?token=DevOps22&scale=1'
+  - name: 'jenkins-node-down'
+    webhook_configs:
+      - send_resolved: false
+        url: 'http://$CLUSTER_DNS/jenkins/job/aws-scale/buildWithParameters?token=DevOps22&scale=-1'
+" | docker secret create alert_manager_config -
+```
+
+
 # Service Limits
 
 ---
 
 ```bash
-curl -o go-demo.yml \
-  https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/go-demo-scale.yml
-
-cat go-demo.yml
-
-docker stack deploy -c go-demo.yml go-demo
+DOMAIN=$CLUSTER_DNS docker stack deploy -c monitor.yml monitor
 ```
 
 
@@ -31,8 +97,7 @@ cat jenkins.yml
 
 source creds
 
-echo "
-export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+echo "export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
 export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
 export STACK_NAME=devops22
@@ -74,14 +139,9 @@ open "http://$CLUSTER_DNS/jenkins/configure"
 ```
 
 * Scroll to *Global Slack Notifier Settings*
-* Enter *devops20* in the *Team Subdomain* field
-* Enter *2Tg33eiyB0PfzxII2srTeMbd* in the *Integration Token* field
-* Click the *Apply* button
 * Click the *Test Connection* button
 
 ```bash
-open "http://slack.devops20toolkit.com"
-
 open "https://devops20.slack.com/messages/C59EWRE2K/team/U2ZLK8MLM"
 ```
 
@@ -91,83 +151,12 @@ open "https://devops20.slack.com/messages/C59EWRE2K/team/U2ZLK8MLM"
 ---
 
 ```bash
-open "http://$CLUSTER_DNS/jenkins/newJob"
+open "http://$CLUSTER_DNS/jenkins/job/service-scale/configure"
 ```
 
-* Type *service-scale* as the item name
-* Select *Pipeline* as job type
-* Click the *OK* button
-* Select the *Trigger builds remotely* checkbox
-* Type *DevOps22* as the *Authentication Token*
-* Type the script that follows inside the *Pipeline Script* field
-
-
-## Creating A Scaling Pipeline
-
----
-
-```groovy
-pipeline {
-    agent {
-        label "prod"
-    }
-    parameters {
-        string(
-                name: "service",
-                defaultValue: "",
-                description: "The name of the service that should be scaled"
-        )
-        string(
-                name: "scale",
-                defaultValue: "",
-                description: "Number of replicas to add or remove."
-        )
-    }
-    stages {
-        stage("Scale") {
-            steps {
-                script {
-                    def inspectOut = sh(
-                            script: "docker service inspect $service",
-                            returnStdout: true
-                    )
-                    def inspectJson = readJSON text: inspectOut.trim()
-                    def currentReplicas = inspectJson[0].Spec.Mode.Replicated.Replicas
-                    def newReplicas = currentReplicas + scale.toInteger()
-                    def minReplicas = inspectJson[0].Spec.Labels["com.df.scaleMin"].toInteger()
-                    def maxReplicas = inspectJson[0].Spec.Labels["com.df.scaleMax"].toInteger()
-                    if (newReplicas > maxReplicas) {
-                        error "$service is already scaled to the maximum number of $maxReplicas replicas"
-                    } else if (newReplicas < minReplicas) {
-                        error "$service is already descaled to the minimum number of $minReplicas replicas"
-                    } else {
-                        sh "docker service scale $service=$newReplicas"
-                        echo "$service was scaled from $currentReplicas to $newReplicas replicas"
-                    }
-                }
-            }
-        }
-    }
-    post {
-        failure {
-            slackSend(
-                    color: "danger",
-                    message: """$service could not be scaled.
-Please check Jenkins logs for the job ${env.JOB_NAME} #${env.BUILD_NUMBER}
-${env.RUN_DISPLAY_URL}"""
-            )
-        }
-    }
-}
-```
-
-
-## Creating A Scaling Pipeline
-
----
-
-* Click the *Save* button
-* Click the *Open Blue Ocean* link located in the left-hand menu.
+* Click the *Jenkins* button
+* Click the *Open Blue Ocean* link located in the left-hand menu
+* Click the *service-scale* job
 * Click the *Run* button
 
 
@@ -176,7 +165,7 @@ ${env.RUN_DISPLAY_URL}"""
 ---
 
 ```bash
-curl -X POST "http://$CLUSTER_DNS/jenkins/job/service-scale/buildWithParameters?token=DevOps22&service=go-demo_main&scale=2"
+curl -X POST "http://$CLUSTER_DNS/jenkins/job/service-scale/buildWithParameters?token=DevOps22&service=go-demo_main&scale=1"
 
 open "http://$CLUSTER_DNS/jenkins/blue/organizations/jenkins/service-scale/activity"
 
@@ -199,13 +188,13 @@ docker stack ps -f desired-state=Running go-demo
 ---
 
 ```bash
-curl -X POST "http://$CLUSTER_DNS/jenkins/job/service-scale/buildWithParameters?token=DevOps22&service=go-demo_main&scale=-123"
-
 docker service update \
-    --label-add com.df.alertIf=@service_mem_limit:0.01 \
+    --label-add com.df.alertIf.1=@service_mem_limit:0.01 \
     go-demo_main
 
 exit
+
+open "http://$CLUSTER_DNS/monitor/alerts"
 
 open "http://$CLUSTER_DNS/jenkins/blue/organizations/jenkins/service-scale/activity"
 
@@ -224,6 +213,6 @@ docker service ps -f desired-state=Running go-demo_main
 
 ```bash
 docker service update \
-    --label-add com.df.alertIf=@service_mem_limit:0.8 \
+    --label-add com.df.alertIf.1=@service_mem_limit:0.8 \
     go-demo_main
 ```

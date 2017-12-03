@@ -10,20 +10,8 @@
 ---
 
 ```bash
-curl -o go-demo.yml \
-    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/go-demo-alert.yml
-
 cat go-demo.yml
 
-docker stack deploy -c go-demo.yml go-demo
-```
-
-
-## Creating Alerts
-
----
-
-```bash
 exit
 
 open "http://$CLUSTER_DNS/monitor/alerts"
