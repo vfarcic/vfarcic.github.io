@@ -2,6 +2,36 @@
 # Infrastructure
 
 
+<!-- .slide: data-background="../img/background/calendar.jpeg" -->
+# Waiting?
+
+
+<!-- .slide: data-background="../img/products/vmware.jpg" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="../img/background/mutable.jpg" -->
+# Mutable?
+
+
+<!-- .slide: data-background="../img/products/cfengine.png" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="../img/products/chef.png" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="../img/products/puppet.png" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="../img/products/ansible.png" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="../img/background/immutable.jpeg" -->
+# Immutable!
+
+
+<!-- .slide: data-background="../img/products/packer.png" data-background-size="contain" -->
+
+
 <!-- .slide: data-background="../img/background/pet.jpeg" -->
 # Pets?
 
@@ -10,12 +40,7 @@
 # Cattle!
 
 
-<!-- .slide: data-background="../img/background/mutable.jpg" -->
-# Mutable?
-
-
-<!-- .slide: data-background="../img/background/immutable.jpeg" -->
-# Immutable!
+<!-- .slide: data-background="../img/products/terraform.png" data-background-size="contain" -->
 
 
 <!-- .slide: data-background="../img/background/elastic.jpeg" -->

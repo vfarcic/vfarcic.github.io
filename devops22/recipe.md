@@ -27,15 +27,19 @@
 <!-- .slide: data-background="../img/products/prometheus.png" data-background-size="contain" -->
 
 
+<!-- .slide: data-background="../img/background/metrics.jpg" -->
+# Instrumentation
+
+
 <!-- .slide: data-background="../img/background/alerting.jpg" -->
 # Alerting
 
 
 <!-- .slide: data-background="../img/background/alerting.jpg" -->
 # Alertmanager
-# + Jenkins<!-- .element: class="fragment" -->
-# + Slack<!-- .element: class="fragment" -->
 
 
-<!-- .slide: data-background="../img/background/metrics.jpg" -->
-# Instrumentation
+<!-- .slide: data-background="../img/products/jenkins.png" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="../img/products/slack.png" data-background-size="contain" -->
