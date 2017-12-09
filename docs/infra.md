@@ -43,6 +43,10 @@
 <!-- .slide: data-background="../img/products/terraform.png" data-background-size="contain" -->
 
 
+<!-- .slide: data-background="../img/background/self-service.jpeg" -->
+# Self-Service
+
+
 <!-- .slide: data-background="../img/background/elastic.jpeg" -->
 # Dynamic & Elastic!
 
