@@ -71,6 +71,9 @@
 <!-- .slide: data-background="../img/products/prometheus.png" data-background-size="contain" -->
 
 
+# Dashboards?
+
+
 <!-- .slide: data-background="../img/background/metrics.jpg" -->
 # Instrumentation
 
