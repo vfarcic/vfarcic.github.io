@@ -1,8 +1,6 @@
 <!-- .slide: data-background="img/culture.jpeg" -->
 # The Culture
 
----
-
 
 <!-- .slide: data-background="../img/background/truth.jpg" -->
 ## Facing The Truth

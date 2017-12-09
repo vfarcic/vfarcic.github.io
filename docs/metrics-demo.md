@@ -96,6 +96,8 @@ open "http://$CLUSTER_DNS/monitor"
 # container_memory_usage_bytes{container_label_com_docker_swarm_service_name!=""}
 
 # container_memory_usage_bytes{container_label_com_docker_swarm_service_name="metrics_cadvisor"}
+
+# container_memory_usage_bytes{container_label_com_docker_swarm_service_name="go-demo-2_main"}
 ```
 
 

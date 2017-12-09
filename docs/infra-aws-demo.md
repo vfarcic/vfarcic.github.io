@@ -1,3 +1,4 @@
+<!-- .slide: data-background="../img/background/servers.jpg" -->
 ## Hands-On Time
 
 ---
