@@ -6,7 +6,7 @@
 # Thou Shalt Be Agile
 
 
-<!-- .slide: data-background="img/silos.jpeg" -->
+<!-- .slide: data-background="../img/background/silos.jpeg" -->
 ## Thou Shalt Be Agile
 
 ---
