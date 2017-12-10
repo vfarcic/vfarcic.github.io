@@ -1,16 +1,16 @@
 # Continuous Deployment To Kubernetes
 
-## Audience
+## Audience
 
-TODO
+People that form a self-sufficient team. All expertise is required for a full software development life-cycle. That expertise must include building software, testing, deployment, and monitoring.
 
 ## Outcome
 
-TODO
+Fully operational local cluster with services and processes required for continuous deployment, monitoring, and alerting.
 
 ## Duration
 
-TODO
+5 days
 
 ## Venue
 
