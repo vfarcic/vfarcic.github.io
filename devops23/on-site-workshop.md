@@ -6,7 +6,7 @@ People that form a self-sufficient team. All expertise is required for a full so
 
 ## Outcome
 
-Fully operational local cluster with services and processes required for continuous deployment, monitoring, and alerting.
+Fully operational local cluster with services and processes required for continuous deployment, logging, monitoring, and alerting, self-adaptation and healing.
 
 ## Duration
 
@@ -22,7 +22,7 @@ On-site at Telstra in Melbourne
 
 ## Format
 
-Each topic is a mixture of hands-on exercises and expert instruction.
+Each topic is a mixture of theory, hands-on exercises and best practise expert instruction.
 
 ## Instructor
 
@@ -38,44 +38,61 @@ Familiarity with basic Linux operations
 
 The goal of the 1st day is to get familiar with the tools and processes used in Telstra as well as to set up the theoretical scene for the rest of the days.
 
-* Introduction
-* Explanation of Telstra tools, practices, and architecture
-* Discussion about microservices
-* Discussion about Docker and schedulers
+* Introduction.
+* Explanation of Telstra tools, practices, and architecture.
+* Discussion about microservices.
+* Discussion about Docker and schedulers.
 
 ### Day 2
 
 The goal of the 2nd day is to get hands-on experience with Docker and continuous integration (CI) practices
 
-* Hands-on introduction to Docker
-* Design and develop all the steps of a CI pipeline running from command line
-* Integrate manual command line steps into an automated Pipeline (e.g., Jenkins)
+* Hands-on introduction to Docker.
+* Test driven development using docker containers.
+* Docker API.
+* Design and develop all the steps of a CI pipeline running from command line.
+* Integrate manual command line steps into an automated Pipeline (e.g., Jenkins).
 
 ### Day 3
 
 The goal of the 3rd day is to get hands-on experience with basic Kubernetes operations
 
-* Minikube installation
-* Pods
-* ReplicaSets
-* Services
-* Deployments
-* Networking
+* Minikube installation.
+* Pods.
+* ReplicaSets.
+* Services.
+* Deployments.
+* Networking.
+* Load balancing and Service Discovery. 
+
 
 ### Day 4
 
 The goal of the 4th day is to deploy a CD service (e.g., Jenkins) and translate previous lessons into CD pipeline
 
-* Deploy CD service and agents
-* Translate previous exercises into a CD pipeline
+* Deploy CD service and agents.
+* Translate previous exercises into a CD pipeline.
+* Automated  proxy configuration.
+* Zero downtime deployment.
+* Defining Logging Strategy. 
 
 ### Day 5
 
 The goal of the 5th day is to set up a monitoring and alerting solution
 
-* Monitoring and alerting
-* Notifications to Slack
-* Notifications to the system to enable self-adaptation
+* Monitoring and alerting(Introduction and best practices).
+* Introduction to Self-Adapting and Self-Healing System.
+* Instrumenting Services.
+* Notifications to Slack(Alerting Humans).
+* Alerting The System.
+* Self-Healing Applied To Services.
+* Self-Adaptation Applied To Services.
+* Self-Adaptation Applied to Instrumented Services.
+* Notifications to the system to enable self-adaptation.
+* Setting Up A Production Cluster.
+* Self-Healing Applied To Infrastructure.
+* Self-Adaptation Applied To Infrastructure.
+* Blueprint Of A Self-Sufficient System
 
 ## Instructor bio
 
