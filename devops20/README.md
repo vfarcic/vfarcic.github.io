@@ -1,5 +1,5 @@
-The DevOps 2.0 Toolkit
-======================
+The DevOps 2.X Toolkit: The State Of DevOps
+===========================================
 
 Abstract: Talk
 --------------
