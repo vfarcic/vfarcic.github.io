@@ -1,0 +1,43 @@
+body:after {
+  content: url(../../img/packt-live.png);
+  position: fixed;
+  top: 0px;
+  right: 0px;}
+
+.reveal {
+  text-shadow:
+          -1px -1px 0 #000,
+          1px -1px 0 #000,
+          -1px 1px 0 #000,
+          1px 1px 0 #000;
+}
+
+.red {
+  color: #ff2c2d; }
+
+.green {
+  color: #17ff2e; }
+
+.reveal pre code {
+    display: block;
+    padding: 5px;
+    overflow: auto;
+    max-height: 400px;
+    word-wrap: normal;
+    background: #3F3F3F;
+    color: #DCDCDC; }
+
+.reveal a {
+    color: #9edffa;
+    text-decoration: none;
+    -webkit-transition: color .15s ease;
+    -moz-transition: color .15s ease;
+    transition: color .15s ease; }
+
+.reveal a:hover {
+    color: #80d0fa;
+    border: none; }
+
+.reveal .roll span:after {
+    color: #fff;
+    background: #068de9; }
