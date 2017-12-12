@@ -1,8 +1,5 @@
-## [@vfarcic](https://twitter.com/vfarcic)
-
----
-
-[![](../img/products/twitter.jpg)](https://twitter.com/vfarcic)
+<!-- .slide: data-background="../img/products/twitter.png" data-background-size="contain" -->
+# [@vfarcic](https://twitter.com/vfarcic)
 
 
 ## [TechnologyConversations.com](http://technologyconversations.com)

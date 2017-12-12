@@ -14,6 +14,10 @@ curl -o jenkins.yml \
     https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/jenkins/vfarcic-jenkins-df-proxy-aws.yml
 
 cat jenkins.yml
+
+echo "admin" | docker secret create jenkins-user -
+
+echo "admin" | docker secret create jenkins-pass -
 ```
 
 
@@ -22,16 +26,14 @@ cat jenkins.yml
 ---
 
 ```bash
-echo "admin" | docker secret create jenkins-user -
-
-echo "admin" | docker secret create jenkins-pass -
-
 export SLACK_IP=$(ping -c 1 devops20.slack.com \
     | awk -F'[()]' '/PING/{print $2}')
 
 docker stack deploy -c jenkins.yml jenkins
 
 docker stack ps jenkins
+
+docker service logs -f jenkins_jenkins-master
 
 exit
 
@@ -90,8 +92,6 @@ LABEL=test EXECUTORS=3 docker stack deploy -c jenkins-agent.yml \
 exit
 
 open "http://$CLUSTER_DNS/jenkins/computer"
-
-ssh -i workshop.pem docker@$CLUSTER_IP
 ```
 
 
@@ -108,6 +108,15 @@ open "http://$CLUSTER_DNS/jenkins/credentials/store/system/domain/_/"
 * Type your Docker Hub username and password
 * Type *docker* as the *ID*
 * Click the *OK* button
+
+
+## Jenkins Shared Libraries
+
+---
+
+```bash
+open "https://github.com/vfarcic/jenkins-shared-libraries"
+```
 
 
 ## Jenkins Shared Libraries

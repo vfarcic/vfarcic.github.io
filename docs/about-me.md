@@ -21,4 +21,5 @@
 ![](../img/devops-toolkit-series.png)
 
 
-# @vfarcic
+<!-- .slide: data-background="../img/products/twitter.png" data-background-size="contain" -->
+# [@vfarcic](https://twitter.com/vfarcic)
