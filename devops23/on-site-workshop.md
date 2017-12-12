@@ -1,4 +1,4 @@
-# Continuous Deployment To Kubernetes
+# Continuous Deployment To Kubernetes with self healing, adaptation enabled, with enhance monitoring and logging.
 
 ## Audience
 
