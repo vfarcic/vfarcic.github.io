@@ -30,7 +30,8 @@ Viktor Farcic
 
 ## Prerequisites
 
-Familiarity with basic Linux operations
+Familiarity with basic Linux operations.
+Internet connection favourably with WIFI.
 
 ## Course Outline
 
