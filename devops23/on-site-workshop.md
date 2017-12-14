@@ -40,24 +40,20 @@ Internet connection favourably with WIFI.
 The goal of the 1st day is to get familiar with the tools and processes used in Telstra as well as to set up the theoretical scene for the rest of the days.
 
 * Introduction.
+* Management crash course on Kubernetes, Microservices, CI/CD.
 * Explanation of Telstra tools, practices, and architecture.
 * Discussion about microservices.
 * Discussion about Docker and schedulers.
 
 ### Day 2
 
-The goal of the 2nd day is to get hands-on experience with Docker and continuous integration (CI) practices
+The goal of the 2nd day is to get hands-on experience with Docker and continuous integration (CI) practices,basic Kubernetes operations
 
 * Hands-on introduction to Docker.
 * Test driven development using docker containers.
 * Docker API.
 * Design and develop all the steps of a CI pipeline running from command line.
 * Integrate manual command line steps into an automated Pipeline (e.g., Jenkins).
-
-### Day 3
-
-The goal of the 3rd day is to get hands-on experience with basic Kubernetes operations
-
 * Minikube installation.
 * Pods.
 * ReplicaSets.
@@ -67,21 +63,22 @@ The goal of the 3rd day is to get hands-on experience with basic Kubernetes oper
 * Load balancing and Service Discovery. 
 
 
-### Day 4
+### Day 3
 
-The goal of the 4th day is to deploy a CD service (e.g., Jenkins) and translate previous lessons into CD pipeline
+The goal of the 3rd day is to deploy a CD service (e.g., Jenkins) and translate previous lessons into CD pipeline,logging and monitoring
 
 * Deploy CD service and agents.
 * Translate previous exercises into a CD pipeline.
 * Automated  proxy configuration.
 * Zero downtime deployment.
 * Defining Logging Strategy. 
-
-### Day 5
-
-The goal of the 5th day is to set up a monitoring and alerting solution
-
 * Monitoring and alerting(Introduction and best practices).
+
+
+### Day 4
+The goal of the 4th day is to set up a monitoring and alerting solution
+
+
 * Introduction to Self-Adapting and Self-Healing System.
 * Instrumenting Services.
 * Notifications to Slack(Alerting Humans).
@@ -94,6 +91,10 @@ The goal of the 5th day is to set up a monitoring and alerting solution
 * Self-Healing Applied To Infrastructure.
 * Self-Adaptation Applied To Infrastructure.
 * Blueprint Of A Self-Sufficient System
+
+### Day 5
+
+* Follow-up and embed with the team for practical applications (also for overflow of any items from previous days)
 
 ## Instructor bio
 
