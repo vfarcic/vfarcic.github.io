@@ -2,8 +2,8 @@
 
 ## Abstract
 
-It's been a bit over a year since Docker released its first "production ready" release. A new door was opened and many of us stepped through. We are creating immutable containers and deploying them to production in a much easier and more reliable ways than we did before. With widespread usage of Docker a huge number of new possibilities started to emerge.
+The number of servers is constantly increasing. With the move to microservices and continuous deployment practices, deployments frequency is higher than ever. Yet, we are expected to handle increased demand with the same workforce as before. How can we tackle those problems. How can we operate clusters at scale with minimum human involvement?
 
-Can we automatically scale (and de-scale) services depending on traffic and server load? Do we need to know where will the applications be deployed? Can we treat all our servers as one big "server farm"? What can we do with auto-discovery? Can we recuperate from failures without human intervention? Can we truly accomplish zero-downtime?
+The answer lies in adoption of new practices and tools. Container schedulers are becoming a de-facto standard for deploying services at scale. Continuous deployment is the norm for complete automation of software delivery. Self-healing and self-adaptation is a must if we want to build a reliable and fault tolerant system. Metrics are an essential component any type of automated cluster management. All those, and many other tools are already available. The real question is how to combine them into a self-sufficient system that can operate at any scale.
 
-We'll try to answer those and a few other questions.
+This talk will walk you through solutions and problems encountered while building systems that operate at scale. We'll try to figure out how to create a cluster that can be scaled to (almost) any size. We'll explore whether we can reach infinity.
