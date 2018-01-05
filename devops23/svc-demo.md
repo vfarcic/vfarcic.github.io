@@ -12,6 +12,21 @@
 [05-svc.sh](https://gist.github.com/ae2527a1e960ec3fea19adb00aab6fd7) (https://goo.gl/W6tuDJ)
 
 
+## Creating A Cluster
+
+---
+
+```bash
+minikube start --vm-driver=virtualbox
+
+kubectl config current-context
+
+cd k8s-specs
+
+git pull
+```
+
+
 ## Exposing Ports
 
 ---
