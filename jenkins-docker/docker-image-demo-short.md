@@ -10,9 +10,12 @@
 ---
 
 ```bash
-cat Dockerfile
+docker container run --rm -it -v $PWD:/repos vfarcic/git \
+    git clone https://github.com/vfarcic/go-demo-2.git
 
-sudo rm go-demo
+cd go-demo-2
+
+cat Dockerfile
 
 docker image build -t go-demo-2 .
 
@@ -25,17 +28,15 @@ docker image ls
 ---
 
 ```bash
-export DOCKER_HUB_USER=[...]
+source ../creds
 
 docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:beta
+
+docker login -u $DOCKER_HUB_USER
 
 docker image push $DOCKER_HUB_USER/go-demo-2:beta
 
 exit
-
-export DOCKER_HUB_USER=[...]
-
-open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo-2/tags"
 ```
 
 

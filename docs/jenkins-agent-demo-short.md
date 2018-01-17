@@ -44,22 +44,3 @@ open "http://$CLUSTER_DNS/jenkins/computer"
 
 ssh -i workshop.pem docker@$CLUSTER_IP
 ```
-
-
-## Scaling Jenkins Agents
-
----
-
-```bash
-docker service scale jenkins-agent-test_main=2
-
-exit
-
-open "http://$CLUSTER_DNS/jenkins/computer"
-
-ssh -i workshop.pem docker@$CLUSTER_IP
-
-docker service scale jenkins-agent-test_main=1
-
-exit
-```

@@ -78,7 +78,7 @@ docker image ls
 ---
 
 ```bash
-export DOCKER_HUB_USER=[...]
+source ../creds
 
 docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:beta
 
