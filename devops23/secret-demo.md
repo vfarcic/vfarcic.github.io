@@ -95,6 +95,8 @@ open "http://$(minikube ip)/jenkins"
 
 ## What Now?
 
+---
+
 ```bash
 minikube delete
 ```
