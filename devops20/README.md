@@ -1,12 +1,12 @@
-The DevOps 2.X Toolkit: The State Of DevOps
-===========================================
+# The DevOps 2.X Toolkit: Modern DevOps Technologies and Practices
 
-Abstract: Talk
---------------
+## Abstract: Talk
 
-DevOps is as much a cultural as technological change. While it united diverse teams and professionals and thought us how to automate all repetitive steps in our processes, it failed to introduce a real difference in the software landscape we use. Hence, DevOps 2.0 emerged with a drastic change in our methods, tools, and architecture. Finally, we have everything we need to build scalable, fault-tolerant, and self-healing systems delivered to production through continuous deployment.
+DevOps requires both cultural and technological change. It teaches us to unite diverse teams and to automate all repetitive steps in our processes. However, the DevOps movement also comes with a host new technologies and supporting practices such as containers, microservices, cloud provides, and configuration management.
 
-This talk focuses on architectural changes and new tools we should adopt to be able to tackle the problems presented by a demand for modern, responsive, fault tolerant, and elastic systems. It is based on the material published in [The DevOps Toolkit Series](http://www.devopstoolkitseries.com/) books.
+This talk will address the current state of DevOps. To do that, we'll go back in time and explore how we got here and what drove the industry to adopt the tools and the practices we're using today. Only with an understanding of the past can we understand the reasons behind modern DevOps technologies and practices.
+
+We'll explore the DevOps culture and the need for change required for the adoption of modern technologies. Given that DevOps is first and foremost a cultural change, that will allow us to explore the reasons and the benefits behind some of the changes we need to apply to our infrastructure and software architecture. Culture together with new approaches to infrastructure and software architecture will allow us to reach nirvana in form of true continuous deployment and self-sufficient systems capable of operating without human intervention.
 
 Abstract: Workshop
 ------------------
