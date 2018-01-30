@@ -1,4 +1,4 @@
-# DevOps Do's And Don'ts: Avoiding DevOps Disasters
+# DevOps Do's And Don'ts: Avoiding DevOps Disasters
 
 ## Abstract
 
