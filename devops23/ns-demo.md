@@ -180,4 +180,4 @@ minikube delete
 
 [Namespace v1 core](https://v1-8.docs.kubernetes.io/docs/api-reference/v1.8/#Namespace-v1-core)
 
-## TODO coming next<!-- .element: class="fragment" -->
+## RBAC coming next<!-- .element: class="fragment" -->

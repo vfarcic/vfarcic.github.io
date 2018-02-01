@@ -8,4 +8,4 @@
 ### Close Your Laptop<!-- .element: class="fragment" -->
 
 
-<!-- .slide: data-background="../img/background/scared.jpeg" -->
+<!-- .slide: data-background="../img/background/disaster.jpeg" -->
