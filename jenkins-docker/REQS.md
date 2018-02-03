@@ -14,4 +14,4 @@ If you are a Windows user, please make sure that your Git client is configured t
 
 ## Checklist
 
-Please execute the commands from [http://vfarcic.github.io/jenkins-docker/reqs.html](http://vfarcic.github.io/jenkins-docker/reqs.html) to verify confirm that you fullfil all the requirements for the workshop. If one of the commands fail, please contact me through email (viktor@farcic.com) or DevOps20 Slack channel. You can register to Slack through [slack.devops20toolkit.com](slack.devops20toolkit.com). My user is `vfarcic` if you prefer sending me a private message.
+Please execute the commands from [http://vfarcic.github.io/jenkins-docker/reqs.html](http://vfarcic.github.io/jenkins-docker/reqs.html) to confirm that you fullfil all the requirements for the workshop. If one of the commands fail, please contact me through email (viktor@farcic.com) or DevOps20 Slack channel. You can register to Slack through [slack.devops20toolkit.com](slack.devops20toolkit.com). My user is `vfarcic` if you prefer sending me a private message.
