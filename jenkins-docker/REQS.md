@@ -11,3 +11,7 @@ On the other hand, you are welcome to follow along and try to reproduce everythi
 * GitBash (if using Windows, it's installed with Git)
 
 If you are a Windows user, please make sure that your Git client is configured to check out the code *AS-IS*. Otherwise, Windows might change carriage returns to the Windows format. You will also need an [AWS account](https://aws.amazon.com/) and [AWS CLI](https://aws.amazon.com/cli/). Please note that it should be free from any customizations and limitations your company might have introduced. If in doubt, please use your personal account.
+
+## Checklist
+
+Please execute the commands from [http://vfarcic.github.io/jenkins-docker/reqs.html](http://vfarcic.github.io/jenkins-docker/reqs.html) to verify confirm that you fullfil all the requirements for the workshop. If one of the commands fail, please contact me through email (viktor@farcic.com) or DevOps20 Slack channel. You can register to Slack through [slack.devops20toolkit.com](slack.devops20toolkit.com). My user is `vfarcic` if you prefer sending me a private message.
