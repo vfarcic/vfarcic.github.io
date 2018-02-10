@@ -14,9 +14,9 @@ ssh -i workshop.pem docker@$CLUSTER_IP
 
 source creds
 
-docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:1.0
+docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:v1.0
 
-docker image push $DOCKER_HUB_USER/go-demo-2:1.0
+docker image push $DOCKER_HUB_USER/go-demo-2:v1.0
 ```
 
 
@@ -27,7 +27,7 @@ docker image push $DOCKER_HUB_USER/go-demo-2:1.0
 ```bash
 docker stack ps -f desired-state=running go-demo-2
 
-docker service update --image $DOCKER_HUB_USER/go-demo-2:1.0 \
+docker service update -d --image $DOCKER_HUB_USER/go-demo-2:v1.0 \
   go-demo-2_main
 
 watch "docker stack ps -f desired-state=running go-demo-2"
@@ -39,9 +39,9 @@ watch "docker stack ps -f desired-state=running go-demo-2"
 ---
 
 ```bash
-docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:2.0
+docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:v2.0
 
-docker image push $DOCKER_HUB_USER/go-demo-2:2.0
+docker image push $DOCKER_HUB_USER/go-demo-2:v2.0
 ```
 
 
@@ -54,7 +54,7 @@ docker node ls
 
 PRIVATE_IP=[...]
 
-docker service update --image $DOCKER_HUB_USER/go-demo-2:2.0 \
+docker service update -d --image $DOCKER_HUB_USER/go-demo-2:v2.0 \
   go-demo-2_main
 
 watch "curl -i \"http://$PRIVATE_IP/demo/hello\" \
@@ -67,9 +67,9 @@ watch "curl -i \"http://$PRIVATE_IP/demo/hello\" \
 ---
 
 ```bash
-docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:3.0
+docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:v3.0
 
-docker image push $DOCKER_HUB_USER/go-demo-2:3.0
+docker image push $DOCKER_HUB_USER/go-demo-2:v3.0
 ```
 
 
@@ -86,7 +86,7 @@ ssh -i workshop.pem docker@$CLUSTER_IP
 
 source creds
 
-docker service update --image $DOCKER_HUB_USER/go-demo-2:3.0 \
+docker service update -d --image $DOCKER_HUB_USER/go-demo-2:v3.0 \
     go-demo-2_main
 ```
 
@@ -108,11 +108,11 @@ docker container run --rm -it -v $PWD/go-demo-2:/compose \
 ---
 
 ```bash
-docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:4.0
+docker image tag go-demo-2 $DOCKER_HUB_USER/go-demo-2:v4.0
 
-docker image push $DOCKER_HUB_USER/go-demo-2:4.0
+docker image push $DOCKER_HUB_USER/go-demo-2:v4.0
 
-docker service update --image $DOCKER_HUB_USER/go-demo-2:4.0 \
+docker service update -d --image $DOCKER_HUB_USER/go-demo-2:v4.0 \
     go-demo-2_main
 ```
 
@@ -133,7 +133,7 @@ docker stack ps -f desired-state=running go-demo-2
 
 docker service update --rollback go-demo-2_main
 
-watch "docker stack ps -f desired-state=running go-demo-2"
+docker stack ps -f desired-state=running go-demo-2
 
 exit
 ```
@@ -178,7 +178,7 @@ pipeline {
         unstash "compose"
         script {
           try {
-            sh "docker service update --image $DOCKER_HUB_USER/go-demo-2:${env.BUILD_NUMBER} go-demo-2_main"
+            sh "docker service update -d --image $DOCKER_HUB_USER/go-demo-2:${env.BUILD_NUMBER} go-demo-2_main"
             sh "TAG=${env.BUILD_NUMBER} docker-compose -p go-demo-2-${env.BUILD_NUMBER} run --rm production"
           } catch (e) {
             sh "docker service update --rollback go-demo-2_main"
@@ -249,7 +249,7 @@ pipeline {
         unstash "compose"
         script {
           try {
-            sh "docker service update --image $DOCKER_HUB_USER/go-demo-2:${env.BUILD_NUMBER} go-demo-2_main"
+            sh "docker service update -d --image $DOCKER_HUB_USER/go-demo-2:${env.BUILD_NUMBER} go-demo-2_main"
             sh "TAG=${env.BUILD_NUMBER} docker-compose -p go-demo-2-${env.BUILD_NUMBER} run --rm production"
           } catch (e) {
             sh "docker service update --rollback go-demo-2_main"

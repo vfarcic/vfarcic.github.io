@@ -176,7 +176,7 @@ echo "admin" | docker secret create jenkins-user -
 
 echo "admin" | docker secret create jenkins-pass -
 
-TAG=workshop docker stack deploy \
+TAG=workshop HUB_USER=$DOCKER_HUB_USER docker stack deploy \
     -c vfarcic-jenkins-df-proxy.yml jenkins
 
 exit

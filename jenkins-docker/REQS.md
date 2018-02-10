@@ -9,6 +9,7 @@ On the other hand, you are welcome to follow along and try to reproduce everythi
 * [AWS CLI](https://aws.amazon.com/cli/)
 * [jq](https://stedolan.github.io/jq/)
 * GitBash (if using Windows, it's installed with Git)
+* [Docker Hub](https://hub.docker.com/) user
 
 If you are a Windows user, please make sure that your Git client is configured to check out the code *AS-IS*. Otherwise, Windows might change carriage returns to the Windows format. You will also need an [AWS account](https://aws.amazon.com/) and [AWS CLI](https://aws.amazon.com/cli/). Please note that it should be free from any customizations and limitations your company might have introduced. If in doubt, please use your personal account.
 

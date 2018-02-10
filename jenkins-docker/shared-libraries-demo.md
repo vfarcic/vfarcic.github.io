@@ -17,6 +17,14 @@ open "http://$CLUSTER_DNS/jenkins/configure"
 ```
 
 * Navigate to *Global Pipeline Libraries*
+* Click the *Add* button
+* Type *my-shared-library* as the *Name*
+* Type *master* as the *Default version*
+* Select *Load implicitly*
+* Select *Modern SCM*
+* Select *Git*
+* Type *https://github.com/vfarcic/jenkins-shared-libraries.git* as the *Name*
+* Click the *Apply* button
 
 
 ## Shared Libraries Repository

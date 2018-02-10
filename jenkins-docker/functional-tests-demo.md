@@ -128,15 +128,13 @@ exit
 ```bash
 open "https://github.com/vfarcic/docker-flow-stacks/blob/master/docker/compose/Dockerfile"
 
-echo $CLUSTER_DNS
-
 ssh -i workshop.pem docker@$CLUSTER_IP
+
+source creds
 
 cd go-demo-2
 
 cat docker-compose.yml
-
-source ../creds
 ```
 
 
