@@ -80,3 +80,14 @@ pipeline {
 
 * Change *[...]*
 * Click the *Save* button
+
+```bash
+open "http://$CLUSTER_DNS/jenkins/blue/organizations/jenkins/go-demo-2/activity"
+```
+
+* Click the *Run* button
+* Click the row with the new build
+
+```bash
+open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo-2/tags"
+```
