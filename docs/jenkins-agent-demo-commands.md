@@ -10,6 +10,8 @@
 ---
 
 ```bash
+cd ~
+
 curl -o jenkins-agent.yml \
     https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/jenkins/vfarcic-jenkins-agent.yml
 
