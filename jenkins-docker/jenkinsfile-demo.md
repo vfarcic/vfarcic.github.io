@@ -33,6 +33,8 @@ dockerHubUser=$DOCKER_HUB_USER
 
 docker service update --secret-add cluster-info.properties \
     jenkins-agent-test_main
+
+exit
 ```
 
 
