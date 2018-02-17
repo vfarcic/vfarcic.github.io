@@ -64,7 +64,7 @@ DOMAIN=$CLUSTER_DNS docker stack deploy -c monitor.yml monitor
 
 exit
 
-open "http://$CLUSTER_DNS/monitor/flags"
+open "http://$CLUSTER_DNS/monitor/config"
 
 ssh -i workshop.pem docker@$CLUSTER_IP
 ```

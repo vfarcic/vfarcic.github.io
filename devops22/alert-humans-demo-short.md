@@ -43,7 +43,7 @@ DOMAIN=$CLUSTER_DNS docker stack deploy -c monitor.yml monitor
 
 exit
 
-open "http://$CLUSTER_DNS/monitor/flags"
+open "http://$CLUSTER_DNS/monitor/config"
 
 ssh -i workshop.pem docker@$CLUSTER_IP
 ```
@@ -78,7 +78,9 @@ ssh -i workshop.pem docker@$CLUSTER_IP
 
 ```bash
 docker service update \
-    --label-add com.df.alertIf.1=@service_mem_limit:0.8 go-demo_main
+    --label-add com.df.alertIf.1=@service_mem_limit:0.8 \
+    --label-add com.df.alertFor.1=1m \
+    go-demo_main
 
 exit
 

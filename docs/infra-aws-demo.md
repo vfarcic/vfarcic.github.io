@@ -69,6 +69,9 @@ aws cloudformation create-stack \
 ```
 
 
+![](../docs/img/docker-for-aws-cluster.png)
+
+
 ## Cluster Info
 
 ---
@@ -77,7 +80,8 @@ aws cloudformation create-stack \
 aws cloudformation describe-stacks --stack-name devops22 | \
   jq -r ".Stacks[0].StackStatus"
 
-aws cloudformation describe-stack-resources --stack-name devops22 | jq "."
+aws cloudformation describe-stack-resources \
+    --stack-name devops22 | jq "."
 
 CLUSTER_DNS=$(aws cloudformation describe-stacks \
   --stack-name devops22 | jq -r ".Stacks[0].Outputs[] | \
@@ -87,9 +91,7 @@ CLUSTER_IP=$(aws ec2 describe-instances | jq -r ".Reservations[] \
   .Instances[] | select(.SecurityGroups[].GroupName | \
   contains(\"devops22-ManagerVpcSG\")).PublicIpAddress" | tail -n 1)
 
-echo $CLUSTER_DNS
-
-echo $CLUSTER_IP
+echo $CLUSTER_DNS && echo $CLUSTER_IP
 ```
 
 
@@ -115,9 +117,6 @@ exit
 
 open "http://$CLUSTER_DNS:8083"
 ```
-
-
-![](../docs/img/docker-for-aws-cluster.png)
 
 
 ## Docker Flow Proxy
