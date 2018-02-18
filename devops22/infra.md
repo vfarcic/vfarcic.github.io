@@ -1,9 +1,9 @@
-# Swarm Cluster
+# Infrastructure
 
 ---
 
-* Docker Swarm
-* Docker Machine
-* Three Nodes
-* Only Managers
+* Immutable
+* Dynamic
+* Elastic
+* Automated
 
