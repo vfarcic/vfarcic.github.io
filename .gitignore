@@ -8,3 +8,4 @@ ms-lifecycle
 *.secret
 /secrets
 *.pem
+/cluster
