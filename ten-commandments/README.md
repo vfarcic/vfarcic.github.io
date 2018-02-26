@@ -20,3 +20,12 @@ Then a continuous delivery project will start. Tests will be written. Builds wil
 The project starts and, shortly afterward, you hit the first obstacle. But, since you are brave and do not give up that easily, you pass it. Then, not long afterward, another obstacle comes along. And another one after that. And on and on it goes. Half a year later you feel that you are not getting far. You spent your budget. You need to show results even though you cannot see the light at the end of the tunnel. The CTO demands results. The business wants value for the investment. You decide to do the only sensible thing and declare that the project is finished. You are continuous delivery certified even though there is nothing continuous nor are you delivering. Continuous delivery joins other failed projects that are declared a big success. Not only that, you are doing agile but you also practice CD. Veni, vidi, vici. You joined the club of glorified failures. Well done!
 
 Why did your attempt to implement continuous delivery fail? There cannot be one answer that fits all scenarios. However, some prerequisites and steps should be taken in almost all cases. The chances are that you missed some, if not all, of the commandments that we’ll explore in this session.
+
+
+# The Ten Commandments Of DevOps
+
+## Abstract
+
+You jumped on the latest hype and started implementing DevOps practices. You saw some improvements but, frankly, you are probably confused what DevOps is. You don't know which methods you should apply. Or, maybe, you think you do, but then you realized that they don't make much sense. Unlike other movements and processes, DevOps does not come with a handbook.
+
+We'll explore what DevOps is and what you should do to implement it successfully. The talk is a combination of personal experience and information gathered through interviews with some of the most prominent DevOps thought leaders and practitioners.
