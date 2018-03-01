@@ -23,13 +23,6 @@
 
 ---
 
-> "Manufacturing process in which parts are added in sequence until the final assembly is produced."
-
-
-### What Software Is Assembly Line?
-
----
-
 > "Produce a **single** product with a **repeatable process**."
 
 

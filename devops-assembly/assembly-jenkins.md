@@ -50,13 +50,18 @@
 <!-- .slide: data-background="img/shared-libraries.png" data-background-size="contain" -->
 
 
-<!-- .slide: data-background="img/blue-steel.png" data-background-size="contain" -->
+# There's Still The Problem At Scale
+
+---
 
 
 <!-- .slide: data-background="../img/products/docker.png" data-background-size="contain" -->
 
 
 <!-- .slide: data-background="../img/products/kubernetes.png" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="img/blue-steel.png" data-background-size="contain" -->
 
 
 <!-- .slide: data-background="img/cje.png" data-background-size="contain" -->

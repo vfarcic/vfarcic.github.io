@@ -1,5 +1,5 @@
 <!-- .slide: data-background="../img/background/agile.jpg" -->
-# Agile
+# Agile & DevOps
 
 ---
 
