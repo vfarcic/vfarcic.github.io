@@ -62,7 +62,17 @@ PORT=$(kubectl get svc go-demo-2-svc \
 IP=$(minikube ip)
 
 open "http://$IP:$PORT"
+```
 
+
+<!-- .slide: data-background="img/svc-expose-rs.png" data-background-size="contain" -->
+
+
+## Exposing Ports
+
+---
+
+```bash
 kubectl delete svc go-demo-2-svc
 ```
 
@@ -79,7 +89,17 @@ kubectl create -f svc/go-demo-2-svc.yml
 kubectl get -f svc/go-demo-2-svc.yml
 
 open "http://$IP:30001"
+```
 
+
+<!-- .slide: data-background="img/svc-hard-coded-port.png" data-background-size="contain" -->
+
+
+## Declarative Syntax
+
+---
+
+```bash
 kubectl get ep go-demo-2 -o yaml
 
 kubectl delete -f svc/go-demo-2-svc.yml
@@ -172,6 +192,12 @@ cat ./svc/go-demo-2-api-rs.yml
 * Communication from outside the cluster<!-- .element: class="fragment" -->
 
 
+<!-- .slide: data-background="img/flow_svc_ch05.png" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="img/flow_svc_ch05.png" data-background-size="contain" -->
+
+
 ## What Now?
 
 ---
@@ -181,5 +207,3 @@ minikube delete
 ```
 
 * [Service v1 core](https://kubernetes.io/docs/api-reference/v1.8/#service-v1-core) (https://kubernetes.io/docs/api-reference/v1.8/#service-v1-core)
-
-## Deployments coming next<!-- .element: class="fragment" -->

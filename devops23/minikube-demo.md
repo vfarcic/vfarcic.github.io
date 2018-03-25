@@ -22,7 +22,17 @@
 
 ```bash
 minikube start --vm-driver=virtualbox
+```
 
+
+<!-- .slide: data-background="img/minikube-simple.png" data-background-size="contain" -->
+
+
+## Exploring Minikube
+
+---
+
+```bash
 minikube status
 
 minikube dashboard

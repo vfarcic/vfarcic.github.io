@@ -48,6 +48,9 @@ kubectl delete deployment db
 ```
 
 
+<!-- .slide: data-background="img/pod-single-container.png" data-background-size="contain" -->
+
+
 ## Declarative Syntax
 
 ---
@@ -99,7 +102,17 @@ kubectl logs db
 kubectl exec -it db pkill mongod
 
 kubectl get pods
+```
 
+
+<!-- .slide: data-background="img/pod-failed-container.png" data-background-size="contain" -->
+
+
+## Declarative Syntax
+
+---
+
+```bash
 kubectl delete -f pod/db.yml
 
 kubectl get pods
@@ -156,6 +169,9 @@ kubectl describe -f pod/go-demo-2-health.yml
 * (Almost) never created directly<!-- .element: class="fragment" -->
 
 
+<!-- .slide: data-background="img/pod-components.png" data-background-size="contain" -->
+
+
 ## What Now?
 
 ```bash
@@ -163,5 +179,3 @@ minikube delete
 ```
 
 * [PodSpec v1 core](https://kubernetes.io/docs/api-reference/v1.8/#pod-v1-core) (https://kubernetes.io/docs/api-reference/v1.8/#pod-v1-core)
-
-## ReplicaSets coming next<!-- .element: class="fragment" -->

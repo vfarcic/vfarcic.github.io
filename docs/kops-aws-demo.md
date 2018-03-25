@@ -2,7 +2,9 @@
 
 ---
 
-# Creating Kubernetes Cluster In AWS With kops
+# Kubernetes Cluster
+# In AWS
+# With kops
 
 
 ## Prerequisites

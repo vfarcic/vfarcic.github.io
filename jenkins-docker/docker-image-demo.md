@@ -88,7 +88,7 @@ exit
 
 export DOCKER_HUB_USER=[...]
 
-open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo-2/tags"
+open "https://hub.docker.com/r/$DOCKER_HUB_USER/go-demo-2/tags/"
 ```
 
 

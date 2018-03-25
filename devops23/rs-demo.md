@@ -46,7 +46,13 @@ kubectl get pods --show-labels
 ```
 
 
+<!-- .slide: data-background="img/rs-two-replicas.png" data-background-size="contain" -->
+
+
 <!-- .slide: data-background="img/seq_pod_ch04.png" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="img/rs.png" data-background-size="contain" -->
 
 
 ## Operating ReplicaSets
@@ -110,6 +116,9 @@ kubectl get pods
 * Rarely created independently but through Deployments<!-- .element: class="fragment" -->
 
 
+<!-- .slide: data-background="img/rs-components.png" data-background-size="contain" -->
+
+
 ## What Now?
 
 ---
@@ -119,5 +128,3 @@ minikube delete
 ```
 
 * [ReplicaSet v1beta2 apps](https://kubernetes.io/docs/api-reference/v1.8/#replicaset-v1beta2-apps) (https://kubernetes.io/docs/api-reference/v1.8/#replicaset-v1beta2-apps)
-
-## Services coming next<!-- .element: class="fragment" -->

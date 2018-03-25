@@ -44,6 +44,9 @@ kubectl get all
 ```
 
 
+<!-- .slide: data-background="img/deployment.png" data-background-size="contain" -->
+
+
 <!-- .slide: data-background="img/seq_deploy_ch06.png" data-background-size="contain" -->
 
 
@@ -220,6 +223,9 @@ kubectl get -f deploy/go-demo-2.yml
 * Zero-downtime updates<!-- .element: class="fragment" -->
 
 
+<!-- .slide: data-background="img/deploy-components.png" data-background-size="contain" -->
+
+
 ## What Now?
 
 ---
@@ -229,5 +235,3 @@ minikube delete
 ```
 
 * [Deployment v1beta2 apps](https://kubernetes.io/docs/api-reference/v1.8/#deployment-v1beta2-apps) (https://kubernetes.io/docs/api-reference/v1.8/#deployment-v1beta2-apps)
-
-## Ingress coming next<!-- .element: class="fragment" -->
