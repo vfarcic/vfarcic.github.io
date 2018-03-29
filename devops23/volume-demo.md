@@ -34,7 +34,8 @@ kubectl config current-context
 ---
 
 ```bash
-kubectl run docker --image=docker:17.11 --restart=Never docker image ls
+kubectl run docker --image=docker:17.11 \
+    --restart=Never docker image ls
 
 kubectl get pods --show-all
 
@@ -56,6 +57,9 @@ kubectl create -f volume/docker.yml
 kubectl exec -it docker -- docker image ls \
     --format '{{.Repository}}'
 ```
+
+
+<!-- .slide: data-background="img/volume-hostPath.png" data-background-size="contain" -->
 
 
 ## Host's Resources > hostPath
@@ -138,6 +142,9 @@ kubectl delete -f volume/prometheus-host-path.yml
 ```
 
 
+<!-- .slide: data-background="img/prometheus-targets.png" data-background-size="contain" -->
+
+
 ## gitRepo > Git Repository
 
 ---
@@ -159,6 +166,9 @@ exit
 
 kubectl delete -f volume/github.yml
 ```
+
+
+<!-- .slide: data-background="img/volume-git-repo.png" data-background-size="contain" -->
 
 
 ## emptyDir > Persist State
@@ -218,6 +228,12 @@ open "http://$(minikube ip)/jenkins"
 ```
 
 
+<!-- .slide: data-background="img/jenkins.png" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="img/volume-components.png" data-background-size="contain" -->
+
+
 ## What Now?
 
 ---
@@ -227,5 +243,3 @@ minikube delete
 ```
 
 [Volume v1 core](https://v1-8.docs.kubernetes.io/docs/api-reference/v1.8/#volume-v1-core) (https://v1-8.docs.kubernetes.io/docs/api-reference/v1.8/#volume-v1-core)
-
-## ConfigMaps coming next<!-- .element: class="fragment" -->

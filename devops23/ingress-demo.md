@@ -121,10 +121,11 @@ kubectl create -f ingress/go-demo-2.yml --record --save-config
 
 curl -i "http://$IP/demo/hello"
 
-cat ingress/devops-toolkit.yml
-
 kubectl delete -f ingress/devops-toolkit-dep.yml
 ```
+
+
+<!-- .slide: data-background="img/seq_ingress_ch07.png" data-background-size="contain" -->
 
 
 ## Ingress Based On Paths
@@ -132,6 +133,8 @@ kubectl delete -f ingress/devops-toolkit-dep.yml
 ---
 
 ```bash
+cat ingress/devops-toolkit.yml
+
 kubectl create -f ingress/devops-toolkit.yml --record --save-config
 
 kubectl get ing
@@ -177,6 +180,9 @@ curl -I -H "Host: acme.com" "http://$IP"
 ```
 
 
+<!-- .slide: data-background="img/ingress-components.png" data-background-size="contain" -->
+
+
 ## What Now?
 
 ---
@@ -186,5 +192,3 @@ minikube delete
 ```
 
 * [Ingress v1beta1 extensions](https://kubernetes.io/docs/api-reference/v1.8/#ingress-v1beta1-extensions) (https://kubernetes.io/docs/api-reference/v1.8/#ingress-v1beta1-extensions)
-
-## Volumes coming next<!-- .element: class="fragment" -->

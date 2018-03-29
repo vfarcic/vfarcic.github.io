@@ -179,6 +179,9 @@ open "http://$(minikube ip)/prometheus/targets"
 ```
 
 
+<!-- .slide: data-background="img/cm-components.png" data-background-size="contain" -->
+
+
 ## What Now?
 
 ---

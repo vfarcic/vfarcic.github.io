@@ -25,9 +25,24 @@
 * Using ConfigMaps To Inject Configuration Files
 * Using Secrets To Hide Confidential Information
 * Dividing A Cluster Into Namespaces
+
+### Day 3
+
 * Securing Kubernetes Clusters
 * Defining and Limiting Resources Used By Containers
-* Creating a continuous deployment pipeline
+* Creating A Production-Ready Kubernetes Cluster
+* Persisting State
+* Exploring Storage Options
+
+### Day 4
+
+* Creating a Continuous Deployment Pipeline
+
+### Day 5
+
+* Workshops
+* Q&A
+* Roadmap
 
 # Talk: Continuously Deploying Applications To A Kubernetes Cluster
 

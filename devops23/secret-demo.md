@@ -93,6 +93,9 @@ open "http://$(minikube ip)/jenkins"
 ```
 
 
+<!-- .slide: data-background="img/secret-components.png" data-background-size="contain" -->
+
+
 ## What Now?
 
 ---
