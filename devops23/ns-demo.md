@@ -72,9 +72,9 @@ kubectl get ns
 
 
 ```bash
-kubectl --namespace kube-public get all
+kubectl -n kube-public get all
 
-kubectl --namespace kube-system get all
+kubectl -n kube-system get all
 ```
 
 
@@ -90,7 +90,7 @@ kubectl create ns testing
 
 kubectl get ns
 
-kubectl config set-context testing --namespace=testing \
+kubectl config set-context testing -n=testing \
     --cluster=minikube --user=minikube
 
 kubectl config view

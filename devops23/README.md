@@ -44,17 +44,12 @@
 * Q&A
 * Roadmap
 
-# Talk: Continuously Deploying Applications To A Kubernetes Cluster
+# Talk: Deploying Fault-Tolerant And Highly-Available Jenkins To Kubernetes
 
-Kubernetes is becoming a de-facto standard for container orchestration. Jenkins is already the standard for continuous deployment. How can we combine both and get the most out of both worlds?
+Jenkins is the de-facto standard for continuous integration, delivery, and deployment process. Docker allows us to package our applications into immutable images that can be reliably deployed anywhere. Kubernetes become undisputable king of container orchestration.
 
-In this talk, we'll try to design a continuous deployment pipeline that delivers new releases on every commit. We'll explore how to ensure that the release is safe to deploy, how to leverage Jenkins and Kubernetes features to speed up the process, and how to guarantee that new versions are running in production without risk, with zero-downtime, and without human intervention.
+What happens when we combine the three? We'll explore the steps we might take to combine Jenkins, Docker, and Kubernetes into a reliable, fault-tolerant, and highly-available platform for continuous deployment processes.
 
-# Workshop: Continuously Deploying Applications To A Kubernetes Cluster
-
-Kubernetes is becoming a de-facto standard for container orchestration. Jenkins is already the standard for continuous deployment. How can we combine both and get the most out of both worlds?
-
-In this workshop, we'll try to design a continuous deployment pipeline that delivers new releases on every commit. We'll explore how to ensure that the release is safe to deploy, how to leverage Jenkins and Kubernetes features to speed up the process, and how to guarantee that new versions are running in production without risk, with zero-downtime, and without human intervention.
 
 # Bio (short)
 

@@ -146,13 +146,13 @@ kubectl auth can-i "*" "*"
 
 ```bash
 kubectl create rolebinding jdoe --clusterrole view --user jdoe \
-    --namespace default --save-config
+    -n default --save-config
 
 kubectl get rolebindings
 
 kubectl describe rolebinding jdoe
 
-kubectl --namespace kube-system describe rolebinding jdoe
+kubectl -n kube-system describe rolebinding jdoe
 
 kubectl auth can-i get pods --as jdoe
 
@@ -179,9 +179,9 @@ cat auth/rb-dev.yml
 
 kubectl create -f auth/rb-dev.yml --record --save-config
 
-kubectl --namespace dev auth can-i create deployments --as jdoe
+kubectl -n dev auth can-i create deployments --as jdoe
 
-kubectl --namespace dev auth can-i delete deployments --as jdoe
+kubectl -n dev auth can-i delete deployments --as jdoe
 ```
 
 
@@ -190,13 +190,13 @@ kubectl --namespace dev auth can-i delete deployments --as jdoe
 ---
 
 ```bash
-kubectl --namespace dev auth can-i "*" "*" --as jdoe
+kubectl -n dev auth can-i "*" "*" --as jdoe
 
 cat auth/rb-jdoe.yml
 
 kubectl create -f auth/rb-jdoe.yml --record --save-config
 
-kubectl --namespace jdoe auth can-i "*" "*" --as jdoe
+kubectl -n jdoe auth can-i "*" "*" --as jdoe
 
 kubectl describe clusterrole admin
 
@@ -214,17 +214,17 @@ kubectl create -f auth/crb-release-manager.yml \
 ```bash
 kubectl describe clusterrole release-manager
 
-kubectl --namespace default auth can-i "*" pods --as jdoe
+kubectl -n default auth can-i "*" pods --as jdoe
 
-kubectl --namespace default auth can-i create deployments --as jdoe
+kubectl -n default auth can-i create deployments --as jdoe
 
-kubectl --namespace default auth can-i delete deployments --as jdoe
+kubectl -n default auth can-i delete deployments --as jdoe
 
 kubectl config use-context jdoe
 
-kubectl --namespace default run db --image mongo:3.3
+kubectl -n default run db --image mongo:3.3
 
-kubectl --namespace default delete deployment db
+kubectl -n default delete deployment db
 ```
 
 
@@ -234,7 +234,7 @@ kubectl --namespace default delete deployment db
 
 ```bash
 kubectl config set-context jdoe --cluster jdoe --user jdoe \
-    --namespace jdoe
+    -n jdoe
 
 kubectl config use-context jdoe
 
@@ -243,7 +243,7 @@ kubectl run db --image mongo:3.3
 kubectl delete deployment db
 
 kubectl create rolebinding mgandhi --clusterrole=view \
-    --user=mgandhi --namespace=jdoe
+    --user=mgandhi -n=jdoe
 ```
 
 
@@ -260,11 +260,11 @@ kubectl config use-context minikube
 
 kubectl apply -f auth/groups.yml --record
 
-kubectl --namespace dev auth can-i create deployments --as jdoe
+kubectl -n dev auth can-i create deployments --as jdoe
 
 kubectl config use-context jdoe
 
-kubectl --namespace dev run new-db --image mongo:3.3
+kubectl -n dev run new-db --image mongo:3.3
 ```
 
 

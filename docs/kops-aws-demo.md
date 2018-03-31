@@ -196,7 +196,7 @@ kops validate cluster
 ---
 
 ```bash
-kubectl --namespace kube-system get pods
+kubectl -n kube-system get pods
 ```
 
 
@@ -307,7 +307,7 @@ kubectl config view
 ```bash
 kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/ingress-nginx/v1.6.0.yaml
 
-kubectl --namespace kube-ingress get all
+kubectl -n kube-ingress get all
 
 aws elb describe-load-balancers
 
