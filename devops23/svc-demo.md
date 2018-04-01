@@ -2,7 +2,7 @@
 
 ---
 
-# Services
+# Using Services To Enable Communication Between Pods
 
 
 ## Gist

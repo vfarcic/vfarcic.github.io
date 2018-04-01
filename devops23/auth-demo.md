@@ -2,7 +2,7 @@
 
 ---
 
-# Authentication
+# Securing Kubernetes Clusters
 
 
 ## Gist

@@ -2,9 +2,7 @@
 
 ---
 
-# Kubernetes Cluster
-# In AWS
-# With kops
+# Creating A Production-Ready Kubernetes Cluster
 
 
 ## Prerequisites

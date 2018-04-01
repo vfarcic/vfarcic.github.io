@@ -1,5 +1,7 @@
 <!-- .slide: data-background="../img/background/why.jpg" -->
-# Authentication
+# Securing Kubernetes Clusters
+
+---
 
 
 <!-- .slide: data-background="../img/background/auth.jpg" -->

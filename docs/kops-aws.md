@@ -1,7 +1,7 @@
 <!-- .slide: data-background="../img/background/why.jpg" -->
-# Kubernetes Cluster
-# In AWS
-# With kops
+# Creating A Production-Ready Kubernetes Cluster
+
+---
 
 
 <!-- .slide: data-background="../img/background/elastic.jpeg" -->

@@ -1,5 +1,7 @@
 <!-- .slide: data-background="../img/background/why.jpg" -->
-# ConfigMaps
+# Using ConfigMaps To Inject Configuration Files
+
+---
 
 
 <!-- .slide: data-background="img/configuration.jpeg" -->

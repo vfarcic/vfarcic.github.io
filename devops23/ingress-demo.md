@@ -2,7 +2,7 @@
 
 ---
 
-# Ingress
+# Using Ingress To Forward Traffic
 
 
 ## Gist

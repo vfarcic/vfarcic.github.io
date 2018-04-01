@@ -1,5 +1,5 @@
 <!-- .slide: data-background="../img/background/why.jpg" -->
-# What Is a Scheduler?
+# What Is a Container Scheduler?
 
 
 <!-- .slide: data-background="../img/background/kids-soccer.jpeg" -->

@@ -1,5 +1,7 @@
 <!-- .slide: data-background="../img/background/why.jpg" -->
-# Namespaces
+# Dividing A Cluster Into Namespaces
+
+---
 
 
 <!-- .slide: data-background="img/doors.jpeg" -->

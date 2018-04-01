@@ -2,7 +2,7 @@
 
 ---
 
-# Namespaces
+# Dividing A Cluster Into Namespaces
 
 
 ## Gist

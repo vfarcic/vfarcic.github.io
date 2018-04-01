@@ -2,7 +2,7 @@
 
 ---
 
-# Secrets
+# Using Secrets To Hide Confidential Information
 
 
 ## Gist

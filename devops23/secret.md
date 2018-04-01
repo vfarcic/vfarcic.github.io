@@ -1,5 +1,7 @@
 <!-- .slide: data-background="../img/background/why.jpg" -->
-# Secrets
+# Using Secrets To Hide Confidential Information
+
+---
 
 
 <!-- .slide: data-background="img/secrets.jpeg" -->

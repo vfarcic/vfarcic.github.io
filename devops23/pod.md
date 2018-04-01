@@ -1,5 +1,7 @@
 <!-- .slide: data-background="../img/background/why.jpg" -->
-# Pods
+# Creating Pods
+
+---
 
 
 <!-- .slide: data-background="img/bricks.jpg" -->

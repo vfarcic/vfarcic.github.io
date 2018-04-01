@@ -2,7 +2,7 @@
 
 ---
 
-# ReplicaSets
+# Scaling Pods With ReplicaSets
 
 
 ## Gist

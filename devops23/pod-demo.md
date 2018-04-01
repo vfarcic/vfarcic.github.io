@@ -2,7 +2,7 @@
 
 ---
 
-# Pods
+# Creating Pods
 
 
 ## Gist

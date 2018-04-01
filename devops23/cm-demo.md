@@ -2,7 +2,7 @@
 
 ---
 
-# ConfigMaps
+# Using ConfigMaps To Inject Configuration Files
 
 
 ## Gist

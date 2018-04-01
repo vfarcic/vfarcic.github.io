@@ -2,7 +2,7 @@
 
 ---
 
-# Minikube
+# Running A Kubernetes Cluster Locally
 
 
 ## Prerequisites

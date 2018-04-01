@@ -1,5 +1,7 @@
 <!-- .slide: data-background="../img/background/why.jpg" -->
-# Deployments
+# Deploying Releases With Zero-Downtime
+
+---
 
 
 <!-- .slide: data-background="img/hurdles.jpeg" -->
