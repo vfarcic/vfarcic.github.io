@@ -1,48 +1,84 @@
-# Workshop: Kubernetes
+# Workshop: Kubernetes (2 days)
 
 ## Agenda
 
-### Day 1
+### Day 1
 
-* Introduction to containers and Docker Ecosystem
-* Running and operating containers
-* Building Docker images
-* Storing Docker images in a registry
-* Using Docker Compose to run tests
-* Discussion about the problems with running containers
-* Introduction to container schedulers
-* Introduction to Kubernetes
+* Building Docker Images
 * Running Kubernetes Cluster Locally
 * Creating Pods
 * Scaling Pods With ReplicaSets
-
-### Day 2
-
 * Using Services To Enable Communication Between Pods
 * Deploying Releases With Zero-Downtime
 * Using Ingress To Forward Traffic
 * Using Volumes To Access Host's File System
+
+### Day 2
+
 * Using ConfigMaps To Inject Configuration Files
 * Using Secrets To Hide Confidential Information
 * Dividing A Cluster Into Namespaces
-
-### Day 3
-
 * Securing Kubernetes Clusters
-* Defining and Limiting Resources Used By Containers
+* Managing Resources
 * Creating A Production-Ready Kubernetes Cluster
 * Persisting State
-* Exploring Storage Options
 
-### Day 4
+# Workshop: Kubernetes (5 days)
 
-* Creating a Continuous Deployment Pipeline
+## Agenda
 
-### Day 5
+### Day 1
 
-* Workshops
-* Q&A
-* Roadmap
+* Introduction
+* Management crash course on Kubernetes, Microservices, CI/CD
+* Explanation of Telstra tools, practices, and architecture (led by Telstra team)
+* Discussion about microservices
+* Discussion about Docker and schedulers
+
+### Day 2
+
+* Hands-on introduction to Docker
+* Test driven development using Docker containers
+* Docker API
+* Design and develop all the steps of a CI pipeline running from command line
+* Integrate manual command line steps into an automated Pipeline (e.g., Jenkins)
+* Minikube installation
+* Pods
+* ReplicaSets
+* Services
+* Deployments
+* Networking
+* Load balancing and Service Discovery
+* K8s and Docker Security
+* Compare K8s vs Docker Swarm
+
+### Day 3
+
+* Deploy CD service and agents
+* Translate previous exercises into a CD pipeline
+* Automated proxy configuration
+* Zero downtime deployment
+* Defining Logging Strategy
+* Monitoring and alerting (Introduction and best practices)
+
+### Day 4
+
+* Introduction to Self-Adapting and Self-Healing System.
+* Instrumenting Services.
+* Notifications to Slack (Alerting Humans).
+* Alerting the System.
+* Self-Healing Applied to Services.
+* Self-Adaptation Applied to Services.
+* Self-Adaptation Applied to Instrumented Services.
+* Notifications to the system to enable self-adaptation.
+* Setting Up A Production Cluster.
+* Self-Healing Applied to Infrastructure.
+* Self-Adaptation Applied to Infrastructure.
+* Blueprint of A Self-Sufficient System
+
+### Day 5
+
+* Follow-up and embed with the team for practical applications (also for overflow of any items from previous days)
 
 # Talk: Deploying Fault-Tolerant And Highly-Available Jenkins To Kubernetes
 
