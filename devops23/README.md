@@ -30,7 +30,7 @@
 
 ### Day 1
 
-* Introduction
+* [DevOps 2.0](http://vfarcic.github.io/devops20/index.html)
 * Management crash course on Kubernetes, Microservices, CI/CD
 * Explanation of company's tools, practices, and architecture
 * Discussion about microservices
