@@ -1,4 +1,14 @@
-# [Workshop: Kubernetes (2 days)](http://vfarcic.github.io/devops23/workshop.html)
+# [Workshop: Kubernetes: Deploying and managing highly-available and fault-tolerant applications at scale (2 days)](http://vfarcic.github.io/devops23/workshop.html)
+
+## Abstract
+
+Kubernetes is a container scheduler and quite a lot more. We can use it to deploy our services, to roll out new releases without downtime, and to scale (or de-scale) those services. It is portable. It can run on a public or private cloud. It can run on-premise or in a hybrid environment. Kubernetes, in a way, makes your infrastructure vendor agnostic. We can move a Kubernetes cluster from one hosting vendor to another without changing (almost) any of the deployment and management processes. Kubernetes can be easily extended to serve nearly any needs. We can choose which modules we'll use, and we can develop additional features ourselves and plug them in.
+
+If we choose to use Kubernetes, we decide to relinquish control. Kubernetes will decide where to run something and how to accomplish the state we specify. Such control allows Kubernetes to place replicas of a service on the most appropriate server, to restart them when needed, to replicate them, and to scale them. We can say that self-healing is a feature included in its design from the start. On the other hand, self-adaptation is coming as well. At the time of this writing, it is still in its infancy. Soon it will be an integral part of the system.
+
+Zero-downtime deployments, fault tolerance, high availability, scaling, scheduling, and self-healing should be more than enough to see the value in Kubernetes. Yet, that is only a fraction of what it provides. We can use it to mount volumes for stateful applications. It allows us to store confidential information as secrets. We can use it to validate the health of our services. It can load balance requests and monitor resources. It provides service discovery and easy access to logs. And so on and so forth. The list of what Kubernetes does is long and rapidly increasing. Together with Docker, it is becoming a platform that envelops whole software development and deployment lifecycle.
+
+In this course, you will learn (almost) everything you need to know about Kubernetes.
 
 ## Agenda
 
@@ -30,56 +40,57 @@
 
 ### Day 1
 
-* [DevOps 2.0](http://vfarcic.github.io/devops20/index.html)
-* Management crash course on Kubernetes, Microservices, CI/CD
-* Explanation of company's tools, practices, and architecture
-* Discussion about microservices
-* Discussion about Docker and schedulers
+[X] [DevOps 2.0](http://vfarcic.github.io/devops20/index.html)
+[X] [DevOps 2.3](http://vfarcic.github.io/devops23/index.html)
+[X] Management crash course on Kubernetes, Microservices, CI/CD
+[X] Explanation of company's tools, practices, and architecture
+[X] Discussion about microservices
+[X] Discussion about Docker and schedulers
 
 ### Day 2
 
-* Hands-on introduction to Docker
-* Test driven development using Docker containers
-* Docker API
-* Design and develop all the steps of a CI pipeline running from command line
-* Integrate manual command line steps into an automated Pipeline (e.g., Jenkins)
-* Minikube installation
-* Pods
-* ReplicaSets
-* Services
-* Deployments
-* Networking
-* Load balancing and Service Discovery
-* K8s and Docker Security
-* Compare K8s vs Docker Swarm
+[X] [Hands-on introduction to Docker](http://vfarcic.github.io/devops21/workshop.html)
+[X] Test driven development using Docker containers
+[ ] Docker API
+[X] Design and develop all the steps of a CI pipeline running from command line
+[X] [Integrate manual command line steps into an automated Pipeline (e.g., Jenkins)](http://vfarcic.github.io/jenkins-docker/workshop.html)
+[X] [Minikube installation](http://vfarcic.github.io/devops23/workshop.html)
+[X] Pods
+[X] ReplicaSets
+[X] Services
+[X] Deployments
+[X] Networking
+[X] Load balancing and Service Discovery
+[X] K8s and Docker Security
+[X] Compare K8s vs Docker Swarm
 
 ### Day 3
 
-* Deploy CD service and agents
-* Translate previous exercises into a CD pipeline
-* Automated proxy configuration
-* Zero downtime deployment
-* Defining Logging Strategy
-* Monitoring and alerting (Introduction and best practices)
+[X] Deploy CD service and agents
+[X] Translate previous exercises into a CD pipeline
+[X] Automated proxy configuration
+[X] Zero downtime deployment
+[X] Defining Logging Strategy
+[ ] Monitoring and alerting (Introduction and best practices)
 
 ### Day 4
 
-* Introduction to Self-Adapting and Self-Healing System
-* Instrumenting Services
-* Notifications to Slack (Alerting Humans)
-* Alerting the System
-* Self-Healing Applied to Services
-* Self-Adaptation Applied to Services
-* Self-Adaptation Applied to Instrumented Services
-* Notifications to the system to enable self-adaptation
-* Setting Up A Production Cluster
-* Self-Healing Applied to Infrastructure
-* Self-Adaptation Applied to Infrastructure
-* Blueprint of A Self-Sufficient System
+[ ] Introduction to Self-Adapting and Self-Healing System
+[ ] Instrumenting Services
+[ ] Notifications to Slack (Alerting Humans)
+[ ] Alerting the System
+[ ] Self-Healing Applied to Services
+[ ] Self-Adaptation Applied to Services
+[ ] Self-Adaptation Applied to Instrumented Services
+[ ] Notifications to the system to enable self-adaptation
+[ ] Setting Up A Production Cluster
+[ ] Self-Healing Applied to Infrastructure
+[ ] Self-Adaptation Applied to Infrastructure
+[ ] Blueprint of A Self-Sufficient System
 
 ### Day 5
 
-* Follow-up and embed with the team for practical applications (also for overflow of any items from previous days)
+[ ] Follow-up and embed with the team for practical applications (also for overflow of any items from previous days)
 
 # Talk: Deploying Fault-Tolerant And Highly-Available Jenkins To Kubernetes
 

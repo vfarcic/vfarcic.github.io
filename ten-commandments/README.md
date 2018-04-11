@@ -2,7 +2,7 @@
 
 ## Synopsis
 
-Why did your attempt to implement continuous delivery fail? There cannot be one answer that fits all scenarios. However, some prerequisites and steps should be taken in almost all cases. The chances are that you missed some, if not all, of the commandments that we’ll explore in this session.
+Why did your attempt to implement continuous delivery fail? The chances are that you missed some, if not all, of the commandments that we’ll explore in this session.
 
 ## Abstract
 
@@ -21,7 +21,6 @@ The project starts and, shortly afterward, you hit the first obstacle. But, sinc
 
 Why did your attempt to implement continuous delivery fail? There cannot be one answer that fits all scenarios. However, some prerequisites and steps should be taken in almost all cases. The chances are that you missed some, if not all, of the commandments that we’ll explore in this session.
 
-
 # The Ten Commandments Of DevOps
 
 ## Abstract
@@ -29,3 +28,21 @@ Why did your attempt to implement continuous delivery fail? There cannot be one 
 You jumped on the latest hype and started implementing DevOps practices. You saw some improvements but, frankly, you are probably confused what DevOps is. You don't know which methods you should apply. Or, maybe, you think you do, but then you realized that they don't make much sense. Unlike other movements and processes, DevOps does not come with a handbook.
 
 We'll explore what DevOps is and what you should do to implement it successfully. The talk is a combination of personal experience and information gathered through interviews with some of the most prominent DevOps thought leaders and practitioners.
+
+# Bio
+
+**Viktor Farcic** is a Principal Consultant at **[CloudBees](https://www.cloudbees.com/)**, a member of the **[Docker Captains](https://www.docker.com/community/docker-captains)** group, and published author.
+
+He coded using a plethora of languages starting with Pascal (yes, he is old), Basic (before it got Visual prefix), ASP (before it got .Net suffix), C, C++, Perl, Python, ASP.Net, Visual Basic, C#, JavaScript, Java, Scala, etc. He never worked with Fortran. His current favorite is **Go**.
+
+His big passions are DevOps, Microservices, Continuous Integration, Delivery and Deployment (CI/CD) and Test-Driven Development (TDD).
+
+He often speaks at community gatherings and conferences (latest can be found [here](http://technologyconversations.com/2014/08/06/history/)).
+
+He published [The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices](https://www.amazon.com/DevOps-2-0-Toolkit-Containerized-Microservices-ebook/dp/B01BJ4V66M), [The DevOps 2.1 Toolkit: Docker Swarm: Building, testing, deploying, and monitoring services inside Docker Swarm clusters](https://www.amazon.com/dp/1542468914), [The DevOps 2.2 Toolkit: Self-Sufficient Docker Clusters](https://www.amazon.com/dp/1979347190), and the [Test-Driven Java Development](http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC).
+
+His random thoughts and tutorials can be found in his blog [TechnologyConversations.com](http://technologyconversations.com/).
+
+# Bio (Short)
+
+Viktor Farcic is a Principal Consultant at CloudBees, a member of the Docker Captains group, and published author.

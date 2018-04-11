@@ -75,3 +75,7 @@ Contact Details:
 * Skype: vfarcic
 * LinkedIn: https://www.linkedin.com/in/viktorfarcic
 * Blog: http://technologyconversations.com/
+
+# Bio (Short)
+
+Viktor Farcic is a Principal Consultant at CloudBees, a member of the Docker Captains group, and published author.
