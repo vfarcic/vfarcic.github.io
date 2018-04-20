@@ -5,84 +5,6 @@
 # Persisting State
 
 
-## Gist
-
----
-
-[15-pv.sh](https://gist.github.com/41c86eb385dfc5c881d910c5e98596f2) (http://bit.ly/2IiX8ZM)
-
-
-## Creating A Kubernetes Cluster
-
----
-
-```bash
-cd k8s-specs
-
-git pull
-
-cd cluster
-
-cat kops
-
-source kops
-
-export BUCKET_NAME=devops23-$(date +%s)
-
-aws s3api create-bucket --bucket $BUCKET_NAME \
-    --create-bucket-configuration \
-    LocationConstraint=$AWS_DEFAULT_REGION
-```
-
-
-## Creating A Kubernetes Cluster
-
----
-
-```bash
-export KOPS_STATE_STORE=s3://$BUCKET_NAME
-
-# Windows only
-alias kops="docker run -it --rm -v $PWD/devops23.pub:/devops23.pub \
-    -v $PWD/config:/config -e KUBECONFIG=/config/kubecfg.yaml \
-    -e NAME=$NAME -e ZONES=$ZONES \
-    -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
-    -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
-    -e KOPS_STATE_STORE=$KOPS_STATE_STORE vfarcic/kops"
-
-kops create cluster --name $NAME --master-count 3 --node-count 2 \
-    --master-size t2.small --node-size t2.medium --zones $ZONES \
-    --master-zones $ZONES --ssh-public-key devops23.pub \
-    --networking kubenet --authorization RBAC --yes
-
-kops validate cluster
-```
-
-
-## Creating A Kubernetes Cluster
-
----
-
-```bash
-# Windows only
-kops export kubecfg --name ${NAME}
-
-# Windows only
-export KUBECONFIG=$PWD/config/kubecfg.yaml
-
-kubectl create \
-    -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/ingress-nginx/v1.6.0.yaml
-
-CLUSTER_DNS=$(aws elb describe-load-balancers | jq -r \
-    ".LoadBalancerDescriptions[] | select(.DNSName \
-    | contains (\"api-devops23\") | not).DNSName")
-
-echo $CLUSTER_DNS
-
-cd ..
-```
-
-
 ## Without Persisting State
 
 ---
@@ -102,7 +24,7 @@ kubectl -n jenkins rollout status deployment jenkins
 
 open "http://$CLUSTER_DNS/jenkins"
 
-kubectl -n jenkins get pods --selector=app=jenkins -o json
+# Create a job
 ```
 
 
@@ -111,6 +33,8 @@ kubectl -n jenkins get pods --selector=app=jenkins -o json
 ---
 
 ```bash
+kubectl -n jenkins get pods --selector=app=jenkins -o json
+
 POD_NAME=$(kubectl -n jenkins get pods --selector=app=jenkins \
     -o jsonpath="{.items[*].metadata.name}")
 
@@ -229,6 +153,8 @@ kubectl -n jenkins rollout status deployment jenkins
 ```bash
 open "http://$CLUSTER_DNS/jenkins"
 
+# Create a job
+
 POD_NAME=$(kubectl -n jenkins get pod --selector=app=jenkins \
     -o jsonpath="{.items[*].metadata.name}")
 
@@ -241,8 +167,6 @@ kubectl -n jenkins delete deploy jenkins
 kubectl -n jenkins get pvc
 
 kubectl get pv
-
-kubectl -n jenkins delete pvc jenkins
 ```
 
 
@@ -251,6 +175,8 @@ kubectl -n jenkins delete pvc jenkins
 ---
 
 ```bash
+kubectl -n jenkins delete pvc jenkins
+
 kubectl get pv
 
 kubectl delete -f pv/pv.yml
@@ -347,14 +273,10 @@ aws ec2 describe-volumes \
 
 ## What Now?
 
+---
+
 ```bash
 kubectl delete ns jenkins
 
-kops delete cluster --name $NAME --yes
-
-aws s3api delete-bucket --bucket $BUCKET_NAME
+kubectl delete sc fast
 ```
-
-* [PersistentVolume v1 core](https://v1-8.docs.kubernetes.io/docs/api-reference/v1.8/#persistentvolume-v1-core)
-* [PersistentVolumeClaim v1 core](https://v1-8.docs.kubernetes.io/docs/api-reference/v1.8/#persistentvolumeclaim-v1-core)
-* [StorageClass v1 storage](https://v1-8.docs.kubernetes.io/docs/api-reference/v1.8/#storageclass-v1-storage)

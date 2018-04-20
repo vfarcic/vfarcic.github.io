@@ -5,28 +5,6 @@
 # Using Services To Enable Communication Between Pods
 
 
-## Gist
-
----
-
-[05-svc.sh](https://gist.github.com/ae2527a1e960ec3fea19adb00aab6fd7) (https://goo.gl/W6tuDJ)
-
-
-## Creating A Cluster
-
----
-
-```bash
-minikube start --vm-driver=virtualbox
-
-kubectl config current-context
-
-cd k8s-specs
-
-git pull
-```
-
-
 ## Exposing Ports
 
 ---
@@ -100,8 +78,6 @@ open "http://$IP:30001"
 ---
 
 ```bash
-kubectl get ep go-demo-2 -o yaml
-
 kubectl delete -f svc/go-demo-2-svc.yml
 
 kubectl delete -f svc/go-demo-2-rs.yml
@@ -192,10 +168,7 @@ cat ./svc/go-demo-2-api-rs.yml
 * Communication from outside the cluster<!-- .element: class="fragment" -->
 
 
-<!-- .slide: data-background="img/flow_svc_ch05.png" data-background-size="contain" -->
-
-
-<!-- .slide: data-background="img/flow_svc_ch05.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/svc-components.png" data-background-size="contain" -->
 
 
 ## What Now?
@@ -203,7 +176,5 @@ cat ./svc/go-demo-2-api-rs.yml
 ---
 
 ```bash
-minikube delete
+kubectl delete -f svc/go-demo-2.yml
 ```
-
-* [Service v1 core](https://kubernetes.io/docs/api-reference/v1.8/#service-v1-core) (https://kubernetes.io/docs/api-reference/v1.8/#service-v1-core)

@@ -5,28 +5,11 @@
 # Managing Resources
 
 
-## Gist
-
----
-
-[13-resource.sh](https://gist.github.com/cc8c44e1e84446dccde3d377c131a5cd) (https://goo.gl/rcRnn8)
-
-
-## Creating A Cluster
+## Enabling Heapster
 
 ---
 
 ```bash
-cd k8s-specs
-
-git pull
-
-minikube start --vm-driver=virtualbox
-
-kubectl config current-context
-
-minikube addons enable ingress
-
 minikube addons enable heapster
 ```
 
@@ -322,4 +305,12 @@ kubectl expose deployment go-demo-2-api -n dev \
 
 ```bash
 minikube delete
+
+kubectl config delete-cluster jdoe
+
+kubectl config delete-context jdoe
+
+kubectl config delete-context testing
+
+kubectl config unset users.jdoe
 ```

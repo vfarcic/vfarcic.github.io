@@ -58,7 +58,7 @@ docker service create --name proxy \
     --network proxy \
     --constraint node.labels.environment==proxy \
     -e MODE=swarm \
-    vfarcic/docker-flow-proxy
+    dockerflow/docker-flow-proxy
 
 docker service ls # Wait until replicas are set to 1/1
 

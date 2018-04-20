@@ -142,7 +142,7 @@ export KOPS_STATE_STORE=s3://$BUCKET_NAME
 
 ---
 
-```
+```bash
 mkdir config
 
 # Windows only
@@ -164,17 +164,16 @@ alias kops="docker run -it --rm \
 
 ```bash
 kops create cluster --name $NAME --master-count 3 --node-count 1 \
-    --node-size t2.small --master-size t2.small --zones $ZONES \
+    --node-size t2.medium --master-size t2.small --zones $ZONES \
     --master-zones $ZONES --ssh-public-key devops23.pub \
-    --networking kubenet --kubernetes-version v1.8.4 --yes
+    --networking kubenet --authorization RBAC \
+    --kubernetes-version v1.8.4 --yes
 
 # Windows only
 kops export kubecfg --name ${NAME}
 
 # Windows only
 export KUBECONFIG=$PWD/config/kubecfg.yaml
-
-kops get cluster
 
 kubectl cluster-info
 
@@ -281,6 +280,8 @@ kops upgrade cluster $NAME --yes
 kops update cluster $NAME --yes
 
 kops rolling-update cluster $NAME --yes
+
+kubectl get nodes
 ```
 
 
@@ -303,7 +304,8 @@ kubectl config view
 ---
 
 ```bash
-kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/ingress-nginx/v1.6.0.yaml
+kubectl create -f \
+    https://raw.githubusercontent.com/kubernetes/kops/master/addons/ingress-nginx/v1.6.0.yaml
 
 kubectl -n kube-ingress get all
 
@@ -356,7 +358,7 @@ kubectl get nodes
 ```
 
 
-## Giving Others Access To The Cluster
+## Giving Access To The Cluster
 
 ---
 
@@ -373,7 +375,7 @@ cat $KUBECONFIG
 ```
 
 
-## Destroying The Cluster
+## ~~Destroying The Cluster~~
 
 ---
 
@@ -391,7 +393,7 @@ aws s3api delete-bucket --bucket $BUCKET_NAME
 ```
 
 
-## Destroying The Cluster
+## ~~Destroying The Cluster~~
 
 ---
 
@@ -411,7 +413,7 @@ aws iam delete-user --user-name kops
 ```
 
 
-## Destroying The Cluster
+## ~~Destroying The Cluster~~
 
 ---
 
@@ -429,4 +431,15 @@ aws iam detach-group-policy --group-name kops \
     --policy-arn arn:aws:iam::aws:policy/IAMFullAccess
     
 aws iam delete-group --group-name kops
+```
+
+
+## What Now?
+
+---
+
+```bash
+cd ..
+
+kubectl delete -f aws/go-demo-2.yml
 ```

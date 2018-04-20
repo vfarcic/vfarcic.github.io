@@ -92,7 +92,7 @@ We can implement the proxy in a couple of ways. One would be to create a new ima
 
 The second approach would be to expose a volume. That way, when needed, we could modify the configuration file instead building a whole new image. However, that has downsides as well. When deploying to a cluster, we should avoid using volumes whenever that's not necessary. As you'll see soon, a proxy is one of those that do not require a volume. As a side note, `--volume` has been replaced with the `docker service` argument `--mount`.
 
-The third option is to use one of the proxies designed to work with Docker Swarm. In this case, we'll use *[vfarcic/docker-flow-proxy](https://hub.docker.com/r/vfarcic/docker-flow-proxy/)* container, created from the *[Docker Flow: Proxy](https://github.com/vfarcic/docker-flow-proxy)* project. It is based on HAProxy with additional features that allow us to reconfigure it by sending HTTP requests.
+The third option is to use one of the proxies designed to work with Docker Swarm. In this case, we'll use *[docker-flow/docker-flow-proxy](https://hub.docker.com/r/docker-flow/docker-flow-proxy/)* container, created from the *[Docker Flow: Proxy](https://github.com/docker-flow/docker-flow-proxy)* project. It is based on HAProxy with additional features that allow us to reconfigure it by sending HTTP requests.
 
 Let's give it a spin.
 
@@ -103,14 +103,14 @@ docker service create --name proxy \
     -p 8080:8080 \
     --network proxy \
     -e MODE=swarm \
-    vfarcic/docker-flow-proxy
+    dockerflow/docker-flow-proxy
 ```
 
 We opened ports *80* and *443* that will serve Internet traffic (*HTTP* and *HTTPS*). The third port is *8080*. We'll use it to send configuration requests to the proxy. Further on, we specified that it should belong to the *proxy* network. That way, since *go-demo* is also attached to the same network, the proxy can access it through the SDN.
 
 Through the proxy we just run we can observe one of the cool features of the network routing mesh. It does not matter on which server the proxy is running. We can send a request to any of the nodes and Docker network will make sure that it is redirected to one of the proxies.
 
-The last argument is the environment variable *MODE* that tells the proxy that containers will be deployed to a Swarm cluster. Please consult the project [README](https://github.com/vfarcic/docker-flow-proxy) for other combinations.
+The last argument is the environment variable *MODE* that tells the proxy that containers will be deployed to a Swarm cluster. Please consult the project [README](https://github.com/docker-flow/docker-flow-proxy) for other combinations.
 
 ![Docker Swarm cluster with the proxy service](../img/swarm/swarm-nodes-proxy.png)
 
@@ -166,7 +166,7 @@ Proxy Configuration
 
 If you choose to roll-up your own proxy solution, it might be useful to understand how to configure the proxy and leverage new Docker networking features.
 
-Let's start by examining the configuration *[Docker Flow: Proxy](https://github.com/vfarcic/docker-flow-proxy)* created for us. We can do that by entering the running container to take a sneak peek at the */cfg/haproxy.cfg* file. The problem is that finding a container run by Docker Swarm is a bit tricky. For example, if we deployed it with Docker Compose, the container name would be predictable. It would use <PROJECT>_<SERVICE>_<INDEX> format. The `docker service` command runs containers with hashed names. The *docker-flow-proxy* created on my laptop has the name *proxy.1.e07jvhdb9e6s76mr9ol41u4sn*. Therefore, to get inside a running container deployed with Docker Swarm, we need to use a filter with, for example, image name.
+Let's start by examining the configuration *[Docker Flow: Proxy](https://github.com/docker-flow/docker-flow-proxy)* created for us. We can do that by entering the running container to take a sneak peek at the */cfg/haproxy.cfg* file. The problem is that finding a container run by Docker Swarm is a bit tricky. For example, if we deployed it with Docker Compose, the container name would be predictable. It would use <PROJECT>_<SERVICE>_<INDEX> format. The `docker service` command runs containers with hashed names. The *docker-flow-proxy* created on my laptop has the name *proxy.1.e07jvhdb9e6s76mr9ol41u4sn*. Therefore, to get inside a running container deployed with Docker Swarm, we need to use a filter with, for example, image name.
 
 First, we need to find out on which node the proxy is running.
 
@@ -184,7 +184,7 @@ The command that will output configuration of the proxy is as follows.
 
 ```bash
 docker exec -it \
-    $(docker ps -q --filter "ancestor=vfarcic/docker-flow-proxy") \
+    $(docker ps -q --filter "ancestor=dockerflow/docker-flow-proxy") \
     cat /cfg/haproxy.cfg
 ```
 
@@ -252,16 +252,16 @@ The next question is whether we need a proxy. We do. IPVS used by Docker will no
 
 What are the downsides? The first one that comes to my mind are sticky sessions. If you expect the same user to send requests to the same instance, this approach will not work. A separate question is whether we should implement sticky sessions inside our services or as a separate entity. I'll leave that discussion for one of the next articles. Just keep in mind that sticky sessions will not work with this type of load balancing.
 
-How about advantages? You already saw that simplicity is one of them. There's no need to reconfigure your proxy every time a new replica is deployed. As a result, the whole process is greatly simplified. Since we don't need the list of all IPs and ports of all instances, there is no need for tools like [Registrator](https://github.com/gliderlabs/registrator) and [Consul Template](https://github.com/hashicorp/consul-template). In the past, one of the possible solutions was to use Registrator to monitor Docker events and store IPs and ports in a key-value store (e.g. [Consul](https://www.consul.io/)). Once information is stored, we would use Consul Template to recreate proxy configuration. There we many projects that simplified the process (one of them being the old version of the [Docker Flow: Proxy](https://github.com/vfarcic/docker-flow-proxy)). However, with Docker Swarm and networking, the process just got simpler.
+How about advantages? You already saw that simplicity is one of them. There's no need to reconfigure your proxy every time a new replica is deployed. As a result, the whole process is greatly simplified. Since we don't need the list of all IPs and ports of all instances, there is no need for tools like [Registrator](https://github.com/gliderlabs/registrator) and [Consul Template](https://github.com/hashicorp/consul-template). In the past, one of the possible solutions was to use Registrator to monitor Docker events and store IPs and ports in a key-value store (e.g. [Consul](https://www.consul.io/)). Once information is stored, we would use Consul Template to recreate proxy configuration. There we many projects that simplified the process (one of them being the old version of the [Docker Flow: Proxy](https://github.com/docker-flow/docker-flow-proxy)). However, with Docker Swarm and networking, the process just got simpler.
 
 To *Docker Flow: Proxy* Or Not To *Docker Flow: Proxy*
 ------------------------------------------------------
 
-I showed you how to configure HAProxy using [Docker Flow: Proxy](https://github.com/vfarcic/docker-flow-proxy) project. It contains HAProxy with an additional API that allows it to reconfigure the proxy with a simple HTTP request. It removes the need for manual configuration or templates.
+I showed you how to configure HAProxy using [Docker Flow: Proxy](https://github.com/docker-flow/docker-flow-proxy) project. It contains HAProxy with an additional API that allows it to reconfigure the proxy with a simple HTTP request. It removes the need for manual configuration or templates.
 
 On the other hand, rolling up your own solution became easier than ever. With the few pointers from this article, you should have no problem creating *nginx* or *HAProxy* configuration yourself.
 
-My suggestion is to give [Docker Flow: Proxy](https://github.com/vfarcic/docker-flow-proxy) a try before you make a decision. In either case, new Docker Swarm networking features are impressive and provide building blocks for more to come.
+My suggestion is to give [Docker Flow: Proxy](https://github.com/docker-flow/docker-flow-proxy) a try before you make a decision. In either case, new Docker Swarm networking features are impressive and provide building blocks for more to come.
 
 What Now?
 ---------

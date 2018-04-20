@@ -5,28 +5,6 @@
 # Scaling Pods With ReplicaSets
 
 
-## Gist
-
----
-
-[04-rs.sh](https://gist.github.com/f6588da3d1c8a82100a81709295d4a93) (https://goo.gl/jdQk5k)
-
-
-## Creating A Cluster
-
----
-
-```bash
-minikube start --vm-driver=virtualbox
-
-kubectl config current-context
-
-cd k8s-specs
-
-git pull
-```
-
-
 ## Creating ReplicaSets
 
 ---
@@ -70,6 +48,8 @@ kubectl create -f rs/go-demo-2.yml --save-config
 
 kubectl get pods
 
+cat rs/go-demo-2-scaled.yml
+
 kubectl apply -f rs/go-demo-2-scaled.yml
 
 kubectl get pods
@@ -100,7 +80,7 @@ kubectl label $POD_NAME service-
 
 kubectl describe $POD_NAME
 
-kubectl get pods
+kubectl get pods --show-labels
 
 kubectl label $POD_NAME service=go-demo-2
 
@@ -124,7 +104,5 @@ kubectl get pods
 ---
 
 ```bash
-minikube delete
+kubectl delete -f rs/go-demo-2-scaled.yml
 ```
-
-* [ReplicaSet v1beta2 apps](https://kubernetes.io/docs/api-reference/v1.8/#replicaset-v1beta2-apps) (https://kubernetes.io/docs/api-reference/v1.8/#replicaset-v1beta2-apps)

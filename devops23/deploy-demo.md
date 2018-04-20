@@ -5,28 +5,6 @@
 # Deploying Releases With Zero-Downtime
 
 
-## Gist
-
----
-
-[06-deploy.sh](https://gist.github.com/677a0d688f65ceb01e31e33db59a4400) (https://goo.gl/hMDRWz)
-
-
-## Creating A Cluster
-
----
-
-```bash
-minikube start --vm-driver=virtualbox
-
-kubectl config current-context
-
-cd k8s-specs
-
-git pull
-```
-
-
 ## Deploying New Releases
 
 ---
@@ -231,7 +209,7 @@ kubectl get -f deploy/go-demo-2.yml
 ---
 
 ```bash
-minikube delete
-```
+kubectl delete -f deploy/go-demo-2.yml
 
-* [Deployment v1beta2 apps](https://kubernetes.io/docs/api-reference/v1.8/#deployment-v1beta2-apps) (https://kubernetes.io/docs/api-reference/v1.8/#deployment-v1beta2-apps)
+kubectl delete -f deploy/different-app-db.yml
+```

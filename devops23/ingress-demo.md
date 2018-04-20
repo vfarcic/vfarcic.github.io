@@ -5,28 +5,6 @@
 # Using Ingress To Forward Traffic
 
 
-## Gist
-
----
-
-[07-ingress.sh](https://gist.github.com/54ef6592bce747ff2d1b089834fc755b) (https://goo.gl/yg2fB9)
-
-
-## Creating A Cluster
-
----
-
-```bash
-cd k8s-specs
-
-git pull
-
-minikube start --vm-driver=virtualbox
-
-kubectl config current-context
-```
-
-
 ## Services Deficiencies
 
 ---
@@ -115,7 +93,7 @@ kubectl delete -f ingress/go-demo-2-deploy.yml
 ---
 
 ```bash
-cat ingress/go-demo-2.yml
+cat ingress/go-demo-2.ymlxxx
 
 kubectl create -f ingress/go-demo-2.yml --record --save-config
 
@@ -188,7 +166,9 @@ curl -I -H "Host: acme.com" "http://$IP"
 ---
 
 ```bash
-minikube delete
-```
+kubectl delete -f ingress/default-backend.yml
 
-* [Ingress v1beta1 extensions](https://kubernetes.io/docs/api-reference/v1.8/#ingress-v1beta1-extensions) (https://kubernetes.io/docs/api-reference/v1.8/#ingress-v1beta1-extensions)
+kubectl delete -f ingress/devops-toolkit-dom.yml
+
+kubectl delete -f ingress/go-demo-2.yml
+```

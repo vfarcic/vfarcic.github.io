@@ -5,28 +5,6 @@
 # Creating Pods
 
 
-## Gist
-
----
-
-[03-pods.sh](https://gist.github.com/vfarcic/d860631d0dd3158c32740e9260c7add0) (https://goo.gl/JtJKqH)
-
-
-## Creating A Cluster
-
----
-
-```bash
-minikube start --vm-driver=virtualbox
-
-kubectl get nodes
-
-git clone https://github.com/vfarcic/k8s-specs.git
-
-cd k8s-specs
-```
-
-
 ## Quick And Dirty Way To Run Pods
 
 ---
@@ -175,7 +153,5 @@ kubectl describe -f pod/go-demo-2-health.yml
 ## What Now?
 
 ```bash
-minikube delete
+kubectl delete -f pod/go-demo-2-health.yml
 ```
-
-* [PodSpec v1 core](https://kubernetes.io/docs/api-reference/v1.8/#pod-v1-core) (https://kubernetes.io/docs/api-reference/v1.8/#pod-v1-core)

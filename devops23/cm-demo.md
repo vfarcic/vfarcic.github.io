@@ -5,28 +5,6 @@
 # Using ConfigMaps To Inject Configuration Files
 
 
-## Gist
-
----
-
-[09-config-map.sh](https://gist.github.com/717f8418982cc5ec1c755fcf7d4255dd) (https://goo.gl/sdQL66)
-
-
-## Creating A Cluster
-
----
-
-```bash
-cd k8s-specs
-
-git pull
-
-minikube start --vm-driver=virtualbox
-
-kubectl config current-context
-```
-
-
 ## Injecting Configs From Files
 
 ---
@@ -187,9 +165,9 @@ open "http://$(minikube ip)/prometheus/targets"
 ---
 
 ```bash
-minikube delete
+kubectl delete -f cm/prometheus.yml
+
+kubectl delete -f cm/alpine-env-all.yml
+
+kubectl delete cm my-config
 ```
-
-[ConfigMap v1 core](https://v1-8.docs.kubernetes.io/docs/api-reference/v1.8/#configmap-v1-core) (https://v1-8.docs.kubernetes.io/docs/api-reference/v1.8/#configmap-v1-core)
-
-## Secrets coming next<!-- .element: class="fragment" -->

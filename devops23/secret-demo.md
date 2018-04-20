@@ -5,28 +5,6 @@
 # Using Secrets To Hide Confidential Information
 
 
-## Gist
-
----
-
-[10-secret.sh](https://gist.github.com/37b3ef7afeaf9237aeb2b9a8065b10c3) (https://goo.gl/PLL2fm)
-
-
-## Creating A Cluster
-
----
-
-```bash
-cd k8s-specs
-
-git pull
-
-minikube start --vm-driver=virtualbox
-
-kubectl config current-context
-```
-
-
 ## Exploring Built-In Secrets
 
 ---
@@ -85,9 +63,9 @@ kubectl rollout status deploy jenkins
 POD_NAME=$(kubectl get pods -l service=jenkins,type=master \
     -o jsonpath="{.items[*].metadata.name}")
 
-kubectl exec -it $POD_NAME -- ls /run/secrets
+kubectl exec -it $POD_NAME -- ls /etc/secrets
 
-kubectl exec -it $POD_NAME -- cat /run/secrets/jenkins-user
+kubectl exec -it $POD_NAME -- cat /etc/secrets/jenkins-user
 
 open "http://$(minikube ip)/jenkins"
 ```
@@ -101,9 +79,7 @@ open "http://$(minikube ip)/jenkins"
 ---
 
 ```bash
-minikube delete
+kubectl delete -f secret/jenkins.yml
+
+kubectl delete secret my-creds
 ```
-
-[Secret v1 core](https://v1-8.docs.kubernetes.io/docs/api-reference/v1.8/#secret-v1-core) (https://v1-8.docs.kubernetes.io/docs/api-reference/v1.8/#secret-v1-core)
-
-## Namespaces coming next<!-- .element: class="fragment" -->

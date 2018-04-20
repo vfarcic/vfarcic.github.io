@@ -20,7 +20,7 @@ I've been in this industry for around 25 years. I'm not even sure why and how I 
 
 **Q:** What advice would you give “newbie” programmers?
 
-**A:** Join an open source project. There is no better way to improve and learn than to work with other people on the same project without being bound by limitations imposed by commercial entities. Start small. Choose a tool or a framework you like (if you're out of ideas, join [Docker Flow Proxy](https://github.com/vfarcic/docker-flow-proxy)) and start with a very simple pull request. Correct or improve documentation. Answer a question. Fix the simplest issue you can find. From there on you'll enter into conversations with other contributors and start doing more and more complex PRs. The rest will come by itself.
+**A:** Join an open source project. There is no better way to improve and learn than to work with other people on the same project without being bound by limitations imposed by commercial entities. Start small. Choose a tool or a framework you like (if you're out of ideas, join [Docker Flow Proxy](https://github.com/docker-flow/docker-flow-proxy)) and start with a very simple pull request. Correct or improve documentation. Answer a question. Fix the simplest issue you can find. From there on you'll enter into conversations with other contributors and start doing more and more complex PRs. The rest will come by itself.
 
 **Q:** Do you feel pressured to work all the time? How demanding is your job and how demanding is coding, software, etc?
 

@@ -80,4 +80,17 @@ minikube start --vm-driver=virtualbox --kubernetes-version="v1.7.0"
 kubectl version --output=yaml
 
 minikube delete
+
+minikube start --vm-driver=virtualbox
+```
+
+
+## Getting The Code
+
+---
+
+```bash
+git clone https://github.com/vfarcic/k8s-specs.git
+
+cd k8s-specs
 ```

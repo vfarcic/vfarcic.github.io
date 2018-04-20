@@ -1,7 +1,7 @@
 TODO
 ====
 
-* Pre-load vfarcic/docker-flow-proxy
+* Pre-load dockerflow/docker-flow-proxy
 * Pre-load vfarcic/books-ms
 
 Self-Healing Systems Workshop

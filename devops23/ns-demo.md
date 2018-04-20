@@ -5,28 +5,6 @@
 # Dividing A Cluster Into Namespaces
 
 
-## Gist
-
----
-
-[11-ns.sh](https://gist.github.com/6e0a03df4c64a9248fbb68673c1ab719) (https://goo.gl/RF4o7G)
-
-
-## Creating A Cluster
-
----
-
-```bash
-cd k8s-specs
-
-git pull
-
-minikube start --vm-driver=virtualbox
-
-kubectl config current-context
-```
-
-
 ## Deploying The First Release
 
 ---
@@ -71,6 +49,10 @@ kubectl get ns
 <!-- .slide: data-background="img/default-ns.png" data-background-size="contain" -->
 
 
+## Exploring The Existing Namespaces
+
+---
+
 ```bash
 kubectl -n kube-public get all
 
@@ -90,8 +72,8 @@ kubectl create ns testing
 
 kubectl get ns
 
-kubectl config set-context testing -n=testing \
-    --cluster=minikube --user=minikube
+kubectl config set-context testing --namespace testing \
+    --cluster minikube --user minikube
 
 kubectl config view
 
@@ -175,7 +157,7 @@ kubectl set image deployment/go-demo-2-api \
 ---
 
 ```bash
-minikube delete
-```
+kubectl delete -f ns/go-demo-2.yml
 
-[Namespace v1 core](https://v1-8.docs.kubernetes.io/docs/api-reference/v1.8/#Namespace-v1-core)
+kubectl delete pod test
+```

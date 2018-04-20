@@ -1,4 +1,4 @@
-# [Workshop: Kubernetes: Deploying and managing highly-available and fault-tolerant applications at scale (2 days)](http://vfarcic.github.io/devops23/workshop.html)
+# [Workshop: Kubernetes: Deploying and managing highly-available and fault-tolerant applications at scale (3 days)](http://vfarcic.github.io/devops23/workshop.html)
 
 ## Abstract
 
@@ -10,19 +10,49 @@ Zero-downtime deployments, fault tolerance, high availability, scaling, scheduli
 
 In this course, you will learn (almost) everything you need to know about Kubernetes.
 
+## 
+
 ## Agenda
 
 ### Day 1
 
 * [Building Docker Images](http://vfarcic.github.io/devops23/workshop.html#/docker-image)
+
+Create a Dockerfile with Multi-Stage builds that envelops whole CI process from running unit tests, through building binaries, all the way until a Docker image is created and pushed to a registry.
+
 * [What Is A Container Scheduler?](http://vfarcic.github.io/devops23/workshop.html#/7)
+
+Learn the short history of software and infrastructure development, why we need containers and container schedulers, and what is Kubernetes.
+
 * [Running A Kubernetes Cluster Locally](http://vfarcic.github.io/devops23/workshop.html#/8/1)
+
+Learn to create a Kubernetes cluster locally.
+
+Minikube creates a single-node cluster inside a VM on your laptop. While that is not ideal since we won't be able to demonstrate some of the features Kubernetes provides in a multi-node setup, it should be more than enough to explain most of the concepts behind Kubernetes. Later on, we'll move into a more production-like environment and explore the features that cannot be demonstrated in Minikube.
+
 * [Creating Pods](http://vfarcic.github.io/devops23/workshop.html#/10)
+
+A Pod encapsulates one or more containers. It provides a unique network IP, it attaches storage resources, and it decides how containers should run. Everything in a Pod is tightly coupled.
+
 * [Scaling Pods With ReplicaSets](http://vfarcic.github.io/devops23/workshop.html#/12)
+
+ReplicaSet’s primary, and pretty much only function, is to ensure that a specified number of replicas of a Pod matches the actual state (almost) all the time. That means that ReplicaSets make Pods scalable.
+
 * [Using Services To Enable Communication Between Pods](http://vfarcic.github.io/devops23/workshop.html#/14)
+
+We need a stable, never-to-be-changed address that will forward requests to whichever Pod is currently running. Kubernetes Services provide addresses through which associated Pods can be accessed.
+
 * [Deploying Releases With Zero-Downtime](http://vfarcic.github.io/devops23/workshop.html#/16)
+
+While we might never be able to reach 100% availability, we should certainly not cause downtime ourselves and must minimise other factors that could cause downtime. We'll try to accomplish zero-downtime deployment of new releases through Kubernetes Deployments.
+
 * [Using Ingress To Forward Traffic](http://vfarcic.github.io/devops23/workshop.html#/18)
+
+Ingress objects manage external access to the applications running inside a Kubernetes cluster. It provides an API that allows us to accomplish path and domain routing and SSL certifications, in addition to a few other features we expect from a dynamic cluster.
+
 * [Using Volumes To Access Host's File System](http://vfarcic.github.io/devops23/workshop.html#/20)
+
+Kubernetes Volumes solve the need to preserve the state across container crashes. In essence, Volumes are references to files and directories made accessible to containers that form a Pod.
 
 ### Day 2
 
@@ -33,6 +63,11 @@ In this course, you will learn (almost) everything you need to know about Kubern
 * [Managing Resources](http://vfarcic.github.io/devops23/workshop.html#/30)
 * [Creating A Production-Ready Kubernetes Cluster](http://vfarcic.github.io/devops23/workshop.html#/32)
 * [Persisting State](http://vfarcic.github.io/devops23/workshop.html#/34)
+
+### Day 3
+
+* [Deploying Stateful Applications At Scale](http://vfarcic.github.io/devops23/workshop.html#/36)
+* Q&A
 
 # Workshop: Kubernetes (5 days)
 

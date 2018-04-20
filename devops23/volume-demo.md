@@ -5,27 +5,22 @@
 # Using Volumes To Access Host's File System
 
 
-## Gist
-
----
-
-[08-volume.sh](https://gist.github.com/5acafb64c0124a1965f6d371dd0dedd1) (https://goo.gl/v5xzyA)
-
-
-## Creating A Cluster
+## Adding Files
 
 ---
 
 ```bash
-cd k8s-specs
-
-git pull
+minikube stop
 
 cp volume/prometheus-conf.yml ~/.minikube/files
 
-minikube start --vm-driver=virtualbox
+minikube start
 
-kubectl config current-context
+minikube ssh "ls -l /files"
+
+minikube ssh "sudo mkdir /files"
+
+minikube ssh "sudo mv /prometheus-conf.yml  /files/"
 ```
 
 
@@ -142,9 +137,6 @@ kubectl delete -f volume/prometheus-host-path.yml
 ```
 
 
-<!-- .slide: data-background="img/prometheus-targets.png" data-background-size="contain" -->
-
-
 ## gitRepo > Git Repository
 
 ---
@@ -185,6 +177,8 @@ kubectl rollout status deploy jenkins
 open "http://$(minikube ip)/jenkins"
 
 open "http://$(minikube ip)/jenkins/newJob"
+
+# Create a new job
 ```
 
 
@@ -228,9 +222,6 @@ open "http://$(minikube ip)/jenkins"
 ```
 
 
-<!-- .slide: data-background="img/jenkins.png" data-background-size="contain" -->
-
-
 <!-- .slide: data-background="img/volume-components.png" data-background-size="contain" -->
 
 
@@ -239,7 +230,5 @@ open "http://$(minikube ip)/jenkins"
 ---
 
 ```bash
-minikube delete
+kubectl delete -f volume/jenkins-empty-dir.yml
 ```
-
-[Volume v1 core](https://v1-8.docs.kubernetes.io/docs/api-reference/v1.8/#volume-v1-core) (https://v1-8.docs.kubernetes.io/docs/api-reference/v1.8/#volume-v1-core)

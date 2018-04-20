@@ -5,80 +5,6 @@
 # Deploying Stateful Applications At Scale
 
 
-## Gist
-
----
-
-[01-sts.sh](https://gist.github.com/505aedf2cb268837983132d4e4385fab) (https://bit.ly/2GUprBC)
-
-
-## Creating A Cluster
-
----
-
-```bash
-git clone https://github.com/vfarcic/k8s-specs.git
-
-cd k8s-specs
-
-mkdir -p cluster
-
-cd cluster
-
-cat kops
-
-source kops
-
-export BUCKET_NAME=devops23-$(date +%s)
-
-export KOPS_STATE_STORE=s3://$BUCKET_NAME
-```
-
-
-## Creating A Cluster
-
----
-
-```bash
-aws s3api create-bucket --bucket $BUCKET_NAME \
-    --create-bucket-configuration \
-    LocationConstraint=$AWS_DEFAULT_REGION
-
-# Windows only
-alias kops="docker run -it --rm -v $PWD/devops23.pub:/devops23.pub \
-    -v $PWD/config:/config -e KUBECONFIG=/config/kubecfg.yaml \
-    -e NAME=$NAME -e ZONES=$ZONES \
-    -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
-    -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
-    -e KOPS_STATE_STORE=$KOPS_STATE_STORE \
-    vfarcic/kops"
-```
-
-
-## Creating A Cluster
-
----
-
-```bash
-kops create cluster --name $NAME --zones $ZONES \
-    --master-count 3 --master-size t2.small --master-zones $ZONES \
-    --node-count 2 --node-size t2.medium --networking kubenet \
-    --ssh-public-key devops23.pub --authorization RBAC --yes
-
-kops validate cluster
-
-# Windows only
-kops export kubecfg --name ${NAME}
-
-# Windows only
-export KUBECONFIG=$PWD/config/kubecfg.yaml
-
-kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/ingress-nginx/v1.6.0.yaml
-
-cd ..
-```
-
-
 ## Using StatefulSets
 
 ---
@@ -151,13 +77,7 @@ cat sts/go-demo-3-sts.yml
 
 kubectl create -f sts/go-demo-3-sts.yml --record --save-config
 
-kubectl -n go-demo-3 get pods
-
-kubectl -n go-demo-3 get pods
-
-kubectl -n go-demo-3 get pods
-
-kubectl -n go-demo-3 get pods
+kubectl -n go-demo-3 get pods # Repeat
 
 kubectl get pv
 ```
@@ -221,7 +141,7 @@ diff sts/go-demo-3-sts.yml sts/go-demo-3-sts-upd.yml
 
 kubectl apply -f sts/go-demo-3-sts-upd.yml --record
 
-kubectl -n go-demo-3 get pods
+kubectl -n go-demo-3 get pods # Repeat
 
 kubectl delete ns go-demo-3
 ```
@@ -245,9 +165,5 @@ kubectl -n go-demo-3 logs db-0 -c db-sidecar
 ---
 
 ```bash
-kops delete cluster --name $NAME --yes
-
-aws s3api delete-bucket --bucket $BUCKET_NAME
+kubectl delete ns go-demo-3
 ```
-
-* [StatefulSet v1beta2 apps](https://v1-8.docs.kubernetes.io/docs/api-reference/v1.8/#statefulset-v1beta2-apps)

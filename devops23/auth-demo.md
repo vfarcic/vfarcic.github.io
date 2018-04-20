@@ -5,13 +5,6 @@
 # Securing Kubernetes Clusters
 
 
-## Gist
-
----
-
-[12-auth.sh](https://gist.github.com/f2c4a72a1e010f1237eea7283a9a0c11) (https://goo.gl/tVeAqL)
-
-
 ## Accessing Kubernetes API
 
 ---
@@ -25,20 +18,11 @@ kubectl config view \
 ```
 
 
-## Creating A Cluster
+## Deploying go-demo-2
 
 ---
 
 ```bash
-cd k8s-specs
-
-git pull
-
-minikube start --vm-driver virtualbox \
-    --extra-config apiserver.Authorization.Mode=RBAC
-
-kubectl config current-context
-
 kubectl create -f auth/go-demo-2.yml --record --save-config
 ```
 
@@ -234,7 +218,7 @@ kubectl -n default delete deployment db
 
 ```bash
 kubectl config set-context jdoe --cluster jdoe --user jdoe \
-    -n jdoe
+    --namespace jdoe
 
 kubectl config use-context jdoe
 
@@ -273,10 +257,11 @@ kubectl -n dev run new-db --image mongo:3.3
 ---
 
 ```bash
-minikube delete
-```
+kubectl config use-context minikube
 
-* [Role v1 rbac](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.9/#role-v1-rbac)
-* [ClusterRole v1 rbac](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.9/#clusterrole-v1-rbac)
-* [RoleBinding v1 rbac](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.9/#rolebinding-v1-rbac)
-* [ClusterRoleBinding v1 rbac](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.9/#clusterrolebinding-v1-rbac)
+kubectl delete deploy db
+
+kubectl delete rolebinding release-manager
+
+kubectl delete ns jdoe dev
+```
