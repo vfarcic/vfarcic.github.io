@@ -163,8 +163,8 @@ alias kops="docker run -it --rm \
 ---
 
 ```bash
-kops create cluster --name $NAME --master-count 3 --node-count 1 \
-    --node-size t2.medium --master-size t2.small --zones $ZONES \
+kops create cluster --name $NAME --master-count 3 --node-count 3 \
+    --master-size t2.small --node-size t2.medium --zones $ZONES \
     --master-zones $ZONES --ssh-public-key devops23.pub \
     --networking kubenet --authorization RBAC \
     --kubernetes-version v1.8.4 --yes

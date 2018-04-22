@@ -132,8 +132,6 @@ exit
 
 open "http://$CLUSTER_DNS/monitor/graph"
 
-# Execute `haproxy_backend_connections_total`
-
 for ((n=0;n<200;n++)); do
     curl "http://$CLUSTER_DNS/demo/hello"
 done
@@ -145,8 +143,6 @@ done
 ---
 
 ```bash
-# Execute `haproxy_backend_connections_total`
-
 # Execute `container_memory_usage_bytes{container_label_com_docker_swarm_service_name="go-demo_main"}`
 
 # Execute `sum by (instance) (node_memory_MemFree)`
