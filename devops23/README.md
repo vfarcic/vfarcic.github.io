@@ -10,8 +10,6 @@ Zero-downtime deployments, fault tolerance, high availability, scaling, scheduli
 
 In this course, you will learn (almost) everything you need to know about Kubernetes.
 
-## 
-
 ## Agenda
 
 ### Day 1
@@ -85,27 +83,27 @@ Kubernetes Volumes solve the need to preserve the state across container crashes
 ### Day 2
 
 [X] [Hands-on introduction to Docker](http://vfarcic.github.io/devops21/workshop.html)
-[X] Test driven development using Docker containers
+[X] [Test driven development using Docker containers](http://vfarcic.github.io/devops23/workshop.html#/5)
 [ ] Docker API
-[X] Design and develop all the steps of a CI pipeline running from command line
+[X] [Design and develop all the steps of a CI pipeline running from command line](http://vfarcic.github.io/devops23/workshop.html#/5)
 [X] [Integrate manual command line steps into an automated Pipeline (e.g., Jenkins)](http://vfarcic.github.io/jenkins-docker/workshop.html)
 [X] [Minikube installation](http://vfarcic.github.io/devops23/workshop.html)
-[X] Pods
-[X] ReplicaSets
-[X] Services
-[X] Deployments
-[X] Networking
-[X] Load balancing and Service Discovery
-[X] K8s and Docker Security
-[X] Compare K8s vs Docker Swarm
+[X] [Pods](http://vfarcic.github.io/devops23/workshop.html#/9)
+[X] [ReplicaSets](http://vfarcic.github.io/devops23/workshop.html#/11)
+[X] [Services](http://vfarcic.github.io/devops23/workshop.html#/13)
+[X] [Deployments](http://vfarcic.github.io/devops23/workshop.html#/15)
+[X] [Networking](http://vfarcic.github.io/devops23/workshop.html#/13)
+[X] [Load balancing and Service Discovery](http://vfarcic.github.io/devops23/workshop.html#/13)
+[X] [K8s and Docker Security](http://vfarcic.github.io/devops23/workshop.html#/27)
+[ ] Compare K8s vs Docker Swarm
 
 ### Day 3
 
-[X] Deploy CD service and agents
-[X] Translate previous exercises into a CD pipeline
-[X] Automated proxy configuration
-[X] Zero downtime deployment
-[X] Defining Logging Strategy
+[ ] [Deploy CD service and agents](http://vfarcic.github.io/devops23/workshop.html#/43)
+[ ] [Translate previous exercises into a CD pipeline](http://vfarcic.github.io/devops23/workshop.html#/45)
+[ ] [Automated proxy configuration](http://vfarcic.github.io/devops23/workshop.html#/17)
+[ ] [Zero downtime deployment](http://vfarcic.github.io/devops23/workshop.html#/15)
+[X] [Defining Logging Strategy](http://vfarcic.github.io/devops23/workshop.html#/27)
 [ ] Monitoring and alerting (Introduction and best practices)
 
 ### Day 4

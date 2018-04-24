@@ -163,7 +163,7 @@ alias kops="docker run -it --rm \
 ---
 
 ```bash
-kops create cluster --name $NAME --master-count 3 --node-count 3 \
+kops create cluster --name $NAME --master-count 3 --node-count 1 \
     --master-size t2.small --node-size t2.medium --zones $ZONES \
     --master-zones $ZONES --ssh-public-key devops23.pub \
     --networking kubenet --authorization RBAC \
@@ -209,7 +209,7 @@ kops edit --help
 
 kops edit ig --name $NAME nodes
 
-# Change `maxSize` and `minSize` to `2`
+# Change `maxSize` and `minSize` to `3`
 ```
 
 
