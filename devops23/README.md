@@ -99,12 +99,12 @@ Kubernetes Volumes solve the need to preserve the state across container crashes
 
 ### Day 3
 
-[ ] [Deploy CD service and agents](http://vfarcic.github.io/devops23/workshop.html#/43)
-[ ] [Translate previous exercises into a CD pipeline](http://vfarcic.github.io/devops23/workshop.html#/45)
-[ ] [Automated proxy configuration](http://vfarcic.github.io/devops23/workshop.html#/17)
-[ ] [Zero downtime deployment](http://vfarcic.github.io/devops23/workshop.html#/15)
-[X] [Defining Logging Strategy](http://vfarcic.github.io/devops23/workshop.html#/27)
-[ ] Monitoring and alerting (Introduction and best practices)
+[X] [Deploy CD service and agents](http://vfarcic.github.io/devops23/workshop.html#/43)
+[X] [Translate previous exercises into a CD pipeline](http://vfarcic.github.io/devops23/workshop.html#/45)
+[X] [Automated proxy configuration](http://vfarcic.github.io/devops23/workshop.html#/17)
+[X] [Zero downtime deployment](http://vfarcic.github.io/devops23/workshop.html#/15)
+[X] [Defining Logging Strategy](http://vfarcic.github.io/devops23/workshop.html#/47)
+[X] [Monitoring and alerting (Introduction and best practices)](http://vfarcic.github.io/devops23/workshop.html#/49)
 
 ### Day 4
 

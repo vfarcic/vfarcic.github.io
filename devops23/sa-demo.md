@@ -5,6 +5,20 @@
 # Service Accounts
 
 
+## Cluster Setup
+
+---
+
+```bash
+source cluster/kops
+
+chmod +x kops/cluster-setup.sh
+
+NODE_COUNT=3 NODE_SIZE=t2.medium \
+    ./kops/cluster-setup.sh
+```
+
+
 ## Jenkins With Kubernetes
 
 ---
@@ -48,8 +62,8 @@ open "http://$CLUSTER_DNS/jenkins/pluginManager/available"
 
 * Type *Kubernetes* in the *Filter* field
 * Select *Kubernetes* checkbox
-* Type *Kubernetes* in the *Filter* field
-* Select *Kubernetes* checkbox
+* Type *BlueOcean* in the *Filter* field
+* Select *BlueOcean* checkbox
 * Click the *Install without restart* button
 
 
@@ -146,9 +160,7 @@ podTemplate(
 * Click the *Run* button
 
 ```bash
-kubectl -n jenkins get pods
-
-kubectl -n jenkins get pods
+kubectl -n jenkins get pods # Repeat until the Pod is gone
 
 kubectl delete ns jenkins
 ```
@@ -214,7 +226,7 @@ kubectl describe sa view
 
 kubectl describe rolebinding view
 
-cat sa/test-view.yml
+cat sa/kubectl-view.yml
 
 kubectl create -f sa/kubectl-view.yml --record --save-config
 ```
@@ -256,11 +268,11 @@ kubectl create -f sa/kubectl-test1.yml --record --save-config
 
 kubectl -n test1 exec -it kubectl -- sh
 
-kubectl get pods
-
 kubectl run new-test --image=alpine --restart=Never sleep 10000
 
 kubectl get pods
+
+kubectl run new-test --image=alpine sleep 10000
 
 kubectl -n test2 get pods
 ```
@@ -347,8 +359,8 @@ open "http://$CLUSTER_DNS/jenkins/pluginManager/available"
 
 * Type *Kubernetes* in the *Filter* field
 * Select *Kubernetes* checkbox
-* Type *Kubernetes* in the *Filter* field
-* Select *Kubernetes* checkbox
+* Type *BlueOcean* in the *Filter* field
+* Select *BlueOcean* checkbox
 * Click the *Install without restart* button
 
 
@@ -420,11 +432,9 @@ podTemplate(
 * Click the *Run* button
 
 ```bash
-kubectl -n build get pods
+kubectl -n build get pods # Repeat until the new Pod is terminated
 
-kubectl -n build get pods
-
-kubectl delete ns jenkins
+kubectl delete ns jenkins build
 ```
 
 
@@ -450,5 +460,5 @@ kubectl delete ns go-demo-3
 ---
 
 ```bash
-TODO
+kubectl delete sa,rolebinding view
 ```

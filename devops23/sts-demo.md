@@ -5,6 +5,20 @@
 # Deploying Stateful Applications At Scale
 
 
+## Cluster Setup
+
+---
+
+```bash
+source cluster/kops
+
+chmod +x kops/cluster-setup.sh
+
+NODE_COUNT=3 NODE_SIZE=t2.medium \
+    ./kops/cluster-setup.sh
+```
+
+
 ## Using StatefulSets
 
 ---
