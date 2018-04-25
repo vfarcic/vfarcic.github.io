@@ -5,7 +5,21 @@
 # Helm
 
 
-## Setup
+## Cluster Setup
+
+---
+
+```bash
+source cluster/kops
+
+chmod +x kops/cluster-setup.sh
+
+NODE_COUNT=3 NODE_SIZE=t2.medium \
+    ./kops/cluster-setup.sh
+```
+
+
+## Helm Setup
 
 ---
 
@@ -150,9 +164,7 @@ LB_IP=$(dig +short $LB_ADDR | tail -n 1)
 
 JENKINS_ADDR="jenkins.$LB_IP.xip.io"
 
-helm install stable/jenkins --name jenkins --namespace jenkins \
-    --values helm/jenkins-values.yml \
-    --set Master.HostName=$JENKINS_ADDR
+cat helm/jenkins-values.yml
 ```
 
 
@@ -161,6 +173,10 @@ helm install stable/jenkins --name jenkins --namespace jenkins \
 ---
 
 ```bash
+helm install stable/jenkins --name jenkins --namespace jenkins \
+    --values helm/jenkins-values.yml \
+    --set Master.HostName=$JENKINS_ADDR
+
 kubectl -n jenkins rollout status deployment jenkins
 
 open "http://$JENKINS_ADDR"
@@ -170,7 +186,14 @@ kubectl -n jenkins get secret jenkins \
     | base64 --decode; echo
     
 helm get values jenkins
+```
 
+
+## Jenkins
+
+---
+
+```bash
 helm delete jenkins --purge
 
 kubectl delete ns jenkins
@@ -186,23 +209,48 @@ cd ../go-demo-3
 
 helm create my-app
 
-helm dependency update
+helm dependency update my-app
 
 helm package my-app
 
 helm lint my-app
 
-rm -rf my-app
-
 helm install ./my-app-0.1.0.tgz --name my-app
 
 helm delete my-app --purge
+
+rm -rf my-app*
 ```
 
 
 ## Creating Charts
 
 ---
+
+```bash
+ls -l helm helm/go-demo-3
+
+cat helm/go-demo-3/Chart.yaml
+
+cat helm/go-demo-3/LICENSE
+
+cat helm/go-demo-3/README.md
+
+cat helm/go-demo-3/values.yaml
+
+ls -l helm/go-demo-3/templates/
+
+cat helm/go-demo-3/templates/NOTES.txt
+
+cat helm/go-demo-3/templates/deployment.yaml
+```
+
+
+## Creating Charts
+
+---
+
+* The rest of the files are following the same logic
 
 ```bash
 helm lint helm/go-demo-3
@@ -218,13 +266,13 @@ helm package helm/go-demo-3 -d helm
 ```bash
 TAG=0.0.1
 
-git tag -a $TAG -m 'A new release. Hooray!'
+git tag -a $TAG -m 'A new release. Hooray!' -f
 
 GITHUB_USER=[...]
 
 GITHUB_TOKEN=[...]
 
-git push \
+git push -f \
     https://$GITHUB_USER:$GITHUB_TOKEN@github.com/$GITHUB_USER/go-demo-3.git \
     --tags
 
@@ -391,5 +439,5 @@ curl http://$LB_IP/demo/hello
 ---
 
 ```bash
-TODO
+kubectl delete ns go-demo-3
 ```

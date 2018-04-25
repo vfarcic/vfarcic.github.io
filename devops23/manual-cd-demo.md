@@ -5,17 +5,35 @@
 # Manual CD
 
 
+## Cluster Setup
+
+---
+
+```bash
+source cluster/kops
+
+chmod +x kops/cluster-setup.sh
+
+NODE_COUNT=3 NODE_SIZE=t2.medium \
+    ./kops/cluster-setup.sh
+```
+
+
 ## Preparing build ns
 
 ---
 
 ```bash
+cat ../go-demo-3/k8s/build-ns.yml
+
 kubectl create -f ../go-demo-3/k8s/build-ns.yml \
     --save-config --record
 
 kubectl -n go-demo-3-build describe rolebinding build
 
 kubectl -n go-demo-3-build describe clusterrole admin
+
+cat ../go-demo-3/k8s/prod-ns.yml
 
 kubectl create -f ../go-demo-3/k8s/prod-ns.yml \
     --save-config --record
@@ -28,6 +46,8 @@ kubectl create -f ../go-demo-3/k8s/prod-ns.yml \
 
 ```bash
 kubectl create ns go-demo-3-1-0-beta
+
+cat cd/docker-socket.yml
 
 kubectl -n go-demo-3-1-0-beta create -f cd/docker-socket.yml \
     --save-config --record
@@ -62,6 +82,8 @@ cd go-demo-3
 
 export DH_USER=[...]
 
+docker login -u $DH_USER
+
 docker image build -t $DH_USER/go-demo-3:1.0-beta .
 
 exit
@@ -80,6 +102,8 @@ exit
 kubectl delete ns go-demo-3-1-0-beta
 
 export GH_USER=[...]
+
+rm -rf ../go-demo-3
 
 git clone https://github.com/$GH_USER/go-demo-3.git ../go-demo-3
 
@@ -113,9 +137,11 @@ docker image push $DH_USER/go-demo-3:1.0-beta
 ---
 
 ```bash
-open "https://github.com/vfarcic/kubectl"
+cat ../go-demo-3/k8s/kubectl.yml
 
-open "https://hub.docker.com/r/vfarcic/kubectl/"
+open "https://github.com/vfarcic/kubectl/blob/master/Dockerfile"
+
+open "https://hub.docker.com/r/vfarcic/kubectl/tags/"
 
 kubectl apply -f ../go-demo-3/k8s/kubectl.yml
 
@@ -135,8 +161,6 @@ kubectl auth can-i create deployment
 kubectl -n go-demo-3 auth can-i create sts
 
 kubectl -n default auth can-i create deployment
-
-kubectl auth can-i create ns
 ```
 
 
@@ -145,10 +169,13 @@ kubectl auth can-i create ns
 ---
 
 ```bash
+kubectl auth can-i create ns
+
 cat /tmp/build.yml | sed -e "s@:latest@:1.0-beta@g" | tee build.yml
 
-kubectl -n go-demo-3-build exec -it kubectl -- kubectl apply \
-    -f /tmp/build.yml --record
+kubectl apply -f /tmp/build.yml --record
+
+exit
 ```
 
 * We won't do this any more. It's painful and unintuitive, but we'll need something similar later.
@@ -216,7 +243,7 @@ exit
 * Can't delete the Namespace since it's set up by a cluster admin. Also, we still need that Namespace.
 
 ```bash
-kubectl delete -f build.yml
+kubectl delete -f ../go-demo-3/k8s/build.yml
 
 kubectl -n go-demo-3-build get all
 ```
@@ -227,13 +254,15 @@ kubectl -n go-demo-3-build get all
 ---
 
 ```bash
-docker image tag $GH_USER/go-demo-3:1.0-beta $GH_USER/go-demo-3:1.0
+docker image tag $DH_USER/go-demo-3:1.0-beta \
+    $DH_USER/go-demo-3:1.0
 
-docker image push $GH_USER/go-demo-3:1.0
+docker image push $DH_USER/go-demo-3:1.0
 
-docker image tag $GH_USER/go-demo-3:1.0-beta $GH_USER/go-demo-3:latest
+docker image tag $DH_USER/go-demo-3:1.0-beta \
+    $DH_USER/go-demo-3:latest
 
-docker image push $GH_USER/go-demo-3:latest
+docker image push $DH_USER/go-demo-3:latest
 ```
 
 
@@ -292,5 +321,5 @@ kubectl -n go-demo-3-build delete pods --all
 ---
 
 ```bash
-TODO
+kubectl delete ns go-demo-3 go-demo-3-build
 ```

@@ -74,7 +74,6 @@ Kubernetes Volumes solve the need to preserve the state across container crashes
 ### Day 1
 
 [X] [DevOps 2.0](http://vfarcic.github.io/devops20/index.html)
-[X] [DevOps 2.3](http://vfarcic.github.io/devops23/index.html)
 [X] Management crash course on Kubernetes, Microservices, CI/CD
 [X] Explanation of company's tools, practices, and architecture
 [X] Discussion about microservices
