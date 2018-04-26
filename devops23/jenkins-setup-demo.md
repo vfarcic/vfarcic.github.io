@@ -5,6 +5,21 @@
 # Jenkins Setup
 
 
+## Cluster Setup
+## (if not already running)
+
+---
+
+```bash
+source cluster/kops
+
+chmod +x kops/cluster-setup.sh
+
+NODE_COUNT=3 NODE_SIZE=t2.medium USE_HELM=true \
+    ./kops/cluster-setup.sh
+```
+
+
 ## Running Jenkins
 
 ---

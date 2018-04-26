@@ -5,6 +5,21 @@
 # Monitoring
 
 
+## Cluster Setup
+## (if not already running)
+
+---
+
+```bash
+source cluster/kops
+
+chmod +x kops/cluster-setup.sh
+
+NODE_COUNT=3 NODE_SIZE=t2.medium \
+    ./kops/cluster-setup.sh
+```
+
+
 ## Prometheus Chart
 
 ---
@@ -54,13 +69,13 @@ open "http://$MON_ADDR"
 
 ---
 
-* Run `container_memory_usage_bytes{namespace="go-demo-3"}`
-* Run `sum(container_memory_usage_bytes{namespace="go-demo-3"})`
-* Run `container_memory_usage_bytes{pod_name=~"go-demo-3-db.+"}`
-* Run `container_memory_usage_bytes{pod_name=~"go-demo-3-db.+", container_name="db"}`
-* Run `node_memory_MemTotal`
-* Run `node_memory_MemFree`
-* Run `node_memory_MemAvailable`
+* `container_memory_usage_bytes{namespace="go-demo-3"}`
+* `sum(container_memory_usage_bytes{namespace="go-demo-3"})`
+* `container_memory_usage_bytes{pod_name=~"go-demo-3-db.+"}`
+* `container_memory_usage_bytes{pod_name=~"go-demo-3-db.+", container_name="db"}`
+* `node_memory_MemTotal`
+* `node_memory_MemFree`
+* `node_memory_MemAvailable`
 
 
 ## Grafana Chart
@@ -82,9 +97,19 @@ kubectl -n mon rollout status deploy grafana
 open "http://$GRAFANA_ADDR"
 
 kubectl get secret -n mon grafana \
-    -o jsonpath="{.data.admin-password}" \
-    | base64 --decode ; echo
+    -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 ```
+
+
+## Grafana Chart
+
+---
+
+```bash
+echo "http://$MON_ADDR"
+```
+
+* Import dashboards *3131*, *1621*
 
 
 ## What Now?
@@ -92,5 +117,5 @@ kubectl get secret -n mon grafana \
 ---
 
 ```bash
-TODO
+kubectl delete ns mon
 ```

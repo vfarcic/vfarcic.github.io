@@ -6,6 +6,7 @@
 
 
 ## Cluster Setup
+## (if not already running)
 
 ---
 

@@ -5,6 +5,21 @@
 # Logging
 
 
+## Cluster Setup
+## (if not already running)
+
+---
+
+```bash
+source cluster/kops
+
+chmod +x kops/cluster-setup.sh
+
+NODE_COUNT=3 NODE_SIZE=t2.medium \
+    ./kops/cluster-setup.sh
+```
+
+
 ## kubectl logs
 
 ---
@@ -36,8 +51,6 @@ POD_NAME=$(kubectl -n go-demo-3 get pods -l app=api \
     -o jsonpath="{.items[0].metadata.name}")
 
 kubectl -n go-demo-3 logs $POD_NAME
-
-kubectl -n go-demo-3 logs sts db -c db
 ```
 
 
@@ -52,9 +65,11 @@ kubectl create -f logs/fluentd-elk.yml --save-config --record
 
 kubectl -n kube-system get pods
 
-KIBANA_POD_NAME=[...]
+KIBANA_POD_NAME=$(kubectl -n kube-system get pods \
+    -l k8s-app=kibana-logging \
+    -o jsonpath="{.items[0].metadata.name}")
 
-kubectl -n kube-system logs -f $KIBANA_POD_NAME
+kubectl -n kube-system logs $KIBANA_POD_NAME
 
 DNS=$(kubectl -n kube-system get ing kibana-logging \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
@@ -67,7 +82,18 @@ open "http://$DNS"
 
 ---
 
+* `kubernetes.namespace_name: "go-demo-3"`
+* `kubernetes.namespace_name: "go-demo-3" AND kubernetes.container_name: "api"`
+* `kubernetes.namespace_name: "go-demo-3" AND kubernetes.container_name: "db"`
+
+
+## FluentD + ELK
+
+---
+
 ```bash
+cat logs/logger.yml
+
 kubectl create -f logs/logger.yml
 
 kubectl logs -f random-logger
@@ -75,11 +101,17 @@ kubectl logs -f random-logger
 open "http://$DNS"
 ```
 
+* `kubernetes.pod_name: "random-logger"`
+
 
 ## What Now?
 
 ---
 
 ```bash
-TODO
+kubectl delete -f logs/go-demo-3.yml
+
+kubectl delete -f logs/fluentd-elk.yml
+
+kubectl delete -f logs/logger.yml
 ```

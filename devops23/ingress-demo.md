@@ -93,7 +93,7 @@ kubectl delete -f ingress/go-demo-2-deploy.yml
 ---
 
 ```bash
-cat ingress/go-demo-2.ymlxxx
+cat ingress/go-demo-2.yml
 
 kubectl create -f ingress/go-demo-2.yml --record --save-config
 
