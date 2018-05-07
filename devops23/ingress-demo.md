@@ -61,7 +61,7 @@ minikube addons enable ingress
 eval $(minikube docker-env)
 
 docker container ps --format "table {{.Names}}\t{{.Status}}" \
-    -f name=8s_nginx-ingress-controller
+    -f name=k8s_nginx-ingress-controller
 
 curl -i "http://$IP/healthz"
 
