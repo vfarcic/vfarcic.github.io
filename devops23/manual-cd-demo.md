@@ -95,7 +95,7 @@ exit
 
 ---
 
-* Docker might be too too old
+* Docker might be too old
 * Socket is exposed
 * The node is logged in
 

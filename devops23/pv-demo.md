@@ -76,11 +76,11 @@ VOLUME_ID_1=$(aws ec2 create-volume --availability-zone $AZ_1 \
     --tag-specifications "ResourceType=volume,Tags=[{Key=KubernetesCluster,Value=$NAME}]" \
     --size 10 --volume-type gp2 | jq -r '.VolumeId')
 
-VOLUME_ID_2=$(aws ec2 create-volume --availability-zone $AZ_1 \
+VOLUME_ID_2=$(aws ec2 create-volume --availability-zone $AZ_2 \
     --tag-specifications "ResourceType=volume,Tags=[{Key=KubernetesCluster,Value=$NAME}]" \
     --size 10 --volume-type gp2 | jq -r '.VolumeId')
 
-VOLUME_ID_3=$(aws ec2 create-volume --availability-zone $AZ_2 \
+VOLUME_ID_3=$(aws ec2 create-volume --availability-zone $AZ_3 \
     --tag-specifications "ResourceType=volume,Tags=[{Key=KubernetesCluster,Value=$NAME}]" \
     --size 10 --volume-type gp2 | jq -r '.VolumeId')
 

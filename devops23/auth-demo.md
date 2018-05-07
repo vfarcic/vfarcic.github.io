@@ -264,4 +264,6 @@ kubectl delete deploy db
 kubectl delete rolebinding release-manager
 
 kubectl delete ns jdoe dev
+
+kubectl delete -f auth/go-demo-2.yml
 ```
