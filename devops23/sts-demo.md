@@ -27,7 +27,7 @@ NODE_COUNT=3 NODE_SIZE=t2.medium \
 ```bash
 cat sts/jenkins.yml
 
-kubectl create -f sts/jenkins.yml --record --save-config
+kubectl apply -f sts/jenkins.yml --record
 
 kubectl -n jenkins rollout status sts jenkins
 
@@ -51,7 +51,7 @@ kubectl delete ns jenkins
 ```bash
 cat sts/go-demo-3-deploy.yml
 
-kubectl create -f sts/go-demo-3-deploy.yml --record --save-config
+kubectl apply -f sts/go-demo-3-deploy.yml --record
 
 kubectl -n go-demo-3 rollout status deployment api
 
@@ -90,7 +90,7 @@ kubectl delete ns go-demo-3
 ```bash
 cat sts/go-demo-3-sts.yml
 
-kubectl create -f sts/go-demo-3-sts.yml --record --save-config
+kubectl apply -f sts/go-demo-3-sts.yml --record
 
 kubectl -n go-demo-3 get pods # Repeat
 
@@ -169,7 +169,7 @@ kubectl delete ns go-demo-3
 ```bash
 cat sts/go-demo-3.yml
 
-kubectl create -f sts/go-demo-3.yml --record --save-config
+kubectl apply -f sts/go-demo-3.yml --record
 
 kubectl -n go-demo-3 logs db-0 -c db-sidecar
 ```

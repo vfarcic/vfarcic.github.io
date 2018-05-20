@@ -32,7 +32,7 @@ services:
       - monitor
     secrets:
       - alert_manager_config
-    command: -config.file=/run/secrets/alert_manager_config -storage.path=/alertmanager
+    command: --config.file=/run/secrets/alert_manager_config --storage.path=/alertmanager
 
   swarm-listener:
     image: vfarcic/docker-flow-swarm-listener
