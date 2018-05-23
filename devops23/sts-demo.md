@@ -20,7 +20,7 @@ NODE_COUNT=3 NODE_SIZE=t2.medium \
 ```
 
 
-## Using StatefulSets
+## Using StatefulSets To Run Stateful Applications
 
 ---
 
@@ -44,32 +44,35 @@ kubectl delete ns jenkins
 ```
 
 
-## Using Deployments At Scale
+## Using Deployments To Run Stateful Applications At Scale
 
 ---
 
 ```bash
 cat sts/go-demo-3-deploy.yml
 
-kubectl apply -f sts/go-demo-3-deploy.yml --record
+kubectl apply \
+    -f sts/go-demo-3-deploy.yml \
+    --record
 
-kubectl -n go-demo-3 rollout status deployment api
+kubectl -n go-demo-3 \
+    rollout status deployment api
 
 kubectl -n go-demo-3 get pods
-```
 
-
-## Using Deployments At Scale
-
----
-
-```bash
 DB_1=$(kubectl -n go-demo-3 get pods -l app=db \
     -o jsonpath="{.items[0].metadata.name}")
 
 DB_2=$(kubectl -n go-demo-3 get pods -l app=db \
     -o jsonpath="{.items[1].metadata.name}")
+```
 
+
+## Using Deployments To Run Stateful Applications At Scale
+
+---
+
+```bash
 kubectl -n go-demo-3 logs $DB_1
 
 kubectl -n go-demo-3 logs $DB_2
@@ -83,7 +86,7 @@ kubectl delete ns go-demo-3
 <!-- .slide: data-background="img/sts-deployment.png" data-background-size="contain" -->
 
 
-## Using StatefulSets At Scale
+## Using StatefulSets To Run Stateful Applications At Scale
 
 ---
 
@@ -92,7 +95,7 @@ cat sts/go-demo-3-sts.yml
 
 kubectl apply -f sts/go-demo-3-sts.yml --record
 
-kubectl -n go-demo-3 get pods # Repeat
+kubectl -n go-demo-3 get pods
 
 kubectl get pv
 ```
@@ -101,7 +104,7 @@ kubectl get pv
 <!-- .slide: data-background="img/sts.png" data-background-size="contain" -->
 
 
-## Using StatefulSets At Scale
+## Using StatefulSets To Run Stateful Applications At Scale
 
 ---
 
@@ -109,25 +112,25 @@ kubectl get pv
 kubectl -n go-demo-3 exec -it db-0 -- hostname
 
 kubectl -n go-demo-3 run -it --image busybox dns-test \
-    --restart=Never --rm /bin/sh
+    --restart=Never --rm sh
 
 nslookup db
 
 nslookup db-0.db
 
 exit
+
+kubectl -n go-demo-3 exec -it db-0 -- sh
+
+mongo
 ```
 
 
-## Using StatefulSets At Scale
+## Using StatefulSets To Run Stateful Applications At Scale
 
 ---
 
 ```bash
-kubectl -n go-demo-3 exec -it db-0 -- sh
-
-mongo
-
 rs.initiate( {
    _id : "rs0",
    members: [
@@ -140,29 +143,29 @@ rs.initiate( {
 rs.status()
 
 exit
+
+exit
+
+kubectl -n go-demo-3 get pods
 ```
 
 
-## Using StatefulSets At Scale
+## Using StatefulSets To Run Stateful Applications At Scale
 
 ---
 
 ```bash
-exit
-
-kubectl -n go-demo-3 get pods
-
 diff sts/go-demo-3-sts.yml sts/go-demo-3-sts-upd.yml
 
 kubectl apply -f sts/go-demo-3-sts-upd.yml --record
 
-kubectl -n go-demo-3 get pods # Repeat
+kubectl -n go-demo-3 get pods
 
 kubectl delete ns go-demo-3
 ```
 
 
-## Using Sidecar Containers
+## Using Sidecar Containers To Initialize Applications
 
 ---
 
@@ -171,13 +174,13 @@ cat sts/go-demo-3.yml
 
 kubectl apply -f sts/go-demo-3.yml --record
 
+# Wait for a few moments
+
 kubectl -n go-demo-3 logs db-0 -c db-sidecar
 ```
 
 
 ## What Now?
-
----
 
 ```bash
 kubectl delete ns go-demo-3
