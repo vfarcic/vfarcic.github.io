@@ -52,43 +52,19 @@
                         <a href="https://www.cloudbees.com">CloudBees.com</a>
 					</p>
 				</section>
-				<section data-background="img/background/about-me.jpg">
-					<section id="about-me">
-						<h2>Viktor Farcic</h2>
-						<img src="img/viktor.jpg" style="width: 50%; height: 50%;" />
-					</section>
-					<section id="about-company">
-						<a href="https://www.cloudbees.com">
-							<img src="img/company-big.png" style="background-color: white;" />
-						</a>
-					</section>
-					<section id="about-docker">
-						<a href="https://www.docker.com/community/docker-captains">
-							<img src="img/docker-captain.png" style="width: 50%; height: 50%;" />
-						</a>
-					</section>
-					<section id="about-books">
-						<figure style="width: 30%; height: 30%; float: left;">
-							<a href="https://leanpub.com/the-devops-2-toolkit">
-								<img src="../img/devops2.png" />
-							</a>
-						</figure>
-						<figure style="width: 30%; height: 30%; float: left;">
-							<a href="https://leanpub.com/the-devops-2-1-toolkit">
-								<img src="../img/devops21.png" />
-							</a>
-						</figure>
-						<figure style="width: 30%; height: 30%; float: left;">
-							<a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">
-								<img src="../img/tdd.jpg" />
-							</a>
-						</figure>
-					</section>
+				<section id="about-me"
+                    data-markdown="../docs/about-me.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/about-me.jpg">
                 </section>
                 <section>
 					<section id="presentations-1">
 						<h1>Presentations</h1>
 						<ul>
+                            <li><a href="devops24/jx.html">Continuous Deployment With Jenkins X And Kubernetes</a></li>
                             <li><a href="devops-assembly/index.html">Managing And Maintaining a DevOps Assembly Line</a></li>
                             <li><a href="devops20/index.html">The DevOps 2.X Toolkit: The State Of DevOps</a></li>
                             <li><a href="devops22/index.html">The DevOps 2.2 Toolkit: Self-Healing and Self-Adaptation</a></li>
@@ -98,12 +74,12 @@
 							<li><a href="devops21/monitoring.html">The DevOps 2.1 Toolkit: Monitoring Swarm Services</a></li>
 							<li><a href="devops21/index.html">The DevOps 2.1 Toolkit: Docker Swarm</a></li>
 							<li><a href="jenkins-swarm/index.html">The DevOps 2.1 Toolkit: CD with Jenkins and Docker Swarm</a></li>
-							<li><a href="self-healing/index.html">Self-Healing Systems</a></li>
 						</ul>
 					</section>
 					<section id="presentations-2">
 						<h1>Presentations</h1>
 						<ul>
+                            <li><a href="self-healing/index.html">Self-Healing Systems</a></li>
                             <li><a href="docker-swarm/index.html">Scaling and Clustering with Docker Swarm</a></li>
 							<li><a href="cd-microservices/index.html">Continuously Deploying Microservices</a></li>
 							<li><a href="cd-pipeline-swarm/index.html">Continuously Deploying Containers with Jenkins Pipeline To a Docker Swarm Cluster</a></li>

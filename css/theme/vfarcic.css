@@ -6,7 +6,7 @@ body:after {
 
 .reveal {
   text-shadow:
-          -4px -4px 0 #000,
+          -1px -1px 0 #000,
           1px -1px 0 #000,
           -1px 1px 0 #000,
           1px 1px 0 #000;

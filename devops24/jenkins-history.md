@@ -53,9 +53,48 @@
 # made it pretty
 
 
+<!-- .slide: data-background="../img/products/docker.png" -->
+## But then
+
+---
+
+# immutable container images become a norm
+
+
+<!-- .slide: data-background="../img/background/microservices.jpg" -->
+## And
+
+---
+
+# microservices become the common choice
+
+
 <!-- .slide: data-background="../img/products/kubernetes.png" -->
-## Since then we
+## And
+
+---
+
+# kubernetes become de-facto standard for everything
+
+
+<!-- .slide: data-background="../img/products/kubernetes.png" -->
+## So we
 
 ---
 
 # added Kubernetes support
+
+
+## That that was
+
+---
+
+# not enough
+
+
+<!-- .slide: data-background="img/jenkins-x.png" -->
+## So we
+
+---
+
+# defined CD in Kubernetes
