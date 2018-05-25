@@ -63,6 +63,9 @@ docker stack deploy -c proxy.yml proxy
 ```bash
 docker container run --rm -it -v $PWD:/repos vfarcic/git \
     git clone https://github.com/vfarcic/docker-flow-stacks
+    
+docker container run --rm -it -v $PWD:/repos vfarcic/git \
+    git clone https://github.com/vfarcic/go-demo-2
 
 cd docker-flow-stacks/jenkins
 
