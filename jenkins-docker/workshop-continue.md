@@ -1,3 +1,5 @@
+# Cluster Setup
+
 ```bash
 export AWS_ACCESS_KEY_ID=[...]
 
@@ -39,27 +41,41 @@ export CLUSTER_IP=[...]
 export DOCKER_HUB_USER=[...]
 ">creds
 
+docker node ls
+
+curl -o visualizer.yml https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/web/docker-visualizer.yml
+
+HTTP_PORT=8083 docker stack deploy -c visualizer.yml visualizer
+
 curl -o proxy.yml \
   https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/proxy/docker-flow-proxy.yml
+
+cat proxy.yml
 
 docker network create -d overlay proxy
 
 docker stack deploy -c proxy.yml proxy
+```
 
-source creds
+# Jenkins Master
+
+
+```bash
+docker container run --rm -it -v $PWD:/repos vfarcic/git \
+    git clone https://github.com/vfarcic/docker-flow-stacks
+
+cd docker-flow-stacks/jenkins
+
+cat vfarcic-jenkins-df-proxy.yml
 
 echo "admin" | docker secret create jenkins-user -
 
 echo "admin" | docker secret create jenkins-pass -
 
-curl -o jenkins.yaml \
-    https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/jenkins/vfarcic-jenkins-df-proxy-aws.yml
+source creds
 
 TAG=workshop docker stack deploy \
-    -c jenkins.yaml jenkins
-
-curl -o jenkins-agent.yml \
-    https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/jenkins/vfarcic-jenkins-agent.yml
+    -c vfarcic-jenkins-df-proxy-aws.yml jenkins
 
 docker node ls
 
@@ -67,32 +83,17 @@ PRIVATE_IP=[...]
 
 export JENKINS_URL="http://$PRIVATE_IP/jenkins"
 
-LABEL=prod EXECUTORS=2 docker stack deploy -c jenkins-agent.yml \
+LABEL=prod EXECUTORS=2 docker stack deploy -c vfarcic-jenkins-agent.yml \
     jenkins-agent-prod
 
 export JENKINS_URL="http://$CLUSTER_DNS/jenkins"
 
-LABEL=test EXECUTORS=3 docker stack deploy -c jenkins-agent.yml \
+LABEL=test EXECUTORS=3 docker stack deploy -c vfarcic-jenkins-agent.yml \
     jenkins-agent-test
-
-docker container run --rm -it -v $PWD:/repos vfarcic/git \
-    git clone https://github.com/vfarcic/go-demo-2.git
-
-docker image pull vfarcic/go-demo-2
-
-docker image tag vfarcic/go-demo-2 go-demo-2
-
-docker service logs jenkins_jenkins-master
-
-# Confirm that it says that "Jenkins is fully up and running"
 
 exit
 
-open "http://$CLUSTER_DNS/jenkins/credentials/store/system/domain/_/"
+open "http://$CLUSTER_DNS/jenkins/computer"
 
-# Login with *admin*/*admin*
-# Click the *Add Credentials* link
-# Type your Docker Hub username and password
-# Type *docker* as the *ID*
-# Click the *OK* button
+ssh -i workshop.pem docker@$CLUSTER_IP
 ```
