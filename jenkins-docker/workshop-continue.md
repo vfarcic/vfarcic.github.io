@@ -97,8 +97,4 @@ LABEL=test EXECUTORS=3 docker stack deploy -c vfarcic-jenkins-agent.yml \
 exit
 
 open "http://$CLUSTER_DNS/jenkins/computer"
-
-ssh -i workshop.pem docker@$CLUSTER_IP
-
-cd ../../go-demo-2
 ```
