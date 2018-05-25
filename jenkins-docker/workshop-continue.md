@@ -96,4 +96,6 @@ exit
 open "http://$CLUSTER_DNS/jenkins/computer"
 
 ssh -i workshop.pem docker@$CLUSTER_IP
+
+cd ../../go-demo-2
 ```
