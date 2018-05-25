@@ -75,7 +75,7 @@ echo "admin" | docker secret create jenkins-user -
 
 echo "admin" | docker secret create jenkins-pass -
 
-source creds
+source ../../creds
 
 TAG=workshop docker stack deploy \
     -c vfarcic-jenkins-df-proxy-aws.yml jenkins
