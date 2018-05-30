@@ -12,7 +12,6 @@ It is the CI/CD solution for development of modern cloud applications on Kuberne
 
 We'll explore some of the features of Jenkins X through a hands-on demo.
 
-
 # Workshop: The DevOps 2.4 Toolkit: Deploying Fault-Tolerant And Highly-Available Jenkins To Kubernetes
 
 Jenkins is the de-facto standard for continuous integration, delivery, and deployment process. Docker allows us to package our applications into immutable images that can be reliably deployed anywhere. Kubernetes become undisputable king of container orchestration.

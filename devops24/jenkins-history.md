@@ -85,7 +85,7 @@
 # added Kubernetes support
 
 
-## That that was
+## That was
 
 ---
 
