@@ -63,6 +63,9 @@ docker stack deploy -c proxy.yml proxy
 ```bash
 docker container run --rm -it -v $PWD:/repos vfarcic/git \
     git clone https://github.com/vfarcic/docker-flow-stacks
+    
+docker container run --rm -it -v $PWD:/repos vfarcic/git \
+    git clone https://github.com/vfarcic/go-demo-2
 
 docker container run --rm -it -v $PWD:/repos vfarcic/git \
     git clone https://github.com/vfarcic/go-demo-2
@@ -75,7 +78,7 @@ echo "admin" | docker secret create jenkins-user -
 
 echo "admin" | docker secret create jenkins-pass -
 
-source creds
+source ../../creds
 
 TAG=workshop docker stack deploy \
     -c vfarcic-jenkins-df-proxy-aws.yml jenkins
