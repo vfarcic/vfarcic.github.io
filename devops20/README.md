@@ -1,4 +1,4 @@
-# The DevOps 2.X Toolkit: Modern DevOps Technologies and Practices
+# The DevOps 2.X Toolkit: The State Of DevOps
 
 ## Abstract: Talk
 
@@ -8,8 +8,11 @@ This talk will address the current state of DevOps. To do that, we'll go back in
 
 We'll explore the DevOps culture and the need for change required for the adoption of modern technologies. Given that DevOps is first and foremost a cultural change, that will allow us to explore the reasons and the benefits behind some of the changes we need to apply to our infrastructure and software architecture. Culture together with new approaches to infrastructure and software architecture will allow us to reach nirvana in form of true continuous deployment and self-sufficient systems capable of operating without human intervention.
 
-Abstract: Workshop
-------------------
+## Short Abstract: Talk
+
+We'll explore the DevOps culture and the need for change required for the adoption of modern technologies. Given that DevOps is first and foremost a cultural change, that will allow us to explore the reasons and the benefits behind some of the changes we need to apply to our infrastructure and software architecture. Culture together with new approaches to infrastructure and software architecture will allow us to reach nirvana in form of true continuous deployment and self-sufficient systems capable of operating without human intervention.
+
+## Abstract: Workshop
 
 Agile changed the way we develop software, but it failed to change the way we deliver it. As a result of facing new challenges, we got **DevOps**. We got a cross-disciplinary community of practice dedicated to the study of building, evolving and operating rapidly changing resilient systems at scale.
 
@@ -58,15 +61,17 @@ The talk describes best practices we're facing when working on distributed syste
 
 ### Bio
 
-**Viktor Farcic** is a Senior Consultant at **[CloudBees](https://www.cloudbees.com/)**, a member of the **[Docker Captains](https://www.docker.com/community/docker-captains)** group, and books author.
+**Viktor Farcic** is a Principal Consultant at **[CloudBees](https://www.cloudbees.com/)**, a member of the **[Docker Captains](https://www.docker.com/community/docker-captains)** group, and published author.
 
 He coded using a plethora of languages starting with Pascal (yes, he is old), Basic (before it got Visual prefix), ASP (before it got .Net suffix), C, C++, Perl, Python, ASP.Net, Visual Basic, C#, JavaScript, Java, Scala, etc. He never worked with Fortran. His current favorite is **Go**.
 
-His big passions are **Microservices**, **Continuous Integration**, **Delivery and Deployment (CI/CD)** and **Test-Driven Development**.
+His big passions are DevOps, Microservices, Continuous Integration, Delivery and Deployment (CI/CD) and Test-Driven Development (TDD).
 
-He often speaks at community gatherings and conferences.
+He often speaks at community gatherings and conferences (latest can be found [here](http://technologyconversations.com/2014/08/06/history/)).
 
-He wrote [The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices](http://www.amazon.com/dp/B01BJ4V66M) and [Test-Driven Java Development](http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC) books.
+He published [The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices](https://www.amazon.com/DevOps-2-0-Toolkit-Containerized-Microservices-ebook/dp/B01BJ4V66M), [The DevOps 2.1 Toolkit: Docker Swarm: Building, testing, deploying, and monitoring services inside Docker Swarm clusters](https://www.amazon.com/dp/1542468914), [The DevOps 2.2 Toolkit: Self-Sufficient Docker Clusters](https://www.amazon.com/dp/1979347190), [The DevOps 2.3 Toolkit: Kubernetes: Deploying and managing highly-available and fault-tolerant applications at scale](https://www.amazon.com/dp/B07BSRNHSS), and the [Test-Driven Java Development](http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC).
+
+His random thoughts and tutorials can be found in his blog [TechnologyConversations.com](http://technologyconversations.com/).
 
 Contact Details:
 

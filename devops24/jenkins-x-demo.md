@@ -12,6 +12,8 @@
 ---
 
 ```bash
+git clone https://github.com/vfarcic/k8s-specs.git
+
 cd k8s-specs/cluster
 
 brew tap jenkins-x/jx
@@ -82,7 +84,7 @@ jx create quickstart  -l go --organisations vfarcic
 ```bash
 kubectl get pods
 
-cho $PASS
+echo $PASS
 
 jx console
 

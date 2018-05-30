@@ -1,6 +1,6 @@
 ## DevOps 2.X Toolkit
 
-# The State Of DevOps
+# Modern DevOps Technologies and Practices
 
 ---
 

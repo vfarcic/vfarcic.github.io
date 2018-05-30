@@ -64,6 +64,9 @@ docker stack deploy -c proxy.yml proxy
 docker container run --rm -it -v $PWD:/repos vfarcic/git \
     git clone https://github.com/vfarcic/docker-flow-stacks
 
+docker container run --rm -it -v $PWD:/repos vfarcic/git \
+    git clone https://github.com/vfarcic/go-demo-2
+
 cd docker-flow-stacks/jenkins
 
 cat vfarcic-jenkins-df-proxy.yml
@@ -94,6 +97,4 @@ LABEL=test EXECUTORS=3 docker stack deploy -c vfarcic-jenkins-agent.yml \
 exit
 
 open "http://$CLUSTER_DNS/jenkins/computer"
-
-ssh -i workshop.pem docker@$CLUSTER_IP
 ```

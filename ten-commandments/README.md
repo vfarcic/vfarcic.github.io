@@ -39,7 +39,7 @@ His big passions are DevOps, Microservices, Continuous Integration, Delivery and
 
 He often speaks at community gatherings and conferences (latest can be found [here](http://technologyconversations.com/2014/08/06/history/)).
 
-He published [The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices](https://www.amazon.com/DevOps-2-0-Toolkit-Containerized-Microservices-ebook/dp/B01BJ4V66M), [The DevOps 2.1 Toolkit: Docker Swarm: Building, testing, deploying, and monitoring services inside Docker Swarm clusters](https://www.amazon.com/dp/1542468914), [The DevOps 2.2 Toolkit: Self-Sufficient Docker Clusters](https://www.amazon.com/dp/1979347190), and the [Test-Driven Java Development](http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC).
+He published [The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices](https://www.amazon.com/DevOps-2-0-Toolkit-Containerized-Microservices-ebook/dp/B01BJ4V66M), [The DevOps 2.1 Toolkit: Docker Swarm: Building, testing, deploying, and monitoring services inside Docker Swarm clusters](https://www.amazon.com/dp/1542468914), [The DevOps 2.2 Toolkit: Self-Sufficient Docker Clusters](https://www.amazon.com/dp/1979347190), [The DevOps 2.3 Toolkit: Kubernetes: Deploying and managing highly-available and fault-tolerant applications at scale](https://www.amazon.com/dp/B07BSRNHSS), and the [Test-Driven Java Development](http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC).
 
 His random thoughts and tutorials can be found in his blog [TechnologyConversations.com](http://technologyconversations.com/).
 
