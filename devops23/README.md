@@ -62,7 +62,7 @@ Ingress objects manage external access to the applications running inside a Kube
 
 Kubernetes Volumes solve the need to preserve the state across container crashes. In essence, Volumes are references to files and directories made accessible to containers that form a Pod.
 
-### Day 2
+### Day 2
 
 * Using ConfigMaps To Inject Configuration Files
 * Using Secrets To Hide Confidential Information
