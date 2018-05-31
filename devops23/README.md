@@ -22,17 +22,17 @@ This will be a very fast paced show & tell type of workshop. The objective is to
 
 ## Agenda
 
-### Day 1
+### Day 1
 
-* Building Docker Images](http://vfarcic.github.io/devops23/workshop.html#/docker-image)
+* Building Docker Images
 
 Create a Dockerfile with Multi-Stage builds that envelops whole CI process from running unit tests, through building binaries, all the way until a Docker image is created and pushed to a registry.
 
-* What Is A Container Scheduler?](http://vfarcic.github.io/devops23/workshop.html#/7)
+* What Is A Container Scheduler?
 
 Learn the short history of software and infrastructure development, why we need containers and container schedulers, and what is Kubernetes.
 
-* Running A Kubernetes Cluster Locally](http://vfarcic.github.io/devops23/workshop.html#/8/1)
+* Running A Kubernetes Cluster Locally
 
 Learn to create a Kubernetes cluster locally.
 
