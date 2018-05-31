@@ -33,7 +33,7 @@ PASS=[...]
 ```bash
 jx create quickstart # Cancel with ctrl+c
 
-jx create quickstart  -l go
+jx create quickstart -l go
 
 ll golang-http
 

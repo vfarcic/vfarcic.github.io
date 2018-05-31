@@ -1,3 +1,4 @@
+<!-- .slide: data-background="../img/products/jenkins.png" data-background-size="contain" -->
 ## Previous Seasons
 
 ---
@@ -5,7 +6,7 @@
 # Recap
 
 
-<!-- .slide: data-background="img/kohsuke.jpg" -->
+<!-- .slide: data-background="img/kohsuke.jpg" data-background-size="contain" -->
 ## Kohsuke Kawaguchi
 
 ---
@@ -13,7 +14,7 @@
 # Creates Hudson
 
 
-<!-- .slide: data-background="img/sun-rip.jpg" -->
+<!-- .slide: data-background="img/sun-rip.jpg"  -->
 ## In 2009 Oracle
 
 ---
@@ -21,7 +22,7 @@
 # purchased Sun
 
 
-<!-- .slide: data-background="img/oracle-evil.jpg" -->
+<!-- .slide: data-background="img/oracle-evil.jpg"  -->
 ## In 2010 Oracle
 
 ---
@@ -29,7 +30,7 @@
 # tried to do what they do best
 
 
-<!-- .slide: data-background="img/evil-jenkins.jpg" -->
+<!-- .slide: data-background="img/evil-jenkins.jpg" data-background-size="contain" -->
 ## In 2011 Hudson
 
 ---
@@ -53,7 +54,7 @@
 # made it pretty
 
 
-<!-- .slide: data-background="../img/products/docker.png" -->
+<!-- .slide: data-background="../img/products/docker.png" data-background-size="contain" -->
 ## But then
 
 ---
@@ -69,7 +70,7 @@
 # microservices become the common choice
 
 
-<!-- .slide: data-background="../img/products/kubernetes.png" -->
+<!-- .slide: data-background="../img/products/kubernetes.png" data-background-size="contain" -->
 ## And
 
 ---
@@ -77,7 +78,7 @@
 # kubernetes become de-facto standard for everything
 
 
-<!-- .slide: data-background="../img/products/kubernetes.png" -->
+<!-- .slide: data-background="../img/products/kubernetes.png" data-background-size="contain" -->
 ## So we
 
 ---
@@ -85,16 +86,16 @@
 # added Kubernetes support
 
 
-## That was
+## But that was
 
 ---
 
 # not enough
 
 
-<!-- .slide: data-background="img/jenkins-x.png" -->
+<!-- .slide: data-background="img/jenkins-x.png" data-background-size="contain" -->
 ## So we
 
 ---
 
-# defined CD in Kubernetes
+# re-defined CD in Kubernetes
