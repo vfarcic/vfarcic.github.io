@@ -30,6 +30,8 @@ NODE_COUNT=3 NODE_SIZE=t2.medium \
 ```bash
 open "https://github.com/vfarcic/go-demo-3"
 
+# Fork the repository
+
 cd ..
 
 rm -rf go-demo-3

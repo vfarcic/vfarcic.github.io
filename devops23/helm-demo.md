@@ -2,7 +2,7 @@
 
 ---
 
-# Helm
+# Packaging Kubernetes Applications
 
 
 ## Cluster Setup
@@ -15,86 +15,100 @@ source cluster/kops
 
 chmod +x kops/cluster-setup.sh
 
-NODE_COUNT=3 NODE_SIZE=t2.medium \
-    ./kops/cluster-setup.sh
+NODE_COUNT=3 NODE_SIZE=t2.medium ./kops/cluster-setup.sh
 ```
 
 
-## Helm Setup
+## Installing Helm
 
 ---
 
 ```bash
-open "https://github.com/kubernetes/helm/releases"
+# Only if MacOC
+brew install kubernetes-helm
 
-# Or https://docs.helm.sh/using_helm/#installing-the-helm-client
+# Only if Windows
+choco install kubernetes-helm
+
+# Only if Linux
+open https://github.com/kubernetes/helm/releases
+
+# Only if Linux
+# Download tar.gz file, unpack it, move binary to /usr/local/bin/.
 
 cat helm/tiller-rbac.yml
 
 kubectl create -f helm/tiller-rbac.yml --record --save-config
+```
 
+
+## Installing Helm
+
+---
+
+```bash
 helm init --service-account tiller
 
 kubectl -n kube-system rollout status deploy tiller-deploy
 
 kubectl -n kube-system get pods
-```
 
-
-## Jenkins
-
----
-
-```bash
 helm repo update
 
 helm search
-
-helm search jenkins
-
-kubectl create ns jenkins
-
-helm install stable/jenkins --name jenkins --namespace jenkins
 ```
 
 
-## Jenkins
+## Installing Helm Charts
 
 ---
 
 ```bash
-kubectl -n jenkins get svc jenkins -o json
+helm search jenkins
 
-kubectl -n jenkins get svc jenkins \
-    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}"
+helm install stable/jenkins --name jenkins --namespace jenkins
 
-DNS=$(kubectl -n jenkins get svc jenkins \
-    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+kubectl -n jenkins \
+    rollout status deploy jenkins
 
-kubectl -n jenkins get all
+ADDR=$(kubectl -n jenkins get svc jenkins \
+    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}"):8080
 
-open "http://$DNS:8080"
+echo $ADDR
 
+open "http://$ADDR"
+```
+
+
+## Installing Helm Charts
+
+---
+
+```bash
 kubectl -n jenkins get secret jenkins \
     -o jsonpath="{.data.jenkins-admin-password}" \
     | base64 --decode; echo
-```
 
-
-## Jenkins
-
----
-
-* Login with user `admin`
-
-```bash
 helm inspect stable/jenkins
 
 helm ls
 
 helm status jenkins
 
+kubectl -n kube-system get cm
+
+kubectl -n kube-system describe cm jenkins.v1
+```
+
+
+## Installing Helm Charts
+
+---
+
+```bash
 helm delete jenkins
+
+kubectl -n jenkins get all
 
 helm status jenkins
 
@@ -104,111 +118,139 @@ helm status jenkins
 ```
 
 
-## Jenkins
+## Customizing Helm Installations
 
 ---
 
 ```bash
 helm inspect values stable/jenkins
 
-helm install stable/jenkins --name jenkins \
-    --namespace jenkins --set Master.ImageTag=2.112-alpine
+helm inspect stable/jenkins
+
+helm install stable/jenkins --name jenkins --namespace jenkins \
+    --set Master.ImageTag=2.112-alpine
 
 kubectl -n jenkins rollout status deployment jenkins
 
-DNS=$(kubectl -n jenkins get svc jenkins \
-    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+ADDR=$(kubectl -n jenkins get svc jenkins \
+    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}"):8080
 
-open "http://$DNS:8080"
+echo $ADDR
+
+open "http://$ADDR"
 ```
 
-* Note the version on the bottom-right
 
-
-## Jenkins
+## Customizing Helm Installations
 
 ---
 
 ```bash
 helm upgrade jenkins stable/jenkins \
-    --set Master.ImageTag=2.116-alpine
+    --set Master.ImageTag=2.116-alpine --reuse-values
 
 kubectl -n jenkins describe deployment jenkins
 
 kubectl -n jenkins rollout status deployment jenkins
 
-open "http://$DNS:8080/manage"
-
-kubectl -n jenkins get secret jenkins \
-    -o jsonpath="{.data.jenkins-admin-password}" \
-    | base64 --decode; echo
+open "http://$ADDR"
 ```
 
-* Login with user `admin`
 
-
-## Jenkins
+## Rolling Back Helm Revisions
 
 ---
 
 ```bash
 helm list
 
-helm rollback jenkins 1
+# helm rollback jenkins 1
+
+helm rollback jenkins 0
+
+helm list
+
+kubectl -n jenkins rollout status deployment jenkins
+
+open "http://$ADDR"
 
 helm delete jenkins --purge
+```
 
-export LB_ADDR=$(kubectl -n kube-ingress get svc ingress-nginx \
+
+## Using YAML Values
+
+---
+
+```bash
+LB_HOST=$(kubectl -n kube-ingress get svc ingress-nginx \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
-LB_IP=$(dig +short $LB_ADDR | tail -n 1)
+LB_IP="$(dig +short $LB_HOST | tail -n 1)"
 
-JENKINS_ADDR="jenkins.$LB_IP.xip.io"
+echo $LB_IP
+
+HOST="jenkins.$LB_IP.xip.io"
+
+echo $HOST
+
+helm inspect values stable/jenkins
 
 cat helm/jenkins-values.yml
 ```
 
 
-## Jenkins
+## Using YAML Values
 
 ---
 
 ```bash
 helm install stable/jenkins --name jenkins --namespace jenkins \
-    --values helm/jenkins-values.yml \
-    --set Master.HostName=$JENKINS_ADDR
+    --values helm/jenkins-values.yml --set Master.HostName=$HOST
 
 kubectl -n jenkins rollout status deployment jenkins
 
-open "http://$JENKINS_ADDR"
+open "http://$HOST"
 
-kubectl -n jenkins get secret jenkins \
-    -o jsonpath="{.data.jenkins-admin-password}" \
-    | base64 --decode; echo
-    
 helm get values jenkins
-```
 
-
-## Jenkins
-
----
-
-```bash
 helm delete jenkins --purge
 
 kubectl delete ns jenkins
 ```
 
 
-## Creating Charts
+## Creating Helm Charts
 
 ---
 
 ```bash
 cd ../go-demo-3
 
+git add .
+
+git commit -m "Defining Continuous Deployment chapter"
+
+git push
+
+git remote add upstream https://github.com/vfarcic/go-demo-3.git
+
+git fetch upstream
+
+git checkout master
+
+git merge upstream/master
+```
+
+
+## Creating Helm Charts
+
+---
+
+```bash
 helm create my-app
+
+ls -1 my-app
 
 helm dependency update my-app
 
@@ -217,19 +259,28 @@ helm package my-app
 helm lint my-app
 
 helm install ./my-app-0.1.0.tgz --name my-app
-
-helm delete my-app --purge
-
-rm -rf my-app*
 ```
 
 
-## Creating Charts
+## Creating Helm Charts
 
 ---
 
 ```bash
-ls -l helm helm/go-demo-3
+helm delete my-app --purge
+
+rm -rf my-app
+
+rm -rf my-app-0.1.0.tgz
+```
+
+
+## Exploring Files From A Chart
+
+---
+
+```bash
+ls -1 helm/go-demo-3
 
 cat helm/go-demo-3/Chart.yaml
 
@@ -238,207 +289,61 @@ cat helm/go-demo-3/LICENSE
 cat helm/go-demo-3/README.md
 
 cat helm/go-demo-3/values.yaml
-
-ls -l helm/go-demo-3/templates/
-
-cat helm/go-demo-3/templates/NOTES.txt
-
-cat helm/go-demo-3/templates/deployment.yaml
 ```
 
 
-## Creating Charts
+## Exploring Files From A Chart
 
 ---
 
-* The rest of the files are following the same logic
-
 ```bash
+ls -1 helm/go-demo-3/templates/
+
+cat helm/go-demo-3/templates/NOTES.txt
+
+cat helm/go-demo-3/templates/_helpers.tpl
+
+cat helm/go-demo-3/templates/deployment.yaml
+
+cat helm/go-demo-3/templates/ing.yaml
+
 helm lint helm/go-demo-3
 
 helm package helm/go-demo-3 -d helm
 ```
 
 
-## Release
+## Upgrading Charts
 
 ---
 
 ```bash
-TAG=0.0.1
+helm inspect values helm/go-demo-3
 
-git tag -a $TAG -m 'A new release. Hooray!' -f
+HOST="go-demo-3.$LB_IP.xip.io"
 
-GITHUB_USER=[...]
+HOST="go-demo-3-go-demo-3.$(minishift ip).nip.io"
 
-GITHUB_TOKEN=[...]
+echo $HOST
 
-git push -f \
-    https://$GITHUB_USER:$GITHUB_TOKEN@github.com/$GITHUB_USER/go-demo-3.git \
-    --tags
-
-open "https://github.com/$GITHUB_USER/go-demo-3/tags"
-```
-
-
-## Release
-
----
-
-```bash
-docker container run --rm -e GITHUB_TOKEN=$GITHUB_TOKEN \
-    -v $PWD:/src -w /src vfarcic/github-release \
-    github-release release --user $GITHUB_USER --repo go-demo-3 \
-    --tag $TAG --name "A real release" \
-    --description "Read the docs, if you can find them."
-
-open "https://github.com/$GITHUB_USER/go-demo-3/releases"
-
-docker container run --rm -e GITHUB_TOKEN=$GITHUB_TOKEN \
-    -v $PWD:/src -w /src vfarcic/github-release \
-    github-release upload --user $GITHUB_USER --repo go-demo-3 \
-    --tag $TAG --name go-demo-3-0.0.1.tgz \
-    --file helm/go-demo-3-0.0.1.tgz
-
-open "https://github.com/$GITHUB_USER/go-demo-3/releases"
-```
-
-
-## Release
-
----
-
-```bash
-HELM_ADDR=https://github.com/$GITHUB_USER/go-demo-3/releases/download/$TAG/go-demo-3-$TAG.tgz
-
-rm helm/go-demo-3-$TAG.tgz
-
-cd ../k8s-specs
-```
-
-
-## Local (Docker For Mac)
-
----
-
-* Instructions for setting up Docker for Mac/Windows and Kubernetes
-
-```bash
-kubectl config set current-context docker-for-desktop
-
-helm inspect values $HELM_ADDR
-
-helm install $HELM_ADDR --name go-demo-3 --set replicaCount=1 \
-    --set dbReplicaCount=1 --set service.type=NodePort \
-    --set ingress.enabled=false
-
-kubectl -n default rollout status deployment go-demo-3
-
-export NODE_PORT=$(kubectl -n default get svc go-demo-3 \
-    -o jsonpath="{.spec.ports[0].nodePort}")
-
-export NODE_IP=localhost
-
-curl http://$NODE_IP:$NODE_PORT/demo/hello
-```
-
-
-## Local (Docker For Mac)
-
----
-
-```bash
-helm delete go-demo-3 --purge
-
-helm install $HELM_ADDR --name go-demo-3 \
-    -f ../go-demo-3/helm/dev.yaml
-
-kubectl -n default rollout status deployment go-demo-3
-
-export NODE_PORT=$(kubectl -n default get svc go-demo-3 \
-    -o jsonpath="{.spec.ports[0].nodePort}")
-
-export NODE_IP=localhost
-
-curl http://$NODE_IP:$NODE_PORT/demo/hello
-
-helm delete go-demo-3 --purge
-```
-
-
-## Testing
-
----
-
-```bash
-kubectl config set current-context devops23.k8s.local
-
-kubectl create ns go-demo-3-1-0-beta
-
-helm install $HELM_ADDR --name go-demo-3-1-0-beta \
-    --namespace go-demo-3-1-0-beta --set image.tag=1.0-beta \
-    --set ingress.path=/1-0-beta/demo
-
-kubectl -n go-demo-3-1-0-beta rollout status \
-    deployment go-demo-3-1-0-beta
-
-export LB_IP=$(kubectl -n go-demo-3-1-0-beta \
-    get ing go-demo-3-1-0-beta \
-    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
-
-curl http://$LB_IP/1-0-beta/demo/hello
-```
-
-
-## Testing
-
----
-
-```bash
-helm delete go-demo-3-1-0-beta --purge
-
-kubectl delete ns go-demo-3-1-0-beta
-```
-
-
-## Production
-
----
-
-```bash
-kubectl create ns go-demo-3
-
-helm upgrade -i go-demo-3 $HELM_ADDR --namespace go-demo-3
+helm upgrade -i go-demo-3 helm/go-demo-3 --namespace go-demo-3 \
+    --set image.tag=1.0 --set ingress.host=$HOST --reuse-values
 
 kubectl -n go-demo-3 rollout status deployment go-demo-3
 
-export LB_IP=$(kubectl -n go-demo-3 get ing go-demo-3 \
-    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
-
-curl http://$LB_IP/demo/hello
-
-kubectl -n go-demo-3 describe deployment go-demo-3
-
-helm upgrade -i go-demo-3 $HELM_ADDR --namespace go-demo-3 \
-    --set image.tag=1.0
+curl http://$HOST/demo/hello
 ```
 
 
-## Production
+## Upgrading Charts
 
 ---
 
 ```bash
-kubectl -n go-demo-3 describe deployment go-demo-3
+helm upgrade -i go-demo-3 helm/go-demo-3 --namespace go-demo-3 \
+    --set image.tag=2.0 --reuse-values
 
-curl http://$LB_IP/demo/hello
-```
+helm delete go-demo-3 --purge
 
-
-## What Now?
-
----
-
-```bash
 kubectl delete ns go-demo-3
 ```
