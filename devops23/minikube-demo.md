@@ -21,7 +21,7 @@
 ---
 
 ```bash
-minikube start --vm-driver=virtualbox
+minikube start --vm-driver virtualbox --cpus 3 --memory 3072
 ```
 
 

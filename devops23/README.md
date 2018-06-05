@@ -89,7 +89,7 @@ What happens when we combine the three? We'll explore the steps we might take to
 
 # Bio (short)
 
-Viktor Farcic is a Principal Consultant at CloudBees, a member of the Docker Captains group, and books author.
+Viktor Farcic is a Principal Consultant at CloudBees, a member of the Docker Captains group, and published author.
 
 His big passions are DevOps, Microservices, Continuous Integration, Delivery and Deployment (CI/CD) and Test-Driven Development (TDD).
 
