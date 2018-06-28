@@ -2,7 +2,7 @@
 
 ---
 
-# Jenkins Setup
+# Installing and Setting Up Jenkins
 
 
 ## Cluster Setup
@@ -17,6 +17,11 @@ chmod +x kops/cluster-setup.sh
 
 NODE_COUNT=3 NODE_SIZE=t2.medium USE_HELM=true \
     ./kops/cluster-setup.sh
+
+LB_HOST=$(kubectl -n kube-ingress get svc ingress-nginx \
+    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+
+export LB_IP="$(dig +short $LB_HOST | tail -n 1)"
 ```
 
 
@@ -25,22 +30,21 @@ NODE_COUNT=3 NODE_SIZE=t2.medium USE_HELM=true \
 ---
 
 ```bash
-export LB_ADDR=$(kubectl -n kube-ingress get svc ingress-nginx \
-    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
-
-dig +short $LB_ADDR
-
-# If empty, LB is still not fully set up. Wait and repeat.
-
-LB_IP=$(dig +short $LB_ADDR | tail -n 1)
-
-JENKINS_ADDR="jenkins.$LB_IP.xip.io"
+JENKINS_ADDR="jenkins.$LB_IP.nip.io"
 
 echo $JENKINS_ADDR
 
 helm install stable/jenkins --name jenkins --namespace jenkins \
     --values helm/jenkins-values.yml \
     --set Master.HostName=$JENKINS_ADDR
+
+kubectl delete clusterrolebinding jenkins-role-binding
+
+cat helm/jenkins-patch.yml
+
+kubectl apply -n jenkins -f helm/jenkins-patch.yml
+
+kubectl -n jenkins rollout status deployment jenkins
 ```
 
 
@@ -49,31 +53,17 @@ helm install stable/jenkins --name jenkins --namespace jenkins \
 ---
 
 ```bash
-kubectl -n jenkins rollout status deployment jenkins
-
 open "http://$JENKINS_ADDR"
 
-kubectl -n jenkins get secret jenkins \
+JENKINS_PASS=$(kubectl -n jenkins get secret jenkins \
     -o jsonpath="{.data.jenkins-admin-password}" \
-    | base64 --decode; echo
+    | base64 --decode; echo)
+
+echo $JENKINS_PASS
 ```
 
-* Login with user *admin*
 
-
-## Tools in the same Namespace
-
----
-
-* Click the *New Item* link in the left-hand menu
-* Type *my-k8s-job* in the *item name* field
-* Select *Pipeline* as the type
-* Click the *OK* button
-* Click the *Pipeline* tab
-* Write the script that follows in the *Pipeline Script* field
-
-
-## Tools in the same Namespace
+## Using Pods to Run Tools
 
 ---
 
@@ -88,17 +78,14 @@ podTemplate(
     node("kubernetes") {
         container("maven") {
             stage("build") {
-                sh "sleep 5"
                 sh "mvn --version"
             }
             stage("unit-test") {
-                sh "sleep 5"
                 sh "java -version"
             }
         }
         container("golang") {
             stage("deploy") {
-                sh "sleep 5"
                 sh "go version"
             }
         }
@@ -107,22 +94,19 @@ podTemplate(
 ```
 
 
-## Tools in the same Namespace
+## Using Pods to Run Tools
 
 ---
-
-* Click the *Save* button
-* Click the *Open Blue Ocean* link from the left-hand menu
-* Click the *Run* button
 
 ```bash
 kubectl -n jenkins get pods
 ```
 
-* Observe the results in the UI
+
+<!-- .slide: data-background="img/jenkins-setup-agent-same-ns.png" data-background-size="contain" -->
 
 
-## Tools in a Different Namespace
+## Using Pods to Run Tools
 
 ---
 
@@ -130,37 +114,54 @@ kubectl -n jenkins get pods
 open "http://$JENKINS_ADDR/job/my-k8s-job/configure"
 ```
 
-* Update the job with the script that follows
 
-
-## Tools in a Different Namespace
+## Using Pods to Run Tools
 
 ---
 
 ```groovy
-podTemplate(
-    label: "kubernetes",
-    containers: [
-        containerTemplate(name: "maven", image: "maven:alpine", ttyEnabled: true, command: "cat"),
-        containerTemplate(name: "golang", image: "golang:alpine", ttyEnabled: true, command: "cat")
-    ],
-    namespace: "go-demo-3-build"
+podTemplate(label: "kubernetes", yaml: """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: kubectl
+    image: vfarcic/kubectl
+    command: ["sleep"]
+    args: ["100000"]
+  - name: oc
+    image: vfarcic/openshift-client
+    command: ["sleep"]
+    args: ["100000"]
+  - name: golang
+    image: golang:1.9
+    command: ["sleep"]
+    args: ["100000"]
+  - name: helm
+    image: vfarcic/helm:2.8.2
+    command: ["sleep"]
+    args: ["100000"]
+"""
 ) {
     node("kubernetes") {
-        container("maven") {
-            stage("build") {
-                sh "sleep 5"
-                sh "mvn --version"
+        container("kubectl") {
+            stage("kubectl") {
+                sh "kubectl version"
             }
-            stage("unit-test") {
-                sh "sleep 5"
-                sh "java -version"
+        }
+        container("oc") {
+            stage("oc") {
+                sh "oc version"
             }
         }
         container("golang") {
-            stage("deploy") {
-                sh "sleep 5"
+            stage("golang") {
                 sh "go version"
+            }
+        }
+        container("helm") {
+            stage("helm") {
+                sh "helm version"
             }
         }
     }
@@ -168,31 +169,278 @@ podTemplate(
 ```
 
 
-## Tools in a Different Namespace
+## Using Pods to Run Tools
 
 ---
 
-* Click *Save*
-* Click the *Open Blue Ocean* link from the left-hand menu
-* Click the *Run* button
+```bash
+open "http://$JENKINS_ADDR/blue/organizations/jenkins/my-k8s-job/activity"
+
+kubectl -n jenkins get pods
+```
+
+
+<!-- .slide: data-background="img/jenkins-setup-agent-to-tiller-in-kube-system.png" data-background-size="contain" -->
+
+
+## Using Pods to Run Tools
+
+---
 
 ```bash
-kubectl create -f ../go-demo-3/k8s/build-ns.yml \
-    --save-config --record
+kubectl -n jenkins get pods
+```
 
-kubectl create -f ../go-demo-3/k8s/prod-ns.yml \
-    --save-config --record
 
-kubectl get ns
+## Builds In Different Namespaces
+
+---
+
+```bash
+open "http://$JENKINS_ADDR/job/my-k8s-job/configure"
+```
+
+
+## Builds In Different Namespaces
+
+---
+
+```groovy
+podTemplate(
+    label: "kubernetes",
+    namespace: "go-demo-3-build",
+    serviceAccount: "build",
+    yaml: """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: kubectl
+    image: vfarcic/kubectl
+    command: ["sleep"]
+    args: ["100000"]
+  - name: oc
+    image: vfarcic/openshift-client
+    command: ["sleep"]
+    args: ["100000"]
+  - name: golang
+    image: golang:1.9
+    command: ["sleep"]
+    args: ["100000"]
+  - name: helm
+    image: vfarcic/helm:2.8.2
+    command: ["sleep"]
+    args: ["100000"]
+"""
+) {
+    node("kubernetes") {
+        container("kubectl") {
+            stage("kubectl") {
+                sh "kubectl version"
+            }
+        }
+        container("oc") {
+            stage("oc") {
+                sh "oc version"
+            }
+        }
+        container("golang") {
+            stage("golang") {
+                sh "go version"
+            }
+        }
+        container("helm") {
+            stage("helm") {
+                sh "helm version --tiller-namespace go-demo-3-build"
+            }
+        }
+    }
+}
+```
+
+
+## Builds In Different Namespaces
+
+---
+
+```bash
+open "http://$JENKINS_ADDR/blue/organizations/jenkins/my-k8s-job/activity"
+
+cat ../go-demo-3/k8s/build-ns.yml
+
+kubectl apply -f ../go-demo-3/k8s/build-ns.yml --record
+
+cat ../go-demo-3/k8s/prod-ns.yml
+
+kubectl apply -f ../go-demo-3/k8s/prod-ns.yml --record
+
+cat ../go-demo-3/k8s/jenkins.yml
+
+kubectl apply -f ../go-demo-3/k8s/jenkins.yml --record
 
 open "http://$JENKINS_ADDR/configure"
 ```
 
-* Change *Jenkins URL* to *http://jenkins.jenkins:8080*
-* Change *Jenkins tunnel* to *jenkins-agent.jenkins:50000*
+
+## Builds In Different Namespaces
+
+---
+
+```bash
+helm init --service-account build \
+    --tiller-namespace go-demo-3-build
+
+kubectl -n go-demo-3-build rollout status deployment tiller-deploy
+```
 
 
-## Tools in a Different Namespace
+<!-- .slide: data-background="img/jenkins-setup-multi-ns.png" data-background-size="contain" -->
+
+
+## Builds In Different Namespaces
+
+---
+
+```bash
+open "http://$JENKINS_ADDR/blue/organizations/jenkins/my-k8s-job/activity"
+
+kubectl -n go-demo-3-build get pods
+```
+
+
+## Creating AMI
+
+---
+
+```bash
+aws ec2 create-security-group \
+    --description "For building Docker images" \
+    --group-name docker | tee cluster/sg.json
+
+SG_ID=$(cat cluster/sg.json | jq -r ".GroupId")
+
+echo $SG_ID
+
+echo "export SG_ID=$SG_ID" | tee -a cluster/docker-ec2
+
+aws ec2 authorize-security-group-ingress --group-name docker \
+    --protocol tcp --port 22 --cidr 0.0.0.0/0
+```
+
+
+## Creating AMI
+
+---
+
+```bash
+cat jenkins/docker-ami.json
+
+packer build -machine-readable jenkins/docker-ami.json \
+    | tee cluster/docker-ami.log
+
+AMI_ID=$(grep 'artifact,0,id' cluster/docker-ami.log | cut -d: -f2)
+
+echo $AMI_ID
+
+echo "export AMI_ID=$AMI_ID" | tee -a cluster/docker-ec2
+
+open "http://$JENKINS_ADDR/configure"
+
+echo $AWS_ACCESS_KEY_ID
+
+echo $AWS_SECRET_ACCESS_KEY
+```
+
+
+## Creating AMI
+
+---
+
+```bash
+aws ec2 create-key-pair --key-name devops24 \
+    | jq -r '.KeyMaterial' >cluster/devops24.pem
+
+chmod 400 cluster/devops24.pem
+
+cat cluster/devops24.pem
+
+echo $AMI_ID
+```
+
+
+## Testing Docker Builds
+
+---
+
+```bash
+open "http://$JENKINS_ADDR/job/my-k8s-job/configure"
+```
+
+
+## Testing Docker Builds
+
+---
+
+```groovy
+podTemplate(
+    label: "kubernetes",
+    namespace: "go-demo-3-build",
+    serviceAccount: "build",
+    yaml: """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: kubectl
+    image: vfarcic/kubectl
+    command: ["sleep"]
+    args: ["100000"]
+  - name: oc
+    image: vfarcic/openshift-client
+    command: ["sleep"]
+    args: ["100000"]
+  - name: golang
+    image: golang:1.9
+    command: ["sleep"]
+    args: ["100000"]
+  - name: helm
+    image: vfarcic/helm:2.8.2
+    command: ["sleep"]
+    args: ["100000"]
+"""
+) {
+    node("docker") {
+        stage("docker") {
+            sh "sudo docker version"
+        }
+    }
+    node("kubernetes") {
+        container("kubectl") {
+            stage("kubectl") {
+                sh "kubectl version"
+            }
+        }
+        container("oc") {
+            stage("oc") {
+                sh "oc version"
+            }
+        }
+        container("golang") {
+            stage("golang") {
+                sh "go version"
+            }
+        }
+        container("helm") {
+            stage("helm") {
+                sh "helm version --tiller-namespace go-demo-3-build"
+            }
+        }
+    }
+}
+```
+
+
+## Testing Docker Builds
 
 ---
 
@@ -200,382 +448,196 @@ open "http://$JENKINS_ADDR/configure"
 open "http://$JENKINS_ADDR/blue/organizations/jenkins/my-k8s-job/activity"
 ```
 
-* Click the *Run* button
 
-```bash
-kubectl -n go-demo-3-build get pods
-```
+<!-- .slide: data-background="img/jenkins-setup.png" data-background-size="contain" -->
 
 
-## Docker Manual
+## Automating Jenkins Setup
 
 ---
 
 ```bash
-aws ec2 create-security-group --group-name docker \
-    --description "For building Docker images" | tee cluster/sg.json
+mkdir -p cluster/jenkins/secrets
 
-SG_ID=$(cat cluster/sg.json | jq -r ".GroupId")
+kubectl -n jenkins describe deployment jenkins
 
-echo "export SG_ID=$SG_ID" | tee -a cluster/kops
+kubectl -n jenkins get pods -l component=jenkins-jenkins-master
 
-aws ec2 authorize-security-group-ingress --group-name docker \
-    --protocol tcp --port 22 --cidr 0.0.0.0/0
+JENKINS_POD=$(kubectl -n jenkins get pods \
+    -l component=jenkins-jenkins-master \
+    -o jsonpath='{.items[0].metadata.name}')
+
+echo $JENKINS_POD
 ```
 
-* Install Packer
 
-
-## Docker Manual
+## Automating Jenkins Setup
 
 ---
 
 ```bash
-packer build -machine-readable jenkins/docker.json \
-    | tee cluster/docker-packer.log
+kubectl -n jenkins cp \
+    $JENKINS_POD:var/jenkins_home/credentials.xml cluster/jenkins
 
-AMI_ID=$(grep 'artifact,0,id' cluster/docker-packer.log \
-    | cut -d: -f2)
+kubectl -n jenkins cp \
+    $JENKINS_POD:var/jenkins_home/secrets/hudson.util.Secret \
+    cluster/jenkins/secrets
 
-echo $AMI_ID
+kubectl -n jenkins cp \
+    $JENKINS_POD:var/jenkins_home/secrets/master.key \
+    cluster/jenkins/secrets
 
-echo "export AMI_ID=$AMI_ID" | tee -a cluster/kops
-
-aws ec2 run-instances --image-id $AMI_ID --count 1 \
-    --instance-type t2.micro --key-name devops23 \
-    --security-groups docker --tag-specifications \
-    'ResourceType=instance,Tags=[{Key=Name,Value=docker}]' \
-    | tee cluster/docker-ec2.json
-```
-
-
-## Docker Manual
-
----
-
-```bash
-INSTANCE_ID=$(cat cluster/docker-ec2.json \
-    | jq -r ".Instances[0].InstanceId")
-
-aws ec2 describe-instances --instance-ids $INSTANCE_ID \
-    | jq -r ".Reservations[0].Instances[0].State.Name"
-```
-
-* Wait until it's `running`, and then wait some more
-
-```bash
-aws ec2 describe-instances --instance-ids $INSTANCE_ID \
-    | jq -r ".Reservations[0].Instances[0].PublicIpAddress"
-
-PUBLIC_IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID \
-    | jq -r ".Reservations[0].Instances[0].PublicIpAddress")
-
-ssh -i cluster/devops23.pem ubuntu@$PUBLIC_IP
-
-docker version
-
-export GH_USER=[...]
-```
-
-
-## Docker Manual
-
----
-
-```bash
-git clone https://github.com/$GH_USER/go-demo-3.git
-
-cd go-demo-3
-
-export DH_USER=[...]
-
-docker image build -t $DH_USER/go-demo-3:1.0-beta .
-
-docker login -u $DH_USER
-
-docker image push $DH_USER/go-demo-3:1.0-beta
-
-exit
-
-aws ec2 terminate-instances --instance-ids $INSTANCE_ID
-```
-
-
-## Docker Jenkins
-
----
-
-```bash
-open "http://$JENKINS_ADDR/configure"
-```
-
-* Click the *Add a new cloud* drop-down list
-* Choose *Amazon EC2*
-* Type *docker-agents* as the *Name*
-* Click *Add* next to *Amazon EC2 Credentials*
-* Choose *Jenkins*
-* Choose *AWS Credentials* as the *Kind*
-* Type *aws* as the *ID*
-* Type *aws* as the *Description*
-
-
-## Docker Jenkins
-
----
-
-```bash
-echo $AWS_ACCESS_KEY_ID
-```
-
-* Copy the output and paste it into the *Access Key ID* field
-
-```bash
-echo $AWS_SECRET_ACCESS_KEY
-```
-
-* Copy the output and paste it into the *Secret Access Key* field
-* Click the *Add* button
-* Choose the newly created credentials
-* Select *us-east-2* as the *Region*
-
-
-## Docker Jenkins
-
----
-
-```bash
-cat cluster/devops23.pem
-```
-
-* Copy the output and paste it into the *EC2 Key Pair's Private Key* field
-* Click the *Test Connection* button
-* Click the *Add* button next to *AMIs*
-* Type *docker* as the *Description*
-
-```bash
-echo $AMI_ID
-```
-
-* Copy the output and paste it into the *AMI ID* field
-* Click the *Check AMI* button
-
-
-## Docker Jenkins
-
----
-
-* Select *T2Micro* as the *Instance Type*
-* Type *docker* as the *Security group names*
-* Type *ubuntu* as the *Remote user*
-* Type *22* as the *Remote ssh port*
-* Type *docker* as labels
-* Type *1* as *Idle termination time*
-* Click the *Save* button
-
-```bash
-open "http://$JENKINS_ADDR/job/my-k8s-job/configure"
-```
-
-* Update the job with the script that follows
-
-
-## Docker Jenkins
-
----
-
-```groovy
-podTemplate(
-    label: "kubernetes",
-    containers: [
-        containerTemplate(name: "maven", image: "maven:alpine", ttyEnabled: true, command: "cat"),
-        containerTemplate(name: "golang", image: "golang:alpine", ttyEnabled: true, command: "cat")
-    ],
-    namespace: "go-demo-3-build"
-) {
-    node("docker") {
-        stage("build") {
-            sh "sleep 5"
-            sh "docker version"
-        }    
-    }
-    node("kubernetes") {
-        container("maven") {
-            stage("unit-test") {
-                sh "sleep 5"
-                sh "java -version"
-            }
-        }
-        container("golang") {
-            stage("deploy") {
-                sh "sleep 5"
-                sh "go version"
-            }
-        }
-    }
-}
-```
-
-
-## kubectl
-
----
-
-```bash
-open "http://$JENKINS_ADDR/job/my-k8s-job/configure"
-```
-
-* Update the job with the script that follows
-
-
-## kubectl
-
----
-
-```groovy
-podTemplate(
-    label: "kubernetes",
-    containers: [
-        containerTemplate(name: "maven", image: "maven:alpine", ttyEnabled: true, command: "cat"),
-        containerTemplate(name: "kubectl", image: "vfarcic/kubectl", ttyEnabled: true, command: "cat")
-    ],
-    namespace: "go-demo-3-build",
-    serviceAccount: "build"
-) {
-    node("docker") {
-        stage("build") {
-            sh "sleep 5"
-            sh "docker version"
-        }    
-    }
-    node("kubernetes") {
-        container("maven") {
-            stage("unit-test") {
-                sh "sleep 5"
-                sh "java -version"
-            }
-        }
-        container("kubectl") {
-            stage("deploy") {
-                sh "sleep 5"
-                sh "kubectl -n go-demo-3 get all"
-            }
-        }
-    }
-}
-```
-
-
-## kubectl
-
----
-
-```bash
 helm delete jenkins --purge
 ```
 
 
-## Automate Setup
+## Automating Jenkins Setup
 
 ---
 
 ```bash
+ls -1 helm/jenkins
+
+cat helm/jenkins/requirements.yaml
+
+helm inspect readme stable/jenkins
+
+cat helm/jenkins/values.yaml
+
+cat helm/jenkins/templates/config.tpl
+
 helm dependency update helm/jenkins
+
+ls -1 helm/jenkins/charts
+```
+
+
+## Automating Jenkins Setup
+
+---
+
+```bash
+kubectl -n jenkins create secret generic jenkins-credentials \
+    --from-file cluster/jenkins/credentials.xml
+
+kubectl -n jenkins create secret generic jenkins-secrets \
+    --from-file cluster/jenkins/secrets
 
 helm install helm/jenkins --name jenkins --namespace jenkins \
     --set jenkins.Master.HostName=$JENKINS_ADDR \
-    --set jenkins.Master.AMI=$AMI_ID
+    --set jenkins.Master.DockerAMI=$AMI_ID \
+    --set jenkins.Master.GProject=$G_PROJECT \
+    --set jenkins.Master.GAuthFile=$G_AUTH_FILE
 
-kubectl -n jenkins describe cm jenkins
+kubectl delete clusterrolebinding jenkins-role-binding
 
+kubectl apply -n jenkins -f helm/jenkins-patch.yml
+```
+
+
+## Automating Jenkins Setup
+
+---
+
+```bash
 kubectl -n jenkins rollout status deployment jenkins
 
 open "http://$JENKINS_ADDR"
 
-kubectl -n jenkins get secret jenkins \
+JENKINS_PASS=$(kubectl -n jenkins get secret jenkins \
     -o jsonpath="{.data.jenkins-admin-password}" \
-    | base64 --decode; echo
-```
+    | base64 --decode; echo)
 
+echo $JENKINS_PASS
 
-## kubectl
-
----
-
-* Login with user `admin`
-
-```bash
 open "http://$JENKINS_ADDR/configure"
+
+cat cluster/devops24.pem
 ```
 
-* Click *Add* next to *Amazon EC2 Credentials*
-* Choose *Jenkins*
-* Choose *AWS Credentials* as the *Kind*
-* Type *aws* as the *ID*
-* Type *aws* as the *Description*
 
-
-## kubectl
+## Automating Jenkins Setup
 
 ---
 
 ```bash
-echo $AWS_ACCESS_KEY_ID
+open "http://$JENKINS_ADDR/credentials/store/system/domain/_/credential/aws/update"
+
+open "http://$JENKINS_ADDR/computer"
+
+open "http://$JENKINS_ADDR/newJob"
 ```
 
-* Copy the output and paste it into the *Access Key ID* field
 
-```bash
-echo $AWS_SECRET_ACCESS_KEY
-```
-
-* Copy the and paste into the *Secret Access Key* field
-* Click the *Add* button
-* Choose the newly created credentials
-
-```bash
-cat cluster/devops23.pem
-```
-
-* Copy and paste into the *EC2 Key Pair's Private Key* field
-* Click the *Test Connection* button
-* Update the job with the script that follows
-
-
-## kubectl
+## Automating Jenkins Setup
 
 ---
 
 ```groovy
 podTemplate(
     label: "kubernetes",
-    containers: [
-        containerTemplate(name: "maven", image: "maven:alpine", ttyEnabled: true, command: "cat"),
-        containerTemplate(name: "kubectl", image: "vfarcic/kubectl", ttyEnabled: true, command: "cat")
-    ],
     namespace: "go-demo-3-build",
-    serviceAccount: "build"
+    serviceAccount: "build",
+    yaml: """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: kubectl
+    image: vfarcic/kubectl
+    command: ["sleep"]
+    args: ["100000"]
+  - name: oc
+    image: vfarcic/openshift-client
+    command: ["sleep"]
+    args: ["100000"]
+  - name: golang
+    image: golang:1.9
+    command: ["sleep"]
+    args: ["100000"]
+  - name: helm
+    image: vfarcic/helm:2.8.2
+    command: ["sleep"]
+    args: ["100000"]
+"""
 ) {
     node("docker") {
-        stage("build") {
-            sh "sleep 5"
-            sh "docker version"
-        }    
+        stage("docker") {
+            sh "sudo docker version"
+        }
     }
     node("kubernetes") {
-        container("maven") {
-            stage("unit-test") {
-                sh "sleep 5"
-                sh "java -version"
+        container("kubectl") {
+            stage("kubectl") {
+                sh "kubectl version"
             }
         }
-        container("kubectl") {
-            stage("deploy") {
-                sh "sleep 5"
-                sh "kubectl -n go-demo-3 get all"
+        container("oc") {
+            stage("oc") {
+                sh "oc version"
+            }
+        }
+        container("golang") {
+            stage("golang") {
+                sh "go version"
+            }
+        }
+        container("helm") {
+            stage("helm") {
+                sh "helm version --tiller-namespace go-demo-3-build"
             }
         }
     }
 }
+```
+
+
+## Automating Jenkins Setup
+
+---
+
+```bash
+open "http://$JENKINS_ADDR/blue/organizations/jenkins/my-k8s-job/activity"
 ```
 
 
@@ -584,5 +646,7 @@ podTemplate(
 ---
 
 ```bash
-TODO
+helm delete $(helm ls -q) --purge
+
+kubectl delete ns go-demo-3 go-demo-3-build jenkins
 ```
