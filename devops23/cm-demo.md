@@ -36,10 +36,6 @@ kubectl exec -it alpine -- sh -c \
 
 kubectl exec -it alpine -- cat /etc/config/prometheus-conf.yml
 
-# Wait
-
-kubectl exec -it alpine -- cat /etc/config/prometheus-conf.yml
-
 kubectl delete -f cm/alpine.yml
 
 kubectl delete cm my-config
@@ -148,12 +144,19 @@ kubectl get cm my-config -o yaml
 
 cat cm/prometheus.yml
 
-cat cm/prometheus.yml | sed -e "s/192.168.99.100/$(minikube ip)/g" \
+cat cm/prometheus.yml | sed -e "s/192.168.99.100/$IP/g" \
     | kubectl create -f -
 
 kubectl rollout status deploy prometheus
+```
 
-open "http://$(minikube ip)/prometheus/targets"
+
+## ConfigMaps As YAML
+
+---
+
+```bash
+open "http://$IP/prometheus/targets"
 ```
 
 

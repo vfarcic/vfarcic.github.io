@@ -5,7 +5,7 @@
 # Using Volumes To Access Host's File System
 
 
-## Adding Files
+## Adding Files (minikube)
 
 ---
 
@@ -32,7 +32,7 @@ minikube ssh "sudo mv /prometheus-conf.yml  /files/"
 kubectl run docker --image=docker:17.11 \
     --restart=Never docker image ls
 
-kubectl get pods --show-all
+kubectl get pods
 
 kubectl logs docker
 
@@ -93,7 +93,7 @@ kubectl delete -f volume/docker.yml
 ```
 
 
-## hostPath > Inject Config Files
+## hostPath > Inject Config Files (minikube)
 
 ---
 
@@ -114,7 +114,7 @@ open "http://$(minikube ip)/prometheus/config"
 ```
 
 
-## hostPath > Inject Config Files
+## hostPath > Inject Config Files (minikube)
 
 ---
 
@@ -137,7 +137,7 @@ kubectl delete -f volume/prometheus-host-path.yml
 ```
 
 
-## gitRepo > Git Repository
+## gitRepo > Git Repository (minikube)
 
 ---
 
@@ -163,7 +163,7 @@ kubectl delete -f volume/github.yml
 <!-- .slide: data-background="img/volume-git-repo.png" data-background-size="contain" -->
 
 
-## emptyDir > Persist State
+## emptyDir > Persist State (minikube)
 
 ---
 
@@ -182,7 +182,7 @@ open "http://$(minikube ip)/jenkins/newJob"
 ```
 
 
-## emptyDir > Persist State
+## emptyDir > Persist State (minikube)
 
 ---
 
@@ -198,7 +198,7 @@ open "http://$(minikube ip)/jenkins"
 ```
 
 
-## emptyDir > Persist State
+## emptyDir > Persist State (minikube)
 
 ---
 
@@ -230,5 +230,6 @@ open "http://$(minikube ip)/jenkins"
 ---
 
 ```bash
+# If minikube
 kubectl delete -f volume/jenkins-empty-dir.yml
 ```

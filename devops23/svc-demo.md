@@ -16,8 +16,13 @@ kubectl create -f svc/go-demo-2-rs.yml
 
 kubectl get -f svc/go-demo-2-rs.yml
 
+# If minikube
 kubectl expose rs go-demo-2 --name=go-demo-2-svc --target-port=28017 \
     --type=NodePort
+
+# If EKS
+kubectl expose rs go-demo-2 --name=go-demo-2-svc --target-port=28017 \
+    --type=LoadBalancer
 ```
 
 
@@ -34,16 +39,20 @@ kubectl expose rs go-demo-2 --name=go-demo-2-svc --target-port=28017 \
 ```bash
 kubectl describe svc go-demo-2-svc
 
+# If minikube
 PORT=$(kubectl get svc go-demo-2-svc \
     -o jsonpath="{.spec.ports[0].nodePort}")
 
+# If EKS
+PORT=28017
+
+# If minikube
 IP=$(minikube ip)
 
-open "http://$IP:$PORT"
+# If EKS
+IP=$(kubectl get svc go-demo-2-svc \
+    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 ```
-
-
-<!-- .slide: data-background="img/svc-expose-rs.png" data-background-size="contain" -->
 
 
 ## Exposing Ports
@@ -51,7 +60,33 @@ open "http://$IP:$PORT"
 ---
 
 ```bash
+open "http://$IP:$PORT"
+
 kubectl delete svc go-demo-2-svc
+```
+
+
+<!-- .slide: data-background="img/svc-expose-rs.png" data-background-size="contain" -->
+
+
+## Declarative Syntax
+
+---
+
+```bash
+# If minikube
+cat svc/go-demo-2-svc.yml
+
+# If EKS
+cat svc/go-demo-2-svc-lb.yml
+
+# If minikube
+kubectl create -f svc/go-demo-2-svc.yml
+
+# If EKS
+kubectl create -f svc/go-demo-2-svc-lb.yml
+
+kubectl get -f svc/go-demo-2-svc.yml
 ```
 
 
@@ -60,13 +95,14 @@ kubectl delete svc go-demo-2-svc
 ---
 
 ```bash
-cat svc/go-demo-2-svc.yml
+# If EKS
+IP=$(kubectl get svc go-demo-2 \
+    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
-kubectl create -f svc/go-demo-2-svc.yml
+# If minikube
+PORT=30012
 
-kubectl get -f svc/go-demo-2-svc.yml
-
-open "http://$IP:30001"
+open "http://$IP:$PORT"
 ```
 
 

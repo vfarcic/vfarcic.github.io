@@ -18,10 +18,6 @@ kubectl get pods
 
 kubectl get pods
 
-eval $(minikube docker-env)
-
-docker container ls -f ancestor=mongo
-
 kubectl delete deployment db
 ```
 
@@ -69,14 +65,7 @@ echo 'db.stats()' | mongo localhost:27017/test
 exit
 
 kubectl logs db
-```
 
-
-## Declarative Syntax
-
----
-
-```bash
 kubectl exec -it db pkill mongod
 
 kubectl get pods

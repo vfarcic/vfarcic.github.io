@@ -10,18 +10,15 @@
 ---
 
 ```bash
+# If minikube
 kubectl create -f ingress/go-demo-2-deploy.yml
+
+# If EKS
+kubectl create -f ingress/go-demo-2-deploy-lb.yml
 
 kubectl get -f ingress/go-demo-2-deploy.yml
 
 kubectl get pods
-
-IP=$(minikube ip)
-
-PORT=$(kubectl get svc go-demo-2-api \
-    -o jsonpath="{.spec.ports[0].nodePort}")
-
-curl -i "http://$IP:$PORT/demo/hello"
 ```
 
 
@@ -30,39 +27,117 @@ curl -i "http://$IP:$PORT/demo/hello"
 ---
 
 ```bash
+# If minikube
+API_IP=$(minikube ip)
+
+# If EKS
+API_IP=$(kubectl get svc go-demo-2-api \
+    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+
+# If minikube
+API_PORT=$(kubectl get svc go-demo-2-api \
+    -o jsonpath="{.spec.ports[0].nodePort}")
+
+# If EKS
+API_PORT=$(kubectl get svc go-demo-2-api \
+    -o jsonpath="{.spec.ports[0].port}")
+
+curl -i "http://$API_IP:$API_PORT/demo/hello"
+```
+
+
+## Services Deficiencies
+
+---
+
+```bash
+# If minikube
 kubectl create -f ingress/devops-toolkit-dep.yml \
     --record --save-config
 
-kubectl get -f ingress/devops-toolkit-dep.yml
+# If EKS
+kubectl create -f ingress/devops-toolkit-dep-lb.yml \
+    --record --save-config
 
-PORT=$(kubectl get svc devops-toolkit \
+kubectl get -f ingress/devops-toolkit-dep.yml
+```
+
+
+## Services Deficiencies
+
+---
+
+```bash
+# If minikube
+T_IP=$(minikube ip)
+
+# If EKS
+T_IP=$(kubectl get svc devops-toolkit \
+    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+
+# If minikube
+T_PORT=$(kubectl get svc devops-toolkit \
     -o jsonpath="{.spec.ports[0].nodePort}")
 
-open "http://$IP:$PORT"
+# If EKS
+T_PORT=$(kubectl get svc devops-toolkit \
+    -o jsonpath="{.spec.ports[0].port}")
 
-curl "http://$IP/demo/hello"
+open "http://$T_IP:$T_PORT"
 
-curl -i -H "Host: devopstoolkitseries.com" "http://$IP"
+curl "http://$T_IP/demo/hello"
+
+curl -i -H "Host: devopstoolkitseries.com" "http://$T_IP"
 ```
 
 
 <!-- .slide: data-background="img/services.png" data-background-size="contain" -->
 
 
-## Enabling Ingress Controllers
+## Enabling Ingress (minikube)
 
 ---
 
 ```bash
+# If minikube
 minikube addons list
 
+# If minikube
 minikube addons enable ingress
 
-eval $(minikube docker-env)
+IP=$(minikube ip)
+```
 
-docker container ps --format "table {{.Names}}\t{{.Status}}" \
-    -f name=k8s_nginx-ingress-controller
 
+## Enabling Ingress (EKS)
+
+---
+
+```bash
+# TODO: Continue
+kubectl apply \
+    -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
+
+kubectl apply \
+    -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/aws/service-l4.yaml
+
+kubectl apply \
+    -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/aws/patch-configmap-l4.yaml
+
+kubectl patch service ingress-nginx \
+    -p '{"spec":{"externalTrafficPolicy":"Local"}}' \
+    -n ingress-nginx
+
+IP=$(kubectl -n ingress-nginx get svc ingress-nginx \
+    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+```
+
+
+## Enabling Ingress
+
+---
+
+```bash
 curl -i "http://$IP/healthz"
 
 curl -i "http://$IP/something"

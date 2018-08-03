@@ -15,7 +15,7 @@ kubectl create -f secret/jenkins-unprotected.yml \
 
 kubectl rollout status deploy jenkins
 
-open "http://$(minikube ip)/jenkins"
+open "http://$IP/jenkins"
 
 kubectl get secrets
 
@@ -67,7 +67,7 @@ kubectl exec -it $POD_NAME -- ls /etc/secrets
 
 kubectl exec -it $POD_NAME -- cat /etc/secrets/jenkins-user
 
-open "http://$(minikube ip)/jenkins"
+open "http://$IP/jenkins"
 ```
 
 

@@ -16,6 +16,17 @@
 * [Minikube](https://github.com/kubernetes/minikube/releases)
 
 
+## Getting The Code
+
+---
+
+```bash
+git clone https://github.com/vfarcic/k8s-specs.git
+
+cd k8s-specs
+```
+
+
 ## Exploring Minikube
 
 ---
@@ -82,15 +93,4 @@ kubectl version --output=yaml
 minikube delete
 
 minikube start --vm-driver=virtualbox
-```
-
-
-## Getting The Code
-
----
-
-```bash
-git clone https://github.com/vfarcic/k8s-specs.git
-
-cd k8s-specs
 ```
