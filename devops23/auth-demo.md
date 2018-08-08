@@ -5,6 +5,14 @@
 # Securing Kubernetes Clusters
 
 
+## WARNING
+
+---
+
+The next few slides work only on **minikube**. For **EKS**, please follow the instructions from [Managing Users or IAM Roles for your Cluster
+](https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html). Create a user and a cluster named *jdoe*. Once finished, continue from the **Deploying go-demo-2** slide.
+
+
 ## Accessing Kubernetes API
 
 ---
@@ -15,15 +23,6 @@ kubectl config view \
 
 kubectl config view \
     -o jsonpath='{.clusters[?(@.name=="minikube")].cluster.certificate-authority}'
-```
-
-
-## Deploying go-demo-2
-
----
-
-```bash
-kubectl create -f auth/go-demo-2.yml --record --save-config
 ```
 
 
@@ -68,6 +67,15 @@ kubectl config set-cluster jdoe \
 
 kubectl config set-credentials jdoe \
     --client-certificate keys/jdoe.crt --client-key keys/jdoe.key
+```
+
+
+## Deploying go-demo-2
+
+---
+
+```bash
+kubectl create -f auth/go-demo-2.yml --record --save-config
 ```
 
 
@@ -257,7 +265,12 @@ kubectl -n dev run new-db --image mongo:3.3
 ---
 
 ```bash
+# If minikube
 kubectl config use-context minikube
+
+# If EKS
+kubectl config use-context \
+    iam-root-account@devops24.$AWS_DEFAULT_REGION.eksctl.io
 
 kubectl delete deploy db
 

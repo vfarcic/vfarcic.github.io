@@ -20,8 +20,6 @@ cat ns/go-demo-2.yml | sed -e "s@image: $IMG@image: $IMG:$TAG@g" \
     | kubectl create -f -
 
 kubectl rollout status deploy go-demo-2-api
-
-curl -H "Host: go-demo-2.com" "http://$(minikube ip)/demo/hello"
 ```
 
 
@@ -30,6 +28,15 @@ curl -H "Host: go-demo-2.com" "http://$(minikube ip)/demo/hello"
 ---
 
 ```bash
+# If minikube
+IP=$(minikube ip)
+
+# If EKS
+IP=$(kubectl -n ingress-nginx get svc ingress-nginx \
+    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+
+curl -H "Host: go-demo-2.com" "http://$IP/demo/hello"
+
 kubectl get all
 ```
 
@@ -72,14 +79,18 @@ kubectl create ns testing
 
 kubectl get ns
 
+# If minikube
 kubectl config set-context testing --namespace testing \
     --cluster minikube --user minikube
+
+# If EKS
+kubectl config set-context testing --namespace testing \
+    --cluster devops24.$AWS_DEFAULT_REGION.eksctl.io \
+    --user iam-root-account@devops24.$AWS_DEFAULT_REGION.eksctl.io
 
 kubectl config view
 
 kubectl config use-context testing
-
-kubectl get all
 ```
 
 
@@ -88,6 +99,8 @@ kubectl get all
 ---
 
 ```bash
+kubectl get all
+
 TAG=2.0
 
 DOM=go-demo-2.com
@@ -108,18 +121,22 @@ kubectl rollout status deploy go-demo-2-api
 ---
 
 ```bash
-curl -H "Host: go-demo-2.com" "http://$(minikube ip)/demo/hello"
+curl -H "Host: go-demo-2.com" "http://$IP/demo/hello"
 
-curl -H "Host: 2.0.go-demo-2.com" "http://$(minikube ip)/demo/hello"
+curl -H "Host: 2.0.go-demo-2.com" "http://$IP/demo/hello"
 ```
 
 
-## Communicating Between Namespaces
+## Communicating Btw Namespaces
 
 ---
 
 ```bash
+# If minikube
 kubectl config use-context minikube
+
+# If EKS
+kubectl config use-context iam-root-account@devops24.$AWS_DEFAULT_REGION.eksctl.io
 
 kubectl run test --image=alpine --restart=Never sleep 10000
 
@@ -145,10 +162,12 @@ kubectl -n testing get all
 
 kubectl get all
 
-curl -H "Host: go-demo-2.com" "http://$(minikube ip)/demo/hello"
+curl -H "Host: go-demo-2.com" "http://$IP/demo/hello"
 
 kubectl set image deployment/go-demo-2-api \
     api=vfarcic/go-demo-2:2.0 --record
+
+curl -H "Host: go-demo-2.com" "http://$IP/demo/hello"
 ```
 
 

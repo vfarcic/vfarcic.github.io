@@ -10,7 +10,17 @@
 ---
 
 ```bash
+# If minikube
 minikube addons enable heapster
+
+# If EKS
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/heapster.yaml
+
+# If EKS
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/influxdb.yaml
+
+# If EKS
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/rbac/heapster-rbac.yaml
 ```
 
 
@@ -38,20 +48,15 @@ kubectl describe nodes
 ```bash
 kubectl -n kube-system get pods
 
+# If minikube
 kubectl -n kube-system expose rc heapster \
     --name heapster-api --port 8082 --type NodePort
 
+# If EKS
+kubectl -n kube-system expose deployment heapster \
+    --name heapster-api --port 8082 --type LoadBalancer
+
 kubectl -n kube-system get svc heapster-api -o json
-
-PORT=$(kubectl -n kube-system get svc heapster-api \
-    -o jsonpath="{.spec.ports[0].nodePort}")
-
-BASE_URL="http://$(minikube ip):$PORT/api/v1/model/namespaces/default/pods"
-
-curl "$BASE_URL"
-
-DB_POD_NAME=$(kubectl get pods -l service=go-demo-2 -l type=db \
-    -o jsonpath="{.items[0].metadata.name}")
 ```
 
 
@@ -60,6 +65,34 @@ DB_POD_NAME=$(kubectl get pods -l service=go-demo-2 -l type=db \
 ---
 
 ```bash
+# If minikube
+PORT=$(kubectl -n kube-system get svc heapster-api \
+    -o jsonpath="{.spec.ports[0].nodePort}")
+
+# If EKS
+PORT=8082
+
+# If minikube
+ADDR=$(minikube ip)
+
+# If EKS
+ADDR=$(kubectl -n kube-system get svc heapster-api \
+    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+
+BASE_URL="http://$ADDR:$PORT/api/v1/model/namespaces/default/pods"
+```
+
+
+## Measuring Consumption
+
+---
+
+```bash
+curl "$BASE_URL"
+
+DB_POD_NAME=$(kubectl get pods -l service=go-demo-2 -l type=db \
+    -o jsonpath="{.items[0].metadata.name}")
+
 curl "$BASE_URL/$DB_POD_NAME/containers/db/metrics"
 
 curl "$BASE_URL/$DB_POD_NAME/containers/db/metrics/memory/usage"

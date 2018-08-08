@@ -82,7 +82,14 @@ T_PORT=$(kubectl get svc devops-toolkit \
 # If EKS
 T_PORT=$(kubectl get svc devops-toolkit \
     -o jsonpath="{.spec.ports[0].port}")
+```
 
+
+## Services Deficiencies
+
+---
+
+```bash
 open "http://$T_IP:$T_PORT"
 
 curl "http://$T_IP/demo/hello"
@@ -114,7 +121,6 @@ IP=$(minikube ip)
 ---
 
 ```bash
-# TODO: Continue
 kubectl apply \
     -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
 
@@ -123,10 +129,6 @@ kubectl apply \
 
 kubectl apply \
     -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/aws/patch-configmap-l4.yaml
-
-kubectl patch service ingress-nginx \
-    -p '{"spec":{"externalTrafficPolicy":"Local"}}' \
-    -n ingress-nginx
 
 IP=$(kubectl -n ingress-nginx get svc ingress-nginx \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")

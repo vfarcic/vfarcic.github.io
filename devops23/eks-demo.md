@@ -13,6 +13,7 @@
 * GitBash (if Windows)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * [eksctl](https://github.com/weaveworks/eksctl)
+* [aws-iam-authenticator](https://github.com/kubernetes-sigs/aws-iam-authenticator)
 * AWS admin permissions
 
 
