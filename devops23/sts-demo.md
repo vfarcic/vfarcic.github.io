@@ -5,21 +5,6 @@
 # Deploying Stateful Applications At Scale
 
 
-## Cluster Setup
-## (if not already running)
-
----
-
-```bash
-source cluster/kops
-
-chmod +x kops/cluster-setup.sh
-
-NODE_COUNT=3 NODE_SIZE=t2.medium \
-    ./kops/cluster-setup.sh
-```
-
-
 ## Using StatefulSets To Run Stateful Applications
 
 ---
@@ -35,10 +20,10 @@ kubectl -n jenkins get pvc
 
 kubectl -n jenkins get pv
 
-CLUSTER_DNS=$(kubectl -n jenkins get ing jenkins \
+JENKINS_ADDR=$(kubectl -n jenkins get ing jenkins \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
-open "http://$CLUSTER_DNS/jenkins"
+open "http://$JENKINS_ADDR/jenkins"
 
 kubectl delete ns jenkins
 ```
@@ -51,12 +36,9 @@ kubectl delete ns jenkins
 ```bash
 cat sts/go-demo-3-deploy.yml
 
-kubectl apply \
-    -f sts/go-demo-3-deploy.yml \
-    --record
+kubectl apply -f sts/go-demo-3-deploy.yml --record
 
-kubectl -n go-demo-3 \
-    rollout status deployment api
+kubectl -n go-demo-3 rollout status deployment api
 
 kubectl -n go-demo-3 get pods
 
@@ -111,18 +93,18 @@ kubectl get pv
 ```bash
 kubectl -n go-demo-3 exec -it db-0 -- hostname
 
+# If kops
 kubectl -n go-demo-3 run -it --image busybox dns-test \
     --restart=Never --rm sh
 
+# If kops
 nslookup db
 
+# If kops
 nslookup db-0.db
 
+# If kops
 exit
-
-kubectl -n go-demo-3 exec -it db-0 -- sh
-
-mongo
 ```
 
 
@@ -131,6 +113,10 @@ mongo
 ---
 
 ```bash
+kubectl -n go-demo-3 exec -it db-0 -- sh
+
+mongo
+
 rs.initiate( {
    _id : "rs0",
    members: [
@@ -141,7 +127,14 @@ rs.initiate( {
 })
 
 rs.status()
+```
 
+
+## Using StatefulSets To Run Stateful Applications At Scale
+
+---
+
+```bash
 exit
 
 exit
@@ -175,6 +168,23 @@ cat sts/go-demo-3.yml
 kubectl apply -f sts/go-demo-3.yml --record
 
 # Wait for a few moments
+
+kubectl -n go-demo-3 logs db-0 -c db-sidecar
+
+kubectl delete ns go-demo-3
+```
+
+
+## Using Sidecar Containers To Initialize Applications
+
+---
+
+```bash
+cat sa/go-demo-3.yml
+
+kubectl create -f sa/go-demo-3.yml --record --save-config
+
+kubectl -n go-demo-3 get pods
 
 kubectl -n go-demo-3 logs db-0 -c db-sidecar
 ```

@@ -1,4 +1,0 @@
-export CLUSTER_DNS=devops22-ExternalL-333JYYHGCJF0-1657009274.us-east-2.elb.amazonaws.com
-export CLUSTER_IP=18.220.16.124
-export DOCKER_HUB_USER=vfarcic
-

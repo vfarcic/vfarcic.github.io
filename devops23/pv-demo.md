@@ -22,9 +22,10 @@ kubectl -n jenkins create secret generic jenkins-creds \
 
 kubectl -n jenkins rollout status deployment jenkins
 
-open "http://$CLUSTER_DNS/jenkins"
+JENKINS_ADDR=$(kubectl -n jenkins get ing jenkins \
+    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
-# Create a job
+open "http://$JENKINS_ADDR/jenkins"
 ```
 
 
@@ -33,6 +34,8 @@ open "http://$CLUSTER_DNS/jenkins"
 ---
 
 ```bash
+# Create a job
+
 kubectl -n jenkins get pods --selector=app=jenkins -o json
 
 POD_NAME=$(kubectl -n jenkins get pods --selector=app=jenkins \
@@ -42,7 +45,7 @@ echo $POD_NAME
 
 kubectl -n jenkins exec -it $POD_NAME pkill java
 
-open "http://$CLUSTER_DNS/jenkins"
+open "http://$JENKINS_ADDR/jenkins"
 ```
 
 
@@ -53,17 +56,19 @@ open "http://$CLUSTER_DNS/jenkins"
 ```bash
 aws ec2 describe-instances
 
+# If kops
+GROUP_NAME=nodes.$NAME
+
+# If EKS
+GROUP_NAME=EKS-devops24-DefaultNodeGroup-NodeSecurityGroup
+
 aws ec2 describe-instances | jq -r ".Reservations[].Instances[] \
-    | select(.SecurityGroups[].GroupName==\"nodes.$NAME\")\
+    | select(.SecurityGroups[].GroupName | startswith(\"$GROUP_NAME\"))\
     .Placement.AvailabilityZone"
 
 aws ec2 describe-instances | jq -r ".Reservations[].Instances[] \
-    | select(.SecurityGroups[].GroupName==\"nodes.$NAME\")\
+    | select(.SecurityGroups[].GroupName | startswith(\"$GROUP_NAME\"))\
     .Placement.AvailabilityZone" | tee zones
-
-AZ_1=$(cat zones | head -n 1)
-
-AZ_2=$(cat zones | tail -n 1)
 ```
 
 
@@ -72,18 +77,29 @@ AZ_2=$(cat zones | tail -n 1)
 ---
 
 ```bash
+AZ_1=$(cat zones | head -n 1)
+
+AZ_2=$(cat zones | tail -n 1)
+
 VOLUME_ID_1=$(aws ec2 create-volume --availability-zone $AZ_1 \
-    --tag-specifications "ResourceType=volume,Tags=[{Key=KubernetesCluster,Value=$NAME}]" \
+    --tag-specifications "ResourceType=volume,Tags=[{Key=KubernetesCluster,Value=devops23}]" \
     --size 10 --volume-type gp2 | jq -r '.VolumeId')
 
 VOLUME_ID_2=$(aws ec2 create-volume --availability-zone $AZ_2 \
-    --tag-specifications "ResourceType=volume,Tags=[{Key=KubernetesCluster,Value=$NAME}]" \
+    --tag-specifications "ResourceType=volume,Tags=[{Key=KubernetesCluster,Value=devops23}]" \
     --size 10 --volume-type gp2 | jq -r '.VolumeId')
 
-VOLUME_ID_3=$(aws ec2 create-volume --availability-zone $AZ_3 \
-    --tag-specifications "ResourceType=volume,Tags=[{Key=KubernetesCluster,Value=$NAME}]" \
+VOLUME_ID_3=$(aws ec2 create-volume --availability-zone $AZ_1 \
+    --tag-specifications "ResourceType=volume,Tags=[{Key=KubernetesCluster,Value=devops23}]" \
     --size 10 --volume-type gp2 | jq -r '.VolumeId')
+```
 
+
+## Creating AWS Volumes
+
+---
+
+```bash
 echo $VOLUME_ID_1
 
 aws ec2 describe-volumes --volume-ids $VOLUME_ID_1
@@ -100,7 +116,8 @@ aws ec2 describe-volumes --volume-ids $VOLUME_ID_1
 ```bash
 cat pv/pv.yml
 
-cat pv/pv.yml | sed -e "s@REPLACE_ME_1@$VOLUME_ID_1@g" \
+cat pv/pv.yml \
+    | sed -e "s@REPLACE_ME_1@$VOLUME_ID_1@g" \
     | sed -e "s@REPLACE_ME_2@$VOLUME_ID_2@g" \
     | sed -e "s@REPLACE_ME_3@$VOLUME_ID_3@g" \
     | kubectl create -f - --save-config --record
@@ -151,7 +168,7 @@ kubectl -n jenkins rollout status deployment jenkins
 ---
 
 ```bash
-open "http://$CLUSTER_DNS/jenkins"
+open "http://$JENKINS_ADDR/jenkins"
 
 # Create a job
 
@@ -160,7 +177,7 @@ POD_NAME=$(kubectl -n jenkins get pod --selector=app=jenkins \
 
 kubectl -n jenkins exec -it $POD_NAME pkill java
 
-open "http://$CLUSTER_DNS/jenkins"
+open "http://$JENKINS_ADDR/jenkins"
 
 kubectl -n jenkins delete deploy jenkins
 
@@ -194,10 +211,27 @@ aws ec2 delete-volume --volume-id $VOLUME_ID_3
 ---
 
 ```bash
+# If EKS
+echo 'kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: gp2
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp2
+  encrypted: "true"' | kubectl create -f -
+
 kubectl get sc
 
 cat pv/jenkins-dynamic.yml
+```
 
+
+## Using Storage Classes
+
+---
+
+```bash
 kubectl apply -f pv/jenkins-dynamic.yml --record
 
 kubectl -n jenkins rollout status deployment jenkins
@@ -210,6 +244,8 @@ kubectl get pv
 
 aws ec2 describe-volumes \
     --filters 'Name=tag-key,Values="kubernetes.io/created-for/pvc/name"'
+
+kubectl -n jenkins delete deploy,pvc jenkins
 ```
 
 
@@ -218,8 +254,6 @@ aws ec2 describe-volumes \
 ---
 
 ```bash
-kubectl -n jenkins delete deploy,pvc jenkins
-
 kubectl get pv
 
 aws ec2 describe-volumes \
@@ -232,6 +266,10 @@ aws ec2 describe-volumes \
 ---
 
 ```bash
+# If EKS
+kubectl patch storageclass gp2 \
+    -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+
 kubectl get sc
 
 kubectl describe sc gp2
@@ -243,8 +281,6 @@ diff pv/jenkins-dynamic.yml pv/jenkins-default.yml
 kubectl apply -f pv/jenkins-default.yml --record
 
 kubectl get pv
-
-kubectl -n jenkins delete deploy,pvc jenkins
 ```
 
 
@@ -253,6 +289,8 @@ kubectl -n jenkins delete deploy,pvc jenkins
 ---
 
 ```bash
+kubectl -n jenkins delete deploy,pvc jenkins
+
 cat pv/sc.yml
 
 kubectl create -f pv/sc.yml
