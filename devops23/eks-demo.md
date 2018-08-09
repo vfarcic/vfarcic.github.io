@@ -28,6 +28,13 @@ cd k8s-specs
 ```
 
 
+## Getting The Code
+
+---
+
+* We cloned the repository that contains (almost) all the examples we'll use in this course
+
+
 ## Creating A Cluster
 
 ---
@@ -50,3 +57,13 @@ export KUBECONFIG=$PWD/cluster/kubecfg-eks
 
 kubectl get nodes
 ```
+
+
+## Creating A Cluster
+
+---
+
+* We created a few environment variable that allow us to connect to AWS API
+* We created a 2 node cluster with managed masters using `eksctl`.
+* We set `KUBECONFIG` variable to the path of the configuration created through `eksctl`.
+* We confirmed that the cluster is accessible by listing the nodes using `kubectl`.
