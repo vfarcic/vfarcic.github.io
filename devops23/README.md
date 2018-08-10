@@ -25,7 +25,7 @@ In this live training course, you will learn how to create and manage basic Kube
 * How to inject configurations into containers
 * How to inject secrets into containers
 * How to split cluster into Namespaces
-* How to authorize users to access the cluster
+* How to secure the cluster and authorize users to access the cluster
 * How to fine-tune resources used by containers and how to limit their usage within Namespaces
 * How to persist stateful applications
 * How to deploy stateful applications
@@ -45,7 +45,7 @@ Materials, downloads, or Supplemental Content needed in advance:
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 * [Docker For Windows](https://www.docker.com/docker-windows), [Docker For Mac](https://www.docker.com/docker-mac), or [Docker Server](https://docs.docker.com/install/#server) if using Linux
 * [Docker Hub account](https://hub.docker.com/)
-* [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) or admin access to AWS
+* [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) or admin access to AWS (for [EKS](https://aws.amazon.com/eks/))
 
 If you are a Windows user, please make sure that your Git client is configured to check out the code AS-IS. Otherwise, Windows might change carriage returns to the Windows format.
 
@@ -59,54 +59,85 @@ kubectl gets nodes
 minikube delete
 ```
 
-## Schedule
+## Schedule
 
 The timeframes are only estimates and may vary according to how the class is progressing
 
-## DAY 1 (4 HOURS)
+## Day 1 (4 hours)
 
-### Section 1: Building Docker Images (45 min - instructor lecture + Q&A)
+### Section 1: Building Docker Images
 
 Create a Dockerfile with Multi-Stage builds that envelops whole CI process from running unit tests, through building binaries, all the way until a Docker image is created and pushed to a registry. We'll build one Docker image based on https://github.com/vfarcic/go-demo-3/blob/master/Dockerfile. Later on, we'll use mongo, jenkins, golang, and a few other images
 
-### Section 2: What Is A Container Scheduler? (15 min - instructor lecture + Q&A)
+### Section 2: What Is A Container Scheduler?
 
 Learn the short history of software and infrastructure development, why we need containers and container schedulers, and what is Kubernetes.
 
-### Section 3: Running A Kubernetes Cluster Locally (1 hour - instructor lecture+ Q&A)
+### Section 3: Running A Kubernetes Cluster Locally
 
 Minikube creates a single-node cluster inside a VM on your laptop. While that is not ideal since we won't be able to demonstrate some of the features Kubernetes provides in a multi-node setup, it should be more than enough to explain most of the concepts behind Kubernetes. Later on, we'll move into a more production-like environment and explore the features that cannot be demonstrated in Minikube.
 
-### Section 4 : Creating Pods (1 hour - instructor lecture+ Q&A)
+### Section 4 : Creating Pods
 
 A Pod encapsulates one or more containers. It provides a unique network IP, it attaches storage resources, and it decides how containers should run. Everything in a Pod is tightly coupled.
 
-### Section 5: Scaling Pods With ReplicaSets (1 hour - instructor lecture + Q&A)
+### Section 5: Scaling Pods With ReplicaSets
 
 ReplicaSet’s primary, and pretty much only function, is to ensure that a specified number of replicas of a Pod matches the actual state (almost) all the time. That means that ReplicaSets make Pods scalable.
 
-## DAY 2 (4HOURS 30 MIN)
+## Day 2 (4 hours)
 
-### Section 6: Using Services To Enable Communication Between Pods (1 hour - instructor lecture + Q&A)
+### Section 6: Using Services To Enable Communication Between Pods
 
 We need a stable, never-to-be-changed address that will forward requests to whichever Pod is currently running. Kubernetes Services provide addresses through which associated Pods can be accessed.
 
-### Section 7: Deploying Releases With Zero-Downtime (1 hour - instructor lecture + Q&A)
+### Section 7: Deploying Releases With Zero-Downtime
 
 While we might never be able to reach 100% availability, we should certainly not cause downtime ourselves and must minimise other factors that could cause downtime. We'll try to accomplish zero-downtime deployment of new releases through Kubernetes Deployments.
 
-### Section 8: Using Ingress To Forward Traffic (1 hour - instructor lecture + Q&A)
+### Section 8: Using Ingress To Forward Traffic
 
 Ingress objects manage external access to the applications running inside a Kubernetes cluster. It provides an API that allows us to accomplish path and domain routing and SSL certifications, in addition to a few other features we expect from a dynamic cluster.
 
-### Section 9: Using Volumes To Access Host's File System (1 hour - instructor lecture + Q&A)
+### Section 9: Using Volumes To Access Host's File System
 
 Kubernetes Volumes solve the need to preserve the state across container crashes. In essence, Volumes are references to files and directories made accessible to containers that form a Pod.
 
-### Wrap-up: Summary, Discussions (30 min)
+## Day 3 (4 hours)
+
+### Section 10: Using ConfigMaps To Inject Configuration Files
+
+ConfigMaps allow us to keep configurations separate from application images. Such separation is useful when other alternatives are not a good fit.
+
+### Section 11: Using Secrets To Hide Confidential Information
+
+We cannot treat all information equally. Sensitive data needs to be handled with additional care. Kubernetes provides an additional level of protection through Secrets.
+
+### Section 12: Dividing A Cluster Into Namespaces
+
+Applications and corresponding objects often need to be separated from each other to avoid conflicts and other undesired effects.
+
+### Section 13: Securing Kubernetes Clusters
+
+Security implementation is a game between a team with a total lock-down strategy and a team that plans to win by providing complete freedom to everyone. You can think of it as a battle between anarchists and totalitarians. The only way the game can be won is if both blend into something new. The only viable strategy is freedom without sacrificing security (too much).
+
+## Day 4 (4 hours)
+
+### Section 14: Managing Resources
+
+Without an indication how much CPU and memory a container needs, Kubernetes has no other option than to treat all containers equally. That often produces a very uneven distribution of resource usage. Asking Kubernetes to schedule containers without resource specifications is like entering a taxi driven by a blind person.
+
+### Section 15: Persisting State
+
+Having fault-tolerance and high-availability is of no use if we lose application state during rescheduling. Having state is unavoidable, and we need to preserve it no matter what happens to our applications, servers, or even a whole datacenter.
+
+### Section 16: Deploying Stateful Applications At Scale
+
+Stateless and stateful application are quite different in their architecture. Those differences need to be reflected in Kubernetes as well. The fact that we can use Deployments with PersistentVolumes does not mean that is the best way to run stateful applications.
+
+### Wrap-up: Summary, Discussions
 
 Interactive Discussion and final Q&A
-
 
 ## Bio (short)
 
@@ -116,6 +147,6 @@ His big passions are DevOps, Microservices, Continuous Integration, Delivery and
 
 He often speaks at community gatherings and conferences.
 
-He published "The DevOps Toolkit Series" books the Test-Driven Java Development.
+He published "The DevOps Toolkit Series" and Test-Driven Java Development.
 
 His random thoughts and tutorials can be found in his blog TechnologyConversations.com.
