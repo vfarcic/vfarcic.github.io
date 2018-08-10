@@ -74,6 +74,7 @@ Create a Dockerfile with Multi-Stage builds that envelops whole CI process from 
 Learn the short history of software and infrastructure development, why we need containers and container schedulers, and what is Kubernetes.
 
 ### Section 3: Running A Kubernetes Cluster Locally
+### Section 3: Running A Kubernetes Cluster in AWS using EKS
 
 Minikube creates a single-node cluster inside a VM on your laptop. While that is not ideal since we won't be able to demonstrate some of the features Kubernetes provides in a multi-node setup, it should be more than enough to explain most of the concepts behind Kubernetes. Later on, we'll move into a more production-like environment and explore the features that cannot be demonstrated in Minikube.
 
