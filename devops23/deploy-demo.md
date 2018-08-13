@@ -22,6 +22,15 @@ kubectl get all
 ```
 
 
+## Deploying New Releases
+
+---
+
+* We created a Deployment
+* We described the Deployment and observed that it created a ReplicaSet
+* We listed all the resources and observed that the ReplicaSet created Pods
+
+
 <!-- .slide: data-background="img/deployment.png" data-background-size="contain" -->
 
 
@@ -43,6 +52,17 @@ kubectl edit -f deploy/go-demo-2-db.yml
 
 kubectl create -f deploy/go-demo-2-db-svc.yml --record
 ```
+
+
+## Updating Deployments
+
+---
+
+* We changed the image of the `db` container definition in the Deployment
+* We described the deployment to confirm that the image changed
+* We retrieved all the resources and observed that a new ReplicaSet was created which, in turn, created a new Pod
+* We tried to edit the resources definition but gave up since it is a bad practice
+* We created a Service for the DB
 
 
 ## Zero-Downtime Deployments
@@ -69,10 +89,22 @@ kubectl get rs
 ```
 
 
+## Zero-Downtime Deployments
+
+---
+
+* We created a Deployment for the API
+* We changed the image of the `api` container definition in the API Deployment
+* We executed `rollout status` to watch the progress of the update
+* We described the API Deployment and observed events related to ReplicaSets
+* We executed `rollout history` and observed that we made two revisions
+* We retrieved all the ReplicaSets and observed that new ones we created with each update
+
+
 <!-- .slide: data-background="img/flow_deploy_ch06.png" data-background-size="contain" -->
 
 
-## Rolling Back Or Rolling Forward?
+## Rolling Back Or Forward?
 
 ---
 
@@ -95,7 +127,17 @@ kubectl rollout status -f deploy/go-demo-2-api.yml
 ```
 
 
-## Rolling Back Or Rolling Forward?
+## Rolling Back Or Forward?
+
+---
+
+* We undid the last update
+* We described the deployment to observe the events related to ReplicaSets
+* We output `rollout history` and observed that a new revision was created
+* We updated the image of the `api` twice to generate a few more revisions
+
+
+## Rolling Back Or Forward?
 
 ---
 
@@ -111,7 +153,17 @@ kubectl rollout history -f deploy/go-demo-2-api.yml
 ```
 
 
-## Rolling Back Failed Deployments
+## Rolling Back Or Forward?
+
+---
+
+* We output `rollout history` to confirm that all the revisions were recorded
+* We executed one more update
+* We rolled out to the revision `2`
+* We observed through `rollout history` that rollback to a specific revision was indeed performed
+
+
+## Rolling Back Failures
 
 ---
 
@@ -131,7 +183,18 @@ kubectl rollout status -f deploy/go-demo-2-api.yml
 ```
 
 
-## Rolling Back Failed Deployments
+## Rolling Back Failures
+
+---
+
+* We set the image to the non-existing tag
+* We retrieved the ReplicaSets of the `api` and observed that the could not finish the update
+* We executed `rollout status` and observed that it returned error
+* We rolled back to the previous revision
+* We retrieved `rollout status` to confirm that the rollback was successful
+
+
+## Rolling Back Failures
 
 ---
 
@@ -142,6 +205,13 @@ kubectl delete -f deploy/go-demo-2-db-svc.yml
 
 kubectl delete -f deploy/go-demo-2-api.yml
 ```
+
+
+## Rolling Back Failures
+
+---
+
+* We removed all the resources we created
 
 
 ## Merging Everything
@@ -155,6 +225,13 @@ kubectl create -f deploy/go-demo-2.yml --record --save-config
 
 kubectl get -f deploy/go-demo-2.yml
 ```
+
+
+## Merging Everything
+
+---
+
+* We created all the objects from a single YAML file
 
 
 ## Updating Multiple Objects
@@ -177,6 +254,17 @@ kubectl describe -f deploy/go-demo-2.yml
 ```
 
 
+## Updating Multiple Objects
+
+---
+
+* We installed a second DB Deployment
+* We retrieved all the deployments and confirmed that two of them have matching labels
+* We retrieved the Deployments of the DB using label filtering
+* We updated all deployments with matching labels
+* We described one of the deployments to confirm that the image was indeed updated
+
+
 ## Scaling Deployments
 
 ---
@@ -192,6 +280,16 @@ kubectl scale deployment go-demo-2-api --replicas 8 --record
 
 kubectl get -f deploy/go-demo-2.yml
 ```
+
+
+## Scaling Deployments
+
+---
+
+* We created a few resources, including Deployment of the API with five replicas
+* We retrieved the resources and observed that Deployment is indeed set to have five replicas
+* We scaled the Deployment of the API to eight
+* We retrieved the resources and observed that Deployment was changed to have eight replicas
 
 
 ## Deployments
