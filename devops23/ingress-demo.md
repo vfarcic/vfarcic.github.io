@@ -26,6 +26,14 @@ kubectl get pods
 
 ---
 
+* We created API and DB Deployments and Services
+* We retrieved the Pods and confirmed that they are running
+
+
+## Services Deficiencies
+
+---
+
 ```bash
 # If minikube
 API_IP=$(minikube ip)
@@ -50,6 +58,14 @@ curl -i "http://$API_IP:$API_PORT/demo/hello"
 
 ---
 
+* We retrieved IP/address and port of the API Service
+* We sent a request to the API and confirmed that it is accessible
+
+
+## Services Deficiencies
+
+---
+
 ```bash
 # If minikube
 kubectl create -f ingress/devops-toolkit-dep.yml \
@@ -67,20 +83,27 @@ kubectl get -f ingress/devops-toolkit-dep.yml
 
 ---
 
+* We created a Deployment and a Service for UI application
+
+
+## Services Deficiencies
+
+---
+
 ```bash
 # If minikube
-T_IP=$(minikube ip)
+UI_IP=$(minikube ip)
 
 # If EKS
-T_IP=$(kubectl get svc devops-toolkit \
+UI_IP=$(kubectl get svc devops-toolkit \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
 # If minikube
-T_PORT=$(kubectl get svc devops-toolkit \
+UI_PORT=$(kubectl get svc devops-toolkit \
     -o jsonpath="{.spec.ports[0].nodePort}")
 
 # If EKS
-T_PORT=$(kubectl get svc devops-toolkit \
+UI_PORT=$(kubectl get svc devops-toolkit \
     -o jsonpath="{.spec.ports[0].port}")
 ```
 
@@ -89,13 +112,29 @@ T_PORT=$(kubectl get svc devops-toolkit \
 
 ---
 
+* We retrieved the IP/address and the port of the UI
+
+
+## Services Deficiencies
+
+---
+
 ```bash
-open "http://$T_IP:$T_PORT"
+open "http://$UI_IP:$UI_PORT"
 
-curl "http://$T_IP/demo/hello"
+curl "http://$UI_IP/demo/hello"
 
-curl -i -H "Host: devopstoolkitseries.com" "http://$T_IP"
+curl -i -H "Host: devopstoolkitseries.com" "http://$UI_IP"
 ```
+
+
+## Services Deficiencies
+
+---
+
+* We opened UI in browser
+* We confirmed that the API is NOT accessible without the port
+* We confirmed that the UI is NOT accessible on a specific domain and without the port
 
 
 <!-- .slide: data-background="img/services.png" data-background-size="contain" -->
@@ -116,6 +155,15 @@ IP=$(minikube ip)
 ```
 
 
+## Enabling Ingress (minikube)
+
+---
+
+* We listed all the available minikube addons
+* We enabled the `ingress` addon
+* We retrieved the IP of the minikube VM
+
+
 ## Enabling Ingress (EKS)
 
 ---
@@ -132,7 +180,17 @@ kubectl apply \
 
 IP=$(kubectl -n ingress-nginx get svc ingress-nginx \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+
+echo $IP
 ```
+
+
+## Enabling Ingress (EKS)
+
+---
+
+* We installed NGINX Ingress resources
+* We retrieved the address of the ELB created by the Ingress Service
 
 
 ## Enabling Ingress
@@ -144,6 +202,14 @@ curl -i "http://$IP/healthz"
 
 curl -i "http://$IP/something"
 ```
+
+
+## Enabling Ingress
+
+---
+
+* We retrieved Ingress' health status
+* We confirmed that random addresses return `404 Not Found`
 
 
 ## Ingress Based On Paths
@@ -162,7 +228,18 @@ curl -i "http://$IP/demo/hello"
 kubectl delete -f ingress/go-demo-2-ingress.yml
 
 kubectl delete -f ingress/go-demo-2-deploy.yml
+
+kubectl delete -f ingress/devops-toolkit-dep.yml
 ```
+
+
+## Ingress Based On Paths
+
+---
+
+* We created an Ingress resource tied to `go-demo-2-api` Service and `/demo` path
+* We sent a request to `/demo/hello` and got a response from the API
+* We deleted all the resources we created
 
 
 ## Ingress Based On Paths
@@ -175,9 +252,15 @@ cat ingress/go-demo-2.yml
 kubectl create -f ingress/go-demo-2.yml --record --save-config
 
 curl -i "http://$IP/demo/hello"
-
-kubectl delete -f ingress/devops-toolkit-dep.yml
 ```
+
+
+## Ingress Based On Paths
+
+---
+
+* We created all go-demo-2 resources from a single YAML file
+* We confirmed that Ingress is working by sending a request
 
 
 <!-- .slide: data-background="img/seq_ingress_ch07.png" data-background-size="contain" -->
@@ -200,6 +283,15 @@ curl "http://$IP/demo/hello"
 ```
 
 
+## Ingress Based On Paths
+
+---
+
+* We created all UI resources from a single YAML file
+* We listed Ingress resources and confirmed that both exist
+* We opened UI in browser and sent a request to the API using the same address
+
+
 <!-- .slide: data-background="img/ingress.png" data-background-size="contain" -->
 
 
@@ -220,6 +312,16 @@ curl -H "Host: acme.com" "http://$IP/demo/hello"
 ```
 
 
+## Ingress Based On Domains
+
+---
+
+* We changed UI Ingress to allow only requests from *devopstoolkitseries.com* domain
+* We confirmed that a request without a domain returns `404 Not Found`
+* We confirmed that a request with the domain returns `200 OK`
+* We confirmed that `/demo/hello` is still accessible through any domain
+
+
 ## Ingress With Default Backends
 
 ---
@@ -233,6 +335,15 @@ kubectl create -f ingress/default-backend.yml
 
 curl -I -H "Host: acme.com" "http://$IP"
 ```
+
+
+## Ingress With Default Backends
+
+---
+
+* We confirmed that requests to a random domain return `404 Not Found`
+* We created a default (catch all) Ingress
+* We confirmed that requests to a domain/path not covered by other Ingress rules are responded by the default Ingress
 
 
 <!-- .slide: data-background="img/ingress-components.png" data-background-size="contain" -->

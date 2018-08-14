@@ -29,6 +29,17 @@ kubectl exec -it $POD_NAME -- ls \
 ```
 
 
+## Exploring Built-In Secrets
+
+---
+
+* We created a Jenkins Deployment
+* We opened Jenkins UI and confirmed that it's running and that it was unprotected
+* We listed the Secrets and discovered that one (`default-token`) is already created
+* We described the Pod and discovered that the `default-token` Secret is mounted
+* We output the files in the `serviceaccount` directory and discovered that a couple of files were mounted
+
+
 ## Creating And Mounting Generic Secrets
 
 ---
@@ -53,6 +64,16 @@ kubectl get secret my-creds -o jsonpath="{.data.password}" \
 
 ---
 
+* We created a Secret with a `username` and `password`
+* We output the secrets and confirmed that `my-creds` is available
+* We output the secret in json format and discovered that it is encoded
+* We output and decoded the `username` and the `password`
+
+
+## Creating And Mounting Generic Secrets
+
+---
+
 ```bash
 cat secret/jenkins.yml
 
@@ -69,6 +90,15 @@ kubectl exec -it $POD_NAME -- cat /etc/secrets/jenkins-user
 
 open "http://$IP/jenkins"
 ```
+
+
+## Creating And Mounting Generic Secrets
+
+---
+
+* We applied a new Jenkins definition with the Secret (the custom image expects them)
+* We retrieved the files from the `jenkins-user` directory and confirmed that both entries of the Secret are avilable as files
+* We opened Jenkins and confirmed that authentication works
 
 
 <!-- .slide: data-background="img/secret-components.png" data-background-size="contain" -->

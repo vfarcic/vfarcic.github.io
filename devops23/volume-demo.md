@@ -24,6 +24,15 @@ minikube ssh "sudo mv /prometheus-conf.yml  /files/"
 ```
 
 
+## Adding Files (minikube)
+
+---
+
+* We stopped minikube, copied a few files to `~/.minikube/files`, and started it again
+* We observed that the files were copied to minikube VM
+* We moved them from root to `/files`
+
+
 ## Host's Resources > hostPath
 
 ---
@@ -44,6 +53,16 @@ kubectl delete pod docker
 
 ---
 
+* We created a Pod based on `docker` image
+* We listed the Pods and observed that `docker` errors
+* We output the logs and noticed that Docker client inside a container cannot connect to Docker socket
+* We removed the Pod
+
+
+## Host's Resources > hostPath
+
+---
+
 ```bash
 cat volume/docker.yml
 
@@ -52,6 +71,14 @@ kubectl create -f volume/docker.yml
 kubectl exec -it docker -- docker image ls \
     --format '{{.Repository}}'
 ```
+
+
+## Host's Resources > hostPath
+
+---
+
+* We created a Pod based on `docker` image and with `/var/run/docker.sock` mounted to the same path on the node
+* We entered into the newly created Pod and confirmed that we can list images available on the node
 
 
 <!-- .slide: data-background="img/volume-hostPath.png" data-background-size="contain" -->
@@ -80,6 +107,15 @@ docker image build -t vfarcic/go-demo-2:beta .
 
 ---
 
+* We entered into the `docker` container
+* We installed Git and cloned `go-demo-2` repository
+* We built a new image
+
+
+## Host's Resources > hostPath
+
+---
+
 ```bash
 docker image ls --format "{{.Repository}}"
 
@@ -91,6 +127,16 @@ exit
 
 kubectl delete -f volume/docker.yml
 ```
+
+
+## Host's Resources > hostPath
+
+---
+
+* We listed the images thus confirming that the one we built is inside the node, not inside the container
+* We pruned unused images, containers, networks, and so on
+* We listed the images again thus confirming that unused ones are removed
+* We deleted the Pod
 
 
 ## hostPath > Inject Config Files (minikube)
