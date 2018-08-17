@@ -20,7 +20,7 @@ NODE_COUNT=2 NODE_SIZE=t2.medium USE_HELM=true USE_CM=true \
 ```
 
 
-<!-- .slide: data-background="img/cd-stages.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/cdp-stages.png" data-background-size="contain" -->
 
 
 ## Installing Jenkins
@@ -87,7 +87,7 @@ open "http://$JENKINS_ADDR/configure"
 ---
 
 
-<!-- .slide: data-background="img/cd-stages-build.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/cdp-stages-build.png" data-background-size="contain" -->
 
 
 ## Defining The Build Stage
@@ -140,7 +140,7 @@ open "https://hub.docker.com/r/$DH_USER/go-demo-3/tags/"
 ---
 
 
-<!-- .slide: data-background="img/cd-stages-func.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/cdp-stages-func.png" data-background-size="contain" -->
 
 
 ## The Functional Testing Stage
@@ -251,7 +251,7 @@ kubectl -n go-demo-3-build get pods
 ---
 
 
-<!-- .slide: data-background="img/cd-stages-release.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/cdp-stages-release.png" data-background-size="contain" -->
 
 
 ## Defining The Release Stage
@@ -386,7 +386,7 @@ curl -u admin:admin "http://$CM_ADDR/index.yaml"
 ---
 
 
-<!-- .slide: data-background="img/cd-stages-deploy.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/cdp-stages-deploy.png" data-background-size="contain" -->
 
 
 ## Defining The Deploy Stage
