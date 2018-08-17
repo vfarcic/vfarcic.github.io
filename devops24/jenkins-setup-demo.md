@@ -5,26 +5,6 @@
 # Installing and Setting Up Jenkins
 
 
-## Cluster Setup
-## (if not already running)
-
----
-
-```bash
-source cluster/kops
-
-chmod +x kops/cluster-setup.sh
-
-NODE_COUNT=3 NODE_SIZE=t2.medium USE_HELM=true \
-    ./kops/cluster-setup.sh
-
-LB_HOST=$(kubectl -n kube-ingress get svc ingress-nginx \
-    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
-
-export LB_IP="$(dig +short $LB_HOST | tail -n 1)"
-```
-
-
 ## Running Jenkins
 
 ---
@@ -37,12 +17,6 @@ echo $JENKINS_ADDR
 helm install stable/jenkins --name jenkins --namespace jenkins \
     --values helm/jenkins-values.yml \
     --set Master.HostName=$JENKINS_ADDR
-
-kubectl delete clusterrolebinding jenkins-role-binding
-
-cat helm/jenkins-patch.yml
-
-kubectl apply -n jenkins -f helm/jenkins-patch.yml
 
 kubectl -n jenkins rollout status deployment jenkins
 ```
@@ -530,8 +504,6 @@ helm install helm/jenkins --name jenkins --namespace jenkins \
     --set jenkins.Master.GAuthFile=$G_AUTH_FILE
 
 kubectl delete clusterrolebinding jenkins-role-binding
-
-kubectl apply -n jenkins -f helm/jenkins-patch.yml
 ```
 
 

@@ -24,9 +24,6 @@ echo $LB_IP
 ---
 
 ```bash
-helm repo add stable \
-    https://kubernetes-charts.storage.googleapis.com
-
 helm inspect values stable/chartmuseum
 
 CM_ADDR="cm.$LB_IP.nip.io"
@@ -53,10 +50,6 @@ helm install stable/chartmuseum --namespace charts --name cm \
     --set env.secret.BASIC_AUTH_PASS=admin
 
 kubectl -n charts rollout status deploy cm-chartmuseum
-
-curl "http://$CM_ADDR/health"
-
-open "http://$CM_ADDR"
 
 curl "http://$CM_ADDR/index.yaml"
 
@@ -118,41 +111,6 @@ helm delete go-demo-3 --purge
 curl -XDELETE "http://$CM_ADDR/api/charts/go-demo-3/0.0.1" \
     -u admin:admin
 ```
-
-
-## Using Monocular
-
----
-
-```bash
-helm repo add monocular https://kubernetes-helm.github.io/monocular
-
-helm inspect values monocular/monocular
-
-cat helm/monocular-values.yml
-
-MONOCULAR_ADDR="monocular.$LB_IP.nip.io"
-
-echo $MONOCULAR_ADDR
-
-helm install monocular/monocular --namespace charts \
-    --name monocular --values helm/monocular-values.yml \
-    --set ingress.hosts={$MONOCULAR_ADDR}
-
-kubectl -n charts rollout status deploy monocular-monocular-api
-```
-
-
-## Using Monocular
-
----
-
-```bash
-open "http://$MONOCULAR_ADDR"
-```
-
-* Deploy Jenkins
-* Delete Jenkins
 
 
 ## What Now?

@@ -5,21 +5,6 @@
 # Defining CD
 
 
-## Cluster Setup
-## (if not already running)
-
----
-
-```bash
-source cluster/kops
-
-chmod +x kops/cluster-setup.sh
-
-NODE_COUNT=3 NODE_SIZE=t2.medium \
-    ./kops/cluster-setup.sh
-```
-
-
 <!-- .slide: data-background="img/manual-cd-stages.png" data-background-size="contain" -->
 
 
@@ -33,8 +18,6 @@ open "https://github.com/vfarcic/go-demo-3"
 # Fork the repository
 
 cd ..
-
-rm -rf go-demo-3
 
 export GH_USER=[...]
 
@@ -269,4 +252,6 @@ kubectl -n go-demo-3-build delete pods --all
 
 ```bash
 kubectl delete ns go-demo-3 go-demo-3-build
+
+cd ../k8s-specs
 ```

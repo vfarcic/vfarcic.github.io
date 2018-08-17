@@ -12,12 +12,56 @@ It is the CI/CD solution for development of modern cloud applications on Kuberne
 
 We'll explore some of the features of Jenkins X through a hands-on demo.
 
-# Workshop: The DevOps 2.4 Toolkit: Deploying Fault-Tolerant And Highly-Available Jenkins To Kubernetes
+# Workshop
 
-Jenkins is the de-facto standard for continuous integration, delivery, and deployment process. Docker allows us to package our applications into immutable images that can be reliably deployed anywhere. Kubernetes become undisputable king of container orchestration.
+## Prerequisites
 
-What happens when we combine the three? We'll explore the steps we might take to combine Jenkins, Docker, and Kubernetes into a reliable, fault-tolerant, and highly-available platform for continuous deployment processes.
+Please install the tools that follow.
 
-Once we learn how to run Jenkins in a Kubernetes cluster, we'll proceed and design a fully-automated Jenkins pipeline that continuously builds, tests and deploys microservices into a Kubernetes cluster.
+* [Git](https://git-scm.com/)
+* GitBash (if Windows)
+* [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+* [eksctl](https://github.com/weaveworks/eksctl)
+* [aws-iam-authenticator](https://github.com/kubernetes-sigs/aws-iam-authenticator) (follow the instructions from the "**install aws-iam-authenticator for Amazon EKS**" section in [Getting Started with Amazon EKS](https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html))
 
-The material is based on the material from yet-to-be-published "The DevOps 2.4 Toolkit: Continuous Deployment To Kubernetes" book.
+Please make sure that you have **AWS admin permissions**. If in doubt, use your personal instead of a corporate account.
+
+Execute the instructions that follow to confirm that all the prerequisites are met. If using Windows, run the commands from GitBash.
+
+First, create AWS **access key ID** and **secret access key**. If you never created them before, please follow the instructions from [Managing Access Keys for Your AWS Account](https://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html).
+
+Execute the commands that follow.
+
+```bash
+# Replace [...] with AWS access key ID
+export AWS_ACCESS_KEY_ID=[...]
+
+# Replace [...] with AWS secret access key
+export AWS_SECRET_ACCESS_KEY=[...]
+
+export AWS_DEFAULT_REGION=us-west-2
+
+mkdir -p cluster
+
+eksctl create cluster -n devops24 --kubeconfig cluster/kubecfg-eks \
+    --node-type t2.medium --nodes 3
+
+export KUBECONFIG=$PWD/cluster/kubecfg-eks
+
+kubectl get nodes
+```
+
+If all the commands were successfull, the output of the last should display three nodes. It should be similar to the one that follows.
+
+```
+NAME                                         STATUS ROLES  AGE VERSION
+ip-192-168-175-68.us-west-2.compute.internal Ready  <none> 1m  v1.10.3
+ip-192-168-197-18.us-west-2.compute.internal Ready  <none> 1m  v1.10.3
+ip-192-168-89-157.us-west-2.compute.internal Ready  <none> 1m  v1.10.3
+```
+
+If you got a similar output, you are successful and you're ready for the workshop. In such a case, please execute the command that follows to delete the cluster (we'll create one during the workshop).
+
+```bash
+eksctl delete cluster -n devops24
+```

@@ -5,20 +5,6 @@
 # Packaging Kubernetes Applications
 
 
-## Cluster Setup
-## (if not already running)
-
----
-
-```bash
-source cluster/kops
-
-chmod +x kops/cluster-setup.sh
-
-NODE_COUNT=3 NODE_SIZE=t2.medium ./kops/cluster-setup.sh
-```
-
-
 ## Installing Helm
 
 ---
@@ -321,8 +307,6 @@ helm package helm/go-demo-3 -d helm
 helm inspect values helm/go-demo-3
 
 HOST="go-demo-3.$LB_IP.xip.io"
-
-HOST="go-demo-3-go-demo-3.$(minishift ip).nip.io"
 
 echo $HOST
 

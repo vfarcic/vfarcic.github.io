@@ -13,7 +13,7 @@
 * GitBash (if Windows)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * [eksctl](https://github.com/weaveworks/eksctl)
-* [aws-iam-authenticator](https://github.com/kubernetes-sigs/aws-iam-authenticator)
+* [aws-iam-authenticator](https://github.com/kubernetes-sigs/aws-iam-authenticator) (follow the instructions from the "**install aws-iam-authenticator for Amazon EKS**" section in [Getting Started with Amazon EKS](https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html))
 * AWS admin permissions
 
 
@@ -51,7 +51,7 @@ export AWS_DEFAULT_REGION=us-west-2
 mkdir -p cluster
 
 eksctl create cluster -n devops24 --kubeconfig cluster/kubecfg-eks \
-    --node-type t2.medium --nodes 2
+    --node-type t2.medium --nodes 3
 
 export KUBECONFIG=$PWD/cluster/kubecfg-eks
 
