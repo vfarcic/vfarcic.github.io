@@ -39,3 +39,21 @@ parameters:
 kubectl patch storageclass gp2 \
     -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 ```
+
+
+## LB IP
+
+---
+
+```bash
+LB_HOST=$(kubectl -n ingress-nginx \
+    get svc ingress-nginx \
+    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+
+export LB_IP="$(dig +short $LB_HOST \
+    | tail -n 1)"
+
+echo $LB_IP
+
+# Repeat the `export` command if `LB_IP` is empty
+```

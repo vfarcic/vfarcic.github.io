@@ -5,21 +5,6 @@
 # Creating A CDP Pipeline With Jenkins
 
 
-## Cluster Setup
-## (if not already running)
-
----
-
-```bash
-source cluster/kops
-
-chmod +x kops/cluster-setup.sh
-
-NODE_COUNT=2 NODE_SIZE=t2.medium USE_HELM=true USE_CM=true \
-    ./kops/cluster-setup.sh
-```
-
-
 <!-- .slide: data-background="img/cdp-stages.png" data-background-size="contain" -->
 
 

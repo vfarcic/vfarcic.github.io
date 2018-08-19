@@ -5,20 +5,6 @@
 # Distributing Kubernetes Applications
 
 
-## Retrieving Cluster IP
-
----
-
-```bash
-LB_HOST=$(kubectl -n kube-ingress get svc ingress-nginx \
-    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
-
-LB_IP="$(dig +short $LB_HOST | tail -n 1)"
-
-echo $LB_IP
-```
-
-
 ## Using ChartMuseum
 
 ---

@@ -37,15 +37,11 @@ helm init --service-account tiller
 
 kubectl -n kube-system rollout status deploy tiller-deploy
 
-kubectl -n kube-system get pods
-
 helm repo update
-
-helm search
 ```
 
 
-## Creating Helm Charts
+## Exploring Helm Charts
 
 ---
 
@@ -56,20 +52,9 @@ ls -1 helm/go-demo-3
 
 cat helm/go-demo-3/Chart.yaml
 
-cat helm/go-demo-3/LICENSE
-
-cat helm/go-demo-3/README.md
+cat helm/go-demo-3/templates/deployment.yaml
 
 cat helm/go-demo-3/values.yaml
-```
-
-
-## Exploring Files From A Chart
-
----
-
-```bash
-cat helm/go-demo-3/templates/deployment.yaml
 
 helm package helm/go-demo-3 -d helm
 ```
@@ -80,8 +65,6 @@ helm package helm/go-demo-3 -d helm
 ---
 
 ```bash
-helm inspect values helm/go-demo-3
-
 HOST="go-demo-3.$LB_IP.xip.io"
 
 echo $HOST
@@ -106,4 +89,6 @@ helm upgrade -i go-demo-3 helm/go-demo-3 --namespace go-demo-3 \
 helm delete go-demo-3 --purge
 
 kubectl delete ns go-demo-3
+
+cd ../k8s-specs
 ```

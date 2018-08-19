@@ -5,20 +5,6 @@
 # Distributing Kubernetes Applications
 
 
-## Retrieving Cluster IP
-
----
-
-```bash
-LB_HOST=$(kubectl -n kube-ingress get svc ingress-nginx \
-    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
-
-LB_IP="$(dig +short $LB_HOST | tail -n 1)"
-
-echo $LB_IP
-```
-
-
 ## Using ChartMuseum
 
 ---
@@ -47,13 +33,12 @@ helm install stable/chartmuseum --namespace charts --name cm \
     --values helm/chartmuseum-values.yml \
     --set ingress.hosts."$CM_ADDR_ESC"={"/"} \
     --set env.secret.BASIC_AUTH_USER=admin \
-    --set env.secret.BASIC_AUTH_PASS=admin
+    --set env.secret.BASIC_AUTH_PASS=admin \
+    --set env.open.AUTH_ANONYMOUS_GET=true
 
 kubectl -n charts rollout status deploy cm-chartmuseum
 
 curl "http://$CM_ADDR/index.yaml"
-
-curl -u admin:admin "http://$CM_ADDR/index.yaml"
 ```
 
 
@@ -70,7 +55,7 @@ helm plugin install https://github.com/chartmuseum/helm-push
 helm push ../go-demo-3/helm/go-demo-3/ chartmuseum \
     --username admin --password admin
 
-curl "http://$CM_ADDR/index.yaml" -u admin:admin
+curl "http://$CM_ADDR/index.yaml"
 
 helm search chartmuseum/
 
@@ -101,7 +86,7 @@ curl "http://$GD3_ADDR/demo/hello"
 ```
 
 
-## Using ChartMuseum
+## What Now?
 
 ---
 
@@ -110,15 +95,6 @@ helm delete go-demo-3 --purge
 
 curl -XDELETE "http://$CM_ADDR/api/charts/go-demo-3/0.0.1" \
     -u admin:admin
-```
 
-
-## What Now?
-
----
-
-```bash
-helm delete $(helm ls -q) --purge
-
-kubectl delete ns charts go-demo-3 jenkins
+kubectl delete ns go-demo-3
 ```

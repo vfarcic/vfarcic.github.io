@@ -5,28 +5,17 @@
 # CD And GitOps
 
 
-## Cluster Setup
-## (if not already running)
-
----
-
-```bash
-source cluster/kops
-
-chmod +x kops/cluster-setup.sh
-
-NODE_COUNT=2 NODE_SIZE=t2.medium USE_HELM=true \
-    ./kops/cluster-setup.sh
-```
-
-
 ## Defining The Prod Environment
 
 ---
 
 ```bash
-GH_USER=[...]
+open "https://github.com/vfarcic/k8s-prod.git"
+```
 
+* Fork the repo
+
+```bash
 cd ..
 
 git clone https://github.com/$GH_USER/k8s-prod.git

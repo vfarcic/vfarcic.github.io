@@ -169,13 +169,6 @@ helm delete jenkins --purge
 ---
 
 ```bash
-LB_HOST=$(kubectl -n kube-ingress get svc ingress-nginx \
-    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
-
-LB_IP="$(dig +short $LB_HOST | tail -n 1)"
-
-echo $LB_IP
-
 HOST="jenkins.$LB_IP.xip.io"
 
 echo $HOST
@@ -326,8 +319,17 @@ curl http://$HOST/demo/hello
 ```bash
 helm upgrade -i go-demo-3 helm/go-demo-3 --namespace go-demo-3 \
     --set image.tag=2.0 --reuse-values
+```
 
+
+## What Now?
+
+---
+
+```bash
 helm delete go-demo-3 --purge
 
 kubectl delete ns go-demo-3
+
+cd ../k8s-specs
 ```
