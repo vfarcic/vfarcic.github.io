@@ -24,9 +24,9 @@ Please install the tools that follow.
 * [eksctl](https://github.com/weaveworks/eksctl)
 * [aws-iam-authenticator](https://github.com/kubernetes-sigs/aws-iam-authenticator) (follow the instructions from the "**install aws-iam-authenticator for Amazon EKS**" section in [Getting Started with Amazon EKS](https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html))
 
-Please make sure that you have **AWS admin permissions**. If in doubt, use your personal instead of a corporate account.
+Make sure that you have **AWS admin permissions**. If in doubt, use your personal instead of a corporate account (they are often too restrictive).
 
-You'll also need a [Docker Hub account](https://hub.docker.com/). Please register if you haven't already.
+You'll need a [Docker Hub account](https://hub.docker.com/). Please register, if you haven't already.
 
 Execute the instructions that follow to confirm that the prerequisites are met. If using Windows, run the commands from GitBash.
 
@@ -53,7 +53,7 @@ export KUBECONFIG=$PWD/cluster/kubecfg-eks
 kubectl get nodes
 ```
 
-If all the commands were successfull, the output of the last should display three nodes. It should be similar to the one that follows.
+If all the commands were successful, the output of the last should display three nodes. It should be similar to the one that follows.
 
 ```
 NAME                                         STATUS ROLES  AGE VERSION
@@ -71,3 +71,5 @@ Please execute the command that follows to delete the cluster (we'll create a ne
 ```bash
 eksctl delete cluster -n devops24
 ```
+
+If you have problems fulfilling the requirements, please contact me through [DevOps20](http://slack.devops20toolkit.com/) Slack (my user is vfarcic) or send me an email to viktor@farcic.com.
