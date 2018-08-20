@@ -29,6 +29,16 @@ kubectl delete ns jenkins
 ```
 
 
+## Using StatefulSets To Run Stateful Applications
+
+---
+
+* We observed that StatefulSets use `volumeClaimTemplate` instead of a separate PersistentVolumeClaim
+* We used StatefulSet to run Jenkins
+* We did NOT observe any significant difference between running a single replica Jenkins as a StatefulSet when compared to Deployments
+* We deleted the `jenkins` Namespace
+
+
 ## Using Deployments To Run Stateful Applications At Scale
 
 ---
@@ -54,6 +64,15 @@ DB_2=$(kubectl -n go-demo-3 get pods -l app=db \
 
 ---
 
+* We installed *go-demo-3* API and DB as Deployments with multiple replicas
+* We retrieved the Pods and observed that all but one DB failed
+* We retrieved names of two DB Pods
+
+
+## Using Deployments To Run Stateful Applications At Scale
+
+---
+
 ```bash
 kubectl -n go-demo-3 logs $DB_1
 
@@ -63,6 +82,15 @@ kubectl get pv
 
 kubectl delete ns go-demo-3
 ```
+
+
+## Using Deployments To Run Stateful Applications At Scale
+
+---
+
+* We observed from the logs that at least one DB Pod could not get a lock on the storage file
+* We retrieved the PersistentVolumes and observed that only one was created for all three replicas of the DB
+* We deleted the `go-demo-3` Namespace
 
 
 <!-- .slide: data-background="img/sts-deployment.png" data-background-size="contain" -->
@@ -83,27 +111,33 @@ kubectl get pv
 ```
 
 
+## Using StatefulSets To Run Stateful Applications At Scale
+
+---
+
+* We installed *go-demo-3* with DB replicas defined as StatefulSet
+* We retrieved the Pods and observed that DB Pods are created sequentially (and that API Pods are failing)
+* We retrieved PersistentVolumes and observed that one was created for each StatefulSet Pod
+
+
 <!-- .slide: data-background="img/sts.png" data-background-size="contain" -->
 
 
 ## Using StatefulSets To Run Stateful Applications At Scale
+## (only if kops)
 
 ---
 
 ```bash
 kubectl -n go-demo-3 exec -it db-0 -- hostname
 
-# If kops
 kubectl -n go-demo-3 run -it --image busybox dns-test \
     --restart=Never --rm sh
 
-# If kops
 nslookup db
 
-# If kops
 nslookup db-0.db
 
-# If kops
 exit
 ```
 
@@ -134,6 +168,13 @@ rs.status()
 
 ---
 
+* We entered into one of the DB Pods and created a MongoDB replica set
+
+
+## Using StatefulSets To Run Stateful Applications At Scale
+
+---
+
 ```bash
 exit
 
@@ -141,6 +182,13 @@ exit
 
 kubectl -n go-demo-3 get pods
 ```
+
+
+## Using StatefulSets To Run Stateful Applications At Scale
+
+---
+
+* We retrieved the Pods and observed that API is not failing to connect to the DB any more
 
 
 ## Using StatefulSets To Run Stateful Applications At Scale
@@ -156,6 +204,15 @@ kubectl -n go-demo-3 get pods
 
 kubectl delete ns go-demo-3
 ```
+
+
+## Using StatefulSets To Run Stateful Applications At Scale
+
+---
+
+* We updated the DB to the new image tag
+* We observed that the Pods are updated in sequential order, from the last to the first
+* We deleted the *go-demo-3* Namespace
 
 
 ## Using Sidecar Containers To Initialize Applications
@@ -179,6 +236,15 @@ kubectl delete ns go-demo-3
 
 ---
 
+* We installed *go-demo-3* with DB StatefulSet containing a sidecar in charge of creating MongoDB replica set
+* We retrieved the sidecar logs and observed that it is forbidden from listing the Pods
+* We deleted the Namespace
+
+
+## Using Sidecar Containers To Initialize Applications
+
+---
+
 ```bash
 cat sa/go-demo-3.yml
 
@@ -188,6 +254,15 @@ kubectl -n go-demo-3 get pods
 
 kubectl -n go-demo-3 logs db-0 -c db-sidecar
 ```
+
+
+## Using Sidecar Containers To Initialize Applications
+
+---
+
+* We created the DB StatefulSet attached to the ServiceAccount and provides the necessary permissions
+* We observed that all the Pods were created
+* We observed that sidecar logs do not show any issues
 
 
 ## What Now?

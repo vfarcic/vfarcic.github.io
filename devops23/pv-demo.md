@@ -28,14 +28,26 @@ JENKINS_ADDR=$(kubectl -n jenkins get ing jenkins \
 open "http://$JENKINS_ADDR/jenkins"
 ```
 
+* Log in with user *jdoe* and the password *incognito*
+
 
 ## Without Persisting State
 
 ---
 
-```bash
-# Create a job
+* We installed Jenkins
+* We retrieved the events and observed that it is failing because the `jenkins-creds` Secret is missing
+* We created the missing Secret
+* We waited until Jenkins rolled out and opened it in browser
 
+
+## Without Persisting State
+
+---
+
+* Create a job
+
+```bash
 kubectl -n jenkins get pods --selector=app=jenkins -o json
 
 POD_NAME=$(kubectl -n jenkins get pods --selector=app=jenkins \
@@ -47,6 +59,15 @@ kubectl -n jenkins exec -it $POD_NAME pkill java
 
 open "http://$JENKINS_ADDR/jenkins"
 ```
+
+
+## Without Persisting State
+
+---
+
+* We created a new job
+* We simulated failure by killing the `java` process
+* We observed that Jenkins recuperated from the failure, but it lost its state (the job)
 
 
 ## Creating AWS Volumes
@@ -76,6 +97,13 @@ aws ec2 describe-instances | jq -r ".Reservations[].Instances[] \
 
 ---
 
+* We retrieved the zones of our cluster
+
+
+## Creating AWS Volumes
+
+---
+
 ```bash
 AZ_1=$(cat zones | head -n 1)
 
@@ -99,11 +127,25 @@ VOLUME_ID_3=$(aws ec2 create-volume --availability-zone $AZ_1 \
 
 ---
 
+* We created three volumes spread in two zones
+
+
+## Creating AWS Volumes
+
+---
+
 ```bash
 echo $VOLUME_ID_1
 
 aws ec2 describe-volumes --volume-ids $VOLUME_ID_1
 ```
+
+
+## Creating AWS Volumes
+
+---
+
+* We described one of the volumes as a way to confirm that it was created correctly
 
 
 <!-- .slide: data-background="img/persistent-volume-ebs.png" data-background-size="contain" -->
@@ -126,6 +168,13 @@ kubectl get pv
 ```
 
 
+## k8s Persistent Volumes
+
+---
+
+* We created three PersistentVolumes matching the three EBS volumes
+
+
 <!-- .slide: data-background="img/persistent-volume-pv.png" data-background-size="contain" -->
 
 
@@ -144,6 +193,14 @@ kubectl get pv
 ```
 
 
+## Claiming Persistent Volumes
+
+---
+
+* We created a PersistentVolumeClaim that uses the StorageClass `manual-ebs`
+* We retrieved the PersistentVolumes and observed that one of them is `Bound` to the claim
+
+
 <!-- .slide: data-background="img/persistent-volume-pvc.png" data-background-size="contain" -->
 
 
@@ -160,6 +217,13 @@ kubectl -n jenkins rollout status deployment jenkins
 ```
 
 
+## Attaching Claimed Volumes
+
+---
+
+* We updated Jenkins by adding a mount that uses the PersistentVolumeClaim
+
+
 <!-- .slide: data-background="img/persistent-volume-pod.png" data-background-size="contain" -->
 
 
@@ -169,9 +233,11 @@ kubectl -n jenkins rollout status deployment jenkins
 
 ```bash
 open "http://$JENKINS_ADDR/jenkins"
+```
 
-# Create a job
+* Create a job
 
+```bash
 POD_NAME=$(kubectl -n jenkins get pod --selector=app=jenkins \
     -o jsonpath="{.items[*].metadata.name}")
 
@@ -185,6 +251,17 @@ kubectl -n jenkins get pvc
 
 kubectl get pv
 ```
+
+
+## Attaching Claimed Volumes
+
+---
+
+* We created a new Job
+* We simulated failure
+* We confirmed that Jenkins recuperated from the failure and that the state (the job) is preserved
+* We deleted Jenkins
+* We observed that the PVC and PV are still bound
 
 
 ## Attaching Claimed Volumes
@@ -206,6 +283,14 @@ aws ec2 delete-volume --volume-id $VOLUME_ID_3
 ```
 
 
+## Attaching Claimed Volumes
+
+---
+
+* We removed the PersistentVolumeClaim and observed that the PV was released
+* We deleted the PVs and the EBS volumes
+
+
 ## Using Storage Classes
 
 ---
@@ -225,6 +310,14 @@ kubectl get sc
 
 cat pv/jenkins-dynamic.yml
 ```
+
+
+## Using Storage Classes
+
+---
+
+* In case of EKS, we created a new StorageClass (most other flavors have it out-of-the-box)
+* We output a new Jenkins definition with a PersistentVolumeClaim that uses the newly created StorageClass
 
 
 ## Using Storage Classes
@@ -253,12 +346,32 @@ kubectl -n jenkins delete deploy,pvc jenkins
 
 ---
 
+* We updated Jenkins
+* We retrieved the events and observed that it provisioner a new volume
+* We retrieved PersistentVolumeClaims and observed that it is bound to a new volume
+* We retrieved Volumes and observed that a new one was created with the reclaim policy set to `DELETE`
+* We described AWS volumes and observed that a new one was created
+* We deleted Jenkins Deployment and PersistentVolumeClaim
+
+
+## Using Storage Classes
+
+---
+
 ```bash
 kubectl get pv
 
 aws ec2 describe-volumes \
     --filters 'Name=tag-key,Values="kubernetes.io/created-for/pvc/name"'
 ```
+
+
+## Using Storage Classes
+
+---
+
+* We retrieved PersistentVolumes and observed that the one we used before was automatically removed with the removal of the PersistentVolumeClaim
+* We retrieved AWS volumes and observed that the one created by the PersitentVolume was removed
 
 
 ## Default Storage Classes
@@ -284,6 +397,16 @@ kubectl get pv
 ```
 
 
+## Default Storage Classes
+
+---
+
+* In case of EKS, we patched the StorageClass to make it default (most of the other flavors have it out-of-the-box)
+* We confirmed that the StorageClass is set to be `default`
+* We updated Jenkins to use a StorageClass that does not specify `storageClassName`
+* We retrieved PersistentVolumes and observed that a new one was created
+
+
 ## Creating Storage Classes
 
 ---
@@ -304,6 +427,16 @@ kubectl apply -f pv/jenkins-sc.yml --record
 aws ec2 describe-volumes \
     --filters 'Name=tag-key,Values="kubernetes.io/created-for/pvc/name"'
 ```
+
+
+## Creating Storage Classes
+
+---
+
+* We deleted Jenkins Deployment and PersistentVolumeClaim
+* We created a new StorageClass based on a different EBS type
+* We Updated Jenkins to use the new StorageClass
+* We retrieved EBS volumes and observed that the newly created one is based on `io1`
 
 
 <!-- .slide: data-background="img/persistent-volume-sc.png" data-background-size="contain" -->

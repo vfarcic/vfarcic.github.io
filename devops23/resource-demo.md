@@ -24,6 +24,13 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/de
 ```
 
 
+## Enabling Heapster
+
+---
+
+* We installed Heapster and InfluxDB
+
+
 ## Memory And CPU Resources
 
 ---
@@ -39,6 +46,14 @@ kubectl describe deploy go-demo-2-api
 
 kubectl describe nodes
 ```
+
+
+## Memory And CPU Resources
+
+---
+
+* We installed *go-demo-2* with randomly defined resource requests and limits
+* We described the nodes and observed resource utilization
 
 
 ## Measuring Consumption
@@ -58,6 +73,13 @@ kubectl -n kube-system expose deployment heapster \
 
 kubectl -n kube-system get svc heapster-api -o json
 ```
+
+
+## Measuring Consumption
+
+---
+
+* We exposed Heapster API and confirmed that the service was created
 
 
 ## Measuring Consumption
@@ -87,6 +109,14 @@ BASE_URL="http://$ADDR:$PORT/api/v1/model/namespaces/default/pods"
 
 ---
 
+* We retrieved Heapster's address and the port
+* We generated a base URL for requests to Heapster
+
+
+## Measuring Consumption
+
+---
+
 ```bash
 curl "$BASE_URL"
 
@@ -99,6 +129,16 @@ curl "$BASE_URL/$DB_POD_NAME/containers/db/metrics/memory/usage"
 
 curl "$BASE_URL/$DB_POD_NAME/containers/db/metrics/cpu/usage_rate"
 ```
+
+
+## Measuring Consumption
+
+---
+
+* We retrieved from Heapster the Pods from the default Namespace
+* We retrieved the name of the DB Pod
+* We retrieved the list of the available metrics
+* We retrieved DBs memory (~33MB) and CPU (~0.002) usage
 
 
 ## Resource Discrepancies
@@ -128,6 +168,18 @@ kubectl describe pod go-demo-2-db
 
 ---
 
+* We updated the DB by setting insufficient memory
+* We retrieved the Pods and observed that the status of the DB is `OOMKilled`
+* We described DB Deployment and observed that the `Last State` is `Terminated` for `OOMKilled` reason
+* We updated the DB by setting more memory than the size of VMs
+* We retrieved the Pods and observed that the status of the DB is `Pending`
+* We described DB Pod and observed that there are no nodes available due to insufficient memory
+
+
+## Resource Discrepancies
+
+---
+
 ```bash
 kubectl apply -f res/go-demo-2-random.yml --record
 
@@ -135,6 +187,13 @@ kubectl rollout status deployment go-demo-2-db
 
 kubectl rollout status deployment go-demo-2-api
 ```
+
+
+## Resource Discrepancies
+
+---
+
+* We updated the application back to the definition that worked
 
 
 ## Adjusting Resources
@@ -162,6 +221,13 @@ curl "$BASE_URL/$API_POD_NAME/containers/api/metrics/cpu/usage_rate"
 
 ---
 
+* We retrieved memory and CPU usage of the DB and the API Pods
+
+
+## Adjusting Resources
+
+---
+
 ```bash
 cat res/go-demo-2.yml
 
@@ -169,6 +235,13 @@ kubectl apply -f res/go-demo-2.yml --record
 
 kubectl rollout status deployment go-demo-2-api
 ```
+
+
+## Adjusting Resources
+
+---
+
+* We updated the definitions so that memory and CPU usage and limits reflect the actual usage
 
 
 ## Quality Of Service (QoS)
@@ -224,6 +297,18 @@ kubectl delete -f res/go-demo-2-qos.yml
 ```
 
 
+## Quality Of Service (QoS)
+
+---
+
+* We described DB Pod and observed observed that the QoS is `Burstable`
+* We updated the DB to have the same values for `requests` and `limits`
+* We updated the API by removing the `requests` and `limits`
+* We described the DB Pod and observed that the QoS is `Guaranteed`
+* We described the API Pod and observed that the QoS is `BestEffort`
+* We deleted the applicaation
+
+
 ## Defaults and Limitations
 
 ---
@@ -251,6 +336,15 @@ kubectl -n test rollout status deployment go-demo-2-api
 
 ---
 
+* We created the `test` Namespace with `LimitRange`
+* We described the Namespace and observed the limits
+* We installed the application without resources
+
+
+## Defaults and Limitations
+
+---
+
 ```bash
 kubectl -n test describe pod go-demo-2-db
 
@@ -270,6 +364,18 @@ kubectl delete namespace test
 ```
 
 
+## Defaults and Limitations
+
+---
+
+* We described the DB Pod and observed that it was assigned default limits and requests
+* We updated DB by setting memory above the limit and the API by setting memory below the limit
+* We observed that creating the API is forbidden because its memory is below the limit and that the DB is forbidden because its memory is above the limit
+* We failed to create a new Pod because the requested memory is above the limit
+* We failed to create a new Pod because the requested memory is below the limit
+* We deleted the `test` Namespace
+
+
 ## Resource Quotas
 
 ---
@@ -287,6 +393,15 @@ kubectl -n dev rollout status deployment go-demo-2-api
 
 kubectl -n dev describe quota dev
 ```
+
+
+## Resource Quotas
+
+---
+
+* We created the `dev` Namespace with `ResourceQuota`
+* We installed the applicatiton
+* We described the `quota` and observed `Used` and `Hard` values
 
 
 ## Resource Quotas
@@ -314,6 +429,17 @@ kubectl -n dev rollout status deployment go-demo-2-api
 
 ---
 
+* We updated the application by increasing the number of API replicas to `15`.
+* We retrieved the events and observed that creating of some Pods was forbidden due to CPU and Pods limits
+* We described the `dev` Namespace and observed that we reached the quota for CPU and Pods
+* We retrieved the Pods and observed that some are missing
+* We updated the application to the previous working version
+
+
+## Resource Quotas
+
+---
+
 ```bash
 cat res/go-demo-2-mem.yml
 
@@ -332,18 +458,21 @@ kubectl expose deployment go-demo-2-api -n dev \
 ```
 
 
+## Resource Quotas
+
+---
+
+* We increased the memory of the API Pods
+* We retrieved the events and observed that creation of some Pods was forbidden
+* We described the `dev` Namespace and observed that we used almost all the memory quota
+* We updated the application to the last known working version
+* We failed to expose a `NodePort`
+
+
 ## What Now?
 
 ---
 
 ```bash
-minikube delete
-
-kubectl config delete-cluster jdoe
-
-kubectl config delete-context jdoe
-
-kubectl config delete-context testing
-
-kubectl config unset users.jdoe
+kubectl delete ns dev
 ```
