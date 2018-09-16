@@ -64,12 +64,6 @@ echo $JENKINS_PASS
 
 ```bash
 open "http://$JENKINS_ADDR/credentials/store/system/domain/_/newCredentials"
-
-JENKINS_PASS=$(kubectl -n go-demo-3-jenkins get secret \
-    go-demo-3-jenkins -o jsonpath="{.data.jenkins-admin-password}" \
-    | base64 --decode; echo)
-
-echo $JENKINS_PASS
 ```
 
 * Type your *admin* as the *Username* and the *Password*
