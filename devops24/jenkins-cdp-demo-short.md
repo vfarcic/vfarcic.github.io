@@ -28,6 +28,8 @@ helm init --service-account build --tiller-namespace go-demo-3-build
 ```bash
 JENKINS_ADDR="go-demo-3-jenkins.$LB_IP.nip.io"
 
+helm dependency build helm/jenkins
+
 helm install helm/jenkins --name go-demo-3-jenkins \
     --namespace go-demo-3-jenkins \
     --set jenkins.Master.HostName=$JENKINS_ADDR \
