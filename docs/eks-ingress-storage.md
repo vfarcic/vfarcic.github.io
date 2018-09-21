@@ -30,14 +30,15 @@ echo 'kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
   name: gp2
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
 provisioner: kubernetes.io/aws-ebs
 parameters:
   type: gp2
   encrypted: "true"' \
     | kubectl create -f -
 
-kubectl patch storageclass gp2 \
-    -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+kubectl get sc
 ```
 
 

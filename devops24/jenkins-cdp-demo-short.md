@@ -30,6 +30,19 @@ JENKINS_ADDR="go-demo-3-jenkins.$LB_IP.nip.io"
 
 helm dependency build helm/jenkins
 
+cat helm/jenkins/requirements.yaml
+
+cat helm/jenkins/values.yaml
+
+cat helm/jenkins/templates/config.tpl
+```
+
+
+## Installing Jenkins
+
+---
+
+```bash
 helm install helm/jenkins --name go-demo-3-jenkins \
     --namespace go-demo-3-jenkins \
     --set jenkins.Master.HostName=$JENKINS_ADDR \
@@ -449,8 +462,6 @@ helm history go-demo-3 --tiller-namespace go-demo-3-build
 ---
 
 ```bash
-open "https://github.com/$GH_USER/jenkins-shared-libraries/tree/master/vars"
-
 curl "https://raw.githubusercontent.com/$GH_USER/jenkins-shared-libraries/master/vars/k8sBuildImageBeta.txt"
 
 open "http://$JENKINS_ADDR/configureSecurity/"

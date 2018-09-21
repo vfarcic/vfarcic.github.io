@@ -15,6 +15,8 @@
 ```bash
 cd ..
 
+git clone https://github.com/vfarcic/go-demo-3.git
+
 cd go-demo-3
 
 cat k8s/build-ns.yml
@@ -71,7 +73,7 @@ exit
 ---
 
 ```bash
-kubectl delete ns go-demo-3-build
-
 cd ../k8s-specs
+
+kubectl delete ns go-demo-3-build
 ```

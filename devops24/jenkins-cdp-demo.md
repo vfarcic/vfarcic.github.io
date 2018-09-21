@@ -38,19 +38,13 @@ helm init --service-account build --tiller-namespace go-demo-3-build
 ```bash
 JENKINS_ADDR="go-demo-3-jenkins.$LB_IP.nip.io"
 
-helm install helm/jenkins --name go-demo-3-jenkins \
-    --namespace go-demo-3-jenkins \
-    --set jenkins.Master.HostName=$JENKINS_ADDR \
-    --set jenkins.Master.DockerAMI=$AMI_ID
+helm dependency build helm/jenkins
 
-kubectl -n go-demo-3-jenkins rollout status deployment \
-    go-demo-3-jenkins
+cat helm/jenkins/requirements.yaml
 
-open "http://$JENKINS_ADDR/computer"
+cat helm/jenkins/values.yaml
 
-JENKINS_PASS=$(kubectl -n go-demo-3-jenkins get secret \
-    go-demo-3-jenkins -o jsonpath="{.data.jenkins-admin-password}" \
-    | base64 --decode; echo)
+cat helm/jenkins/templates/config.tpl
 ```
 
 
@@ -59,6 +53,28 @@ JENKINS_PASS=$(kubectl -n go-demo-3-jenkins get secret \
 ---
 
 ```bash
+helm install helm/jenkins --name go-demo-3-jenkins \
+    --namespace go-demo-3-jenkins \
+    --set jenkins.Master.HostName=$JENKINS_ADDR \
+    --set jenkins.Master.CredentialsXmlSecret="" \
+    --set jenkins.Master.SecretsFilesSecret=""
+
+kubectl -n go-demo-3-jenkins rollout status deployment \
+    go-demo-3-jenkins
+```
+
+
+## Installing Jenkins
+
+---
+
+```bash
+open "http://$JENKINS_ADDR/computer"
+
+JENKINS_PASS=$(kubectl -n go-demo-3-jenkins get secret \
+    go-demo-3-jenkins -o jsonpath="{.data.jenkins-admin-password}" \
+    | base64 --decode; echo)
+
 echo $JENKINS_PASS
 
 cat cluster/devops24.pem

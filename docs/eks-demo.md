@@ -51,7 +51,7 @@ export AWS_DEFAULT_REGION=us-west-2
 mkdir -p cluster
 
 eksctl create cluster -n devops24 --kubeconfig cluster/kubecfg-eks \
-    --node-type t2.medium --nodes 3
+    --node-type t2.medium --nodes 3 -r $AWS_DEFAULT_REGION
 
 export KUBECONFIG=$PWD/cluster/kubecfg-eks
 
