@@ -34,8 +34,14 @@
 ## [DevOpsToolkitSeries.com](http://www.devopstoolkitseries.com/)
 
 <figure style="width: 50%; height: 50%; float: left;">
-    <img src="../img/devops-toolkit-series.png"/>
+    <a href="https://www.devopstoolkitseries.com/">
+        <img src="../img/devops-toolkit-series.png"/>
+    </a>
+    <h3>[@vfarcic](https://twitter.com/vfarcic)</h3>
+    <h3>viktor@farcic.com</h3>
 </figure>
 <figure style="width: 50%; height: 50%; float: right;">
-    <img src="../img/qr/devops-toolkit-series.png"/>
+    <a href="https://www.devopstoolkitseries.com/">
+        <img src="../img/qr/devops-toolkit-series.png"/>
+    </a>
 </figure>
