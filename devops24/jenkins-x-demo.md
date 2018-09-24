@@ -72,8 +72,6 @@ open "https://github.com/vfarcic/golang-http/settings/hooks"
 open "https://github.com/jenkins-x-quickstarts"
 
 ll ~/.jx/draft/packs/github.com/jenkins-x/draft-packs/packs
-
-jx create quickstart  -l go --organisations vfarcic
 ```
 
 
@@ -143,6 +141,8 @@ jx get app -e staging
 
 jx promote golang-http --version 0.0.1 --env production \
     --timeout 24h
+
+kubectl get all
 ```
 
 
