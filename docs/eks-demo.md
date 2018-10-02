@@ -12,6 +12,7 @@
 * [Git](https://git-scm.com/)
 * GitBash (if Windows)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+* [AWS CLI](https://aws.amazon.com/cli/)
 * [eksctl](https://github.com/weaveworks/eksctl)
 * [aws-iam-authenticator](https://github.com/kubernetes-sigs/aws-iam-authenticator) (follow the instructions from the "**install aws-iam-authenticator for Amazon EKS**" section in [Getting Started with Amazon EKS](https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html))
 * AWS admin permissions

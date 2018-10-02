@@ -1,15 +1,18 @@
 # [Workshop: Kubernetes: Deploying and managing highly-available and fault-tolerant applications at scale (3 days)](http://vfarcic.github.io/devops23/workshop.html)
 # Practical Kubernetes
 
+## Abstract (short)
+
+
 ## Abstract
 
 Kubernetes is a container scheduler and quite a lot more. We can use it to deploy our services, to roll out new releases without downtime, and to scale (or de-scale) those services. It is portable. It can run on a public or private cloud. It can run on-premise or in a hybrid environment. Kubernetes, in a way, makes your infrastructure vendor agnostic. We can move a Kubernetes cluster from one hosting vendor to another without changing (almost) any of the deployment and management processes. Kubernetes can be easily extended to serve nearly any needs. We can choose which modules we'll use, and we can develop additional features ourselves and plug them in.
 
-If we choose to use Kubernetes, we decide to relinquish control. Kubernetes will decide where to run something and how to accomplish the state we specify. Such control allows Kubernetes to place replicas of a service on the most appropriate server, to restart them when needed, to replicate them, and to scale them. We can say that self-healing is a feature included in its design from the start. On the other hand, self-adaptation is coming as well. At the time of this writing, it is still in its infancy. Soon it will be an integral part of the system.
+If we choose to use Kubernetes, we decide to relinquish control. Kubernetes will decide where to run something and how to accomplish the state we specify. Such control allows Kubernetes to place replicas of a service on the most appropriate server, to restart them when needed, to replicate them, and to scale them. We can say that self-healing is a feature included in its design from the start.
 
 Zero-downtime deployments, fault tolerance, high availability, scaling, scheduling, and self-healing should be more than enough to see the value in Kubernetes. Yet, that is only a fraction of what it provides. We can use it to mount volumes for stateful applications. It allows us to store confidential information as secrets. We can use it to validate the health of our services. It can load balance requests and monitor resources. It provides service discovery and easy access to logs. And so on and so forth. The list of what Kubernetes does is long and rapidly increasing. Together with Docker, it is becoming a platform that envelops whole software development and deployment lifecycle.
 
-In this live training course, you will learn how to create and manage basic Kubernetes objects.
+The goal of this live training course is to learn fundamentals required to operate a Kubernetes cluster and deploy and manage applications life-cycle. You will learn all the essential and commonly used constructs and resources.
 
 ## What you'll learn-and how you can apply it
 
@@ -42,7 +45,6 @@ Materials, downloads, or Supplemental Content needed in advance:
 * [jq](https://stedolan.github.io/jq/)
 * GitBash (if using Windows)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-* [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 * [Docker For Windows](https://www.docker.com/docker-windows), [Docker For Mac](https://www.docker.com/docker-mac), or [Docker Server](https://docs.docker.com/install/#server) if using Linux
 * [Docker Hub account](https://hub.docker.com/)
 * [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) or admin access to AWS (for [EKS](https://aws.amazon.com/eks/))
@@ -67,7 +69,7 @@ The timeframes are only estimates and may vary according to how the class is pro
 
 ### Section 1: Building Docker Images
 
-Create a Dockerfile with Multi-Stage builds that envelops whole CI process from running unit tests, through building binaries, all the way until a Docker image is created and pushed to a registry. We'll build one Docker image based on https://github.com/vfarcic/go-demo-3/blob/master/Dockerfile. Later on, we'll use mongo, jenkins, golang, and a few other images
+Create a Dockerfile with Multi-Stage builds that envelops the whole CI process from running unit tests, through building binaries, all the way until a Docker image is created and pushed to a registry. We'll build one Docker image based on https://github.com/vfarcic/go-demo-3/blob/master/Dockerfile. Later on, we'll use mongo, jenkins, golang, and a few other images
 
 ### Section 2: What Is A Container Scheduler?
 
