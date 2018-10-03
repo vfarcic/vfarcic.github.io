@@ -77,7 +77,7 @@ exit
 ```
 
 
-<!-- .slide: data-background="img/manual-scaling.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/manual-scaling.jpeg" data-background-size="contain" -->
 
 
 ## Manual Scaling
@@ -232,7 +232,7 @@ exit
 ```
 
 
-<!-- .slide: data-background="img/jenkins-scaling.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/jenkins-scaling.jpeg" data-background-size="contain" -->
 
 
 ## Scaling Job
@@ -401,7 +401,7 @@ open "http://$CLUSTER_DNS/monitor/alerts"
 ```
 
 
-<!-- .slide: data-background="img/slack-scaling.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/slack-scaling.jpeg" data-background-size="contain" -->
 
 
 ## Automated Scaling
@@ -438,7 +438,7 @@ docker node ls
 ```
 
 
-<!-- .slide: data-background="img/infra-scaling.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/infra-scaling.jpeg" data-background-size="contain" -->
 
 
 ## Automated Scaling

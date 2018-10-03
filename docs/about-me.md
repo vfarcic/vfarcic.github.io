@@ -18,7 +18,7 @@
 ![](../img/youtube.png)
 
 
-![](../img/devops-toolkit-series.png)
+[![devopstoolkitseries.com](../img/devops-toolkit-series.png)](https://www.devopstoolkitseries.com/)
 
 
 <!-- .slide: data-background="../img/products/twitter.png" data-background-size="contain" -->

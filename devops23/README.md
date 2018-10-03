@@ -1,4 +1,3 @@
-# [Workshop: Kubernetes: Deploying and managing highly-available and fault-tolerant applications at scale (3 days)](http://vfarcic.github.io/devops23/workshop.html)
 # Practical Kubernetes
 
 ## Abstract (short)

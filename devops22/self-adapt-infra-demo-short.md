@@ -146,7 +146,7 @@ docker node ls
 ```
 
 
-<!-- .slide: data-background="img/infra-scaling.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/infra-scaling.jpeg" data-background-size="contain" -->
 
 
 ## Automated Scaling
