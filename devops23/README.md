@@ -79,7 +79,7 @@ Learn the short history of software and infrastructure development, why we need 
 
 Minikube creates a single-node cluster inside a VM on your laptop. While that is not ideal since we won't be able to demonstrate some of the features Kubernetes provides in a multi-node setup, it should be more than enough to explain most of the concepts behind Kubernetes.
 
-### Section 4 : Creating Pods
+### Section 4: Creating Pods
 
 A Pod encapsulates one or more containers. It provides a unique network IP, it attaches storage resources, and it decides how containers should run. Everything in a Pod is tightly coupled.
 
