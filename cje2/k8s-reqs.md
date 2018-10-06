@@ -24,7 +24,7 @@
 ---
 
 
-<!-- .slide: data-background="img/google-cloud-platform.png" data-background-size="contain" -->
+<!-- .slide: data-background="../img/products/google-cloud-platform.png" data-background-size="contain" -->
 
 
 <!-- .slide: data-background="img/open-shift.svg" data-background-size="contain" -->

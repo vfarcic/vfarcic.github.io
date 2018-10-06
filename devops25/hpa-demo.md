@@ -143,6 +143,50 @@ kubectl -n go-demo-5 describe hpa api
 ```
 
 
+## To Replicas Or Not To Replicas?
+
+---
+
+```bash
+kubectl -n go-demo-5 get pods
+
+cat scaling/go-demo-5-replicas-10.yml
+
+kubectl apply -f scaling/go-demo-5-replicas-10.yml
+
+kubectl -n go-demo-5 get pods
+
+kubectl -n go-demo-5 get pods
+
+kubectl -n go-demo-5 describe deployment api
+
+diff scaling/go-demo-5-replicas-10.yml scaling/go-demo-5.yml
+
+kubectl apply -f scaling/go-demo-5.yml
+```
+
+
+## To Replicas Or Not To Replicas?
+
+---
+
+```bash
+kubectl -n go-demo-5 describe deployment api
+
+kubectl delete -f scaling/go-demo-5.yml
+
+kubectl apply -f scaling/go-demo-5.yml
+
+kubectl -n go-demo-5 describe deployment api
+
+kubectl -n go-demo-5 describe deployment api
+
+kubectl apply -f scaling/go-demo-5-2-5.yml
+
+kubectl -n go-demo-5 describe deployment api
+```
+
+
 ## What Now?
 
 ---
