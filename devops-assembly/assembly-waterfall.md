@@ -1,5 +1,5 @@
 <!-- .slide: data-background="../img/background/waterfall.jpg" -->
-# Waterfall Assembly
+# Waterfall Assembly Line
 
 ---
 
@@ -26,6 +26,11 @@
 # That NEVER Worked!
 
 ---
+
+
+<!-- .slide: data-background="img/einstein.jpg" data-background-size="contain" -->
+> "Insanity Is Doing the Same Thing Over and Over Again and Expecting Different Results"
+> -- Albert Einstein
 
 
 <!-- .slide: data-background="img/assembly-waterfall-07.png" data-background-size="contain" -->

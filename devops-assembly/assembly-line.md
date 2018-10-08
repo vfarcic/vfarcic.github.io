@@ -5,28 +5,28 @@
 ---
 
 
-## What Is Assembly Line?
+## What Is Manufacturing Assembly Line?
 
 ---
 
 > "Manufacturing process in which parts are added in sequence until the final assembly is produced."
 
 
-## What Is Assembly Line?
+## What Is Manufacturing Assembly Line?
 
 ---
 
 > "Mass-produce a product with the same specifications and quality."
 
 
-### What Software Is Assembly Line?
+### What Is Software Assembly Line?
 
 ---
 
 > "Produce a **single** product with a **repeatable process**."
 
 
-### What Software Is Assembly Line?
+### What Is Software Assembly Line?
 
 ---
 

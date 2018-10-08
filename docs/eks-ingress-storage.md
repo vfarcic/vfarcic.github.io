@@ -21,29 +21,6 @@ kubectl apply \
 ```
 
 
-## Ports
-
----
-
-```bash
-CP_SG=$(aws ec2 describe-security-groups \
-    --filter "Name=group-name,Values=eksctl-$NAME-cluster-ControlPlaneSecurityGroup-*" \
-    | jq -r '.SecurityGroups[0].GroupId')
-
-NG_SG=$(aws ec2 describe-security-groups \
-    --filter "Name=group-name,Values=eksctl-devops25-nodegroup-0-SG-*" \
-    | jq -r '.SecurityGroups[0].GroupId')
-
-echo $CP_SG $NG_SG
-
-aws ec2 authorize-security-group-egress --group-id $CP_SG \
-    --ip-permissions IpProtocol=tcp,FromPort=443,ToPort=443,UserIdGroupPairs="[{GroupId=$NG_SG,Description='Metrics Server'}]"
-
-aws ec2 authorize-security-group-ingress --group-id $NG_SG \
-    --protocol tcp --port 443 --source-group $CP_SG
-```
-
-
 ## ELB IP
 
 ---
