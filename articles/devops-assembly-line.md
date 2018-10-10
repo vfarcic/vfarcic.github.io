@@ -44,8 +44,16 @@ There were quite a few problems with the whole process. First of all, the durati
 
 The second reason for the failure of the waterfall process is that it was impossible to make it linear. We cannot expect analysists to know in advance all the features users want. We couldn't expect developers to work for months without producing bugs or, more importantly, not to make mistakes from the start and, at the end of their work, to expect them not to go back to the beginning due to those mistakes. Testers were supposed to confirm that our software works flawelessly, and not to return with hundreds or thousands of bug reports and missinterpreted requirements. If that was not our expectation, why were testers involved only after developers produce months or years all the faulty software? It gets worse. After the testing stage, we'd give it to operators, only to discover that, after the software is deployed, it does not work correctly and it needs to go back to developers and, consequenty, to testers. Finally, if the system worked well, why did we have months of maintenance? We do not return cars because there is no wheel in them but because there is a problem caused by driving thousands of kilometers.
 
+Even though waterfall process tried to create an equivalent to the manufacturing assembly line, it went into the opposite direction. If anything, waterfall is closer to salve labour. **You have a tight control over everything and everyone, the process is mostly manual, and everyone dislikes you.** Waterfall is equivalent to pre-industrial revolution. Or, to find even better parallel, to the way egyptians built pyramids. A lot of managers overview the workforce working on implementing a multi-year plan that is likely going to be delayed, require more slaves, or crumble. There was no incentive for automation, and therefore, for an assembly line. Everything could be fixed by finding more people to work.
+
 This brings me to the main problem.
 
 ## The Tools Used In Software Development
 
+We tend to use a lot of tools and they differ from one role to another. Analysts might use Microsoft Word, Google Docs, or Markdown. Developers spend most of their time writing code in Visual Studio Code, IntelliJ, or Eclipse (only to name a few). Testers tend to look at stats in SonarQube and they might write some automated tests with, let's say, Selenium. Operators love VMWare, Docker, Kubernetes, OpenStack, and other tools that help them do their work. And those in charge of maintenance also have their favourte tools.
 
+Using tools is not a problem per-se. The real issue is that we are mixing the tools and using them in inappropriate places. We can split them into those that require creative work (e.g., coding, writing stories, and so on) and those that do the repetitive steps. The former should be used while designing the solution, while the latter should be part of the assembly line. It is important to understand that the **assembly line is all about automation, and not the creative work**. We expect to have an assembly line in which we can say "stop the process, I need to write a test" or "pause everything, I need get an understanding of that weird result in SonarQube".
+
+## Agile And DevOps Processes
+
+TODO: Continue

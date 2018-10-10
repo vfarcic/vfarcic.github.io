@@ -31,6 +31,7 @@ kubectl delete deployment db
 Note:
 We used the imperative way to tell Kubernetes what to do. Even though there are cases when that might be useful, most of the time we want to leverage the declarative approach. We want to have a way to define what we need in a file and pass that information to Kubernetes. That way, we can have a documented and repeatable process, that can (and should) be version controlled as well. Moreover, the kubectl run was reasonably simple. In real life, we need to declare much more than the name of the deployment and the image. Commands like kubectl can quickly become too long and, in many cases, very complicated. Instead, we’ll write specifications in YAML format. Soon, we’ll see how we can accomplish a similar result using declarative syntax.
 
+
 <!-- .slide: data-background="img/pod-single-container.png" data-background-size="contain" -->
 
 
@@ -56,10 +57,7 @@ kubectl describe pod db
 kubectl describe -f pod/db.yml
 ```
 
-
 Note:
-
-Cat the yaml file:
 We’re using v1 of Kubernetes Pods API. Both apiVersion and kind are mandatory. That way, Kubernetes knows what we want to do (create a Pod) and which API version to use. The next section is metadata.It provides information that does not influence how the Pod behaves. We used metadata to define the name of the Pod (db) and a few labels. Later on, when we move into Controllers, labels will have a practical purpose. For now, they are purely informational. The last section is the spec in which we defined a single container.  The container is defined with the name (db), the image (mongo), the command that should be executed when the container starts (mongod), and, finally, the set of arguments. The arguments are defined as an array with, in this case, two elements (--rest and --httpinterface).
 We will explore different means to retrieve information about running Pods
 
@@ -74,6 +72,7 @@ Creating a POD:
 4. Kubelet is also watching the API server. It detected that the Pod was assigned to the node it is running on.
 5. Kubelet sent a request to Docker requesting the creation of the containers that form the Pod. In our case, the Pod defines a single container based on the mongo image.
 6. Finally, Kubelet sent a request to the API server notifying it that the Pod was created successfully.
+
 
 ## Declarative Syntax
 
@@ -94,7 +93,6 @@ kubectl exec -it db pkill mongod
 
 kubectl get pods
 ```
-
 
 Note:
 * We executed processes inside a Pod
@@ -140,7 +138,6 @@ cat pod/go-demo-2-scaled.yml
 
 kubectl delete -f pod/go-demo-2.yml
 ```
-
 
 Note:
 Pods are designed to run multiple cooperative processes that should act as a cohesive unit. Those processes are wrapped in containers. All the containers that form a Pod are running on the same machine. A Pod cannot be split across multiple nodes. All the processes (containers) inside a Pod share the same set of resources, and they can communicate with each other through localhost. One of those shared resources is storage. A volume defined in a Pod can be accessed by all the containers thus allowing them all to share the same data. We’ll explore storage in more depth later on. For now, let’s take a look at the pod/ go-demo-2. yml specification.
