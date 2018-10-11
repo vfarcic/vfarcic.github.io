@@ -111,8 +111,6 @@ minikube delete
 ---
 
 ```bash
-minikube get-k8s-versions
-
 minikube start --vm-driver=virtualbox --kubernetes-version="v1.9.4"
 
 kubectl version --output=yaml

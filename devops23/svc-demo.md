@@ -147,7 +147,7 @@ IP=$(kubectl get svc go-demo-2 \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
 # If minikube
-PORT=30012
+PORT=30001
 
 open "http://$IP:$PORT"
 ```
