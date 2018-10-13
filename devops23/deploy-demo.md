@@ -147,7 +147,7 @@ kubectl rollout history -f deploy/go-demo-2-api.yml
 kubectl set image -f deploy/go-demo-2-api.yml \
     api=vfarcic/go-demo-2:2.0 --record
 
-kubectl rollout undo -f deploy/go-demo-2-api.yml --to-revision=2
+kubectl rollout undo -f deploy/go-demo-2-api.yml --to-revision=4
 
 kubectl rollout history -f deploy/go-demo-2-api.yml
 ```
