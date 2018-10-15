@@ -50,10 +50,12 @@ If you got a similar output, you are successful and you're ready for the worksho
 
 Please use those commands to create a cluster shortly before the workshop starts. That'll save us 15-20 minutes thus allowing us to jump into continuous deployment straight away.
 
-Please execute the command that follows to delete the cluster (we'll create a new one shortly before the workshop).
+Please execute the command that follows to delete the cluster.
 
 ```bash
 eksctl delete cluster -n devops24
 ```
+
+**Please make sure to recreate the cluster shortly before the workshop starts.**
 
 If you have problems fulfilling the requirements, please contact me through [DevOps20](http://slack.devops20toolkit.com/) Slack (my user is vfarcic) or send me an email to viktor@farcic.com.
