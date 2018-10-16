@@ -23,8 +23,4 @@
 
 
 <!-- .slide: data-background="../img/background/waterfall.jpg" -->
-# Assembly Line
-# == Automation
-# != Creative Work
-
----
+> Software assembly line is all about automation, and not the creative work
