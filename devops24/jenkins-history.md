@@ -93,7 +93,7 @@
 # not enough
 
 
-<!-- .slide: data-background="img/jenkins-x.png" data-background-size="contain" -->
+<!-- .slide: data-background="../img/products/jenkins-x.png" data-background-size="contain" -->
 ## So we
 
 ---

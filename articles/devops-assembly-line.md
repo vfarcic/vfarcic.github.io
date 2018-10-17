@@ -44,7 +44,7 @@ But, I might have moved too fast. Let's go back through history and find out how
 
 A long time ago in a galaxy far, far away, someone came up with a brilliant idea. "Why don't we do the same thing as manufacturing. We'll design a linear process that will be bullet-proof and will result in high-quality software being delivered to our customers fast." Now, for the sake of clarity, the idea came from Winston W. Royce as a description of a flawed, non-working model. But, be it as it may, we adopted it nevertheless, and we started calling it the Waterfall process. So, how does it work?
 
-The process, in spite of some variations, is linear. Analysts figure out what users need. They write specifications and give them to developers. They write code that makes those requirements a working software. They, in turn, are not to be trusted, so they pass it on to testers that validate the software against the requirements. Once testers are finished, they deliver it to operators, who install that software in production. Just to be on the safe side, the last stage is maintenance. Just as cars sometimes malfunction, our software often contains some undesirable effects which are fixed after its delivered to its users. The whole process would take only a couple of years or, if we're very good at our jobs and very lucky, sometimes just months.
+The process, in spite of some variations, is linear. Analysts figure out what users need. They write specifications and give them to developers. They write code that makes those requirements a working software. Developers, in turn, are not to be trusted, so they pass it on to testers that validate the software against the requirements. Once testers are finished, they deliver it to operators, who install that software in production. Just to be on the safe side, the last stage is maintenance. Just as cars sometimes malfunction, our software often contains some undesirable effects which are fixed after its delivered to its users. The whole process would take only a couple of years or, if we're very good at our jobs and very lucky, sometimes just months.
 
 The major problem with the Waterfall process and its assembly line is that **it never worked**. And yet, we were repeating it over and over again. We do a project, and it fails either by not having sufficient quality, or by being more expensive, or by missing deadline (by months or years), or (the most common outcome) by not delivering things that users want. The first project would fail, and we'd to the second using the same process. When the second failed, we did the third. And so on and so forth, until we retire. Every once in a while, we would be successful. But, those were either exceptions or we'd "fake" the plan to make sure that it works. By fake, I mean double the estimates and rewrite the requirements so that we can say "look, we delivered on time, and it's what you want." **What users wanted was in most cases not what users needed.**
 
@@ -124,7 +124,7 @@ All those of you that were involved in manual processes during the latter phases
 
 Once the pipeline starts, machines take over. A pipeline executed through one of the CD platforms (e.g., Jenkins) will use a completely different set of tools than those you used during the creative phase. Those can be SonarQube, Selenium, Kubernetes, Docker, VMWare, Git, and many others. What they all have in common is that they do not require humans (in this phase) and that they have to do something. That "something" can be many things, and the only important factor is their exit code. Each step is either successful, and the pipeline moves to the next one, or it fails, and the execution of the pipeline stops. There is no gray area. There is no space for "we use SonarQube, but we do not fail builds when certain thresholds are reached." The result of an execution of a pipeline is black or white.
 
-> Continuous delivery builds are like the **Schrodinger's cats**.
+> Continuous delivery builds are like **Schrodinger's cats**.
 
 While the builds are running (the cat is in the box), the result can be considered both success or failure (the cat can be dead or alive). Only when we open the lid (receive notifications) can we know the outcome. Or, to be more precise, we hear just about dead cats. No notifications are telling us about those who survived, only about those that failed.
 
@@ -160,7 +160,7 @@ They are easy to manage, and they provide too many benefits for us to ignore the
 
 A few years ago, you could have said: "I want to wait and see whether containers are hype or they're here to stay." There is no excuse anymore. Everything designed in the 21st century should be packaged as container images and run as containers.
 
-> If your application is not a good fit to be inside containers, it was probably designed in the previous century, and you gave up on refactoring and modernizing it.
+> If your applications are not a good fit to be inside containers, it was probably designed in the previous century, and you gave up on refactoring and modernizing it.
 
 What do we do with things we've given up on? We let them rot. Everything else goes to containers.
 
