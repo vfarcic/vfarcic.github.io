@@ -45,12 +45,15 @@ Enough time passed for us to realize that there is no place for non-coders in th
 
 > There's still time to change your profession and become a doctor, a lawyer, or a truck driver.
 
+Note:
+> It's never too late.
+
+> There's still time to change your profession and become a doctor, a lawyer, or a truck driver.
+
 
 <!-- .slide: data-background="img/assembly-cd-02.png" data-background-size="contain" -->
 
 Note:
-> There's still time to change your profession and become a doctor, a lawyer, or a truck driver.
-
 During this creative pre-commit phase, we use tools that are entirely different than the tools used during the pipeline. I do not care whether that's IntelliJ, VS Code, Vi, Eclipse, MS Project, or any other tool through which you use the creative side of your brain. As long as you do the job in advance, you're being proactive. If you can express your work through the code, you're doing fine.
 
 I almost forgot one crucial piece of the story. You need to finish whatever you have to do before a new commit is pushed to the master branch.

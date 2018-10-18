@@ -77,6 +77,6 @@ Note:
 
 > In software, the design is the most of the cost, and if it goes wrong, we can fix it quickly only if we detect it early after it's delivered to customers.
 
-We tend to employ an army of people dedicated to working manually on repetitive tasks (e.g., manual testing, deployments, etc.). That is, kind of silly given that we are in the business of writing software that does things and helps others in their daily lives. And yet, we are somehow better at creating software for others, than software that will help us.
+We tend to employ an army of people dedicated to working manually on repetitive tasks (e.g., manual testing, deployments, etc.). That is kind of silly, given that we are in the business of writing software that does things and helps others in their daily lives. And yet, we are somehow better at creating software for others, than software that will help us.
 
 But, I might have moved too fast. Let's go back through history and find out how we got where we are, and where should we go next.
