@@ -13,8 +13,8 @@
 ## and secure cluster,
 ## that is fault tollerant,
 # with autoscaling,
-## and with all the software
-# pre-installed?
+## and with all the
+## CD software pre-installed?
 
 
 ## Creating A Cluster
