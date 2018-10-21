@@ -133,10 +133,6 @@ kubectl -n go-demo-3-build exec -it cd -c golang -- sh
 curl "http://$(cat addr)/demo/hello"
 
 go get -d -v -t
-
-export ADDRESS=api:8080
-
-go test ./... -v --run FunctionalTest
 ```
 
 

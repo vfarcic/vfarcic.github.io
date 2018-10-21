@@ -950,9 +950,7 @@ open "http://$PROM_ADDR/alerts"
 ---
 
 ```bash
-helm delete prometheus --purge
-
 helm delete go-demo-5 --purge
 
-kubectl delete ns go-demo-5 metrics
+kubectl delete ns go-demo-5
 ```

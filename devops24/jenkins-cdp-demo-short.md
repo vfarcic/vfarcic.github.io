@@ -81,7 +81,7 @@ echo $JENKINS_PASS
 open "http://$JENKINS_ADDR/credentials/store/system/domain/_/newCredentials"
 ```
 
-* Type your *admin* as the *Username* and the *Password*
+* Type *admin* as the *Username* and the *Password*
 * Type *chartmuseum* as the *ID* and the *Description*
 * Click the *OK* button
 
