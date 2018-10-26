@@ -32,7 +32,7 @@ All that is not to say that there is nothing to be learned from manufacturing as
 
 In manufacturing, considerable investment in time, people, and money goes into manufacturing while the design is usually much cheaper. We do, for example, need to design a car, but that is only a fraction of the cost. Producing it is where the real expense lies. If the design is wrong, the cost of repeating the production and re-delivering the product to the customer is so big that it can ruin a company. In software, the design represents almost the entire cost of a release. Now, I need to clarify that by design, I want to say creative and not repeatable work that involves not only brainstorming of a solution but also coding. Every feature we deliver is a result of a massive effort in creative tasks, and almost no effort to move it (after a commit) through the assembly which, in this context, means building, testing, deploying, and other repetitive tasks. At least, that's how it should be, even though in many cases it's not. If we make a mistake in design, all we have to do is to correct it. Delivering the change to customers is almost instant, and there is no significant cost in recreating the product with the fix or redesign. The only significant note is that our costs increase with the time it took us to discover an issue.
 
-> In manufacturing, the design is only a fraction of the cost but, if it does wrong, it cannot be fixed after it is delivered to customers.
+> In manufacturing, the design is only a fraction of the cost but, if it goes wrong, it cannot be fixed after it is delivered to customers.
 
 > In software, the design is the most of the cost, and if it goes wrong, we can fix it quickly only if we detect it early after it's delivered to customers.
 

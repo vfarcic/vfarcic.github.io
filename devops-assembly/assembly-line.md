@@ -68,12 +68,12 @@ In manufacturing, considerable investment in time, people, and money goes into m
 
 ---
 
-> In manufacturing, the design is only a fraction of the cost but, if it does wrong, it cannot be fixed after it is delivered to customers.
+> In manufacturing, the design is only a fraction of the cost but, if it goes wrong, it cannot be fixed after it is delivered to customers.
 
 > In software, the design is the most of the cost, and if it goes wrong, we can easily fix it only if we detect it early after it's delivered to customers.
 
 Note:
-> In manufacturing, the design is only a fraction of the cost but, if it does wrong, it cannot be fixed after it is delivered to customers.
+> In manufacturing, the design is only a fraction of the cost but, if it goes wrong, it cannot be fixed after it is delivered to customers.
 
 > In software, the design is the most of the cost, and if it goes wrong, we can fix it quickly only if we detect it early after it's delivered to customers.
 
