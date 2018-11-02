@@ -13,7 +13,7 @@
 # If minikube
 kubectl create -f ingress/go-demo-2-deploy.yml
 
-# If EKS
+# If EKS or GKE
 kubectl create -f ingress/go-demo-2-deploy-lb.yml
 
 kubectl get -f ingress/go-demo-2-deploy.yml
@@ -42,11 +42,29 @@ API_IP=$(minikube ip)
 API_IP=$(kubectl get svc go-demo-2-api \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
+# If GKE
+API_IP=$(kubectl get svc go-demo-2-api \
+    -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+```
+
+
+## Services Deficiencies
+
+---
+
+* We retrieved IP/address of the API Service
+
+
+## Services Deficiencies
+
+---
+
+```bash
 # If minikube
 API_PORT=$(kubectl get svc go-demo-2-api \
     -o jsonpath="{.spec.ports[0].nodePort}")
 
-# If EKS
+# If EKS or GKE
 API_PORT=$(kubectl get svc go-demo-2-api \
     -o jsonpath="{.spec.ports[0].port}")
 
@@ -58,7 +76,7 @@ curl -i "http://$API_IP:$API_PORT/demo/hello"
 
 ---
 
-* We retrieved IP/address and port of the API Service
+* We retrieved port of the API Service
 * We sent a request to the API and confirmed that it is accessible
 
 
@@ -71,7 +89,7 @@ curl -i "http://$API_IP:$API_PORT/demo/hello"
 kubectl create -f ingress/devops-toolkit-dep.yml \
     --record --save-config
 
-# If EKS
+# If EKS or GKE
 kubectl create -f ingress/devops-toolkit-dep-lb.yml \
     --record --save-config
 
@@ -98,11 +116,29 @@ UI_IP=$(minikube ip)
 UI_IP=$(kubectl get svc devops-toolkit \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
+# If GKE
+UI_IP=$(kubectl get svc devops-toolkit \
+    -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+```
+
+
+## Services Deficiencies
+
+---
+
+* We retrieved the IP/address of the UI
+
+
+## Services Deficiencies
+
+---
+
+```bash
 # If minikube
 UI_PORT=$(kubectl get svc devops-toolkit \
     -o jsonpath="{.spec.ports[0].nodePort}")
 
-# If EKS
+# If EKS or GKE
 UI_PORT=$(kubectl get svc devops-toolkit \
     -o jsonpath="{.spec.ports[0].port}")
 ```
@@ -112,7 +148,7 @@ UI_PORT=$(kubectl get svc devops-toolkit \
 
 ---
 
-* We retrieved the IP/address and the port of the UI
+* We retrieved the port of the UI
 
 
 ## Services Deficiencies
@@ -182,10 +218,40 @@ IP=$(kubectl -n ingress-nginx get svc ingress-nginx \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
 echo $IP
+
+# Repeat if empty
 ```
 
 
 ## Enabling Ingress (EKS)
+
+---
+
+* We installed NGINX Ingress resources
+* We retrieved the address of the ELB created by the Ingress Service
+
+
+## Enabling Ingress (GKE)
+
+---
+
+```bash
+kubectl apply \
+    -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
+
+kubectl apply \
+    -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/cloud-generic.yaml
+
+IP=$(kubectl -n ingress-nginx get svc ingress-nginx \
+    -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+
+echo $IP
+
+# Repeat if empty
+```
+
+
+## Enabling Ingress (GKE)
 
 ---
 

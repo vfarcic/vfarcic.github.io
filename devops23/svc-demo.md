@@ -20,7 +20,7 @@ kubectl get -f svc/go-demo-2-rs.yml
 kubectl expose rs go-demo-2 --name=go-demo-2-svc --target-port=28017 \
     --type=NodePort
 
-# If EKS
+# If EKS or GKE
 kubectl expose rs go-demo-2 --name=go-demo-2-svc --target-port=28017 \
     --type=LoadBalancer
 ```
@@ -56,15 +56,8 @@ kubectl describe svc go-demo-2-svc
 PORT=$(kubectl get svc go-demo-2-svc \
     -o jsonpath="{.spec.ports[0].nodePort}")
 
-# If EKS
+# If EKS or GKE
 PORT=28017
-
-# If minikube
-IP=$(minikube ip)
-
-# If EKS
-IP=$(kubectl get svc go-demo-2-svc \
-    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 ```
 
 
@@ -73,13 +66,42 @@ IP=$(kubectl get svc go-demo-2-svc \
 ---
 
 * We described the newly created Service
-* We retrieved the port and the IP/address through which we can access the new Service
+* We retrieved the port through which we can access the new Service
+
+---
+
+* EKS and GKE opened the same port in ELB as the target port, and it forwards requests to the randomly generated NodePort
+
+
+## Exposing Ports
+
+---
+
+```bash
+# If minikube
+IP=$(minikube ip)
+
+# If EKS
+IP=$(kubectl get svc go-demo-2-svc \
+    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+
+# If GKE
+IP=$(kubectl get svc go-demo-2-svc \
+    -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+```
+
+
+## Exposing Ports
+
+---
+
+* We retrieved the IP/address through which we can access the new Service
 
 ---
 
 * minikube's address is the IP of the VM
 * EKS' address is the address of the ELB
-* EKS opened the same port in ELB as the target port, and it forwards requests to the randomly generated NodePort
+* GKE' address is the IP of the ELB
 
 
 ## Exposing Ports
@@ -112,13 +134,13 @@ kubectl delete svc go-demo-2-svc
 # If minikube
 cat svc/go-demo-2-svc.yml
 
-# If EKS
+# If EKS or GKE
 cat svc/go-demo-2-svc-lb.yml
 
 # If minikube
 kubectl create -f svc/go-demo-2-svc.yml
 
-# If EKS
+# If EKS or GKE
 kubectl create -f svc/go-demo-2-svc-lb.yml
 
 kubectl get -f svc/go-demo-2-svc.yml
@@ -134,7 +156,7 @@ kubectl get -f svc/go-demo-2-svc.yml
 
 ---
 
-* The difference between minikube and EKS Service is in `type` (`NodePort` or `LoadBalancer`)
+* The difference between minikube and EKS/GKE Service is in `type` (`NodePort` or `LoadBalancer`)
 
 
 ## Declarative Syntax
@@ -145,6 +167,10 @@ kubectl get -f svc/go-demo-2-svc.yml
 # If EKS
 IP=$(kubectl get svc go-demo-2 \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+
+# If GKE
+IP=$(kubectl get svc go-demo-2 \
+    -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
 
 # If minikube
 PORT=30001
@@ -161,8 +187,8 @@ open "http://$IP:$PORT"
 
 ---
 
-* minikube's IP is the same as it was, EKS created a new ELB with a new address
-* EKS opens the same port in ELB as target port, so it's left unchanged
+* minikube's IP is the same as it was, EKS and GKE created a new ELB with a new address
+* EKS and GKE open the same port in ELB as target port, so it's left unchanged
 
 
 <!-- .slide: data-background="img/svc-hard-coded-port.png" data-background-size="contain" -->
@@ -222,13 +248,13 @@ kubectl create -f svc/go-demo-2-api-rs.yml
 # If minikube
 cat svc/go-demo-2-api-svc.yml
 
-# If EKS
+# If EKS or GKE
 cat svc/go-demo-2-api-svc-lb.yml
 
 # If minikube
 kubectl create -f svc/go-demo-2-api-svc.yml
 
-# If EKS
+# If EKS or GKE
 kubectl create -f svc/go-demo-2-api-svc-lb.yml
 
 kubectl get all
@@ -245,7 +271,7 @@ kubectl get all
 ---
 
 * For minikube we used Service type `NodePort`
-* For EKS we used Service type `LoadBalancer`
+* For EKS or GKE we used Service type `LoadBalancer`
 
 
 ## Communication Through Services
@@ -257,11 +283,15 @@ kubectl get all
 IP=$(kubectl get svc go-demo-2-api \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
+# If GKE
+IP=$(kubectl get svc go-demo-2-api \
+    -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+
 # If minikube
 PORT=$(kubectl get svc go-demo-2-api \
     -o jsonpath="{.spec.ports[0].nodePort}")
 
-# If EKS
+# If EKS or GKE
 PORT=8080
 
 curl -i "http://$IP:$PORT/demo/hello"
@@ -277,9 +307,9 @@ curl -i "http://$IP:$PORT/demo/hello"
 
 ---
 
-* EKS created a new ELB so the IP changed
+* EKS or GKE created a new ELB so the IP changed
 * The Service in minikube exposed a new random port
-* The port of the Service in EKS is the same as the target port
+* The port of the Service in EKS or GKE is the same as the target port
 
 
 ## Communication Through Services
@@ -312,13 +342,13 @@ kubectl delete -f svc/go-demo-2-api-svc.yml
 # If minikube
 cat svc/go-demo-2.yml
 
-# If EKS
+# If EKS or GKE
 cat svc/go-demo-2-lb.yml
 
 # If minikube
 kubectl create -f svc/go-demo-2.yml
 
-# If EKS
+# If EKS or GKE
 kubectl create -f svc/go-demo-2-lb.yml
 
 kubectl get -f svc/go-demo-2.yml
@@ -342,10 +372,33 @@ kubectl get -f svc/go-demo-2.yml
 IP=$(kubectl get svc go-demo-2-api \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
+# If GKE
+IP=$(kubectl get svc go-demo-2-api \
+    -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+
 # If minikube
 PORT=$(kubectl get svc go-demo-2-api \
     -o jsonpath="{.spec.ports[0].nodePort}")
+```
 
+
+## Multiple Resources In YAML
+
+---
+
+* We retrieved the IP and the port of the API Service
+
+---
+
+* EKS or GKE created a new ELB so the IP changed
+* The Service in minikube exposed a new random port
+
+
+## Multiple Resources In YAML
+
+---
+
+```bash
 curl -i "http://$IP:$PORT/demo/hello"
 
 POD_NAME=$(kubectl get pod --no-headers \
@@ -360,14 +413,8 @@ kubectl exec $POD_NAME env
 
 ---
 
-* We retrieved the IP and the port of the API Service
 * We sent a request to confirm that the API is accessible through the Service
 * We listed the environment variables in one of the Pods to display Service-specific info
-
----
-
-* EKS created a new ELB so the IP changed
-* The Service in minikube exposed a new random port
 
 
 <!-- .slide: data-background="img/flow_svc_ch05.png" data-background-size="contain" -->

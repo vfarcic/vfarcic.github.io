@@ -9,7 +9,9 @@
 
 ---
 
-The next few slides work only on **minikube**. For **EKS**, please follow the instructions from [Managing Users or IAM Roles for your Cluster
+The next few slides do **NOT** work on **EKS**.
+
+For **EKS**, please follow the instructions from [Managing Users or IAM Roles for your Cluster
 ](https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html). Create a user and a cluster named *jdoe*. Once finished, continue from the **Deploying go-demo-2** slide.
 
 
@@ -18,11 +20,22 @@ The next few slides work only on **minikube**. For **EKS**, please follow the in
 ---
 
 ```bash
-kubectl config view \
-    -o jsonpath='{.clusters[?(@.name=="minikube")].cluster.server}'
+# If minikube
+CLUSTER_NAME=minikube
+
+# If GKE
+CLUSTER_NAME=$(kubectl config current-context)
 
 kubectl config view \
-    -o jsonpath='{.clusters[?(@.name=="minikube")].cluster.certificate-authority}'
+    -o jsonpath="{.clusters[?(@.name=='$CLUSTER_NAME')].cluster.server}"
+
+# If minikube
+kubectl config view \
+    -o jsonpath="{.clusters[?(@.name=='$CLUSTER_NAME')].cluster.certificate-authority}"
+
+# If GKE
+kubectl config view \
+    -o jsonpath="{.clusters[?(@.name=='$CLUSTER_NAME')].cluster.certificate-authority-data}"
 ```
 
 

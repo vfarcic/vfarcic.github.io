@@ -50,6 +50,8 @@ kubectl get all
 
 kubectl edit -f deploy/go-demo-2-db.yml
 
+# Exit with `:q` if vi
+
 kubectl create -f deploy/go-demo-2-db-svc.yml --record
 ```
 

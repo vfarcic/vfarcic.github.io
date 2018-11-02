@@ -1,4 +1,4 @@
-# Using EKS As A Kubernetes In AWS
+# Using EKS As A Kubernetes Cluster In AWS
 
 ---
 

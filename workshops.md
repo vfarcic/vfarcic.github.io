@@ -4,6 +4,7 @@
 
 * [The DevOps 2.5 Toolkit: Beyond Kubernetes Deployments: Monitoring, Logging, and Auto-Scaling Kubernetes](devops25/workshop.html)
 * [The DevOps 2.4 Toolkit: CD To Kubernetes](devops24/workshop.html)
+* [The DevOps 2.3 Toolkit: Kubernetes With GKE](devops23/workshop-gke.html)
 * [The DevOps 2.3 Toolkit: Kubernetes With EKS](devops23/workshop-eks.html)
 * [The DevOps 2.3 Toolkit: Kubernetes With Minikube](devops23/workshop.html)
 * [The DevOps 2.1 Toolkit: Jenkins](jenkins-docker/workshop.html)
