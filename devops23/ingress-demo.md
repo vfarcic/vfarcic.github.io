@@ -22,13 +22,8 @@ kubectl get pods
 ```
 
 
-## Services Deficiencies
-
----
-
-* We created API and DB Deployments and Services
-* We retrieved the Pods and confirmed that they are running
-
+Note:
+We cannot explore solutions before we know what the problems are. Therefore, we’ll re-create a few objects using the knowledge we already gained. That will let us see whether Kubernetes Services satisfy all the needs users of our applications might have. Or, to be more explicit, we’ll explore which features we’re missing when making our applications accessible to users. We already discussed that it is a bad practice to publish fixed ports through Services. That method is likely to result in conflicts or, at the very least, create the additional burden of carefully keeping track of which port belongs to which Service. We already discarded that option before, and we won’t change our minds now. Since we’ve clarified that, let’s go back and create the Deployments and the Services from the previous chapter.
 
 ## Services Deficiencies
 
@@ -48,11 +43,8 @@ API_IP=$(kubectl get svc go-demo-2-api \
 ```
 
 
-## Services Deficiencies
-
----
-
-* We retrieved IP/address of the API Service
+Note:
+We retrieved IP/address of the API Service
 
 
 ## Services Deficiencies
@@ -72,12 +64,10 @@ curl -i "http://$API_IP:$API_PORT/demo/hello"
 ```
 
 
-## Services Deficiencies
-
----
-
-* We retrieved port of the API Service
-* We sent a request to the API and confirmed that it is accessible
+Note:
+While publishing a random, or even a hard-coded port of a single application might not be so bad, if we’d apply the same principle to more applications, the user experience would be horrible. To make the point a bit clearer, we’ll deploy another application. In this exercise we will:
+* Retrieve port of the API Service
+* Run a curl command and confirmed that it is accessible
 
 
 ## Services Deficiencies
@@ -97,11 +87,9 @@ kubectl get -f ingress/devops-toolkit-dep.yml
 ```
 
 
-## Services Deficiencies
+Note:
+This is a second application being deployed inside the same cluster.
 
----
-
-* We created a Deployment and a Service for UI application
 
 
 ## Services Deficiencies
@@ -122,10 +110,7 @@ UI_IP=$(kubectl get svc devops-toolkit \
 ```
 
 
-## Services Deficiencies
-
----
-
+Note:
 * We retrieved the IP/address of the UI
 
 
@@ -144,10 +129,7 @@ UI_PORT=$(kubectl get svc devops-toolkit \
 ```
 
 
-## Services Deficiencies
-
----
-
+Note:
 * We retrieved the port of the UI
 
 
@@ -164,13 +146,10 @@ curl -i -H "Host: devopstoolkitseries.com" "http://$UI_IP"
 ```
 
 
-## Services Deficiencies
-
----
-
-* We opened UI in browser
-* We confirmed that the API is NOT accessible without the port
-* We confirmed that the UI is NOT accessible on a specific domain and without the port
+Note:
+The `open` command should display The DevOps Toolkit Books page. If you don't, you might want to wait a bit longer
+* We will also confirm that the API is NOT accessible without the port
+* Finally, the UI is NOT accessible on a specific domain and without the port
 
 
 <!-- .slide: data-background="img/services.png" data-background-size="contain" -->
@@ -223,10 +202,7 @@ echo $IP
 ```
 
 
-## Enabling Ingress (EKS)
-
----
-
+Note:
 * We installed NGINX Ingress resources
 * We retrieved the address of the ELB created by the Ingress Service
 
@@ -251,10 +227,7 @@ echo $IP
 ```
 
 
-## Enabling Ingress (GKE)
-
----
-
+Note:
 * We installed NGINX Ingress resources
 * We retrieved the address of the ELB created by the Ingress Service
 
@@ -270,12 +243,8 @@ curl -i "http://$IP/something"
 ```
 
 
-## Enabling Ingress
-
----
-
-* We retrieved Ingress' health status
-* We confirmed that random addresses return `404 Not Found`
+Note:
+The `curl` command on `healthz` responded with the status code 200 OK, thus indicating that it is healthy and ready to serve requests. There’s not much more to it so we’ll move to the second endpoint. The Ingress Controller has a default catch-all endpoint that is used when a request does not match any of the other criteria. Since we did not yet create any Ingress Resource, this endpoint should provide the same response to all requests except /healthz.
 
 
 ## Ingress Based On Paths
@@ -299,13 +268,9 @@ kubectl delete -f ingress/devops-toolkit-dep.yml
 ```
 
 
-## Ingress Based On Paths
+Note:
+Looking at the YAML file this time, metadata contains a field we haven’t used before. The annotations section allows us to provide additional information to the Ingress Controller. As you’ll see soon, Ingress API specification is concise and limited. That is done on purpose. The specification API defines only the fields that are mandatory for all Ingress Controllers. All the additional info an Ingress Controller needs is specified through annotations. That way, the community behind the Controllers can progress at great speed, while still providing basic general compatibility and standards. Here we will create Ingress resource tied to `go-demo-2-api` Service and `/demo` path. When we send a request to `/demo/hello` and got a response from the API. Then we can delete all the resources we created
 
----
-
-* We created an Ingress resource tied to `go-demo-2-api` Service and `/demo` path
-* We sent a request to `/demo/hello` and got a response from the API
-* We deleted all the resources we created
 
 
 ## Ingress Based On Paths
