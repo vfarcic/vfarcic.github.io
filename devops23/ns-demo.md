@@ -43,6 +43,10 @@ IP=$(minikube ip)
 IP=$(kubectl -n ingress-nginx get svc ingress-nginx \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
+# If GKE
+IP=$(kubectl -n ingress-nginx get svc ingress-nginx \
+    -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+
 curl -H "Host: go-demo-2.com" "http://$IP/demo/hello"
 
 kubectl get all
@@ -109,19 +113,6 @@ kubectl -n kube-system get all
 kubectl create ns testing
 
 kubectl get ns
-
-# If minikube
-kubectl config set-context testing --namespace testing \
-    --cluster minikube --user minikube
-
-# If EKS
-kubectl config set-context testing --namespace testing \
-    --cluster devops24.$AWS_DEFAULT_REGION.eksctl.io \
-    --user iam-root-account@devops24.$AWS_DEFAULT_REGION.eksctl.io
-
-kubectl config view
-
-kubectl config use-context testing
 ```
 
 
@@ -131,9 +122,6 @@ kubectl config use-context testing
 
 * We created a new Namespace called `testing`
 * We retrieved the list of all the Namespaces and confirmed that `testing` is available
-* We created a new context with the `testing` Namespace as the default
-* We viewed the `kubectl` configuration and observed that the current context is still using the `default` Namespace
-* We switched to the `testing` context
 
 
 ## Deploying To A New Namespace
@@ -141,6 +129,41 @@ kubectl config use-context testing
 ---
 
 ```bash
+# If minikube
+kubectl config set-context testing --namespace testing \
+    --cluster minikube --user minikube
+
+# If EKS
+kubectl config set-context testing --namespace testing \
+    --cluster devops24.$AWS_DEFAULT_REGION.eksctl.io \
+    --user iam-root-account@devops24.$AWS_DEFAULT_REGION.eksctl.io
+
+# If GKE
+DEFAULT_CONTEXT=$(kubectl config current-context)
+
+# If GKE
+kubectl config set-context testing --namespace testing \
+    --cluster $DEFAULT_CONTEXT --user $DEFAULT_CONTEXT
+```
+
+
+## Deploying To A New Namespace
+
+---
+
+* We created a new context with the `testing` Namespace as the default
+* We viewed the `kubectl` configuration and observed that the current context is still using the `default` Namespace
+
+
+## Deploying To A New Namespace
+
+---
+
+```bash
+kubectl config view
+
+kubectl config use-context testing
+
 kubectl get all
 
 TAG=2.0
@@ -159,6 +182,7 @@ kubectl rollout status deploy go-demo-2-api
 
 ---
 
+* We switched to the `testing` context
 * We listed all the resources in the `testing` Namespace
 * We installed `go-demo-2` with the tag `2.0` and a new domain in the `testing` Namespace
 * We checked the `rollout status` of the new installation
@@ -196,12 +220,31 @@ kubectl config use-context minikube
 # If EKS
 kubectl config use-context iam-root-account@devops24.$AWS_DEFAULT_REGION.eksctl.io
 
+# If GKE
+kubectl config use-context $DEFAULT_CONTEXT
+
 kubectl run test --image=alpine --restart=Never sleep 10000
 
 kubectl get pod test
 
 kubectl exec -it test -- apk add -U curl
+```
 
+
+## Communicating Btw Namespaces
+
+---
+
+* We switched back to the previous context
+* We run a Pod based on `alpine`
+* Inside the container of the new Pod, we installed `curl`
+
+
+## Communicating Btw Namespaces
+
+---
+
+```bash
 kubectl exec -it test -- curl "http://go-demo-2-api:8080/demo/hello"
 
 kubectl exec -it test \
@@ -213,9 +256,6 @@ kubectl exec -it test \
 
 ---
 
-* We switched back to the previous context
-* We run a Pod based on `alpine`
-* Inside the container of the new Pod, we installed `curl`
 * We sent a request to the API in the same Namespace
 * We sent a request to the API in the `testing` Namespace
 

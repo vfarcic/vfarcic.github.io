@@ -7,6 +7,16 @@
 ## For A Spin
 
 
+<!-- .slide: data-background="../img/background/why.jpg" -->
+### Who long does it take to create a
+## fully operational 
+## and secure cluster,
+## that is fault tollerant,
+# with autoscaling,
+## and with all the
+## CD software pre-installed?
+
+
 ## Creating A Cluster
 
 ---
