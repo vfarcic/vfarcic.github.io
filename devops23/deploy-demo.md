@@ -21,7 +21,6 @@ kubectl describe -f deploy/go-demo-2-db.yml
 kubectl get all
 ```
 
-
 Note:
 If you compare this Deployment with the ReplicaSet we created in the previous chapter, you’ll probably have a hard time finding a difference. Apart from the kind field, they are the same. Since, in this case, both the Deployment and the ReplicaSet are the same, you might be wondering what the advantage of using one over the other is. We will regularly add --record to the kubectl create commands. This allows us to track each change to our resources such as a Deployments.
 `kubectl describe -f deploy/go-demo-2-db.yml`
@@ -54,7 +53,6 @@ kubectl edit -f deploy/go-demo-2-db.yml
 kubectl create -f deploy/go-demo-2-db-svc.yml --record
 ```
 
-
 Note:
 * We changed the image of the `db` container definition in the Deployment
 * We described the deployment to confirm that the image changed
@@ -85,7 +83,6 @@ kubectl rollout history -f deploy/go-demo-2-api.yml
 
 kubectl get rs
 ```
-
 
 Note:
 Regarding `cat go-demo-2-api`
@@ -125,7 +122,6 @@ kubectl set image -f deploy/go-demo-2-api.yml \
 kubectl rollout status -f deploy/go-demo-2-api.yml
 ```
 
-
 Note:
 * We undid the last update
 * We described the deployment to observe the events related to ReplicaSets
@@ -147,7 +143,6 @@ kubectl rollout undo -f deploy/go-demo-2-api.yml --to-revision=4
 
 kubectl rollout history -f deploy/go-demo-2-api.yml
 ```
-
 
 Note:
 * We output `rollout history` to confirm that all the revisions were recorded
@@ -175,7 +170,6 @@ kubectl rollout undo -f deploy/go-demo-2-api.yml
 kubectl rollout status -f deploy/go-demo-2-api.yml
 ```
 
-
 Note:
 The output of the `set` command seems to imply that the `does-not-exist` image was successful deployed, when in fact it was not. Executing at `rollout status` confirms the deployment didn't proceed. The new Pods are not running, and the limit was reached. There’s no point to continue trying. If you expected that the Deployment would roll back after it failed, you’re wrong. It will not do such a thing. At least, not without additional addons.  Running `echo $?`confirms the return code of the command is 1. Now that we witnessed the failure we can undo the rollout, and verify that our api is running.
 
@@ -193,7 +187,6 @@ kubectl delete -f deploy/go-demo-2-db-svc.yml
 
 kubectl delete -f deploy/go-demo-2-api.yml
 ```
-
 
 Note:
 Now that we have learned how to rollback no matter whether the problem is a critical bug or inability to run the new release, we can take a short pause from learning new stuff and merge all the definitions we explored thus far into a single YAML file. But, before we do that, we’ll remove the objects we created.
@@ -233,7 +226,6 @@ kubectl set image deployments -l type=db,vendor=MongoLabs \
 kubectl describe -f deploy/go-demo-2.yml
 ```
 
-
 Note:
 This this exercise we are creating another `db` applications. The purpose of this is to demonstrate how to update multiple objects using labels. Almost everything in Kubernetes is operated using label selectors. It’s just that sometimes that is obscured from us. We do not have to update an object only by specifying its name or the YAML file where its definition resides. We can also use labels to decide which object should be updated. That opens some interesting possibilities since the selectors might match multiple objects. Imagine that we are running several Deployments with Mongo databases and that the time has come to update them all to a newer release. Before we explore how we could do that, we’ll create another Deployment so that we have at least two with the database Pods. Here we are going to find all the deployments that are a `db` type, with `MongoLabs` vendor. Then we will update all the images that use those labels to a new version of mongo. Finally we will confirm that all mongo images are running `3.4`
 
@@ -254,7 +246,6 @@ kubectl scale deployment go-demo-2-api --replicas 8 --record
 
 kubectl get -f deploy/go-demo-2.yml
 ```
-
 
 Note:
 * We created a few resources, including Deployment of the API with five replicas
