@@ -25,7 +25,6 @@ kubectl expose rs go-demo-2 --name=go-demo-2-svc --target-port=28017 \
     --type=LoadBalancer
 ```
 
-
 Note:
 Looking at the yml file we customized the command and the arguments so that MongoDB exposes the REST interface. Those additions are needed so that we can test that the database is accessible through the Service. We can use the kubectl expose command to expose a resource as a new Kubernetes Service. That resource can be a Deployment, another Service, a ReplicaSet, a ReplicationController, or a Pod. We’ll expose the ReplicaSet since it is already running in the cluster. In this exercise we show how to create two different services.
 * We recreated the *go-demo-2* ReplicaSet
@@ -36,7 +35,6 @@ Looking at the yml file we customized the command and the arguments so that Mong
 
 <!-- .slide: data-background="img/seq_svc_ch05.png" data-background-size="contain" -->
 Note:
-
 1. Kubernetes client (kubectl) sent a request to the API server requesting the creation of the Service based on Pods created through the go-demo-2 ReplicaSet.
 2. Endpoint controller is watching the API server for new service events. It detected that there is a new Service object.
 3. Endpoint controller created endpoint objects with the same name as the Service, and it used Service selector to identify endpoints (in this case the IP and the port of go-demo-2 Pods).
@@ -196,7 +194,6 @@ cat svc/go-demo-2-api-rs.yml
 kubectl create -f svc/go-demo-2-api-rs.yml
 ```
 
-
 Note:
 When we at the `go-demo-2-api-rs` file:
 The number of replicas is set to 3. That solves one of the main problems we had with the previous ReplicaSets that defined Pods with both containers. Now the number of replicas can differ, and we have one Pod for the database, and three for the backend API. The type label is set to api so that both the ReplicaSet and the (soon to come) Service can distinguish the Pods from those created for the database. We have the environment variable DB set to go-demo-2-db. The code behind the vfarcic/ go-demo-2 image is written in a way that the connection to the database is established by reading that variable. In this case, we can say that it will try to connect to the database running on the DNS go-demo-2-db. If you go back to the database Service definition, you’ll notice that its name is go-demo-2-db as well. If everything works correctly, we should expect that the DNS was created with the Service and that it’ll forward requests to the database. The `readinessProbe` has the same fields as the `livenessProbe`. We used the same values for both, except for the `periodSeconds`, where instead of relying on the default value of 10, we set it to 1. While livenessProbe is used to determine whether a Pod is alive or it should be replaced by a new one, the readinessProbe is used by the iptables. A Pod that does not pass the readinessProbe will be excluded and will not receive requests. In theory, Requests might be still sent to a faulty Pod, between two iterations. Still, such requests will be small in number since the iptables will change as soon as the next probe responds with HTTP code less than 200, or equal or greater than 400.
@@ -279,7 +276,6 @@ kubectl delete -f svc/go-demo-2-api-rs.yml
 kubectl delete -f svc/go-demo-2-api-svc.yml
 ```
 
-
 Note:
 Now we are going to cleanup the cluster by deleting everything created from the various yml files.
 
@@ -304,7 +300,6 @@ kubectl create -f svc/go-demo-2-lb.yml
 kubectl get -f svc/go-demo-2.yml
 ```
 
-
 Note:
 The vfarcic/ go-demo-2 and mongo images form the same stack. They work together and having four YAML definitions is confusing. It would get even more confusing later on since we are going to add more objects to the stack. Things would be much simpler and easier if we would move all the objects we created thus far into a single YAML definition. Fortunately, that is very easy to accomplish. In the following example we created all the resources from a single YAML file. Afterwards we will confirm all the resources are created.
 
@@ -326,7 +321,6 @@ IP=$(kubectl get svc go-demo-2-api \
 PORT=$(kubectl get svc go-demo-2-api \
     -o jsonpath="{.spec.ports[0].nodePort}")
 ```
-
 
 Note:
 * We retrieved the IP and the port of the API Service

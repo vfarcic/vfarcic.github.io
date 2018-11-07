@@ -21,7 +21,6 @@ kubectl get -f ingress/go-demo-2-deploy.yml
 kubectl get pods
 ```
 
-
 Note:
 We cannot explore solutions before we know what the problems are. Therefore, we’ll re-create a few objects using the knowledge we already gained. That will let us see whether Kubernetes Services satisfy all the needs users of our applications might have. Or, to be more explicit, we’ll explore which features we’re missing when making our applications accessible to users. We already discussed that it is a bad practice to publish fixed ports through Services. That method is likely to result in conflicts or, at the very least, create the additional burden of carefully keeping track of which port belongs to which Service. We already discarded that option before, and we won’t change our minds now. Since we’ve clarified that, let’s go back and create the Deployments and the Services from the previous chapter.
 
@@ -42,7 +41,6 @@ API_IP=$(kubectl get svc go-demo-2-api \
     -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
 ```
 
-
 Note:
 We retrieved IP/address of the API Service
 
@@ -62,7 +60,6 @@ API_PORT=$(kubectl get svc go-demo-2-api \
 
 curl -i "http://$API_IP:$API_PORT/demo/hello"
 ```
-
 
 Note:
 While publishing a random, or even a hard-coded port of a single application might not be so bad, if we’d apply the same principle to more applications, the user experience would be horrible. To make the point a bit clearer, we’ll deploy another application. In this exercise we will:
@@ -86,7 +83,6 @@ kubectl create -f ingress/devops-toolkit-dep-lb.yml \
 kubectl get -f ingress/devops-toolkit-dep.yml
 ```
 
-
 Note:
 This is a second application being deployed inside the same cluster.
 
@@ -109,7 +105,6 @@ UI_IP=$(kubectl get svc devops-toolkit \
     -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
 ```
 
-
 Note:
 * We retrieved the IP/address of the UI
 
@@ -128,7 +123,6 @@ UI_PORT=$(kubectl get svc devops-toolkit \
     -o jsonpath="{.spec.ports[0].port}")
 ```
 
-
 Note:
 * We retrieved the port of the UI
 
@@ -144,7 +138,6 @@ curl "http://$UI_IP/demo/hello"
 
 curl -i -H "Host: devopstoolkitseries.com" "http://$UI_IP"
 ```
-
 
 Note:
 The `open` command should display The DevOps Toolkit Books page. If you don't, you might want to wait a bit longer
@@ -201,7 +194,6 @@ echo $IP
 # Repeat if empty
 ```
 
-
 Note:
 * We installed NGINX Ingress resources
 * We retrieved the address of the ELB created by the Ingress Service
@@ -226,7 +218,6 @@ echo $IP
 # Repeat if empty
 ```
 
-
 Note:
 * We installed NGINX Ingress resources
 * We retrieved the address of the ELB created by the Ingress Service
@@ -241,7 +232,6 @@ curl -i "http://$IP/healthz"
 
 curl -i "http://$IP/something"
 ```
-
 
 Note:
 The `curl` command on `healthz` responded with the status code 200 OK, thus indicating that it is healthy and ready to serve requests. There’s not much more to it so we’ll move to the second endpoint. The Ingress Controller has a default catch-all endpoint that is used when a request does not match any of the other criteria. Since we did not yet create any Ingress Resource, this endpoint should provide the same response to all requests except /healthz.
@@ -266,7 +256,6 @@ kubectl delete -f ingress/go-demo-2-deploy.yml
 
 kubectl delete -f ingress/devops-toolkit-dep.yml
 ```
-
 
 Note:
 Looking at the YAML file this time, metadata contains a field we haven’t used before. The annotations section allows us to provide additional information to the Ingress Controller. As you’ll see soon, Ingress API specification is concise and limited. That is done on purpose. The specification API defines only the fields that are mandatory for all Ingress Controllers. All the additional info an Ingress Controller needs is specified through annotations. That way, the community behind the Controllers can progress at great speed, while still providing basic general compatibility and standards. Here we will create Ingress resource tied to `go-demo-2-api` Service and `/demo` path. When we send a request to `/demo/hello` and got a response from the API. Then we can delete all the resources we created
