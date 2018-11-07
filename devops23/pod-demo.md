@@ -58,12 +58,7 @@ kubectl describe -f pod/db.yml
 ```
 
 Note:
-<<<<<<< Updated upstream
-We’re using v1 of Kubernetes Pods API. Both apiVersion and kind are mandatory. That way, Kubernetes knows what we want to do (create a Pod) and which API version to use. The next section is metadata.It provides information that does not influence how the Pod behaves. We used metadata to define the name of the Pod (db) and a few labels. Later on, when we move into Controllers, labels will have a practical purpose. For now, they are purely informational. The last section is the spec in which we defined a single container.  The container is defined with the name (db), the image (mongo), the command that should be executed when the container starts (mongod), and, finally, the set of arguments. The arguments are defined as an array with, in this case, two elements (--rest and --httpinterface).
-=======
-Cat the yaml file:
 We are using v1 of Kubernetes Pods API. Both apiVersion and kind are mandatory. That way, Kubernetes knows what we want to do (create a Pod) and which API version to use. The next section is metadata.It provides information that does not influence how the Pod behaves. We used metadata to define the name of the Pod (db) and a few labels. Later on, when we move into Controllers, labels will have a practical purpose. For now, they are purely informational. The last section is the spec in which we defined a single container.  The container is defined with the name (db), the image (mongo), the command that should be executed when the container starts (mongod), and, finally, the set of arguments. The arguments are defined as an array with, in this case, two elements (--rest and --httpinterface).
->>>>>>> Stashed changes
 We will explore different means to retrieve information about running Pods
 
 
