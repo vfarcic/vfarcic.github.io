@@ -24,6 +24,7 @@ kubectl get pods
 Note:
 We cannot explore solutions before we know what the problems are. Therefore, we’ll re-create a few objects using the knowledge we already gained. That will let us see whether Kubernetes Services satisfy all the needs users of our applications might have. Or, to be more explicit, we’ll explore which features we’re missing when making our applications accessible to users. We already discussed that it is a bad practice to publish fixed ports through Services. That method is likely to result in conflicts or, at the very least, create the additional burden of carefully keeping track of which port belongs to which Service. We already discarded that option before, and we won’t change our minds now. Since we’ve clarified that, let’s go back and create the Deployments and the Services from the previous chapter.
 
+
 ## Services Deficiencies
 
 ---
