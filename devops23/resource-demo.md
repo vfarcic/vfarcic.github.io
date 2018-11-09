@@ -21,6 +21,8 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/de
 
 # If EKS
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/rbac/heapster-rbac.yaml
+
+# GKE already has it pre-installed
 ```
 
 
@@ -71,6 +73,10 @@ kubectl -n kube-system expose rc heapster \
 kubectl -n kube-system expose deployment heapster \
     --name heapster-api --port 8082 --type LoadBalancer
 
+# If GKE
+kubectl -n kube-system expose deployment heapster-v1.5.2 \
+    --name heapster-api --port 8082 --type LoadBalancer
+
 kubectl -n kube-system get svc heapster-api -o json
 ```
 
@@ -91,7 +97,7 @@ kubectl -n kube-system get svc heapster-api -o json
 PORT=$(kubectl -n kube-system get svc heapster-api \
     -o jsonpath="{.spec.ports[0].nodePort}")
 
-# If EKS
+# If EKS or GKE
 PORT=8082
 
 # If minikube
@@ -101,7 +107,9 @@ ADDR=$(minikube ip)
 ADDR=$(kubectl -n kube-system get svc heapster-api \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
-BASE_URL="http://$ADDR:$PORT/api/v1/model/namespaces/default/pods"
+# If GKE
+ADDR=$(kubectl -n kube-system get svc heapster-api \
+    -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
 ```
 
 
@@ -110,7 +118,6 @@ BASE_URL="http://$ADDR:$PORT/api/v1/model/namespaces/default/pods"
 ---
 
 * We retrieved Heapster's address and the port
-* We generated a base URL for requests to Heapster
 
 
 ## Measuring Consumption
@@ -118,6 +125,8 @@ BASE_URL="http://$ADDR:$PORT/api/v1/model/namespaces/default/pods"
 ---
 
 ```bash
+BASE_URL="http://$ADDR:$PORT/api/v1/model/namespaces/default/pods"
+
 curl "$BASE_URL"
 
 DB_POD_NAME=$(kubectl get pods -l service=go-demo-2 -l type=db \
@@ -135,6 +144,7 @@ curl "$BASE_URL/$DB_POD_NAME/containers/db/metrics/cpu/usage_rate"
 
 ---
 
+* We generated a base URL for requests to Heapster
 * We retrieved from Heapster the Pods from the default Namespace
 * We retrieved the name of the DB Pod
 * We retrieved the list of the available metrics

@@ -19,9 +19,29 @@ kubectl -n jenkins rollout status sts jenkins
 kubectl -n jenkins get pvc
 
 kubectl -n jenkins get pv
+```
 
+
+## Using StatefulSets To Run Stateful Applications
+
+---
+
+* We observed that StatefulSets use `volumeClaimTemplate` instead of a separate PersistentVolumeClaim
+* We used StatefulSet to run Jenkins
+
+
+## Using StatefulSets To Run Stateful Applications
+
+---
+
+```bash
+# If EKS
 JENKINS_ADDR=$(kubectl -n jenkins get ing jenkins \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+
+# If GKE
+JENKINS_ADDR=$(kubectl -n jenkins get ing jenkins \
+    -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
 
 open "http://$JENKINS_ADDR/jenkins"
 
@@ -33,8 +53,6 @@ kubectl delete ns jenkins
 
 ---
 
-* We observed that StatefulSets use `volumeClaimTemplate` instead of a separate PersistentVolumeClaim
-* We used StatefulSet to run Jenkins
 * We did NOT observe any significant difference between running a single replica Jenkins as a StatefulSet when compared to Deployments
 * We deleted the `jenkins` Namespace
 
@@ -121,25 +139,6 @@ kubectl get pv
 
 
 <!-- .slide: data-background="img/sts.png" data-background-size="contain" -->
-
-
-## Using StatefulSets To Run Stateful Applications At Scale
-## (only if kops)
-
----
-
-```bash
-kubectl -n go-demo-3 exec -it db-0 -- hostname
-
-kubectl -n go-demo-3 run -it --image busybox dns-test \
-    --restart=Never --rm sh
-
-nslookup db
-
-nslookup db-0.db
-
-exit
-```
 
 
 ## Using StatefulSets To Run Stateful Applications At Scale

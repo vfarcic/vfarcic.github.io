@@ -9,10 +9,12 @@
 
 ---
 
-The next few slides do **NOT** work on **EKS**.
+The next few slides do **NOT** work on **EKS** and **GKE**.
 
 For **EKS**, please follow the instructions from [Managing Users or IAM Roles for your Cluster
 ](https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html). Create a user and a cluster named *jdoe*. Once finished, continue from the **Deploying go-demo-2** slide.
+
+For **GKE**, please follow the instructions from [Cloud Identity and Access Management Overview](https://cloud.google.com/iam/docs/overview) and [Kubernetes Engine Creating Cloud IAM Policies](https://cloud.google.com/kubernetes-engine/docs/how-to/iam#primitive). Create a user and a cluster named *jdoe*. Once finished, continue from the **Deploying go-demo-2** slide.
 
 
 ## Accessing Kubernetes API
@@ -20,23 +22,22 @@ For **EKS**, please follow the instructions from [Managing Users or IAM Roles fo
 ---
 
 ```bash
-# If minikube
 CLUSTER_NAME=minikube
-
-# If GKE
-CLUSTER_NAME=$(kubectl config current-context)
 
 kubectl config view \
     -o jsonpath="{.clusters[?(@.name=='$CLUSTER_NAME')].cluster.server}"
 
-# If minikube
 kubectl config view \
     -o jsonpath="{.clusters[?(@.name=='$CLUSTER_NAME')].cluster.certificate-authority}"
-
-# If GKE
-kubectl config view \
-    -o jsonpath="{.clusters[?(@.name=='$CLUSTER_NAME')].cluster.certificate-authority-data}"
 ```
+
+
+## Accessing Kubernetes API
+
+---
+
+* We created `CLUSTER_NAME` variable
+* We retrieved current context's server and certificate
 
 
 ## Creating Users
@@ -46,18 +47,18 @@ kubectl config view \
 ```bash
 openssl version
 
-mkdir keys
+mkdir -p cluster/keys
 
-openssl genrsa -out keys/jdoe.key 2048
+openssl genrsa -out cluster/keys/jdoe.key 2048
 
-openssl req -new -key keys/jdoe.key -out keys/jdoe.csr \
-    -subj "/CN=jdoe/O=devs"
+openssl req -new -key cluster/keys/jdoe.key \
+    -out cluster/keys/jdoe.csr -subj "/CN=jdoe/O=devs"
 
 ls -1 ~/.minikube/ca.*
 
-openssl x509 -req -in keys/jdoe.csr -CA ~/.minikube/ca.crt \
-    -CAkey ~/.minikube/ca.key -CAcreateserial -out keys/jdoe.crt \
-    -days 365
+openssl x509 -req -in cluster/keys/jdoe.csr -CA ~/.minikube/ca.crt \
+    -CAkey ~/.minikube/ca.key -CAcreateserial \
+    -out cluster/keys/jdoe.crt -days 365
 ```
 
 
@@ -66,7 +67,7 @@ openssl x509 -req -in keys/jdoe.csr -CA ~/.minikube/ca.crt \
 ---
 
 ```bash
-cp ~/.minikube/ca.crt keys/ca.crt
+cp ~/.minikube/ca.crt cluster/keys/ca.crt
 
 ls -1 keys
 
@@ -76,10 +77,10 @@ SERVER=$(kubectl config view \
 echo $SERVER
 
 kubectl config set-cluster jdoe \
-    --certificate-authority keys/ca.crt --server $SERVER
+    --certificate-authority cluster/keys/ca.crt --server $SERVER
 
 kubectl config set-credentials jdoe \
-    --client-certificate keys/jdoe.crt --client-key keys/jdoe.key
+    --client-certificate cluster/keys/jdoe.crt --client-key cluster/keys/jdoe.key
 ```
 
 
@@ -257,7 +258,7 @@ kubectl create rolebinding mgandhi --clusterrole=view \
 ---
 
 ```bash
-openssl req -in keys/jdoe.csr -noout -subject
+openssl req -in cluster/keys/jdoe.csr -noout -subject
 
 cat auth/groups.yml
 

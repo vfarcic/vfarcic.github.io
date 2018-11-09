@@ -1,8 +1,8 @@
 #### The DevOps 2.5 Toolkit
 
-## Beyond Kubernetes Deployments
+# Beyond Kubernetes Deployments
 
-### Monitoring, Logging, and Auto-Scaling Kubernetes
+#### Monitoring, Logging, and Auto-Scaling Kubernetes
 
 ---
 

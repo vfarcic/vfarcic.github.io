@@ -21,9 +21,33 @@ kubectl -n jenkins create secret generic jenkins-creds \
     --from-literal=jenkins-pass=incognito
 
 kubectl -n jenkins rollout status deployment jenkins
+```
 
+
+## Without Persisting State
+
+---
+
+* We installed Jenkins
+* We retrieved the events and observed that it is failing because the `jenkins-creds` Secret is missing
+* We created the missing Secret
+* We waited until Jenkins rolled out and opened it in browser
+
+
+## Without Persisting State
+
+---
+
+```bash
+# If EKS
 JENKINS_ADDR=$(kubectl -n jenkins get ing jenkins \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+
+# If GKE
+JENKINS_ADDR=$(kubectl -n jenkins get ing jenkins \
+    -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+
+echo $JENKINS_ADDR
 
 open "http://$JENKINS_ADDR/jenkins"
 ```
@@ -35,10 +59,7 @@ open "http://$JENKINS_ADDR/jenkins"
 
 ---
 
-* We installed Jenkins
-* We retrieved the events and observed that it is failing because the `jenkins-creds` Secret is missing
-* We created the missing Secret
-* We waited until Jenkins rolled out and opened it in browser
+* We opened Jenkins in browser
 
 
 ## Without Persisting State
@@ -70,7 +91,7 @@ open "http://$JENKINS_ADDR/jenkins"
 * We observed that Jenkins recuperated from the failure, but it lost its state (the job)
 
 
-## Creating AWS Volumes
+## Creating Volumes (AWS)
 
 ---
 
@@ -93,14 +114,14 @@ aws ec2 describe-instances | jq -r ".Reservations[].Instances[] \
 ```
 
 
-## Creating AWS Volumes
+## Creating Volumes (AWS)
 
 ---
 
 * We retrieved the zones of our cluster
 
 
-## Creating AWS Volumes
+## Creating Volumes (AWS)
 
 ---
 
@@ -123,14 +144,14 @@ VOLUME_ID_3=$(aws ec2 create-volume --availability-zone $AZ_1 \
 ```
 
 
-## Creating AWS Volumes
+## Creating Volumes (AWS)
 
 ---
 
 * We created three volumes spread in two zones
 
 
-## Creating AWS Volumes
+## Creating Volumes (AWS)
 
 ---
 
@@ -141,7 +162,59 @@ aws ec2 describe-volumes --volume-ids $VOLUME_ID_1
 ```
 
 
-## Creating AWS Volumes
+## Creating Volumes (AWS)
+
+---
+
+* We described one of the volumes as a way to confirm that it was created correctly
+
+
+## Creating Volumes (GKE)
+
+---
+
+```bash
+gcloud compute instances list --filter="name:('gke-devops25*')" \
+    --format 'csv[no-heading](zone)' | tee zones
+
+AZ_1=$(cat zones | head -n 1)
+
+AZ_2=$(cat zones | tail -n 2 | head -n 1)
+
+AZ_3=$(cat zones | tail -n 1)
+
+gcloud compute disks create disk1 --zone $AZ_1
+
+gcloud compute disks create disk2 --zone $AZ_2
+
+gcloud compute disks create disk3 --zone $AZ_3
+```
+
+
+## Creating Volumes (GKE)
+
+---
+
+* We retrieved the zones of our cluster
+* We created three volumes spread in three zones
+
+
+## Creating Volumes (GKE)
+
+---
+
+```bash
+VOLUME_ID_1=disk1
+
+VOLUME_ID_2=disk2
+
+VOLUME_ID_3=disk3
+
+gcloud compute disks describe VOLUME_ID_1
+```
+
+
+## Creating Volumes (GKE)
 
 ---
 
@@ -156,9 +229,15 @@ aws ec2 describe-volumes --volume-ids $VOLUME_ID_1
 ---
 
 ```bash
-cat pv/pv.yml
+# If EKS
+YAML=pv/pv.yml
 
-cat pv/pv.yml \
+# If GKE
+YAML=pv/pv-gke.yml
+
+cat $YAML
+
+cat $YAML \
     | sed -e "s@REPLACE_ME_1@$VOLUME_ID_1@g" \
     | sed -e "s@REPLACE_ME_2@$VOLUME_ID_2@g" \
     | sed -e "s@REPLACE_ME_3@$VOLUME_ID_3@g" \
@@ -172,7 +251,7 @@ kubectl get pv
 
 ---
 
-* We created three PersistentVolumes matching the three EBS volumes
+* We created three PersistentVolumes matching the three external drives
 
 
 <!-- .slide: data-background="img/persistent-volume-pv.png" data-background-size="contain" -->
@@ -275,11 +354,15 @@ kubectl get pv
 
 kubectl delete -f pv/pv.yml
 
+# If EKS
 aws ec2 delete-volume --volume-id $VOLUME_ID_1
-
 aws ec2 delete-volume --volume-id $VOLUME_ID_2
-
 aws ec2 delete-volume --volume-id $VOLUME_ID_3
+
+# If GKE
+gcloud compute disks delete $VOLUME_ID_1 --zone $AZ_1 --quiet
+gcloud compute disks delete $VOLUME_ID_2 --zone $AZ_2 --quiet
+gcloud compute disks delete $VOLUME_ID_3 --zone $AZ_3 --quiet
 ```
 
 
@@ -288,10 +371,10 @@ aws ec2 delete-volume --volume-id $VOLUME_ID_3
 ---
 
 * We removed the PersistentVolumeClaim and observed that the PV was released
-* We deleted the PVs and the EBS volumes
+* We deleted the PVs and the external drives
 
 
-## Using Storage Classes
+## Using Storage Classes (EKS)
 
 ---
 
@@ -305,10 +388,6 @@ provisioner: kubernetes.io/aws-ebs
 parameters:
   type: gp2
   encrypted: "true"' | kubectl create -f -
-
-kubectl get sc
-
-cat pv/jenkins-dynamic.yml
 ```
 
 
@@ -317,7 +396,6 @@ cat pv/jenkins-dynamic.yml
 ---
 
 * In case of EKS, we created a new StorageClass (most other flavors have it out-of-the-box)
-* We output a new Jenkins definition with a PersistentVolumeClaim that uses the newly created StorageClass
 
 
 ## Using Storage Classes
@@ -325,20 +403,52 @@ cat pv/jenkins-dynamic.yml
 ---
 
 ```bash
+kubectl get sc
+
+# If EKS
+cat pv/jenkins-dynamic.yml
+
+# If GKE
+cat pv/jenkins-dynamic-gke.yml
+
+# If EKS
 kubectl apply -f pv/jenkins-dynamic.yml --record
 
-kubectl -n jenkins rollout status deployment jenkins
+# If GKE
+kubectl apply -f pv/jenkins-dynamic-gke.yml --record
 
+kubectl -n jenkins rollout status deployment jenkins
+```
+
+
+## Using Storage Classes
+
+---
+
+* We output a new Jenkins definition with a PersistentVolumeClaim that uses the StorageClass
+* We updated Jenkins
+
+
+## Using Storage Classes
+
+---
+
+```bash
 kubectl -n jenkins get events
 
 kubectl -n jenkins get pvc
 
 kubectl get pv
 
+# If EKS
 aws ec2 describe-volumes \
     --filters 'Name=tag-key,Values="kubernetes.io/created-for/pvc/name"'
 
-kubectl -n jenkins delete deploy,pvc jenkins
+# If GKE
+PV_NAME=$(kubectl get pv -o jsonpath="{.items[0].metadata.name}")
+
+# If GKE
+gcloud compute disks list --filter="name:('$PV_NAME')"
 ```
 
 
@@ -346,12 +456,10 @@ kubectl -n jenkins delete deploy,pvc jenkins
 
 ---
 
-* We updated Jenkins
-* We retrieved the events and observed that it provisioner a new volume
+* We retrieved the events and observed that it provisioned a new volume
 * We retrieved PersistentVolumeClaims and observed that it is bound to a new volume
 * We retrieved Volumes and observed that a new one was created with the reclaim policy set to `DELETE`
-* We described AWS volumes and observed that a new one was created
-* We deleted Jenkins Deployment and PersistentVolumeClaim
+* We observed that a new external drive was created
 
 
 ## Using Storage Classes
@@ -359,10 +467,16 @@ kubectl -n jenkins delete deploy,pvc jenkins
 ---
 
 ```bash
+kubectl -n jenkins delete deploy,pvc jenkins
+
 kubectl get pv
 
+# If EKS
 aws ec2 describe-volumes \
     --filters 'Name=tag-key,Values="kubernetes.io/created-for/pvc/name"'
+
+# If GKE
+gcloud compute disks list --filter="name:('$PV_NAME')"
 ```
 
 
@@ -370,8 +484,9 @@ aws ec2 describe-volumes \
 
 ---
 
+* We deleted Jenkins Deployment and PersistentVolumeClaim
 * We retrieved PersistentVolumes and observed that the one we used before was automatically removed with the removal of the PersistentVolumeClaim
-* We retrieved AWS volumes and observed that the one created by the PersitentVolume was removed
+* We retrieved external drives and observed that the one created by the PersitentVolume was removed
 
 
 ## Default Storage Classes
@@ -385,7 +500,7 @@ kubectl patch storageclass gp2 \
 
 kubectl get sc
 
-kubectl describe sc gp2
+kubectl describe sc
 
 cat pv/jenkins-default.yml
 
@@ -414,18 +529,17 @@ kubectl get pv
 ```bash
 kubectl -n jenkins delete deploy,pvc jenkins
 
-cat pv/sc.yml
+# If EKS
+YAML=sc.yml
 
-kubectl create -f pv/sc.yml
+# If GKE
+YAML=sc-gke.yml
+
+cat pv/$YAML
+
+kubectl create -f pv/$YAML
 
 kubectl get sc
-
-cat pv/jenkins-sc.yml
-
-kubectl apply -f pv/jenkins-sc.yml --record
-
-aws ec2 describe-volumes \
-    --filters 'Name=tag-key,Values="kubernetes.io/created-for/pvc/name"'
 ```
 
 
@@ -435,8 +549,35 @@ aws ec2 describe-volumes \
 
 * We deleted Jenkins Deployment and PersistentVolumeClaim
 * We created a new StorageClass based on a different EBS type
+
+
+## Creating Storage Classes
+
+---
+
+```bash
+cat pv/jenkins-sc.yml
+
+kubectl apply -f pv/jenkins-sc.yml --record
+
+# If EKS
+aws ec2 describe-volumes \
+    --filters 'Name=tag-key,Values="kubernetes.io/created-for/pvc/name"'
+
+# If GKE
+PV_NAME=$(kubectl get pv -o jsonpath="{.items[0].metadata.name}")
+
+# If GKE
+gcloud compute disks list --filter="name:('$PV_NAME')"
+```
+
+
+## Creating Storage Classes
+
+---
+
 * We Updated Jenkins to use the new StorageClass
-* We retrieved EBS volumes and observed that the newly created one is based on `io1`
+* We retrieved external disks and observed that the newly created one is based on the `fast` type
 
 
 <!-- .slide: data-background="img/persistent-volume-sc.png" data-background-size="contain" -->
