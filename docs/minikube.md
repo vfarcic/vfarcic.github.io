@@ -1,4 +1,4 @@
-# Running A Kubernetes Cluster Locally
+# Using minikube As A Local Kubernetes Cluster
 
 ---
 

@@ -137,17 +137,13 @@ kubectl -n charts rollout status deploy monocular-monocular-ui
 open "http://$MONOCULAR_ADDR"
 ```
 
-* Deploy Jenkins
-* Delete Jenkins
-
 
 ## What Now?
 
 ---
 
 ```bash
-# Do NOT delete ChartMuseum
-# helm delete $(helm ls -q) --purge
+helm delete monocular --purge
 
-kubectl delete ns charts go-demo-3 jenkins
+kubectl delete ns go-demo-3 go-demo-3-build
 ```

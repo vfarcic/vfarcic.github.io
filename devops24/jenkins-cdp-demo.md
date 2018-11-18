@@ -168,6 +168,8 @@ helm ls --tiller-namespace go-demo-3-build
 
 kubectl -n go-demo-3-build get pods
 
+# Wait until the build is finished
+
 helm ls --tiller-namespace go-demo-3-build
 
 kubectl -n go-demo-3-build get pods
@@ -311,6 +313,8 @@ spec:
 ---
 
 ```bash
+# Wait until the build is finished
+
 open "https://hub.docker.com/r/$DH_USER/go-demo-3/tags/"
 
 curl -u admin:admin "http://$CM_ADDR/index.yaml"
@@ -457,6 +461,8 @@ spec:
 ---
 
 ```bash
+# Wait until the build is finished
+
 helm ls --tiller-namespace go-demo-3-build
 
 kubectl -n go-demo-3 get pods
@@ -473,7 +479,7 @@ curl "http://go-demo-3.$ADDR/demo/hello"
 open "http://$JENKINS_ADDR/configure"
 ```
 
-* Click the *Add* button in the *Global Pipeline Libraries* section
+* Click the *Add* button in *Global Pipeline Libraries*
 * Type *my-library* as the *Name*
 * Type *master* as the *Default version*
 * Click the *Load implicitly* checkbox
@@ -482,6 +488,11 @@ open "http://$JENKINS_ADDR/configure"
 * Go to [vfarcic/jenkins-shared-libraries.git](https://github.com/vfarcic/jenkins-shared-libraries.git) and fork it
 * Copy the address from the *Clone and download* drop-down list, return to Jenkins UI, and paste it into the *Project Repository* field
 * Click the *Save* button to persist the changes
+
+
+## Global Pipeline Libraries
+
+---
 
 ```bash
 export GH_USER=[...]
@@ -650,4 +661,34 @@ open "http://$JENKINS_ADDR/job/go-demo-3/"
 
 ```bash
 open "http://$JENKINS_ADDR/blue/create-pipeline"
+```
+
+
+## Using Jenkinsfile & Multistage Builds
+
+---
+
+* Choose *GitHub*
+* Click the *Create an access token here* link to create a token if you do NOT have it already
+* Type *Token description* and click the *Generate token* button
+* Click the *Connect* button
+* Choose your GitHub organization
+* Type *go-demo-3* to filter the repositories and select it
+* Click the *Create Pipeline* button
+* Stop all the builds except *master*
+
+
+## What Now?
+
+---
+
+```bash
+# If using Docker For Desktop or minikube
+cd cd/docker-build
+
+# If using Docker For Desktop or minikube
+vagrant suspend
+
+# If using Docker For Desktop or minikube
+cd ../..
 ```

@@ -24,8 +24,6 @@ export GH_USER=[...]
 git clone https://github.com/$GH_USER/go-demo-3.git
 
 cd go-demo-3
-
-git pull
 ```
 
 
@@ -55,7 +53,7 @@ kubectl apply -f k8s/cd.yml --record
 ```
 
 
-## Executing Continuous Integration Inside Containers
+## CI Inside Containers
 
 ---
 
@@ -74,7 +72,7 @@ docker login -u $DH_USER
 ```
 
 
-## Executing Continuous Integration Inside Containers
+## CI Inside Containers
 
 ---
 
@@ -99,7 +97,7 @@ exit
 ---
 
 ```bash
-ifconfig # Remember the IP
+ifconfig # If Docker For Desktop; Remember the IP
 
 kubectl -n go-demo-3-build exec -it cd -c kubectl -- sh
 
@@ -123,9 +121,9 @@ echo $?
 ---
 
 ```bash
-# If NOT Docker For Desktop
+# If minikube
 ADDR=$(kubectl -n go-demo-3-build get ing api \
-    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")/beta
+    -o jsonpath="{.status.loadBalancer.ingress[0].ip}")/beta
 
 # If Docker For Desktop
 ADDR=[...]/beta # Replace `[...] with the IP
@@ -205,10 +203,17 @@ kubectl apply -f /tmp/prod.yml --record
 kubectl -n go-demo-3 rollout status deployment api
 
 echo $?
+```
 
-# If NOT Docker For Desktop
+
+## Deploying To Production
+
+---
+
+```bash
+# If minikube
 ADDR=$(kubectl -n go-demo-3 get ing api \
-    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+    -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
 
 # If Docker For Desktop
 ADDR=[...] # Replace `[...] with the IP

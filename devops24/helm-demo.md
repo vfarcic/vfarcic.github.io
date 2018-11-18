@@ -54,11 +54,26 @@ helm search jenkins
 
 helm install stable/jenkins --name jenkins --namespace jenkins
 
-kubectl -n jenkins \
-    rollout status deploy jenkins
+# If minikube
+helm upgrade jenkins stable/jenkins \
+    --set Master.ServiceType=NodePort
 
+kubectl -n jenkins rollout status deploy jenkins
+```
+
+
+## Installing Helm Charts
+
+---
+
+```bash
+# If Docker For Desktop
 ADDR=$(kubectl -n jenkins get svc jenkins \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}"):8080
+
+# If minikube
+ADDR=$(minikube ip):$(kubectl -n jenkins get svc jenkins \
+    -o jsonpath="{.spec.ports[0].nodePort}")
 
 echo $ADDR
 
@@ -116,10 +131,26 @@ helm inspect stable/jenkins
 helm install stable/jenkins --name jenkins --namespace jenkins \
     --set Master.ImageTag=2.112-alpine
 
-kubectl -n jenkins rollout status deployment jenkins
+# If minikube
+helm upgrade jenkins stable/jenkins \
+    --set Master.ServiceType=NodePort --reuse-values
 
+kubectl -n jenkins rollout status deployment jenkins
+```
+
+
+## Customizing Helm Installations
+
+---
+
+```bash
+# If Docker For Windows
 ADDR=$(kubectl -n jenkins get svc jenkins \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}"):8080
+
+# If minikube
+ADDR=$(minikube ip):$(kubectl -n jenkins get svc jenkins \
+    -o jsonpath="{.spec.ports[0].nodePort}")
 
 echo $ADDR
 
@@ -170,8 +201,7 @@ helm delete jenkins --purge
 
 ```bash
 # If GKE
-export LB_IP=$(kubectl -n ingress-nginx \
-    get svc ingress-nginx \
+export LB_IP=$(kubectl -n ingress-nginx get svc ingress-nginx \
     -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
 
 # If Docker For Destop
@@ -180,9 +210,19 @@ ifconfig
 # If Docker For Destop
 LB_IP=[...] # Replace with the IP
 
-echo $LB_IP
+# If minikube
+LB_IP=$(minikube ip)
 
-HOST="jenkins.$LB_IP.xip.io"
+echo $LB_IP
+```
+
+
+## Using YAML Values
+
+---
+
+```bash
+HOST="jenkins.$LB_IP.nip.io"
 
 echo $HOST
 
@@ -291,7 +331,7 @@ helm package helm/go-demo-3 -d helm
 ```bash
 helm inspect values helm/go-demo-3
 
-HOST="go-demo-3.$LB_IP.xip.io"
+HOST="go-demo-3.$LB_IP.nip.io"
 
 echo $HOST
 
@@ -301,14 +341,7 @@ helm upgrade -i go-demo-3 helm/go-demo-3 --namespace go-demo-3 \
 kubectl -n go-demo-3 rollout status deployment go-demo-3
 
 curl http://$HOST/demo/hello
-```
 
-
-## Upgrading Charts
-
----
-
-```bash
 helm upgrade -i go-demo-3 helm/go-demo-3 --namespace go-demo-3 \
     --set image.tag=2.0 --reuse-values
 ```

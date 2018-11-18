@@ -1,5 +1,7 @@
 # Cleanup
 
+---
+
 ```bash
 minikube delete
 ```

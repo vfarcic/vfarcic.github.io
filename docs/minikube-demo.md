@@ -2,7 +2,7 @@
 
 ---
 
-# Running A Kubernetes Cluster Locally
+# Using minikube As A Local Kubernetes Cluster
 
 
 ## Prerequisites
@@ -32,7 +32,7 @@ cd k8s-specs
 ---
 
 ```bash
-minikube start --vm-driver virtualbox --cpus 3 --memory 3072
+minikube start --vm-driver virtualbox --cpus 4 --memory 4096
 ```
 
 
@@ -40,7 +40,7 @@ minikube start --vm-driver virtualbox --cpus 3 --memory 3072
 
 ---
 
-* We started a single-node cluster with 3 CPUs and 3 GB RAM
+* We started a single-node cluster with 4 CPUs and 4 GB RAM
 
 
 <!-- .slide: data-background="img/minikube-simple.png" data-background-size="contain" -->

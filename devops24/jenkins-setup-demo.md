@@ -163,6 +163,8 @@ open "http://$JENKINS_ADDR/blue/organizations/jenkins/my-k8s-job/activity"
 kubectl -n jenkins get pods
 ```
 
+* The build hangs (unless using Docker For Desktop)
+
 
 <!-- .slide: data-background="img/jenkins-setup-agent-to-tiller-in-kube-system.png" data-background-size="contain" -->
 
@@ -250,7 +252,7 @@ spec:
 ```bash
 open "http://$JENKINS_ADDR/blue/organizations/jenkins/my-k8s-job/activity"
 
-# Stop the build
+# Stop the build (unless Docker For Desktop)
 
 cat ../go-demo-3/k8s/build-ns.yml
 
@@ -263,14 +265,16 @@ kubectl apply -f ../go-demo-3/k8s/prod-ns.yml --record
 cat ../go-demo-3/k8s/jenkins.yml
 
 kubectl apply -f ../go-demo-3/k8s/jenkins.yml --record
-
-open "http://$JENKINS_ADDR/configure"
 ```
 
 
 ## Builds In Different Namespaces
 
 ---
+
+```bash
+open "http://$JENKINS_ADDR/configure"
+```
 
 * Change *Jenkins URL* to *http://jenkins.jenkins:8080*
 * Change *Jenkins tunnel* to *jenkins-agent.jenkins:50000*
@@ -311,7 +315,8 @@ open "http://$JENKINS_ADDR/credentials/store/system/domain/_/newCredentials"
 * Click the *OK* button
 
 
-## Creating a VM with Vagrant and VirtualBox (only if Docker For Desktop)
+## Vagrant & VirtualBox Agent
+##### (only if Docker For Desktop or minikube)
 
 ---
 
@@ -332,7 +337,8 @@ open "http://$JENKINS_ADDR/computer/new"
 * Click the *OK* button
 
 
-## Creating a VM with Vagrant and VirtualBox (only if Docker For Desktop)
+## Vagrant & VirtualBox Agent
+##### (only if Docker For Desktop or minikube)
 
 ---
 
@@ -341,21 +347,33 @@ open "http://$JENKINS_ADDR/computer/new"
 * Set the labels to *docker ubuntu linux*
 * Select *Launch slave agents via SSH* as the *Launch Method*
 * Set the *Host* to *10.100.198.200*
-* Click the *Add* drop-down next to *Credentials* and select *Jenkins*
+* Click *Add* drop-down next to *Credentials*, select *Jenkins*
 * Select *SSH Username with private key* as the *Kind*
 * Type *vagrant* as the *Username*
-* Select *Enter directly* as the *Private Key*.
+* Select *Enter directly* as the *Private Key*
+
+
+## Vagrant & VirtualBox Agent
+##### (only if Docker For Desktop or minikube)
+
+---
 
 ```bash
 cat .vagrant/machines/docker-build/virtualbox/private_key
 ```
 
-* Copy the output, go back to Jenkins UI, and paste it into the *Key* field
+* Copy the output and paste it into the *Key* field
 * Type *docker-build* as the *ID* and the *Description*
 * Click the *Add* button
-* Celect *vagrant (docker-build)* in the *Credentials* drop-down list
+* Select *vagrant (docker-build)* in the *Credentials* list
 * Select *Not verifying Verification Strategy* as the *Host Key Verification Strategy*
 * Click the *Save* button
+
+
+## Vagrant & VirtualBox Agent
+##### (only if Docker For Desktop or minikube)
+
+---
 
 ```bash
 cd ../../
@@ -602,9 +620,6 @@ JENKINS_PASS=$(kubectl -n jenkins get secret jenkins \
     | base64 --decode; echo)
 
 echo $JENKINS_PASS
-
-# Only if EKS or kops
-open "http://$JENKINS_ADDR/configure"
 ```
 
 
@@ -613,6 +628,9 @@ open "http://$JENKINS_ADDR/configure"
 ---
 
 ```bash
+# Only if EKS or kops
+open "http://$JENKINS_ADDR/configure"
+
 # Only if EKS or kops
 cat cluster/devops24.pem
 
@@ -696,15 +714,4 @@ spec:
 
 ```bash
 open "http://$JENKINS_ADDR/blue/organizations/jenkins/my-k8s-job/activity"
-```
-
-
-## What Now?
-
----
-
-```bash
-# helm delete $(helm ls -q) --purge
-
-kubectl delete ns go-demo-3 go-demo-3-build
 ```

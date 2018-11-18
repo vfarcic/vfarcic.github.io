@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>The DevOps 2.3 Toolkit: Kubernetes Workshop</title>
+		<title>The DevOps 2.4 Toolkit: Continuous Deployment To Kubernetes</title>
 
 		<meta name="author" content="Viktor Farcic">
 
@@ -44,7 +44,7 @@
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
-                    data-background="../img/background/devops23.jpg">
+                    data-background="../img/background/devops24.jpg">
                 </section>
 				<section id="about-me"
                     data-markdown="../docs/about-me.md"
@@ -55,15 +55,7 @@
                     data-background="../img/background/about-me.jpg">
                 </section>
 				<section id="address"
-                    data-markdown="address.md"
-                    data-separator="^\n\n\n"
-                    data-separator-vertical="^\n\n"
-                    data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/why.jpg">
-                </section>
-				<section id="index"
-                    data-markdown="index.md"
+                    data-markdown="address-minikube.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
@@ -77,32 +69,9 @@
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
                     data-background="../img/background/berserker.jpg">
-                </section>
-				<section id="docker-image"
-                    data-markdown="../docs/docker-image.md"
-                    data-separator="^\n\n\n"
-                    data-separator-vertical="^\n\n"
-                    data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/containers.png">
-                </section>
-				<section id="docker-image-demo"
-                    data-markdown="../docs/docker-image-demo.md"
-                    data-separator="^\n\n\n"
-                    data-separator-vertical="^\n\n"
-                    data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/manual.jpg">
 				</section>
-				<section id="scheduler"
-				    data-markdown="../docs/scheduler.md"
-				    data-separator="^\n\n\n"
-				    data-separator-vertical="^\n\n"
-				    data-separator-notes="^Note:"
-				    data-charset="iso-8859-15">
-                </section>
 				<section id="infra"
-                data-markdown="../docs/minikube.md"
+				    data-markdown="../docs/minikube.md"
 				    data-separator="^\n\n\n"
 				    data-separator-vertical="^\n\n"
 				    data-separator-notes="^Note:"
@@ -110,208 +79,125 @@
 				    data-background="../img/background/servers.jpg">
 			    </section>
 				<section id="infra-demo"
-                    data-markdown="../docs/minikube-demo.md"
+                    data-markdown="../docs/minikube-demo-short.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
                     data-background="../img/background/manual.jpg">
-                </section>
-				<section id="pod"
-				    data-markdown="pod.md"
+				</section>
+				<section id="sa"
+				    data-markdown="sa.md"
 				    data-separator="^\n\n\n"
 				    data-separator-vertical="^\n\n"
 				    data-separator-notes="^Note:"
 				    data-charset="iso-8859-15">
                 </section>
-				<section id="pod-demo"
-                    data-markdown="pod-demo.md"
+				<section id="sa-demo"
+                    data-markdown="sa-demo.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
                     data-background="../img/background/manual.jpg">
-                </section>
-				<section id="rs"
-				    data-markdown="rs.md"
+				</section>
+				<section id="cdp"
+				    data-markdown="cdp.md"
 				    data-separator="^\n\n\n"
 				    data-separator-vertical="^\n\n"
 				    data-separator-notes="^Note:"
 				    data-charset="iso-8859-15">
                 </section>
-				<section id="rs-demo"
-                    data-markdown="rs-demo.md"
-                    data-separator="^\n\n\n"
-                    data-separator-vertical="^\n\n"
-                    data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/manual.jpg">
-                </section>
-				<section id="svc"
-				    data-markdown="svc.md"
+				<section id="manual-cd"
+				    data-markdown="manual-cd.md"
 				    data-separator="^\n\n\n"
 				    data-separator-vertical="^\n\n"
 				    data-separator-notes="^Note:"
 				    data-charset="iso-8859-15">
                 </section>
-				<section id="svc-demo"
-                    data-markdown="svc-demo.md"
+				<section id="manual-cd-demo"
+                    data-markdown="manual-cd-demo.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
                     data-background="../img/background/manual.jpg">
                 </section>
-				<section id="deploy"
-				    data-markdown="deploy.md"
+				<section id="helm"
+				    data-markdown="helm.md"
 				    data-separator="^\n\n\n"
 				    data-separator-vertical="^\n\n"
 				    data-separator-notes="^Note:"
 				    data-charset="iso-8859-15">
                 </section>
-				<section id="deploy-demo"
-                    data-markdown="deploy-demo.md"
+				<section id="helm-demo"
+                    data-markdown="helm-demo.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
                     data-background="../img/background/manual.jpg">
                 </section>
-				<section id="ingress"
-				    data-markdown="ingress.md"
+				<section id="chart-museum"
+				    data-markdown="chart-museum.md"
 				    data-separator="^\n\n\n"
 				    data-separator-vertical="^\n\n"
 				    data-separator-notes="^Note:"
 				    data-charset="iso-8859-15">
                 </section>
-				<section id="ingress-demo"
-                    data-markdown="ingress-demo.md"
+				<section id="chart-museum-demo"
+                    data-markdown="chart-museum-demo.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
                     data-background="../img/background/manual.jpg">
                 </section>
-				<section id="volume"
-				    data-markdown="volume.md"
+				<section id="jenkins-setup"
+				    data-markdown="jenkins-setup.md"
 				    data-separator="^\n\n\n"
 				    data-separator-vertical="^\n\n"
 				    data-separator-notes="^Note:"
 				    data-charset="iso-8859-15">
                 </section>
-				<section id="volume-demo"
-                    data-markdown="volume-demo.md"
+				<section id="jenkins-setup-demo"
+                    data-markdown="jenkins-setup-demo.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
                     data-background="../img/background/manual.jpg">
                 </section>
-				<section id="cm"
-				    data-markdown="cm.md"
+				<section id="jenkins-cdp"
+				    data-markdown="jenkins-cdp.md"
 				    data-separator="^\n\n\n"
 				    data-separator-vertical="^\n\n"
 				    data-separator-notes="^Note:"
 				    data-charset="iso-8859-15">
                 </section>
-				<section id="cm-demo"
-                    data-markdown="cm-demo.md"
+				<section id="jenkins-cdp-demo"
+                    data-markdown="jenkins-cdp-demo.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
                     data-background="../img/background/manual.jpg">
-                </section>
-				<section id="secret"
-				    data-markdown="secret.md"
+				</section>
+				<!-- <section id="jenkins-cd"
+				    data-markdown="jenkins-cd.md"
 				    data-separator="^\n\n\n"
 				    data-separator-vertical="^\n\n"
 				    data-separator-notes="^Note:"
 				    data-charset="iso-8859-15">
                 </section>
-				<section id="secret-demo"
-                    data-markdown="secret-demo.md"
+				<section id="jenkins-cd-demo"
+                    data-markdown="jenkins-cd-demo.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
                     data-background="../img/background/manual.jpg">
-                </section>
-				<section id="ns"
-				    data-markdown="ns.md"
-				    data-separator="^\n\n\n"
-				    data-separator-vertical="^\n\n"
-				    data-separator-notes="^Note:"
-				    data-charset="iso-8859-15">
-                </section>
-				<section id="ns-demo"
-                    data-markdown="ns-demo.md"
-                    data-separator="^\n\n\n"
-                    data-separator-vertical="^\n\n"
-                    data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/manual.jpg">
-                </section>
-				<section id="auth"
-				    data-markdown="auth.md"
-				    data-separator="^\n\n\n"
-				    data-separator-vertical="^\n\n"
-				    data-separator-notes="^Note:"
-				    data-charset="iso-8859-15">
-                </section>
-				<section id="auth-demo"
-                    data-markdown="auth-demo.md"
-                    data-separator="^\n\n\n"
-                    data-separator-vertical="^\n\n"
-                    data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/manual.jpg">
-                </section>
-				<section id="resource"
-				    data-markdown="resource.md"
-				    data-separator="^\n\n\n"
-				    data-separator-vertical="^\n\n"
-				    data-separator-notes="^Note:"
-				    data-charset="iso-8859-15">
-                </section>
-				<section id="resource-demo"
-                    data-markdown="resource-demo.md"
-                    data-separator="^\n\n\n"
-                    data-separator-vertical="^\n\n"
-                    data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/manual.jpg">
-                </section>
-				<section id="pv"
-				    data-markdown="pv.md"
-				    data-separator="^\n\n\n"
-				    data-separator-vertical="^\n\n"
-				    data-separator-notes="^Note:"
-				    data-charset="iso-8859-15">
-                </section>
-				<section id="pv-demo"
-                    data-markdown="pv-demo.md"
-                    data-separator="^\n\n\n"
-                    data-separator-vertical="^\n\n"
-                    data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/manual.jpg">
-                </section>
-				<section id="sts"
-				    data-markdown="sts.md"
-				    data-separator="^\n\n\n"
-				    data-separator-vertical="^\n\n"
-				    data-separator-notes="^Note:"
-				    data-charset="iso-8859-15">
-                </section>
-				<section id="sts-demo"
-                    data-markdown="sts-demo.md"
-                    data-separator="^\n\n\n"
-                    data-separator-vertical="^\n\n"
-                    data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/manual.jpg">
-                </section>
+                </section> -->
 				<section id="the-end"
                     data-markdown="../docs/the-end.md"
                     data-separator="^\n\n\n"

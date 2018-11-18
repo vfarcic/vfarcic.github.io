@@ -1,6 +1,7 @@
-# Choose Your Kubernetes Platform
+# Choose Your Poison
 
 ---
 
-* [EKS](devops24/workshop-eks.html)
-* [Docker For Desktop](devops24/workshop-docker.html)
+* [Docker For Desktop](workshop-docker.html)
+* [minikube](workshop-minikube.html)
+* [EKS](workshop-eks.html)

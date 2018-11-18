@@ -5,6 +5,18 @@
 # Service Accounts
 
 
+## Getting The Code
+## (if you don't have it already)
+
+---
+
+```bash
+git clone https://github.com/vfarcic/k8s-specs.git
+
+cd k8s-specs
+```
+
+
 ## Jenkins With Kubernetes
 
 ---
@@ -16,13 +28,14 @@ kubectl create -f sa/jenkins-no-sa.yml --record --save-config
 
 kubectl -n jenkins rollout status sts jenkins
 
+# If Docker For Desktop
 CLUSTER_DNS=$(kubectl -n jenkins get ing jenkins \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
-open "http://$CLUSTER_DNS/jenkins"
+# If minikube
+CLUSTER_DNS=$(minikube ip)
 
-kubectl -n jenkins exec jenkins-0 -it -- \
-    cat /var/jenkins_home/secrets/initialAdminPassword
+echo $CLUSTER_DNS
 ```
 
 
@@ -30,10 +43,18 @@ kubectl -n jenkins exec jenkins-0 -it -- \
 
 ---
 
+```bash
+open "http://$CLUSTER_DNS/jenkins"
+
+kubectl -n jenkins exec jenkins-0 -it -- \
+    cat /var/jenkins_home/secrets/initialAdminPassword
+```
+
 * Copy the output and paste it into Jenkins UI *Administrator password* field
 * Click the *Continue* button
 * Click the *Install suggested plugins* button
 * Fill in the *Create First Admin User* fields
+* Click the *Save and Continue* button
 * Click the *Save and Finish* button
 * Click the *Start using Jenkins* button
 
@@ -63,65 +84,9 @@ open "http://$CLUSTER_DNS/jenkins/configure"
 
 * Click the *Add a new cloud* drop-down list in the *Cloud* section
 * Select *Kubernetes*
-* Click the *Test Connection* button
-
-
-## Jenkins With Kubernetes
-
----
-
-* Type *http://jenkins/jenkins* in the *Jenkins URL* field
-* Click the *Save* button
-* Click the *New Item* link in the left-hand menu
-* Type *my-k8s-job* in the *item name* field
-* Select *Pipeline* as the type
-* Click the *OK* button
-* Click the *Pipeline* tab
-* Write the script that follows in the *Pipeline Script* field
-
-
-## Jenkins With Kubernetes
-
----
-
-```groovy
-podTemplate(
-    label: 'kubernetes',
-    containers: [
-        containerTemplate(name: 'maven', image: 'maven:alpine', ttyEnabled: true, command: 'cat'),
-        containerTemplate(name: 'golang', image: 'golang:alpine', ttyEnabled: true, command: 'cat')
-    ]
-) {
-    node('kubernetes') {
-        container('maven') {
-            stage('build') {
-                sh 'mvn --version'
-            }
-            stage('unit-test') {
-                sh 'java -version'
-            }
-        }
-        container('golang') {
-            stage('deploy') {
-                sh 'go version'
-            }
-        }
-    }
-}
-```
-
-
-## Jenkins With Kubernetes
-
----
-
-* Click the *Save* button
-* Click the *Open Blue Ocean* link from the left-hand menu
-* Click the *Run* button
+* Click the *Test Connection* button (works only in Docker For Desktop)
 
 ```bash
-kubectl -n jenkins get pods # Repeat until the Pod is gone
-
 kubectl delete ns jenkins
 ```
 
@@ -136,7 +101,7 @@ curl https://raw.githubusercontent.com/vfarcic/kubectl/master/Dockerfile
 kubectl run kubectl --image=vfarcic/kubectl --restart=Never \
     sleep 10000
 
-# Wait a few moments
+# Wait for a few moments
 
 kubectl get pod kubectl -o jsonpath="{.spec.serviceAccount}"
 
@@ -233,9 +198,10 @@ kubectl run new-test --image=alpine --restart=Never sleep 10000
 
 kubectl get pods
 
+# Works only in Docker For Desktop
 kubectl run new-test --image=alpine sleep 10000
 
-kubectl -n test2 get pods
+kubectl -n test2 get pods # Works only in Docker For Desktop
 ```
 
 
@@ -274,9 +240,9 @@ kubectl -n test2 run new-test --image=alpine --restart=Never \
 
 kubectl -n test2 get pods
 
-kubectl -n default get pods
+kubectl -n default get pods # Works only in Docker For Desktop
 
-kubectl -n kube-system get pods
+kubectl -n kube-system get pods # Works only in Docker For Desktop
 
 exit
 
@@ -311,6 +277,7 @@ kubectl -n jenkins exec jenkins-0 -it -- \
 ---
 
 * Fill in the *Create First Admin User* fields
+* Click the *Save and Continue* button
 * Click the *Save and Finish* button
 * Click the *Start using Jenkins* button
 
