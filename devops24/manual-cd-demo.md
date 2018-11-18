@@ -99,6 +99,8 @@ exit
 ---
 
 ```bash
+ifconfig # Remember the IP
+
 kubectl -n go-demo-3-build exec -it cd -c kubectl -- sh
 
 cat k8s/build.yml
@@ -121,8 +123,12 @@ echo $?
 ---
 
 ```bash
+# If NOT Docker For Desktop
 ADDR=$(kubectl -n go-demo-3-build get ing api \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")/beta
+
+# If Docker For Desktop
+ADDR=[...]/beta # Replace `[...] with the IP
 
 echo $ADDR | tee /workspace/addr
 
@@ -200,8 +206,12 @@ kubectl -n go-demo-3 rollout status deployment api
 
 echo $?
 
+# If NOT Docker For Desktop
 ADDR=$(kubectl -n go-demo-3 get ing api \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+
+# If Docker For Desktop
+ADDR=[...] # Replace `[...] with the IP
 
 echo $ADDR | tee /workspace/prod-addr
 

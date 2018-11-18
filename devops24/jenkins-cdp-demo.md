@@ -8,81 +8,6 @@
 <!-- .slide: data-background="img/cdp-stages.png" data-background-size="contain" -->
 
 
-## Installing Jenkins
-
----
-
-```bash
-AMI_ID=$(grep 'artifact,0,id' cluster/docker-ami.log | cut -d: -f2)
-
-echo $AMI_ID
-
-cat ../go-demo-3/k8s/ns.yml
-
-kubectl apply -f ../go-demo-3/k8s/ns.yml --record
-
-kubectl -n go-demo-3-jenkins create secret generic \
-    jenkins-credentials --from-file cluster/jenkins/credentials.xml
-
-kubectl -n go-demo-3-jenkins create secret generic jenkins-secrets \
-    --from-file cluster/jenkins/secrets
-
-helm init --service-account build --tiller-namespace go-demo-3-build
-```
-
-
-## Installing Jenkins
-
----
-
-```bash
-JENKINS_ADDR="go-demo-3-jenkins.$LB_IP.nip.io"
-
-helm dependency build helm/jenkins
-
-cat helm/jenkins/requirements.yaml
-
-cat helm/jenkins/values.yaml
-
-cat helm/jenkins/templates/config.tpl
-```
-
-
-## Installing Jenkins
-
----
-
-```bash
-helm install helm/jenkins --name go-demo-3-jenkins \
-    --namespace go-demo-3-jenkins \
-    --set jenkins.Master.HostName=$JENKINS_ADDR \
-    --set jenkins.Master.CredentialsXmlSecret="" \
-    --set jenkins.Master.SecretsFilesSecret=""
-
-kubectl -n go-demo-3-jenkins rollout status deployment \
-    go-demo-3-jenkins
-```
-
-
-## Installing Jenkins
-
----
-
-```bash
-open "http://$JENKINS_ADDR/computer"
-
-JENKINS_PASS=$(kubectl -n go-demo-3-jenkins get secret \
-    go-demo-3-jenkins -o jsonpath="{.data.jenkins-admin-password}" \
-    | base64 --decode; echo)
-
-echo $JENKINS_PASS
-
-cat cluster/devops24.pem
-
-open "http://$JENKINS_ADDR/configure"
-```
-
-
 ## Defining The Build Stage
 
 ---
@@ -99,6 +24,8 @@ open "http://$JENKINS_ADDR/configure"
 open "http://$JENKINS_ADDR"
 ```
 
+* Create a Pipeline job called *go-demo-3*
+
 
 ## Defining The Build Stage
 
@@ -108,8 +35,8 @@ open "http://$JENKINS_ADDR"
 import java.text.SimpleDateFormat
 
 currentBuild.displayName = new SimpleDateFormat("yy.MM.dd").format(new Date()) + "-" + env.BUILD_NUMBER
-env.REPO = "https://github.com/vfarcic/go-demo-3.git"
-env.IMAGE = "vfarcic/go-demo-3"
+env.REPO = "https://github.com/vfarcic/go-demo-3.git" // Change me!
+env.IMAGE = "vfarcic/go-demo-3" // Change me!
 env.TAG_BETA = "${currentBuild.displayName}-${env.BRANCH_NAME}"
 
 node("docker") {
@@ -165,9 +92,9 @@ open "http://$JENKINS_ADDR/job/go-demo-3/configure"
 import java.text.SimpleDateFormat
 
 currentBuild.displayName = new SimpleDateFormat("yy.MM.dd").format(new Date()) + "-" + env.BUILD_NUMBER
-env.REPO = "https://github.com/vfarcic/go-demo-3.git"
-env.IMAGE = "vfarcic/go-demo-3"
-env.ADDRESS = "go-demo-3-${env.BUILD_NUMBER}-${env.BRANCH_NAME}.acme.com"
+env.REPO = "https://github.com/vfarcic/go-demo-3.git" // Change me!
+env.IMAGE = "vfarcic/go-demo-3" // Change me!
+env.ADDRESS = "go-demo-3-${env.BUILD_NUMBER}-${env.BRANCH_NAME}.acme.com" // Change me!
 env.TAG_BETA = "${currentBuild.displayName}-${env.BRANCH_NAME}"
 env.CHART_NAME = "go-demo-3-${env.BUILD_NUMBER}-${env.BRANCH_NAME}"
 def label = "jenkins-slave-${UUID.randomUUID().toString()}"
@@ -261,15 +188,23 @@ kubectl -n go-demo-3-build get pods
 
 ```bash
 open "http://$JENKINS_ADDR/credentials/store/system/domain/_/newCredentials"
+```
 
-JENKINS_POD=$(kubectl -n go-demo-3-jenkins get pods \
-    -l component=go-demo-3-jenkins-jenkins-master \
+* Type *admin* as both the *Username* and the *Password*
+* Set the *ID* and the *Description* to *chartmuseum*
+* Click the *OK* button to persist the credentials.
+
+```bash
+JENKINS_POD=$(kubectl -n jenkins get pods \
+    -l component=jenkins-jenkins-master \
     -o jsonpath='{.items[0].metadata.name}')
 
 echo $JENKINS_POD
 
-kubectl -n go-demo-3-jenkins cp \
+kubectl -n jenkins cp \
     $JENKINS_POD:var/jenkins_home/credentials.xml cluster/jenkins
+
+echo $ADDR
 
 open "http://$JENKINS_ADDR/job/go-demo-3/configure"
 ```
@@ -283,10 +218,10 @@ open "http://$JENKINS_ADDR/job/go-demo-3/configure"
 import java.text.SimpleDateFormat
 
 currentBuild.displayName = new SimpleDateFormat("yy.MM.dd").format(new Date()) + "-" + env.BUILD_NUMBER
-env.REPO = "https://github.com/vfarcic/go-demo-3.git"
-env.IMAGE = "vfarcic/go-demo-3"
-env.ADDRESS = "go-demo-3-${env.BUILD_NUMBER}-${env.BRANCH_NAME}.acme.com"
-env.CM_ADDR = "cm.acme.com"
+env.REPO = "https://github.com/vfarcic/go-demo-3.git" // Change me!
+env.IMAGE = "vfarcic/go-demo-3" // Change me!
+env.ADDRESS = "go-demo-3-${env.BUILD_NUMBER}-${env.BRANCH_NAME}.acme.com" // Change me!
+env.CM_ADDR = "cm.acme.com" // Change me!
 env.TAG = "${currentBuild.displayName}"
 env.TAG_BETA = "${env.TAG}-${env.BRANCH_NAME}"
 env.CHART_VER = "0.0.1"
@@ -395,6 +330,8 @@ curl -u admin:admin "http://$CM_ADDR/index.yaml"
 ---
 
 ```bash
+echo $ADDR
+
 open "http://$JENKINS_ADDR/job/go-demo-3/configure"
 ```
 
@@ -407,11 +344,11 @@ open "http://$JENKINS_ADDR/job/go-demo-3/configure"
 import java.text.SimpleDateFormat
 
 currentBuild.displayName = new SimpleDateFormat("yy.MM.dd").format(new Date()) + "-" + env.BUILD_NUMBER
-env.REPO = "https://github.com/vfarcic/go-demo-3.git"
-env.IMAGE = "vfarcic/go-demo-3"
-env.ADDRESS = "go-demo-3-${env.BUILD_NUMBER}-${env.BRANCH_NAME}.acme.com"
-env.PROD_ADDRESS = "go-demo-3.acme.com"
-env.CM_ADDR = "acme.com"
+env.REPO = "https://github.com/vfarcic/go-demo-3.git" // Change me!
+env.IMAGE = "vfarcic/go-demo-3" // Change me!
+env.ADDRESS = "go-demo-3-${env.BUILD_NUMBER}-${env.BRANCH_NAME}.acme.com" // Change me!
+env.PROD_ADDRESS = "go-demo-3.acme.com" // Change me!
+env.CM_ADDR = "acme.com" // Change me!
 env.TAG = "${currentBuild.displayName}"
 env.TAG_BETA = "${env.TAG}-${env.BRANCH_NAME}"
 env.CHART_VER = "0.0.1"
@@ -534,14 +471,28 @@ curl "http://go-demo-3.$ADDR/demo/hello"
 
 ```bash
 open "http://$JENKINS_ADDR/configure"
+```
 
+* Click the *Add* button in the *Global Pipeline Libraries* section
+* Type *my-library* as the *Name*
+* Type *master* as the *Default version*
+* Click the *Load implicitly* checkbox
+* Select *Modern SCM* from the *Retrieval method* section
+* Select *Git* from *Source Code Management*
+* Go to [vfarcic/jenkins-shared-libraries.git](https://github.com/vfarcic/jenkins-shared-libraries.git) and fork it
+* Copy the address from the *Clone and download* drop-down list, return to Jenkins UI, and paste it into the *Project Repository* field
+* Click the *Save* button to persist the changes
+
+```bash
 export GH_USER=[...]
 
 open "https://github.com/$GH_USER/jenkins-shared-libraries.git"
 
-kubectl -n go-demo-3-jenkins cp \
+kubectl -n jenkins cp \
     $JENKINS_POD:var/jenkins_home/org.jenkinsci.plugins.workflow.libs.GlobalLibraries.xml \
     cluster/jenkins/secrets
+
+echo $ADDR
 
 open "http://$JENKINS_ADDR/job/go-demo-3/configure"
 ```
@@ -556,11 +507,11 @@ import java.text.SimpleDateFormat
 
 currentBuild.displayName = new SimpleDateFormat("yy.MM.dd").format(new Date()) + "-" + env.BUILD_NUMBER
 env.PROJECT = "go-demo-3"
-env.REPO = "https://github.com/vfarcic/go-demo-3.git"
-env.IMAGE = "vfarcic/go-demo-3"
-env.DOMAIN = "acme.com"
-env.ADDRESS = "go-demo-3.acme.com"
-env.CM_ADDR = "acme.com"
+env.REPO = "https://github.com/vfarcic/go-demo-3.git" // Change me!
+env.IMAGE = "vfarcic/go-demo-3" // Change me!
+env.DOMAIN = "acme.com" // Change me!
+env.ADDRESS = "go-demo-3.acme.com" // Change me!
+env.CM_ADDR = "acme.com" // Change me!
 env.CHART_VER = "0.0.1"
 def label = "jenkins-slave-${UUID.randomUUID().toString()}"
 
@@ -667,9 +618,15 @@ open "https://github.com/$GH_USER/jenkins-shared-libraries/tree/master/vars"
 curl "https://raw.githubusercontent.com/$GH_USER/jenkins-shared-libraries/master/vars/k8sBuildImageBeta.txt"
 
 open "http://$JENKINS_ADDR/configureSecurity/"
+```
 
+* Change *Markup Formatter* to *PegDown*
+
+```bash
 open "http://$JENKINS_ADDR/job/go-demo-3/"
 ```
+
+* Navigate to *Pipeline Syntax* > *Global Variables Reference*
 
 
 ## Using Jenkinsfile & Multistage Builds
@@ -687,13 +644,10 @@ cat ../go-demo-3/k8s/build-config.yml \
     | kubectl apply -f - --record
 
 open "http://$JENKINS_ADDR/job/go-demo-3/"
-
-open "http://$JENKINS_ADDR/blue/create-pipeline"
 ```
 
+* Click the *Delete Pipeline* link
 
-## What Now?
-
----
-
-TODO
+```bash
+open "http://$JENKINS_ADDR/blue/create-pipeline"
+```

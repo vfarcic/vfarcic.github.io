@@ -169,6 +169,19 @@ helm delete jenkins --purge
 ---
 
 ```bash
+# If GKE
+export LB_IP=$(kubectl -n ingress-nginx \
+    get svc ingress-nginx \
+    -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+
+# If Docker For Destop
+ifconfig
+
+# If Docker For Destop
+LB_IP=[...] # Replace with the IP
+
+echo $LB_IP
+
 HOST="jenkins.$LB_IP.xip.io"
 
 echo $HOST
@@ -206,27 +219,6 @@ kubectl delete ns jenkins
 ```bash
 cd ../go-demo-3
 
-git add .
-
-git commit -m "Defining Continuous Deployment chapter"
-
-git push
-
-git remote add upstream https://github.com/vfarcic/go-demo-3.git
-
-git fetch upstream
-
-git checkout master
-
-git merge upstream/master
-```
-
-
-## Creating Helm Charts
-
----
-
-```bash
 helm create my-app
 
 ls -1 my-app

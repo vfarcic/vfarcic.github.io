@@ -111,7 +111,7 @@ curl -XDELETE "http://$CM_ADDR/api/charts/go-demo-3/0.0.1" \
 ---
 
 ```bash
-helm repo add monocular https://kubernetes-helm.github.io/monocular
+helm repo add monocular https://helm.github.io/monocular
 
 helm inspect values monocular/monocular
 
@@ -125,7 +125,7 @@ helm install monocular/monocular --namespace charts \
     --name monocular --values helm/monocular-values.yml \
     --set ingress.hosts={$MONOCULAR_ADDR}
 
-kubectl -n charts rollout status deploy monocular-monocular-api
+kubectl -n charts rollout status deploy monocular-monocular-ui
 ```
 
 
@@ -146,7 +146,8 @@ open "http://$MONOCULAR_ADDR"
 ---
 
 ```bash
-helm delete $(helm ls -q) --purge
+# Do NOT delete ChartMuseum
+# helm delete $(helm ls -q) --purge
 
 kubectl delete ns charts go-demo-3 jenkins
 ```

@@ -5,21 +5,6 @@
 # Service Accounts
 
 
-## Cluster Setup
-## (if not already running)
-
----
-
-```bash
-source cluster/kops
-
-chmod +x kops/cluster-setup.sh
-
-NODE_COUNT=3 NODE_SIZE=t2.medium \
-    ./kops/cluster-setup.sh
-```
-
-
 ## Jenkins With Kubernetes
 
 ---
@@ -29,14 +14,14 @@ cat sa/jenkins-no-sa.yml
 
 kubectl create -f sa/jenkins-no-sa.yml --record --save-config
 
-kubectl -n jenkins rollout status sts master
+kubectl -n jenkins rollout status sts jenkins
 
-CLUSTER_DNS=$(kubectl -n jenkins get ing master \
+CLUSTER_DNS=$(kubectl -n jenkins get ing jenkins \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
 open "http://$CLUSTER_DNS/jenkins"
 
-kubectl -n jenkins exec master-0 -it -- \
+kubectl -n jenkins exec jenkins-0 -it -- \
     cat /var/jenkins_home/secrets/initialAdminPassword
 ```
 
@@ -79,39 +64,13 @@ open "http://$CLUSTER_DNS/jenkins/configure"
 * Click the *Add a new cloud* drop-down list in the *Cloud* section
 * Select *Kubernetes*
 * Click the *Test Connection* button
-* Click the *Add* drop-down list in the *Credentials* section
-* Select *Jenkins*
 
 
 ## Jenkins With Kubernetes
 
 ---
 
-```bash
-kubectl config view \
-    -o jsonpath='{.users[?(@.name == "devops23.k8s.local-basic-auth")].user.username}'
-```
-
-* Copy and paste into the *Username* field
-
-```bash
-kubectl config view \
-    -o jsonpath='{.users[?(@.name == "devops23.k8s.local-basic-auth")].user.password}'
-```
-
-* Copy and paste into the *Password* field
-* Type *kubernetes* into the *ID* field
-* Type *kubernetes* into the *Description* field
-* Click the *Add* button
-* Select the newly created credentials
-* Click the *Test Connection* button
-
-
-## Jenkins With Kubernetes
-
----
-
-* Type *http://master:8080/jenkins* in the *Jenkins URL* field
+* Type *http://jenkins/jenkins* in the *Jenkins URL* field
 * Click the *Save* button
 * Click the *New Item* link in the left-hand menu
 * Type *my-k8s-job* in the *item name* field
@@ -200,7 +159,7 @@ cat ca.crt
 
 cat namespace
 
-kubectl get pods
+kubectl get pods # Works only in Docker For Desktop
 
 exit
 
@@ -244,6 +203,7 @@ kubectl exec -it kubectl -- sh
 
 kubectl get pods
 
+# Works only in Docker For Desktop
 kubectl run new-test --image=alpine --restart=Never sleep 10000
 
 exit
@@ -333,11 +293,11 @@ cat sa/jenkins.yml
 
 kubectl create -f sa/jenkins.yml --record --save-config
 
-kubectl -n jenkins rollout status sts master
+kubectl -n jenkins rollout status sts jenkins
 
 open "http://$CLUSTER_DNS/jenkins"
 
-kubectl -n jenkins exec master-0 -it -- \
+kubectl -n jenkins exec jenkins-0 -it -- \
     cat /var/jenkins_home/secrets/initialAdminPassword
 ```
 
@@ -377,7 +337,7 @@ open "http://$CLUSTER_DNS/jenkins/configure"
 * Select *Kubernetes*
 * Type *build* in the *Kubernetes Namespace* field
 * Click the *Test Connection* button
-* Type *http://master.jenkins:8080/jenkins* in the *Jenkins URL* field
+* Type *http://jenkins.jenkins/jenkins* in the *Jenkins URL* field
 * Click the *Save* button
 
 

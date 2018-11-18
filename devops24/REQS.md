@@ -1,61 +1,18 @@
 # Workshop Prerequisites
 
-Please install the tools that follow.
+A fully operational Kubernetes cluster with NGINX Ingress controller and a default StorageClass. The following Kubernetes platforms were tested for this course. Please note that Gists are provided in case you need to create a cluster specific for this course.
 
-* [Git](https://git-scm.com/)
-* GitBash (if Windows)
-* [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-* [eksctl](https://github.com/weaveworks/eksctl)
-* [aws-iam-authenticator](https://github.com/kubernetes-sigs/aws-iam-authenticator) (follow the instructions from the "**install aws-iam-authenticator for Amazon EKS**" section in [Getting Started with Amazon EKS](https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html))
+[devops24-docker.sh](https://gist.github.com/vfarcic/3fbf532b1716d40ae60552baf83b8ed1): Docker for Mac with 4 CPUs, 4GB RAM, and with nginx Ingress controller.
+[devops24-minikube.sh](https://gist.github.com/vfarcic/f5863c66867bbe87722998683ea20c41): minikube with 4 CPUs, 4GB RAM, and with ingress, storage-provisioner, and default-storageclass addons enabled.
+[kops.sh](https://gist.github.com/2a3e4ee9cb86d4a5a65cd3e4397f48fd): kops in AWS with 3 t2.small masters and 2 t2.medium nodes spread in three availability zones, and with nginx Ingress controller.
+[minishift.sh](https://gist.github.com/c9968f23ecb1f7b2ec40c6bcc0e03e4f): minishift with 2 CPUs, 2GB RAM, and version 1.16+.
+[gke.sh](https://gist.github.com/5c52c165bf9c5002fedb61f8a5d6a6d1): Google Kubernetes Engine (GKE) with 3 n1-standard-1 (1 CPU, 3.75GB RAM) nodes (one in each zone), and with nginx Ingress controller running on top of the "standard" one that comes with GKE. We'll use nginx Ingress for compatibility with other platforms. Feel free to modify the YAML files if you prefer NOT to install nginx Ingress.
+[eks.sh](https://gist.github.com/5496f79a3886be794cc317c6f8dd7083): Elastic Kubernetes Service (EKS) with 2 t2.medium nodes, with nginx Ingress controller, and with a default StorageClass.
 
-Make sure that you have **AWS admin permissions**. If in doubt, use your personal instead of a corporate account (they are often too restrictive).
+If you are a Windows user, please use GitBash as a terminal for running the commands.
 
-You'll need a [Docker Hub account](https://hub.docker.com/). Please register, if you haven't already.
+If you are running a local Kubernetes cluster with Docker For Mac/Windows or minishift, please install Vagrant (if you do not have it already).
 
-Execute the instructions that follow to confirm that the prerequisites are met. If using Windows, run the commands from GitBash.
-
-First, create AWS **access key ID** and **secret access key**. If you never created them before, please follow the instructions from [Managing Access Keys for Your AWS Account](https://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html).
-
-Execute the commands that follow.
-
-```bash
-# Replace [...] with AWS access key ID
-export AWS_ACCESS_KEY_ID=[...]
-
-# Replace [...] with AWS secret access key
-export AWS_SECRET_ACCESS_KEY=[...]
-
-export AWS_DEFAULT_REGION=us-west-2
-
-mkdir -p cluster
-
-eksctl create cluster -n devops24 --kubeconfig cluster/kubecfg-eks \
-    --node-type t2.medium --nodes 3 -r $AWS_DEFAULT_REGION
-
-export KUBECONFIG=$PWD/cluster/kubecfg-eks
-
-kubectl get nodes
-```
-
-If all the commands were successful, the output of the last should display three nodes. It should be similar to the one that follows.
-
-```
-NAME                                         STATUS ROLES  AGE VERSION
-ip-192-168-175-68.us-west-2.compute.internal Ready  <none> 1m  v1.10.3
-ip-192-168-197-18.us-west-2.compute.internal Ready  <none> 1m  v1.10.3
-ip-192-168-89-157.us-west-2.compute.internal Ready  <none> 1m  v1.10.3
-```
-
-If you got a similar output, you are successful and you're ready for the workshop.
-
-Please use those commands to create a cluster shortly before the workshop starts. That'll save us 15-20 minutes thus allowing us to jump into continuous deployment straight away.
-
-Please execute the command that follows to delete the cluster.
-
-```bash
-eksctl delete cluster -n devops24
-```
-
-**Please make sure to recreate the cluster shortly before the workshop starts.**
+Besides the cluster, you’ll need [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) or [oc](https://docs.openshift.com/enterprise/3.1/cli_reference/get_started_cli.html) if you’re using [minishift](https://docs.okd.io/latest/minishift/getting-started/installing.html).
 
 If you have problems fulfilling the requirements, please contact me through [DevOps20](http://slack.devops20toolkit.com/) Slack (my user is vfarcic) or send me an email to viktor@farcic.com.

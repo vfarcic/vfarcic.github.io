@@ -36,6 +36,12 @@ JENKINS_PASS=$(kubectl -n jenkins get secret jenkins \
 echo $JENKINS_PASS
 ```
 
+* Click the *New Item* link
+* Type *my-k8s-job* as the item name
+* Select *Pipeline*
+* Click the *OK* button
+* Copy&paste the job that follows into the Pipeline Script field
+
 
 ## Using Pods to Run Tools
 
@@ -71,6 +77,10 @@ podTemplate(
 ## Using Pods to Run Tools
 
 ---
+
+* Click the *Save* button
+* Click the *Open Blue Ocean* link
+* click the *Run* button
 
 ```bash
 kubectl -n jenkins get pods
@@ -240,6 +250,8 @@ spec:
 ```bash
 open "http://$JENKINS_ADDR/blue/organizations/jenkins/my-k8s-job/activity"
 
+# Stop the build
+
 cat ../go-demo-3/k8s/build-ns.yml
 
 kubectl apply -f ../go-demo-3/k8s/build-ns.yml --record
@@ -259,6 +271,10 @@ open "http://$JENKINS_ADDR/configure"
 ## Builds In Different Namespaces
 
 ---
+
+* Change *Jenkins URL* to *http://jenkins.jenkins:8080*
+* Change *Jenkins tunnel* to *jenkins-agent.jenkins:50000*
+* Click the *Save* button
 
 ```bash
 helm init --service-account build \
@@ -282,7 +298,73 @@ kubectl -n go-demo-3-build get pods
 ```
 
 
-## Creating AMI
+## Creating Nodes For Building Docker Images
+
+---
+
+```bash
+open "http://$JENKINS_ADDR/credentials/store/system/domain/_/newCredentials"
+```
+
+* Type your Docker Hub *Username* and *Password*.
+* Set both the *ID* and the *Description* to *docker*
+* Click the *OK* button
+
+
+## Creating a VM with Vagrant and VirtualBox (only if Docker For Desktop)
+
+---
+
+* Install [Vagrant](https://www.vagrantup.com/)
+
+```bash
+cd cd/docker-build
+
+cat Vagrantfile
+
+vagrant up
+
+open "http://$JENKINS_ADDR/computer/new"
+```
+
+* Type *docker-build* as the *Node name*
+* Select *Permanent Agent*
+* Click the *OK* button
+
+
+## Creating a VM with Vagrant and VirtualBox (only if Docker For Desktop)
+
+---
+
+* Type *2* as the *# of executors*
+* Set the *Remote root directory* to */tmp*
+* Set the labels to *docker ubuntu linux*
+* Select *Launch slave agents via SSH* as the *Launch Method*
+* Set the *Host* to *10.100.198.200*
+* Click the *Add* drop-down next to *Credentials* and select *Jenkins*
+* Select *SSH Username with private key* as the *Kind*
+* Type *vagrant* as the *Username*
+* Select *Enter directly* as the *Private Key*.
+
+```bash
+cat .vagrant/machines/docker-build/virtualbox/private_key
+```
+
+* Copy the output, go back to Jenkins UI, and paste it into the *Key* field
+* Type *docker-build* as the *ID* and the *Description*
+* Click the *Add* button
+* Celect *vagrant (docker-build)* in the *Credentials* drop-down list
+* Select *Not verifying Verification Strategy* as the *Host Key Verification Strategy*
+* Click the *Save* button
+
+```bash
+cd ../../
+
+export DOCKER_VM=true
+```
+
+
+## Creating AMI (only if EKS and kops)
 
 ---
 
@@ -302,7 +384,7 @@ aws ec2 authorize-security-group-ingress --group-name docker \
 ```
 
 
-## Creating AMI
+## Creating AMI (only if EKS and kops)
 
 ---
 
@@ -326,7 +408,7 @@ echo $AWS_SECRET_ACCESS_KEY
 ```
 
 
-## Creating AMI
+## Creating AMI (only if EKS and kops)
 
 ---
 
@@ -499,11 +581,10 @@ kubectl -n jenkins create secret generic jenkins-secrets \
 
 helm install helm/jenkins --name jenkins --namespace jenkins \
     --set jenkins.Master.HostName=$JENKINS_ADDR \
+    --set jenkins.Master.DockerVM=$DOCKER_VM \
     --set jenkins.Master.DockerAMI=$AMI_ID \
     --set jenkins.Master.GProject=$G_PROJECT \
     --set jenkins.Master.GAuthFile=$G_AUTH_FILE
-
-kubectl delete clusterrolebinding jenkins-role-binding
 ```
 
 
@@ -522,9 +603,8 @@ JENKINS_PASS=$(kubectl -n jenkins get secret jenkins \
 
 echo $JENKINS_PASS
 
+# Only if EKS or kops
 open "http://$JENKINS_ADDR/configure"
-
-cat cluster/devops24.pem
 ```
 
 
@@ -533,12 +613,18 @@ cat cluster/devops24.pem
 ---
 
 ```bash
+# Only if EKS or kops
+cat cluster/devops24.pem
+
+# Only if EKS or kops
 open "http://$JENKINS_ADDR/credentials/store/system/domain/_/credential/aws/update"
 
 open "http://$JENKINS_ADDR/computer"
 
 open "http://$JENKINS_ADDR/newJob"
 ```
+
+* Create a job called *my-k8s-job*
 
 
 ## Automating Jenkins Setup
@@ -618,7 +704,7 @@ open "http://$JENKINS_ADDR/blue/organizations/jenkins/my-k8s-job/activity"
 ---
 
 ```bash
-helm delete $(helm ls -q) --purge
+# helm delete $(helm ls -q) --purge
 
-kubectl delete ns go-demo-3 go-demo-3-build jenkins
+kubectl delete ns go-demo-3 go-demo-3-build
 ```
