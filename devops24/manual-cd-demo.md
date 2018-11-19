@@ -79,9 +79,15 @@ docker login -u $DH_USER
 ```bash
 cat Dockerfile
 
+# If NOT kops
 docker image build -t $DH_USER/go-demo-3:1.0-beta .
 
-docker image ls
+# If kops
+docker image pull vfarcic/go-demo-3:1.0-beta
+
+# If kops
+docker image tag vfarcic/go-demo-3:1.0-beta \
+    $DH_USER/go-demo-3:1.0-beta
 
 docker image push $DH_USER/go-demo-3:1.0-beta
 
@@ -97,7 +103,7 @@ exit
 ---
 
 ```bash
-ifconfig # If Docker For Desktop; Remember the IP
+ifconfig # If Docker For Desktop; remember the IP
 
 kubectl -n go-demo-3-build exec -it cd -c kubectl -- sh
 
@@ -121,6 +127,10 @@ echo $?
 ---
 
 ```bash
+# If kops or EKS
+ADDR=$(kubectl -n go-demo-3-build get ing api \
+    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")/beta
+
 # If minikube
 ADDR=$(kubectl -n go-demo-3-build get ing api \
     -o jsonpath="{.status.loadBalancer.ingress[0].ip}")/beta
@@ -131,12 +141,6 @@ ADDR=[...]/beta # Replace `[...] with the IP
 echo $ADDR | tee /workspace/addr
 
 exit
-
-kubectl -n go-demo-3-build exec -it cd -c golang -- sh
-
-curl "http://$(cat addr)/demo/hello"
-
-go get -d -v -t
 ```
 
 
@@ -145,12 +149,25 @@ go get -d -v -t
 ---
 
 ```bash
+kubectl -n go-demo-3-build exec -it cd -c golang -- sh
+
+curl "http://$(cat addr)/demo/hello"
+
+go get -d -v -t
+
 export ADDRESS=$(cat addr)
 
 go test ./... -v --run FunctionalTest
 
 exit
+```
 
+
+## Running Functional Tests
+
+---
+
+```bash
 kubectl -n go-demo-3-build exec -it cd -c kubectl -- sh
 
 kubectl delete -f /workspace/k8s/build.yml
@@ -211,6 +228,10 @@ echo $?
 ---
 
 ```bash
+# If kops or EKS
+ADDR=$(kubectl -n go-demo-3 get ing api \
+    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+
 # If minikube
 ADDR=$(kubectl -n go-demo-3 get ing api \
     -o jsonpath="{.status.loadBalancer.ingress[0].ip}")

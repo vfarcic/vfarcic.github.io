@@ -28,7 +28,7 @@ kubectl create -f sa/jenkins-no-sa.yml --record --save-config
 
 kubectl -n jenkins rollout status sts jenkins
 
-# If Docker For Desktop
+# If Docker For Desktop, kops, or EKS
 CLUSTER_DNS=$(kubectl -n jenkins get ing jenkins \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 

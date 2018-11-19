@@ -158,12 +158,11 @@ spec:
 ---
 
 ```bash
-open "http://$JENKINS_ADDR/blue/organizations/jenkins/my-k8s-job/activity"
-
 kubectl -n jenkins get pods
 ```
 
-* The build hangs (unless using Docker For Desktop)
+* The build hangs (unless Docker For Desktop)
+* Stop the build (unless Docker For Desktop)
 
 
 <!-- .slide: data-background="img/jenkins-setup-agent-to-tiller-in-kube-system.png" data-background-size="contain" -->
@@ -250,8 +249,6 @@ spec:
 ---
 
 ```bash
-open "http://$JENKINS_ADDR/blue/organizations/jenkins/my-k8s-job/activity"
-
 # Stop the build (unless Docker For Desktop)
 
 cat ../go-demo-3/k8s/build-ns.yml
@@ -382,14 +379,15 @@ export DOCKER_VM=true
 ```
 
 
-## Creating AMI (only if EKS and kops)
+## Creating AMI
+##### (only if EKS or kops)
 
 ---
 
 ```bash
 aws ec2 create-security-group \
     --description "For building Docker images" \
-    --group-name docker | tee cluster/sg.json
+    --group-name devops24 | tee cluster/sg.json
 
 SG_ID=$(cat cluster/sg.json | jq -r ".GroupId")
 
@@ -397,16 +395,19 @@ echo $SG_ID
 
 echo "export SG_ID=$SG_ID" | tee -a cluster/docker-ec2
 
-aws ec2 authorize-security-group-ingress --group-name docker \
+aws ec2 authorize-security-group-ingress --group-name devops24 \
     --protocol tcp --port 22 --cidr 0.0.0.0/0
 ```
 
 
-## Creating AMI (only if EKS and kops)
+## Creating AMI
+##### (only if EKS or kops)
 
 ---
 
 ```bash
+open "https://www.packer.io/intro/getting-started/install.html"
+
 cat jenkins/docker-ami.json
 
 packer build -machine-readable jenkins/docker-ami.json \
@@ -419,14 +420,44 @@ echo $AMI_ID
 echo "export AMI_ID=$AMI_ID" | tee -a cluster/docker-ec2
 
 open "http://$JENKINS_ADDR/configure"
-
-echo $AWS_ACCESS_KEY_ID
-
-echo $AWS_SECRET_ACCESS_KEY
 ```
 
 
-## Creating AMI (only if EKS and kops)
+## Creating AMI
+##### (only if EKS or kops)
+
+---
+
+* Scroll to the *Cloud* section and click the *Add a new cloud* drop-down list
+* Choose *Amazon EC2*
+* Type *docker-agents* as the *Name*
+* Expand the *Add* drop-down list next to *Amazon EC2 Credentials* and choose *Jenkins*
+* Choose *AWS Credentials* as the *Kind*
+* Type *aws* as both the *ID* and the *Description*
+
+
+## Creating AMI
+##### (only if EKS or kops)
+
+---
+
+```bash
+echo $AWS_ACCESS_KEY_ID
+```
+
+* Copy&paste the output into the *Access Key ID* field
+
+```bash
+echo $AWS_SECRET_ACCESS_KEY
+```
+
+* Copy&paste the output into the *Secret Access Key* field
+* Press the *Add* button and choose the newly created credentials
+* Select *us-east-2* as the *Region*
+
+
+## Creating AMI
+##### (only if EKS or kops)
 
 ---
 
@@ -437,9 +468,30 @@ aws ec2 create-key-pair --key-name devops24 \
 chmod 400 cluster/devops24.pem
 
 cat cluster/devops24.pem
+```
 
+* Copy&paste the output into the *EC2 Key Pair's Private Key* field
+* Press the *Test Connection* button
+* Click the *Add* button next to *AMIs*
+* Type *docker* as the *Description*
+
+
+## Creating AMI
+##### (only if EKS or kops)
+
+---
+
+```bash
 echo $AMI_ID
 ```
+* Copy&paste the output it into the *AMI ID* field
+* Select *T2Small* as the *Instance Type*
+* Type *devops24* as the *Security group names*
+* Type *ubuntu* as the *Remote user*
+* The *Remote ssh port* should be set to *22*
+* Write *docker ubuntu linux* as the labels
+* Change the *Idle termination time* to *10*
+* Click the *Save* button
 
 
 ## Testing Docker Builds
@@ -511,15 +563,6 @@ spec:
         }
     }
 }
-```
-
-
-## Testing Docker Builds
-
----
-
-```bash
-open "http://$JENKINS_ADDR/blue/organizations/jenkins/my-k8s-job/activity"
 ```
 
 
@@ -628,15 +671,18 @@ echo $JENKINS_PASS
 ---
 
 ```bash
-# Only if EKS or kops
 open "http://$JENKINS_ADDR/configure"
+
+# Confirm that Kubernetes Cloud is configured properly
 
 # Only if EKS or kops
 cat cluster/devops24.pem
+```
 
-# Only if EKS or kops
-open "http://$JENKINS_ADDR/credentials/store/system/domain/_/credential/aws/update"
+* If EKS, Copy&paste into the *EC2 Key Pair's Private Key* field
+* If EKS, Click the *Apply* button
 
+```bash
 open "http://$JENKINS_ADDR/computer"
 
 open "http://$JENKINS_ADDR/newJob"
@@ -705,13 +751,4 @@ spec:
         }
     }
 }
-```
-
-
-## Automating Jenkins Setup
-
----
-
-```bash
-open "http://$JENKINS_ADDR/blue/organizations/jenkins/my-k8s-job/activity"
 ```

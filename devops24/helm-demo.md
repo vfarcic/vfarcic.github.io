@@ -67,7 +67,7 @@ kubectl -n jenkins rollout status deploy jenkins
 ---
 
 ```bash
-# If Docker For Desktop
+# If Docker For Desktop, kops, or EKS
 ADDR=$(kubectl -n jenkins get svc jenkins \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}"):8080
 
@@ -144,7 +144,7 @@ kubectl -n jenkins rollout status deployment jenkins
 ---
 
 ```bash
-# If Docker For Windows
+# If Docker For Windows, kops, or EKS
 ADDR=$(kubectl -n jenkins get svc jenkins \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}"):8080
 
@@ -202,8 +202,26 @@ helm delete jenkins --purge
 ```bash
 # If GKE
 export LB_IP=$(kubectl -n ingress-nginx get svc ingress-nginx \
-    -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
+# If kops
+export LB_HOST=$(kubectl -n kube-ingress get svc ingress-nginx \
+    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+
+# If EKS
+export LB_HOST=$(kubectl -n ingress-nginx get svc ingress-nginx \
+    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+
+# If kops or EKS
+export LB_IP="$(dig +short $LB_HOST | tail -n 1)"
+```
+
+
+## Using YAML Values
+
+---
+
+```bash
 # If Docker For Destop
 ifconfig
 
@@ -214,21 +232,12 @@ LB_IP=[...] # Replace with the IP
 LB_IP=$(minikube ip)
 
 echo $LB_IP
-```
 
-
-## Using YAML Values
-
----
-
-```bash
 HOST="jenkins.$LB_IP.nip.io"
 
 echo $HOST
 
 helm inspect values stable/jenkins
-
-cat helm/jenkins-values.yml
 ```
 
 
@@ -237,6 +246,8 @@ cat helm/jenkins-values.yml
 ---
 
 ```bash
+cat helm/jenkins-values.yml
+
 helm install stable/jenkins --name jenkins --namespace jenkins \
     --values helm/jenkins-values.yml --set Master.HostName=$HOST
 
