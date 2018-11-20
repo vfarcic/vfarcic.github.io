@@ -6,3 +6,4 @@
 * [minikube](workshop-minikube.html)
 * [kops](workshop-kops.html)
 * [EKS](workshop-eks.html)
+* [GKE](workshop-gke.html)

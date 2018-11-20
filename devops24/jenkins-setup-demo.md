@@ -494,6 +494,106 @@ echo $AMI_ID
 * Click the *Save* button
 
 
+## Creating GCE Images
+##### (only if GKE)
+
+---
+
+```bash
+open "https://www.packer.io/intro/getting-started/install.html"
+
+gcloud auth login
+
+gcloud iam service-accounts create jenkins
+
+export G_PROJECT=$(gcloud info --format='value(config.project)')
+
+echo $G_PROJECT
+
+export SA_EMAIL=$(gcloud iam service-accounts list \
+    --filter="name:jenkins" --format='value(email)')
+
+echo $SA_EMAIL
+```
+
+
+## Creating GCE Images
+##### (only if GKE)
+
+---
+
+```bash
+gcloud projects add-iam-policy-binding \
+    --member serviceAccount:$SA_EMAIL --role roles/compute.admin \
+    $G_PROJECT
+
+gcloud projects add-iam-policy-binding \
+    --member serviceAccount:$SA_EMAIL \
+    --role roles/iam.serviceAccountUser $G_PROJECT
+
+gcloud iam service-accounts keys create --iam-account $SA_EMAIL \
+    cluster/gce-jenkins.json
+
+cat jenkins/docker-gce.json
+
+packer build -machine-readable --force \
+    -var "project_id=$G_PROJECT" jenkins/docker-gce.json \
+    | tee cluster/docker-gce.log
+```
+
+
+## Creating GCE Images
+##### (only if GKE)
+
+---
+
+```bash
+open "http://$JENKINS_ADDR/configure"
+```
+
+* Select *Add a new cloud* > *Google Compute Engine*
+* Type *docker* as the *Name*
+
+```bash
+echo $G_PROJECT
+```
+
+* Copy&paste the output into the *Project ID* field
+* Select *Add* > *Jenkins* (*Service Account Credentials*)
+* Select *Google Service Account from private key* as the *Kind*
+* Paste the name of the project to the *Project Name* field
+* Click *Choose File* button in the *JSON Key* field
+* Select the *gce-jenkins.json* file we created earlier
+
+
+## Creating GCE Images
+##### (only if GKE)
+
+---
+
+* Click the *Add* button and select the new credential
+* Click the *Add* button next to *Instance Configurations*
+* Type *docker* as the *Name Prefix*
+* Type *Docker build instances* as the *Description*
+* Type *10* as the *Node Retention Time*
+* Type *docker ubuntu linux* as the *Labels*.
+* Select *us-east-1* as the *Region*
+* Select *us-east1-b* as the *Zone*
+* Select *n1-standard-2* as the *Machine Type*
+* Select *default* as both the *Network* and the *Subnetwork*
+
+
+## Creating GCE Images
+##### (only if GKE)
+
+---
+
+* Check both *External IP* and *Internal IP* check boxes
+* Set *Image project* to the value of the env. var `G_PROJECT`
+* Select *docker* as the *Image name*
+* Click the *Save* button.
+
+
 ## Testing Docker Builds
 
 ---
@@ -603,6 +703,24 @@ kubectl -n jenkins cp \
 kubectl -n jenkins cp \
     $JENKINS_POD:var/jenkins_home/secrets/master.key \
     cluster/jenkins/secrets
+```
+
+
+## Automating Jenkins Setup
+
+---
+
+```bash
+# If GKE
+kubectl -n jenkins cp $JENKINS_POD:var/jenkins_home/gauth/ \
+    cluster/jenkins/secrets
+
+# If GKE
+G_AUTH_FILE=$(ls cluster/jenkins/secrets/key*json \
+    | xargs -n 1 basename)
+
+# If GKE
+echo $G_AUTH_FILE
 
 helm delete jenkins --purge
 ```
@@ -646,6 +764,8 @@ helm install helm/jenkins --name jenkins --namespace jenkins \
     --set jenkins.Master.DockerAMI=$AMI_ID \
     --set jenkins.Master.GProject=$G_PROJECT \
     --set jenkins.Master.GAuthFile=$G_AUTH_FILE
+
+kubectl -n jenkins rollout status deployment jenkins
 ```
 
 
@@ -654,8 +774,6 @@ helm install helm/jenkins --name jenkins --namespace jenkins \
 ---
 
 ```bash
-kubectl -n jenkins rollout status deployment jenkins
-
 open "http://$JENKINS_ADDR"
 
 JENKINS_PASS=$(kubectl -n jenkins get secret jenkins \
@@ -672,9 +790,11 @@ echo $JENKINS_PASS
 
 ```bash
 open "http://$JENKINS_ADDR/configure"
+```
 
-# Confirm that Kubernetes Cloud is configured properly
+* Confirm that Kubernetes Cloud is configured properly
 
+```bash
 # Only if EKS or kops
 cat cluster/devops24.pem
 ```

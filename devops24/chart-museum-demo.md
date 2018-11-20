@@ -10,9 +10,6 @@
 ---
 
 ```bash
-helm repo add stable \
-    https://kubernetes-charts.storage.googleapis.com
-
 helm inspect values stable/chartmuseum
 
 CM_ADDR="cm.$LB_IP.nip.io"
@@ -106,44 +103,10 @@ curl -XDELETE "http://$CM_ADDR/api/charts/go-demo-3/0.0.1" \
 ```
 
 
-## Using Monocular
-
----
-
-```bash
-helm repo add monocular https://helm.github.io/monocular
-
-helm inspect values monocular/monocular
-
-cat helm/monocular-values.yml
-
-MONOCULAR_ADDR="monocular.$LB_IP.nip.io"
-
-echo $MONOCULAR_ADDR
-
-helm install monocular/monocular --namespace charts \
-    --name monocular --values helm/monocular-values.yml \
-    --set ingress.hosts={$MONOCULAR_ADDR}
-
-kubectl -n charts rollout status deploy monocular-monocular-ui
-```
-
-
-## Using Monocular
-
----
-
-```bash
-open "http://$MONOCULAR_ADDR"
-```
-
-
 ## What Now?
 
 ---
 
 ```bash
-helm delete monocular --purge
-
-kubectl delete ns go-demo-3 go-demo-3-build
+kubectl delete ns go-demo-3
 ```

@@ -6,7 +6,7 @@ A fully operational Kubernetes cluster with NGINX Ingress controller and a defau
 [devops24-minikube.sh](https://gist.github.com/vfarcic/f5863c66867bbe87722998683ea20c41): minikube with 4 CPUs, 4GB RAM, and with ingress, storage-provisioner, and default-storageclass addons enabled.
 [devops24-kops.sh](https://gist.github.com/vfarcic/0552be5ccbd5c8d7f87a9dfadb5e66dc): kops in AWS with 3 t2.medium masters and 3 t2.medium nodes spread in three availability zones, and with nginx Ingress controller.
 [devops24-eks.sh](https://gist.github.com/vfarcic/b6ed77d257964fa2e19c2722739ddad6): Elastic Kubernetes Service (EKS) with 3 t2.medium nodes, and with nginx Ingress controller.
-[gke.sh](https://gist.github.com/5c52c165bf9c5002fedb61f8a5d6a6d1): Google Kubernetes Engine (GKE) with 3 n1-standard-1 (1 CPU, 3.75GB RAM) nodes (one in each zone), and with nginx Ingress controller running on top of the "standard" one that comes with GKE. We'll use nginx Ingress for compatibility with other platforms. Feel free to modify the YAML files if you prefer NOT to install nginx Ingress.
+[gke.sh](https://gist.github.com/5c52c165bf9c5002fedb61f8a5d6a6d1): Google Kubernetes Engine (GKE) with 3 n1-standard-1 (1 CPU, 3.75GB RAM) nodes (one in each zone), with Cluster Autoscaler, and with nginx Ingress controller running on top of the "standard" one that comes with GKE.
 [minishift.sh](https://gist.github.com/c9968f23ecb1f7b2ec40c6bcc0e03e4f): minishift with 2 CPUs, 2GB RAM, and version 1.16+.
 
 If you are a Windows user, please use GitBash as a terminal for running the commands.

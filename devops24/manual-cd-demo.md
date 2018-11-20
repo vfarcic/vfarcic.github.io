@@ -79,13 +79,13 @@ docker login -u $DH_USER
 ```bash
 cat Dockerfile
 
-# If NOT kops
+# If Docker For Desktop, minikube, or EKS
 docker image build -t $DH_USER/go-demo-3:1.0-beta .
 
-# If kops
+# If kops or GKE
 docker image pull vfarcic/go-demo-3:1.0-beta
 
-# If kops
+# If kops or GKE
 docker image tag vfarcic/go-demo-3:1.0-beta \
     $DH_USER/go-demo-3:1.0-beta
 
@@ -131,7 +131,7 @@ echo $?
 ADDR=$(kubectl -n go-demo-3-build get ing api \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")/beta
 
-# If minikube
+# If minikube or GKE
 ADDR=$(kubectl -n go-demo-3-build get ing api \
     -o jsonpath="{.status.loadBalancer.ingress[0].ip}")/beta
 
@@ -232,7 +232,7 @@ echo $?
 ADDR=$(kubectl -n go-demo-3 get ing api \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
-# If minikube
+# If minikube or GKE
 ADDR=$(kubectl -n go-demo-3 get ing api \
     -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
 

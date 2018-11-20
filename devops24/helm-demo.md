@@ -71,6 +71,10 @@ kubectl -n jenkins rollout status deploy jenkins
 ADDR=$(kubectl -n jenkins get svc jenkins \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}"):8080
 
+# If GKE
+ADDR=$(kubectl -n jenkins get svc jenkins \
+    -o jsonpath="{.status.loadBalancer.ingress[0].ip}"):8080
+
 # If minikube
 ADDR=$(minikube ip):$(kubectl -n jenkins get svc jenkins \
     -o jsonpath="{.spec.ports[0].nodePort}")
@@ -148,6 +152,10 @@ kubectl -n jenkins rollout status deployment jenkins
 ADDR=$(kubectl -n jenkins get svc jenkins \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}"):8080
 
+# If GKE
+ADDR=$(kubectl -n jenkins get svc jenkins \
+    -o jsonpath="{.status.loadBalancer.ingress[0].ip}"):8080
+
 # If minikube
 ADDR=$(minikube ip):$(kubectl -n jenkins get svc jenkins \
     -o jsonpath="{.spec.ports[0].nodePort}")
@@ -202,7 +210,7 @@ helm delete jenkins --purge
 ```bash
 # If GKE
 export LB_IP=$(kubectl -n ingress-nginx get svc ingress-nginx \
-    -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+    -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
 
 # If kops
 export LB_HOST=$(kubectl -n kube-ingress get svc ingress-nginx \

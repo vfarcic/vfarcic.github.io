@@ -32,10 +32,12 @@ kubectl -n jenkins rollout status sts jenkins
 CLUSTER_DNS=$(kubectl -n jenkins get ing jenkins \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
+# If GKE
+CLUSTER_DNS=$(kubectl -n jenkins get ing jenkins \
+    -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+
 # If minikube
 CLUSTER_DNS=$(minikube ip)
-
-echo $CLUSTER_DNS
 ```
 
 
@@ -44,6 +46,8 @@ echo $CLUSTER_DNS
 ---
 
 ```bash
+echo $CLUSTER_DNS
+
 open "http://$CLUSTER_DNS/jenkins"
 
 kubectl -n jenkins exec jenkins-0 -it -- \
