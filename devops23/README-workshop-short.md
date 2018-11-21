@@ -10,7 +10,7 @@ Zero-downtime deployments, fault tolerance, high availability, scaling, scheduli
 
 The goal of this fast-paced session is to get acquanted with fundamentals building blocks of Kubernetes.
 
-## What you'll learn-and
+## What you'll learn
 
 * The past, the present, and the future
 * How to build Docker images that will be used in a Kubernetes cluster
