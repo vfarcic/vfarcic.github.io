@@ -6,6 +6,7 @@
 
 
 ## Enabling Ingress Controllers
+#### (minikube)
 
 ---
 
@@ -15,6 +16,27 @@ minikube addons enable ingress
 IP=$(minikube ip)
 
 curl -i "http://$IP/healthz"
+```
+
+
+## Enabling Ingress Controllers
+#### (GKE)
+
+---
+
+```bash
+kubectl apply \
+    -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
+
+kubectl apply \
+    -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/cloud-generic.yaml
+
+IP=$(kubectl -n ingress-nginx get svc ingress-nginx \
+    -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+
+echo $IP
+
+# Repeat if empty
 ```
 
 

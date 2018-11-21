@@ -43,7 +43,9 @@ kubectl exec -it $POD_NAME -- ls /etc/secrets
 
 kubectl exec -it $POD_NAME -- cat /etc/secrets/jenkins-user
 
-open "http://$(minikube ip)/jenkins"
+IP=$(minikube ip) # If minikube
+
+open "http://$IP/jenkins"
 ```
 
 

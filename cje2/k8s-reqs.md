@@ -1,4 +1,4 @@
-<!-- .slide: data-background="img/requirements.jpeg" -->
+<!-- .slide: data-background="../img/background/requirements.jpeg" -->
 # CJE 2 Requirements
 
 ---
