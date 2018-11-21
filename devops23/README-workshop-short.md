@@ -26,6 +26,6 @@ The goal of this fast-paced session is to get acquanted with fundamentals buildi
 * How to inject secrets into containers
 * How to split cluster into Namespaces
 
-## This training course is for you because...
+## This shot&tell session is for you because...
 
 The session is aimed at DevOps Engineers, developers and IT Operations who want to enhance the DevOps culture using Kubernetes. If you have been struggling to find the time to gain proficiency and confidence with Kubernetes, here is your one stop solution!
