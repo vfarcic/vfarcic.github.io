@@ -203,7 +203,7 @@ kubectl run new-test --image=alpine --restart=Never sleep 10000
 kubectl get pods
 
 # Works only in Docker For Desktop
-kubectl run new-test --image=alpine sleep 10000
+kubectl -n test2 run new-test --image=alpine sleep 10000
 
 kubectl -n test2 get pods # Works only in Docker For Desktop
 ```
