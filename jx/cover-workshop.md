@@ -1,5 +1,3 @@
-## DevOps 2.4 Toolkit
-
 # CDP With Jenkins X And Kubernetes
 
 ---

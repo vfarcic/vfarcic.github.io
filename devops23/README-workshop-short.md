@@ -8,7 +8,7 @@ If we choose to use Kubernetes, we decide to relinquish control. Kubernetes will
 
 Zero-downtime deployments, fault tolerance, high availability, scaling, scheduling, and self-healing should be more than enough to see the value in Kubernetes. Yet, that is only a fraction of what it provides. We can use it to mount volumes for stateful applications. It allows us to store confidential information as secrets. We can use it to validate the health of our services. It can load balance requests and monitor resources. It provides service discovery and easy access to logs. And so on and so forth. The list of what Kubernetes does is long and rapidly increasing. Together with Docker, it is becoming a platform that envelops whole software development and deployment lifecycle.
 
-The goal of this fast-paced session is to get acquanted with fundamentals building blocks of Kubernetes.
+The goal of this fast-paced session is to get acquainted with fundamentals building blocks of Kubernetes.
 
 ## What you'll learn
 

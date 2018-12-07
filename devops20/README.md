@@ -1,10 +1,11 @@
 # The DevOps 2.X Toolkit: The State Of DevOps
+# DevOps Is The New Agile
 
 ## Abstract: Talk
 
 DevOps requires both cultural and technological change. It teaches us to unite diverse teams and to automate all repetitive steps in our processes. However, the DevOps movement also comes with a host new technologies and supporting practices such as containers, microservices, cloud provides, and configuration management.
 
-This talk will address the current state of DevOps. To do that, we'll go back in time and explore how we got here and what drove the industry to adopt the tools and the practices we're using today. Only with an understanding of the past can we understand the reasons behind modern DevOps technologies and practices.
+This talk will address the current state of DevOps and how it continues what Agile started. To do that, we'll go back in time and explore how we got here and what drove the industry to adopt the tools and the practices we're using today. Only with an understanding of the past can we understand the reasons behind modern DevOps technologies and practices.
 
 We'll explore the DevOps culture and the need for change required for the adoption of modern technologies. Given that DevOps is first and foremost a cultural change, that will allow us to explore the reasons and the benefits behind some of the changes we need to apply to our infrastructure and software architecture. Culture together with new approaches to infrastructure and software architecture will allow us to reach nirvana in form of true continuous deployment and self-sufficient systems capable of operating without human intervention.
 

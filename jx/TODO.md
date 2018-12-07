@@ -1,0 +1,28 @@
+- [X] Install jx
+- [ ] Create GKE cluster with jx and with manual prompts
+- [ ] Create EKS cluster with jx and with manual prompts
+- [ ] Create AKS cluster with jx and with manual prompts
+- [ ] Create minikube cluster with jx and with manual prompts
+- [ ] Create minishift cluster with jx and with manual prompts
+- [X] Create GKE cluster with jx in batch mode
+- [X] Create EKS cluster with jx in batch mode
+- [ ] Create AKS cluster with jx in batch mode
+- [ ] Create minikube cluster with jx in batch mode
+- [ ] Create minishift cluster with jx in batch mode
+- [X] Create GKE cluster without jx
+- [X] Create EKS cluster without jx
+- [ ] Create AKS cluster without jx
+- [ ] Create minikube cluster without jx
+- [ ] Create minishift cluster without jx
+- [X] Install jx in an existing GKE cluster
+- [X] Install jx in an existing EKS cluster
+- [ ] Install jx in an existing AKS cluster
+- [ ] Install jx in an existing minikube cluster
+- [ ] Install jx in an existing minishift cluster
+- [ ] Install jx in an existing on-prem
+- [X] Static Master Jenkins
+- [ ] Serverless jx
+- [X] Kubernetes Workloads: Automated CI+CD with GitOps Promotion
+- [ ] Library Workloads: CI+Release but no CD
+- [ ] Create multiple masters
+- [ ] Add existing projects
