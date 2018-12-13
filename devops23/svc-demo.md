@@ -34,6 +34,7 @@ Looking at the yml file we customized the command and the arguments so that Mong
 
 
 <!-- .slide: data-background="img/seq_svc_ch05.png" data-background-size="contain" -->
+
 Note:
 1. Kubernetes client (kubectl) sent a request to the API server requesting the creation of the Service based on Pods created through the go-demo-2 ReplicaSet.
 2. Endpoint controller is watching the API server for new service events. It detected that there is a new Service object.
@@ -128,6 +129,7 @@ kubectl create -f svc/go-demo-2-svc-lb.yml
 
 kubectl get -f svc/go-demo-2-svc.yml
 ```
+
 Note:
  When we cat the file we see the selector is used by the Service to know which Pods should receive requests. It works in the same way as ReplicaSet selectors. In this case, we defined that the service should forward requests to Pods with labels type set to backend and service set to go-demo. Those two labels are set in the Pods spec of the ReplicaSet.
 * We created a Service using declarative syntax (YAML)
@@ -172,6 +174,7 @@ kubectl delete -f svc/go-demo-2-svc.yml
 
 kubectl delete -f svc/go-demo-2-rs.yml
 ```
+
 Note:
 Now we can clean up the cluster by deleting the ReplicaSet and Service
 
@@ -358,6 +361,7 @@ The last two environment variables are Kubernetes specific and follow the `[SERV
 
 
 <!-- .slide: data-background="img/flow_svc_ch05.png" data-background-size="contain" -->
+
 Note:
 1. When the api container go-demo-2 tries to connect with the go-demo-2-db Service, it looks at the nameserver configured in /etc/ resolv.conf. kubelet configured the nameserver with the kube-dns Service IP (10.96.0.10) during the Pod scheduling process.
 2. The container queries the DNS server listening to port 53. go-demo-2-db DNS gets resolved to the service IP 10.0.0.19. This DNS record was added by kube-dns during the service creation process.

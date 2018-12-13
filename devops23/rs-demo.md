@@ -70,6 +70,7 @@ cat rs/go-demo-2-scaled.yml
 kubectl apply -f rs/go-demo-2-scaled.yml
 
 kubectl get pods
+
 ```
 Note:
 Deleting the replicaSets with cascade=false will delete only the rs, leaving the pods intact. This is due to the loose coupling of replicas and pods. We can see this when looking at the following commands.
