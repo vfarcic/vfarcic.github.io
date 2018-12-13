@@ -21,6 +21,7 @@ kubectl get -f rs/go-demo-2.yml
 kubectl describe -f rs/go-demo-2.yml
 
 kubectl get pods --show-labels
+
 ```
 Note:
 The key take away in the go-demo-2.yml file is the replicas defined in the spec section. The spec sets the desired number of replicas of the pod. In this case, the ReplicaSets should ensure that two Pods should run concurrently. If we did not specify the value of the replicas, it would default to 1. The next spec section is the selector. We use it to select which pods should be included in the ReplicaSet. It does not distinguish between the Pods created by a ReplicaSet or some other process. In other words, ReplicaSets and Pods are decoupled. If Pods that match the selector exist, ReplicaSet will do nothing. If they don’t, it will create as many Pods to match the value of the replicas field. Not only that ReplicaSet creates the Pods that are missing, but it also monitors the cluster and ensures that the desired number of replicas is (almost) always running. In case there are already more running Pods with the matching selector, some will be terminated to match the number set in replicas. We used spec.selector.matchLabels to specify a few labels. They must match the labels defined in the spec.template. In our case, ReplicaSet will look for Pods with type set to backend and service set to go-demo-2.
@@ -33,6 +34,7 @@ The last section of the spec field is the template. It is the only required fiel
 
 
 <!-- .slide: data-background="img/seq_pod_ch04.png" data-background-size="contain" -->
+
 Note:
 Sequence of events
 1. Kubernetes client (kubectl) sent a request to the API server requesting the creation of a ReplicaSet defined in the rs/ go-demo-2. yml file.
@@ -43,7 +45,6 @@ Sequence of events
 6. Kubelet is also watching the API server. It detected that the two Pods were assigned to the node it is running on.
 7. Kubelet sent requests to Docker requesting the creation of the containers that form the Pod. In our case, the Pod defines two containers based on the mongo and api image. So in total four containers are created.
 8. Finally, Kubelet sent a request to the API server notifying it that the Pods were created successfully.
-
 
 
 <!-- .slide: data-background="img/rs.png" data-background-size="contain" -->

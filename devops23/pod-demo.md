@@ -113,6 +113,7 @@ kubectl get pods
 
 kubectl get pods
 ```
+
 Note:
 * We deleted the Pod
 

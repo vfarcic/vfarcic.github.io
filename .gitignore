@@ -9,3 +9,4 @@ ms-lifecycle
 /secrets
 *.pem
 /cluster
+/customers
