@@ -88,7 +88,6 @@ Note:
 This is a second application being deployed inside the same cluster.
 
 
-
 ## Services Deficiencies
 
 ---
