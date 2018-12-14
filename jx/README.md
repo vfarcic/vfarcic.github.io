@@ -4,3 +4,4 @@
 * Kubernetes flavour (currently supported: GKE)?
 * Domain or nip.io (currently supported: nip.io)?
 * Source code (currently supported: GitHub)?
+* Application languages?

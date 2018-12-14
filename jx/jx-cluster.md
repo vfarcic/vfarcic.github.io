@@ -197,4 +197,8 @@ jx install --provider $PROVIDER --external-ip $LB_IP \
     --tiller-namespace $TILLER_NS -b
 
 jx console
+
+kubectl -n jx get pods
+
+kubectl get secrets
 ```

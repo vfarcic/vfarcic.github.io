@@ -25,4 +25,60 @@
 - [X] Kubernetes Workloads: Automated CI+CD with GitOps Promotion
 - [ ] Library Workloads: CI+Release but no CD
 - [ ] Create multiple masters
+- [ ] Configuration (https://jenkins-x.io/getting-started/config/)
+- [ ] Create custom Builder (https://jenkins-x.io/getting-started/create-custom-builder/)
+- [ ] `create addon`
+- [ ] `create archetype`
+- [ ] `create branchpattern`
+- [ ] `create camel`
+- [ ] `create chat`
+- [ ] `create cluster`
+- [ ] `create codeship`
+- [ ] `create devpod`
+- [ ] `create docker`
+- [ ] `create docs`
+- [ ] `create environment`
+- [ ] `create etc-hosts`
+- [ ] `create git`
+- [ ] `create gke-service-account`
+- [ ] `create issue`
+- [ ] `create jenkins`
+- [ ] `create jhipster`
+- [ ] `create lile`
+- [ ] `create micro`
+- [ ] `create post`
+- [ ] `create pullrequest`
+- [X] `create quickstart`
+- [ ] `create quickstartlocation`
+- [ ] `create team`
+- [ ] `create terraform`
+- [ ] `create token`
+- [ ] `create tracker`
+- [ ] `create user`
+- [ ] `create vault`
+- [ ] `step bdd`
+- [ ] `step blog`
+- [ ] `step buildpack`
+- [ ] `step changelog`
+- [ ] `step collect`
+- [ ] `step create`
+- [ ] `step env`
+- [ ] `step git`
+- [ ] `step gpg`
+- [ ] `step helm`
+- [ ] `step link`
+- [ ] `step next-buildnumber`
+- [ ] `step next-version`
+- [ ] `step nexus`
+- [ ] `step post`
+- [ ] `step pr`
+- [ ] `step pre`
+- [ ] `step release`
+- [ ] `step report`
+- [ ] `step split`
+- [ ] `step tag`
+- [ ] `step validate`
+- [ ] `step verify`
+- [ ] `step wait`
+- [ ] `import`
 - [ ] Add existing projects

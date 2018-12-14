@@ -5,11 +5,19 @@
 ```bash
 jx create quickstart # Cancel with ctrl+c
 
-jx create quickstart -l go
+jx create quickstart -l go -p jx-go -b true
 
-ll golang-http
+GH_USER=[...]
 
-open "https://github.com/vfarcic/golang-http"
+open "https://github.com/$GH_USER/jx-go"
+
+ll jx-go
+
+cat jx-go/Dockerfile
+
+cat jx-go/Jenkinsfile
+
+cat jx-go/Makefile
 ```
 
 
@@ -18,29 +26,16 @@ open "https://github.com/vfarcic/golang-http"
 ---
 
 ```bash
-cat golang-http/Dockerfile
+cat jx-go/skaffold.yaml
 
-cat golang-http/Jenkinsfile
+ll jx-go/charts
 
-ll golang-http/charts
+ll jx-go/charts/jx-go
 
-ll golang-http/charts/golang-http
+ll jx-go/charts/preview
 
-ll golang-http/charts/preview
+open "https://github.com/$GH_USER/jx-go/settings/hooks"
 
-open "https://github.com/vfarcic/golang-http/settings/hooks"
-
-# Added Git repo to Jenkins
-
-# Triggered the first pipeline
-```
-
-
-## Creating A Project
-
----
-
-```bash
 open "https://github.com/jenkins-x-quickstarts"
 
 ll ~/.jx/draft/packs/github.com/jenkins-x/draft-packs/packs
@@ -54,13 +49,11 @@ ll ~/.jx/draft/packs/github.com/jenkins-x/draft-packs/packs
 ```bash
 kubectl get pods
 
-echo $PASS
-
 jx console
 
 jx get activities
 
-jx get activities -f golang-http -w
+jx get activities -f jx-go -w
 ```
 
 
@@ -71,17 +64,17 @@ jx get activities -f golang-http -w
 ```bash
 jx get build logs
 
-jx get build logs -f golang-http
+jx get build logs -f jx-go
 
-jx get build logs vfarcic/golang-http/master
+jx get build logs $GH_USER/jx-go/master
 
 jx get pipelines
 
-jx get app
+jx get apps
 
-jx get app -e staging
+jx get apps -e staging
 
-open "https://github.com/vfarcic/golang-http/releases"
+open "https://github.com/$GH_USER/jx-go/releases"
 ```
 
 
@@ -115,21 +108,4 @@ jx promote golang-http --version 0.0.1 --env production \
     --timeout 24h
 
 kubectl get all
-```
-
-
-## Cleanup
-
----
-
-```bash
-# Delete the cluster
-
-# Delete the LB
-
-# Delete the environment repos
-
-# Delete the golang-http repo
-
-rm -rf golang-http
 ```
