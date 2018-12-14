@@ -261,7 +261,6 @@ Note:
 Looking at the YAML file this time, metadata contains a field we haven’t used before. The annotations section allows us to provide additional information to the Ingress Controller. As you’ll see soon, Ingress API specification is concise and limited. That is done on purpose. The specification API defines only the fields that are mandatory for all Ingress Controllers. All the additional info an Ingress Controller needs is specified through annotations. That way, the community behind the Controllers can progress at great speed, while still providing basic general compatibility and standards. Here we will create Ingress resource tied to `go-demo-2-api` Service and `/demo` path. When we send a request to `/demo/hello` and got a response from the API. Then we can delete all the resources we created
 
 
-
 ## Ingress Based On Paths
 
 ---
