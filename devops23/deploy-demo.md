@@ -230,7 +230,6 @@ Note:
 This this exercise we are creating another `db` applications. The purpose of this is to demonstrate how to update multiple objects using labels. Almost everything in Kubernetes is operated using label selectors. It’s just that sometimes that is obscured from us. We do not have to update an object only by specifying its name or the YAML file where its definition resides. We can also use labels to decide which object should be updated. That opens some interesting possibilities since the selectors might match multiple objects. Imagine that we are running several Deployments with Mongo databases and that the time has come to update them all to a newer release. Before we explore how we could do that, we’ll create another Deployment so that we have at least two with the database Pods. Here we are going to find all the deployments that are a `db` type, with `MongoLabs` vendor. Then we will update all the images that use those labels to a new version of mongo. Finally we will confirm that all mongo images are running `3.4`
 
 
-
 ## Scaling Deployments
 
 ---
