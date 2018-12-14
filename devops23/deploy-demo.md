@@ -205,6 +205,7 @@ kubectl get -f deploy/go-demo-2.yml
 Note:
 If you start searching for differences with the previous definitions, you will find a few. The `minReadySeconds`, `progressDeadlineSeconds`, `revisionHistoryLimit`, and strategy fields are removed from the go-demo-2-api Deployment. We used them mostly as a way to demonstrate their usage. But, since Kubernetes has sensible defaults, we omitted them from this definition. You’ll also notice that there are two Services even though we created only one in this chapter. We did not need the go-demo-2-api Service in our examples since we didn’t need to access the API. But, for the sake of completeness, it is included in this definition. Finally, the strategy for deploying the database is set to `recreate`. As explained earlier, it is more suited for a single-replica database, even though we did not mount a volume that would preserve the data. Let’s create the objects defined in deploy/ go-demo-2. yml. Remember, with --save-config we’re making sure we can edit the configuration later. The alternative would be to use kubectl apply instead.
 
+
 ## Updating Multiple Objects
 
 ---
