@@ -174,8 +174,6 @@ Note:
 The output of the `set` command seems to imply that the `does-not-exist` image was successful deployed, when in fact it was not. Executing at `rollout status` confirms the deployment didn't proceed. The new Pods are not running, and the limit was reached. There’s no point to continue trying. If you expected that the Deployment would roll back after it failed, you’re wrong. It will not do such a thing. At least, not without additional addons.  Running `echo $?`confirms the return code of the command is 1. Now that we witnessed the failure we can undo the rollout, and verify that our api is running.
 
 
-
-
 ## Rolling Back Failures
 
 ---
