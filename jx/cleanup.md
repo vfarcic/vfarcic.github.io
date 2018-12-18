@@ -9,4 +9,8 @@ gcloud container clusters delete $NAME --region $REGION --quiet
 
 # If AKS
 eksctl delete cluster -n $NAME
+
+# Delete the environment repos
+
+# Delete the golang-http repo
 ```

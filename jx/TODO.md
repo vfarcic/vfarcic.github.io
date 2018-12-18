@@ -84,4 +84,6 @@
 - [ ] `import --no-draft` (https://jenkins-x.io/developing/import/)
 - [ ] `import --branches "develop|PR-.*|feature.*"` (https://jenkins-x.io/developing/import/)
 - [ ] Use build packs
+- [ ] Promote to envs
 - [ ] Add tests to go-demo-6 Jenkinsfile
+- [ ] Pre-define Ingress hosts

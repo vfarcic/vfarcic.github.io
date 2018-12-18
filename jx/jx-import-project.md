@@ -37,6 +37,10 @@ STAGING_URL=[PROMOTED]/demo/hello
 curl $STAGING_URL
 
 kubectl -n jx-staging logs -l app=jx-staging-go-demo-6
+
+kubectl -n jx-staging get pods
+
+helm ls
 ```
 
 
@@ -45,7 +49,7 @@ kubectl -n jx-staging logs -l app=jx-staging-go-demo-6
 ---
 
 * Create `charts/go-demo-6/requirements.yaml`
-* And add the code that follows
+* Add the code that follows
 
 ```yaml
 dependencies:
@@ -63,16 +67,24 @@ jx get activity -f go-demo-6 -w
 
 * Stop the watch with `ctrl+c`
 
+```bash
+kubectl -n jx-staging logs -l app=jx-staging-go-demo-6
+
+kubectl -n jx-staging get pods
+
+kubectl -n jx-staging get svc
+```
+
 
 ## Adding Dependencies
 
 ---
 
 ```bash
-vim charts/go-demo-6/deployment.yaml
+vim charts/go-demo-6/templates/deployment.yaml
 ```
 
-* Add the code that follows to the only container
+* Add the code that follows to the container
 
 ```yaml
         env:
@@ -84,6 +96,10 @@ vim charts/go-demo-6/deployment.yaml
 git add . && git commit -m "Added dependencies" && git push
 
 jx get activity -f go-demo-6 -w
+
+kubectl -n jx-staging get pods
+
+kubectl -n jx-staging describe pod -l app=jx-staging-go-demo-6
 ```
 
 
@@ -101,36 +117,10 @@ vim charts/go-demo-6/values.yaml
 git add . && git commit -m "Added dependencies" && git push
 
 jx get activity -f go-demo-6 -w
-```
 
+kubectl -n jx-staging get pods
 
-## Something Else
+kubectl -n jx-staging describe pod -l app=jx-staging-go-demo-6
 
----
-
-```bash
-jx get build logs vfarcic/go-demo-6/master
-
-jx console
-
-jx get pipelines
-
-jx get applications
-```
-
-
-## Cleanup
-
----
-
-```bash
-# Delete the cluster
-
-# Delete the LB
-
-# Delete the environment repos
-
-# Delete the golang-http repo
-
-rm -rf golang-http
+curl $STAGING_URL
 ```
