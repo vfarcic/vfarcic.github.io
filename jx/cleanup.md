@@ -13,4 +13,8 @@ eksctl delete cluster -n $NAME
 # Delete the environment repos
 
 # Delete the golang-http repo
+
+rm -rf ~/.jx/environments/vfarcic/environment-jx-rocks-production
+
+rm -rf ~/.jx/environments/vfarcic/environment-jx-rocks-staging
 ```

@@ -87,3 +87,53 @@
 - [ ] Promote to envs
 - [ ] Add tests to go-demo-6 Jenkinsfile
 - [ ] Pre-define Ingress hosts
+- [ ] `uninstall`
+- [ ] `upgrade`
+- [ ] `update cluster`
+- [ ] `create jenkins token`
+- [ ] `init`
+- [ ] `create archetype`
+- [ ] `create spring`
+- [ ] `create quickstart`
+- [ ] `create quickstartlocation`
+- [ ] `create addon`
+- [ ] `create token addon`
+- [ ] `delete addon`
+- [ ] `delete token addon`
+- [ ] `delete application`
+- [ ] `add app`
+- [ ] `create git server`
+- [ ] `delete git server`
+- [ ] `create git token`
+- [ ] `delete git token`
+- [ ] `repository`
+- [ ] `team`
+- [ ] `namespace`
+- [ ] `scan`
+- [ ] `status`
+- [ ] `logs`
+- [ ] `open`
+- [ ] `rsh`
+- [ ] `sync`
+- [ ] `cloudbees`
+- [ ] `login`
+- [ ] `preview`
+- [ ] `promote`
+- [ ] `create environment`
+- [ ] `delete environment`
+- [ ] `edit environment`
+- [ ] `get environments`
+- [ ] `get`
+- [ ] `edit`
+- [ ] `update`
+- [ ] `delete`
+- [ ] `addp 
+- [ ] `start`
+- [ ] `stop`
+- [ ] `step`
+- [ ] `controller`
+- [ ] `gc`
+- [ ] `diagnose`
+- [ ] `docs`
+- [ ] `help`
+- [ ] `version`
