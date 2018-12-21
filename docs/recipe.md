@@ -57,7 +57,7 @@
 <!-- .slide: data-background="../img/products/jenkins.png" data-background-size="contain" data-background-color="white" -->
 
 
-<!-- .slide: data-background="../img/background/logs.png" -->
+<!-- .slide: data-background="../img/background/logs.jpeg" -->
 # Logging
 
 
