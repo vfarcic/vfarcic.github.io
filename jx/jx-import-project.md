@@ -48,38 +48,6 @@ helm ls
 
 ---
 
-* Create `charts/go-demo-6/requirements.yaml`
-* Add the code that follows
-
-```yaml
-dependencies:
-- alias: db
-  name: mongodb
-  repository: https://kubernetes-charts.storage.googleapis.com
-  version: 4.10.1
-```
-
-```bash
-git add . && git commit -m "Added dependencies" && git push
-
-jx get activity -f go-demo-6 -w
-```
-
-* Stop the watch with `ctrl+c`
-
-```bash
-kubectl -n jx-staging logs -l app=jx-staging-go-demo-6
-
-kubectl -n jx-staging get pods
-
-kubectl -n jx-staging get svc
-```
-
-
-## Adding Dependencies
-
----
-
 ```bash
 vim charts/go-demo-6/templates/deployment.yaml
 ```
@@ -89,12 +57,30 @@ vim charts/go-demo-6/templates/deployment.yaml
 ```yaml
         env:
         - name: DB
-          value: {{ .Release.Name }}-db
+          value: {{ template "helm.fullname" . }}-db
 ```
 
 ```bash
-git add . && git commit -m "Added dependencies" && git push
+cat charts/go-demo-6-orig/templates/sts.yaml
 
+cp charts/go-demo-6-orig/templates/sts.yaml \
+  charts/go-demo-6/templates/
+
+cp charts/go-demo-6-orig/templates/rbac.yaml \
+  charts/go-demo-6/templates/
+
+cat charts/go-demo-6-orig/templates/service.yaml \
+  | tee -a charts/go-demo-6/templates/service.yaml
+
+git add . && git commit -m "Added dependencies" && git push
+```
+
+
+## Adding Dependencies
+
+---
+
+```bash
 jx get activity -f go-demo-6 -w
 
 kubectl -n jx-staging get pods

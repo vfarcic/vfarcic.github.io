@@ -25,7 +25,7 @@
 * GitBash (if Windows)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * [Helm](https://helm.sh/)
-* [gcloud CLI](https://cloud.google.com/sdk/docs/quickstarts), and GCP admin permissions (if GKE)
+* [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)
 
 
 ## Creating A Cluster With jx
@@ -33,19 +33,12 @@
 ---
 
 ```bash
-PROJECT=[...] # e.g. devops24-book
-
-NAME=jx-rocks && ZONE=us-east1-b && MACHINE=n1-standard-2
-
-MIN_NODES=3 && MAX_NODES=5 && PASS=admin
-
-jx create cluster gke -n $NAME -p $PROJECT -z $ZONE -m $MACHINE \
-    --min-num-nodes $MIN_NODES --max-num-nodes $MAX_NODES \
+jx create cluster minikube -m 8192 -c 3 -s 200GB -d virtualbox \
     --default-admin-password=$PASS -b
 
 jx console
 
-gcloud container clusters delete $NAME --zone $ZONE --quiet
+minikube delete
 ```
 
 
