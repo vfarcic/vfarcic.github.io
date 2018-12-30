@@ -134,7 +134,7 @@ jx install --provider gke --external-ip $LB_IP \
     --domain $JX_DOMAIN --default-admin-password=$PASS \
     --ingress-namespace $ING_NS --ingress-deployment $ING_DEP \
     --tiller-namespace $TILLER_NS \
-    --default-environment-prefix=jx-rocks -b
+    --default-environment-prefix jx-rocks -b
 ```
 
 
@@ -144,6 +144,8 @@ jx install --provider gke --external-ip $LB_IP \
 
 ```bash
 jx console
+
+jx get activity
 
 kubectl -n jx get pods
 

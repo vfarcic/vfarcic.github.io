@@ -16,6 +16,9 @@ git checkout -b my-pr
 
 cat main.go | sed -e "s@hello, world@hello, PR@g" | tee main.go
 
+cat main_test.go | sed -e "s@hello, world@hello, PR@g" \
+    | tee main_test.go
+
 git add . && git commit -m "This is a PR"
 
 git push --set-upstream origin my-pr
@@ -24,6 +27,11 @@ open "https://github.com/$GH_USER/go-demo-6/pull/new/my-pr"
 ```
 
 * Click the `Create pull request` button
+
+
+## Creating a PR
+
+---
 
 ```bash
 jx get activity -f go-demo-6 -w
@@ -38,12 +46,405 @@ jx get build log
 ```
 
 
-# Something
+## Adding Unit Tests
 
 ---
 
-TODO: Add `rollout status`
+```bash
+jx create issue -t "Add unit tests" \
+    --body "Add unit tests to the CD process"
+
+echo '
+unit-test: 
+	CGO_ENABLED=$(CGO_ENABLED) $(GO) test $(PACKAGE_DIRS) -test.v --run UnitTest --cover' \
+    | tee -a Makefile
+
+vim Jenkinsfile
+
+# Add `sh "make unit-test"` after `checkout scm`
+
+git add . && git commit -m "Added unit tests" && git push
+
+jx get activity -f go-demo-6 -w
+```
+
+
+## Adding Functional Tests
+
+---
 
 ```bash
-# TODO: open "https://github.com/$GH_USER/go-demo-6/blob/master/Makefile"
+echo '
+func-test: 
+	ADDRESS=go-demo-6 CGO_ENABLED=$(CGO_ENABLED) $(GO) test $(PACKAGE_DIRS) -test.v --run FunctionalTest --cover' \
+    | tee -a Makefile
+
+vim Jenkinsfile
 ```
+
+* Add the code that follows as the last step in the `CI Build and push snapshot` stage
+
+```groovy
+          dir('/home/jenkins/go/src/github.com/vfarcic/go-demo-6') {
+            sh "make func-test"
+          }
+```
+
+```bash
+git add . && git commit -m "Added functional tests" && git push
+
+jx get activity -f go-demo-6 -w
+```
+
+http://go-demo-6.jx-vfarcic-go-demo-6-pr-3.jenkinx.35.237.44.84.nip.io
+
+HEAPSTER_SERVICE_PORT=8082
+
+JENKINS_X_MONOCULAR_PRERENDER_SERVICE_PORT=80
+
+JX_RELEASE_VERSION=1.0.10
+
+JENKINS_NODE_COOKIE=f3719f23-244f-417f-b33b-1794febc41be
+
+BUILD_URL=http://jenkins.jx.jenkinx.35.237.44.84.nip.io/job/vfarcic/job/go-demo-6/job/PR-3/7/
+
+JENKINS_X_MONOCULAR_UI_PORT_80_TCP_PORT=80
+
+GOLANG_VERSION=1.11.4
+
+HOSTNAME=go-cpqz3
+
+JENKINS_X_CHARTMUSEUM_PORT_8080_TCP_PROTO=tcp
+
+HELM_RELEASE=go-demo-6-pr-3
+
+HUDSON_SERVER_COOKIE=7c03e4c180682af0
+
+KUBERNETES_PORT=tcp://10.31.240.1:443
+
+KUBERNETES_PORT_443_TCP_PORT=443
+
+JENKINS_X_MONOCULAR_UI_PORT_80_TCP_ADDR=10.31.253.101
+
+CHANGE_BRANCH=my-pr
+
+STAGE_NAME=CI Build and push snapshot
+
+JENKINS_X_MONOCULAR_UI_PORT_80_TCP=tcp://10.31.253.101:80
+
+PREVIEW_VERSION=0.0.0-SNAPSHOT-PR-3-7
+
+BUILD_TAG=jenkins-vfarcic-go-demo-6-PR-3-7
+
+JENKINS_X_MONOCULAR_UI_SERVICE_PORT=80
+
+CHANGE_URL=https://github.com/vfarcic/go-demo-6/pull/3
+
+BRANCH_NAME=PR-3
+
+KUBERNETES_SERVICE_PORT=443
+
+GO15VENDOREXPERIMENT=1
+
+JENKINS_X_MONOCULAR_PRERENDER_SERVICE_HOST=10.31.246.150
+
+HEAPSTER_SERVICE_HOST=10.31.251.126
+
+JENKINS_X_MONOCULAR_UI_PORT_80_TCP_PROTO=tcp
+
+GIT_PREVIOUS_COMMIT=7ab513f7a741e201dc75fd796f8453ee982dd6df
+
+JENKINS_X_DOCKER_REGISTRY_PORT_5000_TCP_ADDR=10.31.241.117
+
+JENKINS_PORT_8080_TCP_PROTO=tcp
+
+JENKINS_X_MONOCULAR_API_PORT_80_TCP=tcp://10.31.244.71:80
+
+NEXUS_PORT_80_TCP=tcp://10.31.254.215:80
+
+APP_NAME=go-demo-6
+
+HEAPSTER_PORT_8082_TCP=tcp://10.31.251.126:8082
+
+KUBERNETES_SERVICE_HOST=10.31.240.1
+
+NEXUS_SERVICE_PORT=80
+
+JENKINS_X_MONOCULAR_API_SERVICE_PORT=80
+
+WORKSPACE=/home/jenkins/workspace/vfarcic_go-demo-6_PR-3
+
+JOB_URL=http://jenkins.jx.jenkinx.35.237.44.84.nip.io/job/vfarcic/job/go-demo-6/job/PR-3/
+
+LC_ALL=en_US.UTF-8
+
+JENKINS_X_MONOCULAR_API_SERVICE_PORT_MONOCULAR_API=80
+
+RUN_CHANGES_DISPLAY_URL=http://jenkins.jx.jenkinx.35.237.44.84.nip.io/job/vfarcic/job/go-demo-6/job/PR-3/7/display/redirect?page=changes
+
+JENKINS_X_CHARTMUSEUM_PORT=tcp://10.31.254.40:8080
+
+HEAPSTER_PORT_8082_TCP_PORT=8082
+
+CHANGE_AUTHOR=vfarcic
+
+JENKINS_X_DOCKER_REGISTRY_PORT=tcp://10.31.241.117:5000
+
+JENKINS_X_DOCKER_REGISTRY_PORT_5000_TCP=tcp://10.31.241.117:5000
+
+CHANGE_TITLE=This is a PR
+
+JENKINS_X_MONOCULAR_PRERENDER_PORT_80_TCP_PORT=80
+
+JENKINS_AGENT_PORT_50000_TCP_ADDR=10.31.248.198
+
+JENKINS_NAME=go-cpqz3
+
+CHARTMUSEUM_CREDS_PSW=****
+
+JENKINS_X_CHARTMUSEUM_SERVICE_PORT_HTTP=8080
+
+JENKINS_PORT_8080_TCP=tcp://10.31.255.20:8080
+
+CHANGE_TARGET=master
+
+JENKINS_X_CHARTMUSEUM_SERVICE_PORT=8080
+
+JENKINS_X_MONOCULAR_PRERENDER_PORT=tcp://10.31.246.150:80
+
+HEAPSTER_PORT=tcp://10.31.251.126:8082
+
+GIT_AUTHOR_NAME=jenkins-x-bot
+
+HEAPSTER_PORT_8082_TCP_ADDR=10.31.251.126
+
+GIT_COMMITTER_NAME=jenkins-x-bot
+
+ORG=vfarcic
+
+JENKINS_AGENT_PORT_50000_TCP=tcp://10.31.248.198:50000
+
+JENKINS_X_CHARTMUSEUM_PORT_8080_TCP_PORT=8080
+
+PREVIEW_NAMESPACE=go-demo-6-pr-3
+
+GIT_COMMIT=9862f092265ccbbe4e1d7b77f3bb81c4a3ec84c4
+
+JENKINS_HOME=/var/jenkins_home
+
+JENKINS_X_MONOCULAR_PRERENDER_PORT_80_TCP_PROTO=tcp
+
+CHARTMUSEUM_CREDS_USR=****
+
+CHANGE_AUTHOR_DISPLAY_NAME=Viktor Farcic
+
+PROTOBUF=3.5.1
+
+JENKINS_AGENT_SERVICE_HOST=10.31.248.198
+
+JENKINS_X_DOCKER_REGISTRY_PORT_5000_TCP_PROTO=tcp
+
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/google-cloud-sdk/bin:/opt/google/chrome:/usr/local/go/bin:/usr/local/glide:/usr/local/:/home/jenkins/go/bin
+
+RUN_DISPLAY_URL=http://jenkins.jx.jenkinx.35.237.44.84.nip.io/job/vfarcic/job/go-demo-6/job/PR-3/7/display/redirect
+
+HUGO_VERSION=0.49
+
+JENKINS_X_MONGODB_PORT_27017_TCP_ADDR=10.31.249.8
+
+_=/usr/bin/env
+
+GCLOUD_VERSION=222.0.0
+
+JENKINS_X_CHARTMUSEUM_PORT_8080_TCP=tcp://10.31.254.40:8080
+
+JENKINS_X_MONOCULAR_PRERENDER_PORT_80_TCP_ADDR=10.31.246.150
+
+CHANGE_ID=3
+
+JENKINS_SERVICE_PORT=8080
+
+JENKINS_X_MONGODB_PORT_27017_TCP=tcp://10.31.249.8:27017
+
+GIT_COMMITTER_EMAIL=jenkins-x@googlegroups.com
+
+PWD=/home/jenkins/go/src/github.com/vfarcic/go-demo-6
+
+JENKINS_X_MONGODB_SERVICE_HOST=10.31.249.8
+
+DOCKER_CONFIG=/home/jenkins/.docker/
+
+HUDSON_URL=http://jenkins.jx.jenkinx.35.237.44.84.nip.io/
+
+JX_VERSION=1.3.683
+
+JENKINS_PORT_8080_TCP_PORT=8080
+
+LANG=en_US.UTF-8
+
+JOB_NAME=vfarcic/go-demo-6/PR-3
+
+NEXUS_SERVICE_PORT_NEXUS=80
+
+CHARTMUSEUM_CREDS=****
+
+JENKINS_X_MONOCULAR_PRERENDER_SERVICE_PORT_PRERENDER=80
+
+JENKINS_X_DOCKER_REGISTRY_SERVICE_PORT=5000
+
+BUILD_DISPLAY_NAME=#7
+
+JENKINS_X_MONOCULAR_PRERENDER_PORT_80_TCP=tcp://10.31.246.150:80
+
+BUILD_ID=7
+
+JENKINS_URL=http://jenkins.jx.jenkinx.35.237.44.84.nip.io/
+
+EXPOSECONTROLLER_VERSION=2.3.34
+
+JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST=10.31.241.117
+
+GLIDE_VERSION=v0.13.1
+
+JENKINS_X_MONOCULAR_API_PORT_80_TCP_ADDR=10.31.244.71
+
+JENKINS_X_MONGODB_PORT_27017_TCP_PORT=27017
+
+NEXUS_PORT_80_TCP_ADDR=10.31.254.215
+
+GIT_PREVIOUS_SUCCESSFUL_COMMIT=8cc350538767f674d39835c1bf6cab3c5d339e85
+
+JOB_BASE_NAME=PR-3
+
+JENKINS_SERVICE_HOST=10.31.255.20
+
+JENKINS_X_MONOCULAR_UI_SERVICE_PORT_MONOCULAR_UI=80
+
+JENKINS_TUNNEL=jenkins-agent:50000
+
+SHLVL=3
+
+JENKINS_X_MONOCULAR_UI_PORT=tcp://10.31.253.101:80
+
+JENKINS_SECRET=e3a271ffc0747216719cbfc77f01916e4b97e54d16c9bdb85178db9f7247a11e
+
+HOME=/home/jenkins
+
+GOROOT=/usr/local/go
+
+LANGUAGE=en_US:en
+
+JENKINS_X_MONGODB_SERVICE_PORT=27017
+
+XDG_CONFIG_HOME=/home/jenkins
+
+GIT_BRANCH=PR-3
+
+SKAFFOLD_VERSION=0.19.0
+
+JENKINS_PORT_8080_TCP_ADDR=10.31.255.20
+
+JENKINS_SERVICE_PORT_HTTP=8080
+
+KUBERNETES_PORT_443_TCP_PROTO=tcp
+
+KUBERNETES_SERVICE_PORT_HTTPS=443
+
+JENKINS_X_DOCKER_REGISTRY_SERVICE_PORT_REGISTRY=5000
+
+EXECUTOR_NUMBER=0
+
+JENKINS_X_MONOCULAR_API_PORT=tcp://10.31.244.71:80
+
+JENKINS_X_MONGODB_SERVICE_PORT_MONGODB=27017
+
+NEXUS_PORT=tcp://10.31.254.215:80
+
+JENKINS_SERVER_COOKIE=durable-9837263a929e7bd6c6a3256c8401953e
+
+NODE_LABELS=go-cpqz3 jenkins-go
+
+GIT_URL=https://github.com/vfarcic/go-demo-6.git
+
+JENKINS_AGENT_SERVICE_PORT_SLAVELISTENER=50000
+
+CHANGE_AUTHOR_EMAIL=viktor@farcic.com
+
+UPDATEBOT_VERSION=1.1.31
+
+JENKINS_X_MONGODB_PORT_27017_TCP_PROTO=tcp
+
+JENKINS_X_CHARTMUSEUM_SERVICE_HOST=10.31.254.40
+
+JQ_RELEASE_VERSION=1.5
+
+JENKINS_AGENT_PORT_50000_TCP_PORT=50000
+
+HUDSON_HOME=/var/jenkins_home
+
+CLASSPATH=
+
+JENKINS_AGENT_PORT_50000_TCP_PROTO=tcp
+
+NODE_NAME=go-cpqz3
+
+DOCKER_REGISTRY=10.31.241.117:5000
+
+GH_RELEASE_VERSION=2.2.1
+
+JENKINS_AGENT_PORT=tcp://10.31.248.198:50000
+
+NEXUS_PORT_80_TCP_PORT=80
+
+JENKINS_X_MONOCULAR_UI_SERVICE_HOST=10.31.253.101
+
+JENKINS_X_MONOCULAR_API_PORT_80_TCP_PORT=80
+
+GOPATH=/home/jenkins/go
+
+JENKINS_X_CHARTMUSEUM_PORT_8080_TCP_ADDR=10.31.254.40
+
+JOB_DISPLAY_URL=http://jenkins.jx.jenkinx.35.237.44.84.nip.io/job/vfarcic/job/go-demo-6/job/PR-3/display/redirect
+
+BUILD_NUMBER=7
+
+JENKINS_PORT=tcp://10.31.255.20:8080
+
+HELM_VERSION=2.12.0
+
+DOCKER_VERSION=17.12.0
+
+JENKINS_X_MONGODB_PORT=tcp://10.31.249.8:27017
+
+JENKINS_X_MONOCULAR_API_SERVICE_HOST=10.31.244.71
+
+JENKINS_AGENT_SERVICE_PORT=50000
+
+KUBERNETES_PORT_443_TCP_ADDR=10.31.240.1
+
+HEAPSTER_PORT_8082_TCP_PROTO=tcp
+
+NEXUS_SERVICE_HOST=10.31.254.215
+
+GIT_AUTHOR_EMAIL=jenkins-x@googlegroups.com
+
+TILLER_NAMESPACE=kube-system
+
+JENKINS_X_DOCKER_REGISTRY_PORT_5000_TCP_PORT=5000
+
+KUBERNETES_PORT_443_TCP=tcp://10.31.240.1:443
+
+JENKINS_AGENT_NAME=go-cpqz3
+
+REFLEX_VERSION=0.3.1
+
+NEXUS_PORT_80_TCP_PROTO=tcp
+
+JENKINS_X_MONOCULAR_API_PORT_80_TCP_PROTO=tcp
+
+## Something
+
+---
+
+* TODO: Add tests (unit and functional)
+* TODO: Add tests (production)

@@ -11,6 +11,9 @@ gcloud container clusters delete $NAME --region $REGION --quiet
 
 # If AKS
 eksctl delete cluster -n $NAME
+
+# If minikube
+minikube delete
 ```
 
 
@@ -25,7 +28,7 @@ eksctl delete cluster -n $NAME
 
 # Delete the golang-http repo
 
-rm -rf ~/.jx/environments/vfarcic/environment-jx-rocks-production
+rm -rf ~/.jx/environments/$GH_USER/environment-jx-rocks-*
 
-rm -rf ~/.jx/environments/vfarcic/environment-jx-rocks-staging
+rm -f ~/.jx/jenkinsAuth.yaml
 ```

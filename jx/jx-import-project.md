@@ -12,10 +12,27 @@ cd ..
 git clone https://github.com/$GH_USER/go-demo-6.git
 
 cd go-demo-6
+```
+
+
+## Importing A Project
+
+---
+
+```bash
+git checkout orig
+
+git merge -s ours master
 
 git checkout master
 
-jx import
+git merge orig
+
+rm -rf charts # Ignore if it fails
+
+git push
+
+jx import --pack go
 ```
 
 
@@ -57,22 +74,23 @@ vim charts/go-demo-6/templates/deployment.yaml
 ```yaml
         env:
         - name: DB
-          value: {{ template "helm.fullname" . }}-db
+          value: {{ template "fullname" . }}-db
 ```
 
+* Save and exit with `:wq`
+
 ```bash
-cat charts/go-demo-6-orig/templates/sts.yaml
+cat charts-orig/go-demo-6/templates/sts.yaml
 
-cp charts/go-demo-6-orig/templates/sts.yaml \
+cp charts-orig/go-demo-6/templates/sts.yaml \
   charts/go-demo-6/templates/
 
-cp charts/go-demo-6-orig/templates/rbac.yaml \
+cp charts-orig/go-demo-6/templates/rbac.yaml \
   charts/go-demo-6/templates/
 
-cat charts/go-demo-6-orig/templates/service.yaml \
-  | tee -a charts/go-demo-6/templates/service.yaml
-
-git add . && git commit -m "Added dependencies" && git push
+echo "
+---
+" | tee -a charts/go-demo-6/templates/service.yaml
 ```
 
 
@@ -81,6 +99,11 @@ git add . && git commit -m "Added dependencies" && git push
 ---
 
 ```bash
+cat charts-orig/go-demo-6/templates/service.yaml \
+  | tee -a charts/go-demo-6/templates/service.yaml
+
+git add . && git commit -m "Added dependencies" && git push
+
 jx get activity -f go-demo-6 -w
 
 kubectl -n jx-staging get pods

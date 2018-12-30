@@ -1,39 +1,14 @@
 - [X] Install jx
-- [ ] Create GKE cluster with jx and with manual prompts
-- [ ] Create EKS cluster with jx and with manual prompts
-- [ ] Create AKS cluster with jx and with manual prompts
-- [ ] Create minikube cluster with jx and with manual prompts
-- [ ] Create minishift cluster with jx and with manual prompts
-- [X] Create GKE cluster with jx in batch mode
-- [X] Create EKS cluster with jx in batch mode
-- [ ] Create AKS cluster with jx in batch mode
-- [ ] Create minikube cluster with jx in batch mode
-- [ ] Create minishift cluster with jx in batch mode
-- [X] Create GKE cluster without jx
-- [X] Create EKS cluster without jx
-- [ ] Create AKS cluster without jx
-- [ ] Create minikube cluster without jx
-- [ ] Create minishift cluster without jx
-- [X] Install jx in an existing GKE cluster
-- [X] Install jx in an existing EKS cluster
-- [ ] Install jx in an existing AKS cluster
-- [ ] Install jx in an existing minikube cluster
-- [ ] Install jx in an existing minishift cluster
-- [ ] Install jx in an existing on-prem
+- [X] Create a cluster with jx in batch mode
+- [X] Create a cluster without jx
+- [X] Install jx in an existing cluster
 - [X] Static Master Jenkins
-- [ ] Serverless jx
 - [X] Kubernetes Workloads: Automated CI+CD with GitOps Promotion
-- [ ] Library Workloads: CI+Release but no CD
-- [ ] Create multiple masters
-- [ ] Configuration (https://jenkins-x.io/getting-started/config/)
-- [ ] Create custom Builder (https://jenkins-x.io/getting-started/create-custom-builder/)
 - [ ] `create addon`
 - [ ] `create archetype`
 - [ ] `create branchpattern`
-- [ ] `create camel`
 - [ ] `create chat`
-- [ ] `create cluster`
-- [ ] `create codeship`
+- [X] `create cluster`
 - [ ] `create devpod`
 - [ ] `create docker`
 - [ ] `create docs`
@@ -41,15 +16,10 @@
 - [ ] `create etc-hosts`
 - [ ] `create git`
 - [ ] `create gke-service-account`
-- [ ] `create issue`
-- [ ] `create jenkins`
-- [ ] `create jhipster`
-- [ ] `create lile`
-- [ ] `create micro`
+- [X] `create issue`
 - [ ] `create post`
 - [ ] `create pullrequest`
 - [X] `create quickstart`
-- [ ] `create quickstartlocation`
 - [ ] `create team`
 - [ ] `create terraform`
 - [ ] `create token`
@@ -85,9 +55,13 @@
 - [ ] `import --branches "develop|PR-.*|feature.*"` (https://jenkins-x.io/developing/import/)
 - [ ] Use build packs
 - [ ] Promote to envs
-- [ ] Add tests to go-demo-6 Jenkinsfile
+- [X] Add unit tests to go-demo-6 Jenkinsfile
+- [ ] Add functional tests to go-demo-6 Jenkinsfile
+- [ ] Add production tests to go-demo-6 Jenkinsfile
 - [ ] Pre-define Ingress hosts
 - [ ] Deploy to specific Namespaces
+- [ ] skaffold
+- [ ] prow 
 - [ ] `uninstall`
 - [ ] `upgrade`
 - [ ] `update cluster`
@@ -101,7 +75,7 @@
 - [ ] `create token addon`
 - [ ] `delete addon`
 - [ ] `delete token addon`
-- [ ] `delete application`
+- [ ] `delete app`
 - [ ] `add app`
 - [ ] `create git server`
 - [ ] `delete git server`
@@ -136,3 +110,10 @@
 - [ ] `gc`
 - [ ] `diagnose`
 - [ ] `docs`
+- [ ] Serverless jx
+- [ ] Library Workloads: CI+Release but no CD
+- [ ] Create multiple masters
+- [ ] Add second app
+- [ ] Configuration (https://jenkins-x.io/getting-started/config/)
+- [ ] Create custom Builder (https://jenkins-x.io/getting-started/create-custom-builder/)
+
