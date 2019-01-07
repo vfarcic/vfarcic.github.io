@@ -22,10 +22,10 @@
 ---
 
 * [Git](https://git-scm.com/)
-* GitBash (if Windows)
+* GitBash (if using Windows)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * [Helm](https://helm.sh/)
-* [gcloud CLI](https://cloud.google.com/sdk/docs/quickstarts), and GCP admin permissions (if GKE)
+* [gcloud CLI](https://cloud.google.com/sdk/docs/quickstarts) and GCP admin permissions
 
 
 ## Creating A Cluster With jx
