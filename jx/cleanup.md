@@ -24,7 +24,7 @@ minikube delete
 ```bash
 # Delete the environment repos
 
-# Delete the my-pr branch
+# Delete the PR branches
 
 # Delete the golang-http repo
 

@@ -4,6 +4,8 @@
 - [X] Install jx in an existing cluster
 - [X] Static Master Jenkins
 - [X] Kubernetes Workloads: Automated CI+CD with GitOps Promotion
+- [ ] Add `--force=false` to `sh 'jx step helm apply'` in Jenkinsfile in environment repos
+- [ ] Delete merged PRs from Helm
 - [ ] `create addon`
 - [ ] `create archetype`
 - [ ] `create branchpattern`
@@ -56,8 +58,8 @@
 - [ ] Use build packs
 - [ ] Promote to envs
 - [X] Add unit tests to go-demo-6 Jenkinsfile
-- [ ] Add functional tests to go-demo-6 Jenkinsfile
-- [ ] Add production tests to go-demo-6 Jenkinsfile
+- [X] Add functional tests to go-demo-6 Jenkinsfile
+- [X] Add production tests to go-demo-6 Jenkinsfile
 - [ ] Pre-define Ingress hosts
 - [ ] Deploy to specific Namespaces
 - [ ] skaffold

@@ -4,9 +4,11 @@
 
 ```bash
 open "https://github.com/vfarcic/go-demo-6"
+```
 
-# Fork it
+* Fork the repo
 
+```
 cd ..
 
 git clone https://github.com/$GH_USER/go-demo-6.git
