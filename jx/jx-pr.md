@@ -54,6 +54,8 @@ jx get build log
 jx create issue -t "Add unit tests" \
     --body "Add unit tests to the CD process"
 
+open "https://github.com/$GH_USER/go-demo-6/issues"
+
 ISSUE_ID=[...]
 
 echo '
@@ -67,7 +69,7 @@ vim Jenkinsfile
 * Add `sh "make unit-test"` after `checkout scm`
 
 ```bash
-git add . && git commit -m "Added unit tests #$ISSUE_ID" && git push
+git add . && git commit -m "Added unit tests (fixes #$ISSUE_ID)" && git push
 ```
 
 
@@ -79,6 +81,14 @@ git add . && git commit -m "Added unit tests #$ISSUE_ID" && git push
 jx get build log -t
 
 jx get activity -f go-demo-6 -w
+
+open "https://github.com/$GH_USER/go-demo-6/issues"
+
+jx get issues
+
+open "https://github.com/$GH_USER/go-demo-6/issues/$ISSUE_ID"
+
+open "https://github.com/$GH_USER/go-demo-6/releases"
 ```
 
 

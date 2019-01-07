@@ -4,7 +4,6 @@
 - [X] Install jx in an existing cluster
 - [X] Static Master Jenkins
 - [X] Kubernetes Workloads: Automated CI+CD with GitOps Promotion
-- [ ] Add `--force=false` to `sh 'jx step helm apply'` in Jenkinsfile in environment repos
 - [ ] Delete merged PRs from Helm
 - [ ] `create addon`
 - [ ] `create archetype`
@@ -56,7 +55,7 @@
 - [ ] `import --no-draft` (https://jenkins-x.io/developing/import/)
 - [ ] `import --branches "develop|PR-.*|feature.*"` (https://jenkins-x.io/developing/import/)
 - [ ] Use build packs
-- [ ] Promote to envs
+- [X] Promote to envs
 - [X] Add unit tests to go-demo-6 Jenkinsfile
 - [X] Add functional tests to go-demo-6 Jenkinsfile
 - [X] Add production tests to go-demo-6 Jenkinsfile
@@ -94,13 +93,47 @@
 - [ ] `sync`
 - [ ] `cloudbees`
 - [ ] `login`
-- [ ] `preview`
-- [ ] `promote`
+- [X] `preview`
+- [X] `promote`
 - [ ] `create environment`
 - [ ] `delete environment`
 - [ ] `edit environment`
-- [ ] `get environments`
-- [ ] `get`
+- [X] `get activities`
+- [ ] `get addons`
+- [X] `get applications`
+- [ ] `get aws`
+- [ ] `get branchpattern`
+- [X] `get build logs`
+- [ ] `get build pods`
+- [ ] `get buildpack`
+- [ ] `get chat`
+- [ ] `get config`
+- [ ] `get cve`
+- [ ] `get devpod`
+- [ ] `get eks`
+- [X] `get environments`
+- [ ] `get git`
+- [ ] `get helmbin`
+- [ ] `get issue`
+- [ ] `get issues`
+- [ ] `get limits`
+- [ ] `get pipelines`
+- [ ] `get plugins`
+- [ ] `get post`
+- [ ] `get previews`
+- [ ] `get quickstartlocations`
+- [ ] `get releases`
+- [ ] `get secrets`
+- [ ] `get storage`
+- [ ] `get teamroles`
+- [ ] `get teams`
+- [ ] `get token`
+- [ ] `get tracker`
+- [ ] `get urls`
+- [ ] `get users`
+- [ ] `get vault-config`
+- [ ] `get vaults`
+- [ ] `get workflows`
 - [ ] `edit`
 - [ ] `update`
 - [ ] `delete`
@@ -118,4 +151,5 @@
 - [ ] Add second app
 - [ ] Configuration (https://jenkins-x.io/getting-started/config/)
 - [ ] Create custom Builder (https://jenkins-x.io/getting-started/create-custom-builder/)
+- [ ] Add system-level tests to env. repos
 

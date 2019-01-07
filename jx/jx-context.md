@@ -3,7 +3,7 @@
 ---
 
 ```bash
-jx environment
+jx env
 ```
 
 * Press `ctrl+c`

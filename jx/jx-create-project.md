@@ -76,36 +76,3 @@ jx get apps -e staging
 
 open "https://github.com/$GH_USER/jx-go/releases"
 ```
-
-
-## Switching The k8s Context
-
----
-
-```bash
-jx get env
-
-jx env staging
-
-kubectl get all
-
-jx ns # Press ctrl+c
-
-jx ns jx-production
-
-kubectl get all
-```
-
-
-## Promoting A Build
-
----
-
-```bash
-jx get app -e staging
-
-jx promote golang-http --version 0.0.1 --env production \
-    --timeout 24h
-
-kubectl get all
-```

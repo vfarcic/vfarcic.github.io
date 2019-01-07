@@ -31,4 +31,8 @@ minikube delete
 rm -rf ~/.jx/environments/$GH_USER/environment-jx-rocks-*
 
 rm -f ~/.jx/jenkinsAuth.yaml
+
+cd ..
+
+rm -f environment-jx-rocks-staging
 ```
