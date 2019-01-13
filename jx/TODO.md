@@ -1,12 +1,20 @@
-- [X] Install jx
-- [X] Create a cluster with jx in batch mode
-- [X] Create a cluster without jx
-- [X] Install jx in an existing cluster
-- [X] Static Master Jenkins
-- [X] Kubernetes Workloads: Automated CI+CD with GitOps Promotion
-- [ ] Delete merged PRs from Helm
-- [ ] `create addon`
-- [ ] `create archetype`
+## TODO
+
+- [ ] Serverless jx
+- [-] `create addon ambassador`
+- [-] `create addon anchore`
+- [-] `create addon cloudbees`
+- [-] `create addon gitea`
+- [-] `create addon istio`
+- [-] `create addon knative-build`
+- [-] `create addon kubeless`
+- [-] `create addon owasp-zap`
+- [-] `create addon pipeline-events`
+- [X] `create addon prometheus`
+- [-] `create addon prow`
+- [-] `create addon sso`
+- [-] `create addon vault-operator`
+- [-] `create archetype`
 - [ ] `create branchpattern`
 - [ ] `create chat`
 - [X] `create cluster`
@@ -27,79 +35,8 @@
 - [ ] `create tracker`
 - [ ] `create user`
 - [ ] `create vault`
-- [ ] `step bdd`
-- [ ] `step blog`
-- [ ] `step buildpack`
-- [ ] `step changelog`
-- [ ] `step collect`
-- [ ] `step create`
-- [ ] `step env`
-- [ ] `step git`
-- [ ] `step gpg`
-- [ ] `step helm`
-- [ ] `step link`
-- [ ] `step next-buildnumber`
-- [ ] `step next-version`
-- [ ] `step nexus`
-- [ ] `step post`
-- [ ] `step pr`
-- [ ] `step pre`
-- [ ] `step release`
-- [ ] `step report`
-- [ ] `step split`
-- [ ] `step tag`
-- [ ] `step validate`
-- [ ] `step verify`
-- [ ] `step wait`
-- [X] `import`
-- [ ] `import --no-draft` (https://jenkins-x.io/developing/import/)
-- [ ] `import --branches "develop|PR-.*|feature.*"` (https://jenkins-x.io/developing/import/)
-- [ ] Use build packs
-- [X] Promote to envs
-- [X] Add unit tests to go-demo-6 Jenkinsfile
-- [X] Add functional tests to go-demo-6 Jenkinsfile
-- [X] Add production tests to go-demo-6 Jenkinsfile
-- [ ] Pre-define Ingress hosts
-- [ ] Deploy to specific Namespaces
-- [ ] skaffold
-- [ ] prow 
-- [ ] `uninstall`
-- [ ] `upgrade`
-- [ ] `update cluster`
-- [ ] `create jenkins token`
-- [ ] `init`
-- [ ] `create archetype`
-- [ ] `create spring`
-- [ ] `create quickstart`
-- [ ] `create quickstartlocation`
-- [ ] `create addon`
-- [ ] `create token addon`
-- [ ] `delete addon`
-- [ ] `delete token addon`
-- [ ] `delete app`
-- [ ] `add app`
-- [ ] `create git server`
-- [ ] `delete git server`
-- [ ] `create git token`
-- [ ] `delete git token`
-- [ ] `repository`
-- [ ] `team`
-- [ ] `namespace`
-- [ ] `scan`
-- [ ] `status`
-- [ ] `logs`
-- [ ] `open`
-- [ ] `rsh`
-- [ ] `sync`
-- [ ] `cloudbees`
-- [ ] `login`
-- [X] `preview`
-- [X] `promote`
-- [ ] `create environment`
-- [ ] `delete environment`
-- [ ] `edit environment`
 - [X] `get activities`
-- [ ] `get addons`
+- [X] `get addons`
 - [X] `get applications`
 - [ ] `get aws`
 - [ ] `get branchpattern`
@@ -134,6 +71,66 @@
 - [ ] `get vault-config`
 - [ ] `get vaults`
 - [ ] `get workflows`
+- [-] `step bdd`
+- [-] `step blog`
+- [-] `step buildpack`
+- [-] `step changelog`
+- [-] `step collect`
+- [-] `step create`
+- [-] `step env`
+- [-] `step git`
+- [-] `step gpg`
+- [-] `step helm`
+- [-] `step link`
+- [-] `step next-buildnumber`
+- [-] `step next-version`
+- [-] `step nexus`
+- [-] `step post build`
+- [-] `step post install`
+- [-] `step post run`
+- [-] `step pr`
+- [-] `step pre`
+- [-] `step release`
+- [-] `step report`
+- [-] `step split`
+- [-] `step tag`
+- [-] `step validate`
+- [-] `step verify`
+- [-] `step wait`
+- [X] `import`
+- [ ] `import --no-draft` (https://jenkins-x.io/developing/import/)
+- [ ] `import --branches "develop|PR-.*|feature.*"` (https://jenkins-x.io/developing/import/)
+- [ ] Use build packs
+- [ ] Pre-define Ingress hosts
+- [ ] Deploy to specific Namespaces
+- [ ] skaffold
+- [ ] prow 
+- [ ] `uninstall`
+- [ ] `upgrade`
+- [ ] `update cluster`
+- [ ] `create jenkins token`
+- [ ] `init`
+- [ ] `create spring`
+- [ ] `create quickstart`
+- [ ] `create quickstartlocation`
+- [ ] `add app`
+- [ ] `create git server`
+- [ ] `create git token`
+- [ ] `repository`
+- [ ] `team`
+- [ ] `namespace`
+- [ ] `scan`
+- [ ] `status`
+- [ ] `logs`
+- [ ] `open`
+- [ ] `rsh`
+- [ ] `sync`
+- [ ] `cloudbees`
+- [ ] `login`
+- [X] `preview`
+- [X] `promote`
+- [ ] `create environment`
+- [ ] `edit environment`
 - [ ] `edit`
 - [ ] `update`
 - [ ] `delete`
@@ -145,11 +142,19 @@
 - [ ] `gc`
 - [ ] `diagnose`
 - [ ] `docs`
-- [ ] Serverless jx
 - [ ] Library Workloads: CI+Release but no CD
 - [ ] Create multiple masters
 - [ ] Add second app
 - [ ] Configuration (https://jenkins-x.io/getting-started/config/)
 - [ ] Create custom Builder (https://jenkins-x.io/getting-started/create-custom-builder/)
 - [ ] Add system-level tests to env. repos
+- [ ] Delete merged PRs from Helm
 
+- [ ] Write a book
+- [ ] Write a series of articles
+- [ ] Create videos
+- [ ] Visit local meetups in customer permises
+- [ ] Apply to conferences
+- [ ] Add externals into the X-Force team
+- [ ] Add articles to the official docs
+- [ ] Play-With-JX

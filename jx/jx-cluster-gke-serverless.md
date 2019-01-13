@@ -33,15 +33,15 @@
 ---
 
 ```bash
-PROJECT=[...] # e.g. devops24-book
+# PROJECT=[...] # e.g. devops24-book
 
-NAME=jx-rocks && ZONE=us-east1-b && MACHINE=n1-standard-2
+# NAME=jx-rocks && ZONE=us-east1-b && MACHINE=n1-standard-2
 
-MIN_NODES=3 && MAX_NODES=5 && PASS=admin
+# MIN_NODES=3 && MAX_NODES=5 && PASS=admin
 
 jx create cluster gke -n $NAME -p $PROJECT -z $ZONE -m $MACHINE \
     --min-num-nodes $MIN_NODES --max-num-nodes $MAX_NODES \
-    --default-admin-password=$PASS -b
+    --default-admin-password=$PASS --prow -b
 
 jx console
 ```

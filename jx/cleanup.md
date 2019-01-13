@@ -1,18 +1,49 @@
-# Cleanup
+# Cleanup (GKE)
 
 ---
 
 ```bash
-# If GKE
+gcloud container clusters delete $NAME --zone $ZONE --quiet
+
 gcloud container clusters delete $NAME --region $REGION --quiet
+```
 
-# If AKS
-# TODO: Delete LB
 
-# If AKS
+# Cleanup (EKS)
+
+---
+
+```bash
+# Only if there are no other ELBs in that region
+LB_NAME=$(aws elbv2 describe-load-balancers | jq -r \
+    ".LoadBalancers[0].LoadBalancerName")
+
+echo $LB_NAME
+
+aws elb delete-load-balancer \
+    --load-balancer-name $LB_NAME
+
+IAM_ROLE=$(aws iam list-roles \
+    | jq -r ".Roles[] \
+    | select(.RoleName \
+    | startswith(\"eksctl-$NAME-nodegroup-0-NodeInstanceRole\")) \
+    .RoleName")
+
+echo $IAM_ROLE
+
+aws iam delete-role-policy \
+    --role-name $IAM_ROLE \
+    --policy-name $NAME-AutoScaling
+
 eksctl delete cluster -n $NAME
+```
 
-# If minikube
+
+# Cleanup (minikube)
+
+---
+
+```bash
 minikube delete
 ```
 
@@ -22,17 +53,30 @@ minikube delete
 ---
 
 ```bash
-# Delete the environment repos
+hub delete -y $GH_USER/environment-jx-rocks-staging
+
+hub delete -y $GH_USER/environment-jx-rocks-production
 
 # Delete the PR branches
 
-# Delete the golang-http repo
+hub delete -y $GH_USER/jx-go
 
 rm -rf ~/.jx/environments/$GH_USER/environment-jx-rocks-*
 
 rm -f ~/.jx/jenkinsAuth.yaml
+```
 
+
+# Cleanup
+
+---
+
+```bash
 cd ..
 
-rm -f environment-jx-rocks-staging
+rm -rf jx-go
+
+rm -rf environment-jx-rocks-staging
+
+rm -rf environment-jx-rocks-production
 ```
