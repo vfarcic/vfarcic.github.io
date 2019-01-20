@@ -1,4 +1,4 @@
-# Talk: Continuous Deployment With Jenkins X, Kubernetes, And Friends
+# Talk: Continuous Delivery With Jenkins X, Kubernetes, And Friends
 
 ## Abstract
 
@@ -10,9 +10,9 @@ Jenkins X is Jenkins and additional best of breed tools and software for Kuberne
 
 It is the CI/CD solution for development of modern cloud applications on Kubernetes.
 
-We'll explore some of the features of Jenkins X through a hands-on demo.
+We'll explore how to create a fully operational continuous delivery pipeline using Docker, Kubernetes, Jenkins X, and quite a few other tools.
 
-# Workshop: Continuous Deployment With Jenkins X, Kubernetes, And Friends
+# Workshop: Continuous Delivery With Jenkins X, Kubernetes, And Friends
 
 ## Abstract
 
@@ -24,4 +24,4 @@ Jenkins X is Jenkins and additional best of breed tools and software for Kuberne
 
 It is the CI/CD solution for development of modern cloud applications on Kubernetes.
 
-We'll explore some of the features of Jenkins X through a hands-on workshop.
+We'll explore how to create a fully operational continuous delivery pipeline using Docker, Kubernetes, Jenkins X, and quite a few other tools.

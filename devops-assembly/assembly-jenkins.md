@@ -57,7 +57,7 @@ Freestyle jobs are not (easily) stored in version control, and they do not repre
 * Does not scale
 
 
-<!-- .slide: data-background="img/jenkinsfile.png" data-background-size="contain" -->
+<!-- .slide: data-background="../img/background/jenkinsfile.png" data-background-size="contain" -->
 
 Note:
 Instead of Freestyle jobs, now we have Jenkins Pipelines. They are defined as code and they are stored in Jenkinsfile residing in the same repository as the code of the application that is being moved through the assembly. On top of other benefits, given that a single Jenkins Pipeline represents the whole flow of an application, we are finally able to render it visually in a simple and easy to understand way through the Blue Ocean plugin.

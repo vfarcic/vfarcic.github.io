@@ -15,7 +15,7 @@
 * GitBash (if using Windows)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * [Helm](https://helm.sh/)
-* [gcloud CLI](https://cloud.google.com/sdk/docs/quickstarts) and GCP admin permissions
+* [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) and Azure admin permissions
 
 
 ## Creating A Cluster With jx
@@ -23,18 +23,13 @@
 ---
 
 ```bash
-open "https://console.cloud.google.com/cloud-resource-manager"
+GH_USER=[...]
 
-PROJECT=[...] # e.g. devops24-book
+NAME=jxrocks && MACHINE=Standard_D2s_v3 && LOCATION=eastus && MIN_NODES=3 && PASS=admin
 
-NAME=jx-rocks && ZONE=us-east1-b && MACHINE=n1-standard-2
+# NOTE: Azure ACR allows only `^[a-zA-Z0-9]*$`
 
-MIN_NODES=3 && MAX_NODES=5 && PASS=admin
-
-jx create cluster gke -n $NAME -p $PROJECT -z $ZONE -m $MACHINE \
-    --min-num-nodes $MIN_NODES --max-num-nodes $MAX_NODES \
-    --default-admin-password=$PASS \
-    --default-environment-prefix jx-rocks
+jx create cluster aks -c $NAME -n $NAME-group -l $LOCATION -s $MACHINE -o $MIN_NODES --default-admin-password=$PASS --git-username $GH_USER --environment-git-owner $GH_USER --default-environment-prefix jx-rocks
 
 jx console
 ```

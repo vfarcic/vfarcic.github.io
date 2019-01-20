@@ -1,10 +1,29 @@
+## Cleaning
+
+---
+
+```bash
+open "https://hub.github.com/"
+
+hub delete -y $GH_USER/environment-jx-rocks-staging
+
+hub delete -y $GH_USER/environment-jx-rocks-production
+
+rm -rf ~/.jx/environments/$GH_USER/environment-jx-rocks-*
+
+rm -rf ../environment-jx-rocks-staging
+
+rm -rf ../environment-jx-rocks-production
+
+gcloud container clusters delete $NAME --zone $ZONE --quiet
+```
+
+
 ## Creating A New Cluster
 
 ---
 
 ```bash
-gcloud container clusters delete $NAME --zone $ZONE --quiet
-
 gcloud auth login
 
 NAME=jx-rocks && REGION=us-east1 && MACHINE_TYPE=n1-standard-2

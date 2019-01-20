@@ -1,5 +1,9 @@
 ## TODO
 
+- [X] `jx create cluster gke`
+- [X] `jx create cluster eks`
+- [ ] `jx create cluster aks`
+- [X] `jx create cluster minikube`
 - [ ] Serverless jx
 - [-] `create addon ambassador`
 - [-] `create addon anchore`
@@ -17,7 +21,6 @@
 - [-] `create archetype`
 - [ ] `create branchpattern`
 - [ ] `create chat`
-- [X] `create cluster`
 - [ ] `create devpod`
 - [ ] `create docker`
 - [ ] `create docs`
@@ -142,6 +145,7 @@
 - [ ] `gc`
 - [ ] `diagnose`
 - [ ] `docs`
+- [ ] Create custom build packs
 - [ ] Library Workloads: CI+Release but no CD
 - [ ] Create multiple masters
 - [ ] Add second app
@@ -157,4 +161,5 @@
 - [ ] Apply to conferences
 - [ ] Add externals into the X-Force team
 - [ ] Add articles to the official docs
-- [ ] Play-With-JX
+- [ ] play-with-jx
+- [ ] Webinars with industry experts (not only Jenkins)

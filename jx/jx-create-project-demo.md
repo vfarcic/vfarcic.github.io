@@ -14,7 +14,7 @@ jx create quickstart # Cancel with ctrl+c
 
 jx create quickstart -l go -p jx-go -b true
 
-GH_USER=[...]
+export GH_USER=[...] # Replace with your GitHub user
 
 open "https://github.com/$GH_USER/jx-go"
 
@@ -45,7 +45,7 @@ open "https://github.com/$GH_USER/jx-go/settings/hooks"
 
 open "https://github.com/jenkins-x-quickstarts"
 
-ls -l ~/.jx/draft/packs/github.com/jenkins-x/draft-packs/packs
+ls -l ~/.jx/draft/packs/github.com/jenkins-x-buildpacks/jenkins-x-kubernetes/packs/
 ```
 
 
@@ -60,7 +60,13 @@ jx console
 
 jx get activities
 
-jx get activities -f jx-go -w
+jx get activities -f jx-go -w # Cancel with ctrl+c
+
+jx get build logs # Cancel with ctrl+c
+
+jx get build logs -f jx-go # Cancel with ctrl+c
+
+jx get build logs $GH_USER/jx-go/master
 ```
 
 
@@ -69,15 +75,11 @@ jx get activities -f jx-go -w
 ---
 
 ```bash
-jx get build logs
-
-jx get build logs -f jx-go
-
-jx get build logs $GH_USER/jx-go/master
-
 jx get pipelines
 
 jx get apps
+
+jx get env
 
 jx get apps -e staging
 

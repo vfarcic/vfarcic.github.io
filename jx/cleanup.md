@@ -39,6 +39,23 @@ eksctl delete cluster -n $NAME
 ```
 
 
+# Cleanup (AKS)
+
+---
+
+```bash
+az aks delete -n $NAME -g $NAME-group --yes
+
+kubectl config delete-cluster jx-rocks
+
+kubectl config delete-context jx-rocks
+
+kubectl config unset users.clusterUser_jx-rocks-group_jx-rocks
+
+az group delete --name $NAME-group --yes
+```
+
+
 # Cleanup (minikube)
 
 ---
@@ -62,8 +79,6 @@ hub delete -y $GH_USER/environment-jx-rocks-production
 hub delete -y $GH_USER/jx-go
 
 rm -rf ~/.jx/environments/$GH_USER/environment-jx-rocks-*
-
-rm -f ~/.jx/jenkinsAuth.yaml
 ```
 
 
@@ -79,4 +94,6 @@ rm -rf jx-go
 rm -rf environment-jx-rocks-staging
 
 rm -rf environment-jx-rocks-production
+
+rm -f ~/.jx/jenkinsAuth.yaml
 ```

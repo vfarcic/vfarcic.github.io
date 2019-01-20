@@ -37,8 +37,8 @@
     <a href="https://www.devopstoolkitseries.com/">
         <img src="../img/devops-toolkit-series.png"/>
     </a>
-    <h3>[@vfarcic](https://twitter.com/vfarcic)</h3>
-    <h3>viktor@farcic.com</h3>
+    <h4>Mailing list:</h4>
+    <strong>http://eepurl.com/bXonVj</strong>
 </figure>
 <figure style="width: 50%; height: 50%; float: right;">
     <a href="https://www.devopstoolkitseries.com/">
