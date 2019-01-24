@@ -1,13 +1,18 @@
 # Requirements
 
-## GKE
-
-Please make sure that you have the tools that follow installed.
+## General
 
 * [Git](https://git-scm.com/)
 * GitBash (if using Windows)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * [Helm](https://helm.sh/)
+* [Docker For Desktop](https://www.docker.com/products/docker-desktop) or [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)
+* [skaffold](https://github.com/GoogleContainerTools/skaffold/releases)
+
+## GKE
+
+Please make sure that you have the tools that follow installed.
+
 * [gcloud CLI](https://cloud.google.com/sdk/docs/quickstarts)
 
 You'll need **Google Cloud Platform (GCP) admin permissions**. If you don't have the account or the one you're using does not have admin permissions, please create a personal account by visiting [cloud.google.com](https://cloud.google.com/). You'll get $300 of free credit.

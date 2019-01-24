@@ -1,24 +1,21 @@
 ## TODO
 
-- [X] `jx create cluster gke`
-- [X] `jx create cluster eks`
-- [ ] `jx create cluster aks`
-- [X] `jx create cluster minikube`
+- [X] `jx create cluster`
 - [ ] Serverless jx
-- [-] `create addon ambassador`
-- [-] `create addon anchore`
-- [-] `create addon cloudbees`
-- [-] `create addon gitea`
-- [-] `create addon istio`
-- [-] `create addon knative-build`
-- [-] `create addon kubeless`
-- [-] `create addon owasp-zap`
-- [-] `create addon pipeline-events`
+- [ ] `create addon ambassador`
+- [ ] `create addon anchore`
+- [ ] `create addon cloudbees`
+- [ ] `create addon gitea`
+- [ ] `create addon istio`
+- [ ] `create addon knative-build`
+- [ ] `create addon kubeless`
+- [ ] `create addon owasp-zap`
+- [ ] `create addon pipeline-events`
 - [X] `create addon prometheus`
-- [-] `create addon prow`
-- [-] `create addon sso`
-- [-] `create addon vault-operator`
-- [-] `create archetype`
+- [ ] `create addon prow`
+- [ ] `create addon sso`
+- [ ] `create addon vault-operator`
+- [ ] `create archetype`
 - [ ] `create branchpattern`
 - [ ] `create chat`
 - [ ] `create devpod`

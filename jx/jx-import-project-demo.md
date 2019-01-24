@@ -37,7 +37,7 @@ git checkout master
 
 git merge orig
 
-rm -rf charts # Ignore if it fails
+rm -rf charts
 
 git push
 

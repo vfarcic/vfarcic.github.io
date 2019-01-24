@@ -6,6 +6,9 @@
 gcloud container clusters delete $NAME --zone $ZONE --quiet
 
 gcloud container clusters delete $NAME --region $REGION --quiet
+
+gcloud compute disks delete $(gcloud compute disks list \
+    --filter="-users:*" --format="value(id)")
 ```
 
 
