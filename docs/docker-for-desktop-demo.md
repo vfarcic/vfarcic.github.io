@@ -40,7 +40,7 @@ cd k8s-specs
 * Go To Preferences > Kubernetes <!-- .element: class="fragment" -->
 * Check Enable Kubernetes <!-- .element: class="fragment" -->
 * Check Kubernetes as the default orchestrator <!-- .element: class="fragment" -->
-* Click the Advanced tab and set CPUs to 2, and Memory to 2.0 <!-- .element: class="fragment" -->
+* Click the Advanced tab and set CPUs to 2, and Memory to 4.0 <!-- .element: class="fragment" -->
 
 
 ## Configuring Docker For Desktop
