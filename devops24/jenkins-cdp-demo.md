@@ -522,7 +522,7 @@ env.REPO = "https://github.com/vfarcic/go-demo-3.git" // Change me!
 env.IMAGE = "vfarcic/go-demo-3" // Change me!
 env.DOMAIN = "acme.com" // Change me!
 env.ADDRESS = "go-demo-3.acme.com" // Change me!
-env.CM_ADDR = "acme.com" // Change me!
+env.CM_ADDR = "cm.acme.com" // Change me!
 env.CHART_VER = "0.0.1"
 def label = "jenkins-slave-${UUID.randomUUID().toString()}"
 
