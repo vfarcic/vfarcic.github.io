@@ -16,9 +16,9 @@ We'll explore how to create a fully operational continuous delivery pipeline usi
 
 ## Abstract
 
-Running applications for continuous delivery is a massive waste of resources. Think about it. We spend gigabytes of RAM for running Jenkins, Bamboo, Team City, or whichever tool we're using. And yet, those tools are often sitting idle inside our cluster, waiting to eventually receive a webhook notifying them that something should be done. As a result, resources are wasted when those tools are idle, and they are slow when under heavy load. If we add agents to the mix, we can quickly end up with hundreds of unused servers, and yet not have enough.
+Running applications for continuous delivery is a massive waste of resources. We spend gigabytes of RAM for running Jenkins, Bamboo, Team City, or whichever tool we're using. And yet, those tools are often sitting idle inside our cluster, waiting to eventually receive a webhook notifying them that something should be done. As a result, resources are wasted when those tools are idle, and they are slow when under heavy load. If we add agents to the mix, we can quickly end up with hundreds of unused servers, and yet not have enough.
 
-What if we could run our tools only when we need them? What if we could scale them to any number of replicas to accommodate the increase in the number of builds, and scale them down to zero when there are no new commits? What if we can do all that with a single command? The answer to those and quite a few other questions is to go serverless with our continuous delivery tools. Jenkins X happens to do just that. It is a cloud-native Kubernetes-first solution that embraced a serverless model for managing our pipelines.
+What if we could run our tools only when we need them? What if we could scale them to any number of replicas to accommodate the increase in the number of builds, and scale them down to zero when there are no new commits? What if we can do all that with a single command? The answer to those and quite a few other questions is to go serverless with continuous delivery tools. Jenkins X happens to do just that. It is a cloud-native Kubernetes-first solution that embraced a serverless model for managing our pipelines.
 
 # Workshop: Continuous Delivery With Jenkins X, Kubernetes, And Friends
 
@@ -33,3 +33,13 @@ Jenkins X is Jenkins and additional best of breed tools and software for Kuberne
 It is the CI/CD solution for development of modern cloud applications on Kubernetes.
 
 We'll explore how to create a fully operational continuous delivery pipeline using Docker, Kubernetes, Jenkins X, and quite a few other tools.
+
+# Workshop: Running Serverless Continuous Delivery
+
+## Abstract
+
+Running applications for continuous delivery is a massive waste of resources. We spend gigabytes of RAM for running Jenkins, Bamboo, Team City, or whichever tool we're using. And yet, those tools are often sitting idle inside our cluster, waiting to eventually receive a webhook notifying them that something should be done. As a result, resources are wasted when those tools are idle, and they are slow when under heavy load. If we add agents to the mix, we can quickly end up with hundreds of unused servers, and yet not have enough.
+
+What if we could run our tools only when we need them? What if we could scale them to any number of replicas to accommodate the increase in the number of builds, and scale them down to zero when there are no new commits? What if we can do all that with a single command? The answer to those and quite a few other questions is to go serverless with continuous delivery tools. Jenkins X happens to do just that. It is a cloud-native Kubernetes-first solution that embraced a serverless model for managing our pipelines.
+
+This workshop will guide you through the process of defining serverless continuous delivery with Jenkins X and friends.
