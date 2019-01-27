@@ -11,12 +11,8 @@
 
 ```bash
 open "https://github.com/vfarcic/go-demo-6"
-```
 
-* Fork the repo
-
-```
-cd ..
+GH_USER=[...]
 
 git clone https://github.com/$GH_USER/go-demo-6.git
 
@@ -31,7 +27,7 @@ cd go-demo-6
 ```bash
 git checkout orig
 
-git merge -s ours master
+git merge -s ours master --no-edit
 
 git checkout master
 
@@ -41,7 +37,9 @@ rm -rf charts
 
 git push
 
-jx import --pack go -b
+jx repo -b
+
+ls -1
 ```
 
 
@@ -50,77 +48,88 @@ jx import --pack go -b
 ---
 
 ```bash
-jx get activity -f go-demo-6 -w
-```
+jx import -b
 
-* Stop the watch with `ctrl+c`
-* Open the `PullRequest` link
-* Open the `Update` link
+ls -1
 
-```bash
-STAGING_URL=[PROMOTED]/demo/hello
+jx get activities -f go-demo-6 -w
 
-curl $STAGING_URL
-```
+STAGING_ADDR=[...]
 
-* Got `505`
+curl "$STAGING_ADDR/demo/hello"
 
-```bash
 kubectl -n jx-staging logs -l app=jx-staging-go-demo-6
-
-kubectl -n jx-staging get pods
-
-helm ls
 ```
 
 
-## Adding Dependencies
+## Fixing The Helm Chart
 
 ---
 
 ```bash
-vim charts/go-demo-6/templates/deployment.yaml
+vi charts/go-demo-6/templates/deployment.yaml
 ```
 
-* Add the code that follows to the container
+* Press `i` to enter into the insert mode
+* Locate the code that follows
 
 ```yaml
+...
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+...
+```
+
+* Add the `env` section as in the following snippet
+
+```yaml
+...
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
         env:
         - name: DB
           value: {{ template "fullname" . }}-db
+        ports:
+...
 ```
 
-* Save and exit with `:wq`
+
+## Fixing The Helm Chart
+
+---
+
+* Exit the insert mode by pressing the `ecs` key
+* Save the changes by typing `:wq` and pressing enter
 
 ```bash
-cat charts-orig/go-demo-6/templates/sts.yaml
+echo "dependencies:
+- name: mongodb
+  alias: go-demo-6-db
+  version: 5.3.0
+  repository:  https://kubernetes-charts.storage.googleapis.com
+" | tee charts/go-demo-6/requirements.yaml
 
-cp charts-orig/go-demo-6/templates/sts.yaml \
-  charts/go-demo-6/templates/
-
-cp charts-orig/go-demo-6/templates/rbac.yaml \
-  charts/go-demo-6/templates/
+echo "go-demo-6-db:
+  replicaSet:
+    enabled: true
+" | tee -a charts/go-demo-6/values.yaml
 ```
 
 
-## Adding Dependencies
+## Fixing The Helm Chart
 
 ---
 
 ```bash
-echo "
----
-" | tee -a charts/go-demo-6/templates/service.yaml
+git add .
 
-cat charts-orig/go-demo-6/templates/service.yaml \
-  | tee -a charts/go-demo-6/templates/service.yaml
+git commit -m "Added dependencies"
 
-git add . && git commit -m "Added dependencies" && git push
+git push
 
 jx get activity -f go-demo-6 -w
 ```
 
-* Promotion failed
+* Stop watching with `ctrl+c`
 
 ```bash
 kubectl -n jx-staging get pods
@@ -129,24 +138,46 @@ kubectl -n jx-staging describe pod -l app=jx-staging-go-demo-6
 ```
 
 
-## Updating Values
+## Fixing The Helm Chart
 
 ---
 
 ```bash
-vim charts/go-demo-6/values.yaml
+vi charts/go-demo-6/values.yaml
 ```
 
-* Change `probePath` value to `/demo/hello?health=true`
+* Press `i` to enter into the insert mode
+* Locate the code that follows
+
+```yaml
+...
+probePath: /
+...
+```
+
+* Change to the code that follows
+
+```yaml
+...
+probePath: /demo/hello?health=true
+...
+```
+
+
+## Fixing The Helm Chart
+
+---
 
 ```bash
-git add . && git commit -m "Added dependencies" && git push
+git add .
+
+git commit -m "Added dependencies"
+
+git push
 
 jx get activity -f go-demo-6 -w
 
 kubectl -n jx-staging get pods
 
-kubectl -n jx-staging describe pod -l app=jx-staging-go-demo-6
-
-curl $STAGING_URL
+curl "$STAGING_ADDR/demo/hello"
 ```
