@@ -58,7 +58,7 @@ echo "REPLACE_ME_APP_NAME-db:
 ---
 
 ```bash
-cd go-demo-6
+jx delete application $GH_USER/go-demo-6 -b
 
 git checkout orig
 
@@ -79,10 +79,6 @@ git push
 ---
 
 ```bash
-GH_USER=[...]
-
-jx delete application $GH_USER/go-demo-6 -b
-
 jx import --pack go-mongo -b
 
 jx get activity -f go-demo-6 -w
@@ -118,8 +114,6 @@ git push
 jx get activity -f go-demo-6 -w
 
 kubectl -n jx-staging get pods
-
-STAGING_ADDR=[...]
 
 curl "$STAGING_ADDR/demo/hello"
 ```

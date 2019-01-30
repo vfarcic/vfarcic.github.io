@@ -11,7 +11,11 @@
 
 ```bash
 open "https://github.com/vfarcic/go-demo-6"
+```
 
+* Fork it.
+
+```bash
 GH_USER=[...]
 
 git clone https://github.com/$GH_USER/go-demo-6.git

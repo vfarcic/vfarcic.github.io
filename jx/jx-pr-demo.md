@@ -45,9 +45,10 @@ open "https://github.com/$GH_USER/go-demo-6/pull/new/my-pr"
 ```bash
 jx get activity -f go-demo-6 -w
 
-URL=[...] # Copy the address from `Preview Application`
+PREVIEW_HOST=$(kubectl -n jx-vfarcic-go-demo-6-pr-17 \
+    get ing go-demo-6 -o jsonpath="{.spec.rules[0].host}")
 
-curl "$URL/demo/hello"
+curl "http://$PREVIEW_HOST/demo/hello"
 
 helm ls
 
