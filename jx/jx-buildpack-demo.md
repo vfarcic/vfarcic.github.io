@@ -58,6 +58,27 @@ echo "REPLACE_ME_APP_NAME-db:
 ---
 
 ```bash
+ls -1 $PACKS_PATH/go-mongo/preview
+
+cat $PACKS_PATH/go-mongo/preview/requirements.yaml
+
+cat $PACKS_PATH/go-mongo/preview/requirements.yaml \
+    | sed -e \
+    's@  # !! "alias@- name: mongodb\
+  alias: preview-db\
+  version: 5.3.0\
+  repository:  https://kubernetes-charts.storage.googleapis.com\
+\
+  # !! "alias@g' \
+    | tee $PACKS_PATH/go-mongo/preview/requirements.yaml
+```
+
+
+## Creating Buildpacks
+
+---
+
+```bash
 jx delete application $GH_USER/go-demo-6 -b
 
 git checkout orig
@@ -97,6 +118,12 @@ kubectl -n jx-staging describe pod -l app=jx-staging-go-demo-6
 cat charts/go-demo-6/values.yaml | sed -e \
     's@probePath: /@probePath: /demo/hello?health=true@g' \
     | tee charts/go-demo-6/values.yaml
+
+cat charts/preview/values.yaml
+
+echo "\
+probePath: /demo/hello?health=true" \
+    | tee -a charts/preview/values.yaml
 
 git add .
 
