@@ -121,8 +121,7 @@ cat charts/go-demo-6/values.yaml | sed -e \
 
 cat charts/preview/values.yaml
 
-echo "\
-probePath: /demo/hello?health=true" \
+echo '  probePath: /demo/hello?health=true' \
     | tee -a charts/preview/values.yaml
 
 git add .

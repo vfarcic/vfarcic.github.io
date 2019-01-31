@@ -1,4 +1,8 @@
-# CDP With Jenkins X And Kubernetes
+## The DevOps 2.6 Toolkit
+
+# Jenkins X
+
+## Cloud-Native Kubernetes-First Continuous Delivery
 
 ---
 
