@@ -34,6 +34,10 @@ It is the CI/CD solution for development of modern cloud applications on Kuberne
 
 We'll explore how to create a fully operational continuous delivery pipeline using Docker, Kubernetes, Jenkins X, and quite a few other tools.
 
+Agenda:
+
+
+
 # Workshop: Running Serverless Continuous Delivery
 
 ## Abstract
