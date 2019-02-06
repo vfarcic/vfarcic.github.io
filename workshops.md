@@ -20,7 +20,7 @@
   * [GKE](devops23/workshop-gke.html)
   * [EKS](devops23/workshop-eks.html)
   * [Minikube](devops23/workshop.html)
-  * [2 hours intense](devops23/workshop-short.html)
+  * [1 day intense](devops23/workshop-short.html)
 * [The DevOps 2.1 Toolkit: Jenkins](jenkins-docker/workshop.html)
 * [The DevOps 2.2 Toolkit: Self-Healing and Self-Adaptation](devops22/workshop.html)
 * [The DevOps 2.1 Toolkit: Docker Swarm](devops21/workshop.html)
