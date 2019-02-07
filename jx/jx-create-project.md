@@ -1,6 +1,4 @@
-# New Projects
-# Vs.
-# Legacy Apps
+# Creating A Quickstart Project
 
 ---
 

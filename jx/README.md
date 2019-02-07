@@ -1,4 +1,4 @@
-# Talk: Continuous Delivery With Jenkins X, Kubernetes, And Friends
+# Talk: Cloud-Native Kubernetes-First Continuous Delivery With Jenkins X
 
 ## Abstract
 
@@ -34,9 +34,18 @@ It is the CI/CD solution for development of modern cloud applications on Kuberne
 
 We'll explore how to create a fully operational continuous delivery pipeline using Docker, Kubernetes, Jenkins X, and quite a few other tools.
 
-Agenda:
+## Agenda
 
-
+* What Do We Expect From Continuous Delivery?
+* How Do We Accomplish Continuous Delivery?
+* Intro To Jenkins X
+* Creating A CD Cluster
+* Creating A Quickstart Project
+* Importing Existing Projects Into Jenkins X
+* Creating Buildpacks
+* Exploring Jenkinsfile
+* Creating Pull Requests
+* Promoting To Production
 
 # Workshop: Running Serverless Continuous Delivery
 

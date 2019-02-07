@@ -44,6 +44,6 @@ gcloud container clusters \
     --quiet
 ```
 
-Those commands craeted a GKE cluster and destroyed it right away. Their purpose was only to validate whether you are able to create a GKE cluster. We'll create a new cluster during the training.
+Those commands created a GKE cluster and destroyed it right away. Their purpose was only to validate whether you are able to create a GKE cluster. We'll create a new cluster during the training.
 
 Please contact me on [DevOps20](http://slack.devops20toolkit.com/) Slack channel (my user is *vfarcic*) if you encountered any problems.

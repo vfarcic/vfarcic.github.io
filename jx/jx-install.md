@@ -1,4 +1,4 @@
-# jx CLI
+# Installing jx CLI
 
 ---
 
