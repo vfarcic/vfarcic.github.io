@@ -2,46 +2,52 @@
 
 ---
 
-# Creating Buildpacks
+# Creating Custom Buildpacks
 
 
-## Creating Buildpacks
+## Buildpack For Go With MongoDB
 
 ---
 
 ```bash
-PACKS_PATH="$HOME/.jx/draft/packs/github.com/jenkins-x-buildpacks/jenkins-x-kubernetes/packs"
+open "https://github.com/jenkins-x-buildpacks/jenkins-x-kubernetes"
 
-ls -1 $PACKS_PATH
+GH_USER=[...]
 
-ls -1 $PACKS_PATH/go
+git clone https://github.com/$GH_USER/jenkins-x-kubernetes
 
-cp -R $PACKS_PATH/go $PACKS_PATH/go-mongo
+cd jenkins-x-kubernetes
+
+ls -1 packs
+
+ls -1 packs/go
+
+cp -R packs/go packs/go-mongo
 ```
 
 
-## Creating Buildpacks
+## Buildpack For Go With MongoDB
 
 ---
 
 ```bash
-cat $PACKS_PATH/go-mongo/charts/templates/deployment.yaml \
-    | sed -e 's@ports:@env:\
+cat packs/go-mongo/charts/templates/deployment.yaml | sed -e \
+    's@ports:@env:\
         - name: DB\
           value: {{ template "fullname" . }}-db\
         ports:@g' \
-    | tee $PACKS_PATH/go-mongo/charts/templates/deployment.yaml
+    | tee packs/go-mongo/charts/templates/deployment.yaml
 
 echo "dependencies:
 - name: mongodb
   alias: REPLACE_ME_APP_NAME-db
   version: 5.3.0
   repository:  https://kubernetes-charts.storage.googleapis.com
-" | tee $PACKS_PATH/go-mongo/charts/requirements.yaml
+" | tee packs/go-mongo/charts/requirements.yaml
 ```
 
 
-## Creating Buildpacks
+## Buildpack For Go With MongoDB
 
 ---
 
@@ -49,20 +55,20 @@ echo "dependencies:
 echo "REPLACE_ME_APP_NAME-db:
   replicaSet:
     enabled: true
-" | tee -a $PACKS_PATH/go-mongo/charts/values.yaml
+" | tee -a packs/go-mongo/charts/values.yaml
 ```
 
 
-## Creating Buildpacks
+## Buildpack For Go With MongoDB
 
 ---
 
 ```bash
-ls -1 $PACKS_PATH/go-mongo/preview
+ls -1 packs/go-mongo/preview
 
-cat $PACKS_PATH/go-mongo/preview/requirements.yaml
+cat packs/go-mongo/preview/requirements.yaml
 
-cat $PACKS_PATH/go-mongo/preview/requirements.yaml \
+cat packs/go-mongo/preview/requirements.yaml \
     | sed -e \
     's@  # !! "alias@- name: mongodb\
   alias: preview-db\
@@ -70,17 +76,51 @@ cat $PACKS_PATH/go-mongo/preview/requirements.yaml \
   repository:  https://kubernetes-charts.storage.googleapis.com\
 \
   # !! "alias@g' \
-    | tee $PACKS_PATH/go-mongo/preview/requirements.yaml
+    | tee packs/go-mongo/preview/requirements.yaml
+
+echo '
+' | tee -a packs/go-mongo/preview/requirements.yaml 
 ```
 
 
-## Creating Buildpacks
+## Buildpack For Go With MongoDB
 
 ---
 
 ```bash
+git add .
+
+git commit -m "Added go-mongo buildpack"
+
+git push
+
+jx edit buildpack \
+    -u https://github.com/$GH_USER/jenkins-x-kubernetes \
+    -r master -b
+```
+
+
+## Testing The New Buildpack
+
+---
+
+```bash
+cd ..
+
+cd go-demo-6
+
 jx delete application $GH_USER/go-demo-6 -b
 
+kubectl -n jx delete act -l owner=$GH_USER \
+  -l sourcerepository=go-demo-6
+```
+
+
+## Testing The New Buildpack
+
+---
+
+```bash
 git checkout orig
 
 git merge -s ours master --no-edit
@@ -92,55 +132,53 @@ git merge orig
 rm -rf charts
 
 git push
+
+jx import --pack go-mongo -b
+
+ls -1 \
+  ~/.jx/draft/packs/github.com/$GH_USER/jenkins-x-kubernetes/packs
 ```
 
 
-## Creating Buildpacks
+## Testing The New Buildpack
 
 ---
 
 ```bash
-jx import --pack go-mongo -b
-
 jx get activity -f go-demo-6 -w
 
 kubectl -n jx-staging get pods
 
 kubectl -n jx-staging describe pod -l app=jx-staging-go-demo-6
-```
 
+cat charts/go-demo-6/values.yaml
 
-## Creating Buildpacks
-
----
-
-```bash
 cat charts/go-demo-6/values.yaml | sed -e \
     's@probePath: /@probePath: /demo/hello?health=true@g' \
     | tee charts/go-demo-6/values.yaml
 
-cat charts/preview/values.yaml
-
 echo '
   probePath: /demo/hello?health=true' \
     | tee -a charts/preview/values.yaml
+```
 
+
+## Testing The New Buildpack
+
+---
+
+```bash
 git add .
 
 git commit -m "Fixed the probe"
 
 git push
-```
 
-
-## Creating Buildpacks
-
----
-
-```bash
 jx get activity -f go-demo-6 -w
 
 kubectl -n jx-staging get pods
+
+STAGING_ADDR=[...]
 
 curl "$STAGING_ADDR/demo/hello"
 ```
