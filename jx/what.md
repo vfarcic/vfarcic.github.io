@@ -85,7 +85,7 @@
 
 
 <!-- .slide: data-background="../img/background/manual.jpg" -->
-# Can You Setup A Dozen Of Other Tools?
+# Can You Setup A Dozen Of Other Tools? Skaffold, ChartMuseum, KSync, ...?
 
 ---
 
@@ -103,7 +103,7 @@
 
 
 <!-- .slide: data-background="../img/background/why.jpg" -->
-# Do All You Projects Employ Continuous Delivery?
+# Do All Your Projects Employ Continuous Delivery?
 
 ---
 
@@ -115,6 +115,6 @@
 
 
 <!-- .slide: data-background="../img/products/jenkins-x.png" -->
-# The Answer Is Jenkins X!
+# Jenkins X!
 
 ---

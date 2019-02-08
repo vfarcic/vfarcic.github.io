@@ -5,8 +5,8 @@ You will need:
 * [Git](https://git-scm.com/)
 * GitBash (only if using Windows; it's installed with Git)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-* [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 * [Minikube](https://github.com/kubernetes/minikube/releases)
+* [VirtualBox](https://www.virtualbox.org/wiki/Downloads) (or any other virtualization supported by minikube)
 * [jq](https://stedolan.github.io/jq/)
 * [Docker For Windows](https://www.docker.com/docker-windows), [Docker For Mac](https://www.docker.com/docker-mac), or [Docker Server](https://docs.docker.com/install/#server) if using Linux
 * [Docker Hub Account](https://hub.docker.com/)
