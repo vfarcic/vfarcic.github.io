@@ -1,4 +1,4 @@
-# GitOps With jx Env
+# Understranding GitOps Principles
 
 ---
 

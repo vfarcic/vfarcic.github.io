@@ -2,7 +2,7 @@
 
 ---
 
-# GitOps With jx Env
+# Understranding GitOps Principles
 
 
 ## Exploring Environments
@@ -20,64 +20,104 @@ jx get env -p Never
 ```
 
 
-## Changing Staging Environment
+## The Staging Environment
 
 ---
 
 ```bash
 cd ..
 
-git clone https://github.com/$GH_USER/environment-jx-rocks-staging.git
+GH_USER=[...]
+
+git clone \
+    https://github.com/$GH_USER/environment-jx-rocks-staging.git
 
 cd environment-jx-rocks-staging
 
-ls -l
-
-cat Makefile
-
-cat Jenkinsfile
-
-ls -l env
-
-cat env/requirements.yaml
+ls -1
 ```
 
 
-## Changing Staging Environment
+## The Staging Environment
 
 ---
 
 ```bash
-vim Jenkinsfile
+cat Makefile
+
+echo 'test:
+	ADDRESS=`kubectl -n jx-staging get ing go-demo-6 \\
+	-o jsonpath="{.spec.rules[0].host}"` go test -v' \
+    | tee -a Makefile
+
+curl -sSLo integration_test.go https://bit.ly/2Do5LRN
+
+cat integration_test.go
+
+cat Jenkinsfile
+
+curl -sSLo Jenkinsfile https://bit.ly/2Dr1Kfk
+
+cat Jenkinsfile
 ```
 
-* Add `--force=false` to `sh 'jx step helm apply'` in Jenkinsfile in environment repos
+
+## The Staging Environment
+
+---
 
 ```bash
-git add . && git commit -m "Added --force=false" && git push
+ls -1 env
 
-jx get activity -f environment-jx-rocks-staging/master -w
+cat env/requirements.yaml
+
+git add .
+
+git commit -m "Added tests"
+
+git push
+
+jx get activity -f environment-jx-rocks-staging -w
+
+jx get build logs $GH_USER/environment-jx-rocks-staging/master
+
+jx console
 ```
 
 
-## Changing Prod Environment
+## The Production Environment
 
 ---
 
 ```bash
 cd ..
 
-git clone https://github.com/$GH_USER/environment-jx-rocks-production.git
+git clone \
+    https://github.com/$GH_USER/environment-jx-rocks-production.git
 
 cd environment-jx-rocks-production
 
-vim Jenkinsfile
+echo 'test:
+	ADDRESS=`kubectl -n jx-production get ing go-demo-6 \\
+	-o jsonpath="{.spec.rules[0].host}"` go test -v' \
+    | tee -a Makefile
+
+curl -sSLo integration_test.go https://bit.ly/2Do5LRN
+
+curl -sSLo Jenkinsfile https://bit.ly/2BsUQWM
 ```
 
-* Add `--force=false` to `sh 'jx step helm apply'` in Jenkinsfile in environment repos
+
+## The Production Environment
+
+---
 
 ```bash
-git add . && git commit -m "Added --force=false" && git push
+git add .
 
-jx get activity -f environment-jx-rocks-production/master -w
+git commit -m "Added tests"
+
+git push
+
+jx get activity -f environment-jx-rocks-production -w
 ```
