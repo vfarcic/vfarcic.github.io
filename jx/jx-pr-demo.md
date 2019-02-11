@@ -45,10 +45,10 @@ open "https://github.com/$GH_USER/go-demo-6/pull/new/my-pr"
 ```bash
 jx get activity -f go-demo-6 -w
 
-PREVIEW_HOST=$(kubectl -n jx-vfarcic-go-demo-6-pr-17 \
+PREVIEW_ADDR=$(kubectl -n jx-vfarcic-go-demo-6-pr-17 \
     get ing go-demo-6 -o jsonpath="{.spec.rules[0].host}")
 
-curl "http://$PREVIEW_HOST/demo/hello"
+curl "http://$PREVIEW_ADDR/demo/hello"
 
 helm ls
 

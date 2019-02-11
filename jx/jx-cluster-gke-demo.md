@@ -27,10 +27,6 @@ open "https://console.cloud.google.com/cloud-resource-manager"
 
 PROJECT=[...] # e.g. devops24-book
 
-NAME=jx-rocks && ZONE=us-east1-b && MACHINE=n1-standard-2
-
-MIN_NODES=3 && MAX_NODES=5 && PASS=admin
-
 echo "nexus:
   enabled: false
 " | tee myvalues.yaml
@@ -42,9 +38,9 @@ echo "nexus:
 ---
 
 ```bash
-jx create cluster gke -n $NAME -p $PROJECT -z $ZONE -m $MACHINE \
-    --min-num-nodes $MIN_NODES --max-num-nodes $MAX_NODES \
-    --default-admin-password=$PASS \
+jx create cluster gke -n jx-rocks -p $PROJECT -z us-east1-b \
+    -m n1-standard-2 --min-num-nodes 3 --max-num-nodes 5 \
+    --default-admin-password=admin \
     --default-environment-prefix jx-rocks
 
 jx console

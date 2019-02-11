@@ -12,9 +12,9 @@
 ---
 
 * It needs to be cloud-native <!-- .element: class="fragment" -->
-* It needs to bee cloud-agnostic <!-- .element: class="fragment" -->
+* It needs to be cloud-agnostic <!-- .element: class="fragment" -->
 * It needs to scale from zero to infinity and back <!-- .element: class="fragment" -->
-* It needs to follow everything-as-code principle <!-- .element: class="fragment" -->
+* It needs to follow the everything-as-code principle <!-- .element: class="fragment" -->
 * It needs to be fast <!-- .element: class="fragment" -->
 * It needs to be (very) easy <!-- .element: class="fragment" -->
 
@@ -33,7 +33,7 @@
 ---
 
 * Design cloud-native apps <!-- .element: class="fragment" -->
-* Adopt container schedulers <!-- .element: class="fragment" -->
+* Adopt containers and schedulers <!-- .element: class="fragment" -->
 * Adopt serverless <!-- .element: class="fragment" -->
 * Adopt the tools you need, remove those you don't <!-- .element: class="fragment" -->
 
@@ -43,11 +43,11 @@
 
 ---
 
-* Adopt Kubernetes as the major cross-platform cloud-agnostic container scheduler
-* Adopt KNative as serverless solution in Kubernetes
-* Adopt prow as GitOps and Kubernetes low-level CI/CD solution
-* Adopt Helm as the standard Kubernetes packaging solution
-* Facilitate quickstarts
+* Adopt Kubernetes as the major cross-platform cloud-agnostic container scheduler <!-- .element: class="fragment" -->
+* Adopt KNative as serverless solution in Kubernetes <!-- .element: class="fragment" -->
+* Adopt prow as GitOps and Kubernetes low-level CI/CD solution <!-- .element: class="fragment" -->
+* Adopt Helm as the standard Kubernetes packaging solution <!-- .element: class="fragment" -->
+* Facilitate quickstarts <!-- .element: class="fragment" -->
 
 
 <!-- .slide: data-background="../img/background/how.jpg" -->
@@ -55,9 +55,9 @@
 
 ---
 
-* Join the tools and the processes into a single easy-to-use bundle
-* Create an CLI-first experience
-* Define an opinionated process
+* Join the tools and the processes into a single easy-to-use bundle <!-- .element: class="fragment" -->
+* Create an CLI-first experience <!-- .element: class="fragment" -->
+* Define an opinionated process <!-- .element: class="fragment" -->
 
 
 <!-- .slide: data-background="img/ninja.jpg" -->
@@ -85,7 +85,7 @@
 
 
 <!-- .slide: data-background="../img/background/manual.jpg" -->
-# Can You Setup A Dozen Of Other Tools? Skaffold, ChartMuseum, KSync, ...?
+# How about skaffold, ChartMuseum, KSync, ...?
 
 ---
 

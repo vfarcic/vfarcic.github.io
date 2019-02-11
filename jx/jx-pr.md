@@ -1,7 +1,4 @@
-# Exploring Jenkinsfile
+# Creating And Previewing Pull Requests
 
 ---
-
-
-> Jenkinsfile defines the steps of a Pipeline.
 

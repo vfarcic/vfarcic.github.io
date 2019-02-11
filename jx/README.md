@@ -20,6 +20,12 @@ Running applications for continuous delivery is a massive waste of resources. We
 
 What if we could run our tools only when we need them? What if we could scale them to any number of replicas to accommodate the increase in the number of builds, and scale them down to zero when there are no new commits? What if we can do all that with a single command? The answer to those and quite a few other questions is to go serverless with continuous delivery tools. Jenkins X happens to do just that. It is a cloud-native Kubernetes-first solution that embraced a serverless model for managing our pipelines.
 
+# Talk: Using Buildpacks To Somplify The Process From Local Development To Deployment To Production
+
+## Abstract
+
+TODO: Write
+
 # Workshop: Continuous Delivery With Jenkins X, Kubernetes, And Friends
 
 ## Abstract

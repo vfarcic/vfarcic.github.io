@@ -10,8 +10,6 @@
 ---
 
 ```bash
-jx create quickstart # Cancel with ctrl+c
-
 jx create quickstart -l go -p jx-go -b
 
 export GH_USER=[...] # Replace with your GitHub user
@@ -42,10 +40,6 @@ ls -l jx-go/charts/jx-go
 ls -l jx-go/charts/preview
 
 open "https://github.com/$GH_USER/jx-go/settings/hooks"
-
-open "https://github.com/jenkins-x-quickstarts"
-
-ls -l ~/.jx/draft/packs/github.com/jenkins-x-buildpacks/jenkins-x-kubernetes/packs/
 ```
 
 
@@ -84,4 +78,9 @@ jx get env
 jx get apps -e staging
 
 open "https://github.com/$GH_USER/jx-go/releases"
+
+STAGING_ADDR=$(kubectl -n jx-staging get ing jx-go \
+    -o jsonpath="{.spec.rules[0].host}")
+
+curl "http://$STAGING_ADDR"
 ```
