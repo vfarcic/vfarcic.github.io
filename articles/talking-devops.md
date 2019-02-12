@@ -10,6 +10,8 @@ I love going to conferences, but not for the obvious reasons. I rarely listen to
 
 Each conversation starts with the innocent question "what is DevOps?". It is only meant to be the cnversation-starter and to facilitate something that is un unstructured, unpreepared, and verey casual conversation. Think of each interview as a conversation with a friend or an acquitance that I met in a pub. As a matter a fact, a few of those were recorded in a bar over a few beers.
 
+All in all, I wanted to share casual conversations with people who practice and often shape DevOps. My hopes is that we'll be able to get an insight into what drives those people and get a better understanding into what makes DevOps so powerful.
+
 * The power of DevOps today (Why should people outside the field be interested in the word)
 
 
