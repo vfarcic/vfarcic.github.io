@@ -12,6 +12,8 @@
 ```bash
 open "https://github.com/jenkins-x-buildpacks/jenkins-x-kubernetes"
 
+# Fork it!
+
 GH_USER=[...]
 
 git clone https://github.com/$GH_USER/jenkins-x-kubernetes

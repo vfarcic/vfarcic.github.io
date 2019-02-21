@@ -10,6 +10,8 @@
 ---
 
 ```bash
+cd ../go-demo-6
+
 go get github.com/cespare/reflex
 
 go get -t
@@ -26,12 +28,14 @@ chmod +x watch.sh
 
 ## Present Time
 
+---
+
 ```bash
 jx create devpod --reuse -b
 
 ls -l
 
-GH_USER=[...]
+go mod init
 
 go get -t
 
@@ -47,12 +51,16 @@ helm init --client-only
 
 ## Present Time
 
+---
+
 ```bash
 skaffold run -p dev
 
 kubectl get ns
 
-kubectl -n jx-edit-$GH_USER get pods
+export MY_USER=[...]
+
+kubectl -n jx-edit-$MY_USER get pods
 
 chmod +x watch.sh
 
@@ -63,6 +71,8 @@ chmod +x watch.sh
 
 
 ## Present Time
+
+---
 
 ```bash
 GH_USER=[...]
@@ -86,6 +96,8 @@ open "http://$THEIA_ADDR"
 
 ## Present Time
 
+---
+
 ```bash
 curl "http://$ADDR/demo/hello"
 ```
@@ -99,6 +111,8 @@ exit
 
 
 ## With Synchronization
+
+---
 
 ```bash
 jx get devpod
@@ -123,10 +137,14 @@ jx sync --daemon # `--daemon` doesn't always work
 
 ## With Synchronization
 
+---
+
 ```bash
 jx create devpod --reuse --sync -b
 
 helm init --client-only
+
+go mod init
 
 go get -t
 
@@ -149,6 +167,8 @@ curl "http://$ADDR/demo/hello"
 
 ## With Synchronization
 
+---
+
 ```bash
 cd go-demo-6
 
@@ -160,8 +180,8 @@ cat main_test.go | sed -e 's@hello, world@hello, devpod@g' \
 
 curl "http://$ADDR/demo/hello"
 
-cat Makefile | sed -e 's@hello, world@hello, devpod@g' \
-    | tee Makefile
+# cat Makefile | sed -e 's@hello, world@hello, devpod@g' \
+#     | tee Makefile
 
 echo 'unittest: 
 	CGO_ENABLED=$(CGO_ENABLED) $(GO) test --run UnitTest -v
@@ -170,6 +190,8 @@ echo 'unittest:
 
 
 ## With Synchronization
+
+---
 
 ```bash
 cat watch.sh | sed -e \
@@ -189,6 +211,8 @@ curl "http://$ADDR/demo/hello"
 
 
 ## With Synchronization
+
+---
 
 ```bash
 STAGING_ADDR=$(kubectl -n jx-staging get ing go-demo-6 \

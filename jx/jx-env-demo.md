@@ -102,6 +102,8 @@ echo 'test:
 	-o jsonpath="{.spec.rules[0].host}"` go test -v' \
     | tee -a Makefile
 
+# Replace spaces with tabs
+
 curl -sSLo integration_test.go https://bit.ly/2Do5LRN
 
 curl -sSLo Jenkinsfile https://bit.ly/2BsUQWM

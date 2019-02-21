@@ -3,9 +3,9 @@
 ---
 
 ```bash
-gcloud container clusters delete $NAME --zone $ZONE --quiet
+gcloud container clusters delete jx-rocks --zone us-east1-b --quiet
 
-gcloud container clusters delete $NAME --region $REGION --quiet
+gcloud container clusters delete jx-rocks --region us-east1-b --quiet
 
 gcloud compute disks delete $(gcloud compute disks list \
     --filter="-users:*" --format="value(id)")
