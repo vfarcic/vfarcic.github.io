@@ -5,6 +5,23 @@
 # Understranding GitOps Principles
 
 
+## Just In Case You Failed
+
+---
+
+```bash
+git checkout buildpack
+
+git merge -s ours master --no-edit
+
+git checkout master
+
+git merge orig
+
+git push
+```
+
+
 ## Exploring Environments
 
 ---

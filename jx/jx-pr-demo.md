@@ -45,7 +45,9 @@ open "https://github.com/$GH_USER/go-demo-6/pull/new/my-pr"
 ```bash
 jx get activity -f go-demo-6 -w
 
-PREVIEW_ADDR=$(kubectl -n jx-vfarcic-go-demo-6-pr-17 \
+PR=[...]
+
+PREVIEW_ADDR=$(kubectl -n jx-$GH_USER-go-demo-6-pr-$PR \
     get ing go-demo-6 -o jsonpath="{.spec.rules[0].host}")
 
 curl "http://$PREVIEW_ADDR/demo/hello"
@@ -127,6 +129,7 @@ vim Jenkinsfile
           }
 ```
 
+* You are not vfarcic!!!
 * Save and exit
 
 
