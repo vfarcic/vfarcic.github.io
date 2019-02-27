@@ -1,4 +1,4 @@
-# Understranding GitOps Principles
+# Applying GitOps Principles
 
 ---
 

@@ -2,10 +2,95 @@
 
 ---
 
-# Understranding GitOps Principles
+# Applying GitOps Principles
 
 
-## Just In Case You Failed
+## Ten Commandments Of GitOps Applied To Continuous Delivery
+
+---
+
+# Git is the only source of truth
+
+
+<!-- .slide: data-background="img/gitops-apps.png" data-background-size="contain" -->
+
+
+## Ten Commandments Of GitOps Applied To Continuous Delivery
+
+---
+
+## Everything must be tracked, every action must be reproducible, and everything must be idempotent
+
+
+## Ten Commandments Of GitOps Applied To Continuous Delivery
+
+---
+
+# Communication between processes must be asynchronous
+
+
+<!-- .slide: data-background="img/gitops-webhooks.png" data-background-size="contain" -->
+
+
+## Ten Commandments Of GitOps Applied To Continuous Delivery
+
+---
+
+# Processes should run for as long as needed, but not longer
+
+
+<!-- .slide: data-background="img/gitops-agents.png" data-background-size="contain" -->
+
+
+## Ten Commandments Of GitOps Applied To Continuous Delivery
+
+---
+
+# All binaries must be stored in registries
+
+
+<!-- .slide: data-background="img/gitops-registries.png" data-background-size="contain" -->
+
+
+## Ten Commandments Of GitOps Applied To Continuous Delivery
+
+---
+
+## Information about all the releases must be stored in environment-specific repositories or branches
+
+
+## Ten Commandments Of GitOps Applied To Continuous Delivery
+
+---
+
+# Everything must follow the same coding practices
+
+
+<!-- .slide: data-background="img/gitops-env.png" data-background-size="contain" -->
+
+
+## Ten Commandments Of GitOps Applied To Continuous Delivery
+
+---
+
+# All deployments must be idempotent
+
+
+## Ten Commandments Of GitOps Applied To Continuous Delivery
+
+---
+
+## Git webhooks are the only ones allowed to initiate a change that will be applied to the system
+
+
+## Ten Commandments Of GitOps Applied To Continuous Delivery
+
+---
+
+# All the tools must be able to speak with each other through APIs
+
+
+## In case you messed it up
 
 ---
 
@@ -22,7 +107,7 @@ git push
 ```
 
 
-## Exploring Environments
+## Exploring Jenkins X Envs
 
 ---
 
@@ -37,14 +122,12 @@ jx get env -p Never
 ```
 
 
-## The Staging Environment
+## Adapting The Staging Env
 
 ---
 
 ```bash
-cd ..
-
-GH_USER=[...]
+cd ...
 
 git clone \
     https://github.com/$GH_USER/environment-jx-rocks-staging.git
@@ -52,21 +135,21 @@ git clone \
 cd environment-jx-rocks-staging
 
 ls -1
-```
 
-
-## The Staging Environment
-
----
-
-```bash
 cat Makefile
 
 echo 'test:
 	ADDRESS=`kubectl -n jx-staging get ing go-demo-6 \\
 	-o jsonpath="{.spec.rules[0].host}"` go test -v' \
     | tee -a Makefile
+```
 
+
+## Adapting The Staging Env
+
+---
+
+```bash
 curl -sSLo integration_test.go https://bit.ly/2Do5LRN
 
 cat integration_test.go
@@ -75,68 +158,60 @@ cat Jenkinsfile
 
 curl -sSLo Jenkinsfile https://bit.ly/2Dr1Kfk
 
-cat Jenkinsfile
+ls -1 env
+
+cat env/requirements.yaml
 ```
 
 
-## The Staging Environment
+## Adapting The Staging Env
 
 ---
 
 ```bash
-ls -1 env
-
-cat env/requirements.yaml
-
 git add .
 
 git commit -m "Added tests"
 
 git push
 
-jx get activity -f environment-jx-rocks-staging -w
+jx get activity -f environment-jx-rocks-staging
 
 jx get build logs $GH_USER/environment-jx-rocks-staging/master
 
 jx console
+
+kubectl -n jx-staging get pods
 ```
 
 
-## The Production Environment
+## App <> Env Pipelines
 
 ---
 
 ```bash
-cd ..
-
-git clone \
-    https://github.com/$GH_USER/environment-jx-rocks-production.git
-
-cd environment-jx-rocks-production
-
-echo 'test:
-	ADDRESS=`kubectl -n jx-production get ing go-demo-6 \\
-	-o jsonpath="{.spec.rules[0].host}"` go test -v' \
-    | tee -a Makefile
-
-# Replace spaces with tabs
-
-curl -sSLo integration_test.go https://bit.ly/2Do5LRN
-
-curl -sSLo Jenkinsfile https://bit.ly/2BsUQWM
+cat env/requirements.yaml
 ```
 
 
-## The Production Environment
+<!-- .slide: data-background="img/gitops-full-flow.png" data-background-size="contain" -->
+
+
+## Controlling The Environments
 
 ---
 
 ```bash
-git add .
+jx create env --name pre-production --label Pre-Production \
+    --namespace jx-pre-production --promotion Manual -b
 
-git commit -m "Added tests"
+jx get env
 
-git push
+jx edit env --name pre-production --promotion Auto
 
-jx get activity -f environment-jx-rocks-production -w
+jx delete env pre-production
+
+GH_USER=[...]
+
+hub delete -y $GH_USER/environment-jx-pre-production
 ```

@@ -39,7 +39,7 @@ IP=$(kubectl get svc go-demo-2-api \
 IP=$(kubectl get svc go-demo-2-api \
     -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
 
-# If GKE
+# If minikube
 IP=$(minikube ip)
 
 echo $IP
