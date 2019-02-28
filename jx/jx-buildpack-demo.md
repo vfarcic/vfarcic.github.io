@@ -14,6 +14,8 @@ open "https://github.com/jenkins-x-buildpacks/jenkins-x-kubernetes"
 
 # Fork it!
 
+cd ..
+
 GH_USER=[...]
 
 git clone https://github.com/$GH_USER/jenkins-x-kubernetes
@@ -114,7 +116,7 @@ cd go-demo-6
 jx delete application $GH_USER/go-demo-6 -b
 
 kubectl -n jx delete act -l owner=$GH_USER \
-  -l sourcerepository=go-demo-6
+  -l sourcerepository=$GH_USER-go-demo-6
 ```
 
 

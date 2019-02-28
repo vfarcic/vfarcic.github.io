@@ -127,7 +127,7 @@ jx get env -p Never
 ---
 
 ```bash
-cd ...
+cd ..
 
 git clone \
     https://github.com/$GH_USER/environment-jx-rocks-staging.git

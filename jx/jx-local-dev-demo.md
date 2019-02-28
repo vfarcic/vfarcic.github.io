@@ -33,6 +33,10 @@ chmod +x watch.sh
 ```bash
 jx create devpod --reuse -b
 
+jx rsh -d
+
+cd go-demo-6
+
 ls -l
 
 go mod init
@@ -141,6 +145,8 @@ jx sync --daemon # `--daemon` doesn't always work
 
 ```bash
 jx create devpod --reuse --sync -b
+
+jx rsh -d
 
 helm init --client-only
 

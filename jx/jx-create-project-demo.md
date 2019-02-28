@@ -77,11 +77,11 @@ jx get build logs $GH_USER/jx-go/master
 ```bash
 jx get pipelines
 
-jx get apps
+jx get applications
 
 jx get env
 
-jx get apps -e staging
+jx get applications -e staging
 
 open "https://github.com/$GH_USER/jx-go/releases"
 ```
