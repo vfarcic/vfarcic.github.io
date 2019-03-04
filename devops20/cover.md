@@ -1,6 +1,6 @@
 ## DevOps 2.X Toolkit
 
-# Modern DevOps Technologies and Practices
+# DevOps Technologies and Practices
 
 ---
 
