@@ -41,13 +41,8 @@ echo "nexus:
 jx create cluster gke -n jx-rocks -p $PROJECT -z us-east1-b \
     -m n1-standard-2 --min-num-nodes 3 --max-num-nodes 5 \
     --default-admin-password=admin \
-    --default-environment-prefix jx-rocks
+    --default-environment-prefix jx-rocks \
+    --prow
 
-jx console
-```
-
-* Use `admin` as the username and password
-
-```bash
 kubectl -n jx get pods
 ```

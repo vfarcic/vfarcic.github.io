@@ -10,9 +10,7 @@
 ---
 
 ```bash
-git checkout master
-
-jx get apps -e staging
+jx get applications -e staging
 
 VERSION=[...]
 

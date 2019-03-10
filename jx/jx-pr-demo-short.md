@@ -42,7 +42,7 @@ PREVIEW_ADDR=$(kubectl -n jx-vfarcic-jx-go-pr-$PR \
 
 curl "http://$PREVIEW_ADDR"
 
-jx get build log $GH_USER/jx-go/PR-$PR
+jx get build log
 ```
 
 
@@ -54,8 +54,10 @@ jx get build log $GH_USER/jx-go/PR-$PR
 open "https://github.com/$GH_USER/jx-go/pull/$PR"
 ```
 
-* Click the *Merge pull request* button
-* Click the *Confirm merge* button
+* Post a comment with `/meow`
+* Post a comment with `/assign @YOUR_GITHUB_USER`
+* Post a comment with `/lgtm`
+* Post a comment with `/approve`
 
 ```bash
 jx get activity -f jx-go/master -w
