@@ -111,3 +111,16 @@ az aks get-credentials \
 
 export KUBECONFIG=$PWD/cluster/kubecfg-aks
 ```
+
+
+
+
+## Something
+
+```bash
+kubectl create \
+    -f https://raw.githubusercontent.com/vfarcic/k8s-specs/master/helm/tiller-rbac.yml \
+    --record --save-config
+
+helm init --service-account tiller
+```
