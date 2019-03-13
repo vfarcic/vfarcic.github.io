@@ -97,7 +97,7 @@ label_values(container_fs_usage_bytes, device)
 ---
 
 * Click the *+* icon
-* choose to *Create Dashboard*
+* Choose to *Create Dashboard*
 * Select *Graph*
 * Click the *Settings*
 * Type *My Dashboard* as the *Name* of the dashboard

@@ -4,10 +4,11 @@ A: DevExperience is evolving. Year after year, the organization is better, talks
 
 Q: It looks like the big companies like Facebook, Netflix, Amazon etc are moving at an incredible pace while the rest of 95% are stagnating. What the others need to do to reach continuous delivery and 100+ deployments per day?
 
-A: It is true that companies like those you mentioned are moving faster than most of the others. TODO: Continue
+A: It is questionable whether an average company can ever reach the greatness of Netflix, Amazon, Google, and similar companies. No matter how much wee improve, they aree improving even faster. The gap is becoming bigger, not smaller. But, that does not mean that we should give up, bacause that will surely result in death. We will be destroyed by competition if we let down our guard. The only way forward is to be better and faster. To do that, we need to forget what we know. We need to dismantly our corporate structures, we need to disawow our culture, and we need to get rid of our processes. We, efectivelly, need to start over. We need to stop doing what we're doing, and start from scratch. The most effective way to do that is by creating a startup within our company. By creating an entity that is not encumbered by existing (and outdated) processes, we can embrace those created by companies that proved to know better that us how to develop and deliver software. The important thing to note is that the change of technology is the easiest part. Changing ourselves is what prevents us from improving.
  
-Why do you think Kubernetes is so successful? 4-5 years ago there were probably very few people that heard of it, while now the ecosystem is huge. What just happened in such a small period of time?
+Q: Why do you think Kubernetes is so successful? 4-5 years ago there were probably very few people that heard of it, while now the ecosystem is huge. What just happened in such a small period of time?
 
+A: TODO: Continue
  
 If you were now the CTO of a well established company, would you use a cloud offering for your Kubernetes platform like EKS, AKS, GKE or try building yourself with kubeadm or kops or kubicorn still on a cloud platform?
 

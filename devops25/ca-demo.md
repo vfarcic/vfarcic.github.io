@@ -53,7 +53,7 @@ cat scaling/eks-autoscaling-policy.json
 
 aws iam put-role-policy --role-name $IAM_ROLE \
     --policy-name $NAME-AutoScaling \
-    --policy-document file://cluster/eks-autoscaling-policy.json
+    --policy-document file://scaling/eks-autoscaling-policy.json
 ```
 
 
