@@ -5,6 +5,7 @@
 * [Git](https://git-scm.com/)
 * GitBash (if using Windows)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+* GitHub account
 
 You can choose to have a cluster in Google (GKE), Amazon (EKS), or Azure (AKS). Please follow the instructions for the cloud-specific requirements. If you're in doubt which one to choose, I strongly recommend GKE. If you register, you'll get 300$ in free credit and we won't spend more than a few $ during the workshop.
 
