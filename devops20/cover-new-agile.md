@@ -1,6 +1,6 @@
-## DevOps 2.X Toolkit
-
-# DevOps Is The New Agile
+# DevOps
+## Is The
+# New Agile
 
 ---
 
