@@ -14,7 +14,7 @@
 # Denied Boarding
 
 
-<!-- .slide: data-background="img/god.jpg" -->
+<!-- .slide: data-background="../img/background/god.jpg" -->
 # Not My Views
 
 

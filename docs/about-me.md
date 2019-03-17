@@ -12,12 +12,6 @@
 ![](../img/technology-conversations.png)
 
 
-![](../img/products/packt-video.png)
-
-
-![](../img/youtube.png)
-
-
 [![devopstoolkitseries.com](../img/devops-toolkit-series.png)](https://www.devopstoolkitseries.com/)
 
 

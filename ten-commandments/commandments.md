@@ -160,7 +160,7 @@
 # The master is the only one that matters
 
 
-<!-- .slide: data-background="img/god.jpg" -->
+<!-- .slide: data-background="../img/background/god.jpg" -->
 # He Commanded...
 
 ### I. Thou Shalt Be Agile<!-- .element: class="fragment" -->
@@ -171,7 +171,7 @@
 ### VI. Thou Shalt Define Your CD Pipeline As Code<!-- .element: class="fragment" -->
 
 
-<!-- .slide: data-background="img/god.jpg" -->
+<!-- .slide: data-background="../img/background/god.jpg" -->
 # He Commanded...
 
 ### VII. Thou Shalt Have a Fast Pipeline<!-- .element: class="fragment" -->
@@ -180,7 +180,7 @@
 ### X. Thou Shalt Commit Only To The Master Branch<!-- .element: class="fragment" -->
 
 
-<!-- .slide: data-background="img/hell.jpg" -->
+<!-- .slide: data-background="../img/background/hell.jpg" -->
 # Or...
 
 
