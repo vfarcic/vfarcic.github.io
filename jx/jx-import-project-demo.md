@@ -110,6 +110,7 @@ echo "dependencies:
   alias: go-demo-6-db
   version: 5.3.0
   repository:  https://kubernetes-charts.storage.googleapis.com
+  condition: db.enabled
 " | tee charts/go-demo-6/requirements.yaml
 
 echo "go-demo-6-db:

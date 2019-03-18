@@ -10,6 +10,18 @@
 ---
 
 
+<!-- .slide: data-background="../img/background/manual.jpg" -->
+# Importing A Project
+
+---
+
+```bash
+cd go-demo-6
+
+jx import -b
+```
+
+
 <!-- .slide: data-background="../img/background/god.jpg" -->
 
 
@@ -22,6 +34,26 @@
 
 
 <!-- .slide: data-background="img/gitops-apps.png" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="../img/background/manual.jpg" -->
+## Git Is The Only Source Of Truth
+
+---
+
+```bash
+cat main.go | sed -e "s@hello,@GitOps,@g" | tee main.go
+
+cat main_test.go | sed -e "s@hello,@GitOps,@g" | tee main_test.go
+
+git add .
+
+git commit -m "This is a GitOps"
+
+git push
+
+jx get activities -f go-demo-6 -w
+```
 
 
 <!-- .slide: data-background="../img/products/git.png" -->
@@ -88,6 +120,18 @@
 <!-- .slide: data-background="img/gitops-agents.png" data-background-size="contain" -->
 
 
+<!-- .slide: data-background="../img/background/manual.jpg" -->
+## Processes should run 
+## for as long as needed,
+## but not longer
+
+---
+
+```bash
+kubectl get pods
+```
+
+
 <!-- .slide: data-background="../img/background/servers.jpg" -->
 # 5.
 
@@ -98,6 +142,21 @@
 
 
 <!-- .slide: data-background="img/gitops-registries.png" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="../img/background/manual.jpg" -->
+## Processes should run 
+## for as long as needed,
+## but not longer
+
+---
+
+```bash
+CM_ADDR=$(kubectl get ing chartmuseum \
+    -o jsonpath="{.spec.rules[0].host}")
+
+curl "http://$CM_ADDR/index.yaml"
+```
 
 
 <!-- .slide: data-background="../img/background/why.jpg" -->
@@ -117,6 +176,19 @@
 ## or branches
 
 
+<!-- .slide: data-background="../img/background/manual.jpg" -->
+### Information about all the releases
+## must be stored in 
+### environment-specific repositories
+## or branches
+
+---
+
+```bash
+open "https://github.com/vfarcic/environment-jx-rocks-staging/blob/master/env/requirements.yaml"
+```
+
+
 <!-- .slide: data-background="../img/background/best-practices.jpg" -->
 # 7.
 
@@ -127,6 +199,17 @@
 
 
 <!-- .slide: data-background="img/gitops-env.png" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="../img/background/manual.jpg" -->
+## Everything must follow
+## the same coding practices
+
+---
+
+```bash
+open "https://github.com/vfarcic/environment-jx-rocks-staging/pulls"
+```
 
 
 <!-- .slide: data-background="../img/background/deployment.png" -->
@@ -141,6 +224,17 @@
 <!-- .slide: data-background="img/desire.jpg" -->
 
 
+<!-- .slide: data-background="../img/background/manual.jpg" -->
+## All deployments must be
+# idempotent
+
+---
+
+```bash
+cat charts/go-demo-6/templates/deployment.yaml
+```
+
+
 <!-- .slide: data-background="../img/products/git.png" -->
 # 9.
 
@@ -152,6 +246,19 @@
 ### that will be applied to the system
 
 
+<!-- .slide: data-background="../img/background/manual.jpg" -->
+# Git webhooks
+### are the only ones allowed to initiate 
+# a change
+### that will be applied to the system
+
+---
+
+```bash
+open "https://github.com/vfarcic/go-demo-6/settings/hooks"
+```
+
+
 <!-- .slide: data-background="../img/background/communication.jpeg" -->
 # 10.
 
@@ -160,6 +267,22 @@
 # All the tools
 ### must be able to speak with each other
 # through APIs
+
+
+<!-- .slide: data-background="../img/background/manual.jpg" -->
+# All the tools
+### must be able to speak with each other
+# through APIs
+
+---
+
+```bash
+jx get applications -e staging
+
+VERSION=[...]
+
+jx promote go-demo-6 --version $VERSION --env production -b
+```
 
 
 <!-- .slide: data-background="../img/background/god.jpg" -->
