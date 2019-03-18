@@ -16,9 +16,9 @@
 ---
 
 ```bash
-cd go-demo-6
+jx create quickstart -l go -p jx-go -b
 
-jx import -b
+cd jx-go
 ```
 
 
@@ -42,13 +42,11 @@ jx import -b
 ---
 
 ```bash
-cat main.go | sed -e "s@hello,@GitOps,@g" | tee main.go
-
-cat main_test.go | sed -e "s@hello,@GitOps,@g" | tee main_test.go
+cat main.go | sed -e "s@golang http@GitOps@g" | tee main.go
 
 git add .
 
-git commit -m "This is a GitOps"
+git commit -m "This is GitOps"
 
 git push
 
