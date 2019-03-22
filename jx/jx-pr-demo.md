@@ -2,7 +2,10 @@
 
 ---
 
-# Exploring Jenkinsfile
+# Working With Pull Requests And Preview Environments
+
+
+<!-- .slide: data-background="img/pr.png" data-background-size="contain" -->
 
 
 ## Exploring Jenkinsfile
@@ -10,51 +13,65 @@
 ---
 
 ```bash
-cd ../go-demo-6
-
 cat Jenkinsfile
 ```
 
 
-## Creating a PR
+## Creating Pull Requests
 
 ---
 
 ```bash
 git checkout -b my-pr
 
-cat main.go | sed -e "s@hello, world@hello, PR@g" | tee main.go
+cat main.go | sed -e "s@hello, devpod with tests@hello, PR@g" \
+    | tee main.go
 
-cat main_test.go | sed -e "s@hello, world@hello, PR@g" \
+cat main_test.go | sed -e "s@hello, devpod with tests@hello, PR@g" \
     | tee main_test.go
 
-git add . && git commit -m "This is a PR"
+echo "
 
-git push --set-upstream origin my-pr
-
-open "https://github.com/$GH_USER/go-demo-6/pull/new/my-pr"
+db:
+  enabled: false
+  
+preview-db:
+  persistence:
+    enabled: false" | tee -a charts/preview/values.yaml
 ```
 
-* Click the `Create pull request` button
 
-
-## Creating a PR
+## Creating Pull Requests
 
 ---
 
 ```bash
-jx get activity -f go-demo-6 -w
+git add .
 
-PR=[...]
+git commit -m "This is a PR"
 
-PREVIEW_ADDR=$(kubectl -n jx-$GH_USER-go-demo-6-pr-$PR \
-    get ing go-demo-6 -o jsonpath="{.spec.rules[0].host}")
+git push --set-upstream origin my-pr
 
-curl "http://$PREVIEW_ADDR/demo/hello"
+jx create pr -t "My PR" \
+  --body "This is the text that describes the PR
+and it can span multiple lines" -b
+```
+
+* Open the link
+
+
+## Creating Pull Requests
+
+---
+
+```bash
+jx get previews
+
+PR_ADDR=[...]
+
+curl "$PR_ADDR/demo/hello"
 
 helm ls
-
-jx get build log
 ```
 
 
@@ -64,43 +81,29 @@ jx get build log
 
 ```bash
 jx create issue -t "Add unit tests" \
-    --body "Add unit tests to the CD process"
-
-open "https://github.com/$GH_USER/go-demo-6/issues"
+    --body "Add unit tests to the CD process" \
+    -b
 
 ISSUE_ID=[...]
-
-echo '
-unit-test: 
-	CGO_ENABLED=$(CGO_ENABLED) $(GO) test -test.v --run UnitTest --cover' \
-    | tee -a Makefile
-
-vim Jenkinsfile
 ```
 
-* Add `sh "make unit-test"` after `checkout scm`
+* Open *Jenkinsfile* and add the code that follows
 
-```bash
-git add . && git commit -m "Added unit tests (fixes #$ISSUE_ID)" && git push
+```groovy
+sh "make unittest"
 ```
 
-
-## Adding Unit Tests
-
----
+* Save the changes
 
 ```bash
-jx get build log -t
+git add .
 
-jx get activity -f go-demo-6 -w
+git commit \
+  -m "Added unit tests (fixes #$ISSUE_ID)"
 
-open "https://github.com/$GH_USER/go-demo-6/issues"
+git push
 
-jx get issues
-
-open "https://github.com/$GH_USER/go-demo-6/issues/$ISSUE_ID"
-
-open "https://github.com/$GH_USER/go-demo-6/releases"
+jx get issues -b
 ```
 
 
@@ -110,78 +113,91 @@ open "https://github.com/$GH_USER/go-demo-6/releases"
 
 ```bash
 echo '
-func-test: 
-	CGO_ENABLED=$(CGO_ENABLED) $(GO) test -test.v --run FunctionalTest --cover' \
-    | tee -a Makefile
-
-vim Jenkinsfile
+functest: 
+	CGO_ENABLED=$(CGO_ENABLED) $(GO) \\
+	test -test.v --run FunctionalTest \\
+	--cover
+' | tee -a Makefile
 ```
 
-* Add the code that follows after the instruction in the `CI Build and push snapshot` stage
+* Open *Jenkinsfile* and add the code that follows
 
 ```groovy
           dir('/home/jenkins/go/src/github.com/vfarcic/go-demo-6') {
             script {
-              sleep 10
-              addr=sh(script: "kubectl -n jx-$CHANGE_AUTHOR-$HELM_RELEASE get ing $APP_NAME -o jsonpath='{.spec.rules[0].host}'", returnStdout: true).trim()
-              sh "ADDRESS=$addr make func-test"
+              sleep 15
+              addr=sh(script: "kubectl -n jx-$ORG-$HELM_RELEASE get ing $APP_NAME -o jsonpath='{.spec.rules[0].host}'", returnStdout: true).trim()
+              sh "ADDRESS=$addr make functest"
             }
           }
 ```
 
-* You are not vfarcic!!!
-* Save and exit
+* Save the changes
 
 
-## Adding Functional Tests
-
----
-
-```bash
-git add . && git commit -m "Added functional tests" && git push
-
-jx get build log -t
-
-jx get activity -f go-demo-6
-```
-
-
-## Adding Production Tests
+## Adding Integration Tests
 
 ---
 
 ```bash
 echo '
-prod-test: 
-	DURATION=1 CGO_ENABLED=$(CGO_ENABLED) $(GO) test -test.v --run ProductionTest --cover' \
-    | tee -a Makefile
-
-vim Jenkinsfile
+integtest: 
+	DURATION=1 \\
+	CGO_ENABLED=$(CGO_ENABLED) $(GO) \\
+	test -test.v --run ProductionTest \\
+	--cover
+' | tee -a Makefile
 ```
 
-* Add the code that follows at the end of the `Promote to Environments` stage
+* Open *Jenkinsfile* and add the code that follows
 
 ```groovy
           dir('/home/jenkins/go/src/github.com/vfarcic/go-demo-6') {
             script {
-              sleep 10
+              sleep 15
               addr=sh(script: "kubectl -n jx-staging get ing $APP_NAME -o jsonpath='{.spec.rules[0].host}'", returnStdout: true).trim()
-              sh "ADDRESS=$addr make prod-test"
+              sh "ADDRESS=$addr make functest"
+              sh "ADDRESS=$addr make integtest"
             }
           }
 ```
 
+* Save the changes
 
-## Adding Production Tests
+
+## Adding Integration Tests
 
 ---
 
 ```bash
-git add . && git commit -m "Added production tests" && git push
+git add .
 
-jx get build log -t
+git commit -m "Added integration tests"
 
-jx get activity -f go-demo-6
+git push
+
+jx get build logs
+
+cat charts/go-demo-6/values.yaml
+
+echo "
+  usePassword: false" | tee -a charts/go-demo-6/values.yaml
+
+echo "
+  usePassword: false" | tee -a charts/preview/values.yaml
+```
+
+
+## Adding Integration Tests
+
+---
+
+```bash
+git add .
+
+git commit -m "Removed MongoDB password"
+
+git push
 ```
 
 
@@ -189,12 +205,31 @@ jx get activity -f go-demo-6
 
 ---
 
-* Open the `Preview` link
-* Click the *Merge pull request* button
-* Click the *Confirm merge* button
+* Open the pull request screen in GitHub
+* Click *Merge pull request* button
+* Click the *Confirm merge* button.
 
 ```bash
-jx get activity -f go-demo-6/master -w
+jx get activity -f go-demo-6 -w
 
-curl $STAGING_URL
+jx get applications
+
+STAGING_ADDR=[...] # Replace `[...]` with the URL
+
+curl "$STAGING_ADDR/demo/hello"
+```
+
+
+## jx Garbage Collection
+
+---
+
+```bash
+kubectl get cronjobs
+
+jx get previews
+
+jx gc previews
+
+jx get previews
 ```

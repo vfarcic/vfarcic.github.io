@@ -50,7 +50,7 @@ git commit -m "This is GitOps"
 
 git push
 
-jx get activities -f go-demo-6 -w
+jx get activities -f jx-go -w
 ```
 
 
@@ -229,7 +229,22 @@ open "https://github.com/vfarcic/environment-jx-rocks-staging/pulls"
 ---
 
 ```bash
-cat charts/go-demo-6/templates/deployment.yaml
+cd ..
+
+git clone https://github.com/vfarcic/environment-jx-rocks-staging.git
+
+cd environment-jx-rocks-staging/env
+
+CM_ADDR=$(kubectl get ing chartmuseum \
+    -o jsonpath="{.spec.rules[0].host}")
+
+cat requirements.yaml | sed -e \
+    "s@http://jenkins-x-chartmuseum:8080@http://$CM_ADDR@g" \
+    | tee requirements.yaml
+
+jx step helm apply --namespace jx-staging
+
+kubectl -n jx-staging get pods
 ```
 
 
@@ -253,7 +268,7 @@ cat charts/go-demo-6/templates/deployment.yaml
 ---
 
 ```bash
-open "https://github.com/vfarcic/go-demo-6/settings/hooks"
+open "https://github.com/vfarcic/jx-go/settings/hooks"
 ```
 
 
@@ -280,6 +295,8 @@ jx get applications -e staging
 VERSION=[...]
 
 jx promote go-demo-6 --version $VERSION --env production -b
+
+cd ..
 ```
 
 

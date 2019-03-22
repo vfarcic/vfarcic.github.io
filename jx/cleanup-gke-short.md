@@ -27,5 +27,7 @@ cd ..
 
 rm -rf jx-go
 
+rm -rf environment-jx-rocks-*
+
 rm -f ~/.jx/jenkinsAuth.yaml
 ```
