@@ -4,7 +4,7 @@ The DevOps 2.6 Toolkit
 
 ## Ten Commandments Of
 # GitOps
-**Applied To Continuous Delivery**
+## Applied To Continuous Delivery
 
 ---
 

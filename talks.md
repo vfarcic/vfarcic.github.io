@@ -2,21 +2,22 @@
 
 ---
 
-* [Continuous Delivery With Jenkins X, Kubernetes, And Friends](jx/recipe.html)
+* [The DevOps 2.6 Toolkit: Ten Commandments Of GitOps Applied To Continuous Delivery](jx/gitops.html)
+* [The DevOps 2.6 Toolkit: The Recipe For Continuous Delivery](jx/recipe.html)
 * [The DevOps 2.4 Toolkit: Continuous Deployment To Kubernetes](devops24/index.html)
 * [Continuous Deployment With Jenkins X And Kubernetes](jx/workshop.html)
 * [Managing And Maintaining a DevOps Assembly Line](devops-assembly/index.html)
 * [The DevOps 2.X Toolkit: The State Of DevOps](devops20/index.html)
 * [The DevOps 2.2 Toolkit: Self-Healing and Self-Adaptation](devops22/index.html)
 * [The DevOps 2.1 Toolkit: Zero-Downtime Deployments](devops21/rolling-updates.html)
-* [The Ten Commandments Of Continuous Delivery](ten-commandments/index.html)
-* [The DevOps 2.2 Toolkit: Auto-Scaling Services](devops22/auto-scaling.html)
+* [Ten Commandments Of Continuous Delivery](ten-commandments/index.html)
 
 
 # Talks
 
 ---
 
+* [The DevOps 2.2 Toolkit: Auto-Scaling Services](devops22/auto-scaling.html)
 * [The DevOps 2.1 Toolkit: Monitoring Swarm Services](devops21/monitoring.html)
 * [The DevOps 2.1 Toolkit: Docker Swarm](devops21/index.html)
 * [The DevOps 2.1 Toolkit: CD with Jenkins and Docker Swarm](jenkins-swarm/index.html)
