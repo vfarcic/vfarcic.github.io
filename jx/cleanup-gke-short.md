@@ -7,6 +7,8 @@ gcloud container clusters delete jx-rocks --zone us-east1-b --quiet
 
 gcloud compute disks delete $(gcloud compute disks list \
     --filter="-users:*" --format="value(id)")
+
+GH_USER=[...] # Replace with your GitHub user
 ```
 
 

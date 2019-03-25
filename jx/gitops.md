@@ -19,7 +19,23 @@ When I speak with teams and ask them whether Git is their only source of truth, 
 
 GitOps is a way to do Continuous Delivery. It assumes that Git is a single source of truth and that both infrastructure and applications are defined using the declarative syntax (e.g., YAML). Changes to infrastructure or applications are made by pushing changes to Git, not by clicking buttons in Jenkins.
 
-Developers understood the need for having a single source of truth for their applications a while back. Nobody argues anymore whether everything an application needs must be stored in the repository of that application. That's where the code is, that's where the tests are, that's where build scripts are located, and that's where the pipeline of that application is defined. The part that is not yet that common is to apply the same principles to infrastructure. We can think of an environment (e.g., production) as an application. As such, everything we need related to an environment must be stored in a single Git repository. We should be able to recreate the whole environment, from nothing to everything, by executing a single process based only on information in that repository. We can also leverage the development principles we apply to applications. A rollback is done by reverting the code to one of the Git revisions. Accepting a change to an environment is a process that starts with a pull request. And so on, and so forth.
+
+<!-- .slide: data-background="../img/background/why.jpg" -->
+# Where Is Code, Tests, Build Scripts, Pipelines, etc?
+
+---
+
+Note:
+Developers understood the need for having a single source of truth for their applications a while back. Nobody argues anymore whether everything an application needs must be stored in the repository of that application. That's where the code is, that's where the tests are, that's where build scripts are located, and that's where the pipeline of that application is defined.
+
+
+<!-- .slide: data-background="../img/background/why.jpg" -->
+# How About Infrastructure, Environments, And Releases?
+
+---
+
+Note:
+The part that is not yet that common is to apply the same principles to infrastructure. We can think of an environment (e.g., production) as an application. As such, everything we need related to an environment must be stored in a single Git repository. We should be able to recreate the whole environment, from nothing to everything, by executing a single process based only on information in that repository. We can also leverage the development principles we apply to applications. A rollback is done by reverting the code to one of the Git revisions. Accepting a change to an environment is a process that starts with a pull request. And so on, and so forth.
 
 The major challenge in applying GitOps principles is to unify the steps specific to an application with those related to the creation and maintenance of whole environments. At some moment, pipeline dedicated to our application needs to push a change to the repository that contains that environment. In turn, since every process is initiated through a Git webhook fired when there is a change, pushing something to an environment repo should launch another build of a pipeline.
 
@@ -95,7 +111,7 @@ Every change must be recorded (tracked). The most reliable and the easiest way t
 <!-- .slide: data-background="img/confused.jpg" -->
 
 Note:
-You are not allowed to add a feature of an application by changing the code directly inside production servers. It does not matter how big or small the change is, it cannot be done by you, because you cannot provide a guarantee that the change will be documented, reproducible, and tracked. Machines are much more reliable than you when performing actions inside your production systems. You are their overlord, you're not one of them. Your job is to express what the desired state, not to change the system to comply with it.
+You are not allowed to add a feature of an application by changing the code directly inside production servers. It does not matter how big or small the change is, it cannot be done by you, because you cannot provide a guarantee that the change will be documented, reproducible, and tracked. Machines are much more reliable than you when performing actions inside your production systems. You are their overlord, you're not one of them. Your job is to express the desired state, not to change the system to comply with it.
 
 The real challenge is to decide how will that communication be performed. How do we express our desires in a way that machines can execute actions that will result in convergence of the actual state into the desired one? We can think of us as aristocracy and the machines as servants.
 
@@ -109,10 +125,13 @@ The good thing about aristocracy is that there is no need to do much work. As a 
 <!-- .slide: data-background="img/slave.jpg" -->
 
 Note:
-Given that human servitude is forbidden in most of the world, we need to look for servants outside the human race. Today, servants are bytes that are converted into processes running inside machines. We (humans) are the overlords and machines are our slaves. However, since it is not legal to have slaves, nor it is politically correct to call them that, we will refer to them as agents. So, we (humans) are overlords of agents (machines).
+Given that human servitude is forbidden in most of the world, we need to look for servants outside the human race. Today, servants are bytes that are converted into processes running inside machines. We (humans) are the overlords and machines are our slaves.
 
 
 <!-- .slide: data-background="../img/background/servers.jpg" -->
+
+Note:
+However, since it is not legal to have slaves, nor it is politically correct to call them that, we will refer to them as agents. So, we (humans) are overlords of agents (machines).
 
 
 <!-- .slide: data-background="../img/background/communication.jpeg" -->
@@ -140,7 +159,6 @@ So, the third rule is that **communication between processes must be asynchronou
 
 <!-- .slide: data-background="img/gitops-webhooks.png" data-background-size="contain" -->
 
-Note:
 Note:
 We are yet to design such a system. For now, think of it a one or more entities inside our cluster. If we apply the principle of having everything defined as code and stored in Git, there is no reason why those webhooks wouldn't be the only operational entry point to the system. There is no excuse to allow SSH access to anyone (any human). If you define everything in Git, what additional value can you add if you're inside one of the nodes of the cluster?
 
@@ -244,7 +262,7 @@ curl "http://$CM_ADDR/index.yaml"
 Note:
 We already established that all code and configurations (excluding secrets) must be stored in Git as well as that Git is the only entity that should trigger pipelines. We also argued that any change must be recorded. A typical example is a new release. It is way too common to deploy a new release, but not to store that information in Git. Tags do not count because we cannot recreate a whole environment from them. We'd need to go from tag to tag to do that. The same is true for release notes. While they are very useful and we should create them, we cannot diff them, nor we can use them to recreate an environment. What we need is a place that defines a full environment. It also needs to allow us to track changes, to review them, to approve them, and so on. In other words, what we need from an environment definition is not conceptually different from what we expect from an application. We need to store it in a Git repository. There is very little doubt about that. What is less clear is which repository should have the information about an environment.
 
-We should be able to respond not only to a question "which release of an application is running in production?" but also "what is production?" and "what are the releases of all the applications running there?" If we would stored information about a release in the repository of the application we just deployed, we would be able to answer only to the first question. We would know which release of our app is in an environment. What we could not answer easily answer is the same question but referred to the whole environment, not only to one application. Or, to be more precise, we could not do that easily. We'd need to go from one repository to another.
+We should be able to respond not only to a question "which release of an application is running in production?" but also "what is production?" and "what are the releases of all the applications running there?" If we would store information about a release in the repository of the application we just deployed, we would be able to answer only to the first question. We would know which release of our app is in an environment. What we could not answer easily answer is the same question but referred to the whole environment, not only to one application. Or, to be more precise, we could not do that easily. We'd need to go from one repository to another.
 
 Another important thing we need to have in mind is the ability to recreate an environment (e.g., staging or production). That cannot be done easily if the information about the releases is spread across many repositories.
 
