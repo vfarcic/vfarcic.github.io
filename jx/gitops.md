@@ -50,6 +50,7 @@ Many things might need to change for us to make the ideas behind GitOps a realit
 ---
 
 ```bash
+# jx create quickstart -l go --pack go-mongodb -p jx-go -b
 jx create quickstart -l go -p jx-go -b
 
 cd jx-go
@@ -433,7 +434,7 @@ jx get applications -e staging
 
 VERSION=[...]
 
-jx promote go-demo-6 --version $VERSION --env production -b
+jx promote jx-go --version $VERSION --env production -b
 
 cd ..
 ```
