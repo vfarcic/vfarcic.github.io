@@ -3,5 +3,4 @@
 ---
 
 
-> Continuous delivery is a fully automated process that leaves only one manualy action; promotion to production with a single click.
-
+> Who is the actor that executes promotion to production. Is it us (humans) or Jenkins X (machines)?

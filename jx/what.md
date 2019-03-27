@@ -44,8 +44,8 @@
 ---
 
 * Adopt Kubernetes as the major cross-platform cloud-agnostic container scheduler <!-- .element: class="fragment" -->
-* Adopt KNative as serverless solution in Kubernetes <!-- .element: class="fragment" -->
-* Adopt prow as GitOps and Kubernetes low-level CI/CD solution <!-- .element: class="fragment" -->
+* Adopt tekton as serverless solution for pipelines in Kubernetes <!-- .element: class="fragment" -->
+* Adopt prow as GitOps and ChatOps <!-- .element: class="fragment" -->
 * Adopt Helm as the standard Kubernetes packaging solution <!-- .element: class="fragment" -->
 * Facilitate quickstarts <!-- .element: class="fragment" -->
 
@@ -78,8 +78,8 @@
 ---
 
 
-<!-- .slide: data-background="../img/products/knative.png" -->
-# Do You Undestand The Intricacies Of KNative Build?
+<!-- .slide: data-background="../img/products/tekton.png" data-background-size="contain" -->
+# Do You Undestand The Intricacies Of tekton?
 
 ---
 

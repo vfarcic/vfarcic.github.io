@@ -2,15 +2,34 @@
 
 ---
 
-# Promoting To Production
+# Promoting Releases To Production
 
 
-## Promoting To Production
+## In case you messed it up
 
 ---
 
 ```bash
+git pull
+
+git checkout pr
+
+git merge -s ours master --no-edit
+
 git checkout master
+
+git merge pr
+
+git push
+```
+
+
+## Promoting Production
+
+---
+
+```bash
+jx get applications -e production
 
 jx get applications -e staging
 
@@ -18,8 +37,9 @@ VERSION=[...]
 
 jx promote go-demo-6 --version $VERSION --env production -b
 
-PROD_ADDR=$(kubectl -n jx-production get ing go-demo-6 \
-    -o jsonpath="{.spec.rules[0].host}")
+jx get applications -e production
 
-curl "http://$PROD_ADDR/demo/hello"
+PROD_ADDR=[...]
+
+curl "$PROD_ADDR/demo/hello"
 ```

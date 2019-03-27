@@ -22,7 +22,7 @@ ls -l jx-go
 
 cat jx-go/Dockerfile
 
-cat jx-go/Jenkinsfile
+cat jx-go/jenkins-x.yml
 
 cat jx-go/Makefile
 ```

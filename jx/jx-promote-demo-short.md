@@ -10,14 +10,17 @@
 ---
 
 ```bash
+jx get applications -e production
+
 jx get applications -e staging
 
 VERSION=[...]
 
-jx promote jx-go --version $VERSION --env production -b
+jx promote go-demo-6 --version $VERSION --env production -b
 
-PROD_ADDR=$(kubectl -n jx-production get ing jx-go \
-    -o jsonpath="{.spec.rules[0].host}")
+jx get applications -e production
 
-curl "http://$PROD_ADDR"
+PROD_ADDR=[...]
+
+curl "$PROD_ADDR/demo/hello"
 ```
