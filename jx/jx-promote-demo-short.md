@@ -16,7 +16,7 @@ jx get applications -e staging
 
 VERSION=[...]
 
-jx promote go-demo-6 --version $VERSION --env production -b
+jx promote jx-go --version $VERSION --env production -b
 
 jx get applications -e production
 

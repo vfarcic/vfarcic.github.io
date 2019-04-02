@@ -22,8 +22,8 @@ We'll explore how to create a fully operational continuous delivery pipeline usi
 * Creating A CD Cluster
 * Creating A Quickstart Project
 * Importing Existing Projects Into Jenkins X
-* Creating Buildpacks
-* Understranding GitOps Principles
+* Creating Custom Buildpacks
+* Applying GitOps Principles
 * Improving And Simplifying Software Development
-* Creating Pull Requests
+* Working With Pull Requests And Preview Environments
 * Promoting To Production

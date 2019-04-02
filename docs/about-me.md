@@ -6,10 +6,13 @@
 [<img src="../img/company-big.png" style="background-color: white;" />](https://www.cloudbees.com)
 
 
-[<img src="../img/docker-captain.png" style="width: 50%; height: 50%;" />](https://www.docker.com/community/docker-captains)
+<!-- .slide: data-background="../img/gde.png" data-background-size="contain" -->
 
 
-![](../img/technology-conversations.png)
+<!-- .slide: data-background="../img/docker-captain.png" data-background-size="contain" -->
+
+
+[![technologyconversations.com](../img/technology-conversations.png)](https://technologyconversations.com)
 
 
 [![devopstoolkitseries.com](../img/devops-toolkit-series.png)](https://www.devopstoolkitseries.com/)
