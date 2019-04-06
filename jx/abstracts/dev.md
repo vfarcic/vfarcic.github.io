@@ -1,4 +1,4 @@
-# Improving And Simplifying Software Development
+# Simplifying Software Development
 
 ## Abstract
 
@@ -16,4 +16,4 @@ As you can imagine, installing and configuring all that is not trivial. It is no
 
 We can continue with business as usual and install all the compilers and the tools on our laptops. We can dedicate time setting them up and connecting them with the system (e.g., with the registries). We can continue giving new hires long Word documents that walk them through all the actions they need to perform to be able to develop our applications. Or, we can take a different approach. We might be able to create a full-blown development environment on demand and for each person. We can even make those environments application specific. And we might be able to make it so fast and straightforward that anyone can do it with a single command and in only a couple of minutes.
 
-Jenkins X allows us to spin up a project-based private development environment with all the tools, configurations, and environment variables we might need to work on any of our applications. That feature is called DevPod.
+Jenkins X allows us to spin up a project-based private development environment with all the tools, configurations, and environment variables we might need to work on any of our applications.
