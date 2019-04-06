@@ -39,6 +39,9 @@ kubectl -n jenkins rollout status deployment jenkins
 ---
 
 ```bash
+# If minikube
+JENKINS_ADDR=$(minikube ip)
+
 # If EKS
 JENKINS_ADDR=$(kubectl -n jenkins get ing jenkins \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")

@@ -210,6 +210,9 @@ kubectl exec -it alpine-env -- env
 ---
 
 ```bash
+# If minikube
+IP=$(minikube ip)
+
 cat cm/prometheus.yml
 
 cat cm/prometheus.yml | sed -e "s/192.168.99.100/$IP/g" \

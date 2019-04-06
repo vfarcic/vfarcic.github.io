@@ -69,7 +69,7 @@ openssl x509 -req -in cluster/keys/jdoe.csr -CA ~/.minikube/ca.crt \
 ```bash
 cp ~/.minikube/ca.crt cluster/keys/ca.crt
 
-ls -1 keys
+ls -1 cluster/keys
 
 SERVER=$(kubectl config view \
     -o jsonpath='{.clusters[?(@.name=="minikube")].cluster.server}')
