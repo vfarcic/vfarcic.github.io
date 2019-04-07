@@ -5,6 +5,30 @@
 # Persisting State
 
 
+## Creating An EKS Cluster
+
+---
+
+```bash
+# Follow the instructions from
+# https://github.com/weaveworks/eksctl to intall eksctl.
+
+export AWS_ACCESS_KEY_ID=[...] # Replace [...] with AWS access key ID
+
+export AWS_SECRET_ACCESS_KEY=[...] # Replace [...] with AWS secret access key
+
+export AWS_DEFAULT_REGION=us-west-2
+
+mkdir -p cluster
+
+eksctl create cluster -n devops23 -r $AWS_DEFAULT_REGION \
+    --kubeconfig cluster/kubecfg-eks --node-type t2.small \
+    --nodes 3 --nodes-max 9 --nodes-min 3
+
+export KUBECONFIG=$PWD/cluster/kubecfg-eks
+```
+
+
 ## Without Persisting State
 
 ---
@@ -101,11 +125,8 @@ open "http://$JENKINS_ADDR/jenkins"
 ```bash
 aws ec2 describe-instances
 
-# If kops
-GROUP_NAME=nodes.$NAME
-
 # If EKS
-GROUP_NAME=EKS-devops24-DefaultNodeGroup-NodeSecurityGroup
+GROUP_NAME=eksctl-devops23-nodegroup-0-SG
 
 aws ec2 describe-instances | jq -r ".Reservations[].Instances[] \
     | select(.SecurityGroups[].GroupName | startswith(\"$GROUP_NAME\"))\
@@ -177,7 +198,7 @@ aws ec2 describe-volumes --volume-ids $VOLUME_ID_1
 ---
 
 ```bash
-gcloud compute instances list --filter="name:('gke-devops25*')" \
+gcloud compute instances list --filter="name:('gke-devops23*')" \
     --format 'csv[no-heading](zone)' | tee zones
 
 AZ_1=$(cat zones | head -n 1)

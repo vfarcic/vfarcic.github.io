@@ -1,4 +1,4 @@
-# Cleanup (GKE)
+## Cleanup (GKE)
 
 ---
 
@@ -12,7 +12,7 @@ gcloud compute disks delete $(gcloud compute disks list \
 ```
 
 
-# Cleanup (EKS)
+## Cleanup (EKS)
 
 ---
 
@@ -23,26 +23,20 @@ LB_NAME=$(aws elbv2 describe-load-balancers | jq -r \
 
 echo $LB_NAME
 
-aws elb delete-load-balancer \
-    --load-balancer-name $LB_NAME
+aws elb delete-load-balancer --load-balancer-name $LB_NAME
 
-IAM_ROLE=$(aws iam list-roles \
-    | jq -r ".Roles[] \
-    | select(.RoleName \
+IAM_ROLE=$(aws iam list-roles | jq -r ".Roles[] | select(.RoleName \
     | startswith(\"eksctl-$NAME-nodegroup-0-NodeInstanceRole\")) \
     .RoleName")
 
-echo $IAM_ROLE
-
-aws iam delete-role-policy \
-    --role-name $IAM_ROLE \
+aws iam delete-role-policy --role-name $IAM_ROLE \
     --policy-name $NAME-AutoScaling
 
 eksctl delete cluster -n $NAME
 ```
 
 
-# Cleanup (AKS)
+## Cleanup (AKS)
 
 ---
 
@@ -59,16 +53,7 @@ az group delete --name $NAME-group --yes
 ```
 
 
-# Cleanup (minikube)
-
----
-
-```bash
-minikube delete
-```
-
-
-# Cleanup
+## Cleanup
 
 ---
 
@@ -77,19 +62,10 @@ hub delete -y $GH_USER/environment-jx-rocks-staging
 
 hub delete -y $GH_USER/environment-jx-rocks-production
 
-# Delete the PR branches
-
 hub delete -y $GH_USER/jx-go
 
 rm -rf ~/.jx/environments/$GH_USER/environment-jx-rocks-*
-```
 
-
-# Cleanup
-
----
-
-```bash
 cd ..
 
 rm -rf jx-go

@@ -1,16 +1,8 @@
 body:after {
   content: url(../../img/company.png);
   position: fixed;
-  top: -10px;
-  right: 0px;}
-
-.reveal {
-  text-shadow:
-          -1px -1px 0 #000,
-          1px -1px 0 #000,
-          -1px 1px 0 #000,
-          1px 1px 0 #000;
-}
+  top: -5px;
+  right: 5px;}
 
 .reveal blockquote {
     display: block;
@@ -35,19 +27,14 @@ body:after {
     max-height: 400px;
     word-wrap: normal;
     background: #3F3F3F;
+    line-height: 1.2em;
+    font-size: 0.9em;
     color: #DCDCDC; }
 
-.reveal a {
-    color: #9edffa;
-    text-decoration: none;
-    -webkit-transition: color .15s ease;
-    -moz-transition: color .15s ease;
-    transition: color .15s ease; }
+.reveal h1 {
+    font-size: 3.77em;
+    text-shadow: 2px 2px 0 #000; }
 
-.reveal a:hover {
-    color: #80d0fa;
-    border: none; }
-
-.reveal .roll span:after {
-    color: #fff;
-    background: #068de9; }
+.reveal h2 {
+    font-size: 1.5em; 
+    text-shadow: 2px 2px 0 #000; }
