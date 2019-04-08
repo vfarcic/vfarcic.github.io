@@ -3,7 +3,7 @@
     font-size: 40px;
     font-weight: normal;
     color: #eee;
-    text-shadow: 2px 2px 0` #000; }
+    text-shadow: 2px 2px 0 #000; }
 
 body:after {
   content: url(../../img/company.png);
