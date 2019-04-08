@@ -29,7 +29,7 @@ NAME=jxrocks && MACHINE=Standard_D2s_v3 && LOCATION=eastus && MIN_NODES=3 && PAS
 
 # NOTE: Azure ACR allows only `^[a-zA-Z0-9]*$`
 
-jx create cluster aks -c $NAME -n $NAME-group -l $LOCATION -s $MACHINE -o $MIN_NODES --default-admin-password=$PASS --git-username $GH_USER --environment-git-owner $GH_USER --default-environment-prefix jx-rocks
+jx create cluster aks -c $NAME -n $NAME-group -l $LOCATION -s $MACHINE -o $MIN_NODES --default-admin-password=$PASS --git-username $GH_USER --environment-git-owner $GH_USER --default-environment-prefix jx-rocks --no-tiller
 
 jx console
 ```

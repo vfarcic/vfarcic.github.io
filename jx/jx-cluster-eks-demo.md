@@ -37,7 +37,7 @@ MIN_NODES=3 && MAX_NODES=5 && PASS=admin
 
 jx create cluster eks -n $NAME -r $AWS_DEFAULT_REGION --node-type $MACHINE \
     -o $MIN_NODES --nodes-min $MIN_NODES --nodes-max $MAX_NODES \
-    --default-admin-password=$PASS --git-username $GH_USER --environment-git-owner $GH_USER --default-environment-prefix jx-rocks
+    --default-admin-password=$PASS --git-username $GH_USER --environment-git-owner $GH_USER --default-environment-prefix jx-rocks --no-tiller
 ```
 
 * Answer with `n` to `Would you like to register a wildcard DNS ALIAS to point at this ELB address?`
