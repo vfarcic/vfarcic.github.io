@@ -47,5 +47,9 @@ body:after {
     text-shadow: 2px 2px 0 #000; }
 
 .reveal h3 {
-    font-size: 1.2em;
+    font-size: 1em;
+    text-shadow: 2px 2px 0 #000; }
+
+.reveal h4 {
+    font-size: 0.8em;
     text-shadow: 2px 2px 0 #000; }

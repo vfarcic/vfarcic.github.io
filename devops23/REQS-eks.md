@@ -33,5 +33,13 @@ mkdir -p cluster
 eksctl create cluster -n devops23 -r $AWS_DEFAULT_REGION \
     --kubeconfig cluster/kubecfg-eks --node-type t2.small \
     --nodes 3 --nodes-max 9 --nodes-min 3
+
+export KUBECONFIG=$PWD/cluster/kubecfg-eks
+
+# Confirm that the nodes are created and joined the cluster
+kubectl get nodes
+
+# Delete the cluster, we'll create it again during the workshop
+eksctl delete cluster -n devops24
 ```
 

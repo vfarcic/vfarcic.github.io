@@ -15,14 +15,14 @@
 
 ## [DevOpsToolkitSeries.com](http://www.devopstoolkitseries.com/)
 
-<figure style="width: 50%; height: 50%; float: left;">
+<figure style="width: 40%; height: 40%; float: left;">
     <a href="https://www.devopstoolkitseries.com/">
         <img src="../img/devops-toolkit-series.png"/>
     </a>
-    <h4>Mailing list:</h4>
-    <strong>http://eepurl.com/bXonVj</strong>
+    <h4 style="background-color: black;">Mailing list:</h4>
+    <strong style="background-color: black;">http://eepurl.com/bXonVj</strong>
 </figure>
-<figure style="width: 50%; height: 50%; float: right;">
+<figure style="width: 30%; height: 30%; float: right;">
     <a href="https://www.devopstoolkitseries.com/">
         <img src="../img/qr/devops-toolkit-series.png"/>
     </a>

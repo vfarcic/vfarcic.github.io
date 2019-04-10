@@ -29,6 +29,22 @@ export KUBECONFIG=$PWD/cluster/kubecfg-eks
 ```
 
 
+## Creating An EKS Cluster
+
+---
+
+```bash
+kubectl apply \
+    -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
+
+kubectl apply \
+    -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/aws/service-l4.yaml
+
+kubectl apply \
+    -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/aws/patch-configmap-l4.yaml
+```
+
+
 ## Without Persisting State
 
 ---
@@ -403,30 +419,6 @@ gcloud compute disks delete $VOLUME_ID_3 --zone $AZ_3 --quiet
 ---
 
 ```bash
-# If EKS
-echo 'kind: StorageClass
-apiVersion: storage.k8s.io/v1
-metadata:
-  name: gp2
-provisioner: kubernetes.io/aws-ebs
-parameters:
-  type: gp2
-  encrypted: "true"' | kubectl create -f -
-```
-
-
-## Using Storage Classes
-
----
-
-* In case of EKS, we created a new StorageClass (most other flavors have it out-of-the-box)
-
-
-## Using Storage Classes
-
----
-
-```bash
 kubectl get sc
 
 # If EKS
@@ -518,10 +510,6 @@ gcloud compute disks list --filter="name:('$PV_NAME')"
 ---
 
 ```bash
-# If EKS
-kubectl patch storageclass gp2 \
-    -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
-
 kubectl get sc
 
 kubectl describe sc
