@@ -10,6 +10,8 @@
 ---
 
 ```bash
+minikube addons enable ingress
+
 kubectl create cm my-config --from-file=cm/prometheus-conf.yml
 
 kubectl describe cm my-config
