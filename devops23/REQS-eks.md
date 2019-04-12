@@ -40,6 +40,6 @@ export KUBECONFIG=$PWD/cluster/kubecfg-eks
 kubectl get nodes
 
 # Delete the cluster, we'll create it again during the workshop
-eksctl delete cluster -n devops24
+eksctl delete cluster -n devops23
 ```
 
