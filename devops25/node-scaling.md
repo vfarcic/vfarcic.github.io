@@ -22,7 +22,7 @@
 <!-- .slide: data-background="../img/background/monitoring.jpeg" -->
 ## You stared at
 # dashboards
-## to find out when to scale your node
+## to find out when to scale your nodes
 
 ---
 
@@ -77,7 +77,7 @@ devops-toolkit-84f6646f5-bhmcg 1/1   Running 0        3d18h
 
 
 <!-- .slide: data-background="../img/background/angry.jpg" -->
-## You learned that
+## You learned that the
 # pending state
 ## is not enough
 
