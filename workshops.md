@@ -2,7 +2,7 @@
 
 ---
 
-* [Continuous Deployment With Jenkins X And Kubernetes](jx/workshop-gke.html) 
+* [Continuous Deployment With Jenkins X And Kubernetes](jx/workshop.html) 
 * [The DevOps 2.5 Toolkit: Beyond Kubernetes Deployments: Monitoring, Logging, and Auto-Scaling Kubernetes](devops25/workshop.html)
 
 

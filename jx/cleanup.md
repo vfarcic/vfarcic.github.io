@@ -25,14 +25,12 @@ echo $LB_NAME
 
 aws elb delete-load-balancer --load-balancer-name $LB_NAME
 
-IAM_ROLE=$(aws iam list-roles | jq -r ".Roles[] | select(.RoleName \
-    | startswith(\"eksctl-$NAME-nodegroup-0-NodeInstanceRole\")) \
-    .RoleName")
-
-aws iam delete-role-policy --role-name $IAM_ROLE \
-    --policy-name $NAME-AutoScaling
-
 eksctl delete cluster -n $NAME
+
+for volume in `aws ec2 describe-volumes --output text| grep available | awk '{print $8}'`; do 
+    echo "Deleting volume $volume"
+    aws ec2 delete-volume --volume-id $volume
+done
 ```
 
 
