@@ -2,6 +2,6 @@
 
 ---
 
-[vfarcic.github.io/jx/workshop-gke.html](http://vfarcic.github.io/jx/workshop-gke.html)
+[vfarcic.github.io/jx/workshop.html](http://vfarcic.github.io/jx/workshop.html)
 
 ![QR](img/address-gke-qr.png)
