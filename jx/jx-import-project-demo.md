@@ -139,7 +139,7 @@ jx get activity -f go-demo-6 -w
 ```bash
 kubectl -n jx-staging get pods
 
-kubectl -n jx-staging describe pod -l app=jx-staging-go-demo-6
+kubectl -n jx-staging describe pod -l app=jx-go-demo-6
 ```
 
 

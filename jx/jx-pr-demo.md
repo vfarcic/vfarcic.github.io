@@ -70,8 +70,6 @@ jx get previews
 PR_ADDR=[...]
 
 curl "$PR_ADDR/demo/hello"
-
-helm ls
 ```
 
 

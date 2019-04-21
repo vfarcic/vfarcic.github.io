@@ -5,10 +5,17 @@
 ```bash
 gcloud container clusters delete jx-rocks --zone us-east1-b --quiet
 
-gcloud container clusters delete jx-rocks --region us-east1-b --quiet
+gcloud container clusters delete jx-rocks --region us-east1 --quiet
 
-gcloud compute disks delete $(gcloud compute disks list \
-    --filter="-users:*" --format="value(id)")
+gcloud compute disks delete --zone us-east1-b $(gcloud compute disks \
+    list --filter="zone:us-east1-b AND -users:*" \
+    --format="value(id)")
+gcloud compute disks delete --zone us-east1-c $(gcloud compute disks \
+    list --filter="zone:us-east1-c AND -users:*" \
+    --format="value(id)")
+gcloud compute disks delete --zone us-east1-d $(gcloud compute disks \
+    list --filter="zone:us-east1-d AND -users:*" \
+    --format="value(id)")
 ```
 
 

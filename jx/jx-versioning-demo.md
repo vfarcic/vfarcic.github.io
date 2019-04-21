@@ -52,6 +52,8 @@ jx-release-version
 exit
 
 jx delete devpod
+
+git checkout master
 ```
 
 
@@ -69,6 +71,8 @@ VERSION := 1.0.0
 jx-release-version
 
 cat Jenkinsfile
+
+git add . 
 
 git commit -m "Finally 1.0.0"
 
