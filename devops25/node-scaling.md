@@ -63,16 +63,12 @@
 
 ---
 
-```
-NAME                           READY STATUS  RESTARTS AGE
-devops-toolkit-84f6646f5-c2bss 1/1   Pending 0        1m
-devops-toolkit-84f6646f5-v278z 1/1   Running 0        3d18h
-devops-toolkit-84f6646f5-9chj4 1/1   Running 0        3d18h
-devops-toolkit-84f6646f5-ncfjm 1/1   Running 0        3d18h
-devops-toolkit-84f6646f5-j5qxh 1/1   Pending 0        1m
-devops-toolkit-84f6646f5-v6c8f 1/1   Running 0        3d18h
-devops-toolkit-84f6646f5-dgfsr 1/1   Pending 0        1m
-devops-toolkit-84f6646f5-bhmcg 1/1   Running 0        3d18h
+```bash
+kubectl apply -f scaling/go-demo-5-many.yml
+
+kubectl -n go-demo-5 get pods
+
+kubectl get nodes
 ```
 
 

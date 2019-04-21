@@ -1,3 +1,18 @@
+```bash
+GD5_ADDR=go-demo-5.$LB_IP.nip.io
+
+helm install \
+	https://github.com/vfarcic/go-demo-5/releases/download/0.0.1/go-demo-5-0.0.1.tgz \
+    --name go-demo-5 --namespace go-demo-5 \
+	--set ingress.host=$GD5_ADDR --wait
+
+for i in {1..1000}; do
+    DELAY=$[ $RANDOM % 10000 ]
+    curl "http://$GD5_ADDR/demo/hello?delay=$DELAY"
+done
+```
+
+
 <!-- .slide: data-background="../img/background/why.jpg" -->
 # A long time ago in a galaxy far, far away...
 
@@ -41,18 +56,8 @@
 
 ---
 
-```
-func recordMetrics(start time.Time, req *http.Request, code int) {
-	duration := time.Since(start)
-	histogram.With(
-		prometheus.Labels{
-			"service": serviceName,
-			"code":    fmt.Sprintf("%d", code),
-			"method":  req.Method,
-			"path":    req.URL.Path,
-		},
-	).Observe(duration.Seconds())
-}
+```bash
+open "https://github.com/vfarcic/go-demo-5/blob/master/main.go#L155"
 ```
 
 
@@ -62,16 +67,16 @@ func recordMetrics(start time.Time, req *http.Request, code int) {
 
 ---
 
+```bash
+open "http://$PROM_ADDR/graph"
 ```
-sum(rate(
-    http_server_resp_time_bucket{
-        le="0.1", kubernetes_name="go-demo-5"}[5m]
-))
-by (method, path) / 
-sum(rate(
-    http_server_resp_time_count{kubernetes_name="go-demo-5"}[5m]
-)) 
-by (method, path) < 0.99
+
+```
+sum(rate(http_server_resp_time_bucket{le="0.1",
+	kubernetes_name="go-demo-5"}[5m])) by (method, path) 
+/ sum(rate(http_server_resp_time_count{
+	kubernetes_name="go-demo-5"}[5m])) by (method, path)
+< 0.99
 ```
 
 

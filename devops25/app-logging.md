@@ -1,3 +1,17 @@
+```bash
+PT_HOST=logs7.papertrailapp.com
+
+PT_PORT=17221
+
+cat logging/fluentd-papertrail.yml | sed -e "s@NNNNN@$PT_PORT@g" \
+    | sed -e "s@logsN.papertrailapp.com@$PT_HOST@g" \
+    | kubectl apply -f -
+
+kubectl -n logging \
+  rollout status ds fluentd-papertrail
+```
+
+
 <!-- .slide: data-background="../img/background/why.jpg" -->
 # A long time ago in a galaxy far, far away...
 
@@ -31,6 +45,10 @@
 # centralized logging
 
 ---
+
+```bash
+open "https://papertrailapp.com/"
+```
 
 
 <!-- .slide: data-background="../img/background/angry.jpg" -->

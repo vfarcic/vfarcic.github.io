@@ -1,3 +1,10 @@
+```bash
+kubectl apply -f scaling/go-demo-5-no-hpa.yml
+
+kubectl apply -f scaling/go-demo-5-api-hpa-low-mem.yml
+```
+
+
 <!-- .slide: data-background="../img/background/why.jpg" -->
 # A long time ago in a galaxy far, far away...
 
@@ -46,7 +53,7 @@
 
 ---
 
-```bash
+```yaml
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 spec:
@@ -62,6 +69,17 @@ spec:
     resource:
       name: memory
       targetAverageUtilization: 80
+```
+
+
+<!-- .slide: data-background="../img/products/kubernetes.png" -->
+## You discovered
+## HorizontalPodAutoscaler
+
+---
+
+```bash
+kubectl -n go-demo-5 get hpa,pods
 ```
 
 

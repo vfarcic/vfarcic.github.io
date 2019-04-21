@@ -50,12 +50,10 @@
 
 ---
 
-```
-sum(rate(nginx_ingress_controller_requests{status=~"5.."}[5m]))
-by (ingress) /
-sum(rate(nginx_ingress_controller_requests[5m]))
-by (ingress)
-> 0.05
+```bash
+open "http://$PROM_ADDR/alerts"
+
+kubectl delete ns go-demo-5
 ```
 
 
