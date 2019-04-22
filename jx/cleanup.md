@@ -69,11 +69,26 @@ hub delete -y $GH_USER/environment-jx-rocks-production
 
 hub delete -y $GH_USER/jx-go
 
-rm -rf ~/.jx/environments/$GH_USER/environment-jx-rocks-*
+hub delete -y $GH_USER/jx-serverless
 
+hub delete -y $GH_USER/jx-prow
+
+rm -rf ~/.jx/environments/$GH_USER/environment-jx-rocks-*
+```
+
+
+## Cleanup
+
+---
+
+```bash
 cd ..
 
 rm -rf jx-go
+
+rm -rf jx-serverless
+
+rm -rf jx-prow
 
 rm -rf environment-jx-rocks-staging
 
