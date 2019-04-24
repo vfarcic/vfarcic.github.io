@@ -45,8 +45,7 @@ PROJECT=[...] # e.g. devops24-book
 jx create cluster gke -n jx-rocks -p $PROJECT -r us-east1 \
     -m n1-standard-2 --min-num-nodes 1 --max-num-nodes 2 \
     --default-admin-password=admin \
-    --default-environment-prefix jx-rocks --git-provider-kind github \
-    --no-tiller
+    --default-environment-prefix jx-rocks --git-provider-kind github
 ```
 
 
@@ -58,7 +57,7 @@ jx create cluster gke -n jx-rocks -p $PROJECT -r us-east1 \
 jx create cluster aks -c jxrocks -n jxrocks-group -l eastus \
     -s Standard_B2s --nodes 3 --default-admin-password=admin \
     --default-environment-prefix jx-rocks \
-    --git-provider-kind github --no-tiller
+    --git-provider-kind github
 ```
 
 
@@ -79,7 +78,7 @@ jx create cluster eks -n jx-rocks -r $AWS_DEFAULT_REGION \
     --node-type t2.medium --nodes 3 --nodes-min 3 --nodes-max 6 \
     --default-admin-password=admin \
     --default-environment-prefix jx-rocks \
-    --git-provider-kind github --no-tiller
+    --git-provider-kind github
 ```
 
 

@@ -53,7 +53,7 @@ jx install --provider $PROVIDER --external-ip $LB_IP --domain $DOMAIN \
     --default-admin-password=admin --ingress-namespace $INGRESS_NS \
     --ingress-deployment $INGRESS_DEP \
     --default-environment-prefix tekton --git-provider-kind github \
-    --namespace cd --no-tiller --prow --tekton -b
+    --namespace cd --prow --tekton -b
 ```
 
 

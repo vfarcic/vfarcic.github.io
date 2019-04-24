@@ -27,7 +27,7 @@ GH_USER=[...]
 
 PASS=admin && MEM=8192 && CPU=8 && DISK=150GB
 
-jx create cluster minikube --default-admin-password=$PASS -m $MEM -c $CPU -s $DISK -d virtualbox --git-username $GH_USER --environment-git-owner $GH_USER --default-environment-prefix jx-rocks --no-tiller
+jx create cluster minikube --default-admin-password=$PASS -m $MEM -c $CPU -s $DISK -d virtualbox --git-username $GH_USER --environment-git-owner $GH_USER --default-environment-prefix jx-rocks
 
 jx console
 ```
