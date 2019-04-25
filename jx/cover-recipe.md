@@ -1,5 +1,7 @@
 ### The DevOps 2.6 Toolkit
 
+---
+
 ## The Recipe For
 # Continuous Delivery
 

@@ -2,9 +2,7 @@
 
 ---
 
-## Ten Commandments Of
-# GitOps
-## Applied To Continuous Delivery
+# Combining Serverless Continuous Delivery With ChatOps
 
 ---
 
