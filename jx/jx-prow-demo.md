@@ -14,8 +14,6 @@ jx create quickstart -l go -p jx-prow -b
 
 cd jx-prow
 
-jx get activities -f jx-prow -w
-
 git checkout -b chat-ops
 
 echo "ChatOps" | tee README.md
@@ -26,7 +24,7 @@ git commit -m "My first PR with prow"
 
 git push --set-upstream origin chat-ops
 
-jx create pr -t "PR with prow" --body "What I can say?" -b
+jx create pr --title "PR with prow" --body "What I can say?" --batch-mode
 ```
 
 * Open the link from the output
@@ -44,8 +42,6 @@ jx create pr -t "PR with prow" --body "What I can say?" -b
 This PR is urgent, so please review it ASAP
 ```
 
-* Type `/unassign` and click the *Comment* button
-* Type `/assign @GH_USER` and click the *Comment* button
 * Type `/lgtm` and click the *Comment* button
 * Type `/unassign` and click the *Comment* button
 
@@ -110,7 +106,7 @@ git commit -m "My second PR with prow"
 
 git push --set-upstream origin my-pr
 
-jx create pr -t "My PR" --body "What I can say?" -b
+jx create pr --title "My PR" --body "What I can say?" --batch-mode
 ```
 
 

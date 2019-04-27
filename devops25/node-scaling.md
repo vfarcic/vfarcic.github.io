@@ -66,9 +66,7 @@
 ```bash
 kubectl apply -f scaling/go-demo-5-many.yml
 
-kubectl -n go-demo-5 get pods
-
-kubectl get nodes
+kubectl -n go-demo-5 get pods,nodes
 ```
 
 

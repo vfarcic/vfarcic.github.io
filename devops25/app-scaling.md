@@ -1,6 +1,4 @@
 ```bash
-kubectl apply -f scaling/go-demo-5-no-hpa.yml
-
 kubectl apply -f scaling/go-demo-5-api-hpa-low-mem.yml
 ```
 

@@ -47,7 +47,7 @@ kubectl -n logging \
 ---
 
 ```bash
-open "https://papertrailapp.com/"
+open "https://papertrailapp.com/events"
 ```
 
 

@@ -1,4 +1,6 @@
 <!--
+cd k8s-specs
+
 gcloud container clusters create devops25 --region us-east1 --machine-type n1-standard-1 --enable-autoscaling --num-nodes 1 --max-nodes 3 --min-nodes 1
 
 kubectl create clusterrolebinding cluster-admin-binding --clusterrole cluster-admin --user $(gcloud config get-value account)
@@ -22,6 +24,8 @@ PROM_ADDR=mon.$LB_IP.nip.io
 AM_ADDR=alertmanager.$LB_IP.nip.io
 
 helm upgrade -i prometheus stable/prometheus --namespace metrics --version 7.1.3 --set server.ingress.hosts={$PROM_ADDR} --set alertmanager.ingress.hosts={$AM_ADDR} -f mon/prom-values.yml --wait
+
+kubectl apply -f scaling/go-demo-5-no-hpa.yml
 -->
 ### The DevOps 2.5 Toolkit
 

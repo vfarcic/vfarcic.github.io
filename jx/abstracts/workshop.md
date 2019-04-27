@@ -14,16 +14,20 @@ It is the CI/CD solution for development of modern cloud applications on Kuberne
 
 We'll explore how to create a fully operational continuous delivery pipeline using containers, Kubernetes, Jenkins X, and quite a few other tools.
 
-## Agenda
+## Agenda (day 1)
 
-* What Do We Expect From Continuous Delivery?
-* How Do We Accomplish Continuous Delivery?
-* Intro To Jenkins X
-* Creating A CD Cluster
-* Creating A Quickstart Project
-* Importing Existing Projects Into Jenkins X
-* Creating Custom Buildpacks
-* Applying GitOps Principles
-* Improving And Simplifying Software Development
-* Working With Pull Requests And Preview Environments
-* Promoting To Production
+* What Do We Expect From Continuous Delivery? (15 min.)
+* What Is Jenkins X? (15 min.)
+* Exploring Quickstart Projects (1h)
+* Importing Existing Projects Into Jenkins X (1h)
+* Creating Custom Build Packs (1h)
+* Applying GitOps Principles (1h)
+* Improving And Simplifying Software Development (1h)
+* Working With Pull Requests And Preview Environments (1h)
+* Promoting Releases To Production (1h)
+* Versioning Releases (30 min.)
+
+## Agenda (day 2)
+
+* Going Serverless (1h)
+* Implementing ChatOps (1h)

@@ -93,6 +93,4 @@ rm -rf jx-prow
 rm -rf environment-jx-rocks-staging
 
 rm -rf environment-jx-rocks-production
-
-rm -f ~/.jx/jenkinsAuth.yaml
 ```
