@@ -108,14 +108,6 @@ kubectl create clusterrolebinding \
     --clusterrole cluster-admin \
     --user $(gcloud config get-value account)
 
-for i in {1..20}
-do
-  codename \
-    --lists=adjectives \
-    --filters=alliterative,unique,random \
-    |  tr '[:upper:]' '[:lower:]'
-done
-
 kubectl apply \
     -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
 
@@ -157,6 +149,8 @@ users:
       name: gcp" \
     | tee workshop_config
 
+# Change `/Users/vfarcic/google-cloud-sdk/bin/gcloud` to the path of your `gcloud`
+
 export KUBECONFIG=$PWD/workshop_config
 ```
 
@@ -184,6 +178,20 @@ jx install --provider gke --external-ip $LB_IP --domain $DOMAIN \
     --default-environment-prefix jx-rocks --git-provider-kind github \
     --namespace $GH_USER
 ```
+<!-- 
+for i in {1..20}
+do
+    GH_USER=$(codename \
+        --lists=adjectives \
+        --filters=alliterative,unique,random \
+        |  tr '[:upper:]' '[:lower:]')
+    jx install --provider gke --external-ip $LB_IP --domain $DOMAIN \
+        --default-admin-password=admin --ingress-namespace ingress-nginx \
+        --ingress-deployment nginx-ingress-controller \
+        --default-environment-prefix jx-rocks --git-provider-kind github \
+        --namespace $GH_USER --batch-mode
+done
+ -->
 
 
 ## Verifying The Installation
