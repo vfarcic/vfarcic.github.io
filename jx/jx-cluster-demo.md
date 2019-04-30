@@ -122,7 +122,7 @@ kubectl apply \
 kubectl apply \
     -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/cloud-generic.yaml
 -->
-## Using The Workshop Cluster
+## Creating A Cluster With jx (Workshop)
 
 ---
 
@@ -161,7 +161,7 @@ export KUBECONFIG=$PWD/workshop_config
 ```
 
 
-## Using The Workshop Cluster
+## Creating A Cluster With jx (Workshop)
 
 ---
 
@@ -173,7 +173,10 @@ export LB_IP=$(kubectl -n ingress-nginx get svc ingress-nginx \
 
 echo $LB_IP
 
-DOMAIN=GH_USER.$LB_IP.nip.io
+DOMAIN=$GH_USER.$LB_IP.nip.io
+
+# Use default answers except in the case specified below.
+# Answer `Static Jenkins Server and Jenkinsfiles` when asked to `select Jenkins installation type`
 
 jx install --provider gke --external-ip $LB_IP --domain $DOMAIN \
     --default-admin-password=admin --ingress-namespace ingress-nginx \
