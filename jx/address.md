@@ -4,4 +4,4 @@
 
 [vfarcic.github.io/jx/workshop.html](http://vfarcic.github.io/jx/workshop.html)
 
-![QR](img/address-gke-qr.png)
+![QR](img/address-qr.png)

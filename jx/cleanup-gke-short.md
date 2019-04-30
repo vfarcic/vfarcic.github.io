@@ -3,8 +3,6 @@
 ---
 
 ```bash
-gcloud container clusters delete jx-rocks --zone us-east1-b --quiet
-
 gcloud container clusters delete jx-rocks --region us-east1 --quiet
 
 gcloud compute disks delete --zone us-east1-b $(gcloud compute disks \
