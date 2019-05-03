@@ -18,13 +18,14 @@ We'll explore how to create a fully operational continuous delivery pipeline usi
 
 * What Do We Expect From Continuous Delivery? (15 min.)
 * What Is Jenkins X? (15 min.)
+* Creating A Jenkins-X Cluster (30 min)
 * Exploring Quickstart Projects (1h)
 * Importing Existing Projects Into Jenkins X (1h)
 * Creating Custom Build Packs (1h)
 * Applying GitOps Principles (1h)
 * Improving And Simplifying Software Development (1h)
 * Working With Pull Requests And Preview Environments (1h)
-* Promoting Releases To Production (1h)
+* Promoting Releases To Production (30 min)
 * Versioning Releases (30 min.)
 
 ## Agenda (day 2)

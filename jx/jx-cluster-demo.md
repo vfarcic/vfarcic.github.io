@@ -147,11 +147,11 @@ users:
         expiry-key: '{.credential.token_expiry}'
         token-key: '{.credential.access_token}'
       name: gcp" \
-    | tee workshop_config
+    | tee workshop_config.yml
 
 # Change `/Users/vfarcic/google-cloud-sdk/bin/gcloud` to the path of your `gcloud`
 
-export KUBECONFIG=$PWD/workshop_config
+export KUBECONFIG=$PWD/workshop_config.yaml
 ```
 
 
