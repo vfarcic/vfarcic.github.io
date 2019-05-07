@@ -24,7 +24,8 @@ git commit -m "My first PR with prow"
 
 git push --set-upstream origin chat-ops
 
-jx create pr --title "PR with prow" --body "What I can say?" --batch-mode
+jx create pr --title "PR with prow" --body "What I can say?" \
+    --batch-mode
 ```
 
 * Open the link from the output
@@ -132,4 +133,6 @@ jx create pr --title "My PR" --body "What I can say?" --batch-mode
 
 ```bash
 kubectl -n cd describe cm plugins
+
+cd ..
 ```

@@ -1,6 +1,6 @@
-# Implementing ChatOps
+# Using The Pipeline Extension Model
 
 ---
 
 
-> Copying and pasting code is a major sin among developers. One of the first things we learn as software engineers is that duplicated code is hard to maintain and prone to errors. That's why we are creating libraries. We do not want to repeat ourselves, so we even came up with a commonly used acronym DRY (don't repeat yourself).
+> The pipeline extension model allows us to focus on what really matters in our projects and to ignore the steps that are common to others.

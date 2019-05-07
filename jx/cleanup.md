@@ -65,6 +65,10 @@ hub delete -y $GH_USER/environment-jx-rocks-staging
 
 hub delete -y $GH_USER/environment-jx-rocks-production
 
+hub delete -y $GH_USER/environment-tekton-staging
+
+hub delete -y $GH_USER/environment-tekton-production
+
 hub delete -y $GH_USER/jx-go
 
 hub delete -y $GH_USER/jx-serverless
@@ -80,15 +84,13 @@ rm -rf ~/.jx/environments/$GH_USER/environment-jx-rocks-*
 ---
 
 ```bash
-cd ..
-
 rm -rf jx-go
 
 rm -rf jx-serverless
 
 rm -rf jx-prow
 
-rm -rf environment-jx-rocks-staging
+rm -rf environment-jx-rocks-*
 
-rm -rf environment-jx-rocks-production
+rm -rf environment-tekton-*
 ```
