@@ -91,6 +91,9 @@ jx create cluster eks -n jx-rocks -r $AWS_DEFAULT_REGION \
 
 
 <!--
+rm -f $PWD/workshop_config.yaml
+
+export KUBECONFIG=workshop_config.yaml
 
 gcloud auth login
 
@@ -147,7 +150,7 @@ users:
         expiry-key: '{.credential.token_expiry}'
         token-key: '{.credential.access_token}'
       name: gcp" \
-    | tee workshop_config.yml
+    | tee workshop_config.yaml
 
 # Change `/Users/vfarcic/google-cloud-sdk/bin/gcloud` to the path of your `gcloud`
 
