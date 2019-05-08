@@ -53,8 +53,7 @@ git commit -m "This is a PR"
 git push --set-upstream origin my-pr
 
 jx create pr -t "My PR" \
-  --body "This is the text that describes the PR
-and it can span multiple lines" -b
+  --body "This is the text that describes the PR and it can span multiple lines" -b
 ```
 
 * Open the link

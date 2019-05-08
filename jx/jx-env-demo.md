@@ -214,4 +214,6 @@ jx delete env pre-production
 GH_USER=[...]
 
 hub delete -y $GH_USER/environment-jx-pre-production
+
+cd ..
 ```

@@ -18,6 +18,8 @@
 ---
 
 ```bash
+cd go-demo-6
+
 git checkout buildpack
 
 git merge -s ours master --no-edit
@@ -62,7 +64,7 @@ echo $DOCKER_REGISTRY
 
 env
 
-helm init --client-only
+helm init --service-account tiller
 
 skaffold run -p dev
 

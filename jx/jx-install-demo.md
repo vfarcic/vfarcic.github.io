@@ -23,7 +23,7 @@ brew install jx
 ```bash
 mkdir -p ~/.jx/bin
 
-curl -L https://github.com/jenkins-x/jx/releases/download/v1.3.634/jx-linux-amd64.tar.gz | tar xzv -C ~/.jx/bin
+curl -L https://github.com/jenkins-x/jx/releases/download/v2.0.100/jx-linux-amd64.tar.gz | tar xzv -C ~/.jx/bin
 
 export PATH=$PATH:~/.jx/bin
 
