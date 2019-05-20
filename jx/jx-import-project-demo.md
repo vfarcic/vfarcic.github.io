@@ -41,7 +41,7 @@ rm -rf charts
 
 git push
 
-jx repo -b
+jx import --batch-mode
 
 ls -1
 ```
@@ -52,17 +52,15 @@ ls -1
 ---
 
 ```bash
-jx import -b
+jx get activities --filter go-demo-6 --watch # Stop with *ctrl*c*
 
-ls -1
-
-jx get activities -f go-demo-6 -w
+jx get applications
 
 STAGING_ADDR=[...]
 
 curl "$STAGING_ADDR/demo/hello"
 
-kubectl -n jx-staging logs -l app=jx-staging-go-demo-6
+kubectl --namespace jx-staging logs -l app=jx-staging-go-demo-6
 ```
 
 

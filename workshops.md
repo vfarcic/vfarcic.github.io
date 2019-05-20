@@ -2,8 +2,8 @@
 
 ---
 
-* [Continuous Deployment With Jenkins X And Kubernetes](jx/workshop.html) 
-* [The DevOps 2.5 Toolkit: Beyond Kubernetes Deployments: Monitoring, Logging, and Auto-Scaling Kubernetes](devops25/workshop.html)
+* [Cloud-Native Kubernetes-First Serverless Continuous Delivery](jx/workshop-tektonsss.html) 
+* [Beyond Kubernetes Deployments: Monitoring, Logging, and Auto-Scaling Kubernetes](devops25/workshop.html)
 
 
 # Workshops

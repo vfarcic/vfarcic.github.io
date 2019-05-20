@@ -22,7 +22,7 @@ ls -l jx-go
 
 cat jx-go/Dockerfile
 
-cat jx-go/Jenkinsfile
+cat jx-go/jenkins-x.yml
 
 cat jx-go/Makefile
 ```
@@ -56,17 +56,13 @@ ls -l ~/.jx/draft/packs/github.com/jenkins-x-buildpacks/jenkins-x-kubernetes/pac
 ```bash
 kubectl get pods
 
-jx console
-
 jx get activities
 
 jx get activities -f jx-go -w # Cancel with ctrl+c
 
 jx get build logs # Cancel with ctrl+c
 
-jx get build logs -f jx-go # Cancel with ctrl+c
-
-jx get build logs $GH_USER/jx-go/master
+jx get build logs -f jx-go
 ```
 
 

@@ -7,8 +7,7 @@ cat logging/fluentd-papertrail.yml | sed -e "s@NNNNN@$PT_PORT@g" \
     | sed -e "s@logsN.papertrailapp.com@$PT_HOST@g" \
     | kubectl apply -f -
 
-kubectl -n logging \
-  rollout status ds fluentd-papertrail
+kubectl -n logging rollout status ds fluentd-papertrail
 ```
 
 

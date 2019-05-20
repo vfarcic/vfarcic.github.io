@@ -140,7 +140,7 @@ cat Makefile
 
 # Make sure that you use tabs instead of spaces
 echo 'test:
-	ADDRESS=`kubectl -n jx-staging get ing go-demo-6 \\
+	ADDRESS=`kubectl -n cd-staging get ing go-demo-6 \\
 	-o jsonpath="{.spec.rules[0].host}"` go test -v' \
     | tee -a Makefile
 ```
@@ -155,9 +155,12 @@ curl -sSLo integration_test.go https://bit.ly/2Do5LRN
 
 cat integration_test.go
 
-cat Jenkinsfile
+cat jenkins-x.yml
 
-curl -sSLo Jenkinsfile https://bit.ly/2Dr1Kfk
+jx create step --pipeline release --lifecycle postbuild --mode post \
+    --sh 'make test'
+
+cat jenkins-x.yml
 
 ls -1 env
 
@@ -176,13 +179,11 @@ git commit -m "Added tests"
 
 git push
 
-jx get activity -f environment-jx-rocks-staging
+jx get activity -f environment-jx-rocks-staging --watch
 
-jx get build logs $GH_USER/environment-jx-rocks-staging/master
+jx get build logs
 
-jx console
-
-kubectl -n jx-staging get pods
+kubectl -n cd-staging get pods
 ```
 
 
