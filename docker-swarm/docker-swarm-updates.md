@@ -149,7 +149,7 @@ ID                         NAME           IMAGE                NODE    DESIRED S
 
 ![Both of the instances updated with the new release](../img/swarm/swarm-update-03.png)
 
-If, for whatever reason, we'd like to rollback the release, we can run the same command again (only with time with the old image). Let's revert to the release *1.0*.
+If, for whatever reason, we'd like to rollback the release, we can run the same command again (only this time with the old image). Let's revert to the release *1.0*.
 
 ```bash
 docker service update --image vfarcic/go-demo:1.0 go-demo
