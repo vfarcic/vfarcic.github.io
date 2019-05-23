@@ -123,24 +123,24 @@ The next in line of the files we have to change is the `requirements.yaml` file.
 ```bash
 echo "dependencies:
 - name: mongodb
-  alias: REPLACE_ME_APP_NAME-db
+  alias: code-db
   version: 5.3.0
   repository:  https://kubernetes-charts.storage.googleapis.com
 " | tee packs/go-mongo/charts/requirements.yaml
 ```
 
-Please note the usage of the `REPLACE_ME_APP_NAME` string. Today (February 2019), that is still one of the features that are not documented. When the build pack is applied, it'll replace that string with the actual name of the application. After all, it would be silly to hard-code the name of the application since this pack should be reusable across many.
+Please note the usage of the `code` string. Today (February 2019), that is still one of the features that are not documented. When the build pack is applied, it'll replace that string with the actual name of the application. After all, it would be silly to hard-code the name of the application since this pack should be reusable across many.
 
 Now that we created the `mongodb` dependency, we should add the values that will customize MongoDB chart so that the database is deployed as a MongoDB replica set (a Kubernetes StatefulSet with two or more replicas). The place where we change variables used with a chart is `values.yaml`. But, since we want to redefine values of dependency, we need to add it inside the name or, in our case, the alias of that dependency.
 
 ```bash
-echo "REPLACE_ME_APP_NAME-db:
+echo "code-db:
   replicaSet:
     enabled: true
 " | tee -a packs/go-mongo/charts/values.yaml
 ```
 
-Just as with `requirements.yaml`, we used the "magic" string `REPLACE_ME_APP_NAME` that will be replaced with the name of the application during the import or the quickstart process. The `replicaSet.enabled` entry will make sure that the database is deployed as a multi-replica StatefulSet.
+Just as with `requirements.yaml`, we used the "magic" string `code` that will be replaced with the name of the application during the import or the quickstart process. The `replicaSet.enabled` entry will make sure that the database is deployed as a multi-replica StatefulSet.
 
 I> If you're interested in all the values available in the `mongodb` chart, please visit the [project README](https://github.com/helm/charts/tree/master/stable/mongodb).
 
@@ -184,13 +184,13 @@ dependencies:
   # !! "alias: preview" must be last entry in dependencies array !!
   # !! Place custom dependencies above !!
 - alias: preview
-  name: REPLACE_ME_APP_NAME
-  repository: file://../REPLACE_ME_APP_NAME
+  name: code
+  repository: file://../code
 ```
 
 If we exclude the `exposecontroller` which we will ignore for now (it creates Ingress for our applications), the only dependency is the one aliased `preview`. It points to the directory where the application chart is located. As a result, whenever we create a preview (through a pull request), it'll deploy the associated application. However, it will not install dependencies of that dependency, so we'll need to add MongoDB there as well.
 
-Just as before, the `preview` uses `REPLACE_ME_APP_NAME` tag instead of a hard-coded name of the application.
+Just as before, the `preview` uses `code` tag instead of a hard-coded name of the application.
 
 If you take a look at the comments, you'll see that the file must end with an empty line. More importantly, the `preview` must be the last entry. That means that we need to add `mongodb` somewhere above it.
 
