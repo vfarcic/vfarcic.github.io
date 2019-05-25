@@ -45,6 +45,8 @@ rm -rf ~/.jx/environments/$GH_USER/environment-jx-rocks-*
 ---
 
 ```bash
+cd ..
+
 rm -rf jx-go
 
 rm -rf jx-serverless

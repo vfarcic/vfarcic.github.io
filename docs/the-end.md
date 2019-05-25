@@ -9,11 +9,9 @@
 ![TechnologyConversations.com](../img/qr/technology-conversations.jpg)
 
 
-## Books
+## [DevOpsToolkitSeries.com](http://www.devopstoolkitseries.com/)
 
 ---
-
-## [DevOpsToolkitSeries.com](http://www.devopstoolkitseries.com/)
 
 <figure style="width: 40%; height: 40%; float: left;">
     <a href="https://www.devopstoolkitseries.com/">

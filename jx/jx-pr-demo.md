@@ -13,7 +13,7 @@
 ---
 
 ```bash
-cat Jenkinsfile
+cat jenkins-x.yml
 ```
 
 

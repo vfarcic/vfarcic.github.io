@@ -2,7 +2,7 @@
 
 ---
 
-* [Cloud-Native Kubernetes-First Serverless Continuous Delivery](jx/workshop-tektonsss.html) 
+* [Cloud-Native Kubernetes-First Serverless Continuous Delivery](jx/workshop-tekton.html) 
 * [Beyond Kubernetes Deployments: Monitoring, Logging, and Auto-Scaling Kubernetes](devops25/workshop.html)
 
 
