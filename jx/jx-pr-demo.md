@@ -5,16 +5,32 @@
 # Working With Pull Requests And Preview Environments
 
 
-<!-- .slide: data-background="img/pr.png" data-background-size="contain" -->
-
-
-## Exploring Jenkinsfile
+## In case you messed it up
 
 ---
 
 ```bash
-cat jenkins-x.yml
+git pull
+
+git checkout dev
+
+git merge -s ours master --no-edit
+
+git checkout master
+
+git merge dev
+
+echo "buildPack: go" | tee jenkins-x.yml
+
+git add .
+
+git commit -m "Added jenkins-x.yml"
+
+git push
 ```
+
+
+<!-- .slide: data-background="img/pr.png" data-background-size="contain" -->
 
 
 ## Creating Pull Requests
@@ -22,7 +38,7 @@ cat jenkins-x.yml
 ---
 
 ```bash
-git checkout -b my-pr
+git checkout -b my-new-pr
 
 cat main.go | sed -e "s@hello, devpod with tests@hello, PR@g" \
     | tee main.go
@@ -50,10 +66,12 @@ git add .
 
 git commit -m "This is a PR"
 
-git push --set-upstream origin my-pr
+git push --set-upstream origin my-new-pr
 
-jx create pr -t "My PR" \
-  --body "This is the text that describes the PR and it can span multiple lines" -b
+jx create pullrequest \
+    --title "My PR" \
+    --body "This is the text that describes the PR" \
+    --batch-mode
 ```
 
 * Open the link
@@ -69,132 +87,6 @@ jx get previews
 PR_ADDR=[...]
 
 curl "$PR_ADDR/demo/hello"
-```
-
-
-## Adding Unit Tests
-
----
-
-```bash
-jx create issue -t "Add unit tests" \
-    --body "Add unit tests to the CD process" \
-    -b
-
-ISSUE_ID=[...]
-```
-
-* Open *Jenkinsfile* and add the code that follows
-
-```groovy
-sh "make unittest"
-```
-
-* Save the changes
-
-```bash
-git add .
-
-git commit \
-  -m "Added unit tests (fixes #$ISSUE_ID)"
-
-git push
-
-jx get issues -b
-```
-
-
-## Adding Functional Tests
-
----
-
-```bash
-echo '
-functest: 
-	CGO_ENABLED=$(CGO_ENABLED) $(GO) \\
-	test -test.v --run FunctionalTest \\
-	--cover
-' | tee -a Makefile
-```
-
-* Open *Jenkinsfile* and add the code that follows
-
-```groovy
-          dir('/home/jenkins/go/src/github.com/vfarcic/go-demo-6') {
-            script {
-              sleep 15
-              addr=sh(script: "kubectl -n jx-$ORG-$HELM_RELEASE get ing $APP_NAME -o jsonpath='{.spec.rules[0].host}'", returnStdout: true).trim()
-              sh "ADDRESS=$addr make functest"
-            }
-          }
-```
-
-* Save the changes
-
-
-## Adding Integration Tests
-
----
-
-```bash
-echo '
-integtest: 
-	DURATION=1 \\
-	CGO_ENABLED=$(CGO_ENABLED) $(GO) \\
-	test -test.v --run ProductionTest \\
-	--cover
-' | tee -a Makefile
-```
-
-* Open *Jenkinsfile* and add the code that follows
-
-```groovy
-          dir('/home/jenkins/go/src/github.com/vfarcic/go-demo-6') {
-            script {
-              sleep 15
-              addr=sh(script: "kubectl -n jx-staging get ing $APP_NAME -o jsonpath='{.spec.rules[0].host}'", returnStdout: true).trim()
-              sh "ADDRESS=$addr make functest"
-              sh "ADDRESS=$addr make integtest"
-            }
-          }
-```
-
-* Save the changes
-
-
-## Adding Integration Tests
-
----
-
-```bash
-git add .
-
-git commit -m "Added integration tests"
-
-git push
-
-jx get build logs
-
-cat charts/go-demo-6/values.yaml
-
-echo "
-  usePassword: false" | tee -a charts/go-demo-6/values.yaml
-
-echo "
-  usePassword: false" | tee -a charts/preview/values.yaml
-```
-
-
-## Adding Integration Tests
-
----
-
-```bash
-git add .
-
-git commit -m "Removed MongoDB password"
-
-git push
 ```
 
 

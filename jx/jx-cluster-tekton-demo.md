@@ -50,7 +50,7 @@ jx create cluster gke -n jx-rocks -p $PROJECT -r us-east1 \
     -m n1-standard-2 --min-num-nodes 1 --max-num-nodes 2 \
     --default-admin-password=admin \
     --default-environment-prefix jx-rocks --git-provider-kind github \
-    --namespace cd --prow --tekton
+    --namespace $NAMESPACE --prow --tekton
 ```
 
 
@@ -64,7 +64,7 @@ jx create cluster gke -n jx-rocks -p $PROJECT -r us-east1 \
 jx create cluster aks -c jxrocks -n jxrocks-group -l eastus \
     -s Standard_B2s --nodes 3 --default-admin-password=admin \
     --default-environment-prefix jx-rocks --git-provider-kind github \
-    --namespace cd --prow --tekton
+    --namespace $NAMESPACE --prow --tekton
 ```
 
 
@@ -86,7 +86,7 @@ jx create cluster eks -n jx-rocks -r $AWS_DEFAULT_REGION \
     --node-type t2.medium --nodes 3 --nodes-min 3 --nodes-max 6 \
     --default-admin-password=admin \
     --default-environment-prefix jx-rocks --git-provider-kind github \
-    --namespace cd --prow --tekton
+    --namespace $NAMESPACE --prow --tekton
 ```
 
 
@@ -102,6 +102,16 @@ doctl k8s cluster create jx-rocks --count $NODES --region nyc1 --size s-4vcpu-8g
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/1cd17cd12c98563407ad03812aebac46ca4442f2/deploy/mandatory.yaml
 
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/1cd17cd12c98563407ad03812aebac46ca4442f2/deploy/provider/cloud-generic.yaml
+
+rm -rf charts/metrics-server charts/k8s/metrics-server
+
+mkdir -p charts/k8s
+
+helm fetch stable/metrics-server -d charts --untar
+
+helm template charts/metrics-server --name metrics-server --output-dir charts/k8s --namespace kube-system
+
+kubectl -n kube-system apply -f charts/k8s/metrics-server/templates
 -->
 ## Using The Workshop Cluster
 
@@ -145,7 +155,7 @@ MY_USER=[...]
 NAMESPACE=$MY_USER
 
 jx install --provider kubernetes --external-ip $LB_IP \
-    --domain $MY_USER.$LB_IP.nip.io --default-admin-password=admin \
+    --domain $LB_IP.nip.io --default-admin-password=admin \
     --ingress-namespace ingress-nginx \
     --ingress-deployment nginx-ingress-controller \
     --default-environment-prefix tekton --git-provider-kind github \
@@ -166,6 +176,5 @@ jx install --provider kubernetes --external-ip $LB_IP \
 ---
 
 ```bash
-# If your own cluster
-kubectl -n $NAMESPACE get pods
+kubectl get pods
 ```

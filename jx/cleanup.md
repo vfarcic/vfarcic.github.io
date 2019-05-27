@@ -1,3 +1,6 @@
+<!--
+doctl kubernetes cluster delete jx-rocks -f
+-->
 ## Cleanup (GKE)
 
 ---
