@@ -12,7 +12,6 @@ doctl auth init
 
 kubectl config use do-nyc1-jx-rocks
 ```
-# TODO: CA
 
 ####################################
 # Install NGINX Ingress controller #
@@ -29,15 +28,15 @@ export LB_IP=$(kubectl -n ingress-nginx \
 
 echo $LB_IP # It might take a while until LB is created. Repeat the `export` command if the output is empty.
 ```
-##############
-# Install jx #
-##############
 
-# The command that follows uses `-b` to run in the batch mode and it assumes that this is not the first time you create a cluster with `jx`.
-# If that's not the case and this is indeed the first time you're creating a `jx` cluster, it will not have some of the default values like GitHub user and the installation might fail.
-# Please remove `-b` from the command if this is NOT the first time you're creating a cluster with `jx`.
+# Install jx 
 
-# Static
+
+The command that follows uses `-b` to run in the batch mode and it assumes that this is not the first time you create a cluster with `jx`.
+If that's not the case and this is indeed the first time you're creating a `jx` cluster, it will not have some of the default values like GitHub user and the installation might fail.
+Please remove `-b` from the command if this is NOT the first time you're creating a cluster with `jx`.
+
+## Static
 ```bash
 jx install \
     --provider kubernetes \
@@ -50,7 +49,7 @@ jx install \
     --git-provider-kind github \
     -b
 ```
-# Serverless
+## Serverless
 ```bash
 jx install \
     --provider kubernetes \
@@ -66,9 +65,8 @@ jx install \
     --tekton \
     -b
 ```
-#######################
-# Destroy the cluster #
-#######################
+
+# Destroy the cluster 
 ```bash
 doctl kubernetes cluster \
     delete jx-rocks \
