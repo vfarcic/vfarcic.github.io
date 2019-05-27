@@ -1,5 +1,10 @@
 <!--
 doctl kubernetes cluster delete jx-rocks -f
+
+# TODO: Remove the volumes
+# doctl compute volume list -o json
+
+# TODO: Remove the LB
 -->
 ## Cleanup (GKE)
 
