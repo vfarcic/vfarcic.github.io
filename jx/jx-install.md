@@ -1,9 +1,6 @@
 # Installing jx CLI
 
 ---
-####################
-# Create a cluster #
-####################
 
 # Install [doctl](https://github.com/digitalocean/doctl)
 ```bash
@@ -13,9 +10,7 @@ doctl auth init
 kubectl config use do-nyc1-jx-rocks
 ```
 
-####################################
-# Install NGINX Ingress controller #
-####################################
+# Install NGINX Ingress controller
 ```bash
 kubectl apply \
   -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/1cd17cd12c98563407ad03812aebac46ca4442f2/deploy/mandatory.yaml .
