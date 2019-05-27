@@ -25,6 +25,8 @@
 ---
 
 ```bash
+NAMESPACE=cd
+
 echo "nexus:
   enabled: false
 docker-registry:
@@ -140,12 +142,14 @@ echo $LB_IP
 
 MY_USER=[...]
 
+NAMESPACE=$MY_USER
+
 jx install --provider kubernetes --external-ip $LB_IP \
     --domain $MY_USER.$LB_IP.nip.io --default-admin-password=admin \
     --ingress-namespace ingress-nginx \
     --ingress-deployment nginx-ingress-controller \
     --default-environment-prefix tekton --git-provider-kind github \
-    --namespace $MY_USER --prow --tekton
+    --namespace $NAMESPACE --prow --tekton
 ```
 
 
@@ -162,5 +166,6 @@ jx install --provider kubernetes --external-ip $LB_IP \
 ---
 
 ```bash
-kubectl -n cd get pods
+# If your own cluster
+kubectl -n $NAMESPACE get pods
 ```
