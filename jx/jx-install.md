@@ -6,18 +6,18 @@
 ####################
 
 # Install [doctl](https://github.com/digitalocean/doctl)
-
+```bash
 doctl auth init
 
 
 kubectl config use do-nyc1-jx-rocks
-
+```
 # TODO: CA
 
 ####################################
 # Install NGINX Ingress controller #
 ####################################
-
+```bash
 kubectl apply \
   -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/1cd17cd12c98563407ad03812aebac46ca4442f2/deploy/mandatory.yaml .
   
@@ -28,7 +28,7 @@ export LB_IP=$(kubectl -n ingress-nginx \
     get svc -o jsonpath="{.items[0].status.loadBalancer.ingress[0].ip}")
 
 echo $LB_IP # It might take a while until LB is created. Repeat the `export` command if the output is empty.
-
+```
 ##############
 # Install jx #
 ##############
@@ -38,6 +38,7 @@ echo $LB_IP # It might take a while until LB is created. Repeat the `export` com
 # Please remove `-b` from the command if this is NOT the first time you're creating a cluster with `jx`.
 
 # Static
+```bash
 jx install \
     --provider kubernetes \
     --external-ip $LB_IP \
@@ -48,8 +49,9 @@ jx install \
     --default-environment-prefix jx-rocks \
     --git-provider-kind github \
     -b
-
+```
 # Serverless
+```bash
 jx install \
     --provider kubernetes \
     --external-ip $LB_IP \
@@ -63,15 +65,15 @@ jx install \
     --prow \
     --tekton \
     -b
-
+```
 #######################
 # Destroy the cluster #
 #######################
-
+```bash
 doctl kubernetes cluster \
     delete jx-rocks \
     -f
-
+```
 # TODO: Delete the volumes
 
 # TODO: Delete the LB
