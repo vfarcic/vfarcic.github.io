@@ -23,8 +23,6 @@ PROVIDER=[...] # gke, eks, aks, etc
 
 echo "nexus:
   enabled: false
-docker-registry:
-  enabled: true
 " | tee myvalues.yaml
 ```
 
