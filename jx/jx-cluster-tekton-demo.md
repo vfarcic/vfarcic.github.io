@@ -115,7 +115,7 @@ kubectl -n kube-system apply -f charts/k8s/metrics-server/templates
 
 # Fetch k8s config from DO UI and replace the one below.
 -->
-## Using The Workshop Cluster
+## Using The Workshop Cluster (Not Today)
 
 ---
 
