@@ -29,8 +29,13 @@ jx rsh -d
 
 cd go-demo-6
 
+#For linux
 curl -L -o /usr/local/bin/jx-release-version \
   https://github.com/jenkins-x/jx-release-version/releases/download/v1.0.17/jx-release-version-linux
+  
+#For MAC OS
+curl -L -o /usr/local/bin/jx-release-version \
+    https://github.com/jenkins-x/jx-release-version/releases/download/v1.0.17/jx-release-version-darwin
 
 chmod +x /usr/local/bin/jx-release-version
 
