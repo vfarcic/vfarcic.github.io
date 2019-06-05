@@ -38,7 +38,7 @@ echo "nexus:
 ```bash
 open "https://console.cloud.google.com/cloud-resource-manager"
 
-PROJECT=[...] # e.g. devops24-book
+PROJECT=[...] # e.g. devops26
 
 # Use default answers except in the case specified below.
 # Answer `Static Jenkins Server and Jenkinsfiles` when asked to `select Jenkins installation type`

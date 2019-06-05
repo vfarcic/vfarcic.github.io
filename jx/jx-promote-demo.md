@@ -10,6 +10,8 @@
 ---
 
 ```bash
+git checkout master
+
 git pull
 
 git checkout pr
@@ -20,6 +22,10 @@ git checkout master
 
 git merge pr
 
+echo "buildPack: go" | tee jenkins-x.yml
+
+git add . && git commit -m "Added jenkins-x.yml"
+
 git push
 ```
 
@@ -29,15 +35,15 @@ git push
 ---
 
 ```bash
-jx get applications -e production
+jx get applications --env production
 
-jx get applications -e staging
+jx get applications --env staging
 
 VERSION=[...]
 
-jx promote go-demo-6 --version $VERSION --env production -b
+jx promote go-demo-6 --version $VERSION --env production --batch-mode
 
-jx get applications -e production
+jx get applications --env production
 
 PROD_ADDR=[...]
 

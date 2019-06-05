@@ -10,6 +10,8 @@
 ---
 
 ```bash
+cd go-demo-6
+
 git pull
 
 git checkout dev
@@ -22,9 +24,7 @@ git merge dev
 
 echo "buildPack: go" | tee jenkins-x.yml
 
-git add .
-
-git commit -m "Added jenkins-x.yml"
+git add . && git commit -m "Added jenkins-x.yml"
 
 git push
 ```

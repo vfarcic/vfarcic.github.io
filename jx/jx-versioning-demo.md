@@ -16,61 +16,16 @@
 * *Major* is incremented when changes are not backward compatible.
 
 
-## Versioning Through Tags
-
----
-
-```bash
-jx get applications
-
-jx create devpod -b
-
-jx rsh -d
-
-cd go-demo-6
-
-curl -L -o /usr/local/bin/jx-release-version \
-  https://github.com/jenkins-x/jx-release-version/releases/download/v1.0.17/jx-release-version-linux
-
-chmod +x /usr/local/bin/jx-release-version
-
-git tag
-
-jx-release-version
-```
-
-
-## Versioning Through Tags
-
----
-
-```bash
-git tag v1.0.0
-
-jx-release-version
-
-exit
-
-jx delete devpod
-
-git checkout master
-```
-
-
 ## Versioning From Pipelines
 
 ---
 
-* Add the snippet that follows to Makefile.
-
-```
-VERSION := 1.0.0
-```
-
 ```bash
-jx-release-version
+jx get applications --env staging
 
-cat Jenkinsfile
+VERSION=[...]
+
+echo "VERSION := $VERSION" | tee -a Makefile
 
 git add . 
 
@@ -80,11 +35,7 @@ git push
 
 jx get activities -f go-demo-6 -w
 
-jx get applications
-
-GH_USER=[...]
-
-open "https://github.com/$GH_USER/go-demo-6/releases"
+jx get applications --env staging
 ```
 
 
@@ -93,6 +44,10 @@ open "https://github.com/$GH_USER/go-demo-6/releases"
 ---
 
 ```bash
+GH_USER=[...]
+
+open "https://github.com/$GH_USER/go-demo-6/releases"
+
 echo "A silly change" | tee README.md
 
 git add .
@@ -101,5 +56,7 @@ git commit -m "A silly change"
 
 git push
 
-jx get activity -f go-demo-6 -w
+jx get activity --filter go-demo-6 --watch
+
+jx get applications --env staging
 ```

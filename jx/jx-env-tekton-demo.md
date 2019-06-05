@@ -103,6 +103,12 @@ git checkout master
 
 git merge buildpack
 
+echo "buildPack: go" | tee jenkins-x.yml
+
+git add .
+
+git commit -m "Added jenkins-x.yml"
+
 git push
 ```
 

@@ -5,7 +5,7 @@
 ---
 
 ```bash
-PROJECT=[...] # e.g. devops24-book
+PROJECT=[...] # e.g. devops26
 
 jx create cluster gke -n jx-rocks -p $PROJECT -r us-east1 \
     -m n1-standard-2 --min-num-nodes 1 --max-num-nodes 2 \
