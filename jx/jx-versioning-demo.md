@@ -59,4 +59,6 @@ git push
 jx get activity --filter go-demo-6 --watch
 
 jx get applications --env staging
+
+cd ..
 ```

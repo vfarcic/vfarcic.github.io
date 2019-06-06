@@ -32,17 +32,6 @@
 
 ---
 
-* Design cloud-native apps <!-- .element: class="fragment" -->
-* Adopt containers and schedulers <!-- .element: class="fragment" -->
-* Adopt serverless <!-- .element: class="fragment" -->
-* Adopt the tools you need, remove those you don't <!-- .element: class="fragment" -->
-
-
-<!-- .slide: data-background="../img/background/how.jpg" -->
-# How?
-
----
-
 * Adopt Kubernetes as the major cross-platform cloud-agnostic container scheduler <!-- .element: class="fragment" -->
 * Adopt tekton as serverless solution for pipelines in Kubernetes <!-- .element: class="fragment" -->
 * Adopt prow as GitOps and ChatOps <!-- .element: class="fragment" -->

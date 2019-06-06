@@ -211,7 +211,8 @@ cat env/requirements.yaml
 
 ```bash
 jx create env --name pre-production --label Pre-Production \
-    --namespace jx-pre-production --promotion Manual -b
+     --git-owner $GH_USER --namespace jx-pre-production \
+     --promotion Manual --batch-mode
 
 jx get env
 

@@ -35,7 +35,13 @@ git checkout master
 
 rm -f Jenkinsfile
 
-jx import --pack go --batch-mode
+echo "buildPack: go" | tee jenkins-x.yml
+
+git add .
+
+git commit -m "jenkins-x.yml"
+
+git push
 
 ls -1
 
