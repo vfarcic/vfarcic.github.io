@@ -49,6 +49,9 @@
 * Define an opinionated process <!-- .element: class="fragment" -->
 
 
+<!-- .slide: data-background="../img/products/cd-foundation.jpg" -->
+
+
 <!-- .slide: data-background="img/ninja.jpg" -->
 # Are You A Ninja?
 
