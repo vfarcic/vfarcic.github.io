@@ -83,7 +83,7 @@ hub delete -y $GH_USER/jx-serverless
 
 hub delete -y $GH_USER/jx-prow
 
-rm -rf ~/.jx/environments/$GH_USER/environment-jx-rocks-*
+rm -rf ~/.jx/environments/$GH_USER/environment-tekton-*
 ```
 
 

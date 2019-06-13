@@ -9,7 +9,7 @@ hub delete -y $GH_USER/environment-jx-rocks-staging
 
 hub delete -y $GH_USER/environment-jx-rocks-production
 
-rm -rf ~/.jx/environments/$GH_USER/environment-jx-rocks-*
+rm -rf ~/.jx/environments/$GH_USER/environment-tekton-*
 
 rm -rf ../environment-jx-rocks-staging
 
