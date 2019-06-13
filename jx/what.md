@@ -107,6 +107,3 @@
 
 
 <!-- .slide: data-background="../img/products/jenkins-x.png" -->
-# Jenkins X!
-
----
