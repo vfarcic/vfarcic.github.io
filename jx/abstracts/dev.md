@@ -1,5 +1,11 @@
 # Simplifying Software Development
 
+## Abstract (short)
+
+Software development is hard. It takes years to become a proficient developer, and the tech and the processes change every so often. What was effective yesterday, is not necessarily effective today. The number of languages we code in is increasing. While in the past, most developers would work in the same language throughout their whole carrier, today it is not uncommon for a developer to work on multiple projects written in different languages. We might, for example, work on a new project and code in Go, while we still need to maintain some other project written in Java. For us to be efficient, we need to install compilers, helper libraries, and quite a few other things.
+
+We'll explore how we can greatly simplify the process of creating a full development environment.
+
 ## Abstract
 
 Software development is hard. It takes years to become a proficient developer, and the tech and the processes change every so often. What was effective yesterday, is not necessarily effective today. The number of languages we code in is increasing. While in the past, most developers would work in the same language throughout their whole carrier, today it is not uncommon for a developer to work on multiple projects written in different languages. We might, for example, work on a new project and code in Go, while we still need to maintain some other project written in Java. For us to be efficient, we need to install compilers, helper libraries, and quite a few other things.
