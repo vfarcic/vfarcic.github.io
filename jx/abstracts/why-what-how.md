@@ -1,4 +1,4 @@
-# Jenkins X: Why, What, And How
+# Jenkins X: Why, What, How, And Who
 
 Jenkins X quickly became the standard of how we do continuous delivery in Kubernetes, and much more. It combines the best and the most commonly used open source projects like Tekton and Prow. It ties them together to form a solution that can be used by everyone, no matter the level of their knowledge of the Kubernetes ecosystem.
 
