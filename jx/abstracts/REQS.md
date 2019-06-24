@@ -125,3 +125,36 @@ az group delete \
 Those commands created an AKS cluster and destroyed it right away. Their purpose was only to validate whether you are able to create an AKS cluster. We'll create a new cluster during the training.
 
 Please contact me on [DevOps20](http://slack.devops20toolkit.com/) Slack channel (my user is *vfarcic*) if you encountered any problems.
+
+# Alibaba
+
+
+Install jx CLI using the instructions that follow.
+
+If using MacOS:
+
+```bash
+brew tap jenkins-x/jx
+
+brew install jx
+```
+
+If using Linux:
+
+```bash
+mkdir -p ~/.jx/bin
+
+curl -L https://github.com/jenkins-x/jx/releases/download/v2.0.100/jx-linux-amd64.tar.gz | tar xzv -C ~/.jx/bin
+
+export PATH=$PATH:~/.jx/bin
+
+echo 'export PATH=$PATH:~/.jx/bin' >> ~/.bashrc
+```
+
+If using Windows:
+
+```bash
+choco install jenkins-x
+```
+
+Please go through the instructions in [Installing Jenkins X on Alibaba Cloud Container Service](https://jenkins-x.io/news/alibaba-container-service-jenkins-x/) to confirm that you can create a Kubernetes cluster in Alibaba. The purpose of that exercise is to validate whether you are able to create an AKS cluster. Feel free to delete the cluster and associated resources once you confirm that everything works. We'll create a new cluster during the training.
