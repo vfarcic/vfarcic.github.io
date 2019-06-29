@@ -31,8 +31,8 @@
 ---
 
 * The need to scale<!-- .element: class="fragment" -->
-* Teams that still together sharing Jenkins<!-- .element: class="fragment" -->
-* Still yet ready to switch to containers<!-- .element: class="fragment" -->
+* Teams that share Jenkins<!-- .element: class="fragment" -->
+* Not yet ready to switch to containers<!-- .element: class="fragment" -->
 * Typically big organizations<!-- .element: class="fragment" -->
 
 
@@ -42,6 +42,7 @@
 ---
 
 * The need to scale<!-- .element: class="fragment" -->
+* Fault tolerant<!-- .element: class="fragment" -->
 * Each team gets a Jenkins<!-- .element: class="fragment" -->
 * Typically big and mid-size organizations<!-- .element: class="fragment" -->
 * Adopted Kubernetes as the platform to run CD<!-- .element: class="fragment" -->
@@ -75,4 +76,5 @@
 ---
 
 * Teams that fully embraced Kubernetes<!-- .element: class="fragment" -->
-* Companies that want enterprise-grade software<!-- .element: class="fragment" -->
+* Companies that need enterprise-grade software<!-- .element: class="fragment" -->
+* Teams that need much more than CD<!-- .element: class="fragment" -->
