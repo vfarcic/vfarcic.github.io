@@ -78,7 +78,7 @@ export AWS_SECRET_ACCESS_KEY=[...] # Replace [...] with the AWS Secret Access Ke
 export AWS_DEFAULT_REGION=us-west-2
 
 # Use default answers except in the case specified below.
-# Answer `Static Jenkins Server and Jenkinsfiles` when asked to `select Jenkins installation type`
+# Answer with `n` to `Would you like to register a wildcard DNS ALIAS to point at this ELB address?`
 
 jx create cluster eks -n jx-rocks -r $AWS_DEFAULT_REGION \
     --node-type t2.medium --nodes 3 --nodes-min 3 --nodes-max 6 \

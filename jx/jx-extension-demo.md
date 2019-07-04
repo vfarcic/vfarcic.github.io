@@ -176,9 +176,9 @@ cd ..
 
 GH_USER=[...]
 
-git clone https://github.com/$GH_USER/environment-tekton-staging.git
+cd environment-jx-rocks-staging
 
-cd environment-tekton-staging
+git pull
 
 cat jenkins-x.yml
 
