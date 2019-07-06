@@ -1,3 +1,7 @@
+<!-- .slide: data-background="../img/background/help.jpg" data-background-size="contain" -->
+# Take what you need, and give something back in return
+
+
 <!-- .slide: data-background="../img/products/twitter.png" data-background-size="contain" -->
 # [@vfarcic](https://twitter.com/vfarcic)
 

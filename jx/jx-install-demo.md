@@ -38,14 +38,3 @@ echo 'export PATH=$PATH:~/.jx/bin' >> ~/.bashrc
 ```bash
 choco install jenkins-x
 ```
-
-
-## Getting The Code
-
----
-
-```bash
-git clone https://github.com/vfarcic/k8s-specs.git
-
-cd k8s-specs
-```
