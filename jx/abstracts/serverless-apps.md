@@ -1,5 +1,7 @@
 # Using Jenkins X To Define And Run Serverless Deployments
 
+TODO: Rewrite
+
 ## What is Serverless Computing?
 
 To understand serverless computing, one needs to understand the challenges we are facing with more "traditional" types of deployments of our applications. A long time ago, most of us were deploying our apps directly to servers. We had to decide the size (memory and CPU) of the nodes where our applications would run, we had to create those servers, and we had to maintain them. The situation improved with the emergence of cloud computing. We still had to do all those things, but now those tasks were much easier due to the simplicity of the APIs and services cloud vendors gave us. Suddenly, we had (a perception of) infinite resources and all we had to do is run a command, and a few minutes later the servers (VMs) we needed would materialize. Things become much easier and faster. But, that did not remove the tasks of creating and maintaining servers. Instead, that made them more straightforward. Concepts like immutability become mainstream as well. As a result, we got much-needed reliability, reduced drastically lean time, and started to rip benefits of elasticity.
