@@ -83,6 +83,8 @@ hub delete -y $GH_USER/jx-serverless
 
 hub delete -y $GH_USER/jx-prow
 
+hub delete -y $GH_USER/jx-knative
+
 rm -rf ~/.jx/environments/$GH_USER/environment-tekton-*
 ```
 
@@ -97,6 +99,8 @@ rm -rf jx-go
 rm -rf jx-serverless
 
 rm -rf jx-prow
+
+rm -rf jx-knative
 
 rm -rf environment-jx-rocks-*
 
