@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Ansible Workshop</title>
+
+		<meta name="author" content="Viktor Farcic">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="../css/reveal.css">
+		<link rel="stylesheet" href="../css/theme/black.css" id="theme">
+		<link rel="stylesheet" href="../css/theme/vfarcic.css">
+
+		<!-- Code syntax highlighting -->
+		<!--<link rel="stylesheet" href="lib/css/zenburn.css">-->
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section id="cover">
+					<h1>Ansible Workshop</h1>
+					<p>
+						Created by <a href="http://technologyconversations.com/about/">Viktor Farcic</a>
+						for <a href="http://technologyconversations.com">Technology Conversations</a>
+					</p>
+					<h3><a href="https://twitter.com/vfarcic">@vfarcic</a></h3>
+				</section>
+				<section id="about-me">
+					<h2>Viktor Farcic</h2>
+					<ul>
+						<img src="img/viktor.jpg" style="float: right; width: 25%; height: 25%;"/>
+						<li>Software Architect at <a href="http://everis.com">everis</a> an <a href="http://www.nttdata.com/">NTT DATA Company</a></li>
+						<li>Never developed in Fortran</li>
+						<li>Passionate about microservices, continuous deployment and TDD</li>
+						<li>Blogger in <a href="http://technologyconversations.com/">TechnologyConversations.com</a></li>
+						<li><a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">Java Test-Driven Development: Mastering TDD Through Katas</a></li>
+					</ul>
+				</section>
+				<section data-background="img/background/cm.png">
+					<section id="cm">
+						<h2>Configuration Management in the Docker World</h2>
+						<table>
+							<tr>
+								<td class="fragment" style="width: 24%;">
+									<img src="img/cm/cfengine.png" style="background-color: white;">
+								</td>
+								<td class="fragment" style="width: 24%;">
+									<img src="img/cm/puppet.png" style="background-color: white;">
+								</td>
+								<td class="fragment" style="width: 24%;">
+									<img src="img/cm/chef.png" style="background-color: white;">
+								</td>
+								<td class="fragment" style="width: 24%;">
+									<img src="img/cm/ansible.png" style="background-color: white;">
+								</td>
+							</tr>
+						</table>
+					</section>
+				</section>
+				<section data-background="img/background/dev-env.png">
+					<section id="env">
+						<h2>Environments</h2>
+						<ul>
+							<img src="img/env/vagrant.png" style="width: 50%; height: 50%; float: right; background-color: white;" class="fragment">
+							<li class="fragment">Master server</li>
+							<li class="fragment">Cluster</li>
+							<li class="fragment">Ubuntu</li>
+						</ul>
+					</section>
+					<section id="env-up">
+						<h4>Environments</h4>
+						<h2>Create VMs</h2>
+						<pre><code data-trim contenteditable>
+cd ansible-workshop
+
+cat Vagrantfile
+
+vagrant up
+
+vagrant ssh cd
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section id="project-info">
+						<h2>The Project</h2>
+						<h4 class="fragment">Deploy Docker Swarm to the Cluster</h4>
+						<ul>
+							<li class="fragment">Common packages</li>
+							<li class="fragment">Consul</li>
+							<li class="fragment">Docker</li>
+							<li class="fragment">Docker Swarm</li>
+						</ul>
+					</section>
+					<section id="project-structure">
+						<h4>The Project</h4>
+						<h2>Structure</h2>
+						<pre><code data-trim contenteditable>
+tree /vagrant/ansible/roles
+
+cat /vagrant/ansible/hosts/prod
+
+cat /vagrant/ansible/swarm.yml
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section id="common-jq">
+						<h4>Common Role</h4>
+						<h2>Task: JQ</h2>
+						<p>
+							Install the <strong>jq</strong> package
+						</p>
+						<p>
+							Tip: <a href="http://docs.ansible.com/ansible/apt_module.html">http://docs.ansible.com/ansible/apt_module.html</a>
+						</p>
+					</section>
+					<section id="common-jq-solution">
+						<h4>Common Role</h4>
+						<h2>Solution: JQ</h2>
+						<pre><code data-trim contenteditable>
+# roles/common/tasks/main.yml
+- apt:
+    name: jq
+						</code></pre>
+					</section>
+					<section id="common-playbook">
+						<h4>Common Role</h4>
+						<h2>Task: Run the playbook</h2>
+						<p>
+							Run the Ansible Playbook
+						</p>
+						<pre><code data-trim contenteditable>
+ansible-playbook /vagrant/ansible/swarm.yml \
+    -i /vagrant/ansible/hosts/prod
+						</code></pre>
+					</section>
+					<section id="common-test">
+						<h4>Common Role</h4>
+						<h2>Test</h2>
+						<pre><code data-trim contenteditable>
+curl https://api.github.com/repos/vfarcic/\
+ansible-workshop/commits?per_page=5 \
+    | jq '.'
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section id="consul-dirs">
+						<h4>Consul Role</h4>
+						<h2>Task: Directories</h2>
+						<p>
+							Create the following directories:
+						</p>
+						<ul>
+							<li>/data/consul/logs</li>
+							<li>/data/consul/data</li>
+							<li>/data/consul/config</li>
+						</ul>
+						<p>
+							Tip: <a href="http://docs.ansible.com/ansible/file_module.html">http://docs.ansible.com/ansible/file_module.html</a>
+						</p>
+					</section>
+					<section id="consul-dirs-solution">
+						<h4>Consul Role</h4>
+						<h2>Solution: Directories</h2>
+						<pre><code data-trim contenteditable>
+# roles/consul/tasks/main.yml
+
+- file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - /data/consul/logs
+    - /data/consul/data
+    - /data/consul/config
+						</code></pre>
+					</section>
+					<section id="consul-files">
+						<h4>Consul Role</h4>
+						<h2>Task: Files</h2>
+						<p>
+							Copy the following files:
+						</p>
+						<ul>
+							<li>consul &gt; /usr/local/bin/consul (mode 0755)</li>
+							<li>ui &gt; /data/consul (mode 0644)</li>
+						</ul>
+						<h4>Tips:</h4>
+						<ul>
+							<li><a href="http://docs.ansible.com/ansible/copy_module.html">http://docs.ansible.com/ansible/copy_module.html</a></li>
+							<li>All files are already available in roles/consul/file</li>
+						</ul>
+					</section>
+					<section id="consul-files-solution">
+						<h4>Consul Role</h4>
+						<h2>Solution: Files</h2>
+						<pre><code data-trim contenteditable>
+# roles/consul/tasks/main.yml
+
+- copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - { src: "consul", dest: "/usr/local/bin/consul", mode: "0755" }
+    - { src: "ui", dest: "/data/consul", mode: "0644" }
+						</code></pre>
+					</section>
+					<section id="consul-agent-1">
+						<h4>Consul Role</h4>
+						<h2>Task: Run the Agent (1/2)</h2>
+						<p>
+							Run the following command:
+						</p>
+						<pre><code data-trim contenteditable>
+nohup consul agent [EXTRA] \
+    -ui-dir /data/consul/ui \
+    -data-dir /data/consul/data \
+    -config-dir /data/consul/config \
+    -node=[HOST_NAME] \
+    -bind=[IP] \
+    -client=0.0.0.0 \
+    >/data/consul/logs/consul.log 2>&1 &
+						</code></pre>
+					</section>
+					<section id="consul-agent-2">
+						<h4>Consul Role</h4>
+						<h2>Task: Run the Agent (2/2)</h2>
+						<ul>
+							<li><strong>[EXTRA]</strong> should be replaced with <strong>-server -bootstrap-expect 1</strong> on the <strong>main server</strong> and be empty on all others.</li>
+							<li><strong>[HOST_NAME]</strong> should be replaced with the name of the host.</li>
+							<li><strong>[IP]</strong> should be replaced with the IP of the host</li>
+						</ul>
+						<h4>Tips:</h4>
+						<ul>
+							<li><a href="http://docs.ansible.com/ansible/shell_module.html">http://docs.ansible.com/ansible/shell_module.html</a></li>
+							<li><a href="http://docs.ansible.com/ansible/intro_inventory.html">http://docs.ansible.com/ansible/intro_inventory.html</a></li>
+							<li><strong>ansible_hostname</strong> variable.</li>
+							<li><strong>facter_ipaddress_eth1</strong> variable.</li>
+						</ul>
+					</section>
+					<section id="consul-agent-solution">
+						<h4>Consul Role</h4>
+						<h2>Solution: Run the Agent</h2>
+						<pre><code data-trim contenteditable>
+# hosts/prod
+[swarm]
+10.100.192.200 consul_extra="-server -bootstrap-expect 1"
+10.100.192.20[1:2] consul_extra=""
+
+# roles/consul/tasks/main.yml
+- shell: nohup consul agent {{ consul_extra }} \
+      -ui-dir /data/consul/ui \
+      -data-dir /data/consul/data \
+      -config-dir /data/consul/config \
+      -node={{ ansible_hostname }} \
+      -bind={{ facter_ipaddress_eth1 }} \
+      -client=0.0.0.0 \
+      >/data/consul/logs/consul.log 2>&1 &
+						</code></pre>
+					</section>
+					<section id="consul-join">
+						<h4>Consul Role</h4>
+						<h2>Task: Join the Cluster</h2>
+						<p>
+							Run the following command only if NOT the <strong>main server</strong>.
+						</p>
+						<pre><code data-trim contenteditable>
+consul join [IP_OF_THE_MAIN_SERVER]
+						</code></pre>
+						<ul>
+							<li><strong>[IP_OF_THE_MAIN_SERVER]</strong> should be replaced with the IP of the main server (10.100.192.200)</li>
+						</ul>
+						<h4>Tips:</h4>
+						<ul>
+							<li><a href="http://docs.ansible.com/ansible/playbooks_conditionals.html">http://docs.ansible.com/ansible/playbooks_conditionals.html</a></li>
+						</ul>
+					</section>
+					<section id="consul-join-solution">
+						<h4>Consul Role</h4>
+						<h2>Solution: Join the Cluster</h2>
+						<pre><code data-trim contenteditable>
+# hosts/prod
+
+[swarm]
+10.100.192.200
+10.100.192.20[1:2] main_server_ip=10.100.192.200
+
+# roles/consul/tasks/main.yml
+
+- shell: consul join {{ main_server_ip }}
+  when: main_server_ip is defined
+						</code></pre>
+					</section>
+					<section id="consul-test">
+						<h4>Common Role</h4>
+						<h2>Test</h2>
+						<pre><code data-trim contenteditable>
+curl 10.100.192.200:8500/v1/catalog/nodes \
+    | jq '.'
+						</code></pre>
+						Open <a href="http://10.100.192.200:8500/">http://10.100.192.200:8500/</a>
+					</section>
+				</section>
+				<section>
+					<section id="docker-repo">
+						<h4>Docker Role</h4>
+						<h2>Task: Add Repository</h2>
+						<p>
+							Add Docker repository <strong>deb https://apt.dockerproject.org/repo ubuntu-trusty main</strong> and update cache.
+						</p>
+						<h4>Tips:</h4>
+						<ul>
+							<li><a href="http://docs.ansible.com/ansible/apt_repository_module.html">http://docs.ansible.com/ansible/apt_repository_module.html</a></li>
+						</ul>
+					</section>
+					<section id="docker-repo-solution">
+						<h4>Docker Role</h4>
+						<h2>Solution: Add Repository</h2>
+						<pre><code data-trim contenteditable>
+# roles/docker/tasks/main.yml
+
+- apt_repository:
+    repo: deb https://apt.dockerproject.org/repo ubuntu-trusty main
+    update_cache: yes
+						</code></pre>
+					</section>
+					<section id="docker-package">
+						<h4>Docker Role</h4>
+						<h2>Task: Install Debian Packages</h2>
+						<p>
+							Install the following Debian packages:
+						</p>
+						<ul>
+							<li>docker-engine</li>
+							<li>python-pip</li>
+						</ul>
+						<h4>Tips:</h4>
+						<ul>
+							<li><a href="http://docs.ansible.com/ansible/apt_module.html">http://docs.ansible.com/ansible/apt_module.html</a></li>
+						</ul>
+					</section>
+					<section id="docker-package-solution">
+						<h4>Docker Role</h4>
+						<h2>Solution: Install Debian Packages</h2>
+						<pre><code data-trim contenteditable>
+# roles/docker/tasks/main.yml
+
+- apt:
+    name: "{{ item }}"
+    force: yes
+  with_items:
+    - docker-engine
+    - python-pip
+						</code></pre>
+					</section>
+					<section id="docker-pip">
+						<h4>Docker Role</h4>
+						<h2>Task: Install PIP Package</h2>
+						<p>
+							Install the <strong>docker-py</strong> PIP package version <strong>0.4.0</strong>
+						</p>
+						<h4>Tips:</h4>
+						<ul>
+							<li><a href="http://docs.ansible.com/ansible/pip_module.html">http://docs.ansible.com/ansible/pip_module.html</a></li>
+						</ul>
+					</section>
+					<section id="docker-pip-solution">
+						<h4>Docker Role</h4>
+						<h2>Solution: Install PIP Package</h2>
+						<pre><code data-trim contenteditable>
+# roles/docker/tasks/main.yml
+
+- pip:
+    name: docker-py
+    version: 0.4.0
+						</code></pre>
+					</section>
+					<section id="docker-test">
+						<h4>Common Role</h4>
+						<h2>Test</h2>
+						<pre><code data-trim contenteditable>
+sudo docker --version
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section id="swarm-docker">
+						<h4>Swarm Role</h4>
+						<h2>Task: Reconfigure Docker</h2>
+						<ul>
+							<li>Copy the configuration file <strong>docker.cfg</strong> to <strong>/etc/default/docker</strong> (only if NOT the main server)</li>
+							<li>Restart the <strong>docker</strong> service if the configuration file has changed</li>
+						</ul>
+						<h4>Tips:</h4>
+						<ul>
+							<li><a href="http://docs.ansible.com/ansible/copy_module.html">http://docs.ansible.com/ansible/copy_module.html</a></li>
+							<li><a href="http://docs.ansible.com/ansible/playbooks_variables.html#registered-variables">http://docs.ansible.com/ansible/playbooks_variables.html#registered-variables</a></li>
+							<li><a href="http://docs.ansible.com/ansible/service_module.html">http://docs.ansible.com/ansible/service_module.html</a></li>
+						</ul>
+					</section>
+					<section id="swarm-docker-solution">
+						<h4>Swarm Role</h4>
+						<h2>Solution: Reconfigure Docker</h2>
+						<pre><code data-trim contenteditable># hosts/prod
+[swarm]
+10.100.192.200 main_server=true
+10.100.192.20[1:2]
+
+# roles/swarm/tasks/main.yml
+- copy:
+    src: docker.cfg
+    dest: /etc/default/docker
+  when: not main_server is defined
+  register: result
+
+- service:
+    name: docker
+    state: restarted
+  when: result|changed</code></pre>
+					</section>
+					<section id="swarm">
+						<h4>Swarm Role</h4>
+						<h2>Task: Deploy Swarm</h2>
+						<p>
+							Run the Docker container called <strong>swarm</strong>
+						</p>
+						<ul>
+							<li>If main server, command should be <strong>manage consul://[IP]:8500/swarm</strong></li>
+							<li>If NOT main server, command should be <strong>join --advertise=[IP]:2375 consul://[IP]:8500/swarm</strong></li>
+							<li>Replace <strong>[IP]</strong> with the IP of the server</li>
+						</ul>
+						<h4>Tips:</h4>
+						<ul>
+							<li><a href="http://docs.ansible.com/ansible/docker_module.html">http://docs.ansible.com/ansible/docker_module.html</a></li>
+						</ul>
+					</section>
+					<section id="swarm-solution">
+						<h4>Swarm Role</h4>
+						<h2>Solution: Deploy Swarm</h2>
+						<pre><code data-trim contenteditable>
+# roles/swarm/tasks/main.yml
+
+- docker:
+    name: swarm
+    image: swarm
+    ports: 2375:2375
+    command: manage consul://{{ facter_ipaddress_eth1 }}:8500/swarm
+  when: main_server is defined
+
+- docker:
+    name: swarm
+    image: swarm
+    command: join --advertise={{ facter_ipaddress_eth1 }}:2375 consul://{{ facter_ipaddress_eth1 }}:8500/swarm
+  when: not main_server is defined
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section id="playbook">
+						<h4>The Playbook</h4>
+						<h2>Test</h2>
+						<pre><code data-trim contenteditable>
+ansible-playbook /vagrant/ansible/swarm.yml \
+    -i /vagrant/ansible/hosts/prod
+
+export DOCKER_HOST=tcp://10.100.192.200:2375
+
+docker info
+
+docker run -d --name hello-world-1 \
+    ubuntu /bin/sh -c "while true; do echo hello world; sleep 5; done"
+
+docker ps
+
+docker logs -f hello-world-1
+
+docker run -d --name hello-world-2 \
+    ubuntu /bin/sh -c "while true; do echo hello world; sleep 5; done"
+
+docker ps
+
+docker logs -f hello-world-2
+						</code></pre>
+					</section>
+				</section>
+				<section id="qa" data-background="img/background/questions.jpg">
+				</section>
+				<section>
+					<section id="the-end" data-background="img/background/the_end.jpg">
+						<h1>Viktor Farcic</h1>
+						<h3><a href="https://twitter.com/vfarcic">@vfarcic</a></h3>
+						<h4><a href="http://technologyconversations.com">technology conversations.com</a></h4>
+					</section>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+//					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Managing Docker Images | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Managing Docker Images" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/docker/docker-building-images.html" />
+<meta property="og:url" content="http://localhost:4000/docker/docker-building-images.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/docker/docker-building-images.html","@type":"WebPage","headline":"Managing Docker Images","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h1 id="managing-docker-images">Managing Docker Images</h1>
+
+<ul>
+  <li>Build</li>
+  <li>Store</li>
+  <li>Pull</li>
+  <li>Run</li>
+</ul>
+
+<p>Note:
+Throughout the previous exercises, we created a few containers. They were all based on public images pulled from Docker Hub. We will continue using those public images since they provide a solution for most third-part services we might need. However, third-party services are only a part of what should run in our cluster. We need to dockerize our own services as well. If, for a moment, we switch conversation to, let’s say, Java, we’d need to build a JAR or WAR file, store it to, let’s say Nexus, allow other teams to pull them from Nexus, and, finally, deploy them.
+Docker is not different except that we are now dealing with images and contain everything a service needs. We need to build them, store them somewhere, pull them to any of the nodes of our cluster, and, finally, run them.</p>
+
+<h1 id="building-images">Building Images</h1>
+
+<h2 id="building-images-1">Building Images</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/vfarcic/go-demo.git
+
+<span class="nb">cd </span>go-demo
+
+<span class="nb">cat </span>Dockerfile
+
+docker image build <span class="nt">-t</span> go-demo <span class="nb">.</span>
+</code></pre></div></div>
+
+<h2 id="building-images-2">Building Images</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker container run <span class="nt">-it</span> <span class="nt">--rm</span> <span class="nt">-v</span> <span class="nv">$PWD</span>:/tmp <span class="nt">-w</span> /tmp golang:1.7 <span class="se">\</span>
+  sh <span class="nt">-c</span> <span class="s2">"go get -d -v -t &amp;&amp; go build -v -o go-demo"</span>
+
+<span class="nb">ls</span> <span class="nt">-l</span>
+
+docker image build <span class="nt">-t</span> go-demo <span class="nb">.</span>
+
+docker image <span class="nb">ls</span>
+</code></pre></div></div>
+
+<h2 id="building-images-3">Building Images</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>Dockerfile.big
+
+docker image build <span class="nt">-f</span> Dockerfile.big <span class="nt">-t</span> go-demo <span class="nb">.</span>
+
+docker image <span class="nb">ls</span>
+</code></pre></div></div>
+
+<h2 id="building-images-4">Building Images</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>Dockerfile.multistage
+
+docker image build <span class="nt">-f</span> Dockerfile.multistage <span class="nt">-t</span> go-demo <span class="nb">.</span>
+
+docker image <span class="nb">ls</span>
+</code></pre></div></div>
+
+<h2 id="building-images-5">Building Images</h2>
+
+<ul>
+  <li>Dockerfile reference (<a href="https://docs.docker.com/engine/reference/builder/">https://docs.docker.com/engine/reference/builder/</a>)</li>
+</ul>
+
+<h1 id="storing-images">Storing Images</h1>
+
+<h2 id="storing-images-1">Storing Images</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker image tag go-demo vfarcic/go-demo
+
+docker login
+
+docker image push vfarcic/go-demo
+</code></pre></div></div>
+
+<h2 id="storing-images-2">Storing Images</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker container run <span class="nt">-d</span> <span class="nt">--name</span> registry <span class="nt">-p</span> 5000:5000 registry
+
+docker image tag go-demo localhost:5000/registry
+
+docker image push localhost:5000/registry
+
+docker image rm localhost:5000/registry
+
+docker image pull localhost:5000/registry
+
+docker container rm <span class="nt">-f</span> registry
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/docker/docker-building-images.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

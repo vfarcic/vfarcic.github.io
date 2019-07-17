@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/jx/jx-promote-demo.html" />
+<meta property="og:url" content="http://localhost:4000/jx/jx-promote-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/jx/jx-promote-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="promoting-releases-to-production">Promoting Releases To Production</h1>
+
+<h2 id="in-case-you-messed-it-up">In case you messed it up</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout master
+
+git pull
+
+git checkout pr
+
+git merge <span class="nt">-s</span> ours master <span class="nt">--no-edit</span>
+
+git checkout master
+
+git merge pr
+
+<span class="nb">echo</span> <span class="s2">"buildPack: go"</span> | tee jenkins-x.yml
+
+git add <span class="nb">.</span> <span class="o">&amp;&amp;</span> git commit <span class="nt">-m</span> <span class="s2">"Added jenkins-x.yml"</span>
+
+git push
+</code></pre></div></div>
+
+<h2 id="promoting-production">Promoting Production</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jx get applications <span class="nt">--env</span> production
+
+jx get applications <span class="nt">--env</span> staging
+
+<span class="nv">VERSION</span><span class="o">=[</span>...]
+
+jx promote go-demo-6 <span class="nt">--version</span> <span class="nv">$VERSION</span> <span class="nt">--env</span> production <span class="nt">--batch-mode</span>
+
+jx get applications <span class="nt">--env</span> production
+
+<span class="nv">PROD_ADDR</span><span class="o">=[</span>...]
+
+curl <span class="s2">"</span><span class="nv">$PROD_ADDR</span><span class="s2">/demo/hello"</span>
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/jx/jx-promote-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

@@ -1,0 +1,7 @@
+# Cleanup
+
+---
+
+```bash
+minikube delete
+```

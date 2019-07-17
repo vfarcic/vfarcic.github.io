@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/devops23/pv-demo.html" />
+<meta property="og:url" content="http://localhost:4000/devops23/pv-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/devops23/pv-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="persisting-state">Persisting State</h1>
+
+<h2 id="creating-an-eks-cluster">Creating An EKS Cluster</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Follow the instructions from</span>
+<span class="c"># https://github.com/weaveworks/eksctl to intall eksctl.</span>
+
+<span class="nb">export </span><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=[</span>...] <span class="c"># Replace [...] with AWS access key ID</span>
+
+<span class="nb">export </span><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=[</span>...] <span class="c"># Replace [...] with AWS secret access key</span>
+
+<span class="nb">export </span><span class="nv">AWS_DEFAULT_REGION</span><span class="o">=</span>us-west-2
+
+mkdir <span class="nt">-p</span> cluster
+
+eksctl create cluster <span class="nt">-n</span> devops23 <span class="nt">-r</span> <span class="nv">$AWS_DEFAULT_REGION</span> <span class="se">\</span>
+    <span class="nt">--kubeconfig</span> cluster/kubecfg-eks <span class="nt">--node-type</span> t2.small <span class="se">\</span>
+    <span class="nt">--nodes</span> 3 <span class="nt">--nodes-max</span> 9 <span class="nt">--nodes-min</span> 3
+
+<span class="nb">export </span><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="nv">$PWD</span>/cluster/kubecfg-eks
+</code></pre></div></div>
+
+<h2 id="creating-an-eks-cluster-1">Creating An EKS Cluster</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="se">\</span>
+    <span class="nt">-f</span> https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
+
+kubectl apply <span class="se">\</span>
+    <span class="nt">-f</span> https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/aws/service-l4.yaml
+
+kubectl apply <span class="se">\</span>
+    <span class="nt">-f</span> https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/aws/patch-configmap-l4.yaml
+</code></pre></div></div>
+
+<h2 id="without-persisting-state">Without Persisting State</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>pv/jenkins-no-pv.yml
+
+kubectl create <span class="nt">-f</span> pv/jenkins-no-pv.yml <span class="nt">--record</span> <span class="nt">--save-config</span>
+
+kubectl <span class="nt">-n</span> jenkins get events
+
+kubectl <span class="nt">-n</span> jenkins create secret generic jenkins-creds <span class="se">\</span>
+    <span class="nt">--from-literal</span><span class="o">=</span>jenkins-user<span class="o">=</span>jdoe <span class="se">\</span>
+    <span class="nt">--from-literal</span><span class="o">=</span>jenkins-pass<span class="o">=</span>incognito
+
+kubectl <span class="nt">-n</span> jenkins rollout status deployment jenkins
+</code></pre></div></div>
+
+<h2 id="without-persisting-state-1">Without Persisting State</h2>
+
+<hr />
+
+<ul>
+  <li>We installed Jenkins</li>
+  <li>We retrieved the events and observed that it is failing because the <code class="highlighter-rouge">jenkins-creds</code> Secret is missing</li>
+  <li>We created the missing Secret</li>
+  <li>We waited until Jenkins rolled out and opened it in browser</li>
+</ul>
+
+<h2 id="without-persisting-state-2">Without Persisting State</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># If minikube</span>
+<span class="nv">JENKINS_ADDR</span><span class="o">=</span><span class="k">$(</span>minikube ip<span class="k">)</span>
+
+<span class="c"># If EKS</span>
+<span class="nv">JENKINS_ADDR</span><span class="o">=</span><span class="k">$(</span>kubectl <span class="nt">-n</span> jenkins get ing jenkins <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.status.loadBalancer.ingress[0].hostname}"</span><span class="k">)</span>
+
+<span class="c"># If GKE</span>
+<span class="nv">JENKINS_ADDR</span><span class="o">=</span><span class="k">$(</span>kubectl <span class="nt">-n</span> jenkins get ing jenkins <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.status.loadBalancer.ingress[0].ip}"</span><span class="k">)</span>
+
+<span class="nb">echo</span> <span class="nv">$JENKINS_ADDR</span>
+
+open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">/jenkins"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Log in with user <em>jdoe</em> and the password <em>incognito</em></li>
+</ul>
+
+<h2 id="without-persisting-state-3">Without Persisting State</h2>
+
+<hr />
+
+<ul>
+  <li>We opened Jenkins in browser</li>
+</ul>
+
+<h2 id="without-persisting-state-4">Without Persisting State</h2>
+
+<hr />
+
+<ul>
+  <li>Create a job</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> jenkins get pods <span class="nt">--selector</span><span class="o">=</span><span class="nv">app</span><span class="o">=</span>jenkins <span class="nt">-o</span> json
+
+<span class="nv">POD_NAME</span><span class="o">=</span><span class="k">$(</span>kubectl <span class="nt">-n</span> jenkins get pods <span class="nt">--selector</span><span class="o">=</span><span class="nv">app</span><span class="o">=</span>jenkins <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.items[*].metadata.name}"</span><span class="k">)</span>
+
+<span class="nb">echo</span> <span class="nv">$POD_NAME</span>
+
+kubectl <span class="nt">-n</span> jenkins <span class="nb">exec</span> <span class="nt">-it</span> <span class="nv">$POD_NAME</span> pkill java
+
+open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">/jenkins"</span>
+</code></pre></div></div>
+
+<h2 id="without-persisting-state-5">Without Persisting State</h2>
+
+<hr />
+
+<ul>
+  <li>We created a new job</li>
+  <li>We simulated failure by killing the <code class="highlighter-rouge">java</code> process</li>
+  <li>We observed that Jenkins recuperated from the failure, but it lost its state (the job)</li>
+</ul>
+
+<h2 id="creating-volumes-aws">Creating Volumes (AWS)</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws ec2 describe-instances
+
+<span class="c"># If EKS</span>
+<span class="nv">GROUP_NAME</span><span class="o">=</span>eksctl-devops23-nodegroup-0-SG
+
+aws ec2 describe-instances | jq <span class="nt">-r</span> <span class="s2">".Reservations[].Instances[] </span><span class="se">\</span><span class="s2">
+    | select(.SecurityGroups[].GroupName | startswith(</span><span class="se">\"</span><span class="nv">$GROUP_NAME</span><span class="se">\"</span><span class="s2">))</span><span class="se">\</span><span class="s2">
+    .Placement.AvailabilityZone"</span>
+
+aws ec2 describe-instances | jq <span class="nt">-r</span> <span class="s2">".Reservations[].Instances[] </span><span class="se">\</span><span class="s2">
+    | select(.SecurityGroups[].GroupName | startswith(</span><span class="se">\"</span><span class="nv">$GROUP_NAME</span><span class="se">\"</span><span class="s2">))</span><span class="se">\</span><span class="s2">
+    .Placement.AvailabilityZone"</span> | tee zones
+</code></pre></div></div>
+
+<h2 id="creating-volumes-aws-1">Creating Volumes (AWS)</h2>
+
+<hr />
+
+<ul>
+  <li>We retrieved the zones of our cluster</li>
+</ul>
+
+<h2 id="creating-volumes-aws-2">Creating Volumes (AWS)</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">AZ_1</span><span class="o">=</span><span class="k">$(</span><span class="nb">cat </span>zones | head <span class="nt">-n</span> 1<span class="k">)</span>
+
+<span class="nv">AZ_2</span><span class="o">=</span><span class="k">$(</span><span class="nb">cat </span>zones | tail <span class="nt">-n</span> 1<span class="k">)</span>
+
+<span class="nv">VOLUME_ID_1</span><span class="o">=</span><span class="k">$(</span>aws ec2 create-volume <span class="nt">--availability-zone</span> <span class="nv">$AZ_1</span> <span class="se">\</span>
+    <span class="nt">--tag-specifications</span> <span class="s2">"ResourceType=volume,Tags=[{Key=KubernetesCluster,Value=devops23}]"</span> <span class="se">\</span>
+    <span class="nt">--size</span> 10 <span class="nt">--volume-type</span> gp2 | jq <span class="nt">-r</span> <span class="s1">'.VolumeId'</span><span class="k">)</span>
+
+<span class="nv">VOLUME_ID_2</span><span class="o">=</span><span class="k">$(</span>aws ec2 create-volume <span class="nt">--availability-zone</span> <span class="nv">$AZ_2</span> <span class="se">\</span>
+    <span class="nt">--tag-specifications</span> <span class="s2">"ResourceType=volume,Tags=[{Key=KubernetesCluster,Value=devops23}]"</span> <span class="se">\</span>
+    <span class="nt">--size</span> 10 <span class="nt">--volume-type</span> gp2 | jq <span class="nt">-r</span> <span class="s1">'.VolumeId'</span><span class="k">)</span>
+
+<span class="nv">VOLUME_ID_3</span><span class="o">=</span><span class="k">$(</span>aws ec2 create-volume <span class="nt">--availability-zone</span> <span class="nv">$AZ_1</span> <span class="se">\</span>
+    <span class="nt">--tag-specifications</span> <span class="s2">"ResourceType=volume,Tags=[{Key=KubernetesCluster,Value=devops23}]"</span> <span class="se">\</span>
+    <span class="nt">--size</span> 10 <span class="nt">--volume-type</span> gp2 | jq <span class="nt">-r</span> <span class="s1">'.VolumeId'</span><span class="k">)</span>
+</code></pre></div></div>
+
+<h2 id="creating-volumes-aws-3">Creating Volumes (AWS)</h2>
+
+<hr />
+
+<ul>
+  <li>We created three volumes spread in two zones</li>
+</ul>
+
+<h2 id="creating-volumes-aws-4">Creating Volumes (AWS)</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="nv">$VOLUME_ID_1</span>
+
+aws ec2 describe-volumes <span class="nt">--volume-ids</span> <span class="nv">$VOLUME_ID_1</span>
+</code></pre></div></div>
+
+<h2 id="creating-volumes-aws-5">Creating Volumes (AWS)</h2>
+
+<hr />
+
+<ul>
+  <li>We described one of the volumes as a way to confirm that it was created correctly</li>
+</ul>
+
+<h2 id="creating-volumes-gke">Creating Volumes (GKE)</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gcloud compute instances list <span class="nt">--filter</span><span class="o">=</span><span class="s2">"name:('gke-devops23*')"</span> <span class="se">\</span>
+    <span class="nt">--format</span> <span class="s1">'csv[no-heading](zone)'</span> | tee zones
+
+<span class="nv">AZ_1</span><span class="o">=</span><span class="k">$(</span><span class="nb">cat </span>zones | head <span class="nt">-n</span> 1<span class="k">)</span>
+
+<span class="nv">AZ_2</span><span class="o">=</span><span class="k">$(</span><span class="nb">cat </span>zones | tail <span class="nt">-n</span> 2 | head <span class="nt">-n</span> 1<span class="k">)</span>
+
+<span class="nv">AZ_3</span><span class="o">=</span><span class="k">$(</span><span class="nb">cat </span>zones | tail <span class="nt">-n</span> 1<span class="k">)</span>
+
+gcloud compute disks create disk1 <span class="nt">--zone</span> <span class="nv">$AZ_1</span>
+
+gcloud compute disks create disk2 <span class="nt">--zone</span> <span class="nv">$AZ_2</span>
+
+gcloud compute disks create disk3 <span class="nt">--zone</span> <span class="nv">$AZ_3</span>
+</code></pre></div></div>
+
+<h2 id="creating-volumes-gke-1">Creating Volumes (GKE)</h2>
+
+<hr />
+
+<ul>
+  <li>We retrieved the zones of our cluster</li>
+  <li>We created three volumes spread in three zones</li>
+</ul>
+
+<h2 id="creating-volumes-gke-2">Creating Volumes (GKE)</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">VOLUME_ID_1</span><span class="o">=</span>disk1
+
+<span class="nv">VOLUME_ID_2</span><span class="o">=</span>disk2
+
+<span class="nv">VOLUME_ID_3</span><span class="o">=</span>disk3
+
+gcloud compute disks describe VOLUME_ID_1
+</code></pre></div></div>
+
+<h2 id="creating-volumes-gke-3">Creating Volumes (GKE)</h2>
+
+<hr />
+
+<ul>
+  <li>We described one of the volumes as a way to confirm that it was created correctly</li>
+</ul>
+
+<!-- .slide: data-background="img/persistent-volume-ebs.png" data-background-size="contain" -->
+
+<h2 id="k8s-persistent-volumes">k8s Persistent Volumes</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># If EKS</span>
+<span class="nv">YAML</span><span class="o">=</span>pv/pv.yml
+
+<span class="c"># If GKE</span>
+<span class="nv">YAML</span><span class="o">=</span>pv/pv-gke.yml
+
+<span class="nb">cat</span> <span class="nv">$YAML</span>
+
+<span class="nb">cat</span> <span class="nv">$YAML</span> <span class="se">\</span>
+    | sed <span class="nt">-e</span> <span class="s2">"s@REPLACE_ME_1@</span><span class="nv">$VOLUME_ID_1</span><span class="s2">@g"</span> <span class="se">\</span>
+    | sed <span class="nt">-e</span> <span class="s2">"s@REPLACE_ME_2@</span><span class="nv">$VOLUME_ID_2</span><span class="s2">@g"</span> <span class="se">\</span>
+    | sed <span class="nt">-e</span> <span class="s2">"s@REPLACE_ME_3@</span><span class="nv">$VOLUME_ID_3</span><span class="s2">@g"</span> <span class="se">\</span>
+    | kubectl create <span class="nt">-f</span> - <span class="nt">--save-config</span> <span class="nt">--record</span>
+
+kubectl get pv
+</code></pre></div></div>
+
+<h2 id="k8s-persistent-volumes-1">k8s Persistent Volumes</h2>
+
+<hr />
+
+<ul>
+  <li>We created three PersistentVolumes matching the three external drives</li>
+</ul>
+
+<!-- .slide: data-background="img/persistent-volume-pv.png" data-background-size="contain" -->
+
+<h2 id="claiming-persistent-volumes">Claiming Persistent Volumes</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>pv/pvc.yml
+
+kubectl create <span class="nt">-f</span> pv/pvc.yml <span class="nt">--save-config</span> <span class="nt">--record</span>
+
+kubectl <span class="nt">-n</span> jenkins get pvc
+
+kubectl get pv
+</code></pre></div></div>
+
+<h2 id="claiming-persistent-volumes-1">Claiming Persistent Volumes</h2>
+
+<hr />
+
+<ul>
+  <li>We created a PersistentVolumeClaim that uses the StorageClass <code class="highlighter-rouge">manual-ebs</code></li>
+  <li>We retrieved the PersistentVolumes and observed that one of them is <code class="highlighter-rouge">Bound</code> to the claim</li>
+</ul>
+
+<!-- .slide: data-background="img/persistent-volume-pvc.png" data-background-size="contain" -->
+
+<h2 id="attaching-claimed-volumes">Attaching Claimed Volumes</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>pv/jenkins-pv.yml
+
+kubectl apply <span class="nt">-f</span> pv/jenkins-pv.yml <span class="nt">--record</span>
+
+kubectl <span class="nt">-n</span> jenkins rollout status deployment jenkins
+</code></pre></div></div>
+
+<h2 id="attaching-claimed-volumes-1">Attaching Claimed Volumes</h2>
+
+<hr />
+
+<ul>
+  <li>We updated Jenkins by adding a mount that uses the PersistentVolumeClaim</li>
+</ul>
+
+<!-- .slide: data-background="img/persistent-volume-pod.png" data-background-size="contain" -->
+
+<h2 id="attaching-claimed-volumes-2">Attaching Claimed Volumes</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">/jenkins"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Create a job</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">POD_NAME</span><span class="o">=</span><span class="k">$(</span>kubectl <span class="nt">-n</span> jenkins get pod <span class="nt">--selector</span><span class="o">=</span><span class="nv">app</span><span class="o">=</span>jenkins <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.items[*].metadata.name}"</span><span class="k">)</span>
+
+kubectl <span class="nt">-n</span> jenkins <span class="nb">exec</span> <span class="nt">-it</span> <span class="nv">$POD_NAME</span> pkill java
+
+open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">/jenkins"</span>
+
+kubectl <span class="nt">-n</span> jenkins delete deploy jenkins
+
+kubectl <span class="nt">-n</span> jenkins get pvc
+
+kubectl get pv
+</code></pre></div></div>
+
+<h2 id="attaching-claimed-volumes-3">Attaching Claimed Volumes</h2>
+
+<hr />
+
+<ul>
+  <li>We created a new Job</li>
+  <li>We simulated failure</li>
+  <li>We confirmed that Jenkins recuperated from the failure and that the state (the job) is preserved</li>
+  <li>We deleted Jenkins</li>
+  <li>We observed that the PVC and PV are still bound</li>
+</ul>
+
+<h2 id="attaching-claimed-volumes-4">Attaching Claimed Volumes</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> jenkins delete pvc jenkins
+
+kubectl get pv
+
+kubectl delete <span class="nt">-f</span> pv/pv.yml
+
+<span class="c"># If EKS</span>
+aws ec2 delete-volume <span class="nt">--volume-id</span> <span class="nv">$VOLUME_ID_1</span>
+aws ec2 delete-volume <span class="nt">--volume-id</span> <span class="nv">$VOLUME_ID_2</span>
+aws ec2 delete-volume <span class="nt">--volume-id</span> <span class="nv">$VOLUME_ID_3</span>
+
+<span class="c"># If GKE</span>
+gcloud compute disks delete <span class="nv">$VOLUME_ID_1</span> <span class="nt">--zone</span> <span class="nv">$AZ_1</span> <span class="nt">--quiet</span>
+gcloud compute disks delete <span class="nv">$VOLUME_ID_2</span> <span class="nt">--zone</span> <span class="nv">$AZ_2</span> <span class="nt">--quiet</span>
+gcloud compute disks delete <span class="nv">$VOLUME_ID_3</span> <span class="nt">--zone</span> <span class="nv">$AZ_3</span> <span class="nt">--quiet</span>
+</code></pre></div></div>
+
+<h2 id="attaching-claimed-volumes-5">Attaching Claimed Volumes</h2>
+
+<hr />
+
+<ul>
+  <li>We removed the PersistentVolumeClaim and observed that the PV was released</li>
+  <li>We deleted the PVs and the external drives</li>
+</ul>
+
+<h2 id="using-storage-classes-eks">Using Storage Classes (EKS)</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl get sc
+
+<span class="c"># If EKS</span>
+<span class="nb">cat </span>pv/jenkins-dynamic.yml
+
+<span class="c"># If GKE</span>
+<span class="nb">cat </span>pv/jenkins-dynamic-gke.yml
+
+<span class="c"># If EKS</span>
+kubectl apply <span class="nt">-f</span> pv/jenkins-dynamic.yml <span class="nt">--record</span>
+
+<span class="c"># If GKE</span>
+kubectl apply <span class="nt">-f</span> pv/jenkins-dynamic-gke.yml <span class="nt">--record</span>
+
+kubectl <span class="nt">-n</span> jenkins rollout status deployment jenkins
+</code></pre></div></div>
+
+<h2 id="using-storage-classes">Using Storage Classes</h2>
+
+<hr />
+
+<ul>
+  <li>We output a new Jenkins definition with a PersistentVolumeClaim that uses the StorageClass</li>
+  <li>We updated Jenkins</li>
+</ul>
+
+<h2 id="using-storage-classes-1">Using Storage Classes</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> jenkins get events
+
+kubectl <span class="nt">-n</span> jenkins get pvc
+
+kubectl get pv
+
+<span class="c"># If EKS</span>
+aws ec2 describe-volumes <span class="se">\</span>
+    <span class="nt">--filters</span> <span class="s1">'Name=tag-key,Values="kubernetes.io/created-for/pvc/name"'</span>
+
+<span class="c"># If GKE</span>
+<span class="nv">PV_NAME</span><span class="o">=</span><span class="k">$(</span>kubectl get pv <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.items[0].metadata.name}"</span><span class="k">)</span>
+
+<span class="c"># If GKE</span>
+gcloud compute disks list <span class="nt">--filter</span><span class="o">=</span><span class="s2">"name:('</span><span class="nv">$PV_NAME</span><span class="s2">')"</span>
+</code></pre></div></div>
+
+<h2 id="using-storage-classes-2">Using Storage Classes</h2>
+
+<hr />
+
+<ul>
+  <li>We retrieved the events and observed that it provisioned a new volume</li>
+  <li>We retrieved PersistentVolumeClaims and observed that it is bound to a new volume</li>
+  <li>We retrieved Volumes and observed that a new one was created with the reclaim policy set to <code class="highlighter-rouge">DELETE</code></li>
+  <li>We observed that a new external drive was created</li>
+</ul>
+
+<h2 id="using-storage-classes-3">Using Storage Classes</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> jenkins delete deploy,pvc jenkins
+
+kubectl get pv
+
+<span class="c"># If EKS</span>
+aws ec2 describe-volumes <span class="se">\</span>
+    <span class="nt">--filters</span> <span class="s1">'Name=tag-key,Values="kubernetes.io/created-for/pvc/name"'</span>
+
+<span class="c"># If GKE</span>
+gcloud compute disks list <span class="nt">--filter</span><span class="o">=</span><span class="s2">"name:('</span><span class="nv">$PV_NAME</span><span class="s2">')"</span>
+</code></pre></div></div>
+
+<h2 id="using-storage-classes-4">Using Storage Classes</h2>
+
+<hr />
+
+<ul>
+  <li>We deleted Jenkins Deployment and PersistentVolumeClaim</li>
+  <li>We retrieved PersistentVolumes and observed that the one we used before was automatically removed with the removal of the PersistentVolumeClaim</li>
+  <li>We retrieved external drives and observed that the one created by the PersitentVolume was removed</li>
+</ul>
+
+<h2 id="default-storage-classes">Default Storage Classes</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl get sc
+
+kubectl describe sc
+
+<span class="nb">cat </span>pv/jenkins-default.yml
+
+diff pv/jenkins-dynamic.yml pv/jenkins-default.yml
+
+kubectl apply <span class="nt">-f</span> pv/jenkins-default.yml <span class="nt">--record</span>
+
+kubectl get pv
+</code></pre></div></div>
+
+<h2 id="default-storage-classes-1">Default Storage Classes</h2>
+
+<hr />
+
+<ul>
+  <li>In case of EKS, we patched the StorageClass to make it default (most of the other flavors have it out-of-the-box)</li>
+  <li>We confirmed that the StorageClass is set to be <code class="highlighter-rouge">default</code></li>
+  <li>We updated Jenkins to use a StorageClass that does not specify <code class="highlighter-rouge">storageClassName</code></li>
+  <li>We retrieved PersistentVolumes and observed that a new one was created</li>
+</ul>
+
+<h2 id="creating-storage-classes">Creating Storage Classes</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> jenkins delete deploy,pvc jenkins
+
+<span class="c"># If EKS</span>
+<span class="nv">YAML</span><span class="o">=</span>sc.yml
+
+<span class="c"># If GKE</span>
+<span class="nv">YAML</span><span class="o">=</span>sc-gke.yml
+
+<span class="nb">cat </span>pv/<span class="nv">$YAML</span>
+
+kubectl create <span class="nt">-f</span> pv/<span class="nv">$YAML</span>
+
+kubectl get sc
+</code></pre></div></div>
+
+<h2 id="creating-storage-classes-1">Creating Storage Classes</h2>
+
+<hr />
+
+<ul>
+  <li>We deleted Jenkins Deployment and PersistentVolumeClaim</li>
+  <li>We created a new StorageClass based on a different EBS type</li>
+</ul>
+
+<h2 id="creating-storage-classes-2">Creating Storage Classes</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>pv/jenkins-sc.yml
+
+kubectl apply <span class="nt">-f</span> pv/jenkins-sc.yml <span class="nt">--record</span>
+
+<span class="c"># If EKS</span>
+aws ec2 describe-volumes <span class="se">\</span>
+    <span class="nt">--filters</span> <span class="s1">'Name=tag-key,Values="kubernetes.io/created-for/pvc/name"'</span>
+
+<span class="c"># If GKE</span>
+<span class="nv">PV_NAME</span><span class="o">=</span><span class="k">$(</span>kubectl get pv <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.items[0].metadata.name}"</span><span class="k">)</span>
+
+<span class="c"># If GKE</span>
+gcloud compute disks list <span class="nt">--filter</span><span class="o">=</span><span class="s2">"name:('</span><span class="nv">$PV_NAME</span><span class="s2">')"</span>
+</code></pre></div></div>
+
+<h2 id="creating-storage-classes-3">Creating Storage Classes</h2>
+
+<hr />
+
+<ul>
+  <li>We Updated Jenkins to use the new StorageClass</li>
+  <li>We retrieved external disks and observed that the newly created one is based on the <code class="highlighter-rouge">fast</code> type</li>
+</ul>
+
+<!-- .slide: data-background="img/persistent-volume-sc.png" data-background-size="contain" -->
+
+<h2 id="what-now">What Now?</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl delete ns jenkins
+
+kubectl delete sc fast
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/devops23/pv-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Requirements | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Requirements" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/jx/REQS.html" />
+<meta property="og:url" content="http://localhost:4000/jx/REQS.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/jx/REQS.html","@type":"WebPage","headline":"Requirements","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h1 id="requirements">Requirements</h1>
+
+<h2 id="general">General</h2>
+
+<ul>
+  <li><a href="https://git-scm.com/">Git</a></li>
+  <li>GitBash (if using Windows)</li>
+  <li><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">kubectl</a></li>
+  <li>GitHub account</li>
+</ul>
+
+<p>You can choose to have a cluster in Google (GKE), Amazon (EKS), or Azure (AKS). Please follow the instructions for the cloud-specific requirements. If you’re in doubt which one to choose, I strongly recommend GKE. If you register, you’ll get 300$ in free credit and we won’t spend more than a few $ during the workshop.</p>
+
+<h2 id="gke-gcp">GKE (GCP)</h2>
+
+<p>Please make sure that you have the tools that follow installed.</p>
+
+<ul>
+  <li><a href="https://cloud.google.com/sdk/docs/quickstarts">gcloud CLI</a></li>
+</ul>
+
+<p>You’ll need <strong>Google Cloud Platform (GCP) admin permissions</strong>. If you don’t have the account or the one you’re using does not have admin permissions, please create a personal account by visiting <a href="https://cloud.google.com/">cloud.google.com</a>. You’ll get $300 of free credit.</p>
+
+<p>Please make sure you have the name of a GCP project ready. If you don’t have one, you can follow the instructions from the <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects">Creating and Managing Projects</a> documentation.</p>
+
+<p>To be on the safe side and confirm that you can create a GKE cluster, please execute the commands that follow.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gcloud auth login
+
+gcloud container clusters <span class="se">\</span>
+    create jxrocks <span class="se">\</span>
+    <span class="nt">--region</span> us-east1 <span class="se">\</span>
+    <span class="nt">--machine-type</span> n1-standard-1 <span class="se">\</span>
+    <span class="nt">--enable-autoscaling</span> <span class="se">\</span>
+    <span class="nt">--num-nodes</span> 1 <span class="se">\</span>
+    <span class="nt">--max-nodes</span> 3 <span class="se">\</span>
+    <span class="nt">--min-nodes</span> 1
+
+kubectl create clusterrolebinding <span class="se">\</span>
+    cluster-admin-binding <span class="se">\</span>
+    <span class="nt">--clusterrole</span> cluster-admin <span class="se">\</span>
+    <span class="nt">--user</span> <span class="k">$(</span>gcloud config get-value account<span class="k">)</span>
+
+gcloud container clusters <span class="se">\</span>
+    delete jxrocks <span class="se">\</span>
+    <span class="nt">--region</span> us-east1 <span class="se">\</span>
+    <span class="nt">--quiet</span>
+</code></pre></div></div>
+
+<p>Those commands created a GKE cluster and destroyed it right away. Their purpose was only to validate whether you are able to create a GKE cluster. We’ll create a new cluster during the training.</p>
+
+<p>Please contact me on <a href="http://slack.devops20toolkit.com/">DevOps20</a> Slack channel (my user is <em>vfarcic</em>) if you encountered any problems.</p>
+
+<h2 id="eks-aws">EKS (AWS)</h2>
+
+<p>Please make sure that you have the tools that follow installed.</p>
+
+<ul>
+  <li><a href="http://docs.aws.amazon.com/cli/latest/userguide/installing.html">AWS CLI</a></li>
+  <li><a href="https://github.com/weaveworks/eksctl">eksctl</a></li>
+</ul>
+
+<p>You’ll need <strong>Amazon Web Services (AWS) admin permissions</strong>. If you don’t have the account or the one you’re using does not have admin permissions, please create a personal account by visiting <a href="https://aws.amazon.com/account/">aws.amazon.com</a>.</p>
+
+<p>Please make sure you have the name of a GCP project ready. If you don’t have one, you can follow the instructions from the <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects">Creating and Managing Projects</a> documentation.</p>
+
+<p>To be on the safe side and confirm that you can create an EKS cluster, please execute the commands that follow.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=[</span>...] <span class="c"># Replace [...] with AWS access key ID</span>
+
+<span class="nb">export </span><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=[</span>...] <span class="c"># Replace [...] with AWS secret access key</span>
+
+<span class="nb">export </span><span class="nv">AWS_DEFAULT_REGION</span><span class="o">=</span>us-west-2
+
+eksctl create cluster <span class="se">\</span>
+    <span class="nt">-n</span> jx-rocks <span class="se">\</span>
+    <span class="nt">-r</span> <span class="nv">$AWS_DEFAULT_REGION</span> <span class="se">\</span>
+    <span class="nt">--kubeconfig</span> kubecfg-eks <span class="se">\</span>
+    <span class="nt">--node-type</span> t2.small <span class="se">\</span>
+    <span class="nt">--nodes</span> 3 <span class="se">\</span>
+    <span class="nt">--nodes-max</span> 9 <span class="se">\</span>
+    <span class="nt">--nodes-min</span> 3
+
+eksctl delete cluster <span class="nt">-n</span> jx-rocks
+</code></pre></div></div>
+
+<p>Those commands created an EKS cluster and destroyed it right away. Their purpose was only to validate whether you are able to create an EKS cluster. We’ll create a new cluster during the training.</p>
+
+<p>Please contact me on <a href="http://slack.devops20toolkit.com/">DevOps20</a> Slack channel (my user is <em>vfarcic</em>) if you encountered any problems.</p>
+
+<h2 id="aks-azure">AKS (Azure)</h2>
+
+<p>Please make sure that you have the tools that follow installed.</p>
+
+<ul>
+  <li><a href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli">az CLI</a></li>
+</ul>
+
+<p>You’ll need <strong>Azure admin permissions</strong>. If you don’t have the account or the one you’re using does not have admin permissions, please create a personal account by visiting <a href="https://azure.microsoft.com/en-us/free/">azure.microsoft.com</a>. You’ll get $200 of free credit.</p>
+
+<p>To be on the safe side and confirm that you can create an AKS cluster, please execute the commands that follow.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>az login
+
+az provider register <span class="nt">-n</span> Microsoft.Network
+
+az provider register <span class="nt">-n</span> Microsoft.Storage
+
+az provider register <span class="nt">-n</span> Microsoft.Compute
+
+az provider register <span class="nt">-n</span> Microsoft.ContainerService
+
+az group create <span class="se">\</span>
+    <span class="nt">--name</span> jxrocks-group <span class="se">\</span>
+    <span class="nt">--location</span> eastus
+
+az aks create <span class="se">\</span>
+    <span class="nt">--resource-group</span> jxrocks-group <span class="se">\</span>
+    <span class="nt">--name</span> jxrocks-cluster <span class="se">\</span>
+    <span class="nt">--node-count</span> 3 <span class="se">\</span>
+    <span class="nt">--node-vm-size</span> Standard_B2s <span class="se">\</span>
+    <span class="nt">--generate-ssh-keys</span> <span class="se">\</span>
+    <span class="nt">--kubernetes-version</span> 1.11.5
+
+az group delete <span class="se">\</span>
+    <span class="nt">--name</span> jxrocks-group <span class="se">\</span>
+    <span class="nt">--yes</span>
+</code></pre></div></div>
+
+<p>Those commands created an AKS cluster and destroyed it right away. Their purpose was only to validate whether you are able to create an AKS cluster. We’ll create a new cluster during the training.</p>
+
+<p>Please contact me on <a href="http://slack.devops20toolkit.com/">DevOps20</a> Slack channel (my user is <em>vfarcic</em>) if you encountered any problems.</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/jx/REQS.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

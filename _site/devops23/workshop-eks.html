@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>The DevOps 2.3 Toolkit: Kubernetes Workshop</title>
+
+		<meta name="author" content="Viktor Farcic">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="../css/reveal.css">
+        <link rel="stylesheet" href="../css/theme/black.css" id="theme">
+        <link rel="stylesheet" href="../css/theme/vfarcic.css">
+
+		<!--<link rel="stylesheet" href="../lib/css/zenburn.css">-->
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<header style="position: absolute;top: 50px; left: 100px; z-index:500; font-size:100px;background-color: rgba(0,0,0,0.5)"></header>
+			<div class="slides">
+				<section id="cover"
+                    data-markdown="cover-workshop.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/devops23.jpg">
+                </section>
+				<section id="about-me"
+                    data-markdown="../docs/about-me.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/about-me.jpg">
+                </section>
+				<section id="address"
+                    data-markdown="address-eks.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/why.jpg">
+                </section>
+				<section id="index"
+                    data-markdown="index.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/why.jpg">
+                </section>
+				<section id="berserker"
+                    data-markdown="../docs/berserker.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/berserker.jpg">
+                </section>
+				<section id="docker-image"
+                    data-markdown="../docs/docker-image.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/containers.png">
+                </section>
+				<section id="docker-image-demo"
+                    data-markdown="../docs/docker-image-demo.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/manual.jpg">
+				</section>
+				<section id="scheduler"
+				    data-markdown="../docs/scheduler.md"
+				    data-separator="^\n\n\n"
+				    data-separator-vertical="^\n\n"
+				    data-separator-notes="^Note:"
+				    data-charset="iso-8859-15">
+                </section>
+				<section id="infra"
+				    data-markdown="../docs/eks.md"
+				    data-separator="^\n\n\n"
+				    data-separator-vertical="^\n\n"
+				    data-separator-notes="^Note:"
+				    data-charset="iso-8859-15"
+				    data-background="../img/background/servers.jpg">
+			    </section>
+				<section id="infra-demo"
+                    data-markdown="../docs/eks-demo.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/manual.jpg">
+                </section>
+				<section id="pod"
+				    data-markdown="pod.md"
+				    data-separator="^\n\n\n"
+				    data-separator-vertical="^\n\n"
+				    data-separator-notes="^Note:"
+				    data-charset="iso-8859-15">
+                </section>
+				<section id="pod-demo"
+                    data-markdown="pod-demo.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/manual.jpg">
+                </section>
+				<section id="rs"
+				    data-markdown="rs.md"
+				    data-separator="^\n\n\n"
+				    data-separator-vertical="^\n\n"
+				    data-separator-notes="^Note:"
+				    data-charset="iso-8859-15">
+                </section>
+				<section id="rs-demo"
+                    data-markdown="rs-demo.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/manual.jpg">
+                </section>
+				<section id="svc"
+				    data-markdown="svc.md"
+				    data-separator="^\n\n\n"
+				    data-separator-vertical="^\n\n"
+				    data-separator-notes="^Note:"
+				    data-charset="iso-8859-15">
+                </section>
+				<section id="svc-demo"
+                    data-markdown="svc-demo.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/manual.jpg">
+                </section>
+				<section id="deploy"
+				    data-markdown="deploy.md"
+				    data-separator="^\n\n\n"
+				    data-separator-vertical="^\n\n"
+				    data-separator-notes="^Note:"
+				    data-charset="iso-8859-15">
+                </section>
+				<section id="deploy-demo"
+                    data-markdown="deploy-demo.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/manual.jpg">
+                </section>
+				<section id="ingress"
+				    data-markdown="ingress.md"
+				    data-separator="^\n\n\n"
+				    data-separator-vertical="^\n\n"
+				    data-separator-notes="^Note:"
+				    data-charset="iso-8859-15">
+                </section>
+				<section id="ingress-demo"
+                    data-markdown="ingress-demo.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/manual.jpg">
+                </section>
+				<section id="volume"
+				    data-markdown="volume.md"
+				    data-separator="^\n\n\n"
+				    data-separator-vertical="^\n\n"
+				    data-separator-notes="^Note:"
+				    data-charset="iso-8859-15">
+                </section>
+				<section id="volume-demo"
+                    data-markdown="volume-demo.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/manual.jpg">
+                </section>
+				<section id="cm"
+				    data-markdown="cm.md"
+				    data-separator="^\n\n\n"
+				    data-separator-vertical="^\n\n"
+				    data-separator-notes="^Note:"
+				    data-charset="iso-8859-15">
+                </section>
+				<section id="cm-demo"
+                    data-markdown="cm-demo.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/manual.jpg">
+                </section>
+				<section id="secret"
+				    data-markdown="secret.md"
+				    data-separator="^\n\n\n"
+				    data-separator-vertical="^\n\n"
+				    data-separator-notes="^Note:"
+				    data-charset="iso-8859-15">
+                </section>
+				<section id="secret-demo"
+                    data-markdown="secret-demo.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/manual.jpg">
+                </section>
+				<section id="ns"
+				    data-markdown="ns.md"
+				    data-separator="^\n\n\n"
+				    data-separator-vertical="^\n\n"
+				    data-separator-notes="^Note:"
+				    data-charset="iso-8859-15">
+                </section>
+				<section id="ns-demo"
+                    data-markdown="ns-demo.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/manual.jpg">
+                </section>
+				<section id="auth"
+				    data-markdown="auth.md"
+				    data-separator="^\n\n\n"
+				    data-separator-vertical="^\n\n"
+				    data-separator-notes="^Note:"
+				    data-charset="iso-8859-15">
+                </section>
+				<section id="auth-demo"
+                    data-markdown="auth-demo.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/manual.jpg">
+                </section>
+				<section id="resource"
+				    data-markdown="resource.md"
+				    data-separator="^\n\n\n"
+				    data-separator-vertical="^\n\n"
+				    data-separator-notes="^Note:"
+				    data-charset="iso-8859-15">
+                </section>
+				<section id="resource-demo"
+                    data-markdown="resource-demo.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/manual.jpg">
+                </section>
+				<section id="pv"
+				    data-markdown="pv.md"
+				    data-separator="^\n\n\n"
+				    data-separator-vertical="^\n\n"
+				    data-separator-notes="^Note:"
+				    data-charset="iso-8859-15">
+                </section>
+				<section id="pv-demo"
+                    data-markdown="pv-demo.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/manual.jpg">
+                </section>
+				<section id="sts"
+				    data-markdown="sts.md"
+				    data-separator="^\n\n\n"
+				    data-separator-vertical="^\n\n"
+				    data-separator-notes="^Note:"
+				    data-charset="iso-8859-15">
+                </section>
+				<section id="sts-demo"
+                    data-markdown="sts-demo.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/manual.jpg">
+                </section>
+				<section id="the-end"
+                    data-markdown="../docs/the-end.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/the_end.jpg">
+				</section>
+				<section id="the-end-cleanup"
+                    data-markdown="../docs/cleanup-eks.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="../img/background/cleanup.jpg">
+				</section>
+			</div>
+
+		</div>
+
+		<script src="../lib/js/head.min.js"></script>
+		<script src="../js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+//					{ src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../plugin/zoom-js/zoom.js', async: true },
+					{ src: '../plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

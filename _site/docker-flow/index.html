@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Docker Flow Projects: Making A Dynamic Cluster Even More Dynamic | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Docker Flow Projects: Making A Dynamic Cluster Even More Dynamic" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/docker-flow/" />
+<meta property="og:url" content="http://localhost:4000/docker-flow/" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/docker-flow/","@type":"WebPage","headline":"Docker Flow Projects: Making A Dynamic Cluster Even More Dynamic","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h1 id="docker-flow-projects-making-a-dynamic-cluster-even-more-dynamic">Docker Flow Projects: Making A Dynamic Cluster Even More Dynamic</h1>
+
+<h2 id="abstract">Abstract</h2>
+
+<p>You are practicing continuous deployment, aren’t you? I will assume you are. Now, let’s say that you just finished the first release of your new service. That first version is the first commit to your code repository. Your CD tool of choice detected the change in your code repository and started the CD pipeline. At the end of it, the service will be deployed to production. I can see a smile on your face. It’s that expression of happiness that can be seen only after a child is born, or a service is deployed to production for the first time. That smile should not be long lasting since deploying a service is only the beginning. It needs to be integrated with the rest of the system. The proxy needs to be reconfigured. Logs parser needs to be updated with the format produced by the new service. Monitoring system needs to become aware of the new service. Alerts need to be created with the goal of sending warning and error notifications when the state of the service reaches certain thresholds. The whole system has to adapt to the new service and incorporate the new variables introduced with the commit we made a few moments ago.</p>
+
+<p>How to we adapt the system so that it takes the new service into account? How do we make that service be an integral part of the system?</p>
+
+<p>We’ll go through <em>Docker Flow</em> projects which aim at bridging the gap between a dynamic cluster running Docker Swarm and third-party services designed in the previous era. We’ll go through a few open source projects:</p>
+
+<ul>
+  <li><a href="http://swarmlistener.dockerflow.com/">Swarm Listener</a> which propagates service events to other services</li>
+  <li><a href="http://proxy.dockerflow.com/">Proxy</a> that reconfigures itself whenever a service is created, updated, or destroyed</li>
+  <li><a href="http://monitor.dockerflow.com/">Monitor</a> that tracks metrics and fires alerts when some threshold is reached.</li>
+  <li><a href="http://cron.dockerflow.com/">Cron</a> that allows scheduling of batch-like processes.</li>
+  <li>and a few more…</li>
+</ul>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/docker-flow/README.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

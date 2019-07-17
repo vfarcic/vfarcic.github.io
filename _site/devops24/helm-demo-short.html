@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/devops24/helm-demo-short.html" />
+<meta property="og:url" content="http://localhost:4000/devops24/helm-demo-short.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/devops24/helm-demo-short.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="packaging-kubernetes-applications">Packaging Kubernetes Applications</h1>
+
+<h2 id="installing-helm">Installing Helm</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Only if MacOC</span>
+brew install kubernetes-helm
+
+<span class="c"># Only if Windows</span>
+choco install kubernetes-helm
+
+<span class="c"># Only if Linux</span>
+open https://github.com/kubernetes/helm/releases
+
+<span class="c"># Only if Linux</span>
+<span class="c"># Download tar.gz file, unpack it, move binary to /usr/local/bin/.</span>
+
+<span class="nb">cat </span>helm/tiller-rbac.yml
+
+kubectl create <span class="nt">-f</span> helm/tiller-rbac.yml <span class="nt">--record</span> <span class="nt">--save-config</span>
+</code></pre></div></div>
+
+<h2 id="installing-helm-1">Installing Helm</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>helm init <span class="nt">--service-account</span> tiller
+
+kubectl <span class="nt">-n</span> kube-system rollout status deploy tiller-deploy
+
+helm repo update
+</code></pre></div></div>
+
+<h2 id="exploring-helm-charts">Exploring Helm Charts</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ../go-demo-3
+
+<span class="nb">ls</span> <span class="nt">-1</span> helm/go-demo-3
+
+<span class="nb">cat </span>helm/go-demo-3/Chart.yaml
+
+<span class="nb">cat </span>helm/go-demo-3/templates/deployment.yaml
+
+<span class="nb">cat </span>helm/go-demo-3/values.yaml
+
+helm package helm/go-demo-3 <span class="nt">-d</span> helm
+</code></pre></div></div>
+
+<h2 id="upgrading-charts">Upgrading Charts</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">HOST</span><span class="o">=</span><span class="s2">"go-demo-3.</span><span class="nv">$LB_IP</span><span class="s2">.xip.io"</span>
+
+<span class="nb">echo</span> <span class="nv">$HOST</span>
+
+helm upgrade <span class="nt">-i</span> go-demo-3 helm/go-demo-3 <span class="nt">--namespace</span> go-demo-3 <span class="se">\</span>
+    <span class="nt">--set</span> image.tag<span class="o">=</span>1.0 <span class="nt">--set</span> ingress.host<span class="o">=</span><span class="nv">$HOST</span> <span class="nt">--reuse-values</span>
+
+kubectl <span class="nt">-n</span> go-demo-3 rollout status deployment go-demo-3
+
+curl http://<span class="nv">$HOST</span>/demo/hello
+
+helm upgrade <span class="nt">-i</span> go-demo-3 helm/go-demo-3 <span class="nt">--namespace</span> go-demo-3 <span class="se">\</span>
+    <span class="nt">--set</span> image.tag<span class="o">=</span>2.0 <span class="nt">--reuse-values</span>
+</code></pre></div></div>
+
+<h2 id="what-now">What Now?</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ../k8s-specs
+
+helm delete go-demo-3 <span class="nt">--purge</span>
+
+kubectl delete ns go-demo-3
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/devops24/helm-demo-short.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

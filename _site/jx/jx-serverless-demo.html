@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/jx/jx-serverless-demo.html" />
+<meta property="og:url" content="http://localhost:4000/jx/jx-serverless-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/jx/jx-serverless-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="going-serverless">Going Serverless</h1>
+
+<h2 id="installing-serverless-jenkins-x">Installing Serverless Jenkins X</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">LB_IP</span><span class="o">=</span><span class="k">$(</span>kubectl <span class="nt">-n</span> kube-system get svc jxing-nginx-ingress-controller <span class="se">\</span>
+  <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.status.loadBalancer.ingress[0].ip}"</span><span class="k">)</span>
+
+<span class="nv">DOMAIN</span><span class="o">=</span>serverless.<span class="nv">$LB_IP</span>.nip.io
+
+<span class="nv">INGRESS_NS</span><span class="o">=</span>kube-system
+
+<span class="nv">INGRESS_DEP</span><span class="o">=</span>jxing-nginx-ingress-controller
+
+<span class="nv">PROVIDER</span><span class="o">=[</span>...] <span class="c"># gke, eks, aks, etc</span>
+
+<span class="nb">echo</span> <span class="s2">"nexus:
+  enabled: false
+"</span> | tee myvalues.yaml
+</code></pre></div></div>
+
+<h2 id="installing-serverless-jenkins-x-1">Installing Serverless Jenkins X</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jx install <span class="nt">--provider</span> <span class="nv">$PROVIDER</span> <span class="nt">--external-ip</span> <span class="nv">$LB_IP</span> <span class="nt">--domain</span> <span class="nv">$DOMAIN</span> <span class="se">\</span>
+    <span class="nt">--default-admin-password</span><span class="o">=</span>admin <span class="nt">--ingress-namespace</span> <span class="nv">$INGRESS_NS</span> <span class="se">\</span>
+    <span class="nt">--ingress-deployment</span> <span class="nv">$INGRESS_DEP</span> <span class="se">\</span>
+    <span class="nt">--default-environment-prefix</span> tekton <span class="nt">--git-provider-kind</span> github <span class="se">\</span>
+    <span class="nt">--namespace</span> <span class="nb">cd</span> <span class="nt">--prow</span> <span class="nt">--tekton</span> <span class="nt">-b</span>
+</code></pre></div></div>
+
+<h2 id="exploring-jenkins-x-teams">Exploring Jenkins X Teams</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jx get teams
+
+jx team jx
+
+jx team <span class="nb">cd</span>
+</code></pre></div></div>
+
+<h2 id="new-quickstart-project">New Quickstart Project</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jx create quickstart <span class="nt">-l</span> go <span class="nt">-p</span> jx-serverless <span class="nt">-b</span>
+
+<span class="nb">cd </span>jx-serverless
+
+<span class="nb">ls</span> <span class="nt">-l</span>
+
+<span class="nb">cat </span>jenkins-x.yml
+
+jx get activities <span class="nt">-f</span> jx-serverless <span class="nt">-w</span>
+
+kubectl <span class="nt">-n</span> <span class="nb">cd </span>get pods
+
+jx get pipelines
+
+jx console
+
+jx get build logs
+</code></pre></div></div>
+
+<!-- .slide: data-background="img/serverless-flow-prow.png" data-background-size="contain" -->
+
+<!-- .slide: data-background="img/serverless-flow-pipeline-operator.png" data-background-size="contain" -->
+
+<!-- .slide: data-background="img/serverless-flow-tekton.png" data-background-size="contain" -->
+
+<!-- .slide: data-background="img/serverless-flow.png" data-background-size="contain" -->
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/jx/jx-serverless-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

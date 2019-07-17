@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/jx/jx-cluster-demo.html" />
+<meta property="og:url" content="http://localhost:4000/jx/jx-cluster-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/jx/jx-cluster-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h3 id="creating-a">Creating A</h3>
+<h1 id="jenkins-x">Jenkins-X</h1>
+<h2 id="cluster">Cluster</h2>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<hr />
+
+<ul>
+  <li><a href="https://git-scm.com/">Git</a></li>
+  <li>GitBash (if using Windows)</li>
+  <li><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">kubectl</a></li>
+  <li><a href="https://helm.sh/">Helm</a></li>
+  <li>If Google: <a href="https://cloud.google.com/sdk/docs/quickstarts">gcloud CLI</a> and GCP admin permissions</li>
+  <li>If Azure: <a href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli">Azure CLI</a> and Azure admin permissions</li>
+  <li>If AWS: <a href="https://aws.amazon.com/cli/">AWS CLI</a> and AWS admin permissions</li>
+</ul>
+
+<h2 id="creating-a-cluster-with-jx">Creating A Cluster With jx</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"nexus:
+  enabled: false
+"</span> | tee myvalues.yaml
+</code></pre></div></div>
+
+<h2 id="creating-a-cluster-with-jx-gke">Creating A Cluster With jx (GKE)</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"https://console.cloud.google.com/cloud-resource-manager"</span>
+
+<span class="nv">PROJECT</span><span class="o">=[</span>...] <span class="c"># e.g. devops26</span>
+
+<span class="c"># Use default answers except in the case specified below.</span>
+<span class="c"># Answer `Static Jenkins Server and Jenkinsfiles` when asked to `select Jenkins installation type`</span>
+
+jx create cluster gke <span class="nt">-n</span> jx-rocks <span class="nt">-p</span> <span class="nv">$PROJECT</span> <span class="nt">-r</span> us-east1 <span class="se">\</span>
+    <span class="nt">-m</span> n1-standard-2 <span class="nt">--min-num-nodes</span> 1 <span class="nt">--max-num-nodes</span> 2 <span class="se">\</span>
+    <span class="nt">--default-admin-password</span><span class="o">=</span>admin <span class="se">\</span>
+    <span class="nt">--default-environment-prefix</span> jx-rocks <span class="nt">--git-provider-kind</span> github
+</code></pre></div></div>
+
+<h2 id="creating-a-cluster-with-jx-aks">Creating A Cluster With jx (AKS)</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Use default answers except in the case specified below.</span>
+<span class="c"># Answer `Static Jenkins Server and Jenkinsfiles` when asked to `select Jenkins installation type`</span>
+
+jx create cluster aks <span class="nt">-c</span> jxrocks <span class="nt">-n</span> jxrocks-group <span class="nt">-l</span> eastus <span class="se">\</span>
+    <span class="nt">-s</span> Standard_B2s <span class="nt">--nodes</span> 3 <span class="nt">--default-admin-password</span><span class="o">=</span>admin <span class="se">\</span>
+    <span class="nt">--default-environment-prefix</span> jx-rocks <span class="se">\</span>
+    <span class="nt">--git-provider-kind</span> github
+</code></pre></div></div>
+
+<h2 id="creating-a-cluster-with-jx-eks">Creating A Cluster With jx (EKS)</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=[</span>...] <span class="c"># Replace [...] with the AWS Access Key ID</span>
+
+<span class="nb">export </span><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=[</span>...] <span class="c"># Replace [...] with the AWS Secret Access Key</span>
+
+<span class="nb">export </span><span class="nv">AWS_DEFAULT_REGION</span><span class="o">=</span>us-west-2
+
+<span class="c"># Use default answers except in the case specified below.</span>
+<span class="c"># Answer with `n` to `Would you like to register a wildcard DNS ALIAS to point at this ELB address?`</span>
+<span class="c"># Answer `Static Jenkins Server and Jenkinsfiles` when asked to `select Jenkins installation type`</span>
+
+jx create cluster eks <span class="nt">-n</span> jx-rocks <span class="nt">-r</span> <span class="nv">$AWS_DEFAULT_REGION</span> <span class="se">\</span>
+    <span class="nt">--node-type</span> t2.medium <span class="nt">--nodes</span> 3 <span class="nt">--nodes-min</span> 3 <span class="nt">--nodes-max</span> 6 <span class="se">\</span>
+    <span class="nt">--default-admin-password</span><span class="o">=</span>admin <span class="se">\</span>
+    <span class="nt">--default-environment-prefix</span> jx-rocks <span class="se">\</span>
+    <span class="nt">--git-provider-kind</span> github
+</code></pre></div></div>
+
+<!--
+rm -f $PWD/workshop_config.yaml
+
+export KUBECONFIG=workshop_config.yaml
+
+gcloud auth login
+
+gcloud container clusters \
+    create jx-workshop \
+    --region us-east1 \
+    --machine-type n1-standard-4	 \
+    --enable-autoscaling \
+    --num-nodes 1 \
+    --max-nodes 10 \
+    --min-nodes 1
+
+kubectl create clusterrolebinding \
+    cluster-admin-binding \
+    --clusterrole cluster-admin \
+    --user $(gcloud config get-value account)
+
+kubectl apply \
+    -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
+
+kubectl apply \
+    -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/cloud-generic.yaml
+-->
+<h2 id="creating-a-cluster-with-jx-workshop">Creating A Cluster With jx (Workshop)</h2>
+
+<hr />
+
+<p>Available only during this workshop</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURDekNDQWZPZ0F3SUJBZ0lRRzJVV0dBV1FLRDZudUVYak9Fa0dqekFOQmdrcWhraUc5dzBCQVFzRkFEQXYKTVMwd0t3WURWUVFERXlRMk1tWXhNREl6WXkwMFltTXdMVFF4TVRZdFlqTTBOUzAzTmpCbU5EQXhZVEExWkRjdwpIaGNOTVRrd05UQTRNRFUwTmpFeldoY05NalF3TlRBMk1EWTBOakV6V2pBdk1TMHdLd1lEVlFRREV5UTJNbVl4Ck1ESXpZeTAwWW1Nd0xUUXhNVFl0WWpNME5TMDNOakJtTkRBeFlUQTFaRGN3Z2dFaU1BMEdDU3FHU0liM0RRRUIKQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUURFZUYwMGZVSjdKR0U5azFxV0U4dXhDN3p3Q2xBNE1yaW9WTlFDaVd2SQpmMDNpdzZJK1MycUpXZjFOSEtMNkNhdlJEcVlZRDNMbkpPRzNNdXpHYmlSc2lsZHVtRFhpbTl5cXVGQmJRb2R3ClRtQ3BrQjNycDlDRnpPanh1MERZWTdIZ1pyYVlGUTZVYkFmT29UUVhQWGJSOEhVMDluTGUvMTJJcWlFa0ZZYUsKRUovOWM3eTVPd3dOZlV2Sm14TWJlNlFLVzRmTDFIK05POHp4TWY5Ym5HRE1ub1BLcVYzVzVYMitndGFqckFMeQpYb09adnBqdm9QOFFUWk5UWktkc3p6R1QrS0pqSXhtazg1K3hseTV3anFzbThabTg2UkkvSXVSenFZa0IrZ1ZxCjdrd1Y5WXVlYnFiNXZtdGNsNHpVek56bUJDT25hbmJvTjRLOHBQaVFLUzJYQWdNQkFBR2pJekFoTUE0R0ExVWQKRHdFQi93UUVBd0lDQkRBUEJnTlZIUk1CQWY4RUJUQURBUUgvTUEwR0NTcUdTSWIzRFFFQkN3VUFBNElCQVFBUQprZGF4MFhxZW1qalROdWxONVEzem52TVVvRlhncXh6Nitmek1LQ1MxcVRXOWdmZHVLN3JURjFVMVJDV2kxcWtPCndXa2pieVVQKzZnVVp5VFFoZ3Zpb1YvdEhTbW9JTGVRdUlrRGZROHh5bTNYamxYc2o0d1MwVEJMTmRNbUk1MXkKU2hVM2VkYmZhWWh5TXRlN2Y3M01tS01UWHFtUFREMitjaE55TGk4dno1VGhDMmtDK2xvWFRFc1pkZmpBeldIeApvZHc0VlJUTEV1U1dCSDl1d1Fwai9GaE5Va3VsR3NuMkN2Um90c2R0NmxDQVc4cXY5NCs1THZ0cjNGdkxJMW5DClhIYVY1em9BdzNnT1p6bjZSUEoyejFwVFZEdlFmVnkrTUk5NXhrU2tzRTdRNUw1T1BGN0NjR1dYNEF3eFgvWUYKMlpPclFwSFFCcjBLRXJwbUNhRVkKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+    server: https://35.196.136.87
+  name: gke_devops24-book_us-east1_jx-workshop
+contexts:
+- context:
+    cluster: gke_devops24-book_us-east1_jx-workshop
+    user: gke_devops24-book_us-east1_jx-workshop
+  name: gke_devops24-book_us-east1_jx-workshop
+current-context: gke_devops24-book_us-east1_jx-workshop
+kind: Config
+preferences: {}
+users:
+- name: gke_devops24-book_us-east1_jx-workshop
+  user:
+    auth-provider:
+      config:
+        access-token: ya29.GlsDB7wNk8S60_IOBop1rD8EKFTHiqgq2qRVEQymMbUajBOdkPVAhCHqFuHWSvssipZPqgPx4_OyEpyPLPCMPs0YFzSVmy2HCb3eBXhGjtYfiB3LmfjsCwaw-LO6
+        cmd-args: config config-helper --format=json
+        cmd-path: /Users/vfarcic/google-cloud-sdk/bin/gcloud
+        expiry: </span><span class="se">\"</span><span class="s2">2019-05-08T07:46:13Z</span><span class="se">\"</span><span class="s2">
+        expiry-key: '{.credential.token_expiry}'
+        token-key: '{.credential.access_token}'
+      name: gcp"</span> <span class="se">\</span>
+    | tee workshop_config.yaml
+
+<span class="c"># Change `/Users/vfarcic/google-cloud-sdk/bin/gcloud` to the path of your `gcloud`</span>
+
+<span class="nb">export </span><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="nv">$PWD</span>/workshop_config.yaml
+</code></pre></div></div>
+
+<h2 id="creating-a-cluster-with-jx-workshop-1">Creating A Cluster With jx (Workshop)</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">GH_USER</span><span class="o">=[</span>...] <span class="c"># Replace with your GitHub username</span>
+
+<span class="nb">export </span><span class="nv">LB_IP</span><span class="o">=</span><span class="k">$(</span>kubectl <span class="nt">-n</span> ingress-nginx get svc ingress-nginx <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.status.loadBalancer.ingress[0].ip}"</span><span class="k">)</span>
+
+<span class="nb">echo</span> <span class="nv">$LB_IP</span>
+
+<span class="nv">DOMAIN</span><span class="o">=</span><span class="nv">$GH_USER</span>.<span class="nv">$LB_IP</span>.nip.io
+
+<span class="c"># Use default answers except in the case specified below.</span>
+<span class="c"># Answer `Static Jenkins Server and Jenkinsfiles` when asked to `select Jenkins installation type`</span>
+
+jx install <span class="nt">--provider</span> gke <span class="nt">--external-ip</span> <span class="nv">$LB_IP</span> <span class="nt">--domain</span> <span class="nv">$DOMAIN</span> <span class="se">\</span>
+    <span class="nt">--default-admin-password</span><span class="o">=</span>admin <span class="nt">--ingress-namespace</span> ingress-nginx <span class="se">\</span>
+    <span class="nt">--ingress-deployment</span> nginx-ingress-controller <span class="se">\</span>
+    <span class="nt">--default-environment-prefix</span> jx-rocks <span class="nt">--git-provider-kind</span> github <span class="se">\</span>
+    <span class="nt">--namespace</span> <span class="nv">$GH_USER</span>
+</code></pre></div></div>
+<!-- 
+for i in {1..20}
+do
+    GH_USER=$(codename \
+        --lists=adjectives \
+        --filters=alliterative,unique,random \
+        |  tr '[:upper:]' '[:lower:]')
+    jx install --provider gke --external-ip $LB_IP --domain $DOMAIN \
+        --default-admin-password=admin --ingress-namespace ingress-nginx \
+        --ingress-deployment nginx-ingress-controller \
+        --default-environment-prefix jx-rocks --git-provider-kind github \
+        --namespace $GH_USER --batch-mode
+done
+ -->
+
+<h2 id="verifying-the-installation">Verifying The Installation</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> jx get pods
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/jx/jx-cluster-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

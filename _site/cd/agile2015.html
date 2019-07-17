@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Title | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Title" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/cd/agile2015.html" />
+<meta property="og:url" content="http://localhost:4000/cd/agile2015.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/cd/agile2015.html","@type":"WebPage","headline":"Title","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h1 id="title">Title</h1>
+
+<h2 id="continuous-deployment-the-ultimate-culmination-of-software-craftsmanship">Continuous Deployment: The Ultimate Culmination of Software Craftsmanship</h2>
+
+<p>Often, automatic, fast, with zero-downtime and the ability to rollback</p>
+
+<h1 id="co-presenter">Co-Presenter</h1>
+
+<h1 id="featured-participants">Featured Participants</h1>
+
+<h1 id="track">Track</h1>
+
+<p>Technical: DevOps</p>
+
+<h1 id="session-type">Session Type</h1>
+
+<p>Talk</p>
+
+<h1 id="audience-level">Audience Level</h1>
+
+<p>Learning</p>
+
+<h1 id="room-setup">Room Setup</h1>
+
+<p>Theater</p>
+
+<h1 id="duration">Duration</h1>
+
+<p>75 minutes</p>
+
+<h1 id="keywords">Keywords</h1>
+
+<p>Continuous Delivery, Continuous Deployment, CD, Docker, DevOps</p>
+
+<h1 id="abstract">Abstract</h1>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Continuous Deployment is the natural evolution of continuous integration and delivery. It is the ultimate culmination of software craftsmanship. Our skills need to be on such a high level that we have a confidence to continuously and automatically deploy our software to production.</p>
+
+<p>We usually start with continuous integration with software being built and tests executed on every commit. As we get better with the process we proceed towards continuous delivery with process and, especially tests, so well done that we have the confidence that any version of the software that passed all validations can be deployed to production. We can release the software any time we want with a click of a button. Continuous deployment is accomplished when we get rid of that button and deploy every “green” build to production.</p>
+
+<p>We’ll try to explore the goals of the final stage of continuous deployment, the deployment itself. We’ll assume that static analysis is being performed, unit, functional and stress tests are being run, test code coverage is high enough and that we have the confidence that our software is performing as expected after every commit.</p>
+
+<p>The goals of deployment process that we should aim for are:</p>
+
+<ul>
+  <li>Run often</li>
+  <li>Be automatic</li>
+  <li>Be fast</li>
+  <li>Provide zero-downtime</li>
+  <li>Provide ability to rollback</li>
+</ul>
+
+<p><strong>Deploy Often</strong></p>
+
+<p>We’ll try to explore why it is important to deploy often. What are the pros and cons deploying on every commit instead once a month or few times a year? What are the prerequisites for successful deployment?</p>
+
+<p><strong>Automate everything</strong></p>
+
+<p>Why automation? What are the pros and cons of provisioning tools like Chef and Puppet? What are containers (e.g. Docker) and how do they help? Do we need provisioning tools if we adopt containers?</p>
+
+<p><strong>Be fast</strong></p>
+
+<p>Speed is the key. Can we deploy often if the process is not fast? What is the relation between fast deployments and time-to-market? What is the acceptable deployment duration?</p>
+
+<p><strong>Zero-downtime</strong></p>
+
+<p>We cannot deploy often without zero-downtime. If there is any downtime during deployment, it will be multiplied with the number of deploys we do. We’ll go through one blue-green deployment as one possible way to accomplish zero-downtime.</p>
+
+<p><strong>Ability to rollback</strong></p>
+
+<p>Unexpected happens sooner or later and the ability to rollback is a must. How can we accomplish automated, fast and reliable rollback? What are the major obstacles?</p>
+
+<h2 id="deployment-strategies">Deployment Strategies</h2>
+
+<p>We’ll explore different strategies to deploy software. This session will in no way provide an exhaustive list of ways to deploy applications but will try to discuss few common ways that are in use today.</p>
+
+<p>Each of the strategies presented is based on practical experience and each of them created a different set of issues. We’ll go through both concepts behind those strategies and specific issues we faced when implementing them.</p>
+
+<p><strong>Mutable monster server</strong></p>
+
+<p>We are used to build and deploy big mutable applications. That’s how we did it during most of the short history of software industry. What are pros and cons of “mutable monster server”? Can we deploy it often with zero-downtime and easily rollback? Is automation of such a server the way to go? Can it be fast? Are there any alternatives?</p>
+
+<p><strong>Immutable servers</strong></p>
+
+<p>What are immutable servers? How can we deploy them? What is blue-green deployment in the context of immutable servers? What are the benefits?</p>
+
+<p><strong>Immutable microservices</strong></p>
+
+<p>What are microservices? Why do they fit perfectly into the concept of immutable servers?</p>
+
+<h2 id="live-example">Live Example</h2>
+
+<p>Once we are all familiar with Continuous Deployment and different strategies that can be employed, we’ll got through one example of deploying fast, often, automatically, with zero-downtime and the ability to rollback. We’ll use Docker, Ansible, nginx and few other tools together with microservices approach to architecture coupled with TDD to release and deploy an application. All examples will be run live.</p>
+
+<h2 id="summary">Summary</h2>
+
+<p>Continuous deployment sounds to many as too risky or even impossible. Whether it’s risky depends on the architecture of software we’re building. As a general rule, splitting application into smaller independent elements helps a lot. Microservices is the way to go if possible. Risks aside, in many cases there is no business reason or willingness to adopt continuous delivery. Still, software can be continuously deployed to test servers thus becoming continuous delivery. No matter whether we are doing continuous deployment, delivery, integration or none of those, having automatic and fast deployment with zero downtime and the ability to rollback provides great benefits. If for no other reason, because it frees us to do more productive and beneficial tasks. We should design and code our software and let machines do the rest for us.</p>
+
+<h1 id="learning-outcomes">Learning Outcomes</h1>
+
+<p>In this session you will learn:</p>
+
+<ul>
+  <li>What is Continuous Deployment</li>
+  <li>Importance to run deployment often, automatically and fast with zero-downtime and the ability to rollback</li>
+  <li>Different deployment strategies</li>
+  <li>Deployments and architecture of immutable microservices as the key to successful Continuous Deployment</li>
+</ul>
+
+<p>You will also see few case studies and “real world” examples.</p>
+
+<h1 id="prerequisite-knowledge">Prerequisite Knowledge</h1>
+
+<h1 id="information-for-review-team">Information for Review Team</h1>
+
+<p>The overall flow will be:</p>
+
+<ul>
+  <li>Introduction to deployment techniques and Continuous Deployment
+    <ul>
+      <li>Discussion about evolution of deployment techniques</li>
+      <li>Discussion around 5 key elements of successful implementation of Continuous Deployment: run often, be automatic, be fast, provide zero-downtime and ability to rollback.</li>
+    </ul>
+  </li>
+  <li>Deployment strategies
+    <ul>
+      <li>Mutable servers</li>
+      <li>Immutable servers</li>
+      <li>Immutable microservices</li>
+    </ul>
+  </li>
+  <li>Live example</li>
+  <li>Summary</li>
+</ul>
+
+<p>The session should be very interactive. I’ll try to present my experiences and engage audience to share their own.</p>
+
+<p>Presentation will be a mix of prepared slides and live coding and demos.</p>
+
+<h1 id="presentation-history">Presentation History</h1>
+
+<p>Similar presentation has been given in Barcelona Software Craftsmanship 2014.</p>
+
+<p>Workshop on the same subject will be given in a 8 hour workshop in <a href="http://craft-conf.com/2015#workshops/ViktorFarcic">Craft 2015</a>.</p>
+
+<p>It was presented and was part of workshops that attended more than 300 employees of the company I worked for. Presentation and workshops had a success that resulted in requests to repeat the same for our clients in US, UK, Finland, Spain, Poland and Singapore. Since then I changed the company and am currently presenting, holding workshops and applying it in several big insurance and banking corporations.</p>
+
+<p>I wrote many articles on the subject of <a href="http://technologyconversations.com/category/continuous-integration-delivery-and-deployment/">Continuous Integration, Delivery and Deployment</a> and am currently writing a book.</p>
+
+<h1 id="presentation-sample">Presentation Sample</h1>
+
+<p>http://vfarcic.github.io/cd/</p>
+
+<p>This is the last presentation I gave on a similar subject. The one planned for Agile 2015 will have similar content.</p>
+
+<h1 id="bio">Bio</h1>
+
+<p>Viktor Farcic is a Software Architect at everis.</p>
+
+<p>He coded using plethora of languages starting with Pascal (yes, he is old), Basic (before it got Visual prefix), ASP (before it got .Net suffix), C, C++, Perl, Python, ASP.Net, Visual Basic, C#, JavaScript, etc. He never worked with Fortran. His current favorites are <strong>Scala</strong> and <strong>JavaScript</strong> even though most of his office hours are spent with <strong>Java</strong>.</p>
+
+<p>His big passions are Behavior-Driven Development (BDD), Test-Driven Development (TDD) and Continuous Integration, Delivery and Deployment (CI/CD).</p>
+
+<p>He is major contributor to the open source project BDD Assistant and often speaks at community gatherings and conferences.</p>
+
+<p>Contact Details:</p>
+
+<ul>
+  <li>E-mail: viktor@farcic.com</li>
+  <li>Twitter: @vfarcic</li>
+  <li>Skype: vfarcic</li>
+</ul>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/cd/agile2015.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

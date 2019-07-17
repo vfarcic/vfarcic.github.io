@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/jx/jx-create-project-demo.html" />
+<meta property="og:url" content="http://localhost:4000/jx/jx-create-project-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/jx/jx-create-project-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="creating-a-quickstart-project">Creating A Quickstart Project</h1>
+
+<h2 id="creating-a-project">Creating A Project</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jx create quickstart <span class="c"># Cancel with ctrl+c</span>
+
+jx create quickstart <span class="nt">--language</span> go <span class="nt">--project-name</span> jx-go <span class="nt">--batch-mode</span>
+
+<span class="nb">export </span><span class="nv">GH_USER</span><span class="o">=[</span>...] <span class="c"># Replace with your GitHub user</span>
+
+open <span class="s2">"https://github.com/</span><span class="nv">$GH_USER</span><span class="s2">/jx-go"</span>
+
+<span class="nb">ls</span> <span class="nt">-l</span> jx-go
+
+<span class="nb">cat </span>jx-go/Dockerfile
+
+<span class="nb">cat </span>jx-go/Jenkinsfile
+
+<span class="nb">cat </span>jx-go/Makefile
+</code></pre></div></div>
+
+<h2 id="creating-a-project-1">Creating A Project</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>jx-go/skaffold.yaml
+
+<span class="nb">ls</span> <span class="nt">-l</span> jx-go/charts
+
+<span class="nb">ls</span> <span class="nt">-l</span> jx-go/charts/jx-go
+
+<span class="nb">ls</span> <span class="nt">-l</span> jx-go/charts/preview
+
+open <span class="s2">"https://github.com/</span><span class="nv">$GH_USER</span><span class="s2">/jx-go/settings/hooks"</span>
+
+open <span class="s2">"https://github.com/jenkins-x-quickstarts"</span>
+
+<span class="nb">ls</span> <span class="nt">-l</span> ~/.jx/draft/packs/github.com/jenkins-x-buildpacks/jenkins-x-kubernetes/packs/
+</code></pre></div></div>
+
+<h2 id="browsing-the-project">Browsing The Project</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl get pods
+
+jx console
+
+jx get activities
+
+jx get activities <span class="nt">-f</span> jx-go <span class="nt">-w</span> <span class="c"># Cancel with ctrl+c</span>
+
+jx get build logs <span class="c"># Cancel with ctrl+c</span>
+
+jx get build logs <span class="nt">-f</span> jx-go <span class="c"># Cancel with ctrl+c</span>
+
+jx get build logs <span class="nv">$GH_USER</span>/jx-go/master
+</code></pre></div></div>
+
+<h2 id="browsing-the-project-1">Browsing The Project</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jx get pipelines
+
+jx get applications
+
+jx get env
+
+jx get applications <span class="nt">-e</span> staging
+
+open <span class="s2">"https://github.com/</span><span class="nv">$GH_USER</span><span class="s2">/jx-go/releases"</span>
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/jx/jx-create-project-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

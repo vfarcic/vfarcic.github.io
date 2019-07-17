@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Microservices Lifecycle</title>
+
+		<meta name="author" content="Viktor Farcic">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+		<link rel="stylesheet" href="css/theme/vfarcic.css">
+
+		<!-- Code syntax highlighting -->
+		<!--<link rel="stylesheet" href="lib/css/zenburn.css">-->
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section id="cover">
+					<h1>Service Discovery</h1>
+					<p>
+						Created by <a href="http://technologyconversations.com/about/">Viktor Farcic</a>
+						for <a href="http://technologyconversations.com">Technology Conversations</a>
+					</p>
+					<h3><a href="https://twitter.com/vfarcic">@vfarcic</a></h3>
+				</section>
+				<section id="about-me">
+					<h2>Viktor Farcic</h2>
+					<ul>
+						<img src="img/viktor.jpg" style="float: right; width: 25%; height: 25%;"/>
+						<li>Senior Consultant at <a href="https://www.cloudbees.com/">CloudBees</a></li>
+						<li>Never developed in Fortran</li>
+						<li>Passionate about microservices, continuous deployment and TDD</li>
+						<li>Blogger in <a href="http://technologyconversations.com/">TechnologyConversations.com</a></li>
+						<li><a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">Java Test-Driven Development: Mastering TDD Through Katas</a></li>
+					</ul>
+				</section>
+				<section data-background="img/background/sd.png">
+					<section id="sd">
+						<h2>Service Discovery</h2>
+						<img src="img/sd/service-discovery.png" class="fragment">
+					</section>
+					<section id="sd-single-node">
+						<h4>Service Discovery</h4>
+						<h2>Single node</h2>
+						<img src="img/sd/single-node-docker.png">
+					</section>
+					<section id="sd-multi-node">
+						<h4>Service Discovery</h4>
+						<h2>Multiple nodes</h2>
+						<img src="img/sd/multi-node-docker.png">
+					</section>
+					<section id="sd-elements">
+						<h4>Service Discovery</h4>
+						<h2>Service Discovery Elements</h2>
+						<ul>
+							<li class="fragment">Service registry</li>
+							<li class="fragment">Service registration</li>
+							<li class="fragment">Service discovery</li>
+						</ul>
+					</section>
+					<section id="sd-tools">
+						<h4>Service Discovery</h4>
+						<h2>Tools</h2>
+						<ol>
+							<li class="fragment">Manual configuration</li>
+							<li class="fragment">Zookeeper</li>
+							<li class="fragment">etcd / Registrator / confd</li>
+							<li class="fragment">
+								<label class="fragment grow highlight-current-green">Consul / Registrator / Consul Template</label>
+							</li>
+						</ol>
+					</section>
+					<section id="sd-consul-playbook">
+						<h4>Service Discovery</h4>
+						<h2>Servers</h2>
+						<pre><code data-trim contenteditable>
+git clone https://github.com/vfarcic/ms-lifecycle.git
+
+cd ms-lifecycle
+
+vagrant up cd serv-disc-01 serv-disc-02 serv-disc-03 \
+    --provision
+
+vagrant ssh cd
+						</code></pre>
+					</section>
+					<section id="sd-consul-setup">
+						<h4>Service Discovery</h4>
+						<h2>Setting up Consul</h2>
+						<pre><code data-trim contenteditable>
+ansible-playbook \
+    /vagrant/ansible/consul.yml \
+    -i /vagrant/ansible/hosts/serv-disc
+
+curl 10.100.194.201:8500/v1/catalog/nodes \
+    | jq '.'
+						</code></pre>
+					</section>
+					<section id="sd-consul-diagram">
+						<h4>Service Discovery</h4>
+						<h2>Consul</h2>
+						<img src="img/sd/consul.png">
+					</section>
+					<section id="sd-kv-put">
+						<h4>Service Discovery</h4>
+						<h2>Key/value store: PUT</h2>
+						<pre><code data-trim contenteditable>
+curl -X PUT -d 'this is a test' \
+    http://10.100.194.201:8500/v1/kv/msg1
+
+curl -X PUT -d 'this is another test' \
+    http://10.100.194.202:8500/v1/kv/messages/msg2
+
+curl -X PUT -d 'this is a test with flags' \
+    http://10.100.194.203:8500/v1/kv/messages/msg3?flags=1234
+						</code></pre>
+					</section>
+					<section id="sd-kv-get-delete">
+						<h4>Service Discovery</h4>
+						<h2>Key/value store: GET/DELETE</h2>
+						<pre><code data-trim contenteditable>
+curl http://10.100.194.203:8500/v1/kv/?recurse \
+    | jq '.'
+
+curl http://10.100.194.202:8500/v1/kv/msg1 \
+    | jq '.'
+
+curl http://10.100.194.201:8500/v1/kv/msg1?raw
+
+curl -X DELETE http://10.100.194.201:8500/v1/kv/messages/msg2
+
+curl http://10.100.194.203:8500/v1/kv/?recurse \
+    | jq '.'
+
+curl -X DELETE http://10.100.194.202:8500/v1/kv/?recurse
+
+curl http://10.100.194.203:8500/v1/kv/?recurse \
+    | jq '.'
+						</code></pre>
+					</section>
+					<section id="sd-registrator-setup">
+						<h4>Service Discovery</h4>
+						<h2>Setting up Registrator</h2>
+						<pre><code data-trim contenteditable>
+ansible-playbook \
+    /vagrant/ansible/registrator.yml \
+    -i /vagrant/ansible/hosts/serv-disc
+						</code></pre>
+					</section>
+					<section id="sd-consul-registrator-diagram">
+						<h4>Service Discovery</h4>
+						<h2>Consul / Registrator</h2>
+						<img src="img/sd/consul-registrator.png">
+					</section>
+					<section id="sd-nginx">
+						<h4>Service Discovery</h4>
+						<h2>Registering service</h2>
+						<pre><code data-trim contenteditable>
+exit # Exit cd
+
+vagrant ssh serv-disc-01
+
+sudo docker run -d --name nginx \
+    --env SERVICE_NAME=nginx \
+    --env SERVICE_ID=nginx \
+    -p 1234:80 \
+    nginx
+
+curl http://10.100.194.201:8500/v1/catalog/service/nginx \
+    | jq '.'
+						</code></pre>
+					</section>
+					<section id="sd-nginx2">
+						<h4>Service Discovery</h4>
+						<h2>Registering service again</h2>
+						<pre><code data-trim contenteditable>
+exit
+
+vagrant ssh serv-disc-02
+
+sudo docker run -d --name nginx2 \
+    --env "SERVICE_ID=nginx2" \
+    --env "SERVICE_NAME=nginx" \
+    --env "SERVICE_TAGS=balancer,proxy,www" \
+    -p 1111:80 \
+    nginx
+
+curl http://localhost:8500/v1/catalog/service/nginx \
+    | jq '.'
+						</code></pre>
+					</section>
+					<section id="sd-consul-template-setup">
+						<h4>Service Discovery</h4>
+						<h2>Setting Up Consul Template</h2>
+						<pre><code data-trim contenteditable>
+exit
+
+vagrant ssh cd
+
+ansible-playbook \
+    /vagrant/ansible/consul-template.yml \
+    -i /vagrant/ansible/hosts/serv-disc
+						</code></pre>
+					</section>
+					<section id="sd-consul-registrator-consul-template-diagram">
+						<h4>Service Discovery</h4>
+						<h2>Consul / Registrator / Consul Template</h2>
+						<img src="img/sd/consul-registrator-consul-template.png">
+					</section>
+					<section id="sd-consul-template-run">
+						<h4>Service Discovery</h4>
+						<h2>Running Consul Template</h2>
+						<pre><code data-trim contenteditable>
+exit # Exit cd node
+
+vagrant ssh serv-disc-01 # Enter serv-disc-01
+
+curl http://localhost:8500/v1/catalog/service/nginx \
+    | jq '.'
+
+cat /data/consul-template/example.ctmpl
+
+consul-template \
+    -consul localhost:8500 \
+    -template "/data/consul-template/example.ctmpl:/tmp/example.conf" \
+    -once
+
+cat /tmp/example.conf
+						</code></pre>
+					</section>
+					<section id="sd-cleanup">
+						<h4>Service Discovery</h4>
+						<h2>Cleanup</h2>
+						<pre><code data-trim contenteditable>
+exit # Exit cd node
+
+vagrant halt cd serv-disc-01 serv-disc-02 serv-disc-03
+						</code></pre>
+					</section>
+				</section>
+				<section data-background="img/background/sd.png">
+					<section id="video">
+						<h2>Videos</h2>
+					</section>
+					<section id="video-consul">
+						<h4>Consul</h4>
+						<script type="text/javascript" src="https://asciinema.org/a/31286.js" id="asciicast-31286" async></script>
+					</section>
+					<section id="video-registrator">
+						<h4>Registrator</h4>
+						<script type="text/javascript" src="https://asciinema.org/a/31285.js" id="asciicast-31285" async></script>
+					</section>
+					<section id="video-consul-template">
+						<h4>Consul Template</h4>
+						<script type="text/javascript" src="https://asciinema.org/a/31288.js" id="asciicast-31288" async></script>
+					</section>
+				</section>
+				<section id="qa" data-background="img/questions.jpg">
+				</section>
+				<section>
+					<section id="the-end" data-background="img/the_end.jpg">
+						<h1>Viktor Farcic</h1>
+						<h3><a href="https://twitter.com/vfarcic">@vfarcic</a></h3>
+						<h4><a href="http://technologyconversations.com">technology conversations.com</a></h4>
+					</section>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+//					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

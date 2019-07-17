@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/devops23/cm-demo-short.html" />
+<meta property="og:url" content="http://localhost:4000/devops23/cm-demo-short.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/devops23/cm-demo-short.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="using-configmaps-to-inject-configuration-files">Using ConfigMaps To Inject Configuration Files</h1>
+
+<h2 id="injecting-configs-from-files">Injecting Configs From Files</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl create cm my-config <span class="nt">--from-file</span><span class="o">=</span>cm/prometheus-conf.yml <span class="se">\</span>
+    <span class="nt">--from-file</span><span class="o">=</span>cm/prometheus.yml
+
+<span class="nb">cat </span>cm/alpine.yml
+
+kubectl create <span class="nt">-f</span> cm/alpine.yml
+
+kubectl <span class="nb">exec</span> <span class="nt">-it</span> alpine <span class="nt">--</span> <span class="nb">ls</span> /etc/config
+
+kubectl <span class="nb">exec</span> <span class="nt">-it</span> alpine <span class="nt">--</span> <span class="nb">cat</span> /etc/config/prometheus-conf.yml
+
+kubectl delete <span class="nt">-f</span> cm/alpine.yml
+
+kubectl delete cm my-config
+</code></pre></div></div>
+
+<h2 id="configs-from-literals">Configs From Literals</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl create cm my-config <span class="se">\</span>
+    <span class="nt">--from-literal</span><span class="o">=</span><span class="nv">something</span><span class="o">=</span><span class="k">else</span> <span class="nt">--from-literal</span><span class="o">=</span><span class="nv">weather</span><span class="o">=</span>sunny
+
+kubectl create <span class="nt">-f</span> cm/alpine.yml
+
+kubectl <span class="nb">exec</span> <span class="nt">-it</span> alpine <span class="nt">--</span> <span class="nb">ls</span> /etc/config
+
+kubectl <span class="nb">exec</span> <span class="nt">-it</span> alpine <span class="nt">--</span> <span class="nb">cat</span> /etc/config/something
+
+kubectl delete <span class="nt">-f</span> cm/alpine.yml
+
+kubectl delete cm my-config
+</code></pre></div></div>
+
+<h2 id="configs-from-environment-files">Configs From Environment Files</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>cm/my-env-file.yml
+
+kubectl create cm my-config <span class="nt">--from-env-file</span><span class="o">=</span>cm/my-env-file.yml
+
+kubectl get cm my-config <span class="nt">-o</span> yaml
+</code></pre></div></div>
+
+<!-- .slide: data-background="img/cm-components.png" data-background-size="contain" -->
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/devops23/cm-demo-short.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

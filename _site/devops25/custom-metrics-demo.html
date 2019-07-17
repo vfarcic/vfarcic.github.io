@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/devops25/custom-metrics-demo.html" />
+<meta property="og:url" content="http://localhost:4000/devops25/custom-metrics-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/devops25/custom-metrics-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="extending-hpa-with-custom-metrics">Extending HPA With Custom Metrics</h1>
+
+<!-- .slide: data-background="img/custom-metrics-without.png" data-background-size="contain" -->
+
+<h2 id="exploring-prometheus-adapter">Exploring Prometheus Adapter</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>helm install stable/prometheus-adapter <span class="nt">--name</span> prometheus-adapter <span class="se">\</span>
+    <span class="nt">--version</span> v0.2.0 <span class="nt">--namespace</span> metrics <span class="nt">--set</span> image.tag<span class="o">=</span>v0.3.0 <span class="se">\</span>
+    <span class="nt">--set</span> <span class="nv">metricsRelistInterval</span><span class="o">=</span>90s <span class="nt">--set</span> prometheus.port<span class="o">=</span>80 <span class="se">\</span>
+    <span class="nt">--set</span> prometheus.url<span class="o">=</span>http://prometheus-server.metrics.svc
+
+kubectl <span class="nt">-n</span> metrics rollout status deployment prometheus-adapter
+
+kubectl get <span class="nt">--raw</span> <span class="s2">"/apis/custom.metrics.k8s.io/v1beta1"</span> | jq <span class="s2">"."</span>
+</code></pre></div></div>
+
+<!-- .slide: data-background="img/custom-metrics-prom-adapter.png" data-background-size="contain" -->
+
+<h2 id="exploring-prometheus-adapter-1">Exploring Prometheus Adapter</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">GD5_ADDR</span><span class="o">=</span>go-demo-5.<span class="nv">$LB_IP</span>.nip.io
+
+helm install <span class="se">\</span>
+    https://github.com/vfarcic/go-demo-5/releases/download/0.0.1/go-demo-5-0.0.1.tgz <span class="se">\</span>
+    <span class="nt">--name</span> go-demo-5 <span class="nt">--namespace</span> go-demo-5 <span class="se">\</span>
+    <span class="nt">--set</span> ingress.host<span class="o">=</span><span class="nv">$GD5_ADDR</span>
+
+kubectl <span class="nt">-n</span> go-demo-5 rollout status deployment go-demo-5
+
+<span class="k">for </span>i <span class="k">in</span> <span class="o">{</span>1..100<span class="o">}</span><span class="p">;</span> <span class="k">do
+    </span>curl <span class="s2">"http://</span><span class="nv">$GD5_ADDR</span><span class="s2">/demo/hello"</span>
+<span class="k">done
+
+</span>kubectl get <span class="nt">--raw</span> <span class="s2">"/apis/custom.metrics.k8s.io/v1beta1"</span> <span class="se">\</span>
+    | jq <span class="s1">'.resources[] | select(.name 
+    | contains("nginx_ingress_controller_requests"))'</span>
+</code></pre></div></div>
+
+<h2 id="exploring-prometheus-adapter-2">Exploring Prometheus Adapter</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl get <span class="nt">--raw</span> <span class="s2">"/apis/custom.metrics.k8s.io/v1beta1"</span> <span class="se">\</span>
+    | jq <span class="s1">'.resources[] | select(.name 
+    | contains("http_server_resp_time_count"))'</span>
+
+kubectl <span class="nt">-n</span> metrics describe cm prometheus-adapter
+</code></pre></div></div>
+
+<h2 id="creating-hpa-wcustom-metrics">Creating HPA w/Custom Metrics</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>mon/prom-adapter-values-ing.yml
+
+helm upgrade prometheus-adapter stable/prometheus-adapter <span class="se">\</span>
+    <span class="nt">--version</span> v0.2.0 <span class="nt">--namespace</span> metrics <span class="se">\</span>
+    <span class="nt">--values</span> mon/prom-adapter-values-ing.yml
+
+kubectl <span class="nt">-n</span> metrics rollout status deployment prometheus-adapter
+
+kubectl <span class="nt">-n</span> metrics describe cm prometheus-adapter
+
+kubectl get <span class="nt">--raw</span> <span class="s2">"/apis/custom.metrics.k8s.io/v1beta1"</span> | jq <span class="s2">"."</span>
+
+<span class="nb">cat </span>mon/go-demo-5-hpa-ing.yml
+
+kubectl <span class="nt">-n</span> go-demo-5 apply <span class="nt">-f</span> mon/go-demo-5-hpa-ing.yml
+</code></pre></div></div>
+
+<h2 id="creating-hpa-wcustom-metrics-1">Creating HPA w/Custom Metrics</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> go-demo-5 describe hpa go-demo-5
+
+<span class="k">for </span>i <span class="k">in</span> <span class="o">{</span>1..100<span class="o">}</span><span class="p">;</span> <span class="k">do
+    </span>curl <span class="s2">"http://</span><span class="nv">$GD5_ADDR</span><span class="s2">/demo/hello"</span>
+<span class="k">done
+
+</span>kubectl <span class="nt">-n</span> go-demo-5 describe hpa go-demo-5
+
+kubectl <span class="nt">-n</span> go-demo-5 get pods
+
+kubectl <span class="nt">-n</span> go-demo-5 describe hpa go-demo-5
+
+<span class="nb">cat </span>mon/prom-adapter-values-svc.yml
+</code></pre></div></div>
+
+<h2 id="creating-hpa-wcustom-metrics-2">Creating HPA w/Custom Metrics</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>helm upgrade <span class="nt">-i</span> prometheus-adapter stable/prometheus-adapter <span class="se">\</span>
+    <span class="nt">--version</span> v0.2.0 <span class="nt">--namespace</span> metrics <span class="se">\</span>
+    <span class="nt">--values</span> mon/prom-adapter-values-svc.yml
+
+kubectl <span class="nt">-n</span> metrics rollout status deployment prometheus-adapter
+
+kubectl get <span class="nt">--raw</span> <span class="s2">"/apis/custom.metrics.k8s.io/v1beta1"</span> | jq <span class="s2">"."</span>
+
+kubectl get <span class="nt">--raw</span> <span class="se">\</span>
+    <span class="s2">"/apis/custom.metrics.k8s.io/v1beta1/namespaces/go-demo-5/services/*/http_req_per_second_per_replica"</span> <span class="se">\</span>
+    | jq <span class="nb">.</span>
+
+<span class="nb">cat </span>mon/go-demo-5-hpa-svc.yml
+
+kubectl <span class="nt">-n</span> go-demo-5 apply <span class="nt">-f</span> mon/go-demo-5-hpa-svc.yml
+</code></pre></div></div>
+
+<h2 id="creating-hpa-wcustom-metrics-3">Creating HPA w/Custom Metrics</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> go-demo-5 describe hpa go-demo-5
+
+kubectl <span class="nt">-n</span> go-demo-5 run <span class="nt">-it</span> <span class="nb">test</span> <span class="nt">--image</span><span class="o">=</span>debian <span class="nt">--restart</span><span class="o">=</span>Never <span class="se">\</span>
+    <span class="nt">--rm</span> <span class="nt">--</span> bash
+
+apt update
+
+apt install <span class="nt">-y</span> curl
+
+<span class="k">for </span>i <span class="k">in</span> <span class="o">{</span>1..500<span class="o">}</span><span class="p">;</span> <span class="k">do
+    </span>curl <span class="s2">"http://go-demo-5:8080/demo/hello"</span>
+<span class="k">done
+
+</span><span class="nb">exit</span>
+</code></pre></div></div>
+
+<h2 id="creating-hpa-wcustom-metrics-4">Creating HPA w/Custom Metrics</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> go-demo-5 describe hpa go-demo-5
+
+kubectl <span class="nt">-n</span> go-demo-5 get pods
+</code></pre></div></div>
+
+<h2 id="combining-metric-server-wcustom-metrics">Combining Metric Server w/Custom Metrics</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>mon/go-demo-5-hpa.yml
+
+kubectl <span class="nt">-n</span> go-demo-5 apply <span class="nt">-f</span> mon/go-demo-5-hpa.yml
+
+kubectl <span class="nt">-n</span> go-demo-5 describe hpa go-demo-5
+</code></pre></div></div>
+
+<!-- .slide: data-background="img/custom-metrics.png" data-background-size="contain" -->
+
+<h2 id="what-now">What Now?</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>helm delete go-demo-5 <span class="nt">--purge</span>
+
+kubectl delete ns go-demo-5
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/devops25/custom-metrics-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

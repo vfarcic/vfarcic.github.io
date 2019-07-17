@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="vfarcic.github.io" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/cje2/cje-install.html" />
+<meta property="og:url" content="http://localhost:4000/cje2/cje-install.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/cje2/cje-install.html","@type":"WebPage","headline":"vfarcic.github.io","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <!-- .slide: data-background="../img/background/setup.jpeg" -->
+<h1 id="installing-cje">Installing CJE</h1>
+
+<hr />
+
+<h1 id="the-release">The Release</h1>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"https://downloads.cloudbees.com/cje2/latest/"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Available Online</li>
+  <li>Check the date of the latest!</li>
+  <li>All versions available</li>
+  <li>Two flavors (k8s, OpenShift)</li>
+  <li>sha256 digest</li>
+</ul>
+
+<h1 id="the-release-1">The Release</h1>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">RELEASE_URL</span><span class="o">=[</span>...]
+
+curl <span class="nt">-o</span> cje.tgz <span class="nv">$RELEASE_URL</span>
+
+<span class="nb">tar</span> <span class="nt">-xvf</span> cje.tgz
+
+<span class="nb">cd </span>cje2_<span class="k">*</span>
+
+<span class="nb">ls</span> <span class="nt">-l</span>
+</code></pre></div></div>
+
+<h1 id="yaml">YAML</h1>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>cje.yml
+</code></pre></div></div>
+
+<h1 id="storage-class">Storage Class</h1>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl get sc <span class="nt">-o</span> yaml
+</code></pre></div></div>
+
+<h1 id="installation">Installation</h1>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl create ns jenkins
+
+<span class="nb">cat </span>cje.yml <span class="se">\</span>
+    | sed <span class="nt">-e</span> <span class="s2">"s@https://cje.example.com@http://cje.example.com@g"</span> <span class="se">\</span>
+    | sed <span class="nt">-e</span> <span class="s2">"s@cje.example.com@</span><span class="nv">$CLUSTER_DNS</span><span class="s2">@g"</span> <span class="se">\</span>
+    | sed <span class="nt">-e</span> <span class="s2">"s@ssl-redirect: </span><span class="se">\"</span><span class="s2">true</span><span class="se">\"</span><span class="s2">@ssl-redirect: </span><span class="se">\"</span><span class="s2">false</span><span class="se">\"</span><span class="s2">@g"</span> <span class="se">\</span>
+    | kubectl <span class="nt">-n</span> jenkins create <span class="nt">-f</span> - <span class="nt">--save-config</span> <span class="nt">--record</span>
+
+kubectl <span class="nt">-n</span> jenkins rollout status sts cjoc
+
+kubectl <span class="nt">-n</span> jenkins get all
+</code></pre></div></div>
+
+<h1 id="setup">Setup</h1>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/cjoc"</span>
+
+kubectl <span class="nt">--namespace</span> jenkins <span class="nb">exec </span>cjoc-0 <span class="nt">--</span> <span class="se">\</span>
+    <span class="nb">cat</span> /var/jenkins_home/secrets/initialAdminPassword
+</code></pre></div></div>
+
+<ul>
+  <li>Complete the wizard steps</li>
+</ul>
+
+<h1 id="storage">Storage</h1>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> jenkins get pvc
+
+kubectl get pv
+</code></pre></div></div>
+
+<h1 id="creating-a-master">Creating A Master</h1>
+
+<hr />
+
+<ul>
+  <li>Create a master called <em>my-master</em></li>
+  <li><em>Jenkins Master Memory in MB</em> to <em>1024</em></li>
+  <li>Set <em>Jenkins Master CPUs</em> to <em>0.5</em></li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> jenkins get all
+
+kubectl <span class="nt">-n</span> jenkins describe pod my-master-0
+
+kubectl <span class="nt">-n</span> jenkins logs my-master-0
+</code></pre></div></div>
+
+<ul>
+  <li>Go to <em>my-master</em></li>
+  <li>Complete the wizard steps</li>
+</ul>
+
+<h1 id="creating-a-job">Creating A Job</h1>
+
+<hr />
+
+<ul>
+  <li>Create a new Pipeline job called <em>my-job</em></li>
+</ul>
+
+<h1 id="creating-a-job-1">Creating A Job</h1>
+
+<hr />
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">podTemplate</span><span class="o">(</span>
+    <span class="nl">label:</span> <span class="s1">'kubernetes'</span><span class="o">,</span>
+    <span class="nl">containers:</span> <span class="o">[</span>
+        <span class="n">containerTemplate</span><span class="o">(</span><span class="nl">name:</span> <span class="s1">'maven'</span><span class="o">,</span> <span class="nl">image:</span> <span class="s1">'maven:alpine'</span><span class="o">,</span> <span class="nl">ttyEnabled:</span> <span class="kc">true</span><span class="o">,</span> <span class="nl">command:</span> <span class="s1">'cat'</span><span class="o">),</span>
+        <span class="n">containerTemplate</span><span class="o">(</span><span class="nl">name:</span> <span class="s1">'golang'</span><span class="o">,</span> <span class="nl">image:</span> <span class="s1">'golang:alpine'</span><span class="o">,</span> <span class="nl">ttyEnabled:</span> <span class="kc">true</span><span class="o">,</span> <span class="nl">command:</span> <span class="s1">'cat'</span><span class="o">)</span>
+    <span class="o">]</span>
+<span class="o">)</span> <span class="o">{</span>
+    <span class="n">node</span><span class="o">(</span><span class="s1">'kubernetes'</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">container</span><span class="o">(</span><span class="s1">'maven'</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">stage</span><span class="o">(</span><span class="s1">'build'</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"sleep 5"</span>
+                <span class="n">sh</span> <span class="s1">'mvn --version'</span>
+            <span class="o">}</span>
+            <span class="n">stage</span><span class="o">(</span><span class="s1">'unit-test'</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"sleep 5"</span>
+                <span class="n">sh</span> <span class="s1">'java -version'</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">container</span><span class="o">(</span><span class="s1">'golang'</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">stage</span><span class="o">(</span><span class="s1">'deploy'</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"sleep 5"</span>
+                <span class="n">sh</span> <span class="s1">'go version'</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h1 id="running-the-job">Running The Job</h1>
+
+<hr />
+
+<ul>
+  <li>Run the job <em>my-job</em></li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> jenkins get pods
+</code></pre></div></div>
+
+<h1 id="a-real-pipeline-namespaces">A Real Pipeline (namespaces)</h1>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="nt">-f</span> https://raw.githubusercontent.com/vfarcic/go-demo-3/master/k8s/build-ns.yml
+
+<span class="c"># kubectl apply -n go-demo-3-build \</span>
+<span class="c">#     -f https://raw.githubusercontent.com/vfarcic/go-demo-3/master/k8s/jenkins.yml</span>
+
+kubectl apply <span class="nt">-f</span> https://raw.githubusercontent.com/vfarcic/go-demo-3/master/k8s/jenkins.yml
+
+curl https://raw.githubusercontent.com/vfarcic/go-demo-3/master/k8s/jenkins.yml <span class="se">\</span>
+    | sed <span class="nt">-e</span> <span class="s2">"s@go-demo-3-build@kube-system@g"</span> <span class="se">\</span>
+    | kubectl apply <span class="nt">-f</span> -
+
+kubectl create <span class="se">\</span>
+    <span class="nt">-f</span> https://raw.githubusercontent.com/vfarcic/k8s-specs/master/helm/tiller-rbac.yml <span class="se">\</span>
+    <span class="nt">--record</span> <span class="nt">--save-config</span>
+
+helm init <span class="nt">--service-account</span> tiller
+
+kubectl <span class="nt">-n</span> kube-system rollout status deploy tiller-deploy
+
+<span class="nv">LB_HOST</span><span class="o">=</span><span class="k">$(</span>kubectl <span class="nt">-n</span> kube-ingress get svc ingress-nginx <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.status.loadBalancer.ingress[0].hostname}"</span><span class="k">)</span>
+
+<span class="nb">export </span><span class="nv">LB_IP</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>dig +short <span class="nv">$LB_HOST</span> | tail <span class="nt">-n</span> 1<span class="k">)</span><span class="s2">"</span>
+
+<span class="nb">echo</span> <span class="nv">$LB_IP</span>
+</code></pre></div></div>
+
+<h1 id="a-real-pipeline">A Real Pipeline</h1>
+
+<hr />
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">podTemplate</span><span class="o">(</span>
+    <span class="nl">label:</span> <span class="s2">"kubernetes"</span><span class="o">,</span>
+    <span class="nl">serviceAccount:</span> <span class="s2">"jenkins"</span><span class="o">,</span>
+    <span class="nl">yaml:</span> <span class="s2">"""
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: docker
+    image: docker:18.03-git
+    command: ["sleep"]
+    args: ["100000"]
+    volumeMounts:
+    - name: docker-socket
+      mountPath: /var/run/docker.sock
+  - name: golang
+    image: golang:1.9
+    command: ["sleep"]
+    args: ["100000"]
+  - name: helm
+    image: vfarcic/helm:2.8.2
+    command: ["sleep"]
+    args: ["100000"]
+  volumes:
+  - name: docker-socket
+    hostPath:
+      path: /var/run/docker.sock
+      type: Socket
+"""</span>
+<span class="o">)</span> <span class="o">{</span>
+    <span class="n">node</span><span class="o">(</span><span class="s2">"kubernetes"</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">stage</span><span class="o">(</span><span class="s2">"test"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">container</span><span class="o">(</span><span class="s2">"golang"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">env</span><span class="o">.</span><span class="na">IP</span> <span class="o">=</span> <span class="s2">"[REPLACE_ME]"</span>
+                <span class="n">git</span> <span class="s2">"https://github.com/vfarcic/go-demo-3.git"</span>
+                <span class="n">sh</span> <span class="s2">"go get -d -v -t"</span>
+                <span class="n">sh</span> <span class="s2">"go test --cover -v ./... --run UnitTest"</span>
+                <span class="n">sh</span> <span class="s2">"go build -v -o go-demo"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">stage</span><span class="o">(</span><span class="s2">"build"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">container</span><span class="o">(</span><span class="s2">"docker"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"docker image build -t vfarcic/go-demo-3:workshop-beta-${env.BUILD_NUMBER} -f Dockerfile.old ."</span>
+                <span class="n">withCredentials</span><span class="o">([</span><span class="n">usernamePassword</span><span class="o">(</span>
+                    <span class="nl">credentialsId:</span> <span class="s2">"docker"</span><span class="o">,</span>
+                    <span class="nl">usernameVariable:</span> <span class="s2">"USER"</span><span class="o">,</span>
+                    <span class="nl">passwordVariable:</span> <span class="s2">"PASS"</span>
+                <span class="o">)])</span> <span class="o">{</span>
+                    <span class="n">sh</span> <span class="s2">"docker login -u $USER -p $PASS"</span>
+                <span class="o">}</span>
+                <span class="n">sh</span> <span class="s2">"docker image push vfarcic/go-demo-3:workshop-beta-${env.BUILD_NUMBER}"</span>
+                <span class="n">sh</span> <span class="s2">"docker logout"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">stage</span><span class="o">(</span><span class="s2">"func-test"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="n">container</span><span class="o">(</span><span class="s2">"helm"</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">sh</span> <span class="s2">"""helm upgrade go-demo-3-workshop-beta-${env.BUILD_NUMBER} \
+                        helm/go-demo-3 -i \
+                        --namespace go-demo-3-build \
+                        --set image.tag=workshop-beta-${env.BUILD_NUMBER} \
+                        --set ingress.host=go-demo-3-beta-${env.BUILD_NUMBER}.${env.IP}.nip.io"""</span>
+                    <span class="n">sh</span> <span class="s2">"""kubectl rollout status \
+                        -n go-demo-3-build \
+                        deployment go-demo-3-workshop-beta-${env.BUILD_NUMBER}"""</span>
+                    <span class="n">env</span><span class="o">.</span><span class="na">HOST</span> <span class="o">=</span> <span class="n">sh</span> <span class="nl">script:</span> <span class="s2">"""kubectl get \
+                        ing go-demo-3-workshop-beta-${env.BUILD_NUMBER} \
+                        -n go-demo-3-build \
+                        -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'"""</span><span class="o">,</span>
+                        <span class="nl">returnStdout:</span> <span class="kc">true</span>
+                    <span class="n">sh</span> <span class="s2">"echo ${env.HOST}"</span>
+                <span class="o">}</span>
+                <span class="n">container</span><span class="o">(</span><span class="s2">"golang"</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">sh</span> <span class="s2">"go get -d -v -t"</span>
+                    <span class="n">withEnv</span><span class="o">([</span><span class="s2">"ADDRESS=go-demo-3-beta-${env.BUILD_NUMBER}.${env.IP}.nip.io"</span><span class="o">])</span> <span class="o">{</span>
+                        <span class="n">sh</span> <span class="s2">"""go test ./... -v \
+                        --run FunctionalTest"""</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">error</span> <span class="s2">"Failed functional tests"</span>
+            <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+                <span class="n">container</span><span class="o">(</span><span class="s2">"helm"</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">sh</span> <span class="s2">"""helm delete go-demo-3-workshop-beta-${env.BUILD_NUMBER} --purge"""</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h1 id="a-real-pipeline-something">A Real Pipeline (something)</h1>
+
+<hr />
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">podTemplate</span><span class="o">(</span>
+    <span class="nl">label:</span> <span class="s2">"kubernetes"</span><span class="o">,</span>
+    <span class="nl">yaml:</span> <span class="s2">"""
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: docker
+    image: docker:18.03-git
+    command: ["sleep"]
+    args: ["100000"]
+    volumeMounts:
+    - name: docker-socket
+      mountPath: /var/run/docker.sock
+  - name: helm
+    image: vfarcic/helm:2.8.2
+    command: ["sleep"]
+    args: ["100000"]
+  - name: kubectl
+    image: vfarcic/kubectl
+    command: ["sleep"]
+    args: ["100000"]
+  - name: golang
+    image: golang:1.9
+    command: ["sleep"]
+    args: ["100000"]
+  volumes:
+  - name: docker-socket
+    hostPath:
+      path: /var/run/docker.sock
+      type: Socket
+"""</span>
+<span class="o">)</span> <span class="o">{</span>
+    <span class="n">node</span><span class="o">(</span><span class="s2">"kubernetes"</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">stage</span><span class="o">(</span><span class="s2">"build"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">container</span><span class="o">(</span><span class="s2">"docker"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">git</span> <span class="s2">"https://github.com/vfarcic/go-demo-3.git"</span>
+                <span class="n">sh</span> <span class="s2">"docker image build -t vfarcic/go-demo-3:workshop-beta-${env.BUILD_NUMBER} -f Dockerfile.old ."</span>
+                <span class="n">withCredentials</span><span class="o">([</span><span class="n">usernamePassword</span><span class="o">(</span>
+                    <span class="nl">credentialsId:</span> <span class="s2">"docker"</span><span class="o">,</span>
+                    <span class="nl">usernameVariable:</span> <span class="s2">"USER"</span><span class="o">,</span>
+                    <span class="nl">passwordVariable:</span> <span class="s2">"PASS"</span>
+                <span class="o">)])</span> <span class="o">{</span>
+                    <span class="n">sh</span> <span class="s2">"docker login -u $USER -p $PASS"</span>
+                <span class="o">}</span>
+                <span class="n">sh</span> <span class="s2">"docker image push vfarcic/go-demo-3:workshop-beta-${env.BUILD_NUMBER}"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">stage</span><span class="o">(</span><span class="s2">"func-test"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="n">container</span><span class="o">(</span><span class="s2">"helm"</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">sh</span> <span class="s2">"""helm upgrade \
+                        go-demo-3-workshop-beta-${env.BUILD_NUMBER} \
+                        helm/go-demo-3 -i \
+                        --namespace go-demo-3-workshop \
+                        --set image.tag=workshop-beta-${env.BUILD_NUMBER} \
+                        --set ingress.path=/go-demo-3-beta-${env.BUILD_NUMBER}/demo"""</span>
+                    <span class="n">sh</span> <span class="s2">"""kubectl rollout status \
+                        deployment go-demo-3-workshop-beta-${env.BUILD_NUMBER}"""</span>
+                    <span class="n">env</span><span class="o">.</span><span class="na">HOST</span> <span class="o">=</span> <span class="n">sh</span> <span class="nl">script:</span> <span class="s2">"""kubectl get \
+                        ing go-demo-3-workshop-beta-${env.BUILD_NUMBER} \
+                        -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'"""</span><span class="o">,</span>
+                        <span class="nl">returnStdout:</span> <span class="kc">true</span>
+                <span class="o">}</span>
+                <span class="n">container</span><span class="o">(</span><span class="s2">"golang"</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">sh</span> <span class="s2">"go get -d -v -t"</span>
+                    <span class="n">withEnv</span><span class="o">([</span><span class="s2">"ADDRESS=${env.HOST}/go-demo-3-beta-${env.BUILD_NUMBER}/demo"</span><span class="o">])</span> <span class="o">{</span>
+                        <span class="n">sh</span> <span class="s2">"""go test ./... -v \
+                        --run FunctionalTest"""</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">error</span> <span class="s2">"Failed functional tests"</span>
+            <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+                <span class="n">container</span><span class="o">(</span><span class="s2">"helm"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"""helm delete \
+                    go-demo-3-workshop-beta-${env.BUILD_NUMBER} \
+                    --namespace go-demo-3-workshop \
+                    --purge"""</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">stage</span><span class="o">(</span><span class="s2">"release"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">node</span><span class="o">(</span><span class="s2">"docker"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"""docker pull ${env.DH_USER}/${env.PROJECT}:${currentBuild.displayName}-beta"""</span>
+                <span class="n">sh</span> <span class="s2">"""docker image tag vfarcic/go-demo-3:workshop-beta-${env.BUILD_NUMBER} vfarcic/go-demo-3:workshop-${env.BUILD_NUMBER}"""</span>
+                <span class="n">sh</span> <span class="s2">"""docker image tag vfarcic/go-demo-3:workshop-beta-${env.BUILD_NUMBER} vfarcic/go-demo-3:latest"""</span>
+                <span class="n">withCredentials</span><span class="o">([</span><span class="n">usernamePassword</span><span class="o">(</span>
+                    <span class="nl">credentialsId:</span> <span class="s2">"docker"</span><span class="o">,</span>
+                    <span class="nl">usernameVariable:</span> <span class="s2">"USER"</span><span class="o">,</span>
+                    <span class="nl">passwordVariable:</span> <span class="s2">"PASS"</span>
+                    <span class="o">)])</span> <span class="o">{</span>
+                        <span class="n">sh</span> <span class="s2">"docker login -u $USER -p $PASS"</span>
+                    <span class="o">}</span>
+                <span class="n">sh</span> <span class="s2">"""docker image push vfarcic/go-demo-3:workshop-${env.BUILD_NUMBER}"""</span>
+                <span class="n">sh</span> <span class="s2">"""docker image push vfarcic/go-demo-3:latest"""</span>
+                <span class="n">sh</span> <span class="s2">"docker logout"</span>
+            <span class="o">}</span>
+        <span class="o">}</span> 
+        <span class="n">stage</span><span class="o">(</span><span class="s2">"deploy"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="n">container</span><span class="o">(</span><span class="s2">"helm"</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">sh</span> <span class="s2">"""helm upgrade \
+                        go-demo-3-workshop \
+                        helm/go-demo-3 -i \
+                        --namespace go-demo-3 \
+                        --set image.tag=workshop-beta-${env.BUILD_NUMBER} \
+                        --set ingress.path=/demo"""</span>
+                    <span class="n">sh</span> <span class="s2">"""kubectl rollout status \
+                        -n go-demo-3 \
+                        deployment go-demo-3-workshop-${env.BUILD_NUMBER}"""</span>
+                    <span class="n">env</span><span class="o">.</span><span class="na">HOST</span> <span class="o">=</span> <span class="n">sh</span> <span class="nl">script:</span> <span class="s2">"""kubectl get \
+                        -n go-demo-3 \
+                        ing go-demo-3 \
+                        -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'"""</span><span class="o">,</span>
+                        <span class="nl">returnStdout:</span> <span class="kc">true</span>
+                <span class="o">}</span>
+                <span class="n">container</span><span class="o">(</span><span class="s2">"golang"</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">sh</span> <span class="s2">"go get -d -v -t"</span>
+                    <span class="n">withEnv</span><span class="o">([</span><span class="s2">"ADDRESS=${env.HOST}"</span><span class="o">,</span> <span class="s2">"DURATION=1"</span><span class="o">])</span> <span class="o">{</span>
+                        <span class="n">sh</span> <span class="s2">"""go test ./... -v \
+                        --run ProductionTest"""</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">container</span><span class="o">(</span><span class="s2">"helm"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"""helm rollback \
+                    ${env.PROJECT} 0 \
+                    --tiller-namespace ${env.PROJECT}-build"""</span>
+                <span class="n">error</span> <span class="s2">"Failed production tests"</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h1 id="deleting-the-master">Deleting The Master</h1>
+
+<hr />
+
+<ul>
+  <li>Delete the master <em>my-master</em></li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> jenkins get pvc
+
+kubectl get pv
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/cje2/cje-install.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

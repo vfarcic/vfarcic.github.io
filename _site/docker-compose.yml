@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  app:
+    build: .
+    image: vfarcic/presentations
+    ports:
+      - 8080:80
+    volumes:
+      - .:/usr/share/nginx/html

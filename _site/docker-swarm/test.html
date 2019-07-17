@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="vfarcic.github.io" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/docker-swarm/test.html" />
+<meta property="og:url" content="http://localhost:4000/docker-swarm/test.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/docker-swarm/test.html","@type":"WebPage","headline":"vfarcic.github.io","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">eval</span> <span class="k">$(</span>docker-machine env node-1<span class="k">)</span>
+
+docker service create <span class="nt">--name</span> <span class="nb">test</span> <span class="se">\</span>
+  <span class="nt">-e</span> <span class="nv">DB</span><span class="o">=</span>go-demo-db <span class="se">\</span>
+  <span class="nt">--network</span> go-demo <span class="se">\</span>
+  <span class="nt">--network</span> proxy <span class="se">\</span>
+  <span class="nt">--constraint</span> node.hostname<span class="o">==</span><span class="s2">"node-1"</span> <span class="se">\</span>
+  alpine sleep 1000000000
+
+docker service <span class="nb">ls</span> <span class="c"># Wait until all services are running</span>
+
+docker <span class="nb">exec</span> <span class="nt">-it</span> <span class="k">$(</span>docker ps <span class="nt">-q</span> <span class="nt">--filter</span> <span class="nv">label</span><span class="o">=</span>com.docker.swarm.service.name<span class="o">=</span><span class="nb">test</span><span class="k">)</span> apk add <span class="nt">--update</span> curl apache2-utils drill
+
+docker <span class="nb">exec</span> <span class="nt">-it</span> <span class="k">$(</span>docker ps <span class="nt">-q</span> <span class="nt">--filter</span> <span class="nv">label</span><span class="o">=</span>com.docker.swarm.service.name<span class="o">=</span><span class="nb">test</span><span class="k">)</span> drill go-demo-db
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/docker-swarm/test.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

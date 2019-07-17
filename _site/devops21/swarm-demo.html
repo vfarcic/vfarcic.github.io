@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/devops21/swarm-demo.html" />
+<meta property="og:url" content="http://localhost:4000/devops21/swarm-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/devops21/swarm-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="managing-swarm-services">Managing Swarm Services</h1>
+
+<h2 id="creating-services">Creating Services</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source </span>creds
+
+docker network create <span class="nt">-d</span> overlay go-demo-2
+
+docker service create <span class="nt">--name</span> go-demo-2-db <span class="nt">--network</span> go-demo-2 mongo
+
+docker service ps go-demo-2-db
+
+docker service create <span class="nt">--name</span> go-demo-2 <span class="nt">--env</span> <span class="nv">DB</span><span class="o">=</span>go-demo-2-db <span class="se">\</span>
+    <span class="nt">--network</span> go-demo-2 <span class="nt">-p</span> 1234:8080 <span class="nv">$DOCKER_HUB_USER</span>/go-demo-2:beta
+
+docker service ps go-demo-2
+
+<span class="nb">exit
+
+</span>curl <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">:1234/demo/hello"</span>
+</code></pre></div></div>
+
+<h2 id="removing-services">Removing Services</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-i</span> workshop.pem docker@<span class="nv">$CLUSTER_IP</span>
+
+docker service rm go-demo-2
+
+docker service rm go-demo-2-db
+
+docker system prune <span class="nt">-f</span>
+</code></pre></div></div>
+
+<h2 id="deploying-stacks">Deploying Stacks</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>go-demo-2
+
+<span class="nb">cat </span>stack.yml
+
+docker stack deploy <span class="nt">-c</span> stack.yml go-demo-2
+
+docker stack services go-demo-2
+
+docker stack ps go-demo-2
+
+docker service inspect go-demo-2_main <span class="nt">--pretty</span>
+
+docker service inspect go-demo-2_main
+</code></pre></div></div>
+
+<h2 id="scaling">Scaling</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker service scale go-demo-2_main<span class="o">=</span>5
+
+docker stack ps go-demo-2
+</code></pre></div></div>
+
+<h2 id="deploying-global-services">Deploying Global Services</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker service create <span class="nt">--name</span> util <span class="se">\</span>
+  <span class="nt">--network</span> go-demo-2_default <span class="nt">--network</span> proxy <span class="se">\</span>
+  <span class="nt">--mode</span> global alpine sleep 1000000000
+
+docker service ps util
+</code></pre></div></div>
+
+<h2 id="exploring-networking">Exploring Networking</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network <span class="nb">ls
+
+</span><span class="nv">ID</span><span class="o">=</span><span class="k">$(</span>docker ps <span class="nt">-q</span> <span class="se">\</span>
+  <span class="nt">--filter</span> <span class="nv">label</span><span class="o">=</span>com.docker.swarm.service.name<span class="o">=</span>util<span class="k">)</span>
+
+docker <span class="nb">exec</span> <span class="nt">-it</span> <span class="nv">$ID</span> apk add <span class="nt">--update</span> drill
+
+docker <span class="nb">exec</span> <span class="nt">-it</span> <span class="nv">$ID</span> drill go-demo-2_db
+
+docker <span class="nb">exec</span> <span class="nt">-it</span> <span class="nv">$ID</span> drill go-demo-2_main
+
+docker <span class="nb">exec</span> <span class="nt">-it</span> <span class="nv">$ID</span> drill tasks.go-demo-2_main
+</code></pre></div></div>
+
+<h2 id="failover">Failover</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker container rm <span class="nt">-f</span> <span class="k">$(</span>docker container ps | <span class="nb">grep </span>go-demo-2_main <span class="se">\</span>
+  | tail <span class="nt">-1</span> | awk <span class="s1">'{print $1}'</span><span class="k">)</span>
+
+docker stack ps go-demo-2
+
+<span class="nb">cd</span> ..
+</code></pre></div></div>
+
+<h2 id="reverse-proxy">Reverse Proxy</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>proxy.yml
+
+<span class="nb">cat </span>go-demo-2/stack.yml
+
+docker stack ps proxy
+
+<span class="nb">exit
+
+</span>curl <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/demo/hello"</span>
+
+ssh <span class="nt">-i</span> workshop.pem docker@<span class="nv">$CLUSTER_IP</span>
+</code></pre></div></div>
+
+<h2 id="proxydockerflowcom"><a href="http://proxy.dockerflow.com">proxy.dockerflow.com</a></h2>
+
+<h2 id="rolling-updates">Rolling Updates</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source </span>creds
+
+<span class="nb">cd </span>go-demo-2
+
+<span class="nb">cat </span>Dockerfile
+
+<span class="nb">cat </span>stack.yml
+
+docker image tag go-demo-2 <span class="nv">$DOCKER_HUB_USER</span>/go-demo-2:2.0
+
+docker image push <span class="nv">$DOCKER_HUB_USER</span>/go-demo-2:2.0
+
+<span class="nv">TAG</span><span class="o">=</span>2.0 docker stack deploy <span class="nt">-c</span> stack.yml go-demo-2
+
+docker stack ps <span class="nt">-f</span> desired-state<span class="o">=</span>running go-demo-2
+</code></pre></div></div>
+
+<h2 id="rolling-updates-1">Rolling Updates</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker image tag go-demo-2 <span class="nv">$DOCKER_HUB_USER</span>/go-demo-2:3.0
+
+docker image push <span class="nv">$DOCKER_HUB_USER</span>/go-demo-2:3.0
+
+docker service update <span class="nt">--image</span> <span class="nv">$DOCKER_HUB_USER</span>/go-demo-2:3.0 <span class="se">\</span>
+    go-demo-2_main
+
+docker stack ps <span class="nt">-f</span> desired-state<span class="o">=</span>running go-demo-2
+</code></pre></div></div>
+
+<h2 id="testing-rolling-updates">Testing Rolling Updates</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker image tag go-demo-2 <span class="nv">$DOCKER_HUB_USER</span>/go-demo-2:4.0
+
+docker image push <span class="nv">$DOCKER_HUB_USER</span>/go-demo-2:4.0
+
+docker service update <span class="nt">--image</span> <span class="nv">$DOCKER_HUB_USER</span>/go-demo-2:4.0 <span class="se">\</span>
+  go-demo-2_main
+
+watch <span class="s2">"curl -i 'http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/demo/hello' </span><span class="se">\</span><span class="s2">
+    &amp;&amp; docker stack ps -f desired-state=running go-demo-2"</span>
+</code></pre></div></div>
+
+<h2 id="rolling-back">Rolling Back</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker stack ps <span class="nt">-f</span> desired-state<span class="o">=</span>running go-demo-2
+
+docker service update <span class="nt">--rollback</span> go-demo-2_main
+
+docker stack ps <span class="nt">-f</span> desired-state<span class="o">=</span>running go-demo-2
+
+<span class="nb">cd</span> ..
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/devops21/swarm-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

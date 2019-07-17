@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/docs/jenkins-demo.html" />
+<meta property="og:url" content="http://localhost:4000/docs/jenkins-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/docs/jenkins-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="running-jenkins">Running Jenkins</h1>
+
+<h1 id="as-a-docker-service">As a Docker Service</h1>
+
+<h2 id="running-jenkins-1">Running Jenkins</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-L</span> <span class="nt">-o</span> jenkins.yml <span class="se">\</span>
+    https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/jenkins/jenkins-df-proxy.yml
+
+<span class="nb">cat </span>jenkins.yml
+
+docker stack deploy <span class="nt">-c</span> jenkins.yml jenkins
+
+<span class="nb">exit
+
+</span>open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/jenkins"</span>
+
+ssh <span class="nt">-i</span> workshop.pem docker@<span class="nv">$CLUSTER_IP</span>
+
+docker stack rm jenkins
+
+<span class="nb">exit</span>
+</code></pre></div></div>
+
+<h2 id="building-jenkins-image">Building Jenkins Image</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker container run <span class="nt">--rm</span> <span class="nt">-it</span> <span class="nt">-v</span> <span class="nv">$PWD</span>:/repos vfarcic/git <span class="se">\</span>
+    git clone https://github.com/vfarcic/docker-flow-stacks
+
+<span class="nb">cd </span>docker-flow-stacks/jenkins
+
+<span class="nb">cat </span>Dockerfile
+
+<span class="nb">cat </span>security.groovy
+
+<span class="nb">cat </span>plugins.txt
+</code></pre></div></div>
+
+<h2 id="building-jenkins-image-1">Building Jenkins Image</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source </span>creds
+
+docker image build <span class="nt">-t</span> <span class="nv">$DOCKER_HUB_USER</span>/jenkins:workshop <span class="nb">.</span>
+
+docker login
+
+docker image push <span class="nv">$DOCKER_HUB_USER</span>/jenkins:workshop
+</code></pre></div></div>
+
+<h3 id="jenkins-agents">Jenkins Agents</h3>
+
+<h1 id="initialize-cluster">Initialize Cluster</h1>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>test-swarm.tf
+
+terraform apply <span class="nt">-target</span> aws_instance.test-swarm-manager <span class="se">\</span>
+  <span class="nt">-var</span> <span class="nv">swarm_init</span><span class="o">=</span><span class="nb">true</span> <span class="nt">-var</span> <span class="nv">test_swarm_managers</span><span class="o">=</span>1 <span class="nt">-var</span> <span class="nv">rexray</span><span class="o">=</span><span class="nb">true
+
+</span>terraform refresh
+</code></pre></div></div>
+
+<h3 id="jenkins-agents-1">Jenkins Agents</h3>
+
+<h1 id="add-nodes">Add Nodes</h1>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">TF_VAR_test_swarm_manager_token</span><span class="o">=</span><span class="k">$(</span>ssh <span class="nt">-i</span> devops21.pem <span class="se">\</span>
+  ubuntu@<span class="k">$(</span>terraform output test_swarm_manager_1_public_ip<span class="k">)</span> <span class="se">\</span>
+  docker swarm join-token <span class="nt">-q</span> manager<span class="k">)</span>
+
+<span class="nb">export </span><span class="nv">TF_VAR_test_swarm_manager_ip</span><span class="o">=</span><span class="k">$(</span>terraform <span class="se">\</span>
+  output test_swarm_manager_1_private_ip<span class="k">)</span>
+
+terraform apply <span class="nt">-target</span> aws_instance.test-swarm-manager <span class="se">\</span>
+  <span class="nt">-var</span> <span class="nv">rexray</span><span class="o">=</span><span class="nb">true
+
+</span>ssh <span class="nt">-i</span> devops21.pem ubuntu@<span class="k">$(</span>terraform <span class="se">\</span>
+  output test_swarm_manager_1_public_ip<span class="k">)</span> docker node <span class="nb">ls</span>
+</code></pre></div></div>
+
+<h3 id="jenkins-agents-2">Jenkins Agents</h3>
+
+<h1 id="service">Service</h1>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>terraform output swarm_manager_1_private_ip
+
+ssh <span class="nt">-i</span> devops21.pem ubuntu@<span class="k">$(</span>terraform output test_swarm_manager_1_public_ip<span class="k">)</span>
+
+<span class="nb">export </span><span class="nv">JENKINS_IP</span><span class="o">=[</span>...] <span class="c"># Manager private IP</span>
+
+curl <span class="nt">-o</span> jenkins-agent.yml https://raw.githubusercontent.com/vfarcic/<span class="se">\</span>
+docker-flow-stacks/master/jenkins/jenkins-swarm-agent-secrets.yml
+
+<span class="nb">cat </span>jenkins-agent.yml
+
+<span class="nb">echo</span> <span class="s2">"admin"</span> | docker secret create jenkins-user -
+
+<span class="nb">echo</span> <span class="s2">"admin"</span> | docker secret create jenkins-pass -
+
+docker stack deploy <span class="nt">-c</span> jenkins-agent.yml jenkins-agent
+</code></pre></div></div>
+
+<h3 id="jenkins-agents-3">Jenkins Agents</h3>
+
+<h1 id="service-1">Service</h1>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">exit
+
+</span>open <span class="s2">"http://</span><span class="k">$(</span>terraform output swarm_manager_1_public_ip<span class="k">)</span><span class="s2">/jenkins/computer"</span>
+</code></pre></div></div>
+
+<h3 id="jenkins-agents-4">Jenkins Agents</h3>
+
+<h1 id="registry-service">Registry Service</h1>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-i</span> devops21.pem ubuntu@<span class="k">$(</span>terraform <span class="se">\</span>
+    output test_swarm_manager_1_public_ip<span class="k">)</span>
+
+curl <span class="nt">-o</span> registry.yml <span class="se">\</span>
+    https://raw.githubusercontent.com/vfarcic/<span class="se">\</span>
+docker-flow-stacks/master/docker/registry-rexray-external.yml
+
+docker stack deploy <span class="nt">-c</span> registry.yml registry
+
+<span class="nb">exit</span>
+</code></pre></div></div>
+
+<h3 id="jenkins-agents-5">Jenkins Agents</h3>
+
+<h1 id="env-variables">Env. Variables</h1>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>terraform output swarm_manager_1_private_ip
+
+open <span class="s2">"http://</span><span class="k">$(</span>terraform output swarm_manager_1_public_ip<span class="k">)</span><span class="s2">/</span><span class="se">\</span><span class="s2">
+jenkins/configure"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Click <em>Environment Variables</em></li>
+  <li>Click <em>Add</em></li>
+  <li>Type <em>PROD_IP</em> as <em>Name</em></li>
+  <li>Paste the output as <em>Value</em></li>
+  <li>Click <em>Save</em></li>
+</ul>
+
+<h1 id="pipeline-job">Pipeline Job</h1>
+
+<hr />
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pipeline</span> <span class="o">{</span>
+  <span class="n">agent</span> <span class="o">{</span>
+    <span class="n">label</span> <span class="s2">"docker"</span>
+  <span class="o">}</span>
+  <span class="n">stages</span> <span class="o">{</span>
+    <span class="n">stage</span><span class="o">(</span><span class="s2">"Unit"</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">steps</span> <span class="o">{</span>
+        <span class="n">git</span> <span class="nl">url:</span> <span class="s2">"https://github.com/vfarcic/go-demo.git"</span><span class="o">,</span> <span class="nl">branch:</span> <span class="s2">"multi-stage-builds"</span>
+        <span class="n">sh</span> <span class="s2">"docker image build -t go-demo ."</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="n">stage</span><span class="o">(</span><span class="s2">"Staging"</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">steps</span> <span class="o">{</span>
+        <span class="n">sh</span> <span class="s2">"docker-compose -f docker-compose-test-local.yml up -d staging-dep"</span>
+        <span class="n">sh</span> <span class="s1">'HOST_IP=localhost docker-compose -f docker-compose-test-local.yml run --rm staging'</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="n">stage</span><span class="o">(</span><span class="s2">"Publish"</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">steps</span> <span class="o">{</span>
+        <span class="n">sh</span> <span class="s2">"docker image tag go-demo localhost:5000/go-demo"</span>
+        <span class="n">sh</span> <span class="s2">"docker image tag go-demo localhost:5000/go-demo:2.${env.BUILD_NUMBER}"</span>
+        <span class="n">sh</span> <span class="s2">"docker image push localhost:5000/go-demo"</span>
+        <span class="n">sh</span> <span class="s2">"docker image push localhost:5000/go-demo:2.${env.BUILD_NUMBER}"</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="n">stage</span><span class="o">(</span><span class="s2">"Prod-like"</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">steps</span> <span class="o">{</span>
+        <span class="n">echo</span> <span class="s2">"A production-like cluster is yet to be created"</span>
+        <span class="c1">// sh "DOCKER_HOST=tcp://${env.PROD_LIKE_IP}:2375 docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo_main"</span>
+        <span class="c1">// sh "HOST_IP=${env.TEST_IP} docker-compose -f docker-compose-test-local.yml run --rm production"</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="n">stage</span><span class="o">(</span><span class="s2">"Production"</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">steps</span> <span class="o">{</span>
+        <span class="n">sh</span> <span class="s2">"DOCKER_HOST=tcp://${env.PROD_IP}:2375 docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo_main"</span>
+        <span class="k">try</span> <span class="o">{</span>
+          <span class="n">sh</span> <span class="s2">"HOST_IP=${env.PROD_IP} docker-compose -f docker-compose-test-local.yml run --rm production-loop"</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+          <span class="n">sh</span> <span class="s2">"DOCKER_HOST=tcp://${env.PROD_IP}:2375 docker service update --rollback go-demo"</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+  <span class="n">post</span> <span class="o">{</span>
+    <span class="n">always</span> <span class="o">{</span>
+      <span class="n">sh</span> <span class="s2">"docker-compose -f docker-compose-test-local.yml down"</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h1 id="pipeline-job-1">Pipeline Job</h1>
+
+<hr />
+
+<ul>
+  <li>Click <em>New Item</em></li>
+  <li>Type <em>go-demo</em>, select <em>Pipeline</em>, click <em>OK</em></li>
+  <li>Paste the code into the <em>Pipeline Script</em> field</li>
+  <li>Click the <em>Save</em> button</li>
+  <li>Click <em>Build Now</em></li>
+</ul>
+
+<h1 id="build-result">Build Result</h1>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-i</span> devops21.pem ubuntu@<span class="k">$(</span>terraform <span class="se">\</span>
+  output swarm_manager_1_public_ip<span class="k">)</span> docker stack ps go-demo
+
+curl <span class="k">$(</span>terraform output swarm_manager_1_public_ip<span class="k">)</span>/demo/hello
+</code></pre></div></div>
+
+<h1 id="jenkins-failover">Jenkins Failover</h1>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-i</span> devops21.pem ubuntu@<span class="k">$(</span>terraform <span class="se">\</span>
+  output swarm_manager_1_public_ip<span class="k">)</span>
+
+docker stack ps jenkins
+
+<span class="nv">IP</span><span class="o">=[</span>...]  <span class="c"># Manager private IP</span>
+
+docker <span class="nt">-H</span> tcp://<span class="nv">$IP</span>:2375 rm <span class="nt">-f</span> <span class="k">$(</span>docker <span class="nt">-H</span> tcp://<span class="nv">$IP</span>:2375 <span class="se">\</span>
+    ps <span class="nt">-qa</span> <span class="nt">-f</span> <span class="nv">label</span><span class="o">=</span>com.docker.swarm.service.name<span class="o">=</span>jenkins_main<span class="k">)</span>
+
+docker stack ps jenkins
+
+<span class="nb">exit
+
+</span>open <span class="s2">"http://</span><span class="k">$(</span>terraform output swarm_manager_1_public_ip<span class="k">)</span><span class="s2">/jenkins"</span>
+</code></pre></div></div>
+
+<h1 id="cleanup">Cleanup</h1>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-i</span> devops21.pem ubuntu@<span class="k">$(</span>terraform <span class="se">\</span>
+  output swarm_manager_1_public_ip<span class="k">)</span> docker stack rm jenkins
+
+ssh <span class="nt">-i</span> devops21.pem ubuntu@<span class="k">$(</span>terraform <span class="se">\</span>
+  output swarm_manager_1_public_ip<span class="k">)</span> docker stack rm registry
+
+ssh <span class="nt">-i</span> devops21.pem ubuntu@<span class="k">$(</span>terraform <span class="se">\</span>
+  output test_swarm_manager_1_public_ip<span class="k">)</span> docker stack rm registry
+
+ssh <span class="nt">-i</span> devops21.pem ubuntu@<span class="k">$(</span>terraform <span class="se">\</span>
+  output swarm_manager_1_public_ip<span class="k">)</span> docker volume rm jenkins_main
+
+ssh <span class="nt">-i</span> devops21.pem ubuntu@<span class="k">$(</span>terraform <span class="se">\</span>
+  output swarm_manager_1_public_ip<span class="k">)</span> docker volume rm registry
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/docs/jenkins-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

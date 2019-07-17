@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/docs/eks-demo.html" />
+<meta property="og:url" content="http://localhost:4000/docs/eks-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/docs/eks-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="creating-an-eks-cluster">Creating An EKS Cluster</h1>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<hr />
+
+<ul>
+  <li><a href="https://git-scm.com/">Git</a></li>
+  <li>GitBash (if Windows)</li>
+  <li><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">kubectl</a></li>
+  <li><a href="https://aws.amazon.com/cli/">AWS CLI</a></li>
+  <li><a href="https://github.com/weaveworks/eksctl">eksctl</a></li>
+  <li><a href="https://github.com/kubernetes-sigs/aws-iam-authenticator">aws-iam-authenticator</a> (follow the instructions from the “<strong>install aws-iam-authenticator for Amazon EKS</strong>” section in <a href="https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html">Getting Started with Amazon EKS</a>)</li>
+  <li>AWS admin permissions</li>
+</ul>
+
+<h2 id="getting-the-code">Getting The Code</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/vfarcic/k8s-specs.git
+
+<span class="nb">cd </span>k8s-specs
+</code></pre></div></div>
+
+<h2 id="getting-the-code-1">Getting The Code</h2>
+
+<hr />
+
+<ul>
+  <li>We cloned the repository that contains (almost) all the examples we’ll use in this course</li>
+</ul>
+
+<h2 id="creating-a-cluster">Creating A Cluster</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Replace [...] with AWS access key ID</span>
+<span class="nb">export </span><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=[</span>...]
+
+<span class="c"># Replace [...] with AWS secret access key</span>
+<span class="nb">export </span><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=[</span>...]
+
+<span class="nb">export </span><span class="nv">AWS_DEFAULT_REGION</span><span class="o">=</span>us-west-2
+
+mkdir <span class="nt">-p</span> cluster
+
+eksctl create cluster <span class="nt">-n</span> devops24 <span class="nt">--kubeconfig</span> cluster/kubecfg-eks <span class="se">\</span>
+    <span class="nt">--node-type</span> t2.medium <span class="nt">--nodes</span> 3 <span class="nt">-r</span> <span class="nv">$AWS_DEFAULT_REGION</span>
+
+<span class="nb">export </span><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="nv">$PWD</span>/cluster/kubecfg-eks
+
+kubectl get nodes
+</code></pre></div></div>
+
+<h2 id="creating-a-cluster-1">Creating A Cluster</h2>
+
+<hr />
+
+<ul>
+  <li>We created a few environment variable that allow us to connect to AWS API</li>
+  <li>We created a 2 node cluster with managed masters using <code class="highlighter-rouge">eksctl</code>.</li>
+  <li>We set <code class="highlighter-rouge">KUBECONFIG</code> variable to the path of the configuration created through <code class="highlighter-rouge">eksctl</code>.</li>
+  <li>We confirmed that the cluster is accessible by listing the nodes using <code class="highlighter-rouge">kubectl</code>.</li>
+</ul>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/docs/eks-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

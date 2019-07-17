@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/docs/jenkins-master-demo-short.html" />
+<meta property="og:url" content="http://localhost:4000/docs/jenkins-master-demo-short.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/docs/jenkins-master-demo-short.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="jenkins-master-service">Jenkins Master Service</h1>
+
+<h2 id="running-containers">Running Containers</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker container run <span class="nt">-d</span> <span class="nt">--name</span> jenkins <span class="nt">-p</span> 8080:8080 jenkins:alpine
+
+docker container <span class="nb">ls
+
+</span><span class="nv">PRIVATE_IP</span><span class="o">=</span><span class="k">$(</span>docker inspect jenkins | <span class="se">\</span>
+    jq <span class="nt">-r</span> <span class="s1">'.[0].NetworkSettings.IPAddress'</span><span class="k">)</span>
+
+curl <span class="nt">-i</span> <span class="s2">"http://</span><span class="nv">$PRIVATE_IP</span><span class="s2">:8080"</span>
+
+docker container rm <span class="nt">-f</span> jenkins
+
+docker container <span class="nb">ls</span>
+</code></pre></div></div>
+
+<h2 id="problems">Problems</h2>
+
+<hr />
+
+<ul>
+  <li>No high availability</li>
+  <li>No fault tolerance</li>
+  <li>It’s not 2014</li>
+</ul>
+
+<h2 id="running-jenkins-stack">Running Jenkins Stack</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-L</span> <span class="nt">-o</span> jenkins.yml <span class="se">\</span>
+    https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/jenkins/jenkins-df-proxy.yml
+
+<span class="nb">cat </span>jenkins.yml
+
+docker stack deploy <span class="nt">-c</span> jenkins.yml jenkins
+
+<span class="nb">exit
+
+</span>open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/jenkins"</span>
+
+ssh <span class="nt">-i</span> workshop.pem docker@<span class="nv">$CLUSTER_IP</span>
+
+docker stack rm jenkins
+
+<span class="nb">exit</span>
+</code></pre></div></div>
+
+<h2 id="problems-1">Problems</h2>
+
+<hr />
+
+<ul>
+  <li>Not Fully Automated</li>
+</ul>
+
+<h2 id="git-in-a-container">Git In A Container</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open https://github.com/vfarcic/docker-flow-stacks/blob/master/util/git/Dockerfile
+
+ssh <span class="nt">-i</span> workshop.pem docker@<span class="nv">$CLUSTER_IP</span>
+
+docker container run <span class="nt">--rm</span> <span class="nt">-it</span> <span class="nt">-v</span> <span class="nv">$PWD</span>:/repos vfarcic/git <span class="se">\</span>
+    git clone https://github.com/vfarcic/docker-flow-stacks
+
+docker container <span class="nb">ls
+
+ls</span> <span class="nt">-l</span>
+</code></pre></div></div>
+
+<h2 id="building-jenkins-image">Building Jenkins Image</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source </span>creds
+
+<span class="nb">cd </span>docker-flow-stacks/jenkins
+
+<span class="nb">cat </span>Dockerfile
+
+<span class="nb">cat </span>security.groovy
+
+<span class="nb">cat </span>plugins.txt
+
+docker image build <span class="nt">-t</span> <span class="nv">$DOCKER_HUB_USER</span>/jenkins:workshop <span class="nb">.</span>
+
+docker login <span class="nt">-u</span> <span class="nv">$DOCKER_HUB_USER</span>
+
+docker image push <span class="nv">$DOCKER_HUB_USER</span>/jenkins:workshop
+</code></pre></div></div>
+
+<h2 id="running-jenkins-without-manual-setup">Running Jenkins Without Manual Setup</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>vfarcic-jenkins-df-proxy.yml
+
+<span class="nb">echo</span> <span class="s2">"admin"</span> | docker secret create jenkins-user -
+
+<span class="nb">echo</span> <span class="s2">"admin"</span> | docker secret create jenkins-pass -
+
+<span class="nv">TAG</span><span class="o">=</span>workshop docker stack deploy <span class="se">\</span>
+    <span class="nt">-c</span> vfarcic-jenkins-df-proxy.yml jenkins
+
+<span class="nb">exit
+
+</span>open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/jenkins"</span>
+</code></pre></div></div>
+
+<h2 id="simulating-failure">Simulating Failure</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Create a job</span>
+
+open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/jenkins/exit"</span>
+
+open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/jenkins"</span>
+
+ssh <span class="nt">-i</span> workshop.pem docker@<span class="nv">$CLUSTER_IP</span>
+
+docker stack ps jenkins
+
+docker stack rm jenkins
+</code></pre></div></div>
+
+<h2 id="problems-2">Problems</h2>
+
+<hr />
+
+<ul>
+  <li>State is not preserved</li>
+</ul>
+
+<h2 id="preserving-state">Preserving State</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source </span>creds
+
+<span class="nb">cd </span>docker-flow-stacks/jenkins
+
+<span class="nb">cat </span>vfarcic-jenkins-df-proxy-aws.yml
+
+<span class="nv">TAG</span><span class="o">=</span>workshop docker stack deploy <span class="se">\</span>
+    <span class="nt">-c</span> vfarcic-jenkins-df-proxy-aws.yml jenkins
+</code></pre></div></div>
+
+<h2 id="simulating-failure-1">Simulating Failure</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">exit
+
+</span>open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/jenkins"</span>
+
+<span class="c"># Create a job</span>
+
+open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/jenkins/exit"</span>
+
+open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/jenkins"</span>
+
+ssh <span class="nt">-i</span> workshop.pem docker@<span class="nv">$CLUSTER_IP</span>
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/docs/jenkins-master-demo-short.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

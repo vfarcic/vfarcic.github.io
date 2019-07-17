@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/devops22/alert-demo.html" />
+<meta property="og:url" content="http://localhost:4000/devops22/alert-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/devops22/alert-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="alerting">Alerting</h1>
+
+<h2 id="creating-alerts">Creating Alerts</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker service update <span class="nt">--label-add</span> com.df.alertName<span class="o">=</span>mem <span class="se">\</span>
+    <span class="nt">--label-add</span> com.df.alertIf<span class="o">=</span><span class="s1">'container_memory_usage_bytes{container_label_com_docker_swarm_service_name="go-demo_main"} &gt; 20000000'</span> <span class="se">\</span>
+    go-demo_main
+
+<span class="nb">exit
+
+</span>open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/monitor/config"</span>
+
+open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/monitor/rules"</span>
+
+open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/monitor/alerts"</span>
+
+open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/monitor/graph"</span>
+
+<span class="c"># container_memory_usage_bytes{container_label_com_docker_swarm_service_name="go-demo_main"}</span>
+</code></pre></div></div>
+
+<h2 id="creating-alerts-1">Creating Alerts</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-i</span> workshop.pem docker@<span class="nv">$CLUSTER_IP</span>
+
+docker service update <span class="nt">--label-add</span> com.df.alertName<span class="o">=</span>mem <span class="se">\</span>
+    <span class="nt">--label-add</span> com.df.alertIf<span class="o">=</span><span class="s1">'container_memory_usage_bytes{container_label_com_docker_swarm_service_name="go-demo_main"} &gt; 1000000'</span> <span class="se">\</span>
+    go-demo_main
+
+<span class="nb">exit
+
+</span>open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/monitor/alerts"</span>
+</code></pre></div></div>
+
+<!-- .slide: data-background="img/alerts-fire-diag.png" data-background-size="contain" -->
+
+<h2 id="creating-alerts-2">Creating Alerts</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/monitor/graph"</span>
+
+<span class="c"># container_spec_memory_limit_bytes{container_label_com_docker_swarm_service_name="go-demo_main"}</span>
+
+<span class="c"># container_memory_usage_bytes{container_label_com_docker_swarm_service_name="go-demo_main"}</span>
+
+ssh <span class="nt">-i</span> workshop.pem docker@<span class="nv">$CLUSTER_IP</span>
+
+docker service update <span class="nt">--label-add</span> com.df.alertName<span class="o">=</span>mem_limit <span class="se">\</span>
+    <span class="nt">--label-add</span> com.df.alertIf<span class="o">=</span><span class="s1">'container_memory_usage_bytes{container_label_com_docker_swarm_service_name="go-demo"}/container_spec_memory_limit_bytes{container_label_com_docker_swarm_service_name="go-demo"} &gt; 0.8'</span> <span class="se">\</span>
+    go-demo_main
+
+<span class="nb">exit
+
+</span>open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/monitor/alerts"</span>
+</code></pre></div></div>
+
+<h2 id="creating-multiple-alerts">Creating Multiple Alerts</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-i</span> workshop.pem docker@<span class="nv">$CLUSTER_IP</span>
+
+docker service update <span class="se">\</span>
+    <span class="nt">--label-add</span> com.df.alertName.1<span class="o">=</span>mem_load <span class="se">\</span>
+    <span class="nt">--label-add</span> com.df.alertIf.1<span class="o">=</span><span class="s1">'(sum by (instance) (node_memory_MemTotal) - sum by (instance) (node_memory_MemFree + node_memory_Buffers + node_memory_Cached)) / sum by (instance) (node_memory_MemTotal) &gt; 0.8'</span> <span class="se">\</span>
+    <span class="nt">--label-add</span> com.df.alertName.2<span class="o">=</span>diskload <span class="se">\</span>
+    <span class="nt">--label-add</span> com.df.alertIf.2<span class="o">=</span><span class="s1">'(node_filesystem_size{fstype="aufs"} - node_filesystem_free{fstype="aufs"}) / node_filesystem_size{fstype="aufs"} &gt; 0.8'</span> <span class="se">\</span>
+    exporter_node-exporter
+
+<span class="nb">exit
+
+</span>open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/monitor/alerts"</span>
+
+ssh <span class="nt">-i</span> workshop.pem docker@<span class="nv">$CLUSTER_IP</span>
+</code></pre></div></div>
+
+<!-- .slide: data-background="img/alerts-exporters-fire-diag.png" data-background-size="contain" -->
+
+<h2 id="postponing-alerts-firing">Postponing Alerts Firing</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-o</span> go-demo.yml <span class="se">\</span>
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/go-demo-alert-long.yml
+
+<span class="nb">cat </span>go-demo.yml
+
+docker stack deploy <span class="nt">-c</span> go-demo.yml go-demo
+
+<span class="nb">exit
+
+</span>open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/monitor/alerts"</span>
+
+ssh <span class="nt">-i</span> workshop.pem docker@<span class="nv">$CLUSTER_IP</span>
+</code></pre></div></div>
+
+<h2 id="postponing-alerts-firing-1">Postponing Alerts Firing</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker service update <span class="se">\</span>
+    <span class="nt">--label-add</span> com.df.alertIf<span class="o">=</span><span class="s1">'container_memory_usage_bytes{container_label_com_docker_swarm_service_name="go-demo_main"}/container_spec_memory_limit_bytes{container_label_com_docker_swarm_service_name="go-demo_main"} &gt; 0.05'</span> <span class="se">\</span>
+    go-demo_main
+
+<span class="nb">exit
+
+</span>open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/monitor/alerts"</span>
+
+ssh <span class="nt">-i</span> workshop.pem docker@<span class="nv">$CLUSTER_IP</span>
+</code></pre></div></div>
+
+<h2 id="alert-labels-and-annotations">Alert Labels And Annotations</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-o</span> go-demo.yml <span class="se">\</span>
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/go-demo-alert-info.yml
+
+<span class="nb">cat </span>go-demo.yml
+
+docker stack deploy <span class="nt">-c</span> go-demo.yml go-demo
+
+<span class="nb">exit
+
+</span>open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/monitor/alerts"</span>
+
+ssh <span class="nt">-i</span> workshop.pem docker@<span class="nv">$CLUSTER_IP</span>
+</code></pre></div></div>
+
+<h2 id="using-shortcuts">Using Shortcuts</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-o</span> go-demo.yml <span class="se">\</span>
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/go-demo-alert.yml
+
+<span class="nb">cat </span>go-demo.yml
+
+docker stack deploy <span class="nt">-c</span> go-demo.yml go-demo
+
+curl <span class="nt">-o</span> exporters.yml <span class="se">\</span>
+    https://raw.githubusercontent.com/vfarcic/docker-flow-monitor/master/stacks/exporters-alert.yml
+
+<span class="nb">cat </span>exporters.yml
+
+docker stack deploy <span class="nt">-c</span> exporters.yml exporter
+</code></pre></div></div>
+
+<h2 id="using-shortcuts-1">Using Shortcuts</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">exit
+
+</span>open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/monitor/alerts"</span>
+
+ssh <span class="nt">-i</span> workshop.pem docker@<span class="nv">$CLUSTER_IP</span>
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/devops22/alert-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

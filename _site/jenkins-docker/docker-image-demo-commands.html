@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/jenkins-docker/docker-image-demo-commands.html" />
+<meta property="og:url" content="http://localhost:4000/jenkins-docker/docker-image-demo-commands.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/jenkins-docker/docker-image-demo-commands.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="docker-images">Docker Images</h1>
+
+<h2 id="jenkins-credentials">Jenkins Credentials</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">exit
+
+</span>open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/jenkins/credentials/store/system/domain/_/"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Login with <em>admin</em>/<em>admin</em></li>
+  <li>Click the <em>Add Credentials</em> link</li>
+  <li>Type your Docker Hub username and password</li>
+  <li>Type <em>docker</em> as the <em>ID</em></li>
+  <li>Click the <em>OK</em> button</li>
+</ul>
+
+<h2 id="jenkins-pipeline">Jenkins Pipeline</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/jenkins/view/all/newJob"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Type <em>go-demo-2</em> as the item name</li>
+  <li>Select <em>Pipeline</em> as the item type</li>
+  <li>Click the <em>OK</em> button</li>
+  <li>Type the Pipeline script from the next slide</li>
+</ul>
+
+<h2 id="jenkins-pipeline-1">Jenkins Pipeline</h2>
+
+<hr />
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.text.SimpleDateFormat</span>
+
+<span class="n">pipeline</span> <span class="o">{</span>
+  <span class="n">agent</span> <span class="o">{</span>
+    <span class="n">label</span> <span class="s2">"test"</span>
+  <span class="o">}</span>
+  <span class="n">options</span> <span class="o">{</span>
+    <span class="n">buildDiscarder</span><span class="o">(</span><span class="n">logRotator</span><span class="o">(</span><span class="nl">numToKeepStr:</span> <span class="s2">"2"</span><span class="o">))</span>
+    <span class="n">disableConcurrentBuilds</span><span class="o">()</span>
+  <span class="o">}</span>
+  <span class="n">environment</span> <span class="o">{</span>
+    <span class="n">HUB_USER</span> <span class="o">=</span> <span class="s2">"[...]"</span>
+  <span class="o">}</span>
+  <span class="n">stages</span> <span class="o">{</span>
+    <span class="n">stage</span><span class="o">(</span><span class="s2">"build"</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">steps</span> <span class="o">{</span>
+        <span class="n">git</span> <span class="s2">"https://github.com/vfarcic/go-demo-2.git"</span>
+        <span class="n">sh</span> <span class="s2">"docker image build -t ${env.HUB_USER}/go-demo-2:beta-${env.BUILD_NUMBER} ."</span>
+        <span class="n">withCredentials</span><span class="o">([</span><span class="n">usernamePassword</span><span class="o">(</span>
+          <span class="nl">credentialsId:</span> <span class="s2">"docker"</span><span class="o">,</span>
+          <span class="nl">usernameVariable:</span> <span class="s2">"USER"</span><span class="o">,</span>
+          <span class="nl">passwordVariable:</span> <span class="s2">"PASS"</span>
+        <span class="o">)])</span> <span class="o">{</span>
+          <span class="n">sh</span> <span class="s2">"docker login -u $USER -p $PASS"</span>
+        <span class="o">}</span>
+        <span class="n">sh</span> <span class="s2">"docker image push ${env.HUB_USER}/go-demo-2:beta-${env.BUILD_NUMBER}"</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="jenkins-pipeline-2">Jenkins Pipeline</h2>
+
+<hr />
+
+<ul>
+  <li>Change <em>[…]</em></li>
+  <li>Click the <em>Save</em> button</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/jenkins/blue/organizations/jenkins/go-demo-2/activity"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Click the <em>Run</em> button</li>
+  <li>Click the row with the new build</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"https://hub.docker.com/r/</span><span class="nv">$DOCKER_HUB_USER</span><span class="s2">/go-demo-2/tags"</span>
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/jenkins-docker/docker-image-demo-commands.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

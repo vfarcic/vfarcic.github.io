@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/devops24/chart-museum-demo-short.html" />
+<meta property="og:url" content="http://localhost:4000/devops24/chart-museum-demo-short.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/devops24/chart-museum-demo-short.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="distributing-kubernetes-applications">Distributing Kubernetes Applications</h1>
+
+<h2 id="using-chartmuseum">Using ChartMuseum</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>helm inspect values stable/chartmuseum
+
+<span class="nv">CM_ADDR</span><span class="o">=</span><span class="s2">"cm.</span><span class="nv">$LB_IP</span><span class="s2">.nip.io"</span>
+
+<span class="nb">echo</span> <span class="nv">$CM_ADDR</span>
+
+<span class="nv">CM_ADDR_ESC</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$CM_ADDR</span> | sed <span class="nt">-e</span> <span class="s2">"s@</span><span class="se">\.</span><span class="s2">@</span><span class="se">\\\.</span><span class="s2">@g"</span><span class="k">)</span>
+
+<span class="nb">echo</span> <span class="nv">$CM_ADDR_ESC</span>
+
+<span class="nb">cat </span>helm/chartmuseum-values.yml
+</code></pre></div></div>
+
+<h2 id="using-chartmuseum-1">Using ChartMuseum</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>helm install stable/chartmuseum <span class="nt">--namespace</span> charts <span class="nt">--name</span> cm <span class="se">\</span>
+    <span class="nt">--values</span> helm/chartmuseum-values.yml <span class="se">\</span>
+    <span class="nt">--set</span> ingress.hosts.<span class="s2">"</span><span class="nv">$CM_ADDR_ESC</span><span class="s2">"</span><span class="o">={</span><span class="s2">"/"</span><span class="o">}</span> <span class="se">\</span>
+    <span class="nt">--set</span> env.secret.BASIC_AUTH_USER<span class="o">=</span>admin <span class="se">\</span>
+    <span class="nt">--set</span> env.secret.BASIC_AUTH_PASS<span class="o">=</span>admin <span class="se">\</span>
+    <span class="nt">--set</span> env.open.AUTH_ANONYMOUS_GET<span class="o">=</span><span class="nb">true
+
+</span>kubectl <span class="nt">-n</span> charts rollout status deploy cm-chartmuseum
+
+curl <span class="s2">"http://</span><span class="nv">$CM_ADDR</span><span class="s2">/index.yaml"</span>
+</code></pre></div></div>
+
+<h2 id="using-chartmuseum-2">Using ChartMuseum</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>helm repo add chartmuseum http://<span class="nv">$CM_ADDR</span> <span class="nt">--username</span> admin <span class="se">\</span>
+    <span class="nt">--password</span> admin
+
+helm plugin install https://github.com/chartmuseum/helm-push
+
+helm push ../go-demo-3/helm/go-demo-3/ chartmuseum <span class="se">\</span>
+    <span class="nt">--username</span> admin <span class="nt">--password</span> admin
+
+curl <span class="s2">"http://</span><span class="nv">$CM_ADDR</span><span class="s2">/index.yaml"</span>
+
+helm search chartmuseum/
+
+helm repo update
+
+helm search chartmuseum/
+</code></pre></div></div>
+
+<h2 id="using-chartmuseum-3">Using ChartMuseum</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>helm inspect chartmuseum/go-demo-3
+
+<span class="nv">GD3_ADDR</span><span class="o">=</span><span class="s2">"go-demo-3.</span><span class="nv">$LB_IP</span><span class="s2">.nip.io"</span>
+
+<span class="nb">echo</span> <span class="nv">$GD3_ADDR</span>
+
+helm upgrade <span class="nt">-i</span> go-demo-3 chartmuseum/go-demo-3 <span class="se">\</span>
+    <span class="nt">--namespace</span> go-demo-3 <span class="nt">--set</span> image.tag<span class="o">=</span>1.0 <span class="se">\</span>
+    <span class="nt">--set</span> ingress.host<span class="o">=</span><span class="nv">$GD3_ADDR</span> <span class="nt">--reuse-values</span>
+
+kubectl <span class="nt">-n</span> go-demo-3 rollout status deploy go-demo-3
+
+curl <span class="s2">"http://</span><span class="nv">$GD3_ADDR</span><span class="s2">/demo/hello"</span>
+</code></pre></div></div>
+
+<h2 id="what-now">What Now?</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>helm delete go-demo-3 <span class="nt">--purge</span>
+
+curl <span class="nt">-XDELETE</span> <span class="s2">"http://</span><span class="nv">$CM_ADDR</span><span class="s2">/api/charts/go-demo-3/0.0.1"</span> <span class="se">\</span>
+    <span class="nt">-u</span> admin:admin
+
+kubectl delete ns go-demo-3
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/devops24/chart-museum-demo-short.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="vfarcic.github.io" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/jx/jx-serverless-apps.html" />
+<meta property="og:url" content="http://localhost:4000/jx/jx-serverless-apps.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/jx/jx-serverless-apps.html","@type":"WebPage","headline":"vfarcic.github.io","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <!-- .slide: data-background="../img/background/servers.jpg" -->
+<h1 id="defining-and-running-serverless-deployments">Defining And Running Serverless Deployments</h1>
+
+<hr />
+
+<!-- .slide: data-background="../img/products/jenkins-x.png" -->
+<blockquote>
+  <p>Jenkins X itself is serverless. That helps with many things, with better resource utilization and scalability being only a few of the benefits.</p>
+</blockquote>
+
+<!-- .slide: data-background="../img/background/why.jpg" -->
+<blockquote>
+  <p>Can we do something similar with our applications? Can we scale them to zero when no one is using them? Can we scale them up when the number of concurrent requests increases? Can we make our applications serverless?</p>
+</blockquote>
+
+<!-- .slide: data-background="../img/background/why.jpg" -->
+<h2 id="what-is-serverless-computing">What is Serverless Computing?</h2>
+
+<hr />
+
+<!-- .slide: data-background="../img/background/why.jpg" -->
+<h3 id="a-long-time-ago">A long time ago,</h3>
+<h3 id="most-of-us-were">most of us were</h3>
+<h3 id="deploying-our-apps">deploying our apps</h3>
+<h3 id="directly-to-servers">directly to servers.</h3>
+
+<hr />
+
+<!-- .slide: data-background="../img/background/cloud.jpg" -->
+<h3 id="then-we-got-cloud-computing">Then we got cloud computing</h3>
+
+<hr />
+
+<!-- .slide: data-background="../img/products/kubernetes.png" -->
+<h3 id="and-now-we-have-containers-and-schedulers">And Now We Have Containers And Schedulers</h3>
+
+<hr />
+
+<!-- .slide: data-background="../img/background/why.jpg" -->
+<h3 id="and-we-got-serverless-functions">And We Got Serverless Functions</h3>
+
+<hr />
+
+<!-- .slide: data-background="../img/background/why.jpg" -->
+<h3 id="but">But…</h3>
+
+<hr />
+
+<ul>
+  <li>Serverless with cloud providers is a lock-in mechanism<!-- .element: class="fragment" --></li>
+  <li>Serverless on-prem requires too much maintenance<!-- .element: class="fragment" --></li>
+  <li>Serverless functions might be limiting<!-- .element: class="fragment" --></li>
+</ul>
+
+<!-- .slide: data-background="../img/products/kubernetes.png" -->
+<h3 id="why-not-use-kubernetes">Why Not Use Kubernetes?</h3>
+
+<hr />
+
+<!-- .slide: data-background="../img/products/kubernetes.png" -->
+<h2 id="serverless-deployments-in-kubernetes">Serverless Deployments In Kubernetes</h2>
+
+<hr />
+
+<ul>
+  <li>Everyone is (or will be) using it<!-- .element: class="fragment" --></li>
+  <li>It is the de-facto standard<!-- .element: class="fragment" --></li>
+  <li>No vendor lock-in<!-- .element: class="fragment" --></li>
+</ul>
+
+<!-- .slide: data-background="../img/products/knative.png" -->
+<h3 id="knative">Knative</h3>
+
+<hr />
+
+<!-- .slide: data-background="../img/products/knative.png" -->
+<h2 id="which-types-of-applications-should-run-as-serverless">Which Types Of Applications Should Run As Serverless?</h2>
+
+<hr />
+
+<ul>
+  <li>If it can run in a container, it can be serverless<!-- .element: class="fragment" --></li>
+  <li>Faster is better<!-- .element: class="fragment" --></li>
+  <li>Stateless works great<!-- .element: class="fragment" --></li>
+  <li>Preview environments are a no brainer<!-- .element: class="fragment" --></li>
+</ul>
+
+<!-- .slide: data-background="../img/products/jenkins-x.png" -->
+<h2 id="why-do-we-need-jenkins-x-to-be-serverless">Why Do We Need Jenkins X To Be Serverless?</h2>
+
+<hr />
+
+<ul>
+  <li>Jenkins (without X) does not scale<!-- .element: class="fragment" --></li>
+  <li>Jenkins (without X) is not fault tollerant<!-- .element: class="fragment" --></li>
+  <li>Jenkins (without X) resource usage is heavy<!-- .element: class="fragment" --></li>
+  <li>Jenkins (without X) is slow<!-- .element: class="fragment" --></li>
+  <li>Jenkins (without X) is NOT API-driven<!-- .element: class="fragment" --></li>
+</ul>
+
+<!-- .slide: data-background="../img/products/jenkins.png" -->
+<h3 id="jenkins-had-to-go-away-for-jenkins-x-to-take-its-place">Jenkins had to go away for Jenkins X to take its place.</h3>
+
+<hr />
+
+<!-- .slide: data-background="../img/products/jenkins-x.png" -->
+<h3 id="jenkins-x-is-truly-serverless">Jenkins X Is Truly Serverless</h3>
+
+<hr />
+
+<!-- .slide: data-background="../img/products/tekton.png" -->
+<h2 id="what-is-tekton-and-how-does-it-fit-jenkins-x">What Is Tekton And How Does It Fit Jenkins X?</h2>
+
+<hr />
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/jx/jx-serverless-apps.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

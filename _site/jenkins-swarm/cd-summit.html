@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Continuous Deployment with Jenkins and Docker Swarm</title>
+
+		<meta name="author" content="Viktor Farcic">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="../css/reveal.css">
+        <link rel="stylesheet" href="../css/theme/black.css" id="theme">
+        <link rel="stylesheet" href="../css/theme/vfarcic.css">
+
+		<!-- Code syntax highlighting -->
+		<!--<link rel="stylesheet" href="lib/css/zenburn.css">-->
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<header style="position: absolute;top: 50px; left: 100px; z-index:500; font-size:100px;background-color: rgba(0,0,0,0.5)"></header>
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+                <section id="cover" data-background="../img/background/devops21.jpg">
+                    <h3>Continuous Deployment</h3>
+                    <h2>Jenkins Pipeline and</h2>
+                    <h2>Docker Explained</h2>
+                    <hr/>
+                    <h3><a href="http://technologyconversations.com/about/">Viktor Farcic</a></h3>
+                    <hr/>
+                    <h4>
+                        <a href="https://twitter.com/vfarcic">@vfarcic</a>
+                    </h4>
+                    <h4>
+                        <a href="http://technologyconversations.com">TechnologyConversations.com</a>
+                    </h4>
+                    <h4>
+                        <a href="https://www.cloudbees.com">CloudBees.com</a>
+                    </h4>
+				</section>
+                <section data-background="../img/background/about-me.jpg">
+                    <section id="about-me">
+                        <h2>Viktor Farcic</h2>
+                        <img src="../img/viktor.jpg" style="width: 50%; height: 50%;" />
+                    </section>
+                    <section id="about-company">
+                        <a href="https://www.cloudbees.com">
+                            <img src="../img/company-big.png" style="background-color: white;" />
+                        </a>
+                    </section>
+                    <section id="about-docker">
+                        <a href="https://www.docker.com/community/docker-captains">
+                            <img src="../img/docker-captain.png" style="width: 50%; height: 50%;" />
+                        </a>
+                    </section>
+                    <section id="about-books">
+                        <figure style="width: 30%; height: 30%; float: left;">
+                            <a href="https://leanpub.com/the-devops-2-toolkit">
+                                <img src="../img/devops2.png" />
+                            </a>
+                        </figure>
+                        <figure style="width: 30%; height: 30%; float: left;">
+                            <a href="https://leanpub.com/the-devops-2-1-toolkit">
+                                <img src="../img/devops21.png" />
+                            </a>
+                        </figure>
+                        <figure style="width: 30%; height: 30%; float: left;">
+                            <a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">
+                                <img src="../img/tdd.jpg" />
+                            </a>
+                        </figure>
+                    </section>
+                </section>
+                <section>
+                    <section id="berserker" data-background="../img/background/berserker.jpg">
+                        <h1>Berserker</h1>
+                        <hr/>
+                        <h3 class="fragment">An ancient Norse warrior who fought in a wild frenzy</h3>
+                    </section>
+                </section>
+                <section data-background="../img/background/why.jpg">
+                    <section id="what">
+                        <h1 class="fragment">Docker?</h1>
+                        <hr/>
+                        <h1 class="fragment">CD?</h1>
+                        <hr/>
+                        <h1 class="fragment">Jenkins?</h1>
+                    </section>
+                </section>
+                <section data-background="../img/background/containers.png">
+                    <section id="docker">
+                        <h1>Docker</h1>
+                        <hr/>
+                        <h3 class="fragment">Docker Engine</h3>
+                        <h3 class="fragment">Docker Machine</h3>
+                        <h3 class="fragment">Docker Compose</h3>
+                        <h3 class="fragment">Docker Registry</h3>
+                        <h3 class="fragment">Docker Swarm</h3>
+                    </section>
+                    <section id="pre-reqs">
+                        <h1>Prerequisites</h1>
+                        <hr/>
+                        <pre><code data-trim contenteditable>git clone https://github.com/vfarcic/cloud-provisioning.git
+
+cd cloud-provisioning/terraform/aws-full
+
+export AWS_ACCESS_KEY_ID=[...]
+
+export AWS_SECRET_ACCESS_KEY=[...]
+
+export AWS_DEFAULT_REGION=us-east-1
+
+aws ec2 create-key-pair --key-name devops21 | jq -r '.KeyMaterial' >devops21.pem
+
+packer build -machine-readable packer-ubuntu-docker-compose.json \
+  | tee packer-ubuntu-docker-compose.log</code></pre>
+                    </section>
+                    <section id="swarm-init">
+                        <h3>Docker Swarm</h3>
+                        <h1>Initialize</h1>
+                        <hr/>
+                        <pre><code data-trim contenteditable>export TF_VAR_aws_access_key=[...]
+
+export TF_VAR_aws_secret_key=[...]
+
+export TF_VAR_aws_default_region=us-east-1
+
+export TF_VAR_swarm_ami_id=$(grep 'artifact,0,id' \
+  packer-ubuntu-docker-rexray.log | cut -d, -f6 | cut -d: -f2)
+
+terraform apply -target aws_instance.swarm-manager \
+  -var swarm_init=true -var swarm_managers=1 -var rexray=true
+
+ssh -i devops21.pem ubuntu@$(terraform output \
+  swarm_manager_1_public_ip) docker node ls</code></pre>
+                    </section>
+                    <section id="swarm-stack">
+                        <h3>Docker Swarm</h3>
+                        <h1>Add Nodes</h1>
+                        <hr/>
+                        <pre><code data-trim contenteditable>export TF_VAR_swarm_manager_token=$(ssh -i devops21.pem \
+  ubuntu@$(terraform output swarm_manager_1_public_ip) \
+  docker swarm join-token -q manager)
+
+export TF_VAR_swarm_manager_ip=$(terraform \
+  output swarm_manager_1_private_ip)
+
+terraform apply -target aws_instance.swarm-manager -var rexray=true
+
+ssh -i devops21.pem ubuntu@$(terraform \
+  output swarm_manager_1_public_ip) docker node ls</code></pre>
+                    </section>
+                    <section id="swarm-visualizer">
+                        <h3>Docker Swarm</h3>
+                        <h1>Visualizer</h1>
+                        <hr/>
+                        <pre><code data-trim contenteditable>terraform output swarm_manager_1_public_ip
+
+ssh -i devops21.pem ubuntu@$(terraform \
+  output swarm_manager_1_public_ip)
+
+docker service create --name=visualizer \
+  --publish=9090:8080/tcp --constraint=node.role==manager \
+  --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+  dockersamples/visualizer</code></pre>
+                        <ul>
+                            <li><a href="http://[IP]:9090">http://[IP]:9090</a></li>
+                        </ul>
+                    </section>
+                    <section id="swarm-network">
+                        <h1>Networking</h1>
+                        <hr/>
+						<pre><code data-trim contenteditable>docker network create --driver overlay proxy
+
+docker network create --driver overlay go-demo
+
+docker network ls</code></pre>
+                    </section>
+                    <section id="swarm-service">
+                        <h1>Service</h1>
+                        <hr/>
+						<pre><code data-trim contenteditable>docker service create --name go-demo-db \
+  --network go-demo --reserve-memory 100m mongo
+
+docker service create --name go-demo -e DB=go-demo-db \
+  --network go-demo --network proxy --reserve-memory 50m \
+  --label com.df.notify=true --label com.df.distribute=true \
+  --label com.df.servicePath=/demo --label com.df.port=8080 \
+  vfarcic/go-demo
+
+docker service ls
+
+docker service ps go-demo
+
+docker service inspect go-demo --pretty</code></pre>
+                    </section>
+                    <section id="swarm-proxy">
+                        <h1>Reverse Proxy</h1>
+                        <hr/>
+						<pre><code data-trim contenteditable>docker service create --name swarm-listener \
+  --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
+  -e DF_NOTIF_CREATE_SERVICE_URL=http://proxy:8080/v1/docker-flow-proxy/reconfigure \
+  -e DF_NOTIF_REMOVE_SERVICE_URL=http://proxy:8080/v1/docker-flow-proxy/remove \
+  --constraint 'node.role==manager' --network proxy \
+  vfarcic/docker-flow-swarm-listener
+
+docker service create -e MODE=swarm -e LISTENER_ADDRESS=swarm-listener \
+  -p 80:80 -p 443:443 --network proxy --replicas 3 \
+  --name proxy vfarcic/docker-flow-proxy
+
+docker service ls
+
+docker service ps proxy</code></pre>
+                        <ul>
+                            <li><a href="http://[IP]">http://[IP]/demo/hello</a></li>
+                        </ul>
+                    </section>
+                    <section id="swawrm-registry">
+                        <h1>Registry Service</h1>
+                        <hr/>
+						<pre><code data-trim contenteditable>docker service create --name registry -p 5000:5000 \
+  --mount "type=volume,source=registry,target=/var/lib/registry,volume-driver=rexray" \
+  --reserve-memory 100m registry
+
+docker service ps registry</code></pre>
+                    </section>
+                </section>
+                <section data-background="../img/background/continuous-deployment.png">
+                    <section id="cdp">
+                        <h1>Continuous Deployment</h1>
+                        <hr/>
+                        <ul>
+                            <li class="fragment">Checkout the code</li>
+                            <li class="fragment">Run unit tests</li>
+                            <li class="fragment">Build</li>
+                            <li class="fragment">Run functional tests</li>
+                            <li class="fragment">Push to the registry</li>
+                            <li class="fragment">Deploy to the production-like cluster</li>
+                            <li class="fragment">Run production-like tests</li>
+                            <li class="fragment">Deploy to the production cluster</li>
+                            <li class="fragment">Run production tests</li>
+                        </ul>
+                    </section>
+                    <section id="cdp-extra-reqs">
+                        <h3>Continuous Deployment</h3>
+                        <h1>Extra Reqs.</h1>
+                        <hr/>
+                        <ul>
+                            <li class="fragment">Freedom to code in any language</li>
+                            <li class="fragment">Freedom not to depend on a specific framework</li>
+                            <li class="fragment">Freedom not to depend on infrastructure</li>
+                            <li class="fragment">Immutable deployments</li>
+                            <li class="fragment">Minimal time in-between steps</li>
+                            <li class="fragment">Everything automated</li>
+                            <li class="fragment">Freedom to innovate</li>
+                        </ul>
+                    </section>
+                    <section id="cdp-why-extra-reqs">
+                        <h3>Continuous Deployment</h3>
+                        <h1>Why Extra Reqs?</h1>
+                        <hr/>
+                        <ul>
+                            <li class="fragment">I'm impatient</li>
+                            <li class="fragment">I hate handovers</li>
+                            <li class="fragment">I dislike to depend on others</li>
+                            <li class="fragment">I really hate doing the same tasks over and over</li>
+                        </ul>
+                    </section>
+                </section>
+                <section data-background="../img/background/jenkins.png">
+                    <section id="jenkins">
+                        <h1>Jenkins</h1>
+                        <hr/>
+                        <ul>
+                            <li class="fragment">Continuous Integration</li>
+                            <li class="fragment">Continuous Delivery</li>
+                            <li class="fragment">Continuous Deployment</li>
+                            <li class="fragment">Orchestrator</li>
+                            <li class="fragment">Awesome</li>
+                        </ul>
+                        <img src="../img/products/jenkins.png" style="background-color: white;" />
+                    </section>
+                </section>
+                <section data-background="../img/background/manual.jpg">
+                    <section id="jenkins-service">
+                        <h1>Jenkins Service</h1>
+                        <hr/>
+                            <pre><code data-trim contenteditable>docker service create --name jenkins \
+  -e JENKINS_OPTS="--prefix=/jenkins" \
+  --mount "type=volume,source=jenkins,target=/var/jenkins_home,volume-driver=rexray" \
+  --label com.df.notify=true --label com.df.distribute=true \
+  --label com.df.servicePath=/jenkins --label com.df.port=8080 \
+  -p 50000:50000 --network proxy jenkins:2.7.4-alpine
+
+docker service ps jenkins</code></pre>
+                        <ul>
+                            <li><a href="http://[IP]/jenkins">http://[IP]/jenkins</a></li>
+                        </ul>
+                    </section>
+                    <section id="jenkins-setup">
+                        <h1>Jenkins Setup</h1>
+                        <hr/>
+						<pre><code data-trim contenteditable>docker run -it --rm \
+  --volume-driver rexray -v jenkins:/var/jenkins_home \
+  alpine cat /var/jenkins_home/secrets/initialAdminPassword
+
+# Copy the password</code></pre>
+                        <ul>
+                            <li>Type the <code>Administrator password</code></li>
+                            <li>Select <code>Install suggested plugins</code></li>
+                            <li>Type <code>admin</code> as both <code>user</code> and <code>password</code>.</li>
+                            <li>Fill in the rest of the fields and press <code>Save And Finish</code>.</li>
+                            <li>Click <code>Start Using Jenkins</code></li>
+                        </ul>
+                    </section>
+                    <section id="jenkins-failover">
+                        <h1>Jenkins Failover</h1>
+                        <hr/>
+						<pre><code data-trim contenteditable>docker service ps jenkins
+
+IP=[...] # Manager private IP
+
+docker -H tcp://$IP:2375 rm -f $(docker \
+  -H tcp://$IP:2375 ps -qa -f "ancestor=jenkins:2.7.4-alpine")
+
+docker service ps jenkins
+
+exit</code></pre>
+                        <ul>
+                            <li><a href="http://[IP]/jenkins">http://[IP]/jenkins</a></li>
+                        </ul>
+                    </section>
+                    <section id="jenkins-swarm-plugin">
+                        <h3>Jenkins Agents</h3>
+                        <h1>Jenkins Swarm Plugin</h1>
+                        <hr/>
+                        <ul>
+                            <li><a href="http://[IP]/jenkins/pluginManager/available">http://[IP]/jenkins/pluginManager/available</a></li>
+                            <li>Select <code>Self-Organizing Swarm Plug-in Modules</code></li>
+                            <li>Click <code>Install without restart</code></li>
+                        </ul>
+                    </section>
+                    <section id="jenkins-agents-cluster-nodes">
+                        <h3>Jenkins Agents</h3>
+                        <h1>Cluster</h1>
+                        <hr/>
+                        <pre><code data-trim contenteditable>terraform apply -target aws_instance.test-swarm-manager \
+  -var swarm_init=true -var test_swarm_managers=1 -var rexray=true
+
+export TF_VAR_test_swarm_manager_token=$(ssh -i devops21.pem \
+  ubuntu@$(terraform output test_swarm_manager_1_public_ip) \
+  docker swarm join-token -q manager)
+
+export TF_VAR_test_swarm_manager_ip=$(terraform \
+  output test_swarm_manager_1_private_ip)
+
+terraform apply -target aws_instance.test-swarm-manager \
+  -var rexray=true
+
+ssh -i devops21.pem ubuntu@$(terraform \
+  output test_swarm_manager_1_public_ip) docker node ls</code></pre>
+                    </section>
+                    <section id="jenkins-test-cluster">
+                        <h3>Jenkins Agents</h3>
+                        <h1>Service</h1>
+                        <hr/>
+						<pre><code data-trim contenteditable>terraform output swarm_manager_1_private_ip
+
+ssh -i devops21.pem ubuntu@$(terraform \
+  output test_swarm_manager_1_public_ip)
+
+export JENKINS_IP=[...] # Manager private IP
+
+docker service create --name jenkins-agent \
+  -e COMMAND_OPTIONS="-master http://$JENKINS_IP/jenkins -username admin -password admin -labels 'docker' -executors 5" \
+  --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
+  --mount "type=bind,source=/workspace,target=/workspace" \
+  --mode global vfarcic/jenkins-swarm-agent
+
+docker service ps jenkins-agent</code></pre>
+                        <ul>
+                            <li><a href="http://[IP]/jenkins/computer">http://[IP]/jenkins/computer</a></li>
+                        </ul>
+                    </section>
+                    <section id="jenkins-registry">
+                        <h1>Registry Service</h1>
+                        <hr/>
+						<pre><code data-trim contenteditable>docker service create --name registry -p 5000:5000 \
+  --mount "type=volume,source=registry,target=/var/lib/registry,volume-driver=rexray" \
+  --reserve-memory 100m registry
+
+docker service ps registry
+
+exit
+
+terraform output swarm_manager_1_private_ip</code></pre>
+                    </section>
+                    <section id="jenkins-env">
+                        <h1>Env. Variables</h1>
+                        <hr/>
+                        <ul>
+                            <li><a href="http://[IP]/jenkins/configure">http://[IP]/jenkins/configure</a></li>
+                            <li>Click <code>Environment Variables</code></li>
+                            <li>Click <code>Add</code></li>
+                            <li>Type <code>PROD_IP</code> as <code>Name</code></li>
+                            <li>Paste the output as <code>Value</code></li>
+                            <li>Click <code>Save</code></li>
+                        </ul>
+                    </section>
+                </section>
+                <section data-background="../img/background/manual.jpg">
+                    <section id="cdp-for-real">
+                        <h1>Continuous Deployment</h1>
+                        <hr/>
+                        <h3 class="fragment">Every commit goes through a fully automated pipeline and is deployed to production</h3>
+                        <hr/>
+                        <h3 class="fragment">No Humans*</h3>
+                        <h3 class="fragment">No Exception</h3>
+                        <label class="fragment">*Except to fix a failed pipeline</label>
+                    </section>
+                    <section id="cdp-audo">
+                        <h1>Continuous Deployment</h1>
+                        <hr/>
+                        <div><span class="fragment">Automatically</span> <span class="green">checkout the code</span></div>
+                        <div><span class="fragment">Automatically</span> <span class="green">run unit tests</span></div>
+                        <div><span class="fragment">Automatically</span> <span class="green">build</span></div>
+                        <div><span class="fragment">Automatically</span> <span class="green">run functional tests</span></div>
+                        <div><span class="fragment">Automatically</span> <span class="green">push to registry</span></div>
+                        <div><span class="fragment">Automatically</span> <span class="green">deploy to production-like cluster</span></div>
+                        <div><span class="fragment">Automatically</span> <span class="green">run production-like tests</span></div>
+                        <div><span class="fragment">Automatically</span> <span class="green">deploy to production cluster</span></div>
+                        <div><span class="fragment">Automatically</span> <span class="green">run production tests</span></div>
+                    </section>
+                    <section id="jenkins-job-new">
+                        <h3>Continuous Deployment</h3>
+                        <h1>Jenkins Pipeline Job</h1>
+                        <hr/>
+                        <ul>
+                            <li>Click "New Item"</li>
+                            <li>Type "go-demo", select "Pipeline", click "OK"</li>
+                        </ul>
+                    </section>
+                    <section id="jenkins-job-code">
+                        <h3>Continuous Deployment</h3>
+                        <h1>Jenkins Pipeline Job</h1>
+                        <hr/>
+						<pre><code data-trim contenteditable>node("docker") {
+
+  git "https://github.com/vfarcic/go-demo.git"
+
+  stage("Unit") {
+    sh "docker-compose -f docker-compose-test.yml run --rm unit"
+    sh "docker build -t go-demo ."
+  }
+
+  stage("Staging") {
+    try {
+      sh "docker-compose -f docker-compose-test-local.yml up -d staging-dep"
+      sh "HOST_IP=localhost docker-compose -f docker-compose-test-local.yml run --rm staging"
+    } catch(e) {
+      error "Staging failed"
+    } finally {
+      sh "docker-compose -f docker-compose-test-local.yml down"
+    }
+  }
+
+  stage("Publish") {
+    sh "docker tag go-demo localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
+    sh "docker push localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
+  }
+
+  stage("Prod-like") {
+    echo "A production-like cluster is yet to be created"
+  }
+
+  stage("Production") {
+    withEnv([
+      "DOCKER_HOST=tcp://${env.PROD_IP}:2375"
+    ]) {
+      sh "docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo"
+    }
+    sh "HOST_IP=${env.PROD_IP} docker-compose -f docker-compose-test-local.yml run --rm production"
+  }
+}</code></pre>
+                    </section>
+                    <section id="jenkins-job-confirmation">
+                        <h3>Continuous Deployment</h3>
+                        <h1>Jenkins Pipeline Job</h1>
+                        <hr/>
+                        <pre><code data-trim contenteditable>ssh -i devops21.pem ubuntu@$(terraform \
+  output swarm_manager_1_public_ip) docker service ps go-demo</code></pre>
+                    </section>
+                </section>
+                <section data-background="../img/background/the_end.jpg">
+                    <section id="the-end-company">
+                        <h2>Viktor Farcic</h2>
+                        <hr/>
+                        <a href="https://www.cloudbees.com">
+                            <img src="../img/company-big.png" style="background-color: white;" />
+                        </a>
+                    </section>
+                    <section id="the-end-blog">
+                        <h2>Viktor Farcic</h2>
+                        <hr/>
+                        <h3><a href="https://twitter.com/vfarcic">@vfarcic</a></h3>
+                        <hr/>
+                        <figure>
+                            <img src="../img/qr/technology-conversations.jpg"/>
+                        </figure>
+                        <h3><a href="http://technologyconversations.com">TechnologyConversations.com</a></h3>
+                    </section>
+                    <section id="the-end-book">
+                        <div>
+                            <figure style="width: 25%; height: 25%; float: left;">
+                                <img src="../img/qr/devops2-amazon.jpg"/>
+                                <figcaption><a href="http://www.amazon.com/dp/B01BJ4V66M">Amazon</a></figcaption>
+                            </figure>
+                            <figure style="width: 25%; height: 25%; float: right;">
+                                <img src="../img/qr/devops2-leanpub.jpg"/>
+                                <figcaption><a href="https://leanpub.com/the-devops-2-toolkit">LeanPub</a></figcaption>
+                            </figure>
+                            <a href="http://www.amazon.com/dp/B01BJ4V66M">
+                                <img src="../img/devops2.png" style="width: 30%; height: 30%;" />
+                            </a>
+                        </div>
+                        <hr/>
+                        <div>
+                            <figure style="width: 25%; height: 25%; float: left;">
+                                &nbsp;
+                            </figure>
+                            <figure style="width: 25%; height: 25%; float: right;">
+                                <img src="../img/qr/devops21-leanpub.png"/>
+                                <figcaption><a href="https://leanpub.com/the-devops-2-1-toolkit">LeanPub</a></figcaption>
+                            </figure>
+                            <a href="https://leanpub.com/the-devops-2-1-toolkit">
+                                <img src="../img/devops21.png" style="width: 30%; height: 30%;" />
+                            </a>
+                        </div>
+                    </section>
+                </section>
+                <section>
+                    <section data-background="../img/background/cleanup.jpg">
+                        <h1>Cleanup</h1>
+                        <pre><code data-trim contenteditable>ssh -i devops21.pem ubuntu@$(terraform \
+  output swarm_manager_1_public_ip)
+
+docker service rm jenkins registry
+
+docker volume rm registry jenkins
+
+exit
+
+terraform destroy -force</code></pre>
+                    </section>
+                </section>
+			</div>
+
+		</div>
+
+		<script src="../lib/js/head.min.js"></script>
+		<script src="../js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+//					{ src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../plugin/zoom-js/zoom.js', async: true },
+					{ src: '../plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

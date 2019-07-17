@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/devops21/infra-demo.html" />
+<meta property="og:url" content="http://localhost:4000/devops21/infra-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/devops21/infra-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="immutable">Immutable</h1>
+
+<h1 id="infrastructure">infrastructure</h1>
+
+<h1 id="as-code">as code</h1>
+
+<h1 id="prerequisites">Prerequisites</h1>
+
+<hr />
+
+<ul>
+  <li><a href="https://git-scm.com/">Git</a></li>
+  <li><a href="https://aws.amazon.com/">AWS account</a></li>
+  <li><a href="https://aws.amazon.com/cli/">AWS CLI</a></li>
+  <li><a href="https://www.packer.io/">Packer</a></li>
+  <li><a href="https://www.terraform.io/downloads.html">Terraform</a></li>
+  <li><a href="https://stedolan.github.io/jq/">jq</a></li>
+  <li>GitBash (if Windows)</li>
+</ul>
+
+<h1 id="environment-variables">Environment variables</h1>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=[</span>...]
+
+<span class="nb">export </span><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=[</span>...]
+
+<span class="nb">export </span><span class="nv">AWS_DEFAULT_REGION</span><span class="o">=</span>us-east-1
+
+<span class="nb">export </span><span class="nv">TF_VAR_aws_access_key</span><span class="o">=[</span>...]
+
+<span class="nb">export </span><span class="nv">TF_VAR_aws_secret_key</span><span class="o">=[</span>...]
+
+<span class="nb">export </span><span class="nv">TF_VAR_aws_default_region</span><span class="o">=</span>us-east-1
+</code></pre></div></div>
+
+<h1 id="build-images">Build images</h1>
+
+<p><img src="/img/diags/cloud-architecture-images.png" alt="The flow of the Packer process" /></p>
+
+<h1 id="build-images-1">Build images</h1>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/vfarcic/cloud-provisioning.git
+
+<span class="nb">cd </span>cloud-provisioning/terraform/aws-full
+
+aws ec2 create-key-pair <span class="nt">--key-name</span> devops21 <span class="se">\</span>
+  | jq <span class="nt">-r</span> <span class="s1">'.KeyMaterial'</span> <span class="o">&gt;</span>devops21.pem
+
+chmod 400 devops21.pem
+
+<span class="nb">cat </span>packer-ubuntu-docker-compose.json
+
+packer build <span class="nt">-machine-readable</span> packer-ubuntu-docker-compose.json <span class="se">\</span>
+  | tee packer-ubuntu-docker-compose.log
+</code></pre></div></div>
+
+<h1 id="create-vm-instances">Create VM Instances</h1>
+
+<p><img src="/img/diags/cloud-architecture-instances.png" alt="The flow of the Terraform process" /></p>
+
+<h1 id="create-vm-instances-1">Create VM Instances</h1>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">TF_VAR_ci_ami_id</span><span class="o">=</span><span class="k">$(</span><span class="nb">grep</span> <span class="s1">'artifact,0,id'</span> <span class="se">\</span>
+  packer-ubuntu-docker-compose.log | cut <span class="nt">-d</span>: <span class="nt">-f2</span><span class="k">)</span>
+
+<span class="nb">cat </span>docker.tf
+
+terraform plan <span class="nt">-target</span> aws_instance.ci <span class="nt">-var</span> <span class="nv">ci_count</span><span class="o">=</span>1
+
+terraform apply <span class="nt">-target</span> aws_instance.ci <span class="nt">-var</span> <span class="nv">ci_count</span><span class="o">=</span>1
+
+terraform refresh
+
+ssh <span class="nt">-i</span> devops21.pem ubuntu@<span class="k">$(</span>terraform output ci_public_ip<span class="k">)</span> <span class="se">\</span>
+    docker version
+
+ssh <span class="nt">-i</span> devops21.pem ubuntu@<span class="k">$(</span>terraform output ci_public_ip<span class="k">)</span> <span class="se">\</span>
+    docker-compose version
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/devops21/infra-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

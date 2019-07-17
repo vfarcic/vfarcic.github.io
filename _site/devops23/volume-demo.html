@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/devops23/volume-demo.html" />
+<meta property="og:url" content="http://localhost:4000/devops23/volume-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/devops23/volume-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="using-volumes-to-access-hosts-file-system">Using Volumes To Access Host’s File System</h1>
+
+<h2 id="adding-files-minikube">Adding Files (minikube)</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>minikube stop
+
+cp volume/prometheus-conf.yml ~/.minikube/files
+
+minikube start
+
+minikube ssh <span class="s2">"ls -l /files"</span>
+
+minikube ssh <span class="s2">"sudo mkdir /files"</span>
+
+minikube ssh <span class="s2">"sudo mv /prometheus-conf.yml  /files/"</span>
+</code></pre></div></div>
+
+<h2 id="adding-files-minikube-1">Adding Files (minikube)</h2>
+
+<hr />
+
+<ul>
+  <li>We stopped minikube, copied a few files to <code class="highlighter-rouge">~/.minikube/files</code>, and started it again</li>
+  <li>We observed that the files were copied to minikube VM</li>
+  <li>We moved them from root to <code class="highlighter-rouge">/files</code></li>
+</ul>
+
+<h2 id="hosts-resources--hostpath">Host’s Resources &gt; hostPath</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl run docker <span class="nt">--image</span><span class="o">=</span>docker:17.11 <span class="se">\</span>
+    <span class="nt">--restart</span><span class="o">=</span>Never docker image <span class="nb">ls
+
+</span>kubectl get pods
+
+kubectl logs docker
+
+kubectl delete pod docker
+</code></pre></div></div>
+
+<h2 id="hosts-resources--hostpath-1">Host’s Resources &gt; hostPath</h2>
+
+<hr />
+
+<ul>
+  <li>We created a Pod based on <code class="highlighter-rouge">docker</code> image</li>
+  <li>We listed the Pods and observed that <code class="highlighter-rouge">docker</code> errors</li>
+  <li>We output the logs and noticed that Docker client inside a container cannot connect to Docker socket</li>
+  <li>We removed the Pod</li>
+</ul>
+
+<h2 id="hosts-resources--hostpath-2">Host’s Resources &gt; hostPath</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>volume/docker.yml
+
+kubectl create <span class="nt">-f</span> volume/docker.yml
+
+kubectl <span class="nb">exec</span> <span class="nt">-it</span> docker <span class="nt">--</span> docker image <span class="nb">ls</span> <span class="se">\</span>
+    <span class="nt">--format</span> <span class="s1">''</span>
+</code></pre></div></div>
+
+<h2 id="hosts-resources--hostpath-3">Host’s Resources &gt; hostPath</h2>
+
+<hr />
+
+<ul>
+  <li>We created a Pod based on <code class="highlighter-rouge">docker</code> image and with <code class="highlighter-rouge">/var/run/docker.sock</code> mounted to the same path on the node</li>
+  <li>We entered into the newly created Pod and confirmed that we can list images available on the node</li>
+</ul>
+
+<!-- .slide: data-background="img/volume-hostPath.png" data-background-size="contain" -->
+
+<h2 id="hosts-resources--hostpath-4">Host’s Resources &gt; hostPath</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nb">exec</span> <span class="nt">-it</span> docker sh
+
+apk add <span class="nt">-U</span> git
+
+git clone https://github.com/vfarcic/go-demo-2.git
+
+<span class="nb">cd </span>go-demo-2
+
+<span class="nb">cat </span>Dockerfile
+
+docker image build <span class="nt">-t</span> vfarcic/go-demo-2:beta <span class="nb">.</span>
+</code></pre></div></div>
+
+<h2 id="hosts-resources--hostpath-5">Host’s Resources &gt; hostPath</h2>
+
+<hr />
+
+<ul>
+  <li>We entered into the <code class="highlighter-rouge">docker</code> container</li>
+  <li>We installed Git and cloned <code class="highlighter-rouge">go-demo-2</code> repository</li>
+  <li>We built a new image</li>
+</ul>
+
+<h2 id="hosts-resources--hostpath-6">Host’s Resources &gt; hostPath</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker image <span class="nb">ls</span> <span class="nt">--format</span> <span class="s2">""</span>
+
+docker system prune <span class="nt">-f</span>
+
+docker image <span class="nb">ls</span> <span class="nt">--format</span> <span class="s2">""</span>
+
+<span class="nb">exit
+
+</span>kubectl delete <span class="nt">-f</span> volume/docker.yml
+</code></pre></div></div>
+
+<h2 id="hosts-resources--hostpath-7">Host’s Resources &gt; hostPath</h2>
+
+<hr />
+
+<ul>
+  <li>We listed the images thus confirming that the one we built is inside the node, not inside the container</li>
+  <li>We pruned unused images, containers, networks, and so on</li>
+  <li>We listed the images again thus confirming that unused ones are removed</li>
+  <li>We deleted the Pod</li>
+</ul>
+
+<h2 id="hostpath--inject-config-files-minikube">hostPath &gt; Inject Config Files (minikube)</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>volume/prometheus.yml
+
+<span class="nb">cat </span>volume/prometheus.yml <span class="se">\</span>
+    | sed <span class="nt">-e</span> <span class="s2">"s/192.168.99.100/</span><span class="k">$(</span>minikube ip<span class="k">)</span><span class="s2">/g"</span> <span class="se">\</span>
+    | kubectl create <span class="nt">-f</span> - <span class="nt">--record</span> <span class="nt">--save-config</span>
+
+kubectl rollout status deploy prometheus
+
+open <span class="s2">"http://</span><span class="k">$(</span>minikube ip<span class="k">)</span><span class="s2">/prometheus"</span>
+
+open <span class="s2">"http://</span><span class="k">$(</span>minikube ip<span class="k">)</span><span class="s2">/prometheus/targets"</span>
+
+open <span class="s2">"http://</span><span class="k">$(</span>minikube ip<span class="k">)</span><span class="s2">/prometheus/config"</span>
+</code></pre></div></div>
+
+<h2 id="hostpath--inject-config-files-minikube-1">hostPath &gt; Inject Config Files (minikube)</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>volume/prometheus-host-path.yml
+
+minikube ssh <span class="nb">sudo </span>chmod +rw /files/prometheus-conf.yml
+
+minikube ssh <span class="nb">cat</span> /files/prometheus-conf.yml
+
+<span class="nb">cat </span>volume/prometheus-host-path.yml <span class="se">\</span>
+    | sed <span class="nt">-e</span> <span class="s2">"s/192.168.99.100/</span><span class="k">$(</span>minikube ip<span class="k">)</span><span class="s2">/g"</span> <span class="se">\</span>
+    | kubectl apply <span class="nt">-f</span> -
+
+kubectl rollout status deploy prometheus
+
+open <span class="s2">"http://</span><span class="k">$(</span>minikube ip<span class="k">)</span><span class="s2">/prometheus/targets"</span>
+
+kubectl delete <span class="nt">-f</span> volume/prometheus-host-path.yml
+</code></pre></div></div>
+
+<h2 id="gitrepo--git-repository-minikube">gitRepo &gt; Git Repository (minikube)</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>volume/github.yml
+
+kubectl create <span class="nt">-f</span> volume/github.yml
+
+kubectl <span class="nb">exec</span> <span class="nt">-it</span> github sh
+
+<span class="nb">cd</span> /src
+
+<span class="nb">ls</span> <span class="nt">-l</span>
+
+docker image build <span class="nt">-t</span> vfarcic/go-demo-2:beta <span class="nb">.</span>
+
+<span class="nb">exit
+
+</span>kubectl delete <span class="nt">-f</span> volume/github.yml
+</code></pre></div></div>
+
+<!-- .slide: data-background="img/volume-git-repo.png" data-background-size="contain" -->
+
+<h2 id="emptydir--persist-state-minikube">emptyDir &gt; Persist State (minikube)</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>volume/jenkins.yml
+
+kubectl create <span class="nt">-f</span> volume/jenkins.yml <span class="nt">--record</span> <span class="nt">--save-config</span>
+
+kubectl rollout status deploy jenkins
+
+open <span class="s2">"http://</span><span class="k">$(</span>minikube ip<span class="k">)</span><span class="s2">/jenkins"</span>
+
+open <span class="s2">"http://</span><span class="k">$(</span>minikube ip<span class="k">)</span><span class="s2">/jenkins/newJob"</span>
+
+<span class="c"># Create a new job</span>
+</code></pre></div></div>
+
+<h2 id="emptydir--persist-state-minikube-1">emptyDir &gt; Persist State (minikube)</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">POD_NAME</span><span class="o">=</span><span class="k">$(</span>kubectl get pods <span class="nt">-l</span> <span class="nv">service</span><span class="o">=</span>jenkins,type<span class="o">=</span>master <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.items[*].metadata.name}"</span><span class="k">)</span>
+
+kubectl <span class="nb">exec</span> <span class="nt">-it</span> <span class="nv">$POD_NAME</span> <span class="nb">kill </span>1
+
+kubectl get pods
+
+open <span class="s2">"http://</span><span class="k">$(</span>minikube ip<span class="k">)</span><span class="s2">/jenkins"</span>
+</code></pre></div></div>
+
+<h2 id="emptydir--persist-state-minikube-2">emptyDir &gt; Persist State (minikube)</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>volume/jenkins-empty-dir.yml
+
+kubectl apply <span class="nt">-f</span> volume/jenkins-empty-dir.yml
+
+kubectl rollout status deploy jenkins
+
+open <span class="s2">"http://</span><span class="k">$(</span>minikube ip<span class="k">)</span><span class="s2">/jenkins/newJob"</span>
+
+<span class="nv">POD_NAME</span><span class="o">=</span><span class="k">$(</span>kubectl get pods <span class="nt">-l</span> <span class="nv">service</span><span class="o">=</span>jenkins,type<span class="o">=</span>master <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.items[*].metadata.name}"</span><span class="k">)</span>
+
+kubectl <span class="nb">exec</span> <span class="nt">-it</span> <span class="nv">$POD_NAME</span> <span class="nb">kill </span>1
+
+kubectl get pods
+
+open <span class="s2">"http://</span><span class="k">$(</span>minikube ip<span class="k">)</span><span class="s2">/jenkins"</span>
+</code></pre></div></div>
+
+<!-- .slide: data-background="img/volume-components.png" data-background-size="contain" -->
+
+<h2 id="what-now">What Now?</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># If minikube</span>
+kubectl delete <span class="nt">-f</span> volume/jenkins-empty-dir.yml
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/devops23/volume-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

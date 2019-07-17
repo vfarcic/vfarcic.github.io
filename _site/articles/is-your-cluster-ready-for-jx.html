@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Is Your Cluster Ready For Jenkins X? | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Is Your Cluster Ready For Jenkins X?" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/articles/is-your-cluster-ready-for-jx.html" />
+<meta property="og:url" content="http://localhost:4000/articles/is-your-cluster-ready-for-jx.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/articles/is-your-cluster-ready-for-jx.html","@type":"WebPage","headline":"Is Your Cluster Ready For Jenkins X?","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h1 id="is-your-cluster-ready-for-jenkins-x">Is Your Cluster Ready For Jenkins X?</h1>
+
+<p>If you’re reading this, the chances are that you do not want to use <code class="highlighter-rouge">jx cluster create</code> to create a new cluster that will host Jenkins X. That is OK, or even welcome. That likely means that you are already experienced with Kubernetes and that you already have applications running in Kubernetes. That’s a sign of maturity and your desire to add Jenkins X to the mix of whichever applications you are already running there. After all, it would be silly to create a new cluster for each set of applications.</p>
+
+<p>However, using an existing Kubernetes cluster is risky. Many people think that they are so smart that they will assemble their Kubernetes cluster from scratch. “We’re so awesome that we don’t need tools like Rancher to create a cluster for us.” “We’ll do it with <code class="highlighter-rouge">kubeadm</code>.” Then, after a lot of sweat, we announce that the cluster is operational, only to discover that there is no StorageClass or that networking does not work. So, if you assembled your own cluster and you want to use Jenkins X inside it, you need to ask yourself whether that cluster is set up correctly. Does it have everything we need? Does it comply with standards, or did you tweak it to meet your corporate restrictions? Did you choose to remove StorageClass because all your applications are stateless? Were you forced by your security department to restrict communication between Namespaces? Is the Kubernetes version too old? We can answer those and many other questions by running compliance tests.
+<!--more--></p>
+
+<p>Before we proceed, we’ll verify whether the cluster we’re hoping to use meets the requirements. Fortunately, <code class="highlighter-rouge">jx</code> has a command that can help us. We can run compliance tests and check whether there is anything “suspicious” in the results. Among many other things, <code class="highlighter-rouge">jx</code> has its own implementation of the <a href="https://github.com/heptio/sonobuoy">sonobuoy</a> SDK.</p>
+
+<p>So, what is sonobuoy? It is a diagnostic tool that makes it easier to understand the state of a Kubernetes cluster by running a set of Kubernetes conformance tests in an accessible and non-destructive manner.</p>
+
+<p>Sonobuoy supports Kubernetes versions 1.11, 1.12 and 1.13, so bear that in mind before running it in your cluster. As a matter a fact, if your Kubernetes cluster is older than that, you likely think that creating a cluster is a one-time deal and that there is nothing to maintain or upgrade.</p>
+
+<p>Given that I do not know whether your cluster complies with Kubernetes specifications and best practices, I cannot guarantee that Jenkins X installation will be successful. Compliance tests should give us that kind of comfort.</p>
+
+<p>Before we proceed with compliance, I must warn you that the execution lasts for over an hour. Is it worth it? That depends on your cluster. Jenkins X does not need anything “special”. It assumes that your Kubernetes cluster has some bare minimums and that it complies with Kubernetes standards. If you created it with one of the Cloud providers and you did not go astray from the default setup and configuration, you can probably skip running the compliance tests.</p>
+
+<p>On the other hand, if you baked your own Kubernetes cluster, or if you customized it to comply with some corporate restrictions, running compliance tests might be well worth the wait. Even if you’re sure that your cluster is ready for Jenkins X, it’s still a good idea to run them. You might find something you did not know exists or, to be more precise, you might see that you are missing things you might want to have.</p>
+
+<p>Anyway, the choice is yours. You can run the compliance tests and wait for over an hour, or you can be brave and skip right into <a href="#jx-install">Installing Jenkins X In An Existing Kubernetes Cluster</a>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jx compliance run
+</code></pre></div></div>
+
+<p>Once the compliance tests are running, we can check their status to see whether they finished executing.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jx compliance status
+</code></pre></div></div>
+
+<p>The output is as follows.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Compliance tests are still running, it can take up to 60 minutes.
+</code></pre></div></div>
+
+<p>If you got <code class="highlighter-rouge">no compliance status found</code> message instead, you were too hasty, and the tests did not yet start. If that’s the case, re-execute the <code class="highlighter-rouge">jx compliance status</code> command.</p>
+
+<p>We can also follow the progress by watching the logs.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jx compliance logs <span class="nt">-f</span>
+</code></pre></div></div>
+
+<p>After a while, it’ll start churning a lot of logs. If it’s stuck, you executed the previous command too soon. Cancel with <em>ctrl+c</em> and repeat the <code class="highlighter-rouge">jx compliance logs -f</code> command.</p>
+
+<p>Once you get bored looking at endless logs entries, stop following logs by pressing <em>ctrl+c</em>.</p>
+
+<p>The best thing you can do right now is to find something to watch on Netflix since there’s at least an hour left until the tests are finished.</p>
+
+<p>We’ll know whether the compliance testing is done by executing <code class="highlighter-rouge">jx compliance status</code>. If the output is the same as the one that follows, the execution is finished.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Compliance tests completed. Use `jx compliance results` to display the results.
+</code></pre></div></div>
+
+<p>Let’s see the results.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jx compliance results
+</code></pre></div></div>
+
+<p>If the statuses of all the tests are <code class="highlighter-rouge">PASSED</code>, you’re probably good to go. I used the word “probably” since there is an infinite number of things you might have done to your cluster that are not covered by the compliance tests. Nevertheless, with everything <code class="highlighter-rouge">PASSED</code>, it is very likely that everything will run smoothly. By “everything”, I don’t mean only Jenkins X, but whatever else you’re planning to deploy to your cluster.</p>
+
+<p>What happens if one of the tests failed? The obvious answer is that you should fix the issue first. A little less obvious response would be that it might or might not affect Jenkins X and whatever else we’ll do in that cluster. Still, no matter whether the issue is going to affect us or not, you should fix it because you should have a healthy and conformant Kubernetes cluster.</p>
+
+<p>We don’t need compliance tests anymore, so let’s remove them from the system and free some resources.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jx compliance delete
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/articles/is-your-cluster-ready-for-jx.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

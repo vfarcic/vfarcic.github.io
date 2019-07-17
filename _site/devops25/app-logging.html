@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="vfarcic.github.io" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/devops25/app-logging.html" />
+<meta property="og:url" content="http://localhost:4000/devops25/app-logging.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/devops25/app-logging.html","@type":"WebPage","headline":"vfarcic.github.io","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">PT_HOST</span><span class="o">=</span>logs7.papertrailapp.com
+
+<span class="nv">PT_PORT</span><span class="o">=</span>17221
+
+<span class="nb">cat </span>logging/fluentd-papertrail.yml | sed <span class="nt">-e</span> <span class="s2">"s@NNNNN@</span><span class="nv">$PT_PORT</span><span class="s2">@g"</span> <span class="se">\</span>
+    | sed <span class="nt">-e</span> <span class="s2">"s@logsN.papertrailapp.com@</span><span class="nv">$PT_HOST</span><span class="s2">@g"</span> <span class="se">\</span>
+    | kubectl apply <span class="nt">-f</span> -
+
+kubectl <span class="nt">-n</span> logging rollout status ds fluentd-papertrail
+</code></pre></div></div>
+
+<!-- .slide: data-background="../img/background/why.jpg" -->
+<h1 id="a-long-time-ago-in-a-galaxy-far-far-away">A long time ago in a galaxy far, far away…</h1>
+
+<hr />
+
+<!-- .slide: data-background="../img/background/logs.jpeg" -->
+<h2 id="you-were-writing-logs-to-files">You were writing logs to files</h2>
+
+<hr />
+
+<!-- .slide: data-background="../img/background/logs.jpeg" -->
+<h2 id="you-realized-that-you-cannot-be">You realized that you cannot be</h2>
+<h1 id="in-many-places">in many places</h1>
+<h2 id="at-the-same-time">at the same time</h2>
+
+<hr />
+
+<!-- .slide: data-background="../img/background/logs.jpeg" -->
+<h2 id="you-learned-that-they-were-supposed-to-be">You learned that they were supposed to be</h2>
+<h1 id="sent-to-stdout">sent to stdout</h1>
+<h2 id="all-along">all along</h2>
+
+<hr />
+
+<!-- .slide: data-background="../img/products/elk.png" -->
+<h2 id="you-adopted">You adopted</h2>
+<h1 id="centralized-logging">centralized logging</h1>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"https://papertrailapp.com/events"</span>
+</code></pre></div></div>
+
+<!-- .slide: data-background="../img/background/angry.jpg" -->
+<h2 id="you-learned-that-logging-cannot-be-used-to">You learned that logging cannot be used to</h2>
+<h1 id="prevent-problems">prevent problems</h1>
+
+<hr />
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/devops25/app-logging.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

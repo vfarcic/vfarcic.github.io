@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Docker Services | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Docker Services" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/docker/services.html" />
+<meta property="og:url" content="http://localhost:4000/docker/services.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/docker/services.html","@type":"WebPage","headline":"Docker Services","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h1 id="docker-services">Docker Services</h1>
+
+<h2 id="docker-services-1">Docker Services</h2>
+
+<hr />
+
+<ul>
+  <li>A group of containers</li>
+  <li>Fault tolerant</li>
+  <li>Scalable</li>
+  <li>Service discovery &amp; networking</li>
+  <li>Resource based allocation</li>
+  <li>And much more</li>
+</ul>
+
+<h2 id="deploying-services">Deploying Services</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">eval</span> <span class="k">$(</span>docker-machine env swarm-1<span class="k">)</span>
+
+docker service create <span class="nt">--name</span><span class="o">=</span>visualizer <span class="se">\</span>
+  <span class="nt">--publish</span><span class="o">=</span>9090:8080/tcp <span class="nt">--constraint</span><span class="o">=</span>node.role<span class="o">==</span>manager <span class="se">\</span>
+  <span class="nt">--mount</span><span class="o">=</span><span class="nb">type</span><span class="o">=</span><span class="nb">bind</span>,src<span class="o">=</span>/var/run/docker.sock,dst<span class="o">=</span>/var/run/docker.sock <span class="se">\</span>
+  dockersamples/visualizer
+
+docker service <span class="nb">ls
+
+</span>docker service ps visualizer
+
+open <span class="s2">"http://</span><span class="k">$(</span>docker-machine ip swarm-1<span class="k">)</span><span class="s2">:9090"</span>
+</code></pre></div></div>
+
+<h2 id="ingress-network">Ingress Network</h2>
+
+<hr />
+
+<ul>
+  <li>Forwards requests from any node to a service that published the same port</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="k">$(</span>docker-machine ip swarm-2<span class="k">)</span><span class="s2">:9090"</span>
+
+open <span class="s2">"http://</span><span class="k">$(</span>docker-machine ip swarm-4<span class="k">)</span><span class="s2">:9090"</span>
+</code></pre></div></div>
+
+<h2 id="overlay-network">Overlay Network</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network create <span class="nt">-d</span> overlay go-demo
+
+docker network <span class="nb">ls
+
+</span>docker service create <span class="nt">--name</span> db <span class="nt">--network</span> go-demo mongo
+
+docker service ps db
+
+docker service create <span class="nt">--name</span> go-demo <span class="nt">--network</span> go-demo <span class="nt">-e</span> <span class="nv">DB</span><span class="o">=</span>db <span class="se">\</span>
+  <span class="nt">--replicas</span> 3 vfarcic/go-demo
+
+docker service ps go-demo
+
+docker service rm db go-demo
+
+docker network rm go-demo
+</code></pre></div></div>
+
+<h2 id="deploying-stacks">Deploying Stacks</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-o</span> go-demo.yml <span class="se">\</span>
+  https://raw.githubusercontent.com/vfarcic/go-demo/master/docker-compose-stack.yml
+
+<span class="nb">cat </span>go-demo.yml
+
+docker stack deploy <span class="nt">-c</span> go-demo.yml go-demo
+
+docker network create <span class="nt">-d</span> overlay proxy
+
+docker stack deploy <span class="nt">-c</span> go-demo.yml go-demo
+
+docker stack ps go-demo
+
+open <span class="s2">"http://</span><span class="k">$(</span>docker-machine ip swarm-1<span class="k">)</span><span class="s2">:9090"</span>
+</code></pre></div></div>
+
+<h2 id="deploying-global-services">Deploying Global Services</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker service create <span class="nt">--name</span> util <span class="nt">--mode</span> global <span class="nt">--network</span> proxy <span class="se">\</span>
+  alpine sleep 1000000
+
+docker service ps util
+
+docker container <span class="nb">ls
+
+</span>docker container <span class="nb">ls</span> <span class="nt">-f</span> <span class="nv">label</span><span class="o">=</span><span class="s2">"com.docker.swarm.service.name=util"</span>
+
+docker container <span class="nb">ls</span> <span class="nt">-q</span> <span class="nt">-f</span> <span class="nv">label</span><span class="o">=</span><span class="s2">"com.docker.swarm.service.name=util"</span>
+
+<span class="nv">ID</span><span class="o">=</span><span class="k">$(</span>docker container <span class="nb">ls</span> <span class="nt">-q</span> <span class="se">\</span>
+  <span class="nt">-f</span> <span class="nv">label</span><span class="o">=</span><span class="s2">"com.docker.swarm.service.name=util"</span><span class="k">)</span>
+
+open <span class="s2">"http://</span><span class="k">$(</span>docker-machine ip swarm-1<span class="k">)</span><span class="s2">:9090"</span>
+</code></pre></div></div>
+
+<h2 id="service-discovery">Service Discovery</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker container <span class="nb">exec</span> <span class="nt">-it</span> <span class="nv">$ID</span> sh
+
+apk add <span class="nt">--update</span> drill
+
+drill go-demo_main
+
+drill tasks.go-demo_main
+
+<span class="nb">exit</span>
+</code></pre></div></div>
+
+<h2 id="rolling-updates">Rolling Updates</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker service update <span class="nt">--image</span> vfarcic/go-demo:1.6 <span class="se">\</span>
+  go-demo_main
+
+watch <span class="s2">"docker service ps -f desired-state=running go-demo_main"</span>
+
+<span class="nb">cat </span>go-demo.yml
+
+docker service ps <span class="nt">-f</span> desired-state<span class="o">=</span>running go-demo_main
+
+docker service update <span class="nt">--replicas</span> 15 go-demo_main
+
+docker service ps <span class="nt">-f</span> desired-state<span class="o">=</span>running go-demo_main
+
+docker service scale go-demo_main<span class="o">=</span>12
+
+docker service ps <span class="nt">-f</span> desired-state<span class="o">=</span>running go-demo_main
+</code></pre></div></div>
+
+<h2 id="failover">Failover</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">ID</span><span class="o">=</span><span class="k">$(</span>docker container <span class="nb">ls</span> <span class="nt">-q</span> <span class="se">\</span>
+  <span class="nt">-f</span> <span class="nv">label</span><span class="o">=</span><span class="s2">"com.docker.swarm.service.name=go-demo_main"</span> | tail <span class="nt">-n</span> 1<span class="k">)</span>
+
+docker container rm <span class="nt">-f</span> <span class="nv">$ID</span>
+
+docker stack ps <span class="nt">-f</span> desired-state<span class="o">=</span>running go-demo
+
+docker-machine rm <span class="nt">-f</span> swarm-4
+
+docker stack ps <span class="nt">-f</span> desired-state<span class="o">=</span>running go-demo
+
+open <span class="s2">"http://</span><span class="k">$(</span>docker-machine ip swarm-1<span class="k">)</span><span class="s2">:9090"</span>
+</code></pre></div></div>
+
+<h2 id="integrating-services-with-a-proxy">Integrating Services With A Proxy</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker service <span class="nb">ls
+
+</span>curl <span class="nt">-o</span> proxy.yml <span class="se">\</span>
+  https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/proxy/docker-flow-proxy.yml
+
+<span class="nb">cat </span>proxy.yml
+
+docker stack deploy <span class="nt">-c</span> proxy.yml proxy
+
+docker stack ps proxy
+
+curl <span class="s2">"http://</span><span class="k">$(</span>docker-machine ip swarm-1<span class="k">)</span><span class="s2">/demo/hello"</span>
+
+<span class="nb">cat </span>go-demo.yml
+</code></pre></div></div>
+
+<h2 id="destroying-the-cluster">Destroying The Cluster</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-machine rm <span class="nt">-f</span> swarm-1 swarm-2 swarm-3
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/docker/services.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

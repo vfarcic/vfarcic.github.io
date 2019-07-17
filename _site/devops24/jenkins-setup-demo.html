@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/devops24/jenkins-setup-demo.html" />
+<meta property="og:url" content="http://localhost:4000/devops24/jenkins-setup-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/devops24/jenkins-setup-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="installing-and-setting-up-jenkins">Installing and Setting Up Jenkins</h1>
+
+<h2 id="running-jenkins">Running Jenkins</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">JENKINS_ADDR</span><span class="o">=</span><span class="s2">"jenkins.</span><span class="nv">$LB_IP</span><span class="s2">.nip.io"</span>
+
+<span class="nb">echo</span> <span class="nv">$JENKINS_ADDR</span>
+
+helm install stable/jenkins <span class="nt">--name</span> jenkins <span class="nt">--namespace</span> jenkins <span class="se">\</span>
+    <span class="nt">--values</span> helm/jenkins-values.yml <span class="se">\</span>
+    <span class="nt">--set</span> Master.HostName<span class="o">=</span><span class="nv">$JENKINS_ADDR</span>
+
+kubectl <span class="nt">-n</span> jenkins rollout status deployment jenkins
+</code></pre></div></div>
+
+<h2 id="running-jenkins-1">Running Jenkins</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">"</span>
+
+<span class="nv">JENKINS_PASS</span><span class="o">=</span><span class="k">$(</span>kubectl <span class="nt">-n</span> jenkins get secret jenkins <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.data.jenkins-admin-password}"</span> <span class="se">\</span>
+    | base64 <span class="nt">--decode</span><span class="p">;</span> <span class="nb">echo</span><span class="k">)</span>
+
+<span class="nb">echo</span> <span class="nv">$JENKINS_PASS</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Click the <em>New Item</em> link</li>
+  <li>Type <em>my-k8s-job</em> as the item name</li>
+  <li>Select <em>Pipeline</em></li>
+  <li>Click the <em>OK</em> button</li>
+  <li>Copy&amp;paste the job that follows into the Pipeline Script field</li>
+</ul>
+
+<h2 id="using-pods-to-run-tools">Using Pods to Run Tools</h2>
+
+<hr />
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">podTemplate</span><span class="o">(</span>
+    <span class="nl">label:</span> <span class="s2">"kubernetes"</span><span class="o">,</span>
+    <span class="nl">containers:</span> <span class="o">[</span>
+        <span class="n">containerTemplate</span><span class="o">(</span><span class="nl">name:</span> <span class="s2">"maven"</span><span class="o">,</span> <span class="nl">image:</span> <span class="s2">"maven:alpine"</span><span class="o">,</span> <span class="nl">ttyEnabled:</span> <span class="kc">true</span><span class="o">,</span> <span class="nl">command:</span> <span class="s2">"cat"</span><span class="o">),</span>
+        <span class="n">containerTemplate</span><span class="o">(</span><span class="nl">name:</span> <span class="s2">"golang"</span><span class="o">,</span> <span class="nl">image:</span> <span class="s2">"golang:alpine"</span><span class="o">,</span> <span class="nl">ttyEnabled:</span> <span class="kc">true</span><span class="o">,</span> <span class="nl">command:</span> <span class="s2">"cat"</span><span class="o">)</span>
+    <span class="o">]</span>
+<span class="o">)</span> <span class="o">{</span>
+    <span class="n">node</span><span class="o">(</span><span class="s2">"kubernetes"</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">container</span><span class="o">(</span><span class="s2">"maven"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">stage</span><span class="o">(</span><span class="s2">"build"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"mvn --version"</span>
+            <span class="o">}</span>
+            <span class="n">stage</span><span class="o">(</span><span class="s2">"unit-test"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"java -version"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">container</span><span class="o">(</span><span class="s2">"golang"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">stage</span><span class="o">(</span><span class="s2">"deploy"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"go version"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="using-pods-to-run-tools-1">Using Pods to Run Tools</h2>
+
+<hr />
+
+<ul>
+  <li>Click the <em>Save</em> button</li>
+  <li>Click the <em>Open Blue Ocean</em> link</li>
+  <li>click the <em>Run</em> button</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> jenkins get pods
+</code></pre></div></div>
+
+<!-- .slide: data-background="img/jenkins-setup-agent-same-ns.png" data-background-size="contain" -->
+
+<h2 id="using-pods-to-run-tools-2">Using Pods to Run Tools</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">/job/my-k8s-job/configure"</span>
+</code></pre></div></div>
+
+<h2 id="using-pods-to-run-tools-3">Using Pods to Run Tools</h2>
+
+<hr />
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">podTemplate</span><span class="o">(</span><span class="nl">label:</span> <span class="s2">"kubernetes"</span><span class="o">,</span> <span class="nl">yaml:</span> <span class="s2">"""
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: kubectl
+    image: vfarcic/kubectl
+    command: ["sleep"]
+    args: ["100000"]
+  - name: oc
+    image: vfarcic/openshift-client
+    command: ["sleep"]
+    args: ["100000"]
+  - name: golang
+    image: golang:1.9
+    command: ["sleep"]
+    args: ["100000"]
+  - name: helm
+    image: vfarcic/helm:2.8.2
+    command: ["sleep"]
+    args: ["100000"]
+"""</span>
+<span class="o">)</span> <span class="o">{</span>
+    <span class="n">node</span><span class="o">(</span><span class="s2">"kubernetes"</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">container</span><span class="o">(</span><span class="s2">"kubectl"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">stage</span><span class="o">(</span><span class="s2">"kubectl"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"kubectl version"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">container</span><span class="o">(</span><span class="s2">"oc"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">stage</span><span class="o">(</span><span class="s2">"oc"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"oc version"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">container</span><span class="o">(</span><span class="s2">"golang"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">stage</span><span class="o">(</span><span class="s2">"golang"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"go version"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">container</span><span class="o">(</span><span class="s2">"helm"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">stage</span><span class="o">(</span><span class="s2">"helm"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"helm version"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="using-pods-to-run-tools-4">Using Pods to Run Tools</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> jenkins get pods
+</code></pre></div></div>
+
+<ul>
+  <li>The build hangs (unless Docker For Desktop)</li>
+  <li>Stop the build (unless Docker For Desktop)</li>
+</ul>
+
+<!-- .slide: data-background="img/jenkins-setup-agent-to-tiller-in-kube-system.png" data-background-size="contain" -->
+
+<h2 id="using-pods-to-run-tools-5">Using Pods to Run Tools</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> jenkins get pods
+</code></pre></div></div>
+
+<h2 id="builds-in-different-namespaces">Builds In Different Namespaces</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">/job/my-k8s-job/configure"</span>
+</code></pre></div></div>
+
+<h2 id="builds-in-different-namespaces-1">Builds In Different Namespaces</h2>
+
+<hr />
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">podTemplate</span><span class="o">(</span>
+    <span class="nl">label:</span> <span class="s2">"kubernetes"</span><span class="o">,</span>
+    <span class="nl">namespace:</span> <span class="s2">"go-demo-3-build"</span><span class="o">,</span>
+    <span class="nl">serviceAccount:</span> <span class="s2">"build"</span><span class="o">,</span>
+    <span class="nl">yaml:</span> <span class="s2">"""
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: kubectl
+    image: vfarcic/kubectl
+    command: ["sleep"]
+    args: ["100000"]
+  - name: oc
+    image: vfarcic/openshift-client
+    command: ["sleep"]
+    args: ["100000"]
+  - name: golang
+    image: golang:1.9
+    command: ["sleep"]
+    args: ["100000"]
+  - name: helm
+    image: vfarcic/helm:2.8.2
+    command: ["sleep"]
+    args: ["100000"]
+"""</span>
+<span class="o">)</span> <span class="o">{</span>
+    <span class="n">node</span><span class="o">(</span><span class="s2">"kubernetes"</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">container</span><span class="o">(</span><span class="s2">"kubectl"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">stage</span><span class="o">(</span><span class="s2">"kubectl"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"kubectl version"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">container</span><span class="o">(</span><span class="s2">"oc"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">stage</span><span class="o">(</span><span class="s2">"oc"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"oc version"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">container</span><span class="o">(</span><span class="s2">"golang"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">stage</span><span class="o">(</span><span class="s2">"golang"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"go version"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">container</span><span class="o">(</span><span class="s2">"helm"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">stage</span><span class="o">(</span><span class="s2">"helm"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"helm version --tiller-namespace go-demo-3-build"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="builds-in-different-namespaces-2">Builds In Different Namespaces</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Stop the build (unless Docker For Desktop)</span>
+
+<span class="nb">cat</span> ../go-demo-3/k8s/build-ns.yml
+
+kubectl apply <span class="nt">-f</span> ../go-demo-3/k8s/build-ns.yml <span class="nt">--record</span>
+
+<span class="nb">cat</span> ../go-demo-3/k8s/prod-ns.yml
+
+kubectl apply <span class="nt">-f</span> ../go-demo-3/k8s/prod-ns.yml <span class="nt">--record</span>
+
+<span class="nb">cat</span> ../go-demo-3/k8s/jenkins.yml
+
+kubectl apply <span class="nt">-f</span> ../go-demo-3/k8s/jenkins.yml <span class="nt">--record</span>
+</code></pre></div></div>
+
+<h2 id="builds-in-different-namespaces-3">Builds In Different Namespaces</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">/configure"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Change <em>Jenkins URL</em> to <em>http://jenkins.jenkins:8080</em></li>
+  <li>Change <em>Jenkins tunnel</em> to <em>jenkins-agent.jenkins:50000</em></li>
+  <li>Click the <em>Save</em> button</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>helm init <span class="nt">--service-account</span> build <span class="se">\</span>
+    <span class="nt">--tiller-namespace</span> go-demo-3-build
+
+kubectl <span class="nt">-n</span> go-demo-3-build rollout status deployment tiller-deploy
+</code></pre></div></div>
+
+<!-- .slide: data-background="img/jenkins-setup-multi-ns.png" data-background-size="contain" -->
+
+<h2 id="builds-in-different-namespaces-4">Builds In Different Namespaces</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">/blue/organizations/jenkins/my-k8s-job/activity"</span>
+
+kubectl <span class="nt">-n</span> go-demo-3-build get pods
+</code></pre></div></div>
+
+<h2 id="creating-nodes-for-building-docker-images">Creating Nodes For Building Docker Images</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">/credentials/store/system/domain/_/newCredentials"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Type your Docker Hub <em>Username</em> and <em>Password</em>.</li>
+  <li>Set both the <em>ID</em> and the <em>Description</em> to <em>docker</em></li>
+  <li>Click the <em>OK</em> button</li>
+</ul>
+
+<h2 id="vagrant--virtualbox-agent">Vagrant &amp; VirtualBox Agent</h2>
+<h5 id="only-if-docker-for-desktop-or-minikube">(only if Docker For Desktop or minikube)</h5>
+
+<hr />
+
+<ul>
+  <li>Install <a href="https://www.vagrantup.com/">Vagrant</a></li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd cd</span>/docker-build
+
+<span class="nb">cat </span>Vagrantfile
+
+vagrant up
+
+open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">/computer/new"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Type <em>docker-build</em> as the <em>Node name</em></li>
+  <li>Select <em>Permanent Agent</em></li>
+  <li>Click the <em>OK</em> button</li>
+</ul>
+
+<h2 id="vagrant--virtualbox-agent-1">Vagrant &amp; VirtualBox Agent</h2>
+<h5 id="only-if-docker-for-desktop-or-minikube-1">(only if Docker For Desktop or minikube)</h5>
+
+<hr />
+
+<ul>
+  <li>Type <em>2</em> as the <em># of executors</em></li>
+  <li>Set the <em>Remote root directory</em> to <em>/tmp</em></li>
+  <li>Set the labels to <em>docker ubuntu linux</em></li>
+  <li>Select <em>Launch slave agents via SSH</em> as the <em>Launch Method</em></li>
+  <li>Set the <em>Host</em> to <em>10.100.198.200</em></li>
+  <li>Click <em>Add</em> drop-down next to <em>Credentials</em>, select <em>Jenkins</em></li>
+  <li>Select <em>SSH Username with private key</em> as the <em>Kind</em></li>
+  <li>Type <em>vagrant</em> as the <em>Username</em></li>
+  <li>Select <em>Enter directly</em> as the <em>Private Key</em></li>
+</ul>
+
+<h2 id="vagrant--virtualbox-agent-2">Vagrant &amp; VirtualBox Agent</h2>
+<h5 id="only-if-docker-for-desktop-or-minikube-2">(only if Docker For Desktop or minikube)</h5>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> .vagrant/machines/docker-build/virtualbox/private_key
+</code></pre></div></div>
+
+<ul>
+  <li>Copy the output and paste it into the <em>Key</em> field</li>
+  <li>Type <em>docker-build</em> as the <em>ID</em> and the <em>Description</em></li>
+  <li>Click the <em>Add</em> button</li>
+  <li>Select <em>vagrant (docker-build)</em> in the <em>Credentials</em> list</li>
+  <li>Select <em>Not verifying Verification Strategy</em> as the <em>Host Key Verification Strategy</em></li>
+  <li>Click the <em>Save</em> button</li>
+</ul>
+
+<h2 id="vagrant--virtualbox-agent-3">Vagrant &amp; VirtualBox Agent</h2>
+<h5 id="only-if-docker-for-desktop-or-minikube-3">(only if Docker For Desktop or minikube)</h5>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ../../
+
+<span class="nb">export </span><span class="nv">DOCKER_VM</span><span class="o">=</span><span class="nb">true</span>
+</code></pre></div></div>
+
+<h2 id="creating-ami">Creating AMI</h2>
+<h5 id="only-if-eks-or-kops">(only if EKS or kops)</h5>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws ec2 create-security-group <span class="se">\</span>
+    <span class="nt">--description</span> <span class="s2">"For building Docker images"</span> <span class="se">\</span>
+    <span class="nt">--group-name</span> devops24 | tee cluster/sg.json
+
+<span class="nv">SG_ID</span><span class="o">=</span><span class="k">$(</span><span class="nb">cat </span>cluster/sg.json | jq <span class="nt">-r</span> <span class="s2">".GroupId"</span><span class="k">)</span>
+
+<span class="nb">echo</span> <span class="nv">$SG_ID</span>
+
+<span class="nb">echo</span> <span class="s2">"export SG_ID=</span><span class="nv">$SG_ID</span><span class="s2">"</span> | tee <span class="nt">-a</span> cluster/docker-ec2
+
+aws ec2 authorize-security-group-ingress <span class="nt">--group-name</span> devops24 <span class="se">\</span>
+    <span class="nt">--protocol</span> tcp <span class="nt">--port</span> 22 <span class="nt">--cidr</span> 0.0.0.0/0
+</code></pre></div></div>
+
+<h2 id="creating-ami-1">Creating AMI</h2>
+<h5 id="only-if-eks-or-kops-1">(only if EKS or kops)</h5>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"https://www.packer.io/intro/getting-started/install.html"</span>
+
+<span class="nb">cat </span>jenkins/docker-ami.json
+
+packer build <span class="nt">-machine-readable</span> jenkins/docker-ami.json <span class="se">\</span>
+    | tee cluster/docker-ami.log
+
+<span class="nv">AMI_ID</span><span class="o">=</span><span class="k">$(</span><span class="nb">grep</span> <span class="s1">'artifact,0,id'</span> cluster/docker-ami.log | cut <span class="nt">-d</span>: <span class="nt">-f2</span><span class="k">)</span>
+
+<span class="nb">echo</span> <span class="nv">$AMI_ID</span>
+
+<span class="nb">echo</span> <span class="s2">"export AMI_ID=</span><span class="nv">$AMI_ID</span><span class="s2">"</span> | tee <span class="nt">-a</span> cluster/docker-ec2
+
+open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">/configure"</span>
+</code></pre></div></div>
+
+<h2 id="creating-ami-2">Creating AMI</h2>
+<h5 id="only-if-eks-or-kops-2">(only if EKS or kops)</h5>
+
+<hr />
+
+<ul>
+  <li>Scroll to the <em>Cloud</em> section and click the <em>Add a new cloud</em> drop-down list</li>
+  <li>Choose <em>Amazon EC2</em></li>
+  <li>Type <em>docker-agents</em> as the <em>Name</em></li>
+  <li>Expand the <em>Add</em> drop-down list next to <em>Amazon EC2 Credentials</em> and choose <em>Jenkins</em></li>
+  <li>Choose <em>AWS Credentials</em> as the <em>Kind</em></li>
+  <li>Type <em>aws</em> as both the <em>ID</em> and the <em>Description</em></li>
+</ul>
+
+<h2 id="creating-ami-3">Creating AMI</h2>
+<h5 id="only-if-eks-or-kops-3">(only if EKS or kops)</h5>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="nv">$AWS_ACCESS_KEY_ID</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Copy&amp;paste the output into the <em>Access Key ID</em> field</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="nv">$AWS_SECRET_ACCESS_KEY</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Copy&amp;paste the output into the <em>Secret Access Key</em> field</li>
+  <li>Press the <em>Add</em> button and choose the newly created credentials</li>
+  <li>Select <em>us-east-2</em> as the <em>Region</em></li>
+</ul>
+
+<h2 id="creating-ami-4">Creating AMI</h2>
+<h5 id="only-if-eks-or-kops-4">(only if EKS or kops)</h5>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws ec2 create-key-pair <span class="nt">--key-name</span> devops24 <span class="se">\</span>
+    | jq <span class="nt">-r</span> <span class="s1">'.KeyMaterial'</span> <span class="o">&gt;</span>cluster/devops24.pem
+
+chmod 400 cluster/devops24.pem
+
+<span class="nb">cat </span>cluster/devops24.pem
+</code></pre></div></div>
+
+<ul>
+  <li>Copy&amp;paste the output into the <em>EC2 Key Pair’s Private Key</em> field</li>
+  <li>Press the <em>Test Connection</em> button</li>
+  <li>Click the <em>Add</em> button next to <em>AMIs</em></li>
+  <li>Type <em>docker</em> as the <em>Description</em></li>
+</ul>
+
+<h2 id="creating-ami-5">Creating AMI</h2>
+<h5 id="only-if-eks-or-kops-5">(only if EKS or kops)</h5>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="nv">$AMI_ID</span>
+</code></pre></div></div>
+<ul>
+  <li>Copy&amp;paste the output it into the <em>AMI ID</em> field</li>
+  <li>Select <em>T2Small</em> as the <em>Instance Type</em></li>
+  <li>Type <em>devops24</em> as the <em>Security group names</em></li>
+  <li>Type <em>ubuntu</em> as the <em>Remote user</em></li>
+  <li>The <em>Remote ssh port</em> should be set to <em>22</em></li>
+  <li>Write <em>docker ubuntu linux</em> as the labels</li>
+  <li>Change the <em>Idle termination time</em> to <em>10</em></li>
+  <li>Click the <em>Save</em> button</li>
+</ul>
+
+<h2 id="creating-gce-images">Creating GCE Images</h2>
+<h5 id="only-if-gke">(only if GKE)</h5>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"https://www.packer.io/intro/getting-started/install.html"</span>
+
+gcloud auth login
+
+gcloud iam service-accounts create jenkins
+
+<span class="nb">export </span><span class="nv">G_PROJECT</span><span class="o">=</span><span class="k">$(</span>gcloud info <span class="nt">--format</span><span class="o">=</span><span class="s1">'value(config.project)'</span><span class="k">)</span>
+
+<span class="nb">echo</span> <span class="nv">$G_PROJECT</span>
+
+<span class="nb">export </span><span class="nv">SA_EMAIL</span><span class="o">=</span><span class="k">$(</span>gcloud iam service-accounts list <span class="se">\</span>
+    <span class="nt">--filter</span><span class="o">=</span><span class="s2">"name:jenkins"</span> <span class="nt">--format</span><span class="o">=</span><span class="s1">'value(email)'</span><span class="k">)</span>
+
+<span class="nb">echo</span> <span class="nv">$SA_EMAIL</span>
+</code></pre></div></div>
+
+<h2 id="creating-gce-images-1">Creating GCE Images</h2>
+<h5 id="only-if-gke-1">(only if GKE)</h5>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gcloud projects add-iam-policy-binding <span class="se">\</span>
+    <span class="nt">--member</span> serviceAccount:<span class="nv">$SA_EMAIL</span> <span class="nt">--role</span> roles/compute.admin <span class="se">\</span>
+    <span class="nv">$G_PROJECT</span>
+
+gcloud projects add-iam-policy-binding <span class="se">\</span>
+    <span class="nt">--member</span> serviceAccount:<span class="nv">$SA_EMAIL</span> <span class="se">\</span>
+    <span class="nt">--role</span> roles/iam.serviceAccountUser <span class="nv">$G_PROJECT</span>
+
+gcloud iam service-accounts keys create <span class="nt">--iam-account</span> <span class="nv">$SA_EMAIL</span> <span class="se">\</span>
+    cluster/gce-jenkins.json
+
+<span class="nb">cat </span>jenkins/docker-gce.json
+
+packer build <span class="nt">-machine-readable</span> <span class="nt">--force</span> <span class="se">\</span>
+    <span class="nt">-var</span> <span class="s2">"project_id=</span><span class="nv">$G_PROJECT</span><span class="s2">"</span> jenkins/docker-gce.json <span class="se">\</span>
+    | tee cluster/docker-gce.log
+</code></pre></div></div>
+
+<h2 id="creating-gce-images-2">Creating GCE Images</h2>
+<h5 id="only-if-gke-2">(only if GKE)</h5>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">/configure"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Select <em>Add a new cloud</em> &gt; <em>Google Compute Engine</em></li>
+  <li>Type <em>docker</em> as the <em>Name</em></li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="nv">$G_PROJECT</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Copy&amp;paste the output into the <em>Project ID</em> field</li>
+  <li>Select <em>Add</em> &gt; <em>Jenkins</em> (<em>Service Account Credentials</em>)</li>
+  <li>Select <em>Google Service Account from private key</em> as the <em>Kind</em></li>
+  <li>Paste the name of the project to the <em>Project Name</em> field</li>
+  <li>Click <em>Choose File</em> button in the <em>JSON Key</em> field</li>
+  <li>Select the <em>gce-jenkins.json</em> file we created earlier</li>
+</ul>
+
+<h2 id="creating-gce-images-3">Creating GCE Images</h2>
+<h5 id="only-if-gke-3">(only if GKE)</h5>
+
+<hr />
+
+<ul>
+  <li>Click the <em>Add</em> button and select the new credential</li>
+  <li>Click the <em>Add</em> button next to <em>Instance Configurations</em></li>
+  <li>Type <em>docker</em> as the <em>Name Prefix</em></li>
+  <li>Type <em>Docker build instances</em> as the <em>Description</em></li>
+  <li>Type <em>10</em> as the <em>Node Retention Time</em></li>
+  <li>Type <em>docker ubuntu linux</em> as the <em>Labels</em>.</li>
+  <li>Select <em>us-east-1</em> as the <em>Region</em></li>
+  <li>Select <em>us-east1-b</em> as the <em>Zone</em></li>
+  <li>Select <em>n1-standard-2</em> as the <em>Machine Type</em></li>
+  <li>Select <em>default</em> as both the <em>Network</em> and the <em>Subnetwork</em></li>
+</ul>
+
+<h2 id="creating-gce-images-4">Creating GCE Images</h2>
+<h5 id="only-if-gke-4">(only if GKE)</h5>
+
+<hr />
+
+<ul>
+  <li>Check both <em>External IP</em> and <em>Internal IP</em> check boxes</li>
+  <li>Set <em>Image project</em> to the value of the env. var <code class="highlighter-rouge">G_PROJECT</code></li>
+  <li>Select <em>docker</em> as the <em>Image name</em></li>
+  <li>Click the <em>Save</em> button.</li>
+</ul>
+
+<h2 id="testing-docker-builds">Testing Docker Builds</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">/job/my-k8s-job/configure"</span>
+</code></pre></div></div>
+
+<h2 id="testing-docker-builds-1">Testing Docker Builds</h2>
+
+<hr />
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">podTemplate</span><span class="o">(</span>
+    <span class="nl">label:</span> <span class="s2">"kubernetes"</span><span class="o">,</span>
+    <span class="nl">namespace:</span> <span class="s2">"go-demo-3-build"</span><span class="o">,</span>
+    <span class="nl">serviceAccount:</span> <span class="s2">"build"</span><span class="o">,</span>
+    <span class="nl">yaml:</span> <span class="s2">"""
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: kubectl
+    image: vfarcic/kubectl
+    command: ["sleep"]
+    args: ["100000"]
+  - name: oc
+    image: vfarcic/openshift-client
+    command: ["sleep"]
+    args: ["100000"]
+  - name: golang
+    image: golang:1.9
+    command: ["sleep"]
+    args: ["100000"]
+  - name: helm
+    image: vfarcic/helm:2.8.2
+    command: ["sleep"]
+    args: ["100000"]
+"""</span>
+<span class="o">)</span> <span class="o">{</span>
+    <span class="n">node</span><span class="o">(</span><span class="s2">"docker"</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">stage</span><span class="o">(</span><span class="s2">"docker"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">sh</span> <span class="s2">"sudo docker version"</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="n">node</span><span class="o">(</span><span class="s2">"kubernetes"</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">container</span><span class="o">(</span><span class="s2">"kubectl"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">stage</span><span class="o">(</span><span class="s2">"kubectl"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"kubectl version"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">container</span><span class="o">(</span><span class="s2">"oc"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">stage</span><span class="o">(</span><span class="s2">"oc"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"oc version"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">container</span><span class="o">(</span><span class="s2">"golang"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">stage</span><span class="o">(</span><span class="s2">"golang"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"go version"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">container</span><span class="o">(</span><span class="s2">"helm"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">stage</span><span class="o">(</span><span class="s2">"helm"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"helm version --tiller-namespace go-demo-3-build"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<!-- .slide: data-background="img/jenkins-setup.png" data-background-size="contain" -->
+
+<h2 id="automating-jenkins-setup">Automating Jenkins Setup</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir <span class="nt">-p</span> cluster/jenkins/secrets
+
+kubectl <span class="nt">-n</span> jenkins describe deployment jenkins
+
+kubectl <span class="nt">-n</span> jenkins get pods <span class="nt">-l</span> <span class="nv">component</span><span class="o">=</span>jenkins-jenkins-master
+
+<span class="nv">JENKINS_POD</span><span class="o">=</span><span class="k">$(</span>kubectl <span class="nt">-n</span> jenkins get pods <span class="se">\</span>
+    <span class="nt">-l</span> <span class="nv">component</span><span class="o">=</span>jenkins-jenkins-master <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.items[0].metadata.name}'</span><span class="k">)</span>
+
+<span class="nb">echo</span> <span class="nv">$JENKINS_POD</span>
+</code></pre></div></div>
+
+<h2 id="automating-jenkins-setup-1">Automating Jenkins Setup</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> jenkins cp <span class="se">\</span>
+    <span class="nv">$JENKINS_POD</span>:var/jenkins_home/credentials.xml cluster/jenkins
+
+kubectl <span class="nt">-n</span> jenkins cp <span class="se">\</span>
+    <span class="nv">$JENKINS_POD</span>:var/jenkins_home/secrets/hudson.util.Secret <span class="se">\</span>
+    cluster/jenkins/secrets
+
+kubectl <span class="nt">-n</span> jenkins cp <span class="se">\</span>
+    <span class="nv">$JENKINS_POD</span>:var/jenkins_home/secrets/master.key <span class="se">\</span>
+    cluster/jenkins/secrets
+</code></pre></div></div>
+
+<h2 id="automating-jenkins-setup-2">Automating Jenkins Setup</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># If GKE</span>
+kubectl <span class="nt">-n</span> jenkins cp <span class="nv">$JENKINS_POD</span>:var/jenkins_home/gauth/ <span class="se">\</span>
+    cluster/jenkins/secrets
+
+<span class="c"># If GKE</span>
+<span class="nv">G_AUTH_FILE</span><span class="o">=</span><span class="k">$(</span><span class="nb">ls </span>cluster/jenkins/secrets/key<span class="k">*</span>json <span class="se">\</span>
+    | xargs <span class="nt">-n</span> 1 basename<span class="k">)</span>
+
+<span class="c"># If GKE</span>
+<span class="nb">echo</span> <span class="nv">$G_AUTH_FILE</span>
+
+helm delete jenkins <span class="nt">--purge</span>
+</code></pre></div></div>
+
+<h2 id="automating-jenkins-setup-3">Automating Jenkins Setup</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">ls</span> <span class="nt">-1</span> helm/jenkins
+
+<span class="nb">cat </span>helm/jenkins/requirements.yaml
+
+helm inspect readme stable/jenkins
+
+<span class="nb">cat </span>helm/jenkins/values.yaml
+
+<span class="nb">cat </span>helm/jenkins/templates/config.tpl
+
+helm dependency update helm/jenkins
+
+<span class="nb">ls</span> <span class="nt">-1</span> helm/jenkins/charts
+</code></pre></div></div>
+
+<h2 id="automating-jenkins-setup-4">Automating Jenkins Setup</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> jenkins create secret generic jenkins-credentials <span class="se">\</span>
+    <span class="nt">--from-file</span> cluster/jenkins/credentials.xml
+
+kubectl <span class="nt">-n</span> jenkins create secret generic jenkins-secrets <span class="se">\</span>
+    <span class="nt">--from-file</span> cluster/jenkins/secrets
+
+helm install helm/jenkins <span class="nt">--name</span> jenkins <span class="nt">--namespace</span> jenkins <span class="se">\</span>
+    <span class="nt">--set</span> jenkins.Master.HostName<span class="o">=</span><span class="nv">$JENKINS_ADDR</span> <span class="se">\</span>
+    <span class="nt">--set</span> jenkins.Master.DockerVM<span class="o">=</span><span class="nv">$DOCKER_VM</span> <span class="se">\</span>
+    <span class="nt">--set</span> jenkins.Master.DockerAMI<span class="o">=</span><span class="nv">$AMI_ID</span> <span class="se">\</span>
+    <span class="nt">--set</span> jenkins.Master.GProject<span class="o">=</span><span class="nv">$G_PROJECT</span> <span class="se">\</span>
+    <span class="nt">--set</span> jenkins.Master.GAuthFile<span class="o">=</span><span class="nv">$G_AUTH_FILE</span>
+
+kubectl <span class="nt">-n</span> jenkins rollout status deployment jenkins
+</code></pre></div></div>
+
+<h2 id="automating-jenkins-setup-5">Automating Jenkins Setup</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">"</span>
+
+<span class="nv">JENKINS_PASS</span><span class="o">=</span><span class="k">$(</span>kubectl <span class="nt">-n</span> jenkins get secret jenkins <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.data.jenkins-admin-password}"</span> <span class="se">\</span>
+    | base64 <span class="nt">--decode</span><span class="p">;</span> <span class="nb">echo</span><span class="k">)</span>
+
+<span class="nb">echo</span> <span class="nv">$JENKINS_PASS</span>
+</code></pre></div></div>
+
+<h2 id="automating-jenkins-setup-6">Automating Jenkins Setup</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">/configure"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Confirm that Kubernetes Cloud is configured properly</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Only if EKS or kops</span>
+<span class="nb">cat </span>cluster/devops24.pem
+</code></pre></div></div>
+
+<ul>
+  <li>If EKS, Copy&amp;paste into the <em>EC2 Key Pair’s Private Key</em> field</li>
+  <li>If EKS, Click the <em>Apply</em> button</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">/computer"</span>
+
+open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">/newJob"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Create a job called <em>my-k8s-job</em></li>
+</ul>
+
+<h2 id="automating-jenkins-setup-7">Automating Jenkins Setup</h2>
+
+<hr />
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">podTemplate</span><span class="o">(</span>
+    <span class="nl">label:</span> <span class="s2">"kubernetes"</span><span class="o">,</span>
+    <span class="nl">namespace:</span> <span class="s2">"go-demo-3-build"</span><span class="o">,</span>
+    <span class="nl">serviceAccount:</span> <span class="s2">"build"</span><span class="o">,</span>
+    <span class="nl">yaml:</span> <span class="s2">"""
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: kubectl
+    image: vfarcic/kubectl
+    command: ["sleep"]
+    args: ["100000"]
+  - name: oc
+    image: vfarcic/openshift-client
+    command: ["sleep"]
+    args: ["100000"]
+  - name: golang
+    image: golang:1.9
+    command: ["sleep"]
+    args: ["100000"]
+  - name: helm
+    image: vfarcic/helm:2.8.2
+    command: ["sleep"]
+    args: ["100000"]
+"""</span>
+<span class="o">)</span> <span class="o">{</span>
+    <span class="n">node</span><span class="o">(</span><span class="s2">"docker"</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">stage</span><span class="o">(</span><span class="s2">"docker"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">sh</span> <span class="s2">"sudo docker version"</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="n">node</span><span class="o">(</span><span class="s2">"kubernetes"</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">container</span><span class="o">(</span><span class="s2">"kubectl"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">stage</span><span class="o">(</span><span class="s2">"kubectl"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"kubectl version"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">container</span><span class="o">(</span><span class="s2">"oc"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">stage</span><span class="o">(</span><span class="s2">"oc"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"oc version"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">container</span><span class="o">(</span><span class="s2">"golang"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">stage</span><span class="o">(</span><span class="s2">"golang"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"go version"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">container</span><span class="o">(</span><span class="s2">"helm"</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">stage</span><span class="o">(</span><span class="s2">"helm"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sh</span> <span class="s2">"helm version --tiller-namespace go-demo-3-build"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/devops24/jenkins-setup-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

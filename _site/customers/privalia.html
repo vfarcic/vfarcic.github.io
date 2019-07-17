@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Context | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Context" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/customers/privalia.html" />
+<meta property="og:url" content="http://localhost:4000/customers/privalia.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/customers/privalia.html","@type":"WebPage","headline":"Context","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="context">Context</h2>
+
+<hr />
+
+<ul>
+  <li>Legacy + 3 years of Technical debt</li>
+  <li>Migration to microservices</li>
+  <li>Standard PHP -&gt; Java</li>
+  <li>Agile</li>
+  <li>On-premise -&gt; Cloud</li>
+</ul>
+
+<p>## New team (9 months ago)</p>
+
+<hr />
+
+<ul>
+  <li>1 Frontend developer</li>
+  <li>2 CI oriented devs</li>
+  <li>2 legacy oriented devs</li>
+  <li>4 CD oriented devs</li>
+  <li>1 External consultant (POC)</li>
+  <li>Small team, planned increase 3 new members</li>
+  <li>Devs requirements to Devops teams</li>
+</ul>
+
+<h2 id="pipeline-cis">Pipeline CIs</h2>
+
+<hr />
+
+<ul>
+  <li>Done in Jenkins</li>
+  <li>External repo Groovy (shared_library) + Jenkinsfiles</li>
+  <li>Properties in pipeline.yml (file in app’s repo)</li>
+  <li>Docker containers (Nothing is installed on jenkins runners)</li>
+  <li>2 Harbor + 2 registries on-premise</li>
+  <li>Repository of Dockerfile utils (docker_base_creator)</li>
+  <li>Usage of public images for testing</li>
+  <li>Auto-versioning: Release + Snapshot + Hotfix</li>
+  <li>Different languages: Node, Java, PHP + (Python + Go).</li>
+  <li>3 types of artifact: Docker / RPM / Libraries</li>
+  <li>Artifactory</li>
+  <li>Sonar</li>
+  <li>Log output (stdout)</li>
+  <li>Trigger per job (listener Spinnaker)</li>
+</ul>
+
+<h2 id="pipeline-cd">Pipeline CD</h2>
+
+<hr />
+
+<ul>
+  <li>Pipeline in ROER -&gt; In code (template)</li>
+  <li>Spinnaker as UI</li>
+  <li>AD not filtered</li>
+  <li>Triggered from Jenkins jobs or Harbor upload</li>
+  <li>Docker AWS flow</li>
+  <li>Different environments: K8s on-premise, AWS EC2, Kubernetes on cloud (kubespray), EKS?</li>
+  <li>Infrastructure with Terraform</li>
+  <li>infra.yml (defines the infrastructure) &amp; Tf.vars (values) inside each repo</li>
+  <li>Not rollback strategy implemented</li>
+</ul>
+
+<h2 id="microservices">Microservices</h2>
+
+<hr />
+
+<p>Docker + docker compose in EC2 ???
+RPM in CentOS EC2
+Bootstrap script on EC2 startup, different in Docker and RPM
+Logs with tdagent “fluentd” in Elasticsearch + Kibana
+EC2 monitoring with Telegraf and Influx
+Alerting with Kapacitor &amp; Cloudwatch ???</p>
+
+<h2 id="master-data">Master Data</h2>
+
+<hr />
+
+<ul>
+  <li>Developed in Python</li>
+  <li>Used for Smart Monitoring (Pagerduty)</li>
+  <li>Main application for Application Catalog</li>
+</ul>
+
+<h2 id="popeye">Popeye</h2>
+
+<hr />
+
+<ul>
+  <li>Created in Angular + PHP API</li>
+  <li>User interface to create and configure new apps ???</li>
+  <li>Creates infrastructure and CI/CD pipelines</li>
+  <li>Jenkins jobs do the work</li>
+</ul>
+
+<h1 id="doubts">Doubts</h1>
+
+<hr />
+
+<h2 id="pipeline-ci">Pipeline CI</h2>
+
+<hr />
+
+<ul>
+  <li>Maintenance: Jenkins, Pipelines Hierarchy -&gt; Move logic from shared library to jenkinsfile.</li>
+  <li>Easily escalation? -&gt; Use helm Jenkins with defined plugins.</li>
+  <li>Testing best practices -&gt; Sonar stops execution. Do not wait for service. Applications shut down and restart until the dependencies are OK.</li>
+  <li>Security tests during CI pipeline / docker images. -&gt; If it’s useful, yes. Claire sin la “e”</li>
+  <li>Versionate -&gt;</li>
+</ul>
+
+<h2 id="pipeline-cd-1">Pipeline CD</h2>
+
+<hr />
+
+<p>K8s -&gt; Spinnaker. Only to show the last step (deploy) in AWS. Not useful in K8s. All the logic centralized in Jenkins. Return important information to the developer. Helm hierarchy for atomic changes, pointing to the version of the base helm in the artifactory.
+Terraform -&gt; Test only if it’s gonna survive
+Rollback strategies
+AMI templates (Bootstrapping)
+Deploying strategies (Canary AWS &amp; K8s) -&gt; Istio, Service Mesh?
+Lifecycle AMI -&gt; repo restructured
+Attach code to Infrastructure -&gt;</p>
+
+<h2 id="microservices-1">Microservices</h2>
+
+<hr />
+
+<ul>
+  <li>Logs -&gt;</li>
+  <li>Monitoring:</li>
+  <li>DB Migrations:</li>
+  <li>Config manager: No acoplar las aplicaciones a nivel de librerías con Consul/Vault</li>
+  <li>Secrets</li>
+  <li>K8s on premise : Mala idea master y workers a la vez cluster onpremise</li>
+  <li>Desaprovisionar 1 master físico sustituir por un master virtual.</li>
+  <li>Other cloud services (Alibaba cloud, etc.)</li>
+  <li>Kubernetes : GKE, AKS, EKS</li>
+</ul>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<hr />
+
+<ul>
+  <li>Jenkins Stability improvement -&gt; Jenkins en k8s</li>
+  <li>Development team + Support team</li>
+</ul>
+
+<h2 id="master-data-1">Master data</h2>
+
+<hr />
+
+<ul>
+  <li>Service Catalog</li>
+  <li>Health Checks</li>
+</ul>
+
+<h2 id="popeye-1">Popeye</h2>
+
+<hr />
+
+<p>Tools to the developers</p>
+
+<h2 id="docker">Docker</h2>
+
+<hr />
+
+<ul>
+  <li>Lifecycle images -&gt; 1 aplicación, 1 repositorio. Versionádo.</li>
+  <li>Security external images</li>
+  <li>Docker + Java</li>
+</ul>
+
+<h2 id="methodologies">Methodologies</h2>
+
+<hr />
+
+<ul>
+  <li>Grant permissions to developers? (limits)</li>
+  <li>Share information with teams.</li>
+  <li>Shared responsibilities</li>
+  <li>Standardisation</li>
+</ul>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/customers/privalia.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

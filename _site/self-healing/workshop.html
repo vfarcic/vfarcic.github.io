@@ -1,0 +1,1203 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Self-Healing Systems</title>
+
+		<meta name="author" content="Viktor Farcic">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="../css/reveal.css">
+        <link rel="stylesheet" href="../css/theme/black.css" id="theme">
+        <link rel="stylesheet" href="../css/theme/vfarcic.css">
+
+		<!-- Code syntax highlighting -->
+		<!--<link rel="stylesheet" href="lib/css/zenburn.css">-->
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<header style="position: absolute;top: 50px; left: 100px; z-index:500; font-size:100px;background-color: rgba(0,0,0,0.5)"></header>
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section id="cover" data-background="../img/background/health.png">
+					<h1>Self-Healing Systems Workshop</h1>
+                    <hr/>
+					<h2>
+						<a href="http://technologyconversations.com/about/">Viktor Farcic</a>
+                    </h2>
+                    <hr/>
+                    <h4>
+                        <a href="https://twitter.com/vfarcic">@vfarcic</a>
+                    </h4>
+                    <h4>
+						<a href="http://technologyconversations.com">TechnologyConversations.com</a>
+                    </h4>
+                    <h4>
+                        <a href="https://www.cloudbees.com">CloudBees.com</a>
+					</h4>
+				</section>
+                <section data-background="../img/background/about-me.jpg">
+                    <section id="about-me">
+                        <h2>Viktor Farcic</h2>
+                        <img src="../img/viktor.jpg" style="width: 50%; height: 50%;" />
+                    </section>
+                    <section id="about-company">
+                        <a href="https://www.cloudbees.com">
+                            <img src="../img/company-big.png" style="background-color: white;" />
+                        </a>
+                    </section>
+                    <section id="about-docker">
+                        <a href="https://www.docker.com/community/docker-captains">
+                            <img src="../img/docker-captain.png" style="width: 50%; height: 50%;" />
+                        </a>
+                    </section>
+                    <section id="about-books">
+                        <a href="https://leanpub.com/the-devops-2-toolkit">
+                            <img src="../img/devops2.png" style="float: left; width: 40%; height: 40%;" />
+                        </a>
+                        <a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">
+                            <img src="../img/tdd.jpg" style="float: right; width: 40%; height: 40%;" />
+                        </a>
+                    </section>
+                </section>
+                <section data-background="../img/background/continuous-deployment.png">
+                    <section id="cd">
+                        <h1>Continuous Deployment</h1>
+                        <ul>
+                            <li class="fragment">Provision</li>
+                            <li class="fragment">Test</li>
+                            <li class="fragment">Build</li>
+                            <li class="fragment">Test</li>
+                            <li class="fragment">Deploy</li>
+                            <li class="fragment">Test</li>
+                            <li class="fragment">Enable</li>
+                            <li class="fragment">Test</li>
+                        </ul>
+                    </section>
+                    <section id="cd-second-half">
+                        <h4>Continuous Deployment</h4>
+                        <h1>The Second Half</h1>
+                        <ul>
+                            <li class="fragment">Monitor</li>
+                            <li class="fragment">React to problems</li>
+                            <li class="fragment">Prevent problems</li>
+                            <li class="fragment">Automated?</li>
+                        </ul>
+                    </section>
+                </section>
+				<section>
+					<section id="perfection" data-background="img/background/goals.jpg">
+						<h2>What Are We Trying to Accomplish?</h2>
+						<h1 class="fragment">Perfection?</h1>
+						<ul>
+							<li class="fragment">Applications that never fail?</li>
+							<li class="fragment">Services that can handle any load?</li>
+							<li class="fragment">Commits without bugs?</li>
+							<li class="fragment">Hardware that never breaks?</li>
+						</ul>
+					</section>
+					<section id="perfection-not" data-background="img/background/goals.jpg">
+						<h4>What Are We Trying to Accomplish?</h4>
+						<h1 class="fragment">There is no such thing as perfection</h1>
+						<ul>
+							<li class="fragment">Applications fail!</li>
+							<li class="fragment">Services that can NOT handle any load!</li>
+							<li class="fragment">Commits contain undetected bugs!</li>
+							<li class="fragment">Hardware breaks!</li>
+						</ul>
+                    </section>
+					<section id="perfection-darwin" data-background="img/background/darwin.jpg">
+                        <h4>What Are We Trying to Accomplish?</h4>
+						<h2>Self-Replicating System</h2>
+						<h1 class="fragment">Life</h1>
+						<ul>
+							<li class="fragment">System over individuals</li>
+							<li class="fragment">Small and incremental evolutionary improvements</li>
+                            <li class="fragment">Reproduction</li>
+							<li class="fragment">Self-healing</li>
+						</ul>
+					</section>
+                    <section id="perfection-human" data-background="img/background/human.jpg">
+                        <h4>What Are We Trying to Accomplish?</h4>
+                        <h2>Resilient System</h2>
+                        <h1 class="fragment">Cells</h1>
+                        <ul>
+                            <li class="fragment">Restoring to the state of equilibrium</li>
+                            <li class="fragment">Monitoring and adjusting processes</li>
+                            <li class="fragment">Reproducing</li>
+                            <li class="fragment">Healing</li>
+                        </ul>
+                    </section>
+                    <section id="body-dc" data-background="img/background/human.jpg">
+                        <h4>What Are We Trying to Accomplish?</h4>
+                        <h2>Body Equivalent?</h2>
+                        <ul>
+                            <li class="fragment">Datacenter</li>
+                            <li class="fragment">Orchestrator</li>
+                            <li class="fragment">(micro)Services</li>
+                            <li class="fragment">Containers</li>
+                            <li class="fragment">Scaling</li>
+                            <li class="fragment">Self-Healing?</li>
+                        </ul>
+                    </section>
+                </section>
+                <section data-background="img/background/health.png">
+                    <section id="self-healing">
+                        <h1>Self-Healing System</h1>
+                        <ul>
+                            <li class="fragment">Discover problems</li>
+                            <li class="fragment">Restore itself to the desired state</li>
+                            <li class="fragment">Make decisions</li>
+                            <li class="fragment">Adapt to changed conditions</li>
+                        </ul>
+                    </section>
+                    <section id="self-healing-levels">
+                        <h4>Self-Healing System</h4>
+                        <h2>Levels</h2>
+                        <ul>
+                            <li class="fragment">Application level</li>
+                            <li class="fragment">System level</li>
+                            <li class="fragment">Hardware level</li>
+                        </ul>
+                    </section>
+                    <section id="self-healing-types">
+                        <h4>Self-Healing System</h4>
+                        <h2>Types</h2>
+                        <ul>
+                            <li class="fragment">Reactive healing</li>
+                            <li class="fragment">Preventive healing</li>
+                        </ul>
+                    </section>
+                </section>
+                <section data-background="../img/background/tools.jpg">
+                    <section id="tools">
+                        <h2>Tools</h2>
+                        <ul>
+                            <li class="fragment">Cluster orchestrator</li>
+                            <li class="fragment">Realtime Registry</li>
+                            <li class="fragment">Historical Registry</li>
+                            <li class="fragment">Monitoring</li>
+                            <li class="fragment">General orchestrator</li>
+                        </ul>
+                    </section>
+                    <section id="tools-swarm">
+                        <h4>Tools</h4>
+                        <h2>Cluster Orchestrator</h2>
+                        <div>
+                            <img src="../img/products/swarm.png" class="fragment" style="width: 40%; height: 40%; background-color: white;"/>
+                        </div>
+                    </section>
+                    <section id="tools-realtime-registry">
+                        <h4>Tools</h4>
+                        <h2>Realtime Registry</h2>
+                        <div>
+                            <img src="../img/products/consul.jpg" class="fragment" style="width: 80%; height: 80%;"/>
+                        </div>
+                    </section>
+                    <section id="tools-historical-registry">
+                        <h4>Tools</h4>
+                        <h2>Historical Registry</h2>
+                        <div>
+                            <img src="../img/products/elastic.png" class="fragment" style="width: 100%; height: 100%; background-color: white;"/>
+                        </div>
+                    </section>
+                    <section id="tools-monitoring">
+                        <h4>Tools</h4>
+                        <h2>Monitoring</h2>
+                        <div>
+                            <img src="../img/products/consul.jpg" class="fragment" style="width: 50%; height: 50%; background-color: white;"/>
+                            <img src="../img/products/kibana.png" class="fragment" style="width: 50%; height: 50%; background-color: black;"/>
+                        </div>
+                    </section>
+                    <section id="tools-general-orchestrator">
+                        <h4>Tools</h4>
+                        <h2>General Orchestrator</h2>
+                        <div>
+                            <img src="../img/products/jenkins.png" class="fragment" style="background-color: white;"/>
+                        </div>
+                    </section>
+                </section>
+                <section data-background="../img/background/dev-env.png">
+                    <section id="provisioning">
+                        <h2>Provisioning</h2>
+                        <div><img class="fragment" src="../img/products/vagrant.png" style="background-color: white"/></div>
+                        <div><img class="fragment" src="../img/products/ansible.png" style="width: 25%; height: 25%; background-color: white"/></div>
+                    </section>
+                    <section id="provisioning-nodes-code">
+                        <h4>Provisioning</h4>
+                        <h2>Nodes</h2>
+						<pre><code data-trim contenteditable>git clone https://github.com/vfarcic/ms-lifecycle.git
+
+cd ms-lifecycle
+
+vagrant plugin install vagrant-cachier
+
+vagrant up cd swarm-master swarm-node-1 swarm-node-2</code></pre>
+                    </section>
+                    <section id="provisioning-nodes">
+                        <h4>Provisioning</h4>
+                        <h2>Nodes</h2>
+                        <img src="img/architecture/self-healing-tools-nodes-bare.png"/>
+                    </section>
+                    <section id="provisioning-nodes-swarm-code">
+                        <h4>Provisioning</h4>
+                        <h2>Docker Swarm</h2>
+						<pre><code data-trim contenteditable>vagrant ssh cd
+
+cat /vagrant/ansible/swarm.yml
+
+cat /vagrant/ansible/roles/docker/tasks/debian.yml
+
+ansible-playbook /vagrant/ansible/swarm.yml \
+    -i /vagrant/ansible/hosts/prod</code></pre>
+                    </section>
+                    <section id="provisioning-nodes-swarm">
+                        <h4>Provisioning</h4>
+                        <h2>Docker Swarm</h2>
+                        <img src="img/architecture/self-healing-tools-nodes-swarm.png"/>
+                    </section>
+                    <section id="provisioning-nodes-jenkins-code">
+                        <h4>Provisioning</h4>
+                        <h2>Jenkins</h2>
+						<pre><code data-trim contenteditable>cat /vagrant/ansible/jenkins-node-swarm.yml
+
+cat /vagrant/ansible/jenkins.yml
+
+ansible-playbook /vagrant/ansible/jenkins-node-swarm.yml \
+    -i /vagrant/ansible/hosts/prod
+
+ansible-playbook /vagrant/ansible/jenkins.yml \
+    --extra-vars "main_job_src=service-healing-config.xml service_redeploy_src=service-redeploy-df-config.xml" \
+    -c local</code></pre>
+                    </section>
+                    <section id="provisioning-nodes-jenkins">
+                        <h4>Provisioning</h4>
+                        <h2>Jenkins</h2>
+                        <img src="img/architecture/self-healing-tools-nodes-jenkins.png"/>
+                    </section>
+                </section>
+                <section>
+                    <section id="deployment">
+                        <h2>Prerequisite #1</h2>
+                        <span class="fragment">Ability to <span class="fragment grow highlight-current-green">deploy to any server</span> inside a cluster that meets hardware requirements</span>
+                    </section>
+                    <section id="architecture-01" data-transition="fade-in slide-out">
+                        <img src="img/architecture/01-self-healing.png"/>
+                    </section>
+                    <section id="architecture-02" data-transition="fade-in slide-out">
+                        <img src="img/architecture/02-self-healing.png"/>
+                    </section>
+                    <section id="architecture-03" data-transition="fade-in slide-out">
+                        <img src="img/architecture/03-self-healing.png"/>
+                    </section>
+                    <section id="tools-cluster-orchestrator">
+                        <h4>Deployment</h4>
+                        <h2>Cluster Orchestrator Tools</h2>
+                        <div>
+                            <img src="../img/products/mesos.jpg" class="fragment" style="width: 30%; height: 30%;"/>
+                            <img src="../img/products/kubernetes.png" class="fragment" style="width: 30%; height: 30%;"/>
+                            <img src="../img/products/swarm.png" class="fragment" style="width: 30%; height: 30%; background-color: white;"/>
+                        </div>
+                    </section>
+                    <section id="deployment-container-code">
+                        <h4>Deployment</h4>
+                        <h2>The Code</h2>
+						<pre><code data-trim contenteditable>git clone https://github.com/vfarcic/go-demo.git
+
+cd go-demo
+
+cat docker-compose-test.yml
+
+docker-compose -f docker-compose-test.yml run --rm unit
+
+ll
+
+cat Dockerfile
+
+docker build -t vfarcic/go-demo .
+
+# docker push vfarcic/go-demo</code></pre>
+                    </section>
+                    <section id="architecture-04" data-transition="fade-in slide-out">
+                        <img src="img/architecture/04-self-healing.png"/>
+                    </section>
+                    <section id="architecture-05" data-transition="fade-in slide-out">
+                        <img src="img/architecture/05-self-healing.png"/>
+                    </section>
+                    <section id="deployment-run-code">
+                        <h4>Deployment</h4>
+                        <h2>Run</h2>
+						<pre><code data-trim contenteditable>docker-compose up -d db app
+
+docker-compose ps
+
+GO_DEMO_PORT=&lt;PORT&gt;
+
+curl -i -XPUT localhost:$GO_DEMO_PORT/demo/hello
+
+docker-compose down
+
+docker-compose ps</code></pre>
+                    </section>
+                    <section id="deployment-run-cluster-code">
+                        <h4>Deployment</h4>
+                        <h2>Run in cluster</h2>
+						<pre><code data-trim contenteditable>export DOCKER_HOST=tcp://swarm-master:2375
+
+docker ps -a --format "table {{.Names}}\t{{.Status}}"
+
+docker info
+
+docker-compose up -d db app
+
+docker-compose ps
+
+curl swarm-master:8500/v1/catalog/service/go-demo \
+    | jq '.'</code></pre>
+                    </section>
+                    <section id="deployment-run">
+                        <h4>Deployment</h4>
+                        <h2>Run</h2>
+                        <img src="img/architecture/01-self-healing-tools.png"/>
+                    </section>
+                    <section id="tools-proxy">
+                        <h4>Deployment</h4>
+                        <h2>Proxy</h2>
+                        <div>
+                            <img src="../img/products/apache.png" class="fragment" style="width: 30%; height: 30%;"/>
+                            <br />
+                            <img src="../img/products/nginx.png" class="fragment" style="width: 50%; height: 50%; background-color: white;"/>
+                            <img src="../img/products/haproxy.png" class="fragment" style="width: 50%; height: 50%; background-color: white;"/>
+                        </div>
+                    </section>
+                    <section id="deployment-proxy-code">
+                        <h4>Deployment</h4>
+                        <h2>Proxy</h2>
+						<pre><code data-trim contenteditable>curl -i localhost/demo/hello
+
+sudo docker run -d \
+    --name docker-flow-proxy \
+    -e CONSUL_ADDRESS=10.100.192.200:8500 \
+    -p 80:80 -p 8081:8080 \
+    vfarcic/docker-flow-proxy
+
+curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
+    | jq '.'
+
+curl -i localhost/demo/hello</code></pre>
+                    </section>
+                    <section id="deployment-proxy-operations">
+                        <h4>Deployment</h4>
+                        <h2>Proxy: Operations</h2>
+                        <img src="img/architecture/docker-flow-proxy-swarm.png"/>
+                    </section>
+                    <section id="deployment-proxy-user">
+                        <h4>Deployment</h4>
+                        <h2>Proxy: User</h2>
+                        <img src="../img/docker-flow-proxy/user.png"/>
+                    </section>
+                    <section id="deployment-scale-code">
+                        <h4>Deployment</h4>
+                        <h2>Scale</h2>
+						<pre><code data-trim contenteditable>docker-compose ps
+
+docker-compose scale app=3
+
+docker-compose ps
+
+curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
+    | jq '.'
+
+curl -i localhost/demo/hello # Repeat a few times
+
+docker-compose logs app
+
+docker-compose down</code></pre>
+                    </section>
+                    <section id="deployment-limits-code">
+                        <h4>Deployment</h4>
+                        <h2>Scale With Limits</h2>
+						<pre><code data-trim contenteditable>cat docker-compose-limits.yml
+
+docker-compose -f docker-compose-limits.yml up -d db app-big
+
+docker info
+
+docker-compose -f docker-compose-limits.yml up -d db app-small
+
+docker-compose -f docker-compose-limits.yml scale app-small=10
+
+docker info
+
+docker-compose -f docker-compose-limits.yml scale app-big=2
+
+docker-compose -f docker-compose-limits.yml down</code></pre>
+                    </section>
+                    <section id="deployment-network-code-1">
+                        <h4>Deployment</h4>
+                        <h2>Networking</h2>
+						<pre><code data-trim contenteditable>docker-compose up -d db app
+
+docker-compose scale app=2
+
+docker-compose ps
+
+curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
+    | jq '.'
+
+curl -i -XPUT localhost/demo/person?name=Viktor
+
+curl -i -XPUT localhost/demo/person?name=Sara
+
+curl -i localhost/demo/person</code></pre>
+                    </section>
+                    <section id="deployment-network-code-2">
+                        <h4>Deployment</h4>
+                        <h2>Networking</h2>
+						<pre><code data-trim contenteditable>docker-compose exec app ping -c 1 db
+
+docker-compose exec db ping -c 1 godemo_app_1
+
+docker-compose exec db ping -c 1 godemo_app_2
+
+docker-compose down</code></pre>
+                    </section>
+                    <section id="deployment-network">
+                        <h4>Deployment</h4>
+                        <h2>Networking</h2>
+                        <img src="img/architecture/proxy-comm.png"/>
+                    </section>
+                    <!--TODO: Add Docker DNS example-->
+                </section>
+                <section>
+                    <section id="redeployment">
+                        <h2>Prerequisite #2</h2>
+                        <span class="fragment">Ability to deploy <span class="fragment grow highlight-current-green">without downtime</span> and to <span class="fragment grow highlight-current-green">automatically scale and de-scale</span> instances</span>
+                    </section>
+                    <section id="redeployment-deployment-code">
+                        <h4>Redeployment</h4>
+                        <h2>Deployment</h2>
+						<pre><code data-trim contenteditable>docker-compose up -d db app
+
+docker-compose ps
+
+curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
+    | jq '.'
+
+curl -i localhost/demo/hello</code></pre>
+                    </section>
+                    <section id="redeployment-deployment">
+                        <h4>Redeployment</h4>
+                        <h2>Deployment</h2>
+                        <img src="img/architecture/docker-flow-scaling-deploy.png"/>
+                    </section>
+                    <section id="redeployment-scaling-code">
+                        <h4>Redeployment</h4>
+                        <h2>Scaling</h2>
+						<pre><code data-trim contenteditable>docker-compose up -d db app
+
+docker-compose scale app=2
+
+docker-compose ps
+
+curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
+    | jq '.'
+
+curl -i localhost/demo/hello
+
+curl -XPUT -d "10.100.198.200" \
+    http://swarm-master:8500/v1/kv/proxy/ip
+
+curl -XPUT -d "2" http://swarm-master:8500/v1/kv/go-demo/scale</code></pre>
+                    </section>
+                    <section id="redeployment-scaling">
+                        <h4>Redeployment</h4>
+                        <h2>Scaling</h2>
+                        <img src="img/architecture/docker-flow-scaling-scale.png"/>
+                    </section>
+                    <section id="redeployment-relative-scaling-code">
+                        <h4>Redeployment</h4>
+                        <h2>Relative Scaling</h2>
+						<pre><code data-trim contenteditable>curl http://swarm-master:8500/v1/kv/go-demo/scale?raw
+
+CURRENT_SCALE=$(curl http://swarm-master:8500/v1/kv/go-demo/scale?raw)
+
+NEW_SCALE=$(($CURRENT_SCALE + 1))
+
+docker-compose scale app=$NEW_SCALE
+
+docker-compose ps
+
+curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
+    | jq '.'
+
+curl -XPUT -d $NEW_SCALE http://swarm-master:8500/v1/kv/go-demo/scale
+
+curl -i localhost/demo/hello</code></pre>
+                    </section>
+                    <section id="redeployment-relative-scaling">
+                        <h4>Redeployment</h4>
+                        <h2>Relative Scaling</h2>
+                        <img src="img/architecture/docker-flow-scaling-relative-scale.png"/>
+                    </section>
+                    <section id="redeployment-relative-descaling-code">
+                        <h4>Redeployment</h4>
+                        <h2>Relative De-scaling</h2>
+						<pre><code data-trim contenteditable>CURRENT_SCALE=$(curl http://swarm-master:8500/v1/kv/go-demo/scale?raw)
+
+NEW_SCALE=$(($CURRENT_SCALE - 1))
+
+docker-compose scale app=$NEW_SCALE
+
+docker-compose ps
+
+curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
+    | jq '.'
+
+curl -XPUT -d $NEW_SCALE http://swarm-master:8500/v1/kv/go-demo/scale
+
+curl -i localhost/demo/hello
+
+docker-compose down</code></pre>
+                    </section>
+                    <section id="redeployment-relative-descaling">
+                        <h4>Redeployment</h4>
+                        <h2>Relative De-scaling</h2>
+                        <img src="img/architecture/docker-flow-scaling-relative-descale.png"/>
+                    </section>
+                    <section id="redeployment-standard-code">
+                        <h4>Redeployment</h4>
+                        <h2>Standard Deployment</h2>
+						<pre><code data-trim contenteditable>cat docker-compose-bg.yml
+
+VERSION=:1.0 docker-compose -f docker-compose-bg.yml up -d db app
+
+curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
+    | jq '.'
+
+VERSION=:1.1 docker-compose -f docker-compose-bg.yml up -d db app
+
+curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo" \
+    | jq '.'
+
+docker-compose -f docker-compose-bg.yml down
+
+curl "localhost:8081/v1/docker-flow-proxy/remove?serviceName=go-demo" \
+    | jq '.'</code></pre>
+                    </section>
+                    <section id="redeployment-standard-1">
+                        <h4>Redeployment</h4>
+                        <h2>Standard Deployment</h2>
+                        <img src="img/architecture/docker-flow-deployment-standard-1.png"/>
+                    </section>
+                    <section id="redeployment-standard-2">
+                        <h4>Redeployment</h4>
+                        <h2>Standard Deployment</h2>
+                        <img src="img/architecture/docker-flow-deployment-standard-2.png"/>
+                    </section>
+                    <section id="redeployment-bg-code-1">
+                        <h4>Redeployment</h4>
+                        <h2>Blue-Green Deployment</h2>
+                        <pre><code data-trim contenteditable>cat docker-compose-bg.yml
+
+export NEXT_COLOR=blue
+
+VERSION=:1.0 docker-compose -f docker-compose-bg.yml \
+    up -d db app-${NEXT_COLOR}
+
+curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo-${NEXT_COLOR}&servicePath=/demo" \
+    | jq '.'
+
+curl -i localhost/demo/hello
+
+docker-compose -f docker-compose-bg.yml logs
+
+curl -XPUT -d $NEXT_COLOR \
+    http://swarm-master:8500/v1/kv/go-demo/color</code></pre>
+                    </section>
+                    <section id="redeployment-bg-1">
+                        <h4>Redeployment</h4>
+                        <h2>Blue-Green Deployment</h2>
+                        <img src="img/architecture/docker-flow-deployment-bg-1.png"/>
+                    </section>
+                    <section id="redeployment-bg-code-2">
+                        <h4>Redeployment</h4>
+                        <h2>Blue-Green Deployment</h2>
+						<pre><code data-trim contenteditable>COLOR=$(curl http://swarm-master:8500/v1/kv/go-demo/color?raw)
+
+NEXT_COLOR=$(if [[ "$COLOR" == "blue" ]]; then echo "green"
+else echo "blue"; fi)
+
+VERSION=:1.1 docker-compose -f docker-compose-bg.yml \
+    up -d db app-${NEXT_COLOR}
+
+docker-compose -f docker-compose-bg.yml ps
+
+curl -i localhost/demo/hello
+
+docker-compose -f docker-compose-bg.yml logs</code></pre>
+                    </section>
+                    <section id="redeployment-bg-2">
+                        <h4>Redeployment</h4>
+                        <h2>Blue-Green Deployment</h2>
+                        <img src="img/architecture/docker-flow-deployment-bg-2.png"/>
+                    </section>
+                    <section id="redeployment-bg-code-3">
+                        <h4>Redeployment</h4>
+                        <h2>Blue-Green Deployment</h2>
+						<pre><code data-trim contenteditable>curl "localhost:8081/v1/docker-flow-proxy/reconfigure?serviceName=go-demo-${NEXT_COLOR}&servicePath=/demo" \
+    | jq '.'
+
+curl "localhost:8081/v1/docker-flow-proxy/remove?serviceName=go-demo-${COLOR}" \
+    | jq '.'
+
+curl -XPUT -d $NEXT_COLOR http://swarm-master:8500/v1/kv/go-demo/color
+
+curl -i localhost/demo/hello # Repeat
+
+docker-compose -f docker-compose-bg.yml logs
+
+docker-compose -f docker-compose-bg.yml stop app-${COLOR}
+
+docker-compose -f docker-compose-bg.yml ps</code></pre>
+                    </section>
+                    <section id="redeployment-bg-3">
+                        <h4>Redeployment</h4>
+                        <h2>Blue-Green Deployment</h2>
+                        <img src="img/architecture/docker-flow-deployment-bg-3.png"/>
+                    </section>
+                    <section id="redeployment-bg-code-4">
+                        <h4>Redeployment</h4>
+                        <h2>Blue-Green Deployment</h2>
+						<pre><code data-trim contenteditable>docker-compose -f docker-compose-bg.yml down
+
+curl "localhost:8081/v1/docker-flow-proxy/remove?serviceName=go-demo-${NEXT_COLOR}" \
+    | jq '.'</code></pre>
+                    </section>
+                    <section id="redeployment-df-code-1">
+                        <h4>Redeployment</h4>
+                        <h2>Docker Flow</h2>
+						<pre><code data-trim contenteditable>export FLOW_PROXY_HOST=10.100.198.200
+
+export FLOW_PROXY_RECONF_PORT=8081
+
+export FLOW_CONSUL_ADDRESS=http://10.100.192.200:8500
+
+export FLOW_PROXY_DOCKER_HOST=tcp://10.100.198.200:2375
+
+docker-flow --flow=deploy --flow=proxy --flow=stop-old
+
+docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+
+curl -i localhost/demo/hello</code></pre>
+                    </section>
+                    <section id="redeployment-df-1">
+                        <h4>Redeployment</h4>
+                        <h2>Docker Flow</h2>
+                        <img src="../img/docker-flow/docker-flow-first-deployment-flow.png"/>
+                    </section>
+                    <section id="redeployment-df-code-2">
+                        <h4>Redeployment</h4>
+                        <h2>Docker Flow</h2>
+                            <pre><code data-trim contenteditable>docker-flow --flow=deploy --flow=proxy --flow=stop-old
+
+docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+
+curl -i localhost/demo/hello</code></pre>
+                    </section>
+                    <section id="redeployment-df-2">
+                        <h4>Redeployment</h4>
+                        <h2>Docker Flow</h2>
+                        <img src="../img/docker-flow/docker-flow-second-deployment-flow.png"/>
+                    </section>
+                    <section id="redeployment-df-code-3">
+                        <h4>Redeployment</h4>
+                        <h2>Docker Flow</h2>
+                            <pre><code data-trim contenteditable>docker-flow --scale="+2" --flow=scale --flow=proxy
+
+docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+
+curl -i localhost/demo/hello
+
+docker-flow --scale="-2" --flow=scale --flow=proxy
+
+docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"</code></pre>
+                    </section>
+                    <section id="redeployment-df-3">
+                        <h4>Redeployment</h4>
+                        <h2>Docker Flow</h2>
+                        <img src="../img/docker-flow/docker-flow-scaling-flow.png"/>
+                    </section>
+                    <section id="redeployment-jenkins-setup-code">
+                        <h4>Redeployment</h4>
+                        <h2>Automation With Jenkins</h2>
+                            <pre><code data-trim contenteditable>git clone http://10.100.198.200:8080/workflowLibs.git /tmp/workflowLibs
+
+cd /tmp/workflowLibs
+
+git checkout -b master
+
+mkdir vars
+
+cp ~/go-demo/jenkins/vars/dockerFlowWorkshop.groovy \
+    /tmp/workflowLibs/vars/dockerFlow.groovy
+
+git config --global user.name "vfarcic"
+
+git add --all && git commit -a -m "Docker Flow"
+
+git push --set-upstream origin master</code></pre>
+                    </section>
+                    <section id="redeployment-jenkins-code">
+                        <h4>Redeployment</h4>
+                        <h2>Automation With Jenkins</h2>
+                            <pre><code data-trim contenteditable>cd ~/go-demo
+
+cat jenkins/vars/dockerFlowWorkshop.groovy
+
+cat Jenkinsfile</code></pre>
+                    </section>
+                    <section id="redeployment-jenkins-ui">
+                        <h4>Redeployment</h4>
+                        <h2>Automation With Jenkins</h2>
+                        <div><a href="http://10.100.198.200:8080">http://10.100.198.200:8080</a> &gt; New Item</div>
+                        <div>Item Name: go-demo; Type: Multibranch Pipeline &gt; OK</div>
+                        <div>Add Source &gt; Git</div>
+                        <div>Project Repository: https://github.com/vfarcic/go-demo.git &gt; Save</div>
+                        <div><a href="http://10.100.198.200:8080/job/go-demo/branch/master/">http://10.100.198.200:8080/job/go-demo/branch/master/</a></div>
+                        <div><a href="http://10.100.198.200:8080/job/go-demo/branch/master/lastBuild/console">http://10.100.198.200:8080/job/go-demo/branch/master/lastBuild/console</a></div>
+                    </section>
+                </section>
+                <section>
+                    <section id="hardware-checks">
+                        <h2>Prerequisite #3</h2>
+                        <span class="fragment">Ability to <span class="fragment grow highlight-current-green">monitor hardware</span> and dynamically adjust <span class="fragment grow highlight-current-green">cluster capacity</span> (elasticity)</span>
+                    </section>
+                    <section id="architecture-06" data-transition="fade-in slide-out">
+                        <img src="img/architecture/06-self-healing.png"/>
+                    </section>
+                    <section id="architecture-07" data-transition="fade-in slide-out">
+                        <img src="img/architecture/07-self-healing.png"/>
+                    </section>
+                    <section id="hardware-checks-df-commands">
+                        <h4>Hardware Health Checks and Watches</h4>
+                        <h2>Hard Disk Script</h2>
+						<pre><code data-trim contenteditable>df -h
+
+set -- $(df -h | awk '$NF=="/"{print $2" "$3" "$5}')
+
+total=$1
+
+used=$2
+
+used_percent=${3::-1}
+
+printf "Disk Usage: %s/%s (%s%%)\n" $used $total $used_percent</code></pre>
+                    </section>
+                    <section id="hardware-checks-df-script-prep">
+                        <h4>Hardware Health Checks and Watches</h4>
+                        <h2>Hard Disk Script</h2>
+						<pre><code data-trim contenteditable>exit
+
+vagrant ssh swarm-master
+
+sudo mkdir -p /data/consul/scripts</code></pre>
+                    </section>
+                    <section id="hardware-checks-df-script">
+                        <h4>Hardware Health Checks and Watches</h4>
+                        <h2>Hard Disk Script</h2>
+						<pre><code data-trim contenteditable>echo '#!/usr/bin/env bash
+
+set -- $(df -h | awk '"'"'$NF=="/"{print $2" "$3" "$5}'"'"')
+total=$1
+used=$2
+used_percent=${3::-1}
+printf "Disk Usage: %s/%s (%s%%)\n" $used $total $used_percent
+if [ $used_percent -gt 95 ]; then
+  exit 2
+elif [ $used_percent -gt 80 ]; then
+  exit 1
+else
+  exit 0
+fi
+' | sudo tee /data/consul/scripts/disk.sh</code></pre>
+                    </section>
+                    <section id="hardware-checks-df-try">
+                        <h4>Hardware Health Checks and Watches</h4>
+                        <h2>Hard Disk Script</h2>
+						<pre><code data-trim contenteditable>sudo chmod +x /data/consul/scripts/disk.sh
+
+/data/consul/scripts/disk.sh
+
+echo $?</code></pre>
+                    </section>
+                    <section id="hardware-checks-df-check-json">
+                        <h4>Hardware Health Checks and Watches</h4>
+                        <h2>Hard Disk Check</h2>
+						<pre><code data-trim contenteditable>echo '{
+  "checks": [
+    {
+      "id": "disk",
+      "name": "Disk utilization",
+      "notes": "Critical 95% util, warning 80% util",
+      "script": "/data/consul/scripts/disk.sh",
+      "interval": "10s"
+    }
+  ]
+}' | sudo tee /data/consul/config/consul_check.json
+
+sudo killall -HUP consul</code></pre>
+                    </section>
+                    <section id="hardware-checks-df-check">
+                        <h4>Hardware Health Checks and Watches</h4>
+                        <h2>Hard Disk Check</h2>
+                        <img src="img/architecture/health-consul-hardware-hd.png" style="width: 35%; height: 35%;"/>
+                        <br />
+                        <a href="http://10.100.192.200:8500/ui/">http://10.100.192.200:8500/ui/</a> &gt; Nodes &gt; swarm-master
+                    </section>
+                    <section id="hardware-checks-df-watch-script">
+                        <h4>Hardware Health Checks and Watches</h4>
+                        <h2>Hard Disk Check</h2>
+						<pre><code data-trim contenteditable>echo '#!/usr/bin/env bash
+
+read -r JSON
+
+STATUS_ARRAY=($(echo "$JSON" | jq -r ".[].Status"))
+CHECK_ID_ARRAY=($(echo "$JSON" | jq -r ".[].CheckID"))
+LENGTH=${#STATUS_ARRAY[*]}
+
+for (( i=0; i<=$(( $LENGTH -1 )); i++ ))
+do
+  CHECK_ID=${CHECK_ID_ARRAY[$i]}
+  STATUS=${STATUS_ARRAY[$i]}
+  echo -e "Triggering Jenkins job http://10.100.198.200:8080/job/hardware-notification/build"
+  curl -X POST http://10.100.198.200:8080/job/hardware-notification/build \
+    --data-urlencode json="{\"parameter\": [{\"name\":\"checkId\", \"value\":\"$CHECK_ID\"}, {\"name\":\"status\", \"value\":\"$STATUS\"}]}"
+done' | sudo tee /data/consul/scripts/manage_watches.sh
+
+sudo chmod +x /data/consul/scripts/manage_watches.sh</code></pre>
+                    </section>
+                    <section id="hardware-checks-df-watch-json">
+                        <h4>Hardware Health Checks and Watches</h4>
+                        <h2>Hard Disk Check</h2>
+						<pre><code data-trim contenteditable>echo '{
+  "watches": [
+    {
+      "type": "checks",
+      "state": "warning",
+      "handler": "/data/consul/scripts/manage_watches.sh >>/data/consul/logs/watches.log"
+    }, {
+      "type": "checks",
+      "state": "critical",
+      "handler": "/data/consul/scripts/manage_watches.sh >>/data/consul/logs/watches.log"
+    }
+  ]
+}' | sudo tee /data/consul/config/watches.json</code></pre>
+                    </section>
+                    <section id="hardware-checks-df-run">
+                        <h4>Hardware Health Checks and Watches</h4>
+                        <h2>Hard Disk Check</h2>
+						<pre><code data-trim contenteditable>sudo sed -i "s/80/2/" /data/consul/scripts/disk.sh
+
+sudo killall -HUP consul
+
+cat /data/consul/logs/watches.log
+
+exit</code></pre>
+                        <a href="http://10.100.198.200:8080/job/hardware-notification/">http://10.100.198.200:8080/job/hardware-notification/</a>
+                    </section>
+                    <section id="hardware-checks-ansible">
+                        <h4>Hardware Health Checks and Watches</h4>
+                        <h2>Cluster Hardware Checks</h2>
+						<pre><code data-trim contenteditable>vagrant ssh cd
+
+export DOCKER_HOST=tcp://swarm-master:2375
+
+cat /vagrant/ansible/swarm-healing.yml
+
+cat /vagrant/ansible/roles/consul-healing/files/mem.sh
+
+ansible-playbook /vagrant/ansible/swarm-healing.yml \
+    -i /vagrant/ansible/hosts/prod \
+    --extra-vars "elk_ip=10.100.198.200"</code></pre>
+                        <a href="http://10.100.192.200:8500/ui/">http://10.100.192.200:8500/ui/</a> &gt; Nodes
+                    </section>
+                    <!--TODO: Add example of scaling nodes when Swarm reports that there are not resources available-->
+                </section>
+                <section>
+                    <section id="service-checks">
+                        <h2>Prerequisite #4</h2>
+                        <span class="fragment">Ability to <span class="fragment grow highlight-current-green">monitor services</span> in (near)real-time and execute <span class="fragment grow highlight-current-green">reactive actions</span></span>
+                    </section>
+                    <section id="service-checks-code-1">
+                        <h4>Reactive Healing</h4>
+                        <h2>Service Checks</h2>
+						<pre><code data-trim contenteditable>cat /vagrant/ansible/roles/consul-healing/templates/manage_watches.sh
+
+# ansible-playbook /vagrant/ansible/swarm-healing.yml \
+#    -i /vagrant/ansible/hosts/prod \
+#    --extra-vars "elk_ip=10.100.198.200"
+
+cd ~/go-demo
+
+cat consul_service.ctmpl
+
+cat consul_check.ctmpl
+
+cat Jenkinsfile</code></pre>
+                    </section>
+                    <section id="service-checks-code-2">
+                        <h4>Reactive Healing</h4>
+                        <h2>Service Checks</h2>
+                        <pre><code data-trim contenteditable>docker rm -f $(docker ps -a | grep godemo | awk '{ print $1}')
+
+curl -i http://10.100.198.200/demo/hello</code></pre>
+                        <a href="http://10.100.198.200:8080/job/service-redeploy">http://10.100.198.200:8080/job/service-redeploy</a>
+                        <pre><code data-trim contenteditable>curl -i http://10.100.198.200/demo/hello</code></pre>
+                    </section>
+                    <section id="service-checks-code-3">
+                        <h4>Reactive Healing</h4>
+                        <h2>Service Checks</h2>
+                        <pre><code data-trim contenteditable>sudo docker rm -f docker-flow-proxy
+
+curl -i http://10.100.198.200/demo/hello</code></pre>
+                        <a href="http://10.100.198.200:8080/job/service-redeploy/lastBuild/console">http://10.100.198.200:8080/job/service-redeploy/lastBuild/console</a>
+                        <pre><code data-trim contenteditable>curl -i http://10.100.198.200/demo/hello</code></pre>
+                    </section>
+                </section>
+                <section>
+                    <section id="service-proactive">
+                        <h2>Prerequisite #5</h2>
+                        <span class="fragment">Ability to <span class="fragment grow highlight-current-green">predict the future</span> and execute <span class="fragment grow highlight-current-green">proactive actions</span></span>
+                    </section>
+                    <section id="service-proactive-scale">
+                        <h4>Proactive Healing</h4>
+                        <h2>Scheduled Scaling</h2>
+                        <div><a href="http://10.100.198.200:8080/job/go-demo-scale/configure">http://10.100.198.200:8080/job/go-demo-scale/configure</a></div>
+                        <div>Build With Parameters &gt; Build</div>
+                        <div><a href="http://10.100.198.200:8080/job/go-demo-scale/lastBuild/console">http://10.100.198.200:8080/job/go-demo-scale/lastBuild/console</a></div>
+                    </section>
+                    <section id="service-proactive-descale">
+                        <h4>Proactive Healing</h4>
+                        <h2>Scheduled Descaling</h2>
+                        <div><a href="http://10.100.198.200:8080/job/go-demo-descale/configure">http://10.100.198.200:8080/job/go-demo-descale/configure</a></div>
+                        <div>Build With Parameters &gt; Build</div>
+                        <div><a href="http://10.100.198.200:8080/job/go-demo-descale/lastBuild/console">http://10.100.198.200:8080/job/go-demo-descale/lastBuild/console</a></div>
+                    </section>
+                    <section id="architecture-08" data-transition="fade-in slide-out">
+                        <img src="img/architecture/08-self-healing.png"/>
+                    </section>
+                    <section id="architecture-09" data-transition="fade-in slide-out">
+                        <img src="img/architecture/09-self-healing.png"/>
+                    </section>
+                    <section id="proactive-proxy-stats">
+                        <h4>Proactive Healing</h4>
+                        <h2>Proxy Stats</h2>
+                        <div><a href="http://10.100.198.200/admin?stats">http://10.100.198.200/admin?stats</a></div>
+                        <div><a href="http://10.100.198.200/admin?stats;csv">http://10.100.198.200/admin?stats;csv</a></div>
+                    </section>
+                    <section id="proactive-elk-code">
+                        <h4>Proactive Healing</h4>
+                        <h2>ELK Setup</h2>
+						<pre><code data-trim contenteditable>cat /vagrant/ansible/roles/logstash/files/haproxy.conf
+
+ansible-playbook /vagrant/ansible/elk-local.yml \
+    --extra-vars "logstash_config=haproxy.conf" -c local
+
+sudo docker logs logstash</code></pre>
+                        <a href="http://10.100.198.200:5601/">http://10.100.198.200:5601/</a>
+                    </section>
+                    <section id="proactive-es-code-1">
+                        <h4>Proactive Healing</h4>
+                        <h2>LogStash API</h2>
+						<pre><code data-trim contenteditable>curl http://10.100.198.200:9200/logstash-*/_search | jq '.'</code></pre>
+                    </section>
+                    <section id="proactive-es-code-2">
+                        <h4>Proactive Healing</h4>
+                        <h2>LogStash API</h2>
+						<pre><code data-trim contenteditable>curl http://10.100.198.200:9200/logstash-*/_search -d '{
+  "query": {
+    "bool": {
+      "must": { "match": { "tags" : "haproxy_stats" } },
+      "must": { "match": { "haproxy_stats.svname" : "BACKEND" } },
+      "must": { "range": { "@timestamp": { "gt" : "now-1h" } } }
+    }
+  }
+}' | jq '.'</code></pre>
+                    </section>
+                    <section id="proactive-es-code-3">
+                        <h4>Proactive Healing</h4>
+                        <h2>LogStash API</h2>
+						<pre><code data-trim contenteditable>curl http://10.100.198.200:9200/logstash-*/_search -d '{
+  "size" : 0,
+  "query": {
+    "bool": {
+      "must": { "match": { "tags" : "haproxy_stats" } },
+      "must": { "match": { "haproxy_stats.svname" : "BACKEND" } },
+      "must": { "range": { "@timestamp": { "gt" : "now-1h" } } }
+    }
+  },
+  "aggs" : {
+    "services" : {
+      "terms" : { "field" : "haproxy_stats.pxname.raw" },
+      "aggs": { "avg_rtime": { "avg": { "field": "haproxy_stats.rtime" } } }
+    }
+  }
+}' | jq '.'</code></pre>
+                    </section>
+                    <section id="proactive-es-code-4">
+                        <h4>Proactive Healing</h4>
+                        <h2>LogStash API</h2>
+						<pre><code data-trim contenteditable>curl http://10.100.198.200:9200/logstash-*/_search -d '{
+  "size" : 0,
+  "query": {
+    "bool": {
+      "must": { "match": { "tags" : "haproxy_stats" } },
+      "must": { "match": { "haproxy_stats.svname" : "BACKEND" } },
+      "must": { "match": { "haproxy_stats.pxname.raw" : "go-demo-app-be" } },
+      "must": { "range": { "@timestamp": { "gt" : "now-1h" } } }
+    }
+  },
+  "aggs" : {
+    "avg_rtime" : {
+      "avg": { "field": "haproxy_stats.rtime" }
+    }
+  }
+}' | jq '.'</code></pre>
+                    </section>
+                    <section id="proactive-consul-code-1">
+                        <h4>Proactive Healing</h4>
+                        <h2>Consul / Jenkins</h2>
+						<pre><code data-trim contenteditable>cat /vagrant/ansible/roles/consul-healing/templates/rtime_up.sh
+
+cat /vagrant/ansible/roles/consul-healing/templates/rtime_down.sh
+
+cat /vagrant/ansible/roles/consul-healing/templates/manage_watches.sh
+
+cat consul_check.ctmpl</code></pre>
+                        <a href="http://10.100.198.200:8080/job/service-scale/configure">http://10.100.198.200:8080/job/service-scale/configure</a>
+                    </section>
+                    <section id="proactive-consul-code-2">
+                        <h4>Proactive Healing</h4>
+                        <h2>Consul</h2>
+						<pre><code data-trim contenteditable>exit
+
+vagrant ssh swarm-master
+
+sudo sed -i "s/1000 2000/1 2/" /data/consul/config/go-demo_check.json
+
+sudo killall -HUP consul
+
+exit
+
+vagrant ssh cd
+
+curl localhost/demo/hello?delay=2000 # Repeat</code></pre>
+                        <div><a href="http://10.100.198.200:8080/job/service-scale/1/console">http://10.100.198.200:8080/job/service-scale/1/console</a></div>
+                        <div><a href="http://10.100.192.200:8500/ui">http://10.100.192.200:8500/ui</a></div>
+                    </section>
+                    <section id="proactive-consul-code-3">
+                        <h4>Proactive Healing</h4>
+                        <h2>Consul</h2>
+						<pre><code data-trim contenteditable>exit
+
+vagrant ssh swarm-master
+
+sudo sed -i "s/1 2/1000 2000/" /data/consul/config/go-demo_check.json
+
+sudo killall -HUP consul</code></pre>
+                        <div><a href="http://10.100.192.200:8500/ui">http://10.100.192.200:8500/ui</a></div>
+                    </section>
+                </section>
+                <section data-background="../img/background/the_end.jpg">
+                    <section id="the-end-blog">
+                        <h2>Viktor Farcic</h2>
+                        <hr/>
+                        <h3><a href="https://twitter.com/vfarcic">@vfarcic</a></h3>
+                        <hr/>
+                        <figure>
+                            <img src="../img/qr/technology-conversations.jpg"/>
+                        </figure>
+                        <h3><a href="http://technologyconversations.com">TechnologyConversations.com</a></h3>
+                    </section>
+                    <section id="the-end-book">
+                        <h2>Viktor Farcic</h2>
+                        <hr/>
+                        <div>
+                            <figure style="width: 30%; height: 30%; float: left;">
+                                <img src="../img/qr/devops2-amazon.jpg"/>
+                                <figcaption><a href="http://www.amazon.com/dp/B01BJ4V66M">Amazon</a></figcaption>
+                            </figure>
+                            <figure style="width: 30%; height: 30%; float: right;">
+                                <img src="../img/qr/devops2-leanpub.jpg"/>
+                                <figcaption><a href="https://leanpub.com/the-devops-2-toolkit">LeanPub</a></figcaption>
+                            </figure>
+                            <a href="https://leanpub.com/the-devops-2-toolkit">
+                                <img src="../img/devops2.png" style="width: 30%; height: 30%;" />
+                            </a>
+                        </div>
+                    </section>
+                </section>
+                <section>
+                    <section id="cleanup">
+                        <h1>Cleanup</h1>
+						<pre><code data-trim contenteditable>exit
+
+vagrant destroy -f</code></pre>
+                    </section>
+                </section>
+			</div>
+
+		</div>
+
+		<script src="../lib/js/head.min.js"></script>
+		<script src="../js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+//					{ src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../plugin/zoom-js/zoom.js', async: true },
+					{ src: '../plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

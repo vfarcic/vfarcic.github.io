@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Continuous Deployment: The good, the bad, and the ugly</title>
+
+		<meta name="author" content="Viktor Farcic">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="../css/reveal.css">
+        <link rel="stylesheet" href="../css/theme/black.css" id="theme">
+        <link rel="stylesheet" href="../css/theme/vfarcic.css">
+
+		<!-- Code syntax highlighting -->
+		<!--<link rel="stylesheet" href="lib/css/zenburn.css">-->
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<header style="position: absolute;top: 50px; left: 100px; z-index:500; font-size:100px;background-color: rgba(0,0,0,0.5)"></header>
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section id="cover" data-background="../img/background/good-bad-ugly.jpg">
+					<h1>Continuous Deployment</h1>
+                    <h2>The good, the bad, and the ugly</h2>
+                    <hr/>
+					<h2>
+						<a href="http://technologyconversations.com/about/">Viktor Farcic</a>
+                    </h2>
+                    <hr/>
+                    <h4>
+                        <a href="https://twitter.com/vfarcic">@vfarcic</a>
+                    </h4>
+                    <h4>
+						<a href="http://technologyconversations.com">TechnologyConversations.com</a>
+                    </h4>
+                    <h4>
+                        <a href="https://www.cloudbees.com">CloudBees.com</a>
+					</h4>
+				</section>
+                <section data-background="../img/background/about-me.jpg">
+                    <section id="about-me">
+                        <h2>Viktor Farcic</h2>
+                        <img src="../img/viktor.jpg" style="width: 50%; height: 50%;" />
+                    </section>
+                    <section id="about-company">
+                        <a href="https://www.cloudbees.com">
+                            <img src="../img/company-big.png" style="background-color: white;" />
+                        </a>
+                    </section>
+                    <section id="about-docker">
+                        <a href="https://www.docker.com/community/docker-captains">
+                            <img src="../img/docker-captain.png" style="width: 50%; height: 50%;" />
+                        </a>
+                    </section>
+                    <section id="about-books">
+                        <figure style="width: 30%; height: 30%; float: left;">
+                            <a href="https://leanpub.com/the-devops-2-toolkit">
+                                <img src="../img/devops2.png" />
+                            </a>
+                        </figure>
+                        <figure style="width: 30%; height: 30%; float: left;">
+                            <a href="https://leanpub.com/the-devops-2-1-toolkit">
+                                <img src="../img/devops21.png" />
+                            </a>
+                        </figure>
+                        <figure style="width: 30%; height: 30%; float: left;">
+                            <a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">
+                                <img src="../img/tdd.jpg" />
+                            </a>
+                        </figure>
+                    </section>
+                </section>
+                <section data-background="../img/background/truth.jpg">
+                    <section id="how-long">
+                        <h1>Facing the truth</h1>
+                        <h3 class="fragment">How long would it take your organization to deploy a change that involves just one <span class="fragment grow highlight-current-green">single line of code</span>?</h3>
+                        <h3 class="fragment">Do you do this on a <span class="fragment grow highlight-current-green">repeatable, reliable basis</span>?</h3>
+                    </section>
+                    <!--Mary Poppendieck-->
+                </section>
+                <section data-background="../img/background/why.jpg">
+                    <section id="why">
+                        <h1>Why Continuous Delivery or Deployment?</h1>
+                        <ul>
+                            <li class="fragment">Because it is modern?</li>
+                            <li class="fragment">Because it is popular?</li>
+                            <li class="fragment">Because everyone talks about it?</li>
+                        </ul>
+                    </section>
+                    <section id="because">
+                        <h1>Because...</h1>
+                        <ul>
+                            <li class="fragment">Earlier feedback to business</li>
+                            <li class="fragment">Faster development</li>
+                            <li class="fragment">Fewer merge conflicts</li>
+                            <li class="fragment">Lower deployment risk</li>
+                            <li class="fragment">Changes done faster</li>
+                        </ul>
+                    </section>
+                </section>
+                <section data-background="../img/background/continuous-deployment.png">
+                    <section id="ci-vs-cd">
+                        <h1>Continuous</h1>
+                        <h1>Integration</h1>
+                        <h3>vs</h3>
+                        <h1>Delivery</h1>
+                        <h3>vs</h3>
+                        <h1>Deployment</h1>
+                    </section>
+                    <section id="ci-vs-cd-1">
+                        <h1>Continuous Integration</h1>
+                        <ul>
+                            <li class="fragment green">Automated integration flow</li>
+                            <li class="fragment green">Merge to main branch often (at least once a day)</li>
+                            <li class="fragment green">Fixing failed flow has the highest priority</li>
+                            <li class="fragment red">Unclear status</li>
+                            <li class="fragment red">Not a "production ready" process</li>
+                        </ul>
+                    </section>
+                    <section id="ci-vs-cd-1-question">
+                        <h3>Continuous Integration</h3>
+                        <h1>Are you doing CI today?</h1>
+                        <h3 class="fragment">If not, so long and thanks for all the fish</h3>
+                    </section>
+                    <section id="ci-vs-cd-2">
+                        <h1>Continuous Delivery</h1>
+                        <h3>You're doing it when...</h3>
+                        <ul>
+                            <li class="fragment">you are already doing continuous integration</li>
+                            <li class="fragment">your software is deployable throughout its life-cycle</li>
+                            <li class="fragment">your team prioritizes keeping the software deployable</li>
+                            <li class="fragment">anybody can get fast, automated feedback on the production readiness</li>
+                            <li class="fragment">you can perform push-button deployments</li>
+                        </ul>
+                    </section>
+                    <section id="ci-vs-cd-3">
+                        <h1>Continuous Delivery</h1>
+                        <h3>Means that...</h3>
+                        <ul>
+                            <li class="fragment">every commit to VCS that passed the flow <span class="fragment grow highlight-current-green">can be deployed</span> to production</li>
+                            <li class="fragment">pressing the button to deploy to production is the <span class="fragment grow highlight-current-green">only manual action</span></li>
+                        </ul>
+                    </section>
+                    <section id="ci-vs-cd-4">
+                        <h1>Continuous Deployment</h1>
+                        <h3>You're doing it when...</h3>
+                        <ul>
+                            <li class="fragment">you are already doing continuous delivery</li>
+                            <li class="fragment">there are no buttons to push</li>
+                        </ul>
+                    </section>
+                    <section id="ci-vs-cd-5">
+                        <h1>Continuous Deployment</h1>
+                        <h3>Means that...</h3>
+                        <ul>
+                            <li class="fragment">every commit to VCS that passed the flow <span class="fragment grow highlight-current-green">is deployed</span> to production</li>
+                            <li class="fragment">there are no manual actions of any kind</li>
+                        </ul>
+                    </section>
+                    <section id="ci-vs-cd-6">
+                        <h1>CD</h1>
+                        <ul>
+                            <li class="fragment">Tasks are reordered</li>
+                            <li class="fragment">Proactive approach</li>
+                            <li class="fragment">Cannot be "faked"</li>
+                        </ul>
+                    </section>
+                </section>
+                <section data-background="../img/background/good-bad-ugly.jpg">
+                    <section id="benefits">
+                        <h1>Benefits</h1>
+                        <ul>
+                            <li class="fragment">Faster time-to-market</li>
+                            <li class="fragment">Building the right product</li>
+                            <li class="fragment">Improved productivity and efficiency</li>
+                            <li class="fragment">Reliable releases</li>
+                            <li class="fragment">Improved product quality</li>
+                            <li class="fragment">Visibility</li>
+                            <li class="fragment">Feedback</li>
+                        </ul>
+                    </section>
+                    <section id="case-studies">
+                        <h3>Benefits</h3>
+                        <h1>Where are the case studies?</h1>
+                        <div class="fragment">
+                            Successful CD implementations are not projects nor they have an end
+                        </div>
+                    </section>
+                    <section id="case-studies-hp">
+                        <h3>Benefits</h3>
+                        <h1>HP LaserJet Firmware</h1>
+                        <ul>
+                            <li class="fragment">Overall development costs reduced by ~40%</li>
+                            <li class="fragment">Programs under development increased by ~140%</li>
+                            <li class="fragment">Development costs per program reduced by 78%</li>
+                            <li class="fragment">Resources driving innovation increased by 5x</li>
+                        </ul>
+                    </section>
+                    <section id="case-studies-others">
+                        <h3>Benefits</h3>
+                        <ul>
+                            <li>ARTstor: provisioning a new server from days to 15 minutes</li>
+                            <li class="fragment">Group Adeo: one week of development productivity gained, each month</li>
+                            <li class="fragment">jClouds: 33% increase in developer productivity.</li>
+                            <li class="fragment">Neustar: build frequency increased by a factor of 4x.</li>
+                            <li class="fragment">Orbitz: release cycles cut by more than 75%</li>
+                            <li class="fragment">Service-Flow: development time reduced by 50%</li>
+                        </ul>
+                    </section>
+                    <section id="problems">
+                        <h1>Problems</h1>
+                        <ul>
+                            <li class="fragment">It's hard to get there</li>
+                            <li class="fragment">Very hard</li>
+                            <li class="fragment">Harder than you think</li>
+                            <li class="fragment">Requires changes on all levels
+                                <ul>
+                                    <li class="fragment">Technology</li>
+                                    <li class="fragment">Architecture</li>
+                                    <li class="fragment">Culture</li>
+                                    <li class="fragment">Organization structure</li>
+                                    <li class="fragment">...</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+                    <section id="conway">
+                        <h1>Problems</h1>
+                        <div>
+                            Organizations which design systems ... are constrained to produce designs which are copies of the communication structures of these organizations - M. Conway
+                        </div>
+                    </section>
+                </section>
+                <section data-background="../img/background/why.jpg">
+                    <section id="cd-what">
+                        <h1>What is CD?</h1>
+                    </section>
+                    <section id="cd-vertical">
+                        <h3>What is CD?</h3>
+                        <h1>It is vertical</h1>
+                        <ul>
+                            <li class="fragment">It's not another process</li>
+                            <li class="fragment">It's not another layer</li>
+                            <li class="fragment">It does not belong to a single department</li>
+                            <li class="fragment">It spans the whole organization and the project vertically</li>
+                            <li class="fragment">It affects the whole SDLC</li>
+                            <li class="fragment">From business and requirements, through development and testing, all the way until operations and maintainance... is a single, continuous process without delays.</li>
+                            <li class="fragment">There can be no hand-offs</li>
+                        </ul>
+                    </section>
+                    <section id="cd-process">
+                        <h3>What is CD?</h3>
+                        <h1>Single, repeatable, and reliable</h1>
+                        <ul>
+                            <li class="fragment">The same artifacts</li>
+                            <li class="fragment">The same process</li>
+                            <li class="fragment">The same release</li>
+                        </ul>
+                    </section>
+                    <section id="cd-automation">
+                        <h3>What is CD?</h3>
+                        <h1>Fully automated</h1>
+                        <ul>
+                            <li class="fragment">No manual steps<br/><span class="fragment">(except clicking the "deploy to production" button)</span></li>
+                            <li class="fragment">Right tool for a task</li>
+                        </ul>
+                    </section>
+                    <section id="cd-vcs">
+                        <h3>What is CD?</h3>
+                        <h1>Everything must be in VCS</h1>
+                        <ul>
+                            <li class="fragment">Code</li>
+                            <li class="fragment">Configuration</li>
+                            <li class="fragment">Scripts</li>
+                            <li class="fragment">Database deltas</li>
+                            <li class="fragment">Documentation</li>
+                            <li class="fragment">Delivery flow</li>
+                        </ul>
+                        <div class="fragment">Everything related to a single project in single repository</div>
+                    </section>
+                    <section id="cd-iteration">
+                        <h3>What is CD?</h3>
+                        <h1>Short feedback loops</h1>
+                        <ul>
+                            <li class="fragment">Continuous != monthly != weekly</li>
+                            <li class="fragment">Continuous == (at least) daily</li>
+                            <li class="fragment">Fix of a delivery flow failure == priority</li>
+                            <li class="fragment">Time to fix the problem ∝ time it was detected</li>
+                            <li class="fragment">Delivery flow must be fast</li>
+                        </ul>
+                    </section>
+                    <section id="cd-branches">
+                        <h3>What is CD?</h3>
+                        <h1>No branching</h1>
+                        <ul>
+                            <li class="fragment">Branches prevent CD</li>
+                            <li class="fragment">... unless they are short lived (a day or less)</li>
+                        </ul>
+                    </section>
+                    <section id="cd-everything">
+                        <h3>What is CD?</h3>
+                        <h1>Generates everything</h1>
+                        <ul>
+                            <li class="fragment">Environments</li>
+                            <li class="fragment">Binaries</li>
+                            <li class="fragment">DB changes</li>
+                            <li class="fragment">Documentation</li>
+                            <li class="fragment">...</li>
+                        </ul>
+                    </section>
+                </section>
+                <section data-background="../img/background/do-dont.jpg">
+                    <section id="do-do-not">
+                        <h1>Dos & Don'ts</h1>
+                    </section>
+                    <section id="do-not">
+                        <h1>Do Not</h1>
+                        <ul>
+                            <li class="fragment">form a CD team</li>
+                            <li class="fragment">task one department to create a CD flow</li>
+                            <li class="fragment">automate inside a CD tool</li>
+                        </ul>
+                    </section>
+                    <section id="do">
+                        <h1>Do</h1>
+                        <ul>
+                            <li class="fragment">form a multifunctional and autonomous team capable of delivering a service</li>
+                            <li class="fragment">include someone with CD experience inside the team</li>
+                            <li class="fragment">choose an easy target</li>
+                            <li class="fragment">trust the team</li>
+                            <li class="fragment">short iterations</li>
+                        </ul>
+                    </section>
+                </section>
+                <section data-background="../img/background/start.jpg">
+                    <section id="start">
+                        <h1>How to start?</h1>
+                        <ul>
+                            <li class="fragment">Do dos and don't do don'ts</li>
+                            <li class="fragment">Don't trust do-it-all processes and tools</li>
+                            <li class="fragment">A feature/story is done when it is ready for (or deployed to) production</li>
+                            <li class="fragment">It's a learning experience</li>
+                            <li class="fragment">The team will fail<span class="fragment">, learn from failure</span><span class="fragment">, improve</span><span class="fragment">, repeat</span></li>
+                            <li class="fragment">Support the team in failure</li>
+                        </ul>
+                    </section>
+                </section>
+                <section  data-background="../img/background/the_end.jpg">
+                    <section id="the-end-blog">
+                        <h2>Viktor Farcic</h2>
+                        <hr/>
+                        <h3><a href="https://twitter.com/vfarcic">@vfarcic</a></h3>
+                        <hr/>
+                        <figure>
+                            <img src="../img/qr/technology-conversations.jpg"/>
+                        </figure>
+                        <h3><a href="http://technologyconversations.com">TechnologyConversations.com</a></h3>
+                    </section>
+                    <section id="the-end-book">
+                        <div>
+                            <figure style="width: 25%; height: 25%; float: left;">
+                                <img src="../img/qr/devops2-amazon.jpg"/>
+                                <figcaption><a href="http://www.amazon.com/dp/B01BJ4V66M">Amazon</a></figcaption>
+                            </figure>
+                            <figure style="width: 25%; height: 25%; float: right;">
+                                <img src="../img/qr/devops2-leanpub.jpg"/>
+                                <figcaption><a href="https://leanpub.com/the-devops-2-toolkit">LeanPub</a></figcaption>
+                            </figure>
+                            <a href="http://www.amazon.com/dp/B01BJ4V66M">
+                                <img src="../img/devops2.png" style="width: 30%; height: 30%;" />
+                            </a>
+                        </div>
+                        <hr/>
+                        <div>
+                            <figure style="width: 25%; height: 25%; float: left;">
+                                &nbsp;
+                            </figure>
+                            <figure style="width: 25%; height: 25%; float: right;">
+                                <img src="../img/qr/devops21-leanpub.png"/>
+                                <figcaption><a href="https://leanpub.com/the-devops-2-1-toolkit">LeanPub</a></figcaption>
+                            </figure>
+                            <a href="https://leanpub.com/the-devops-2-1-toolkit">
+                                <img src="../img/devops21.png" style="width: 30%; height: 30%;" />
+                            </a>
+                        </div>
+                    </section>
+                </section>
+                </section>
+			</div>
+
+		</div>
+
+		<script src="../lib/js/head.min.js"></script>
+		<script src="../js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+//					{ src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../plugin/zoom-js/zoom.js', async: true },
+					{ src: '../plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

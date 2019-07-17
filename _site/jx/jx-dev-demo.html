@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/jx/jx-dev-demo.html" />
+<meta property="og:url" content="http://localhost:4000/jx/jx-dev-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/jx/jx-dev-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="improving-and-simplifying-software-development">Improving And Simplifying Software Development</h1>
+
+<h2 id="exploring-the-requirements-of-efficient-development-environment">Exploring The Requirements Of Efficient Development Environment</h2>
+
+<hr />
+
+<!-- .slide: data-background="img/vs-code-jx.png" data-background-size="contain" -->
+
+<h2 id="in-case-you-messed-it-up">In Case You Messed It Up</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>go-demo-6
+
+git checkout buildpack
+
+git merge <span class="nt">-s</span> ours master <span class="nt">--no-edit</span>
+
+git checkout master
+
+git merge buildpack
+
+git push
+</code></pre></div></div>
+
+<h2 id="remote-dev-environment">Remote Dev Environment</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>go-demo-6
+
+jx create devpod <span class="nt">-b</span>
+
+jx rsh <span class="nt">-d</span>
+
+<span class="nb">cd </span>go-demo-6
+
+<span class="nb">ls</span> <span class="nt">-1</span>
+
+go mod init
+
+make linux
+
+<span class="nb">cat </span>skaffold.yaml
+</code></pre></div></div>
+
+<h2 id="remote-dev-environment-1">Remote Dev Environment</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="nv">$DOCKER_REGISTRY</span>
+
+env
+
+helm init <span class="nt">--service-account</span> tiller
+
+skaffold run <span class="nt">-p</span> dev
+
+<span class="nb">echo</span> <span class="nv">$SKAFFOLD_DEPLOY_NAMESPACE</span>
+
+kubectl <span class="nt">-n</span> <span class="nv">$SKAFFOLD_DEPLOY_NAMESPACE</span> get pods
+</code></pre></div></div>
+
+<h2 id="remote-dev-environment-2">Remote Dev Environment</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>watch.sh
+
+chmod +x watch.sh
+
+nohup ./watch.sh &amp;
+
+<span class="nb">exit
+
+</span>jx get applications
+
+<span class="nv">URL</span><span class="o">=[</span>...]
+
+curl <span class="s2">"</span><span class="nv">$URL</span><span class="s2">/demo/hello"</span>
+</code></pre></div></div>
+
+<!-- .slide: data-background="img/devpod.png" data-background-size="contain" -->
+
+<h2 id="using-browser-based-ide">Using Browser-Based IDE</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jx open
+
+jx open <span class="o">[</span>...]
+
+curl <span class="s2">"</span><span class="nv">$URL</span><span class="s2">/demo/hello"</span>
+
+jx delete devpod
+</code></pre></div></div>
+
+<!-- .slide: data-background="img/devpod-theia.png" data-background-size="contain" -->
+
+<h2 id="synchronizing-with-a-devpod">Synchronizing With A DevPod</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s1">'unittest: 
+	CGO_ENABLED=$(CGO_ENABLED) $(GO) test --run UnitTest -v
+'</span> | tee <span class="nt">-a</span> Makefile
+
+<span class="nb">cat </span>watch.sh | sed <span class="nt">-e</span> <span class="se">\</span>
+    <span class="s1">'s@linux \&amp;\&amp; skaffold@linux \&amp;\&amp; make unittest \&amp;\&amp; skaffold@g'</span> <span class="se">\</span>
+    | tee watch.sh
+
+jx sync <span class="nt">--daemon</span>
+
+jx create devpod <span class="nt">--sync</span> <span class="nt">-b</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Open a second terminal session.</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jx rsh <span class="nt">-d</span>
+
+go mod init
+
+helm init <span class="nt">--client-only</span>
+
+chmod +x watch.sh
+
+./watch.sh
+</code></pre></div></div>
+
+<h2 id="synchronizing-with-a-devpod-1">Synchronizing With A DevPod</h2>
+
+<hr />
+
+<ul>
+  <li>Return to the first terminal.</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="s2">"</span><span class="nv">$URL</span><span class="s2">/demo/hello"</span>
+
+<span class="nb">cat </span>main.go | sed <span class="nt">-e</span> <span class="se">\</span>
+    <span class="s1">'s@hello, world@hello, devpod with tests@g'</span> | tee main.go
+
+<span class="nb">cat </span>main_test.go | sed <span class="nt">-e</span> <span class="se">\</span>
+    <span class="s1">'s@hello, world@hello, devpod with tests@g'</span> | tee main_test.go
+</code></pre></div></div>
+
+<ul>
+  <li>Go back to the second terminal and observe the output</li>
+  <li>Go to the first terminal</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="s2">"</span><span class="nv">$URL</span><span class="s2">/demo/hello"</span>
+</code></pre></div></div>
+
+<!-- .slide: data-background="img/devpod-ksync.png" data-background-size="contain" -->
+
+<h2 id="synchronizing-with-a-devpod-2">Synchronizing With A DevPod</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add <span class="nb">.</span>
+
+git commit <span class="nt">-m</span> <span class="s2">"devpod"</span>
+
+git push
+
+jx get activity <span class="nt">-f</span> go-demo-6 <span class="nt">-w</span>
+
+jx get applications
+
+<span class="nv">STAGING_URL</span><span class="o">=[</span>...]
+
+curl <span class="s2">"</span><span class="nv">$STAGING_URL</span><span class="s2">/demo/hello"</span>
+
+jx delete devpod
+</code></pre></div></div>
+
+<h2 id="integrating-with-vs-code">Integrating With VS Code</h2>
+
+<hr />
+
+<!-- .slide: data-background="img/vs-code-jx.png" data-background-size="contain" -->
+
+<h2 id="integrating-with-vs-code-1">Integrating With VS Code</h2>
+
+<hr />
+
+<ul>
+  <li>Install VS Code from the <a href="https://code.visualstudio.com/">official site</a></li>
+  <li><em>File</em> &gt; <em>Open</em>, select <em>go-demo-6</em>, and click the <em>Open</em> button</li>
+  <li><em>View</em> &gt; <em>Extensions</em>, search for <em>jx</em>, click <em>Install</em> in <em>jx-tools</em></li>
+  <li>Click the <em>Reload</em> button</li>
+  <li>Open <em>View</em> &gt; <em>Explorer</em>, and expanding the <em>JENKINS X</em> tab</li>
+  <li>Click the <em>…</em> button</li>
+  <li>Expand <em>Pipelines</em> &gt; <em>go-demo-6</em> &gt; <em>master</em></li>
+  <li>Open <em>View</em> &gt; <em>Integrated Terminal</em></li>
+</ul>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/jx/jx-dev-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

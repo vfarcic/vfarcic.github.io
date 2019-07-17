@@ -1,0 +1,7 @@
+Continuous deployment sounds to many as too risky or even impossible. Whether it's risky depends on the architecture of software we're building. As a general rule, splitting application into smaller independent elements helps a lot.
+
+Microservices is the way to go if possible. Risks aside, in many cases there is no business reason or willingness to adopt continuous deployment. Still, software can be continuously deployed to test servers thus becoming continuous delivery. No matter whether we are doing continuous deployment, delivery, integration or none of those, having automatic and fast deployment with zero downtime and ability to rollback provides great benefits. If for no other reason, because it frees us to do more productive and beneficial tasks. We should design and code our software and let machines do the rest for us.
+
+In this hands-on workshop we'll build an entire system from scratch following some of best practices for continuous deployment. It will be done in a way that it can be deployed often, be fully automatic and very fast with zero-downtime and ability to rollback.
+
+We'll use Vagrant, Docker, etcd, nginx, blue-green deployment, microservices, TDD, etc. At the end of the workshop, each participant will gain practical knowledge how to specify, design, develop and test their applications in a way that they can be continuously deployed to production. Every commit that passed all validations will be deployed fast and without any downtime.

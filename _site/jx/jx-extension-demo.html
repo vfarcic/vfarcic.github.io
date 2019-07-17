@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/jx/jx-extension-demo.html" />
+<meta property="og:url" content="http://localhost:4000/jx/jx-extension-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/jx/jx-extension-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="using-the-pipeline-extension-model">Using The Pipeline Extension Model</h1>
+
+<h2 id="in-case-you-messed-it-up">In Case You Messed It Up</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>go-demo-6
+
+git pull
+
+git checkout versioning
+
+git merge <span class="nt">-s</span> ours master <span class="nt">--no-edit</span>
+
+git checkout master
+
+git merge versioning
+
+git push
+</code></pre></div></div>
+
+<h2 id="exploring-build-pack-pipelines">Exploring Build Pack Pipelines</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout master
+
+rm <span class="nt">-f</span> Jenkinsfile
+
+<span class="nb">echo</span> <span class="s2">"buildPack: go"</span> | tee jenkins-x.yml
+
+git add <span class="nb">.</span>
+
+git commit <span class="nt">-m</span> <span class="s2">"jenkins-x.yml"</span>
+
+git push
+
+<span class="nb">ls</span> <span class="nt">-1</span>
+
+<span class="nb">cat </span>jenkins-x.yml
+
+open <span class="s2">"https://github.com/jenkins-x-buildpacks/jenkins-x-kubernetes"</span>
+
+curl <span class="s2">"https://raw.githubusercontent.com/jenkins-x-buildpacks/jenkins-x-kubernetes/master/packs/go/pipeline.yaml"</span>
+
+curl <span class="s2">"https://raw.githubusercontent.com/jenkins-x-buildpacks/jenkins-x-classic/master/packs/go/pipeline.yaml"</span>
+
+jx get activities <span class="nt">--filter</span> go-demo-6 <span class="nt">--watch</span>
+</code></pre></div></div>
+
+<h2 id="extending-build-pack-pipelines">Extending Build Pack Pipelines</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout <span class="nt">-b</span> extension
+
+<span class="nb">cat </span>charts/go-demo-6/values.yaml | sed <span class="nt">-e</span> <span class="se">\</span>
+    <span class="s1">'s@replicaCount: 1@replicaCount: 3@g'</span> <span class="se">\</span>
+    | tee charts/go-demo-6/values.yaml
+
+<span class="nb">cat </span>functional_test.go | sed <span class="nt">-e</span> <span class="se">\</span>
+    <span class="s1">'s@fmt.Sprintf("http://@fmt.Sprintf("@g'</span> <span class="se">\</span>
+    | tee functional_test.go
+
+<span class="nb">cat </span>production_test.go | sed <span class="nt">-e</span> <span class="se">\</span>
+    <span class="s1">'s@fmt.Sprintf("http://@fmt.Sprintf("@g'</span> <span class="se">\</span>
+    | tee production_test.go
+
+jx create step
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>? Pick the pipeline kind:  pullrequest
+? Pick the lifecycle:  build
+? Pick the create mode:  pre
+? Command for the new step:  make unittest
+Updated Jenkins X Pipeline file: jenkins-x.yml
+</code></pre></div></div>
+
+<h2 id="extending-build-pack-pipelines-1">Extending Build Pack Pipelines</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>jenkins-x.yml
+
+git add <span class="nb">.</span>
+
+git commit <span class="nt">--message</span> <span class="s2">"Trying to extend the pipeline"</span>
+
+git push <span class="nt">--set-upstream</span> origin extension
+
+jx create pullrequest <span class="nt">--title</span> <span class="s2">"Extensions"</span> <span class="nt">--body</span> <span class="s2">"What I can say?"</span> <span class="se">\</span>
+    <span class="nt">--batch-mode</span>
+
+<span class="nv">PR_ADDR</span><span class="o">=[</span>...] <span class="c"># e.g., `https://github.com/vfarcic/go-demo-6/pull/56`</span>
+
+<span class="nv">BRANCH</span><span class="o">=[</span>...] <span class="c"># e.g., `PR-56`</span>
+
+jx get build logs <span class="nt">--filter</span> go-demo-6 <span class="nt">--branch</span> <span class="nv">$BRANCH</span>
+</code></pre></div></div>
+
+<h2 id="extending-build-pack-pipelines-2">Extending Build Pack Pipelines</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jx create step <span class="nt">--pipeline</span> pullrequest <span class="nt">--lifecycle</span> promote <span class="nt">--mode</span> post <span class="se">\</span>
+    <span class="nt">--sh</span> <span class="s1">'ADDRESS=`jx get preview --current 2&gt;&amp;1` make functest'</span>
+
+<span class="nb">cat </span>jenkins-x.yml
+
+git add <span class="nb">.</span>
+
+git commit <span class="nt">--message</span> <span class="s2">"Trying to extend the pipeline"</span>
+
+git push
+
+jx get build logs <span class="nt">--filter</span> go-demo-6 <span class="nt">--branch</span> <span class="nv">$BRANCH</span>
+</code></pre></div></div>
+
+<h2 id="extending-build-pack-pipelines-3">Extending Build Pack Pipelines</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jx create step <span class="nt">--pipeline</span> pullrequest <span class="nt">--lifecycle</span> promote <span class="nt">--mode</span> post <span class="se">\</span>
+    <span class="nt">--sh</span> <span class="s1">'ADDRESS=http://this-domain-does-not-exist.com make functest'</span>
+
+git add <span class="nb">.</span>
+
+git commit <span class="nt">--message</span> <span class="s2">"Added sully tests"</span>
+
+git push
+
+jx get build logs <span class="nt">--filter</span> go-demo-6 <span class="nt">--branch</span> <span class="nv">$BRANCH</span>
+
+open <span class="s2">"</span><span class="nv">$PR_ADDR</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<h2 id="extending-build-pack-pipelines-4">Extending Build Pack Pipelines</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>jenkins-x.yml | sed <span class="s1">'$ d'</span> | tee jenkins-x.yml
+
+git add <span class="nb">.</span>
+
+git commit <span class="nt">--message</span> <span class="s2">"Removed the silly test"</span>
+
+git push
+</code></pre></div></div>
+
+<h2 id="extending-environment-pipelines">Extending Environment Pipelines</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ..
+
+<span class="nv">GH_USER</span><span class="o">=[</span>...]
+
+<span class="nb">cd </span>environment-jx-rocks-staging
+
+git pull
+
+<span class="nb">cat </span>jenkins-x.yml
+
+curl https://raw.githubusercontent.com/jenkins-x-buildpacks/jenkins-x-kubernetes/master/packs/environment/pipeline.yaml
+
+jx create step <span class="nt">--pipeline</span> release <span class="nt">--lifecycle</span> postbuild <span class="nt">--mode</span> post <span class="se">\</span>
+    <span class="nt">--sh</span> <span class="s1">'echo "Running integ tests!!!"'</span>
+
+<span class="nb">cat </span>jenkins-x.yml
+</code></pre></div></div>
+
+<h2 id="extending-environment-pipelines-1">Extending Environment Pipelines</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add <span class="nb">.</span>
+
+git commit <span class="nt">--message</span> <span class="s2">"Added integ tests"</span>
+
+git push
+
+jx get build logs <span class="nt">--filter</span> environment-tekton-staging <span class="nt">--branch</span> master
+
+open <span class="s2">"</span><span class="nv">$PR_ADDR</span><span class="s2">"</span>
+
+<span class="nb">cd</span> ..
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/jx/jx-extension-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

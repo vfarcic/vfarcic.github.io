@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Talk: Running Serverless Continuous Delivery | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Talk: Running Serverless Continuous Delivery" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/jx/abstracts/tekton.html" />
+<meta property="og:url" content="http://localhost:4000/jx/abstracts/tekton.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/jx/abstracts/tekton.html","@type":"WebPage","headline":"Talk: Running Serverless Continuous Delivery","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h1 id="talk-running-serverless-continuous-delivery">Talk: Running Serverless Continuous Delivery</h1>
+
+<h2 id="abstract">Abstract</h2>
+
+<p>Running applications for continuous delivery is a massive waste of resources. Think about it. We spend gigabytes of RAM for running Jenkins, Bamboo, Team City, or whichever tool we’re using. And yet, those tools are often sitting idle inside our cluster, waiting to eventually receive a webhook notifying them that something should be done. As a result, resources are wasted when those tools are idle, and they are slow when under heavy load. If we add agents to the mix, we can quickly end up with hundreds of unused servers, and yet not have enough. What if we could run our tools only when we need them? What if we could scale them to any number of replicas to accommodate the increase in the number of builds, and scale them down to zero when there are no new commits? What if we can do all that with a single command? The answer to those and quite a few other questions is to go serverless with our continuous delivery tools. Jenkins X with Tekton happens to do just that. It is a cloud-native Kubernetes-first solution that embraced the serverless model for managing our pipelines.</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/jx/abstracts/tekton.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

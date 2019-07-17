@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/devops23/deploy-demo-short.html" />
+<meta property="og:url" content="http://localhost:4000/devops23/deploy-demo-short.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/devops23/deploy-demo-short.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="deploying-releases-with-zero-downtime">Deploying Releases With Zero-Downtime</h1>
+
+<h2 id="deploying-new-releases">Deploying New Releases</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>deploy/go-demo-2.yml
+
+kubectl create <span class="nt">-f</span> deploy/go-demo-2.yml <span class="nt">--record</span> <span class="nt">--save-config</span>
+
+kubectl describe deploy go-demo-2-api
+
+kubectl get all
+</code></pre></div></div>
+
+<!-- .slide: data-background="img/deployment.png" data-background-size="contain" -->
+
+<!-- .slide: data-background="img/seq_deploy_ch06.png" data-background-size="contain" -->
+
+<h2 id="zero-downtime-deployments">Zero-Downtime Deployments</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nb">set </span>image deploy go-demo-2-api <span class="nv">api</span><span class="o">=</span>vfarcic/go-demo-2:2.0 <span class="se">\</span>
+    <span class="nt">--record</span>
+
+kubectl rollout status <span class="nt">-w</span> deploy go-demo-2-api
+
+kubectl describe deploy go-demo-2-api
+
+kubectl rollout <span class="nb">history </span>deploy go-demo-2-api
+
+kubectl get rs
+</code></pre></div></div>
+
+<!-- .slide: data-background="img/flow_deploy_ch06.png" data-background-size="contain" -->
+
+<h2 id="rolling-back-or-rolling-forward">Rolling Back Or Rolling Forward?</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl rollout undo deploy go-demo-2-api
+
+kubectl describe deploy go-demo-2-api
+
+kubectl rollout <span class="nb">history </span>deploy go-demo-2-api
+
+kubectl rollout undo <span class="nt">-f</span> deploy/go-demo-2-api.yml <span class="nt">--to-revision</span><span class="o">=</span>2
+
+kubectl rollout <span class="nb">history </span>deploy go-demo-2-api
+</code></pre></div></div>
+
+<h2 id="scaling-deployments">Scaling Deployments</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl scale deployment go-demo-2-api <span class="nt">--replicas</span> 8 <span class="nt">--record</span>
+
+kubectl get pods
+</code></pre></div></div>
+
+<h2 id="deployments">Deployments</h2>
+
+<hr />
+
+<ul>
+  <li>Zero-downtime updates<!-- .element: class="fragment" --></li>
+</ul>
+
+<!-- .slide: data-background="img/deploy-components.png" data-background-size="contain" -->
+
+<h2 id="what-now">What Now?</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl delete <span class="nt">-f</span> deploy/go-demo-2.yml
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/devops23/deploy-demo-short.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

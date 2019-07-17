@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Creating A | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Creating A" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/jx/jx-cluster-demo-talk.html" />
+<meta property="og:url" content="http://localhost:4000/jx/jx-cluster-demo-talk.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/jx/jx-cluster-demo-talk.html","@type":"WebPage","headline":"Creating A","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h3 id="creating-a">Creating A</h3>
+<h1 id="jenkins-x">Jenkins-X</h1>
+<h2 id="cluster">Cluster</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">PROJECT</span><span class="o">=[</span>...] <span class="c"># e.g. devops26</span>
+
+jx create cluster gke <span class="nt">--cluster-name</span> jx-rocks <span class="nt">--project-id</span> <span class="nv">$PROJECT</span> <span class="se">\</span>
+    <span class="nt">--region</span> us-east1 <span class="nt">-m</span> n1-standard-2 <span class="nt">--min-num-nodes</span> 1 <span class="se">\</span>
+    <span class="nt">--max-num-nodes</span> 2 <span class="nt">--default-admin-password</span><span class="o">=</span>admin <span class="se">\</span>
+    <span class="nt">--default-environment-prefix</span> tekton <span class="nt">--git-provider-kind</span> github <span class="se">\</span>
+    <span class="nt">--namespace</span> <span class="nb">cd</span> <span class="nt">--prow</span> <span class="nt">--tekton</span> <span class="nt">--batch-mode</span>
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/jx/jx-cluster-demo-talk.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

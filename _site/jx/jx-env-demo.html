@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/jx/jx-env-demo.html" />
+<meta property="og:url" content="http://localhost:4000/jx/jx-env-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/jx/jx-env-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="applying-gitops-principles">Applying GitOps Principles</h1>
+
+<h2 id="ten-commandments-of-gitops-applied-to-continuous-delivery">Ten Commandments Of GitOps Applied To Continuous Delivery</h2>
+
+<hr />
+
+<h1 id="git-is-the-only-source-of-truth">Git is the only source of truth</h1>
+
+<!-- .slide: data-background="img/gitops-apps.png" data-background-size="contain" -->
+
+<h2 id="ten-commandments-of-gitops-applied-to-continuous-delivery-1">Ten Commandments Of GitOps Applied To Continuous Delivery</h2>
+
+<hr />
+
+<h2 id="everything-must-be-tracked-every-action-must-be-reproducible-and-everything-must-be-idempotent">Everything must be tracked, every action must be reproducible, and everything must be idempotent</h2>
+
+<h2 id="ten-commandments-of-gitops-applied-to-continuous-delivery-2">Ten Commandments Of GitOps Applied To Continuous Delivery</h2>
+
+<hr />
+
+<h1 id="communication-between-processes-must-be-asynchronous">Communication between processes must be asynchronous</h1>
+
+<!-- .slide: data-background="img/gitops-webhooks.png" data-background-size="contain" -->
+
+<h2 id="ten-commandments-of-gitops-applied-to-continuous-delivery-3">Ten Commandments Of GitOps Applied To Continuous Delivery</h2>
+
+<hr />
+
+<h1 id="processes-should-run-for-as-long-as-needed-but-not-longer">Processes should run for as long as needed, but not longer</h1>
+
+<!-- .slide: data-background="img/gitops-agents.png" data-background-size="contain" -->
+
+<h2 id="ten-commandments-of-gitops-applied-to-continuous-delivery-4">Ten Commandments Of GitOps Applied To Continuous Delivery</h2>
+
+<hr />
+
+<h1 id="all-binaries-must-be-stored-in-registries">All binaries must be stored in registries</h1>
+
+<!-- .slide: data-background="img/gitops-registries.png" data-background-size="contain" -->
+
+<h2 id="ten-commandments-of-gitops-applied-to-continuous-delivery-5">Ten Commandments Of GitOps Applied To Continuous Delivery</h2>
+
+<hr />
+
+<h2 id="information-about-all-the-releases-must-be-stored-in-environment-specific-repositories-or-branches">Information about all the releases must be stored in environment-specific repositories or branches</h2>
+
+<h2 id="ten-commandments-of-gitops-applied-to-continuous-delivery-6">Ten Commandments Of GitOps Applied To Continuous Delivery</h2>
+
+<hr />
+
+<h1 id="everything-must-follow-the-same-coding-practices">Everything must follow the same coding practices</h1>
+
+<!-- .slide: data-background="img/gitops-env.png" data-background-size="contain" -->
+
+<h2 id="ten-commandments-of-gitops-applied-to-continuous-delivery-7">Ten Commandments Of GitOps Applied To Continuous Delivery</h2>
+
+<hr />
+
+<h1 id="all-deployments-must-be-idempotent">All deployments must be idempotent</h1>
+
+<h2 id="ten-commandments-of-gitops-applied-to-continuous-delivery-8">Ten Commandments Of GitOps Applied To Continuous Delivery</h2>
+
+<hr />
+
+<h2 id="git-webhooks-are-the-only-ones-allowed-to-initiate-a-change-that-will-be-applied-to-the-system">Git webhooks are the only ones allowed to initiate a change that will be applied to the system</h2>
+
+<h2 id="ten-commandments-of-gitops-applied-to-continuous-delivery-9">Ten Commandments Of GitOps Applied To Continuous Delivery</h2>
+
+<hr />
+
+<h1 id="all-the-tools-must-be-able-to-speak-with-each-other-through-apis">All the tools must be able to speak with each other through APIs</h1>
+
+<h2 id="in-case-you-messed-it-up">In case you messed it up</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout buildpack
+
+git merge <span class="nt">-s</span> ours master <span class="nt">--no-edit</span>
+
+git checkout master
+
+git merge buildpack
+
+git push
+</code></pre></div></div>
+
+<h2 id="exploring-jenkins-x-envs">Exploring Jenkins X Envs</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jx get env
+
+jx get env <span class="nt">-p</span> Auto
+
+jx get env <span class="nt">-p</span> Manual
+
+jx get env <span class="nt">-p</span> Never
+</code></pre></div></div>
+
+<h2 id="adapting-the-staging-env">Adapting The Staging Env</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ..
+
+git clone <span class="se">\</span>
+    https://github.com/<span class="nv">$GH_USER</span>/environment-jx-rocks-staging.git
+
+<span class="nb">cd </span>environment-jx-rocks-staging
+
+<span class="nb">ls</span> <span class="nt">-1</span>
+
+<span class="nb">cat </span>Makefile
+
+<span class="c"># Make sure that you use tabs instead of spaces</span>
+<span class="nb">echo</span> <span class="s1">'test:
+	ADDRESS=`kubectl -n jx-staging get ing go-demo-6 \\
+	-o jsonpath="{.spec.rules[0].host}"` go test -v'</span> <span class="se">\</span>
+    | tee <span class="nt">-a</span> Makefile
+</code></pre></div></div>
+
+<h2 id="adapting-the-staging-env-1">Adapting The Staging Env</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-sSLo</span> integration_test.go https://bit.ly/2Do5LRN
+
+<span class="nb">cat </span>integration_test.go
+
+<span class="nb">cat </span>Jenkinsfile
+
+curl <span class="nt">-sSLo</span> Jenkinsfile https://bit.ly/2Dr1Kfk
+
+<span class="nb">ls</span> <span class="nt">-1</span> env
+
+<span class="nb">cat </span>env/requirements.yaml
+</code></pre></div></div>
+
+<h2 id="adapting-the-staging-env-2">Adapting The Staging Env</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add <span class="nb">.</span>
+
+git commit <span class="nt">-m</span> <span class="s2">"Added tests"</span>
+
+git push
+
+jx get activity <span class="nt">-f</span> environment-jx-rocks-staging
+
+jx get build logs <span class="nv">$GH_USER</span>/environment-jx-rocks-staging/master
+
+jx console
+
+kubectl <span class="nt">-n</span> jx-staging get pods
+</code></pre></div></div>
+
+<h2 id="app--env-pipelines">App &lt;&gt; Env Pipelines</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>env/requirements.yaml
+</code></pre></div></div>
+
+<!-- .slide: data-background="img/gitops-full-flow.png" data-background-size="contain" -->
+
+<h2 id="controlling-the-environments">Controlling The Environments</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jx create env <span class="nt">--name</span> pre-production <span class="nt">--label</span> Pre-Production <span class="se">\</span>
+    <span class="nt">--namespace</span> jx-pre-production <span class="nt">--promotion</span> Manual <span class="nt">-b</span>
+
+jx get env
+
+jx edit env <span class="nt">--name</span> pre-production <span class="nt">--promotion</span> Auto
+
+jx delete env pre-production
+
+<span class="nv">GH_USER</span><span class="o">=[</span>...]
+
+hub delete <span class="nt">-y</span> <span class="nv">$GH_USER</span>/environment-jx-pre-production
+
+<span class="nb">cd</span> ..
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/jx/jx-env-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Talk: Combining Serverless Continuous Delivery With ChatOps | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Talk: Combining Serverless Continuous Delivery With ChatOps" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/jx/abstracts/prow.html" />
+<meta property="og:url" content="http://localhost:4000/jx/abstracts/prow.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/jx/abstracts/prow.html","@type":"WebPage","headline":"Talk: Combining Serverless Continuous Delivery With ChatOps","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h1 id="talk-combining-serverless-continuous-delivery-with-chatops">Talk: Combining Serverless Continuous Delivery With ChatOps</h1>
+
+<h2 id="abstract">Abstract</h2>
+
+<p>Jenkins does not scale. There’s no denying it. If we need more power because the number of concurrent builds increased, we cannot scale Jenkins. We cannot hook it into Kubernetes HorizontalPodAutoscaler that would increase or decrease the number of replicas based on metrics like the number of concurrent builds.</p>
+
+<p>Simply put, Jenkins does not scale. At times, our Jenkins is struggling under heavy load. At others, it is wasting resources when it is underutilized. As a result, we might need to increase its requested memory and CPU as well as its limits to cover the worst-case scenario. As a result, when fewer builds are running in parallel, it is wasting resources, and when more builds are running, it is slow due to insufficient amount of assigned resources. And if it reaches its memory limit, it’ll be shut down and rerun (potentially on a different node), thus causing delays or failed builds.</p>
+
+<p>Except, that there is no Jenkins in Jenkins X. And the good news is that it is serverless. It combines Kubernetes with Prow, Tekton, and Pipeline Operator. And that’s not all. It is based on GitOps principles, and it comes with ChatOps capabilities.</p>
+
+<p>We’ll explore how we can combine different tools and processes to accomplish Kubernetes-first Cloud-native continuous delivery based on GitOps principles combined with ChatOps. But, before we do that, you’ll need to forget everything you know about Jenkins or similar tools.</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/jx/abstracts/prow.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/devops23/ns-demo.html" />
+<meta property="og:url" content="http://localhost:4000/devops23/ns-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/devops23/ns-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="dividing-a-cluster-into-namespaces">Dividing A Cluster Into Namespaces</h1>
+
+<h2 id="deploying-the-first-release">Deploying The First Release</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>ns/go-demo-2.yml
+
+<span class="nv">IMG</span><span class="o">=</span>vfarcic/go-demo-2
+
+<span class="nv">TAG</span><span class="o">=</span>1.0
+
+<span class="nb">cat </span>ns/go-demo-2.yml | sed <span class="nt">-e</span> <span class="s2">"s@image: </span><span class="nv">$IMG</span><span class="s2">@image: </span><span class="nv">$IMG</span><span class="s2">:</span><span class="nv">$TAG</span><span class="s2">@g"</span> <span class="se">\</span>
+    | kubectl create <span class="nt">-f</span> -
+
+kubectl rollout status deploy go-demo-2-api
+</code></pre></div></div>
+
+<h2 id="deploying-the-first-release-1">Deploying The First Release</h2>
+
+<hr />
+
+<ul>
+  <li>We deployed <em>go-demo-2</em> resources with a specific image tag</li>
+  <li>We waited until the deployment rolls out</li>
+</ul>
+
+<h2 id="exploring-virtual-clusters">Exploring Virtual Clusters</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># If minikube</span>
+<span class="nv">IP</span><span class="o">=</span><span class="k">$(</span>minikube ip<span class="k">)</span>
+
+<span class="c"># If EKS</span>
+<span class="nv">IP</span><span class="o">=</span><span class="k">$(</span>kubectl <span class="nt">-n</span> ingress-nginx get svc ingress-nginx <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.status.loadBalancer.ingress[0].hostname}"</span><span class="k">)</span>
+
+<span class="c"># If GKE</span>
+<span class="nv">IP</span><span class="o">=</span><span class="k">$(</span>kubectl <span class="nt">-n</span> ingress-nginx get svc ingress-nginx <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.status.loadBalancer.ingress[0].ip}"</span><span class="k">)</span>
+
+curl <span class="nt">-H</span> <span class="s2">"Host: go-demo-2.com"</span> <span class="s2">"http://</span><span class="nv">$IP</span><span class="s2">/demo/hello"</span>
+
+kubectl get all
+</code></pre></div></div>
+
+<h2 id="exploring-virtual-clusters-1">Exploring Virtual Clusters</h2>
+
+<hr />
+
+<ul>
+  <li>We retrieved the IP of the cluster</li>
+  <li>We sent a request to the production release tied to the <code class="highlighter-rouge">go-demo-2.com</code> domain</li>
+  <li>We retrieved the list of all the resources</li>
+</ul>
+
+<!-- .slide: data-background="img/go-demo-2.png" data-background-size="contain" -->
+
+<h2 id="exploring-the-existing-namespaces">Exploring The Existing Namespaces</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl get ns
+</code></pre></div></div>
+
+<h2 id="exploring-the-existing-namespaces-1">Exploring The Existing Namespaces</h2>
+
+<hr />
+
+<ul>
+  <li>We retrieved the list of all the Namespaces</li>
+</ul>
+
+<!-- .slide: data-background="img/default-ns.png" data-background-size="contain" -->
+
+<h2 id="exploring-the-existing-namespaces-2">Exploring The Existing Namespaces</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> kube-public get all
+
+kubectl <span class="nt">-n</span> kube-system get all
+</code></pre></div></div>
+
+<h2 id="exploring-the-existing-namespaces-3">Exploring The Existing Namespaces</h2>
+
+<hr />
+
+<ul>
+  <li>We retrieved the list of all the resources in <code class="highlighter-rouge">kube-public</code> and <code class="highlighter-rouge">kube-system</code> Namespaces</li>
+</ul>
+
+<!-- .slide: data-background="img/kube-system-ns.png" data-background-size="contain" -->
+
+<h2 id="deploying-to-a-new-namespace">Deploying To A New Namespace</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl create ns testing
+
+kubectl get ns
+</code></pre></div></div>
+
+<h2 id="deploying-to-a-new-namespace-1">Deploying To A New Namespace</h2>
+
+<hr />
+
+<ul>
+  <li>We created a new Namespace called <code class="highlighter-rouge">testing</code></li>
+  <li>We retrieved the list of all the Namespaces and confirmed that <code class="highlighter-rouge">testing</code> is available</li>
+</ul>
+
+<h2 id="deploying-to-a-new-namespace-2">Deploying To A New Namespace</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># If minikube</span>
+kubectl config set-context testing <span class="nt">--namespace</span> testing <span class="se">\</span>
+    <span class="nt">--cluster</span> minikube <span class="nt">--user</span> minikube
+
+<span class="c"># If EKS</span>
+kubectl config set-context testing <span class="nt">--namespace</span> testing <span class="se">\</span>
+    <span class="nt">--cluster</span> devops24.<span class="nv">$AWS_DEFAULT_REGION</span>.eksctl.io <span class="se">\</span>
+    <span class="nt">--user</span> iam-root-account@devops24.<span class="nv">$AWS_DEFAULT_REGION</span>.eksctl.io
+
+<span class="c"># If GKE</span>
+<span class="nv">DEFAULT_CONTEXT</span><span class="o">=</span><span class="k">$(</span>kubectl config current-context<span class="k">)</span>
+
+<span class="c"># If GKE</span>
+kubectl config set-context testing <span class="nt">--namespace</span> testing <span class="se">\</span>
+    <span class="nt">--cluster</span> <span class="nv">$DEFAULT_CONTEXT</span> <span class="nt">--user</span> <span class="nv">$DEFAULT_CONTEXT</span>
+</code></pre></div></div>
+
+<h2 id="deploying-to-a-new-namespace-3">Deploying To A New Namespace</h2>
+
+<hr />
+
+<ul>
+  <li>We created a new context with the <code class="highlighter-rouge">testing</code> Namespace as the default</li>
+  <li>We viewed the <code class="highlighter-rouge">kubectl</code> configuration and observed that the current context is still using the <code class="highlighter-rouge">default</code> Namespace</li>
+</ul>
+
+<h2 id="deploying-to-a-new-namespace-4">Deploying To A New Namespace</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl config view
+
+kubectl config use-context testing
+
+kubectl get all
+
+<span class="nv">TAG</span><span class="o">=</span>2.0
+
+<span class="nv">DOM</span><span class="o">=</span>go-demo-2.com
+
+<span class="nb">cat </span>ns/go-demo-2.yml | sed <span class="nt">-e</span> <span class="s2">"s@image: </span><span class="nv">$IMG</span><span class="s2">@image: </span><span class="nv">$IMG</span><span class="s2">:</span><span class="nv">$TAG</span><span class="s2">@g"</span> <span class="se">\</span>
+    | sed <span class="nt">-e</span> <span class="s2">"s@host: </span><span class="nv">$DOM</span><span class="s2">@host: </span><span class="nv">$TAG</span><span class="se">\.</span><span class="nv">$DOM</span><span class="s2">@g"</span> <span class="se">\</span>
+    | kubectl create <span class="nt">-f</span> -
+
+kubectl rollout status deploy go-demo-2-api
+</code></pre></div></div>
+
+<h2 id="deploying-to-a-new-namespace-5">Deploying To A New Namespace</h2>
+
+<hr />
+
+<ul>
+  <li>We switched to the <code class="highlighter-rouge">testing</code> context</li>
+  <li>We listed all the resources in the <code class="highlighter-rouge">testing</code> Namespace</li>
+  <li>We installed <code class="highlighter-rouge">go-demo-2</code> with the tag <code class="highlighter-rouge">2.0</code> and a new domain in the <code class="highlighter-rouge">testing</code> Namespace</li>
+  <li>We checked the <code class="highlighter-rouge">rollout status</code> of the new installation</li>
+</ul>
+
+<!-- .slide: data-background="img/testing-ns.png" data-background-size="contain" -->
+
+<h2 id="deploying-to-a-new-namespace-6">Deploying To A New Namespace</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-H</span> <span class="s2">"Host: go-demo-2.com"</span> <span class="s2">"http://</span><span class="nv">$IP</span><span class="s2">/demo/hello"</span>
+
+curl <span class="nt">-H</span> <span class="s2">"Host: 2.0.go-demo-2.com"</span> <span class="s2">"http://</span><span class="nv">$IP</span><span class="s2">/demo/hello"</span>
+</code></pre></div></div>
+
+<h2 id="deploying-to-a-new-namespace-7">Deploying To A New Namespace</h2>
+
+<hr />
+
+<ul>
+  <li>We confirmed that both installations are running (in separate Namespaces) by sending a request to each</li>
+</ul>
+
+<h2 id="communicating-btw-namespaces">Communicating Btw Namespaces</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># If minikube</span>
+kubectl config use-context minikube
+
+<span class="c"># If EKS</span>
+kubectl config use-context iam-root-account@devops24.<span class="nv">$AWS_DEFAULT_REGION</span>.eksctl.io
+
+<span class="c"># If GKE</span>
+kubectl config use-context <span class="nv">$DEFAULT_CONTEXT</span>
+
+kubectl run <span class="nb">test</span> <span class="nt">--image</span><span class="o">=</span>alpine <span class="nt">--restart</span><span class="o">=</span>Never sleep 10000
+
+kubectl get pod <span class="nb">test
+
+</span>kubectl <span class="nb">exec</span> <span class="nt">-it</span> <span class="nb">test</span> <span class="nt">--</span> apk add <span class="nt">-U</span> curl
+</code></pre></div></div>
+
+<h2 id="communicating-btw-namespaces-1">Communicating Btw Namespaces</h2>
+
+<hr />
+
+<ul>
+  <li>We switched back to the previous context</li>
+  <li>We run a Pod based on <code class="highlighter-rouge">alpine</code></li>
+  <li>Inside the container of the new Pod, we installed <code class="highlighter-rouge">curl</code></li>
+</ul>
+
+<h2 id="communicating-btw-namespaces-2">Communicating Btw Namespaces</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nb">exec</span> <span class="nt">-it</span> <span class="nb">test</span> <span class="nt">--</span> curl <span class="s2">"http://go-demo-2-api:8080/demo/hello"</span>
+
+kubectl <span class="nb">exec</span> <span class="nt">-it</span> <span class="nb">test</span> <span class="se">\</span>
+    <span class="nt">--</span> curl <span class="s2">"http://go-demo-2-api.testing:8080/demo/hello"</span>
+</code></pre></div></div>
+
+<h2 id="communicating-btw-namespaces-3">Communicating Btw Namespaces</h2>
+
+<hr />
+
+<ul>
+  <li>We sent a request to the API in the same Namespace</li>
+  <li>We sent a request to the API in the <code class="highlighter-rouge">testing</code> Namespace</li>
+</ul>
+
+<h2 id="deleting-a-namespace">Deleting A Namespace</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl delete ns testing
+
+kubectl <span class="nt">-n</span> testing get all
+
+kubectl get all
+
+curl <span class="nt">-H</span> <span class="s2">"Host: go-demo-2.com"</span> <span class="s2">"http://</span><span class="nv">$IP</span><span class="s2">/demo/hello"</span>
+
+kubectl <span class="nb">set </span>image deployment/go-demo-2-api <span class="se">\</span>
+    <span class="nv">api</span><span class="o">=</span>vfarcic/go-demo-2:2.0 <span class="nt">--record</span>
+
+curl <span class="nt">-H</span> <span class="s2">"Host: go-demo-2.com"</span> <span class="s2">"http://</span><span class="nv">$IP</span><span class="s2">/demo/hello"</span>
+</code></pre></div></div>
+
+<h2 id="deleting-a-namespace-1">Deleting A Namespace</h2>
+
+<hr />
+
+<ul>
+  <li>We deleted the <code class="highlighter-rouge">testing</code> Namespace</li>
+  <li>We observed that all the resources from the Namespace were deleted as well</li>
+  <li>We confirmed that the resources from the <code class="highlighter-rouge">default</code> Namespace are still intact and the release <code class="highlighter-rouge">1.0</code> is still running</li>
+  <li>We upgraded the release to <code class="highlighter-rouge">2.0</code> and confirmed that it is running</li>
+</ul>
+
+<h2 id="what-now">What Now?</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl delete <span class="nt">-f</span> ns/go-demo-2.yml
+
+kubectl delete pod <span class="nb">test</span>
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/devops23/ns-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

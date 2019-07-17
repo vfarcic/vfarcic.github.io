@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Cluster | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Cluster" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/docker/dm-cluster.html" />
+<meta property="og:url" content="http://localhost:4000/docker/dm-cluster.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/docker/dm-cluster.html","@type":"WebPage","headline":"Cluster","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h1 id="cluster">Cluster</h1>
+
+<h1 id="cluster-1">Cluster</h1>
+
+<ul>
+  <li>Not a group of servers</li>
+  <li>A sum of resources of all the servers</li>
+  <li>Do not deploy to a server</li>
+  <li>Instruct a scheduler what the requirements are</li>
+  <li>Scheduler decides where to deploy</li>
+</ul>
+
+<h1 id="docker-machine">Docker Machine</h1>
+
+<ul>
+  <li>Lightweight VM</li>
+  <li>Very simple</li>
+  <li>Prepared for Docker</li>
+  <li>Good for local simulation</li>
+  <li>Bad for production usage</li>
+</ul>
+
+<h2 id="creating-dm-servers">Creating DM Servers</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-machine create <span class="nt">-d</span> virtualbox swarm-1
+
+docker-machine <span class="nb">ls
+
+</span>docker-machine env swarm-1
+
+<span class="nb">eval</span> <span class="k">$(</span>docker-machine env swarm-1<span class="k">)</span>
+
+docker version
+
+docker-machine create <span class="nt">-d</span> virtualbox swarm-2
+
+docker-machine create <span class="nt">-d</span> virtualbox swarm-3
+
+docker-machine <span class="nb">ls</span>
+</code></pre></div></div>
+
+<h2 id="initializing-a-swarm-cluster">Initializing A Swarm Cluster</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker swarm init <span class="nt">--advertise-addr</span> <span class="k">$(</span>docker-machine ip swarm-1<span class="k">)</span>
+
+docker node <span class="nb">ls</span>
+</code></pre></div></div>
+
+<h2 id="adding-managers">Adding Managers</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker swarm join-token <span class="nt">-q</span> manager
+
+<span class="nv">TOKEN</span><span class="o">=</span><span class="k">$(</span>docker swarm join-token <span class="nt">-q</span> manager<span class="k">)</span>
+
+<span class="nb">eval</span> <span class="k">$(</span>docker-machine env swarm-2<span class="k">)</span>
+
+docker swarm join <span class="nt">--advertise-addr</span> <span class="k">$(</span>docker-machine ip swarm-2<span class="k">)</span> <span class="se">\</span>
+  <span class="nt">--token</span> <span class="nv">$TOKEN</span> <span class="k">$(</span>docker-machine ip swarm-1<span class="k">)</span>:2377
+
+<span class="nb">eval</span> <span class="k">$(</span>docker-machine env swarm-3<span class="k">)</span>
+
+docker swarm join <span class="nt">--advertise-addr</span> <span class="k">$(</span>docker-machine ip swarm-3<span class="k">)</span> <span class="se">\</span>
+  <span class="nt">--token</span> <span class="nv">$TOKEN</span> <span class="k">$(</span>docker-machine ip swarm-1<span class="k">)</span>:2377
+
+docker node <span class="nb">ls</span>
+</code></pre></div></div>
+
+<h2 id="adding-workers">Adding Workers</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-machine create <span class="nt">-d</span> virtualbox swarm-4
+
+docker swarm join-token <span class="nt">-q</span> worker
+
+<span class="nv">TOKEN</span><span class="o">=</span><span class="k">$(</span>docker swarm join-token <span class="nt">-q</span> worker<span class="k">)</span>
+
+<span class="nb">eval</span> <span class="k">$(</span>docker-machine env swarm-4<span class="k">)</span>
+
+docker swarm join <span class="nt">--token</span> <span class="nv">$TOKEN</span> <span class="nt">--advertise-addr</span> <span class="k">$(</span>docker-machine ip swarm-4<span class="k">)</span> <span class="k">$(</span>docker-machine ip swarm-1<span class="k">)</span>:2377
+
+docker node <span class="nb">ls
+
+eval</span> <span class="k">$(</span>docker-machine env swarm-1<span class="k">)</span>
+
+docker node <span class="nb">ls</span>
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/docker/dm-cluster.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

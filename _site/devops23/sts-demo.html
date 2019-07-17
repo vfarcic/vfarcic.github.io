@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/devops23/sts-demo.html" />
+<meta property="og:url" content="http://localhost:4000/devops23/sts-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/devops23/sts-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="deploying-stateful-applications-at-scale">Deploying Stateful Applications At Scale</h1>
+
+<h2 id="using-statefulsets-to-run-stateful-applications">Using StatefulSets To Run Stateful Applications</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>sts/jenkins.yml
+
+kubectl apply <span class="nt">-f</span> sts/jenkins.yml <span class="nt">--record</span>
+
+kubectl <span class="nt">-n</span> jenkins rollout status sts jenkins
+
+kubectl <span class="nt">-n</span> jenkins get pvc
+
+kubectl <span class="nt">-n</span> jenkins get pv
+</code></pre></div></div>
+
+<h2 id="using-statefulsets-to-run-stateful-applications-1">Using StatefulSets To Run Stateful Applications</h2>
+
+<hr />
+
+<ul>
+  <li>We observed that StatefulSets use <code class="highlighter-rouge">volumeClaimTemplate</code> instead of a separate PersistentVolumeClaim</li>
+  <li>We used StatefulSet to run Jenkins</li>
+</ul>
+
+<h2 id="using-statefulsets-to-run-stateful-applications-2">Using StatefulSets To Run Stateful Applications</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># If EKS</span>
+<span class="nv">JENKINS_ADDR</span><span class="o">=</span><span class="k">$(</span>kubectl <span class="nt">-n</span> jenkins get ing jenkins <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.status.loadBalancer.ingress[0].hostname}"</span><span class="k">)</span>
+
+<span class="c"># If GKE</span>
+<span class="nv">JENKINS_ADDR</span><span class="o">=</span><span class="k">$(</span>kubectl <span class="nt">-n</span> jenkins get ing jenkins <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.status.loadBalancer.ingress[0].ip}"</span><span class="k">)</span>
+
+open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">/jenkins"</span>
+
+kubectl delete ns jenkins
+</code></pre></div></div>
+
+<h2 id="using-statefulsets-to-run-stateful-applications-3">Using StatefulSets To Run Stateful Applications</h2>
+
+<hr />
+
+<ul>
+  <li>We did NOT observe any significant difference between running a single replica Jenkins as a StatefulSet when compared to Deployments</li>
+  <li>We deleted the <code class="highlighter-rouge">jenkins</code> Namespace</li>
+</ul>
+
+<h2 id="using-deployments-to-run-stateful-applications-at-scale">Using Deployments To Run Stateful Applications At Scale</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>sts/go-demo-3-deploy.yml
+
+kubectl apply <span class="nt">-f</span> sts/go-demo-3-deploy.yml <span class="nt">--record</span>
+
+kubectl <span class="nt">-n</span> go-demo-3 rollout status deployment api
+
+kubectl <span class="nt">-n</span> go-demo-3 get pods
+
+<span class="nv">DB_1</span><span class="o">=</span><span class="k">$(</span>kubectl <span class="nt">-n</span> go-demo-3 get pods <span class="nt">-l</span> <span class="nv">app</span><span class="o">=</span>db <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.items[0].metadata.name}"</span><span class="k">)</span>
+
+<span class="nv">DB_2</span><span class="o">=</span><span class="k">$(</span>kubectl <span class="nt">-n</span> go-demo-3 get pods <span class="nt">-l</span> <span class="nv">app</span><span class="o">=</span>db <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.items[1].metadata.name}"</span><span class="k">)</span>
+</code></pre></div></div>
+
+<h2 id="using-deployments-to-run-stateful-applications-at-scale-1">Using Deployments To Run Stateful Applications At Scale</h2>
+
+<hr />
+
+<ul>
+  <li>We installed <em>go-demo-3</em> API and DB as Deployments with multiple replicas</li>
+  <li>We retrieved the Pods and observed that all but one DB failed</li>
+  <li>We retrieved names of two DB Pods</li>
+</ul>
+
+<h2 id="using-deployments-to-run-stateful-applications-at-scale-2">Using Deployments To Run Stateful Applications At Scale</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> go-demo-3 logs <span class="nv">$DB_1</span>
+
+kubectl <span class="nt">-n</span> go-demo-3 logs <span class="nv">$DB_2</span>
+
+kubectl get pv
+
+kubectl delete ns go-demo-3
+</code></pre></div></div>
+
+<h2 id="using-deployments-to-run-stateful-applications-at-scale-3">Using Deployments To Run Stateful Applications At Scale</h2>
+
+<hr />
+
+<ul>
+  <li>We observed from the logs that at least one DB Pod could not get a lock on the storage file</li>
+  <li>We retrieved the PersistentVolumes and observed that only one was created for all three replicas of the DB</li>
+  <li>We deleted the <code class="highlighter-rouge">go-demo-3</code> Namespace</li>
+</ul>
+
+<!-- .slide: data-background="img/sts-deployment.png" data-background-size="contain" -->
+
+<h2 id="using-statefulsets-to-run-stateful-applications-at-scale">Using StatefulSets To Run Stateful Applications At Scale</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>sts/go-demo-3-sts.yml
+
+kubectl apply <span class="nt">-f</span> sts/go-demo-3-sts.yml <span class="nt">--record</span>
+
+kubectl <span class="nt">-n</span> go-demo-3 get pods
+
+kubectl get pv
+</code></pre></div></div>
+
+<h2 id="using-statefulsets-to-run-stateful-applications-at-scale-1">Using StatefulSets To Run Stateful Applications At Scale</h2>
+
+<hr />
+
+<ul>
+  <li>We installed <em>go-demo-3</em> with DB replicas defined as StatefulSet</li>
+  <li>We retrieved the Pods and observed that DB Pods are created sequentially (and that API Pods are failing)</li>
+  <li>We retrieved PersistentVolumes and observed that one was created for each StatefulSet Pod</li>
+</ul>
+
+<!-- .slide: data-background="img/sts.png" data-background-size="contain" -->
+
+<h2 id="using-statefulsets-to-run-stateful-applications-at-scale-2">Using StatefulSets To Run Stateful Applications At Scale</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> go-demo-3 <span class="nb">exec</span> <span class="nt">-it</span> db-0 <span class="nt">--</span> sh
+
+mongo
+
+rs.initiate<span class="o">(</span> <span class="o">{</span>
+   _id : <span class="s2">"rs0"</span>,
+   members: <span class="o">[</span>
+      <span class="o">{</span>_id: 0, host: <span class="s2">"db-0.db:27017"</span><span class="o">}</span>,
+      <span class="o">{</span>_id: 1, host: <span class="s2">"db-1.db:27017"</span><span class="o">}</span>,
+      <span class="o">{</span>_id: 2, host: <span class="s2">"db-2.db:27017"</span><span class="o">}</span>
+   <span class="o">]</span>
+<span class="o">})</span>
+
+rs.status<span class="o">()</span>
+</code></pre></div></div>
+
+<h2 id="using-statefulsets-to-run-stateful-applications-at-scale-3">Using StatefulSets To Run Stateful Applications At Scale</h2>
+
+<hr />
+
+<ul>
+  <li>We entered into one of the DB Pods and created a MongoDB replica set</li>
+</ul>
+
+<h2 id="using-statefulsets-to-run-stateful-applications-at-scale-4">Using StatefulSets To Run Stateful Applications At Scale</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">exit
+
+exit
+
+</span>kubectl <span class="nt">-n</span> go-demo-3 get pods
+</code></pre></div></div>
+
+<h2 id="using-statefulsets-to-run-stateful-applications-at-scale-5">Using StatefulSets To Run Stateful Applications At Scale</h2>
+
+<hr />
+
+<ul>
+  <li>We retrieved the Pods and observed that API is not failing to connect to the DB any more</li>
+</ul>
+
+<h2 id="using-statefulsets-to-run-stateful-applications-at-scale-6">Using StatefulSets To Run Stateful Applications At Scale</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>diff sts/go-demo-3-sts.yml sts/go-demo-3-sts-upd.yml
+
+kubectl apply <span class="nt">-f</span> sts/go-demo-3-sts-upd.yml <span class="nt">--record</span>
+
+kubectl <span class="nt">-n</span> go-demo-3 get pods
+
+kubectl delete ns go-demo-3
+</code></pre></div></div>
+
+<h2 id="using-statefulsets-to-run-stateful-applications-at-scale-7">Using StatefulSets To Run Stateful Applications At Scale</h2>
+
+<hr />
+
+<ul>
+  <li>We updated the DB to the new image tag</li>
+  <li>We observed that the Pods are updated in sequential order, from the last to the first</li>
+  <li>We deleted the <em>go-demo-3</em> Namespace</li>
+</ul>
+
+<h2 id="using-sidecar-containers-to-initialize-applications">Using Sidecar Containers To Initialize Applications</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>sts/go-demo-3.yml
+
+kubectl apply <span class="nt">-f</span> sts/go-demo-3.yml <span class="nt">--record</span>
+
+<span class="c"># Wait for a few moments</span>
+
+kubectl <span class="nt">-n</span> go-demo-3 logs db-0 <span class="nt">-c</span> db-sidecar
+
+kubectl delete ns go-demo-3
+</code></pre></div></div>
+
+<h2 id="using-sidecar-containers-to-initialize-applications-1">Using Sidecar Containers To Initialize Applications</h2>
+
+<hr />
+
+<ul>
+  <li>We installed <em>go-demo-3</em> with DB StatefulSet containing a sidecar in charge of creating MongoDB replica set</li>
+  <li>We retrieved the sidecar logs and observed that it is forbidden from listing the Pods</li>
+  <li>We deleted the Namespace</li>
+</ul>
+
+<h2 id="using-sidecar-containers-to-initialize-applications-2">Using Sidecar Containers To Initialize Applications</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>sa/go-demo-3.yml
+
+kubectl create <span class="nt">-f</span> sa/go-demo-3.yml <span class="nt">--record</span> <span class="nt">--save-config</span>
+
+kubectl <span class="nt">-n</span> go-demo-3 get pods
+
+kubectl <span class="nt">-n</span> go-demo-3 logs db-0 <span class="nt">-c</span> db-sidecar
+</code></pre></div></div>
+
+<h2 id="using-sidecar-containers-to-initialize-applications-3">Using Sidecar Containers To Initialize Applications</h2>
+
+<hr />
+
+<ul>
+  <li>We created the DB StatefulSet attached to the ServiceAccount and provides the necessary permissions</li>
+  <li>We observed that all the Pods were created</li>
+  <li>We observed that sidecar logs do not show any issues</li>
+</ul>
+
+<h2 id="what-now">What Now?</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl delete ns go-demo-3
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/devops23/sts-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="vfarcic.github.io" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/devops25/app-scaling.html" />
+<meta property="og:url" content="http://localhost:4000/devops25/app-scaling.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/devops25/app-scaling.html","@type":"WebPage","headline":"vfarcic.github.io","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="nt">-f</span> scaling/go-demo-5-api-hpa-low-mem.yml
+</code></pre></div></div>
+
+<!-- .slide: data-background="../img/background/why.jpg" -->
+<h1 id="a-long-time-ago-in-a-galaxy-far-far-away">A long time ago in a galaxy far, far away…</h1>
+
+<hr />
+
+<!-- .slide: data-background="../img/background/source-code.jpeg" -->
+<h2 id="your-applications">Your applications</h2>
+<h1 id="could-not-be-scaled">could not be scaled</h1>
+
+<hr />
+
+<!-- .slide: data-background="../img/background/angry.jpg" -->
+<h2 id="you-knew-that-your-applications-should-be-scaled">You knew that your applications should be scaled</h2>
+<h1 id="when-users-complained">when users complained</h1>
+
+<hr />
+
+<!-- .slide: data-background="../img/background/monitoring.jpeg" -->
+<h2 id="you-stared-at">You stared at</h2>
+<h1 id="dashboards">dashboards</h1>
+<h2 id="to-find-out-when-to-scale-your-applications">to find out when to scale your applications</h2>
+
+<hr />
+
+<!-- .slide: data-background="../img/background/monitoring.jpeg" -->
+<h2 id="you-created">You created</h2>
+<h1 id="scaling-groups">scaling groups</h1>
+
+<hr />
+
+<!-- .slide: data-background="../img/products/kubernetes.png" -->
+<h2 id="you-adopted">You adopted</h2>
+<h1 id="kubernetes">Kubernetes</h1>
+
+<hr />
+
+<!-- .slide: data-background="../img/products/kubernetes.png" -->
+<h2 id="you-discovered">You discovered</h2>
+<h2 id="horizontalpodautoscaler">HorizontalPodAutoscaler</h2>
+
+<hr />
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">autoscaling/v2beta1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">HorizontalPodAutoscaler</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="s">...</span>
+  <span class="s">minReplicas</span><span class="pi">:</span> <span class="s">2</span>
+  <span class="na">maxReplicas</span><span class="pi">:</span> <span class="s">5</span>
+  <span class="na">metrics</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">Resource</span>
+    <span class="na">resource</span><span class="pi">:</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">cpu</span>
+      <span class="na">targetAverageUtilization</span><span class="pi">:</span> <span class="s">80</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">Resource</span>
+    <span class="na">resource</span><span class="pi">:</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">memory</span>
+      <span class="na">targetAverageUtilization</span><span class="pi">:</span> <span class="s">80</span>
+</code></pre></div></div>
+
+<!-- .slide: data-background="../img/products/kubernetes.png" -->
+<h2 id="you-discovered-1">You discovered</h2>
+<h2 id="horizontalpodautoscaler-1">HorizontalPodAutoscaler</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> go-demo-5 get hpa,pods
+</code></pre></div></div>
+
+<!-- .slide: data-background="../img/background/angry.jpg" -->
+<h2 id="you-learned-that">You learned that</h2>
+<h1 id="memory-and-cpu">memory and CPU</h1>
+<h2 id="is-not-enough">is not enough</h2>
+
+<hr />
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/devops25/app-scaling.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

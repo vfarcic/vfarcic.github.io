@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/devops24/jenkins-cd-demo.html" />
+<meta property="og:url" content="http://localhost:4000/devops24/jenkins-cd-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/devops24/jenkins-cd-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="cd-and-gitops">CD And GitOps</h1>
+
+<h2 id="defining-the-prod-environment">Defining The Prod Environment</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"https://github.com/vfarcic/k8s-prod.git"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Fork the repo</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ..
+
+git clone https://github.com/<span class="nv">$GH_USER</span>/k8s-prod.git
+
+<span class="nb">cd </span>k8s-prod
+
+<span class="nb">cat </span>helm/Chart.yaml
+
+cp helm/requirements-orig.yaml helm/requirements.yaml
+
+<span class="nb">cat </span>helm/requirements.yaml
+
+<span class="nb">cat </span>helm/values-orig.yaml
+</code></pre></div></div>
+
+<h2 id="defining-the-prod-environment-1">Defining The Prod Environment</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">ls</span> <span class="nt">-1</span> helm/templates
+
+<span class="nb">cat </span>helm/templates/ns.yaml
+
+<span class="nv">ADDR</span><span class="o">=</span><span class="nv">$LB_IP</span>.nip.io
+
+<span class="nb">echo</span> <span class="nv">$ADDR</span>
+
+<span class="nv">ADDR_ESC</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ADDR</span> | sed <span class="nt">-e</span> <span class="s2">"s@</span><span class="se">\.</span><span class="s2">@</span><span class="se">\\\.</span><span class="s2">@g"</span><span class="k">)</span>
+
+<span class="nb">echo</span> <span class="nv">$ADDR_ESC</span>
+
+<span class="nb">cat </span>helm/values-orig.yaml <span class="se">\</span>
+    | sed <span class="nt">-e</span> <span class="s2">"s@acme-escaped.com@</span><span class="nv">$ADDR_ESC</span><span class="s2">@g"</span> <span class="se">\</span>
+    | sed <span class="nt">-e</span> <span class="s2">"s@acme.com@</span><span class="nv">$ADDR</span><span class="s2">@g"</span> | tee helm/values.yaml
+</code></pre></div></div>
+
+<h2 id="defining-the-prod-environment-2">Defining The Prod Environment</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add <span class="nb">.</span>
+
+git commit <span class="nt">-m</span> <span class="s2">"Address"</span>
+
+git push
+
+helm dependency update helm
+
+<span class="nb">ls</span> <span class="nt">-1</span> helm/charts
+
+helm install helm <span class="nt">-n</span> prod <span class="nt">--namespace</span> prod
+</code></pre></div></div>
+
+<h2 id="defining-the-prod-environment-3">Defining The Prod Environment</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> prod create secret generic jenkins-credentials <span class="se">\</span>
+    <span class="nt">--from-file</span> ../k8s-specs/cluster/jenkins/credentials.xml
+
+kubectl <span class="nt">-n</span> prod create secret generic jenkins-secrets <span class="se">\</span>
+    <span class="nt">--from-file</span> ../k8s-specs/cluster/jenkins/secrets
+
+helm <span class="nb">ls
+
+</span>kubectl <span class="nt">-n</span> prod rollout status deploy prod-chartmuseum
+
+curl <span class="s2">"http://cm.</span><span class="nv">$ADDR</span><span class="s2">/health"</span>
+
+kubectl <span class="nt">-n</span> prod rollout status deploy prod-jenkins
+</code></pre></div></div>
+
+<h2 id="defining-the-prod-environment-4">Defining The Prod Environment</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">JENKINS_ADDR</span><span class="o">=</span><span class="s2">"jenkins.</span><span class="nv">$ADDR</span><span class="s2">"</span>
+
+open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">"</span>
+
+<span class="nv">JENKINS_PASS</span><span class="o">=</span><span class="k">$(</span>kubectl <span class="nt">-n</span> prod get secret prod-jenkins <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.data.jenkins-admin-password}"</span> <span class="se">\</span>
+    | base64 <span class="nt">--decode</span><span class="p">;</span> <span class="nb">echo</span><span class="k">)</span>
+
+<span class="nb">echo</span> <span class="nv">$JENKINS_PASS</span>
+</code></pre></div></div>
+
+<h2 id="preparing-the-environment">Preparing The Environment</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ..
+
+git clone https://github.com/<span class="nv">$GH_USER</span>/go-demo-5.git
+
+<span class="nb">cd </span>go-demo-5
+
+<span class="nv">DH_USER</span><span class="o">=[</span>...]
+
+<span class="nb">cat </span>helm/go-demo-5/deployment-orig.yaml <span class="se">\</span>
+    | sed <span class="nt">-e</span> <span class="s2">"s@vfarcic@</span><span class="nv">$DH_USER</span><span class="s2">@g"</span> <span class="se">\</span>
+    | tee helm/go-demo-5/templates/deployment.yaml
+
+kubectl apply <span class="nt">-f</span> k8s/build.yml <span class="nt">--record</span>
+
+helm init <span class="nt">--service-account</span> build <span class="se">\</span>
+    <span class="nt">--tiller-namespace</span> go-demo-5-build
+</code></pre></div></div>
+
+<h2 id="preparing-the-environment-1">Preparing The Environment</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>Dockerfile
+</code></pre></div></div>
+
+<h2 id="declarative-pipeline">Declarative Pipeline</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>Jenkinsfile.orig
+
+<span class="nb">cat </span>KubernetesPod.yaml
+</code></pre></div></div>
+
+<h2 id="continuous-delivery-job">Continuous Delivery Job</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>Jenkinsfile.orig | sed <span class="nt">-e</span> <span class="s2">"s@acme.com@</span><span class="nv">$ADDR</span><span class="s2">@g"</span> <span class="se">\</span>
+    | sed <span class="nt">-e</span> <span class="s2">"s@vfarcic@</span><span class="nv">$DH_USER</span><span class="s2">@g"</span> | tee Jenkinsfile
+
+git add <span class="nb">.</span>
+
+git commit <span class="nt">-m</span> <span class="s2">"Jenkinsfile"</span>
+
+git push
+</code></pre></div></div>
+
+<h2 id="continuous-delivery-job-1">Continuous Delivery Job</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ..
+
+git clone https://github.com/<span class="nv">$GH_USER</span>/jenkins-shared-libraries.git
+
+<span class="nb">cd </span>jenkins-shared-libraries
+
+git remote add upstream <span class="se">\</span>
+    https://github.com/vfarcic/jenkins-shared-libraries.git
+
+git fetch upstream
+
+git checkout master
+
+git merge upstream/master
+
+<span class="nb">cd</span> ../go-demo-5
+</code></pre></div></div>
+
+<h2 id="continuous-delivery-job-2">Continuous Delivery Job</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">/configure"</span>
+
+open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">/blue/organizations/jenkins/"</span>
+
+curl <span class="s2">"http://cm.</span><span class="nv">$ADDR</span><span class="s2">/index.yaml"</span>
+
+<span class="nv">VERSION</span><span class="o">=[</span>...]
+
+helm repo add chartmuseum http://cm.<span class="nv">$ADDR</span>
+
+helm repo list
+
+helm repo update
+
+helm inspect chartmuseum/go-demo-5 <span class="nt">--version</span> <span class="nv">$VERSION</span>
+</code></pre></div></div>
+
+<h2 id="upgrading-the-production">Upgrading The Production</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ../k8s-prod
+
+<span class="nb">cat </span>helm/requirements.yaml
+
+<span class="nb">echo</span> <span class="s2">"- name: go-demo-5
+  repository: </span><span class="se">\"</span><span class="s2">@chartmuseum</span><span class="se">\"</span><span class="s2">
+  version: </span><span class="nv">$VERSION</span><span class="s2">"</span> | tee <span class="nt">-a</span> helm/requirements.yaml
+
+<span class="nb">cat </span>helm/requirements.yaml
+
+<span class="nb">echo</span> <span class="s2">"go-demo-5:
+  ingress:
+    host: go-demo-5.</span><span class="nv">$ADDR</span><span class="s2">"</span> | tee <span class="nt">-a</span> helm/values.yaml
+
+<span class="nb">cat </span>helm/values.yaml
+</code></pre></div></div>
+
+<h2 id="upgrading-the-production-1">Upgrading The Production</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add <span class="nb">.</span>
+
+git commit <span class="nt">-m</span> <span class="s2">"Added go-demo-5"</span>
+
+git push
+
+helm dependency update helm
+
+<span class="nb">ls</span> <span class="nt">-1</span> helm/charts
+</code></pre></div></div>
+
+<h2 id="upgrading-the-production-2">Upgrading The Production</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>helm upgrade prod helm <span class="nt">--namespace</span> prod
+
+kubectl <span class="nt">-n</span> prod get pods
+
+kubectl <span class="nt">-n</span> prod rollout status deployment prod-go-demo-5
+
+curl <span class="nt">-i</span> <span class="s2">"http://go-demo-5.</span><span class="nv">$ADDR</span><span class="s2">/demo/hello"</span>
+
+kubectl <span class="nt">-n</span> prod describe deploy prod-go-demo-5
+</code></pre></div></div>
+
+<h2 id="jenkins-job-for-prod-env">Jenkins Job For Prod Env</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">/blue/organizations/jenkins/go-demo-5/branches"</span>
+
+<span class="nb">cd</span> ../go-demo-5
+
+git add <span class="nb">.</span>
+
+git commit <span class="nt">-m</span> <span class="s2">"Version bump"</span>
+
+git push
+
+open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">/blue/organizations/jenkins/go-demo-5/branches"</span>
+</code></pre></div></div>
+
+<h2 id="automating-prod-upgrade">Automating Prod Upgrade</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ../k8s-prod
+
+<span class="nb">cat </span>Jenkinsfile.orig
+
+<span class="nb">cat </span>Jenkinsfile.orig | sed <span class="nt">-e</span> <span class="s2">"s@acme.com@</span><span class="nv">$ADDR</span><span class="s2">@g"</span> | tee Jenkinsfile
+
+git add <span class="nb">.</span>
+
+git commit <span class="nt">-m</span> <span class="s2">"Jenkinsfile"</span>
+
+git push
+
+open <span class="s2">"http://</span><span class="nv">$JENKINS_ADDR</span><span class="s2">/blue/pipelines"</span>
+
+helm <span class="nb">history </span>prod
+</code></pre></div></div>
+
+<h2 id="high-level-overview">High-Level Overview</h2>
+
+<hr />
+
+<!-- .slide: data-background="img/cdp-stages-full.png" data-background-size="contain" -->
+
+<!-- .slide: data-background="img/cd-stages.png" data-background-size="contain" -->
+
+<!-- .slide: data-background="img/deployment-stage.png" data-background-size="contain" -->
+
+<!-- .slide: data-background="img/cd-high-level.png" data-background-size="contain" -->
+
+<h2 id="what-now">What Now?</h2>
+
+<hr />
+
+<p>TODO</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/devops24/jenkins-cd-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

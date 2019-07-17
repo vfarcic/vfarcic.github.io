@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/devops23/auth-demo-short.html" />
+<meta property="og:url" content="http://localhost:4000/devops23/auth-demo-short.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/devops23/auth-demo-short.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="securing-kubernetes-clusters">Securing Kubernetes Clusters</h1>
+
+<h2 id="creating-users">Creating Users</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir <span class="nt">-p</span> keys
+
+openssl genrsa <span class="nt">-out</span> keys/jdoe.key 2048
+
+openssl req <span class="nt">-new</span> <span class="nt">-key</span> keys/jdoe.key <span class="nt">-out</span> keys/jdoe.csr <span class="se">\</span>
+    <span class="nt">-subj</span> <span class="s2">"/CN=jdoe/O=devs"</span>
+
+openssl x509 <span class="nt">-req</span> <span class="nt">-in</span> keys/jdoe.csr <span class="nt">-CA</span> ~/.minikube/ca.crt <span class="se">\</span>
+    <span class="nt">-CAkey</span> ~/.minikube/ca.key <span class="nt">-CAcreateserial</span> <span class="nt">-out</span> keys/jdoe.crt <span class="se">\</span>
+    <span class="nt">-days</span> 365
+</code></pre></div></div>
+
+<h2 id="creating-users-1">Creating Users</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cp ~/.minikube/ca.crt keys/ca.crt
+
+<span class="nv">SERVER</span><span class="o">=</span><span class="k">$(</span>kubectl config view <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.clusters[?(@.name=="minikube")].cluster.server}'</span><span class="k">)</span>
+
+<span class="nb">echo</span> <span class="nv">$SERVER</span>
+
+kubectl config set-cluster jdoe <span class="se">\</span>
+    <span class="nt">--certificate-authority</span> keys/ca.crt <span class="nt">--server</span> <span class="nv">$SERVER</span>
+
+kubectl config set-credentials jdoe <span class="se">\</span>
+    <span class="nt">--client-certificate</span> keys/jdoe.crt <span class="nt">--client-key</span> keys/jdoe.key
+</code></pre></div></div>
+
+<h2 id="creating-users-2">Creating Users</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl config set-context jdoe <span class="se">\</span>
+    <span class="nt">--cluster</span> jdoe <span class="se">\</span>
+    <span class="nt">--user</span> jdoe
+
+kubectl config use-context jdoe
+
+kubectl config view
+
+kubectl get pods
+
+kubectl get all
+</code></pre></div></div>
+
+<h2 id="pre-defined-cluster-roles">Pre-Defined Cluster Roles</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl config use-context minikube
+
+kubectl get all
+
+kubectl auth can-i get pods <span class="nt">--as</span> jdoe
+
+kubectl get clusterroles
+
+kubectl describe clusterrole view
+
+kubectl auth can-i <span class="s2">"*"</span> <span class="s2">"*"</span>
+</code></pre></div></div>
+
+<h2 id="role-and-cluster-role-bindings">Role And Cluster Role Bindings</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl create rolebinding jdoe <span class="nt">--clusterrole</span> view <span class="nt">--user</span> jdoe <span class="se">\</span>
+    <span class="nt">-n</span> default <span class="nt">--save-config</span>
+
+kubectl auth can-i get pods <span class="nt">--as</span> jdoe
+
+kubectl auth can-i get pods <span class="nt">--as</span> jdoe <span class="nt">--all-namespaces</span>
+
+kubectl delete rolebinding jdoe
+</code></pre></div></div>
+
+<h2 id="role-and-cluster-role-bindings-1">Role And Cluster Role Bindings</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>auth/rb-jdoe.yml
+
+kubectl create <span class="nt">-f</span> auth/rb-jdoe.yml <span class="nt">--record</span> <span class="nt">--save-config</span>
+
+kubectl <span class="nt">-n</span> jdoe auth can-i <span class="s2">"*"</span> <span class="s2">"*"</span> <span class="nt">--as</span> jdoe
+
+<span class="nb">cat </span>auth/crb-release-manager.yml
+
+kubectl create <span class="nt">-f</span> auth/crb-release-manager.yml <span class="se">\</span>
+    <span class="nt">--record</span> <span class="nt">--save-config</span>
+</code></pre></div></div>
+
+<h2 id="role-and-cluster-role-bindings-2">Role And Cluster Role Bindings</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> default auth can-i <span class="s2">"*"</span> pods <span class="nt">--as</span> jdoe
+
+kubectl <span class="nt">-n</span> default auth can-i create deployments <span class="nt">--as</span> jdoe
+
+kubectl <span class="nt">-n</span> default auth can-i delete deployments <span class="nt">--as</span> jdoe
+
+kubectl config use-context jdoe
+
+kubectl <span class="nt">-n</span> default run db <span class="nt">--image</span> mongo:3.3
+
+kubectl <span class="nt">-n</span> default delete deployment db
+</code></pre></div></div>
+
+<h2 id="what-now">What Now?</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl config use-context minikube
+
+kubectl delete deploy db
+
+kubectl delete rolebinding release-manager
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/devops23/auth-demo-short.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Specification By Example</title>
+
+		<meta name="author" content="Viktor Farcic, Jordi Falguera">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section id="cover">
+					<h1>Specification By Example</h1>
+                    <h3>using</h3>
+					<h3>Behavior Driven Development (BDD)</h3>
+					<p>
+						<small>
+                            Created by <a href="http://technologyconversations.com/about/">Viktor Farcic & Jordi Falguera</a>
+                            for <a href="http://technologyconversations.com">Technology Conversations</a> / <a href="http://twitter.com/vfarcic">@vfarcic</a> / <a href="http://twitter.com/jordi_falguera">@jordi_falguera</a>
+                        </small>
+					</p>
+				</section>
+                <section id="aboutMe">
+                    <h2>Viktor Farcic</h2>
+                    <ul>
+                        <img src="img/viktor.jpg" style="float: right; width: 25%; height: 25%;"/>
+                        <li>Software Architect at <a href="http://defie.co">Defie</a></li>
+                        <li>Never developed in Fortran</li>
+                        <li>Passionate about TDD, BDD and Continuous Delivery</li>
+                        <li>Blogger in <a href="http://technologyconversations.com/">TechnologyConversations.com</a></li>
+                        <li>Java Test-Driven Development: Mastering TDD Through Katas</li>
+                    </ul>
+                </section>
+                <section id="index">
+                    <h2>Index</h2>
+                    <ul>
+                        <li><a href="#communicationChallenges">Communication Challenges</a></li>
+                        <li><a href="#howCanWeBridgeThisGap">How Can We Bridge This Gap</a></li>
+                        <li><a href="#sbe">Specification By Example</a></li>
+                        <li><a href="#bdd">Behavior-Driven Development</a></li>
+                        <li><a href="#automation">Automation</a></li>
+                        <li><a href="#bddVsTdd">BDD vs TDD</a></li>
+                        <li><a href="#cd">BDD & Continuous Delivery</a></li>
+                        <li><a href="#bddAssistant">BDD Assistant</a></li>
+                        <li><a href="#moreInfo">Additional Information</a></li>
+                        <li><a href="#qa">Q&A</a></li>
+                    </ul>
+                </section>
+                <section>
+					<section id="communicationChallenges">
+						<h2>Communication challenges</h2>
+						<img src="img/telephone.jpg" style="width:50%; height:50%"/>
+						<div>The telephone game</div>
+					</section>
+					<section id="deathByDocumentation">
+						<h2>Communication challenges</h2>
+						<img src="img/deathByDocumentation.png" style="width:40%; height:40%"/>
+						<div>Death by documentation</div>
+					</section>
+					<section id="groupThink">
+						<h2>Communication challenges</h2>
+						<img src="img/groupthink.gif" style="width:40%; height:40%"/>
+						<div>Group Think effect</div>
+					</section>
+					<section id="assume">
+						<h2>Communication challenges</h2>
+						<img src="img/assume.jpg" style="width:70%; height:70%"/>
+						<div>BAs trying to answer directly</div>
+					</section>
+                </section>
+                <section>
+                    <section id="howCanWeBridgeThisGap">
+                        <h2>How can we bridge this gap?</h2>
+						<img src="img/align.jpg" style="width:70%; height:70%"/>
+						<div>Align all the stakeholders</div>
+                    </section>
+                    <section id="sameLanguage">
+                        <h2>How can we bridge this gap?</h2>
+						<img src="img/sameLanguage.png"  style="width:50%; height:50%"/>
+						<div>Use an ubiquitous language</div>
+                    </section>
+                    <section id="communicateWithExamples">
+                        <h2>How can we bridge this gap?</h2>
+						<img src="img/communicateWithExamples.gif" style="width:50%; height:50%"/>
+						<div>Communicate with examples</div>
+                    </section>
+                    <section id="blackBoxTesting">
+                        <h2>How can we bridge this gap?</h2>
+						<img src="img/blackBox.jpg" style="width:50%; height:50%"/>
+						<div>Take advantage of black box testing</div>
+                    </section>
+                </section>
+                <section>
+                    <section id="sbe">
+						<h2>Specification By Example</h2>
+						<h3>Same shit with different names</h3>
+                        <ul>
+                            <li>ATDD (Acceptance Test Driven Development)</li>
+                            <li>FTDD (Functional Test Driven Development)</li>
+                            <li>BDD (Behavior Driven Development)</li>
+                            <li>EDD (Examples Driven Development)</li>
+                            <li>SBE (Specification By Example)</li>
+                            <li>Executable Specifications</li>
+                        </ul>
+                    </section>
+                    <section id="sbeBenefits">
+                        <h2>Specification By Example</h2>
+						<h3>Benefits</h3>
+                        <ul>
+                            <li>Improved communication</li>
+                            <li>Shared understanding of the problem</li>
+                            <li>Reduction in feedback loops</li>
+                            <li>Examples being the Single Source of Trust</li>
+                            <li>Easy to check whether the code conforms to the specs</li>
+                        </ul>
+                    </section>
+                    <section id="sbeToolsAndFrameworks">
+                        <h2>Specification By Example</h2>
+						<h3>Frameworks</h3>
+                        <ul>
+                            <li>Fit (Framework for Integrated tests)</li>
+                            <li>Fitnesse</li>
+                            <li>JBehave / Cucumber / Specflow</li>
+                            <li>Robot framework</li>
+                            <li>Concordion</li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section id="bdd">
+                        <h2>Behavior Driven Development (BDD)</h2>
+                        <h3>Introduction</h3>
+                        <ul>
+                            <li>Agile process</li>
+                            <li>Stakeholder value</li>
+                            <li>Unique set of artifacts</li>
+                            <li>TDD with clarity</li>
+                            <li>Natural language</li>
+                            <li>A way to get technical and non-technical people to understand each other</li>
+                        </ul>
+                    </section>
+                    <section id="bddStory">
+                        <h2>Behavior Driven Development (BDD)</h2>
+                        <h3>Story</h3>
+                        <ul>
+                            <li>Narrative</li>
+                            <li>One or more scenarios</li>
+                        </ul>
+                    </section>
+                    <section id="bddNarrativeExample">
+                        <h2>Behavior Driven Development (BDD)</h2>
+                        <h3>Narrative</h3>
+                        <pre><code contenteditable>
+                            Narrative:<br />
+                            In Order to [benefit]<br />
+                            As a [role]<br />
+                            I Want to [feature]<br />
+                        </code></pre>
+                    </section>
+                    <section id="bddNarrative">
+                        <h2>Behavior Driven Development (BDD)</h2>
+                        <h3>Narrative</h3>
+                        <ul>
+                            <li>NOT requirement statements</li>
+                            <li>Everyone can write them</li>
+                            <li>
+                                INVEST
+                                <ul>
+                                    <li>Independent</li>
+                                    <li>Negotiable</li>
+                                    <li>Valuable</li>
+                                    <li>Estimable</li>
+                                    <li>Small</li>
+                                    <li>Testable</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+                    <section id="bddScenario">
+                        <h2>Behavior Driven Development (BDD)</h2>
+                        <h3>Scenario</h3>
+                        <pre><code contenteditable>
+                            Scenario: [description]<br />
+                            Given [context or precondition]<br />
+                            When [event or action]<br />
+                            Then [outcome validation]<br />
+                        </code></pre>
+                    </section>
+                    <section id="bddProcess">
+                        <h2>Process</h2>
+                        <ul>
+                            <li>Write and discuss narrative</li>
+                            <li>Write and discuss short descriptions of scenarios</li>
+                            <li>Write steps for each scenario</li>
+                            <li>Repeat steps 2 and 3 during the development of the narrative</li>
+                        </ul>
+                    </section>
+                </section>
+				<section>
+                    <section id="automation">
+                        <h2>Automation</h2>
+                        <h3>Frameworks</h3>
+                        <ul>
+                            <li>JBehave (Java)</li>
+                            <li>Cucumber (Ruby / Java / .Net / Flex)</li>
+                            <li>RSpec (Ruby)</li>
+                            <li>Spec Flow (.Net)</li>
+                        </ul>
+    				</section>
+                    <section id="automationSteps">
+                        <h2>Automation</h2>
+                        <h3>Steps</h3>
+                        <ol>
+                            <li>Create library of normalized steps</li>
+                            <li>Combine steps into composites</li>
+                            <li>Empower scenarios with examples tables</li>
+                        </ol>
+                    </section>
+                    <section id="automationNormalizedSteps">
+                        <h2>Automation</h2>
+                        <h3>Phase #1</h3>
+                        <h3>Create library of normalized steps</h3>
+                        <ul>
+                            <li>Separate the scenarios from the code</li>
+                            <li>Build the steps library</li>
+                            <li>Create small atomic steps</li>
+                            <li>Standardize steps format</li>
+                            <li>Externalize parameters</li>
+                            <li>Avoid repeated code with aliases</li>
+                        </ul>
+                    </section>
+                    <section id="automationNormalizedStepsSeparateFromCode">
+                        <h2>Automation</h2>
+                        <h3>Phase #1</h3>
+                        <h4>Create library of normalized steps</h4>
+                        <h5>Separate the scenarios from the code</h5>
+                        <pre>Java code:<code contenteditable>@When("user clicks the $id button")
+public final void clickButton(final String id) {
+    // Code that clicks the button with specified ID
+}</code></pre>
+                        <pre>BDD step:
+When user clicks the login button</pre>
+                    </section>
+                    <section id="automationNormalizedStepsLibrary">
+                        <h2>Automation</h2>
+                        <h3>Phase #1</h3>
+                        <h4>Create library of normalized steps</h4>
+                        <h5>Build the steps library</h5>
+                        <pre>CommonSteps - WebSteps        - MyWebSiteSteps
+                              - BackOfficeSteps
+            - DatabaseSteps   - OracleSteps
+                              - MySQLSteps
+                              - DB2Steps
+            - APISteps        - JSONSteps
+                              - WebServiceSteps
+            - OperationsSteps - ShellSteps
+                              - WindowsSteps
+                              - TelnetSteps</pre>
+                    </section>
+                    <section id="automationNormalizedStepsAtomic">
+                        <h2>Automation</h2>
+                        <h3>Phase #1</h3>
+                        <h4>Create library of normalized steps</h4>
+                        <h5>Create small atomic steps</h5>
+                        <pre>BDD story:
+When visitor types john.doe@example.com into the email field
+When visitor types password mysecret into the password field
+When visitor clicks the register button</pre>
+                    </section>
+                    <section id="automationNormalizedStepsFormat">
+                        <h2>Automation</h2>
+                        <h3>Phase #1</h3>
+                        <h4>Create library of normalized steps</h4>
+                        <h5>Standardize steps format</h5>
+                        <pre>BDD story:
+When Web user clicks the $id element
+When Web user clicks the $id link
+When Back office user clicks the $id button</pre>
+                    </section>
+                    <section id="normalizedStepsExternalizeParams">
+                        <h2>Automation</h2>
+                        <h3>Phase #1</h3>
+                        <h4>Create library of normalized steps</h4>
+                        <h5>Externalize parameters</h5>
+                        <pre>BDD story:
+Given Web user is using Firefox browser
+Given Web user opened http://www.google.com
+When Web user types behavior driven development in the search field
+Then the first result is Behavior-driven development - Wikipedia</pre>
+                        <pre>BDD Story:
+Given Web user is using selected browser</pre>
+                    </section>
+                    <section id="automationNormalizedStepsAliases">
+                        <h2>Automation</h2>
+                        <h3>Phase #1</h3>
+                        <h4>Create library of normalized steps</h4>
+                        <h5>Avoid repeated code with aliases</h5>
+                        <pre>Java code<code contenteditable="true">@When("Web user clicks the $id element")
+@Aliases(values={
+    "Web user clicks the $id button",
+    "Web user clicks the $id link"
+}
+public final void clickElement(final String id) {
+    ...
+}</code></pre>
+                    </section>
+                    <section id="automationComposites">
+                        <h2>Automation</h2>
+                        <h3>Phase #2</h3>
+                        <h4>Combine steps into composites</h4>
+                    </section>
+                    <section id="automationCompositesWithout">
+                        <h2>Automation</h2>
+                        <h3>Phase #2</h3>
+                        <h4>Combine steps into composites</h4>
+                        <h5>Without composites</h5>
+                        <pre>BDD story:
+Given user is on the home screen
+When user types john.doe@example.com into the email field
+When user types my_secret into the password field
+When user clicks the login button
+Then confirmation screen is opened</pre>
+                    </section>
+                    <section id="automationCompositesWith">
+                        <h2>Automation</h2>
+                        <h3>Phase #2</h3>
+                        <h4>Combine steps into composites</h4>
+                        <h5>With composites</h5>
+                        <pre>BDD story:
+Given user is logged in</pre>
+                        <pre>Java code:<code contenteditable="true">@Given("user is logged in")
+@Composite(steps = {
+    "Given user is on the home screen",
+    "When user types john.doe@example.com into the email field",
+    "When user types my_secret into the password field",
+    "When user clicks the login button",
+    "Then confirmation screen is opened"
+}</code></pre>
+                    </section>
+                    <section id="automationExamplesTable">
+                        <h2>Automation</h2>
+                        <h3>Phase #3</h3>
+                        <h4>Empower scenarios with examples tables</h4>
+                        <pre>Scenario: Visitors are able to register
+
+Given visitor is on the registration screen
+When visitor types email &lt;email&gt;
+When visitor types password &lt;password&gt;
+When visitor clicks the register button
+Then text &lt;text&gt; is displayed
+
+Examples:
+|email                |password |text                            |
+|john.doe@example.com |mysecret |Welcome john.doe@example.com    |
+|john.doe@example.com |secret   |Password is too short           |
+|john.doe             |mysecret |Email is incorrect              |</pre>
+                    </section>
+                </section>
+                <section>
+                    <section id="bddVsTdd">
+                        <h2>BDD vs TDD</h2>
+                        <ul>
+                            <li>Similar but not the same</li>
+                            <li>BDD eliminates issues that TDD might cause</li>
+                            <li>BDD works best when used together with TDD</li>
+                        </ul>
+                    </section>
+                    <section id="bddVsTddWhatIsTdd">
+                        <h2>BDD vs TDD</h2>
+                        <h3>What is TDD?</h3>
+                        <h4>Red-Green-Refactor</h4>
+                        <div>
+                            <ol>
+                                <li class="fragment highlight-red">Write a test</li>
+                                <li class="fragment highlight-red">Run the test</li>
+                                <li class="fragment highlight-green">Write the implementation code</li>
+                                <li class="fragment highlight-green">Run the test</li>
+                                <li class="fragment highlight-blue">Refactor</li>
+                            </ol>
+                        </div>
+                    </section>
+                    <section id="bddVsTddSimilar">
+                        <h2>BDD vs TDD</h2>
+                        <h3>Similarities</h3>
+                        <ul>
+                            <li>Both drive software development</li>
+                            <li>Both write specification before the implementation</li>
+                            <li>Both are replacing part of existing documentation</li>
+                        </ul>
+                    </section>
+                    <section id="bddVsTddDifferent">
+                        <h2>BDD vs TDD</h2>
+                        <h3>Differences</h3>
+                        <ol>
+                            <li>BDD is readable by non-geeks</li>
+                            <li>Specification and behaviour vs code design and units</li>
+                            <li>Many vs one (or two in case of Pair Programming)</li>
+                            <li>Time span between specification and implementation</li>
+                            <li>Levels of abstraction</li>
+                            <li>Behavior vs code</li>
+                            <li>BDD is acceptance criteria</li>
+                            <li>Everyone vs coders</li>
+                        </ol>
+                    </section>
+                </section>
+                <section>
+                    <section id="cd">
+                        <h2>BDD & Continuous Delivery</h2>
+                        <h3>Introduction</h3>
+                        <ul>
+                            <li>Commit to VCS</li>
+                            <li>Static analysis</li>
+                            <li>Unit tests</li>
+                            <li>Functional and integration tests</li>
+                            <li>Package & deliver</li>
+                        </ul>
+                    </section>
+                    <section id="cdTools">
+                        <h2>BDD & Continuous Delivery</h2>
+                        <h3>Functional Tests vs BDD</h3>
+                        <ul>
+                            <li>What we expect vs what users expect</li>
+                            <li>Tests vs executable requirements</li>
+                            <li>Tests vs acceptance criteria</li>
+                        </ul>
+                    </section>
+                </section>
+                <section id="bddAssistant">
+                    <h2>BDD Assistant</h2>
+                    <!--<img src="img/bddAssistant.png" style="float: right">-->
+                    <div class="row text-center">
+                        <div class="col-md-12 video-container">
+                            <iframe width="640" height="360" src="//www.youtube.com/embed/RTBsbxm0nUc?rel=0" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    More information on the <a href="http://www.bddassistant.com">site</a> and in the <a href="https://github.com/TechnologyConversations/TechnologyConversationsBdd">repository</a>.
+                </section>
+                <section id="qa">
+                    <h1>Q&A</h1>
+                </section>
+                <section id="moreInfo">
+                    <h2>Additional Information</h2>
+                    <ul>
+                        <li>
+                            Behavior Driven Development (BDD): Value Through Collaboration
+                            <ul>
+                                <li><a href="http://technologyconversations.com/2013/11/14/behavior-driven-development-bdd-value-through-collaboration-part-1-introduction/">Introduction</a></li>
+                                <li><a href="http://technologyconversations.com/2013/11/17/behavior-driven-development-bdd-value-through-collaboration-part-2-narrative/">Narrative</a></li>
+                                <li><a href="http://technologyconversations.com/2013/11/25/behavior-driven-development-bdd-value-through-collaboration-part-3-scenarios/">Scenarios</a></li>
+                                <li><a href="http://technologyconversations.com/2013/12/08/behavior-driven-development-bdd-value-through-collaboration-part-4-automation/">Automation</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="http://technologyconversations.com/2014/04/08/tests-as-documentation/">Tests as Documentation</a></li>
+                        <li><a href="http://technologyconversations.com/2014/07/23/bdd-behavior-driven-development-missing-piece-in-the-continuous-integration-puzzle/">BDD: Missing Piece in the Continuous Integration Puzzle</a></li>
+                        <li><a href="http://technologyconversations.com/2014/09/02/bdd-assistant-its-alive-and-cries-for-help/">BDD Assistant: It's Alive and Cries for Help</a></li>
+                    </ul>
+                </section>
+				<section id="theEnd">
+					<h1>The End</h1>
+					<h3>By Viktor Farcic & Jordi Falguera</h3>
+					<h4>@vfarcic @jordi_falguera</h4>
+					<h4><a href="http://technologyconversations.com/about/">technologyconversations.com</a></h4>
+				</section>
+			</div>
+		</div>
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+		<script>
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+		</script>
+	</body>
+</html>

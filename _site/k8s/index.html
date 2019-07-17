@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Setup | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Setup" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/k8s/" />
+<meta property="og:url" content="http://localhost:4000/k8s/" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/k8s/","@type":"WebPage","headline":"Setup","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="setup">Setup</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-LO</span> <span class="s2">"https://storage.googleapis.com/kubernetes-release/release/</span><span class="k">$(</span>curl <span class="nt">-s</span> https://storage.googleapis.com/kubernetes-release/release/stable.txt<span class="k">)</span><span class="s2">/bin/darwin/amd64/kubectl"</span>
+
+chmod +x ./kubectl
+
+<span class="nb">sudo </span>mv ./kubectl /usr/local/bin/kubectl
+
+kubectl version
+
+minikube start
+
+kubectl cluster-info
+
+kubectl get nodes
+</code></pre></div></div>
+
+<h2 id="deployment">Deployment</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl run kubernetes-bootcamp <span class="nt">--image</span><span class="o">=</span>docker.io/jocatalin/kubernetes-bootcamp:v1 <span class="nt">--port</span><span class="o">=</span>8080
+
+kubectl get deployments
+
+kubectl proxy
+
+<span class="nb">export </span><span class="nv">POD_NAME</span><span class="o">=</span><span class="k">$(</span>kubectl get pods <span class="nt">-o</span> go-template <span class="nt">--template</span> <span class="s1">'\n'</span><span class="k">)</span>
+
+<span class="nb">echo</span> <span class="s2">"Pods:</span><span class="se">\n</span><span class="nv">$POD_NAME</span><span class="s2">"</span>
+
+curl <span class="s2">"http://localhost:8001/api/v1/proxy/namespaces/default/pods/</span><span class="nv">$POD_NAME</span><span class="s2">/"</span>
+
+kubectl get pods
+
+kubectl describe pods
+
+kubectl logs <span class="nv">$POD_NAME</span>
+
+kubectl <span class="nb">exec</span> <span class="nv">$POD_NAME</span> env
+
+kubectl <span class="nb">exec</span> <span class="nt">-ti</span> <span class="nv">$POD_NAME</span> bash
+
+<span class="nb">cat </span>server.js
+
+curl <span class="s2">"localhost:8080"</span>
+
+<span class="nb">exit</span>
+
+<span class="c"># TODO: https://kubernetes.io/docs/tutorials/kubernetes-basics/expose-intro/</span>
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/k8s/README.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

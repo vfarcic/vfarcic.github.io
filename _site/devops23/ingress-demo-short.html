@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/devops23/ingress-demo-short.html" />
+<meta property="og:url" content="http://localhost:4000/devops23/ingress-demo-short.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/devops23/ingress-demo-short.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="using-ingress-to-forward-traffic">Using Ingress To Forward Traffic</h1>
+
+<h2 id="enabling-ingress-controllers">Enabling Ingress Controllers</h2>
+<h4 id="minikube">(minikube)</h4>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>minikube addons <span class="nb">enable </span>ingress
+
+<span class="nv">IP</span><span class="o">=</span><span class="k">$(</span>minikube ip<span class="k">)</span>
+
+curl <span class="nt">-i</span> <span class="s2">"http://</span><span class="nv">$IP</span><span class="s2">/healthz"</span>
+</code></pre></div></div>
+
+<h2 id="enabling-ingress-controllers-1">Enabling Ingress Controllers</h2>
+<h4 id="gke">(GKE)</h4>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="se">\</span>
+    <span class="nt">-f</span> https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
+
+kubectl apply <span class="se">\</span>
+    <span class="nt">-f</span> https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/cloud-generic.yaml
+
+<span class="nv">IP</span><span class="o">=</span><span class="k">$(</span>kubectl <span class="nt">-n</span> ingress-nginx get svc ingress-nginx <span class="se">\</span>
+    <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.status.loadBalancer.ingress[0].ip}"</span><span class="k">)</span>
+
+<span class="nb">echo</span> <span class="nv">$IP</span>
+
+<span class="c"># Repeat if empty</span>
+</code></pre></div></div>
+
+<h2 id="ingress-based-on-paths">Ingress Based On Paths</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>ingress/go-demo-2.yml
+
+kubectl create <span class="nt">-f</span> ingress/go-demo-2.yml <span class="nt">--record</span> <span class="nt">--save-config</span>
+
+kubectl rollout status deployment go-demo-2-api
+
+curl <span class="nt">-i</span> <span class="s2">"http://</span><span class="nv">$IP</span><span class="s2">/demo/hello"</span>
+</code></pre></div></div>
+
+<!-- .slide: data-background="img/seq_ingress_ch07.png" data-background-size="contain" -->
+
+<h2 id="ingress-based-on-domains">Ingress Based On Domains</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>ingress/devops-toolkit-dom.yml
+
+kubectl apply <span class="nt">-f</span> ingress/devops-toolkit-dom.yml <span class="nt">--record</span>
+
+kubectl rollout status deployment devops-toolkit
+
+curl <span class="nt">-I</span> <span class="nt">-H</span> <span class="s2">"Host: devopstoolkitseries.com"</span> <span class="s2">"http://</span><span class="nv">$IP</span><span class="s2">"</span>
+
+curl <span class="nt">-I</span> <span class="nt">-H</span> <span class="s2">"Host: acme.com"</span> <span class="s2">"http://</span><span class="nv">$IP</span><span class="s2">/demo/hello"</span>
+</code></pre></div></div>
+
+<h2 id="ingress-with-default-backends">Ingress With Default Backends</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-I</span> <span class="nt">-H</span> <span class="s2">"Host: acme.com"</span> <span class="s2">"http://</span><span class="nv">$IP</span><span class="s2">"</span>
+
+<span class="nb">cat </span>ingress/default-backend.yml
+
+kubectl create <span class="nt">-f</span> ingress/default-backend.yml
+
+curl <span class="nt">-I</span> <span class="nt">-H</span> <span class="s2">"Host: acme.com"</span> <span class="s2">"http://</span><span class="nv">$IP</span><span class="s2">"</span>
+
+open <span class="s2">"http://</span><span class="nv">$IP</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<!-- .slide: data-background="img/ingress-components.png" data-background-size="contain" -->
+
+<h2 id="what-now">What Now?</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl delete <span class="nt">-f</span> ingress/default-backend.yml
+
+kubectl delete <span class="nt">-f</span> ingress/devops-toolkit-dom.yml
+
+kubectl delete <span class="nt">-f</span> ingress/go-demo-2.yml
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/devops23/ingress-demo-short.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

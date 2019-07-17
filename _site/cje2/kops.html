@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/cje2/kops.html" />
+<meta property="og:url" content="http://localhost:4000/cje2/kops.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/cje2/kops.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="creating-a-production-ready-kubernetes-cluster">Creating A Production-Ready Kubernetes Cluster</h1>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+  <li><a href="https://git-scm.com/downloads">Git</a></li>
+  <li><a href="https://aws.amazon.com">AWS account</a></li>
+  <li><a href="http://docs.aws.amazon.com/cli/latest/userguide/installing.html">AWS CLI</a></li>
+  <li><a href="https://stedolan.github.io/jq/">jq</a></li>
+  <li><a href="https://github.com/kubernetes/kops#installing">kops</a> or <a href="https://www.docker.com/docker-windows">Docker for Windows</a></li>
+  <li>GitBash (if Windows)</li>
+</ul>
+
+<h2 id="creating-aws-keys">Creating AWS keys</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"https://console.aws.amazon.com/iam/home#/security_credential"</span>
+
+<span class="nb">export </span><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=[</span>...]
+
+<span class="nb">export </span><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=[</span>...]
+
+<span class="nb">export </span><span class="nv">AWS_DEFAULT_REGION</span><span class="o">=</span>us-east-2
+</code></pre></div></div>
+
+<h2 id="iam">IAM</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws iam create-group <span class="nt">--group-name</span> kops
+
+aws iam attach-group-policy <span class="nt">--group-name</span> kops <span class="se">\</span>
+    <span class="nt">--policy-arn</span> arn:aws:iam::aws:policy/AmazonEC2FullAccess
+
+aws iam attach-group-policy <span class="nt">--group-name</span> kops <span class="se">\</span>
+    <span class="nt">--policy-arn</span> arn:aws:iam::aws:policy/AmazonS3FullAccess
+
+aws iam attach-group-policy <span class="nt">--group-name</span> kops <span class="se">\</span>
+    <span class="nt">--policy-arn</span> arn:aws:iam::aws:policy/AmazonVPCFullAccess
+
+aws iam attach-group-policy <span class="nt">--group-name</span> kops <span class="se">\</span>
+    <span class="nt">--policy-arn</span> arn:aws:iam::aws:policy/IAMFullAccess
+
+aws iam create-user <span class="nt">--user-name</span> kops
+</code></pre></div></div>
+
+<h2 id="iam-1">IAM</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws iam add-user-to-group <span class="nt">--user-name</span> kops <span class="nt">--group-name</span> kops
+
+aws iam create-access-key <span class="nt">--user-name</span> kops <span class="o">&gt;</span>kops-creds
+
+<span class="nb">cat </span>kops-creds
+
+<span class="nb">export </span><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span><span class="k">$(</span><span class="nb">cat </span>kops-creds | <span class="se">\</span>
+    jq <span class="nt">-r</span> <span class="s1">'.AccessKey.AccessKeyId'</span><span class="k">)</span>
+
+<span class="nb">export </span><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span><span class="k">$(</span><span class="nb">cat </span>kops-creds | <span class="se">\</span>
+    jq <span class="nt">-r</span> <span class="s1">'.AccessKey.SecretAccessKey'</span><span class="k">)</span>
+</code></pre></div></div>
+
+<h2 id="choosing-availability-zones">Choosing Availability Zones</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws ec2 describe-availability-zones <span class="nt">--region</span> <span class="nv">$AWS_DEFAULT_REGION</span>
+
+<span class="c"># If Windows, use `tr '\r\n' ', '` instead of `tr '\n' ','`</span>
+<span class="nb">export </span><span class="nv">ZONES</span><span class="o">=</span><span class="k">$(</span>aws ec2 describe-availability-zones <span class="se">\</span>
+    <span class="nt">--region</span> <span class="nv">$AWS_DEFAULT_REGION</span> | jq <span class="nt">-r</span> <span class="se">\</span>
+    <span class="s1">'.AvailabilityZones[].ZoneName'</span> | tr <span class="s1">'\n'</span> <span class="s1">','</span> | tr <span class="nt">-d</span> <span class="s1">' '</span><span class="k">)</span>
+
+<span class="nv">ZONES</span><span class="o">=</span><span class="k">${</span><span class="nv">ZONES</span><span class="p">%?</span><span class="k">}</span>
+
+<span class="nb">echo</span> <span class="nv">$ZONES</span>
+</code></pre></div></div>
+
+<h2 id="generating-ssh-keys">Generating SSH Keys</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir <span class="nt">-p</span> cluster
+
+<span class="nb">cd </span>cluster
+
+aws ec2 create-key-pair <span class="nt">--key-name</span> devops23 <span class="se">\</span>
+    | jq <span class="nt">-r</span> <span class="s1">'.KeyMaterial'</span> <span class="o">&gt;</span>devops23.pem
+
+chmod 400 devops23.pem
+
+ssh-keygen <span class="nt">-y</span> <span class="nt">-f</span> devops23.pem <span class="o">&gt;</span>devops23.pub
+</code></pre></div></div>
+
+<h2 id="creating-cluster-state-storage">Creating Cluster State Storage</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">NAME</span><span class="o">=</span>devops23.k8s.local
+
+<span class="nb">export </span><span class="nv">BUCKET_NAME</span><span class="o">=</span>devops23-<span class="k">$(</span>date +%s<span class="k">)</span>
+
+aws s3api create-bucket <span class="nt">--bucket</span> <span class="nv">$BUCKET_NAME</span> <span class="se">\</span>
+    <span class="nt">--create-bucket-configuration</span> <span class="se">\</span>
+    <span class="nv">LocationConstraint</span><span class="o">=</span><span class="nv">$AWS_DEFAULT_REGION</span>
+
+<span class="nb">export </span><span class="nv">KOPS_STATE_STORE</span><span class="o">=</span>s3://<span class="nv">$BUCKET_NAME</span>
+</code></pre></div></div>
+
+<h2 id="kops-in-windows">kops In Windows</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir config
+
+<span class="c"># Windows only</span>
+<span class="nb">alias </span><span class="nv">kops</span><span class="o">=</span><span class="s2">"docker run -it --rm </span><span class="se">\</span><span class="s2">
+    -v </span><span class="nv">$PWD</span><span class="s2">/devops23.pub:/devops23.pub </span><span class="se">\</span><span class="s2">
+    -v </span><span class="nv">$PWD</span><span class="s2">/config:/config </span><span class="se">\</span><span class="s2">
+    -e KUBECONFIG=/config/kubecfg.yaml </span><span class="se">\</span><span class="s2">
+    -e NAME=</span><span class="nv">$NAME</span><span class="s2"> -e ZONES=</span><span class="nv">$ZONES</span><span class="s2"> </span><span class="se">\</span><span class="s2">
+    -e AWS_ACCESS_KEY_ID=</span><span class="nv">$AWS_ACCESS_KEY_ID</span><span class="s2"> </span><span class="se">\</span><span class="s2">
+    -e AWS_SECRET_ACCESS_KEY=</span><span class="nv">$AWS_SECRET_ACCESS_KEY</span><span class="s2"> </span><span class="se">\</span><span class="s2">
+    -e KOPS_STATE_STORE=</span><span class="nv">$KOPS_STATE_STORE</span><span class="s2"> </span><span class="se">\</span><span class="s2">
+    vfarcic/kops"</span>
+</code></pre></div></div>
+
+<h2 id="creating-a-cluster">Creating A Cluster</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kops create cluster <span class="nt">--name</span> <span class="nv">$NAME</span> <span class="nt">--master-count</span> 3 <span class="nt">--node-count</span> 3 <span class="se">\</span>
+    <span class="nt">--master-size</span> t2.small <span class="nt">--node-size</span> t2.xlarge <span class="nt">--zones</span> <span class="nv">$ZONES</span> <span class="se">\</span>
+    <span class="nt">--master-zones</span> <span class="nv">$ZONES</span> <span class="nt">--ssh-public-key</span> devops23.pub <span class="se">\</span>
+    <span class="nt">--networking</span> kubenet <span class="nt">--yes</span>
+
+<span class="c"># Windows only</span>
+kops <span class="nb">export </span>kubecfg <span class="nt">--name</span> <span class="k">${</span><span class="nv">NAME</span><span class="k">}</span>
+
+<span class="c"># Windows only</span>
+<span class="nb">export </span><span class="nv">KUBECONFIG</span><span class="o">=</span><span class="nv">$PWD</span>/config/kubecfg.yaml
+
+kubectl cluster-info
+
+kops validate cluster
+</code></pre></div></div>
+
+<!-- .slide: data-background="../docs/img/kops-infra-servers.png" data-background-size="contain" -->
+
+<!-- .slide: data-background="../docs/img/kops-infra-nodeup.png" data-background-size="contain" -->
+
+<h2 id="exploring-system-pods">Exploring System Pods</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nt">-n</span> kube-system get pods
+</code></pre></div></div>
+
+<!-- .slide: data-background="../docs/img/kops-infra-components.png" data-background-size="contain" -->
+
+<h2 id="accessing-the-cluster-api">Accessing The Cluster API</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws elb describe-load-balancers
+
+kubectl config view
+</code></pre></div></div>
+
+<!-- .slide: data-background="../docs/img/kops-elb-api.png" data-background-size="contain" -->
+
+<h2 id="accessing-cluster-nodes">Accessing Cluster Nodes</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl create <span class="nt">-f</span> <span class="se">\</span>
+    https://raw.githubusercontent.com/kubernetes/kops/master/addons/ingress-nginx/v1.6.0.yaml
+
+kubectl <span class="nt">-n</span> kube-ingress get all
+
+aws elb describe-load-balancers
+
+<span class="nv">CLUSTER_DNS</span><span class="o">=</span><span class="k">$(</span>aws elb describe-load-balancers | jq <span class="nt">-r</span> <span class="se">\</span>
+    <span class="s2">".LoadBalancerDescriptions[] | select(.DNSName </span><span class="se">\</span><span class="s2">
+    | contains (</span><span class="se">\"</span><span class="s2">api-devops23</span><span class="se">\"</span><span class="s2">) | not).DNSName"</span><span class="k">)</span>
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/cje2/kops.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

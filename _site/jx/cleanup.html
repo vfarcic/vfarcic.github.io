@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="vfarcic.github.io" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/jx/cleanup.html" />
+<meta property="og:url" content="http://localhost:4000/jx/cleanup.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/jx/cleanup.html","@type":"WebPage","headline":"vfarcic.github.io","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <!--
+doctl kubernetes cluster delete jx-rocks -f
+
+# TODO: Remove the volumes
+# doctl compute volume list -o json
+
+# TODO: Remove the LB
+-->
+<h2 id="cleanup-gke">Cleanup (GKE)</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gcloud container clusters delete jx-rocks <span class="nt">--region</span> us-east1 <span class="nt">--quiet</span>
+
+gcloud compute disks delete <span class="nt">--zone</span> us-east1-b <span class="k">$(</span>gcloud compute disks <span class="se">\</span>
+    list <span class="nt">--filter</span><span class="o">=</span><span class="s2">"zone:us-east1-b AND -users:*"</span> <span class="se">\</span>
+    <span class="nt">--format</span><span class="o">=</span><span class="s2">"value(id)"</span><span class="k">)</span> <span class="nt">--quiet</span>
+gcloud compute disks delete <span class="nt">--zone</span> us-east1-c <span class="k">$(</span>gcloud compute disks <span class="se">\</span>
+    list <span class="nt">--filter</span><span class="o">=</span><span class="s2">"zone:us-east1-c AND -users:*"</span> <span class="se">\</span>
+    <span class="nt">--format</span><span class="o">=</span><span class="s2">"value(id)"</span><span class="k">)</span> <span class="nt">--quiet</span>
+gcloud compute disks delete <span class="nt">--zone</span> us-east1-d <span class="k">$(</span>gcloud compute disks <span class="se">\</span>
+    list <span class="nt">--filter</span><span class="o">=</span><span class="s2">"zone:us-east1-d AND -users:*"</span> <span class="se">\</span>
+    <span class="nt">--format</span><span class="o">=</span><span class="s2">"value(id)"</span><span class="k">)</span> <span class="nt">--quiet</span>
+</code></pre></div></div>
+
+<h2 id="cleanup-eks">Cleanup (EKS)</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Only if there are no other ELBs in that region</span>
+<span class="nv">LB_NAME</span><span class="o">=</span><span class="k">$(</span>aws elbv2 describe-load-balancers | jq <span class="nt">-r</span> <span class="se">\</span>
+    <span class="s2">".LoadBalancers[0].LoadBalancerName"</span><span class="k">)</span>
+
+<span class="nb">echo</span> <span class="nv">$LB_NAME</span>
+
+aws elb delete-load-balancer <span class="nt">--load-balancer-name</span> <span class="nv">$LB_NAME</span>
+
+eksctl delete cluster <span class="nt">-n</span> <span class="nv">$NAME</span>
+
+<span class="k">for </span>volume <span class="k">in</span> <span class="sb">`</span>aws ec2 describe-volumes <span class="nt">--output</span> text| <span class="nb">grep </span>available | awk <span class="s1">'{print $8}'</span><span class="sb">`</span><span class="p">;</span> <span class="k">do 
+    </span><span class="nb">echo</span> <span class="s2">"Deleting volume </span><span class="nv">$volume</span><span class="s2">"</span>
+    aws ec2 delete-volume <span class="nt">--volume-id</span> <span class="nv">$volume</span>
+<span class="k">done</span>
+</code></pre></div></div>
+
+<h2 id="cleanup-aks">Cleanup (AKS)</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>az aks delete <span class="nt">-n</span> <span class="nv">$NAME</span> <span class="nt">-g</span> <span class="nv">$NAME</span><span class="nt">-group</span> <span class="nt">--yes</span>
+
+kubectl config delete-cluster jx-rocks
+
+kubectl config delete-context jx-rocks
+
+kubectl config <span class="nb">unset </span>users.clusterUser_jx-rocks-group_jx-rocks
+
+az group delete <span class="nt">--name</span> <span class="nv">$NAME</span><span class="nt">-group</span> <span class="nt">--yes</span>
+</code></pre></div></div>
+
+<h2 id="cleanup">Cleanup</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hub delete <span class="nt">-y</span> <span class="nv">$GH_USER</span>/environment-jx-rocks-staging
+
+hub delete <span class="nt">-y</span> <span class="nv">$GH_USER</span>/environment-jx-rocks-production
+
+hub delete <span class="nt">-y</span> <span class="nv">$GH_USER</span>/environment-tekton-staging
+
+hub delete <span class="nt">-y</span> <span class="nv">$GH_USER</span>/environment-tekton-production
+
+hub delete <span class="nt">-y</span> <span class="nv">$GH_USER</span>/jx-go
+
+hub delete <span class="nt">-y</span> <span class="nv">$GH_USER</span>/jx-serverless
+
+hub delete <span class="nt">-y</span> <span class="nv">$GH_USER</span>/jx-prow
+
+hub delete <span class="nt">-y</span> <span class="nv">$GH_USER</span>/jx-knative
+
+rm <span class="nt">-rf</span> ~/.jx/environments/<span class="nv">$GH_USER</span>/environment-tekton-<span class="k">*</span>
+</code></pre></div></div>
+
+<h2 id="cleanup-1">Cleanup</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm <span class="nt">-rf</span> jx-go
+
+rm <span class="nt">-rf</span> jx-serverless
+
+rm <span class="nt">-rf</span> jx-prow
+
+rm <span class="nt">-rf</span> jx-knative
+
+rm <span class="nt">-rf</span> environment-jx-rocks-<span class="k">*</span>
+
+rm <span class="nt">-rf</span> environment-tekton-<span class="k">*</span>
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/jx/cleanup.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/devops25/instrument-demo.html" />
+<meta property="og:url" content="http://localhost:4000/devops25/instrument-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/devops25/instrument-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="debugging-issues-discovered-through-metrics-and-alerts">Debugging Issues Discovered Through Metrics And Alerts</h1>
+
+<h2 id="facing-a-disaster">Facing A Disaster</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">GD5_ADDR</span><span class="o">=</span>go-demo-5.<span class="nv">$LB_IP</span>.nip.io
+
+helm install <span class="nt">--name</span> go-demo-5 <span class="nt">--namespace</span> go-demo-5 <span class="se">\</span>
+    https://github.com/vfarcic/go-demo-5/releases/download/0.0.1/go-demo-5-0.0.1.tgz <span class="se">\</span>
+    <span class="nt">--set</span> ingress.host<span class="o">=</span><span class="nv">$GD5_ADDR</span>
+
+kubectl <span class="nt">-n</span> go-demo-5 rollout status deployment go-demo-5
+
+curl http://<span class="nv">$GD5_ADDR</span>/demo/hello
+
+<span class="k">for </span>i <span class="k">in</span> <span class="o">{</span>1..20<span class="o">}</span><span class="p">;</span> <span class="k">do
+    </span><span class="nv">DELAY</span><span class="o">=</span><span class="nv">$[</span> <span class="nv">$RANDOM</span> % 10000 <span class="o">]</span>
+    curl <span class="s2">"http://</span><span class="nv">$GD5_ADDR</span><span class="s2">/demo/hello?delay=</span><span class="nv">$DELAY</span><span class="s2">"</span>
+<span class="k">done
+
+</span>open <span class="s2">"http://</span><span class="nv">$PROM_ADDR</span><span class="s2">/alerts"</span>
+</code></pre></div></div>
+
+<h2 id="facing-a-disaster-1">Facing A Disaster</h2>
+
+<hr />
+
+<p>[Prometheus expressions]</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sum(rate(
+    nginx_ingress_controller_request_duration_seconds_sum{
+        ingress="go-demo-5"
+    }[5m]
+)) / 
+sum(rate(
+    nginx_ingress_controller_request_duration_seconds_count{
+        ingress="go-demo-5"
+    }[5m]
+))
+</code></pre></div></div>
+
+<h2 id="using-instrumentation">Using Instrumentation</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"https://github.com/vfarcic/go-demo-5/blob/master/main.go"</span>
+
+kubectl <span class="nt">-n</span> metrics run <span class="nt">-it</span> <span class="nb">test</span> <span class="nt">--image</span><span class="o">=</span>appropriate/curl <span class="se">\</span>
+    <span class="nt">--restart</span><span class="o">=</span>Never <span class="nt">--rm</span> <span class="nt">--</span> go-demo-5.go-demo-5:8080/metrics
+
+open <span class="s2">"http://</span><span class="nv">$PROM_ADDR</span><span class="s2">/targets"</span>
+
+open <span class="s2">"http://</span><span class="nv">$PROM_ADDR</span><span class="s2">/graph"</span>
+</code></pre></div></div>
+
+<p>[Prometheus expressions]</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http_server_resp_time_count
+
+http_server_resp_time_sum{
+    kubernetes_name="go-demo-5"
+} / 
+http_server_resp_time_count{
+    kubernetes_name="go-demo-5"
+}
+</code></pre></div></div>
+
+<h2 id="debugging-potential-issues">Debugging Potential Issues</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for </span>i <span class="k">in</span> <span class="o">{</span>1..20<span class="o">}</span><span class="p">;</span> <span class="k">do
+    </span><span class="nv">DELAY</span><span class="o">=</span><span class="nv">$[</span> <span class="nv">$RANDOM</span> % 10000 <span class="o">]</span>
+    curl <span class="s2">"http://</span><span class="nv">$GD5_ADDR</span><span class="s2">/demo/hello?delay=</span><span class="nv">$DELAY</span><span class="s2">"</span>
+<span class="k">done
+
+</span>open <span class="s2">"http://</span><span class="nv">$PROM_ADDR</span><span class="s2">/alerts"</span>
+</code></pre></div></div>
+
+<p>[Prometheus expressions]</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sum(rate(
+    http_server_resp_time_bucket{
+        le="0.1",
+        kubernetes_name="go-demo-5"
+    }[5m]
+)) /
+sum(rate(
+    http_server_resp_time_count{
+        kubernetes_name="go-demo-5"
+    }[5m]
+))
+</code></pre></div></div>
+
+<h2 id="debugging-potential-issues-1">Debugging Potential Issues</h2>
+
+<hr />
+
+<p>[Prometheus expressions]</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sum(rate(
+    http_server_resp_time_bucket{
+        le="0.1",
+        kubernetes_name="go-demo-5"
+    }[5m]
+)) 
+by (method, path) / 
+sum(rate(
+    http_server_resp_time_count{
+        kubernetes_name="go-demo-5"
+    }[5m]
+)) 
+by (method, path)
+</code></pre></div></div>
+
+<h2 id="debugging-potential-issues-2">Debugging Potential Issues</h2>
+
+<hr />
+
+<p>[Prometheus expressions]</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sum(rate(
+    http_server_resp_time_bucket{
+        le="0.1",
+        kubernetes_name="go-demo-5"
+    }[5m]
+)) 
+by (method, path) / 
+sum(rate(
+    http_server_resp_time_count{
+        kubernetes_name="go-demo-5"
+    }[5m]
+)) 
+by (method, path) &lt; 0.99
+</code></pre></div></div>
+
+<h2 id="what-now">What Now?</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>helm delete go-demo-5 <span class="nt">--purge</span>
+
+kubectl delete ns go-demo-5
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/devops25/instrument-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

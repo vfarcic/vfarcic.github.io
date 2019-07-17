@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="vfarcic.github.io" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/articles/devoptics.html" />
+<meta property="og:url" content="http://localhost:4000/articles/devoptics.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/articles/devoptics.html","@type":"WebPage","headline":"vfarcic.github.io","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <ul>
+  <li>Value stream &gt; Each phase is a job?</li>
+  <li>CD is typically not archived by <strong>a single job or pipeline</strong> &gt; Single pipeline per product/microservice. From the DORA report: “Loosely coupled architectures and teams are the strongest predictor of continuous delivery.”, “High performers: Deployment frequency - On demand (multiple deploys per day)”,</li>
+  <li>Insights into <strong>server workloads</strong> &gt; Prometheus</li>
+  <li><strong>Number of runs waiting to start</strong> &gt; CJE</li>
+  <li><strong>Lenght of build request queues</strong> &gt; CJE</li>
+  <li>Run completion status - successful, <strong>failed</strong>, etc &gt; Fix the failed build immediatelly</li>
+  <li>Optimal time for maintenance/upgrades &gt; Rolling updates in k8s (except Jenkins)</li>
+  <li>Expose <strong>infrastructure inefficiencies</strong> &gt; How?</li>
+  <li>Allow automation constraints to be uncovered and removed &gt; How?</li>
+  <li>When a build succeeds that includes an <strong>artifact from a preceding gate</strong>, tickets from the preceding gate move to the successful gate &gt; Which types of artifact are tracked? Container images? Documentation states that, in case of pipelines, only those with <code class="highlighter-rouge">archiveArtifacts</code> are used. <code class="highlighter-rouge">devOpticsConsumes</code> sounds like too much coupling.</li>
+  <li>https://go.cloudbees.com/docs/cloudbees-documentation/devoptics-user-guide/value_streams/#devoptics-value-stream &gt; Uses old pipeline views. Why?</li>
+</ul>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/articles/devoptics.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

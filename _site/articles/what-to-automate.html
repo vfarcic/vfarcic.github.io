@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>What should you be automating in the development process? | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="What should you be automating in the development process?" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/articles/what-to-automate.html" />
+<meta property="og:url" content="http://localhost:4000/articles/what-to-automate.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/articles/what-to-automate.html","@type":"WebPage","headline":"What should you be automating in the development process?","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h1 id="what-should-you-be-automating-in-the-development-process">What should you be automating in the development process?</h1>
+
+<p>What to automate? Which parts of the delivery process are good candidates? Which applications will benefit from automation? At first, those sound like silly questions. Automate all your repetitive processes. <strong>If you think that you’ll do the same thing manually more than once, automate it.</strong> Why would you waste your creative potential and knowledge by doing things that are much better done by scripts? If we can create robots that assemble cars, we can surely create a Jenkins job that builds software, runs tests, and deploys containers. Car assembly is undoubtedly harder to accomplish than building software. Yet, an average company does not adhere to that logic. Why is that?</p>
+
+<p>Two main culprits prevent many companies from automating all the repetitive process; silos and legacy code.</p>
+
+<p>I often encounter companies that have a lot of small pieces of the process automated, but without an overarching pipeline that joins those pieces into a fully automated process. As a result, not much is accomplished since the whole process still needs to wait for handovers and (often long) manual actions. The reason behind missing pipeline that envelops the entire process is the lack of responsibility for a product. Different silos do their stuff (e.g., coding, testing, deployments), and nobody understands the big picture. At least, not those that are capable of redesigning and refactoring applications and writing automation scripts. Instead, silos keep introducing manual approvals and handovers because their parts are done, and they don’t care or even know what’s happening next. To make things more complicated, when you do decide to join those disparate pieces of automation into a product-oriented fully-automated pipeline, you’ll realize that it cannot be done. You will not be able to assemble those automation snippets into a pipeline because they were not designed to work together. Even when you do, you’ll face a challenge with legacy code.</p>
+
+<p>The most common problem with automation is legacy code. By definition, legacy applications are those that were not refactored and those that did not keep up with the changes in the industry. That does not mean that all the apps that started their life long time ago are legacy. But, instead, that those that did not keep up with time are. Now, you might ask why does that pose problems with automation? The answer is simple. The applications that are not designed to be buildable, testable, and deployable (according to today’s standards) cannot be moved through their life-cycle through automation. At least, not without too much effort that often results in slow delivery and an insufficient return of investment.</p>
+
+<p>If we accept that silos and legacy applications are often preventing automation of the development process, the answer to the initial question is straightforward. Automate development processes of the new applications. Design them in a way that the are automation-friendly. Do it correctly from the start, and you’ll see immediate benefits. Make sure that you pick an application that is managed by an autonomous team that is free from administrative obstacles and does not need to wait for others (silos) to continue their work. After all, why would you invest in automation with applications that you do worth the improvements? If you really want to improve older applications, you’ll refactor them. You’ll make their architecture better and, during the process, you’ll make them more automation-friendly. Automating something that you do not want to refactor is a waste of time. <strong>Legacy means that you gave up on it so just keep it rotting.</strong> Similarly, <strong>automating a process that requires handovers from one team to another is also a waste since the lean time is going to slow you down no matter how much you automate individual pieces</strong>.</p>
+
+<p>All in all, automate deployment processes of the applications managed by self-sufficient teams and those you do believe are worthy candidates, not those you let rot for too long (legacy). Once you make the decision which applications should have an automated development process, embrace automation fully. Do not pick and choose what to automate. Instead, write an automated pipeline that envelops the whole process, from a commit to a code repository all the way until a release is ready for production. If you do that, you’ll embrace continuous delivery. Now, you might think that’s too much, but I would argue that it’s not. Writing code is always unique. It’s not repeatable. Everything else, after we commit that code, is a repetition of the same steps, over and over again. As I already stated, it’s silly NOT to automate repetitive steps, unless the applications are not designed to be automatable.</p>
+
+<p>To summarize, <strong>pick an application that is a good candidate for automation, design it (or refactor it) to be automation-friendly, make sure that it is managed by a single team, and automate the whole delivery pipeline from a commit all the way until it reaches production</strong>. Instead of automating a segment of a pipeline for all application, automate the entire process for a selected set of applications. Embrace continuous delivery (or deployment) entirely.</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/articles/what-to-automate.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

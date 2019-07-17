@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/devops23/pod-demo.html" />
+<meta property="og:url" content="http://localhost:4000/devops23/pod-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/devops23/pod-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="creating-pods">Creating Pods</h1>
+
+<h2 id="quick-and-dirty-way-to-run-pods">Quick And Dirty Way To Run Pods</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl run db <span class="nt">--image</span> mongo
+
+kubectl get pods
+
+<span class="c"># Wait for a while</span>
+
+kubectl get pods
+
+kubectl delete deployment db
+</code></pre></div></div>
+
+<h2 id="quick-and-dirty-way-to-run-pods-1">Quick And Dirty Way To Run Pods</h2>
+
+<hr />
+
+<ul>
+  <li>We used undocumented way to create Pods (and more)</li>
+</ul>
+
+<p>Note:
+We used the imperative way to tell Kubernetes what to do. Even though there are cases when that might be useful, most of the time we want to leverage the declarative approach. We want to have a way to define what we need in a file and pass that information to Kubernetes. That way, we can have a documented and repeatable process, that can (and should) be version controlled as well. Moreover, the kubectl run was reasonably simple. In real life, we need to declare much more than the name of the deployment and the image. Commands like kubectl can quickly become too long and, in many cases, very complicated. Instead, we’ll write specifications in YAML format. Soon, we’ll see how we can accomplish a similar result using declarative syntax.</p>
+
+<!-- .slide: data-background="img/pod-single-container.png" data-background-size="contain" -->
+
+<h2 id="declarative-syntax">Declarative Syntax</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>pod/db.yml
+
+kubectl create <span class="nt">-f</span> pod/db.yml
+
+kubectl get pods
+
+kubectl get pods <span class="nt">-o</span> wide
+
+kubectl get pods <span class="nt">-o</span> json
+
+kubectl get pods <span class="nt">-o</span> yaml
+
+kubectl describe pod db
+
+kubectl describe <span class="nt">-f</span> pod/db.yml
+</code></pre></div></div>
+
+<p>Note:
+We are using v1 of Kubernetes Pods API. Both apiVersion and kind are mandatory. That way, Kubernetes knows what we want to do (create a Pod) and which API version to use. The next section is metadata.It provides information that does not influence how the Pod behaves. We used metadata to define the name of the Pod (db) and a few labels. Later on, when we move into Controllers, labels will have a practical purpose. For now, they are purely informational. The last section is the spec in which we defined a single container.  The container is defined with the name (db), the image (mongo), the command that should be executed when the container starts (mongod), and, finally, the set of arguments. The arguments are defined as an array with, in this case, two elements (–rest and –httpinterface).
+We will explore different means to retrieve information about running Pods</p>
+
+<!-- .slide: data-background="img/seq_pod_ch03.png" data-background-size="contain" -->
+
+<p>Note:
+Creating a POD:</p>
+<ol>
+  <li>Kubernetes client (kubectl) sent a request to the API server requesting creation of a Pod defined in the pod/ db.yml file.</li>
+  <li>Since the scheduler is watching the API server for new events, it detected that there is an unassigned Pod.</li>
+  <li>The scheduler decided which node to assign the Pod to and sent that information to the API server.</li>
+  <li>Kubelet is also watching the API server. It detected that the Pod was assigned to the node it is running on.</li>
+  <li>Kubelet sent a request to Docker requesting the creation of the containers that form the Pod. In our case, the Pod defines a single container based on the mongo image.</li>
+  <li>Finally, Kubelet sent a request to the API server notifying it that the Pod was created successfully.</li>
+</ol>
+
+<h2 id="declarative-syntax-1">Declarative Syntax</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl <span class="nb">exec </span>db ps aux
+
+kubectl <span class="nb">exec</span> <span class="nt">-it</span> db sh
+
+<span class="nb">echo</span> <span class="s1">'db.stats()'</span> | mongo localhost:27017/test
+
+<span class="nb">exit
+
+</span>kubectl logs db
+
+kubectl <span class="nb">exec</span> <span class="nt">-it</span> db pkill mongod
+
+kubectl get pods
+</code></pre></div></div>
+
+<p>Note:</p>
+<ul>
+  <li>We executed processes inside a Pod</li>
+  <li>We retrieved logs of a Pod</li>
+  <li>We explored what happens when a container fails</li>
+</ul>
+
+<h2 id="declarative-syntax-2">Declarative Syntax</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl delete <span class="nt">-f</span> pod/db.yml
+
+kubectl get pods
+
+<span class="c"># Wait</span>
+
+kubectl get pods
+</code></pre></div></div>
+
+<p>Note:</p>
+<ul>
+  <li>We deleted the Pod</li>
+</ul>
+
+<h2 id="running-multiple-containers">Running Multiple Containers</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>pod/go-demo-2.yml
+
+kubectl create <span class="nt">-f</span> pod/go-demo-2.yml
+
+kubectl get <span class="nt">-f</span> pod/go-demo-2.yml
+
+kubectl get <span class="nt">-f</span> pod/go-demo-2.yml <span class="nt">-o</span> json
+
+kubectl <span class="nb">exec</span> <span class="nt">-it</span> <span class="nt">-c</span> db go-demo-2 ps aux
+
+kubectl logs go-demo-2 <span class="nt">-c</span> db
+
+<span class="nb">cat </span>pod/go-demo-2-scaled.yml
+
+kubectl delete <span class="nt">-f</span> pod/go-demo-2.yml
+</code></pre></div></div>
+
+<p>Note:
+Pods are designed to run multiple cooperative processes that should act as a cohesive unit. Those processes are wrapped in containers. All the containers that form a Pod are running on the same machine. A Pod cannot be split across multiple nodes. All the processes (containers) inside a Pod share the same set of resources, and they can communicate with each other through localhost. One of those shared resources is storage. A volume defined in a Pod can be accessed by all the containers thus allowing them all to share the same data. We’ll explore storage in more depth later on. For now, let’s take a look at the pod/ go-demo-2. yml specification.</p>
+
+<p>We explored how to execute processes inside a container in a multi-container Pod
+We explored how to retrieve logs of a container in a multi-container Pod</p>
+
+<p>For cat pod/go-demo-2-scaled.yml
+We defined two containers for the API and named them api-1 and api-2. The only thing left is to create the Pod. But, we’re not going to do that. We should not think of Pods as resources that should do anything beyond a definition of the smallest unit in our cluster. A Pod is a collection of containers that share the same resources. Not much more. Everything else should be accomplished with higher-level constructs. We’ll explore how to scale Pods without changing their definition in one of the next chapters. Let’s go back to our original multi-container Pod that defined api and db containers. That was a terrible design choice since it tightly couples one with the other. As a result, when we explore how to scale Pods (not containers), both would need to match. If, for example, we scale the Pod to three, we’d have three APIs and three DBs. Instead, we should have defined two Pods, one for each container (db and api). That would give us enough flexibility to treat each independently from the other.</p>
+
+<h2 id="monitoring-health">Monitoring Health</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>pod/go-demo-2-health.yml
+
+kubectl create <span class="nt">-f</span> pod/go-demo-2-health.yml
+
+kubectl describe <span class="nt">-f</span> pod/go-demo-2-health.yml
+</code></pre></div></div>
+
+<p>Note:
+Cat pod/go-demo-2-health.yml
+Further down, we declared that the first execution of the probe should be delayed by five seconds (initialDelaySeconds), that requests should timeout after two seconds (timeoutSeconds), that the process should be repeated every five seconds (periodSeconds), and (failureThreshold) define how many attempts it must try before giving up . The take aways here are livenessProbe</p>
+
+<h2 id="pods">Pods?</h2>
+
+<hr />
+
+<ul>
+  <li>(Almost) Useless (By Themselves)<!-- .element: class="fragment" --></li>
+  <li>Fundamental building block<!-- .element: class="fragment" --></li>
+  <li>Disposable<!-- .element: class="fragment" --></li>
+  <li>(Almost) never created directly<!-- .element: class="fragment" --></li>
+</ul>
+
+<!-- .slide: data-background="img/pod-components.png" data-background-size="contain" -->
+
+<h2 id="what-now">What Now?</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl delete <span class="nt">-f</span> pod/go-demo-2-health.yml
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/devops23/pod-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

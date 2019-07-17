@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Pre-Workshop Instructions | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Pre-Workshop Instructions" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/docker-swarm/instructions.html" />
+<meta property="og:url" content="http://localhost:4000/docker-swarm/instructions.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/docker-swarm/instructions.html","@type":"WebPage","headline":"Pre-Workshop Instructions","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h1 id="pre-workshop-instructions">Pre-Workshop Instructions</h1>
+
+<p>Install <a href="https://www.virtualbox.org/">Virtual Box</a>, <a href="https://www.vagrantup.com/">Vagrant</a> and <a href="https://git-scm.com/">Git</a>.</p>
+
+<p><strong>If you are using Windows, please make sure that Git is configured to use “Checkout as-is”. This can be accomplished during the setup by selecting the second or third option from the screen.</strong></p>
+
+<p><img src="/docker-swarm/git-windows.png" alt="Windows Git Setup" /></p>
+
+<p><strong>Vagrant tends to create problems with file permissions when linux VMs are created from a Windows host. If you are a Windows user, please follow the following instructions. After cloning the code, open the Vagrantfile in your text editor (I tend to use <a href="https://notepad-plus-plus.org/">NotePad++</a>). Inside, you’ll find the following two lines:</strong></p>
+
+<p>Run the following commands:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant plugin install vagrant-cachier
+
+<span class="nb">cd</span> ..
+git clone https://github.com/vfarcic/ms-lifecycle.git
+<span class="nb">cd </span>ms-lifecycle
+
+vagrant up <span class="nb">cd
+</span>vagrant ssh <span class="nb">cd</span> <span class="nt">-c</span> <span class="s2">"sudo chmod +x /vagrant/scripts/*"</span>
+vagrant ssh <span class="nb">cd</span> <span class="nt">-c</span> <span class="s2">"sudo /vagrant/scripts/preload_cd_no_build.sh"</span>
+
+vagrant up swarm-master swarm-node-1 swarm-node-2
+vagrant ssh <span class="nb">cd</span> <span class="nt">-c</span> <span class="s2">"ansible-playbook /vagrant/ansible/swarm.yml -i /vagrant/ansible/hosts/prod"</span>
+vagrant ssh swarm-master <span class="nt">-c</span> <span class="s2">"sudo /vagrant/scripts/preload_swarm.sh"</span>
+vagrant ssh swarm-node-1 <span class="nt">-c</span> <span class="s2">"sudo /vagrant/scripts/preload_swarm_node.sh"</span>
+vagrant ssh swarm-node-2 <span class="nt">-c</span> <span class="s2">"sudo /vagrant/scripts/preload_swarm_node.sh"</span>
+
+vagrant halt
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/docker-swarm/instructions.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

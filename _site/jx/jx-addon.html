@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="vfarcic.github.io" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/jx/jx-addon.html" />
+<meta property="og:url" content="http://localhost:4000/jx/jx-addon.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/jx/jx-addon.html","@type":"WebPage","headline":"vfarcic.github.io","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jx get addons
+
+jx create addon prometheus
+
+jx get addons
+
+helm <span class="nb">ls
+
+</span><span class="nv">PROM_ADDR</span><span class="o">=</span><span class="k">$(</span>kubectl <span class="nt">-n</span> jx get ing prometheus-server <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.spec.rules[0].host}"</span><span class="k">)</span>
+
+open <span class="s2">"http://</span><span class="nv">$PROM_ADDR</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Use <code class="highlighter-rouge">admin</code> as the username and password</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jx create addon anchore
+
+<span class="c"># export JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST=docker-registry.jx.35.231.225.121.nip.io</span>
+
+<span class="c"># export JENKINS_X_DOCKER_REGISTRY_SERVICE_PORT=80</span>
+
+<span class="c"># jx step post build --image vfarcic/presentations</span>
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/jx/jx-addon.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

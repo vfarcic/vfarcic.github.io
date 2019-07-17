@@ -1,0 +1,41 @@
+To DevOps Or Not To DevOps
+==========================
+
+There are three types of software organizations.
+
+The first group would be the leaders of our industry who are paving the way. They are coming up with new technologies, processes and cultural shifts. They write articles and books and present at conferences. The rest of us are trying to follow or just absorb their wisdom hoping that our projects will get there one day.
+
+Then there are, usually smaller, organizations that tend to adopt the latest and the greatest. They are the first wave of followers of the first group. They are not afraid to try new things, nor they are afraid to fail. They have the culture that allows them to experiment and adapt. They are given a lot of free time to invest in learning and adapting.
+
+The first two groups are a minority. They are a single digit percent of the whole industry. Not everyone can lead the way nor, everyone can have the luxury to spend a significant portion of their time experimenting with the latest and greatest. After all, most of the new things do not have the long lifespan. They appear, generate some attention, and then disappear into oblivion. It's enough to take a look at, for example, front-end frameworks. New ones are popping like mushrooms after rain, live for a few months, and then are removed from existence by other frameworks. Even better example are containers. Few doubt their usefulness. Most of us are convinced that they are the way to go. What is still very confusing is which cluster orchestration framework to choose. They are evolving so rapidly, with new ones coming on a weekly basis, that it's almost certain that most will not survive another year. So, if you are into latest and greatest, the chances are that you'll make a wrong choice. Will it be Kubernetes? Or Docker Swarm? Mesosphere Marathon? Rancher OS? Cloud Foundry's Diego? CoreOS Fleet? The question is not whether to adopt one of those tools, but, rather, which one.
+
+Most of us are in the third group. We don't have the ability to lead the way, nor we have the luxury to use the latest and greatest. On the other hand, we cannot allow ourselves to become obsolete. The industry is moving so fast that obsolete means a few years old. Let yourself be more than five years behind the leaders and, suddenly, you cannot catch up anymore. Your speed is slower than the speed of the rest. The gap is becoming bigger and bigger. What was a five years gap, becomes six, then seven, all the way until you reach the point of no return. You reach the point from which no effort nor investment can get you back into the game. You, as a company, become the equivalent of the front-end frameworks that went into oblivion.
+
+Now, when I think about it, there is the fourth type. It consists of software companies that did not, yet, realize that they do not exist anymore. Those are the businesses that are plugged into a life-support machine. Without that machine, death is imminent, and, sooner or later, someone is going make a decision to pull the plug. With each moment, such a decision is closer, and there is no cure on the horizon. Those are the organizations who do no innovate, who do not follow the tendencies, who do not adapt, who do not invest (enough) in improvements, nor are even understanding the industry of the present. Those are the companies that live in the long-gone past. Those are the organizations that do not apprehend that long-gone is not measured in centuries or decades, but in years, sometimes even months.
+
+The chances are that you do not work for one of the first two groups. After all, they are the minority. The fact that you are reading this article and trying to get informed tells me that you do not belong to the fourth group either. That leaves us with the third group. You are not Google, nor you are plugged into some life-support machine.
+
+You have to balance between the latest and the greatest on one hand, and the oblivion on the other. You cannot try everything that comes along nor you can let years pass by until you jump into the train. The million dollar question is how to distinguish what will stay and what will disappear? How do you make a choice what to adopt and what to ignore?
+
+If you're hoping that I'll give you the answer to those questions, you're in for a disappointment. I don't have it. Probably nobody does. It is on a per-case basis, and the case I want to discuss is DevOps. Should you adopt it? Definitely, without a shred of doubt, the answer is a sounding yes. Adopt it now, before it's too late. Adopt it before you are taken out of business by other companies that are already living and breeding DevOps. Otherwise, you'll be too slow and unreliable. You'll be unable to adapt to the speed required by today's market. You will not understand what cloud truly means. You will have that short downtime that ends up in news. You will not be able to scale when an avalanche of users come to your site after a successful marketing campaign. A competing company will remove you from the business.
+
+DevOps is not going away. DevOps brings proven value. DevOps is, what Agile was. It is the answer to today's challenges. The only problem is that adopting DevOps is hard. It's very hard. It's harder than you think.
+
+You might have to change your company's culture. You might need to adopt new tools. You might need to change processes. And, you might need to change your software architecture. Changing any of those aspects is hard. Changing all of them is very hard.
+
+Your culture and company structure need to be agile (in a literal meaning of the word). The old, monolithic tools need to be switched with smaller, much more dynamic ones that will work well with ever changing nature of the cloud infrastructure. Processes need to be highly automated since there is no time to pause for manual interventions. Your applications and services will need to be relatively small to accommodate the needs of automation and frequent deployments. Continuous delivery or deployment will become your standard process. Your teams will have to become small and fully capable of working on all aspects of software development lifecycle, from requirements to post-production support.
+
+It's a harsh and challenging road ahead but, at the end of it, lies success. You'll experience faster time to market, higher reliability, high availability, adaptability to market changes, and so on. Some are already there, while others already embarked on the journey. Don't be left out. Accept the present state, join the future. The alternative is the road to oblivion.
+
+To DevOps or not to DevOps is not a question with both answers being equally valid.
+
+The DevOps 2.0 Toolkit
+======================
+
+<a href="http://www.amazon.com/dp/B01BJ4V66M" rel="attachment wp-att-3017"><img src="https://technologyconversations.files.wordpress.com/2014/04/the-devops-2-0-toolkit.png?w=188" alt="The DevOps 2.0 Toolkit" width="188" height="300" class="alignright size-medium wp-image-3017" /></a>If you liked this article, you might be interested in [The DevOps 2.0 Toolkit: Automating the Continuous Deployment Pipeline with Containerized Microservices](http://www.amazon.com/dp/B01BJ4V66M) book.
+
+The book is about different techniques that help us architect software in a better and more efficient way with *microservices* packed as *immutable containers*, *tested* and *deployed continuously* to servers that are *automatically provisioned* with *configuration management* tools. It's about fast, reliable and continuous deployments with *zero-downtime* and ability to *roll-back*. It's about *scaling* to any number of servers, the design of *self-healing systems* capable of recuperation from both hardware and software failures and about *centralized logging and monitoring* of the cluster.
+
+In other words, this book envelops the full *microservices development and deployment lifecycle* using some of the latest and greatest practices and tools. We'll use *Docker, Ansible, Ubuntu, Docker Swarm and Docker Compose, Consul, etcd, Registrator, confd, Jenkins, nginx*, and so on. We'll go through many practices and, even more, tools.
+
+The book is available from Amazon ([Amazon.com](http://www.amazon.com/dp/B01BJ4V66M) and other worldwide sites) and [LeanPub](https://leanpub.com/the-devops-2-toolkit).

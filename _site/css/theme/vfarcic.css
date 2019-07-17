@@ -1,0 +1,55 @@
+.reveal {
+    font-family: "Open Sans", sans-serif;
+    font-size: 40px;
+    font-weight: normal;
+    color: #eee;
+    text-shadow: 2px 2px 0 #000; }
+
+body:after {
+  content: url(../../img/company.png);
+  position: fixed;
+  top: -5px;
+  right: 5px;}
+
+.reveal blockquote {
+    display: block;
+    position: relative;
+    width: 70%;
+    margin: 20px auto;
+    padding: 5px;
+    font-style: italic;
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2); }
+    
+.red {
+  color: #ff2c2d; }
+
+.green {
+  color: #17ff2e; }
+
+.reveal pre code {
+    display: block;
+    padding: 5px;
+    overflow: auto;
+    max-height: 400px;
+    word-wrap: normal;
+    background: #3F3F3F;
+    line-height: 1.2em;
+    font-size: 0.9em;
+    color: #DCDCDC; }
+
+.reveal h1 {
+    font-size: 2.0em;
+    text-shadow: -1px 0 black, 0 1px black, 5px 5px 0 black, 0 -1px black; }
+
+.reveal h2 {
+    font-size: 1.5em; 
+    text-shadow: -1px 0 black, 0 1px black, 4px 4px 0 black, 0 -1px black; }
+
+.reveal h3 {
+    font-size: 1em;
+    text-shadow: -1px 0 black, 0 1px black, 3px 3px 0 black, 0 -1px black; }
+
+.reveal h4 {
+    font-size: 0.8em;
+    text-shadow: -1px 0 black, 0 1px black, 2px 2px 0 black, 0 -1px black; }

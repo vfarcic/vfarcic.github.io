@@ -1,0 +1,1 @@
+Docker just published a new Docker Engine v1.12. It is the most significant release since v1.9. We'll highlight some of the new features of Docker Swarm. We will see some of the ways how to set up and operate a Docker cluster. The session will be a mixture of a talk and live coding.

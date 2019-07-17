@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Continuous Deployment: The Ultimate Culmination of Software Craftsmanship</title>
+
+		<meta name="author" content="Viktor Farcic">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+
+		<!--[if lt IE 9]>
+		<script src="../lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section id="cover">
+                    <h4>Continuous</h4>
+					<h3>Integration</h3>
+                    <h2>Delivery</h2>
+                    <h1>Deployment</h1>
+                    <h5>The Ultimate Culmination of Software Craftsmanship</h5>
+					<p>
+						<small>
+                            Created by <a href="http://technologyconversations.com/about/">Viktor Farcic</a>
+                            for <a href="http://technologyconversations.com">Technology Conversations</a> / <a href="http://twitter.com/vfarcic">@vfarcic</a>
+                        </small>
+					</p>
+				</section>
+                <section id="aboutMe">
+                    <h2>Viktor Farcic</h2>
+                    <ul>
+                        <img src="img/viktor.jpg" style="float: right; width: 25%; height: 25%;"/>
+                        <li>Software Architect at <a href="http://defie.co">Defie</a></li>
+                        <li>Never developed in Fortran</li>
+                        <li>Passionate about TDD, BDD and Continuous Integration, Delivery and Deployment</li>
+                        <li>Blogger in <a href="http://technologyconversations.com/">TechnologyConversations.com</a></li>
+                        <li>Java Test-Driven Development: Mastering TDD Through Katas</li>
+                    </ul>
+                </section>
+                <section>
+                    <section id="whyCd">
+                        <img src="img/why.jpg" style="width: 50%; height: 50%; float: right;">
+                        <h2>Why should we care about Continuous Integration, Delivery or Deployment?</h2>
+                    </section>
+                    <section id="whyCdModern">
+                        <h4>Why should we care about Continuous Integration, Delivery or Deployment?</h4>
+                        <h2>Because it is modern?</h2>
+                        <img src="img/modern.jpg" style="width: 75%; height: 75%;">
+                    </section>
+                    <section id="whyCdPopular">
+                        <h4>Why should we care about Continuous Integration, Delivery or Deployment?</h4>
+                        <h2>Because it is popular?</h2>
+                        <img src="img/popular.jpg" style="width: 75%; height: 75%;">
+                    </section>
+                    <section id="whyCdTalks">
+                        <h4>Why should we care about Continuous Integration, Delivery or Deployment?</h4>
+                        <h2>Because everybody talks about it?</h2>
+                        <img src="img/talking.jpg" style="width: 75%; height: 75%;">
+                    </section>
+                    <section id="whyCdBenefits">
+                        <h4>Why should we care about Continuous Integration, Delivery or Deployment?</h4>
+                        <h2>We should care because...</h2>
+                        <div>
+                            <ul>
+                                <li>
+                                    Earlier feedback to business
+                                </li>
+                                <li>
+                                    Faster development
+                                </li>
+                                <li>
+                                    Fewer merge conflicts
+                                </li>
+                                <li>
+                                    Lower deployment risk
+                                </li>
+                                <li>
+                                    Changes done faster (no need to wait for release)
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+                </section>
+                <section>
+                    <section id="whatIsCd">
+                        <img src="img/what.jpg" style="width: 40%; height: 40%; float: right;">
+                        <h1>What is continuous delivery?</h1>
+                    </section>
+                    <section id="whatIsCdViktor">
+                        <img src="img/high_school.jpg" style="width: 50%; height: 50%; float: right;">
+                        <h4>What is continuous delivery?</h4>
+                        <div>
+                            Continuous Delivery is like sex in high school: everyone talks about it, everyone claims they're doing it, but hardly anyone is.
+                        </div>
+                    </section>
+                    <section id="whatIsCdMartin">
+                        <h4>What is continuous delivery?</h4>
+                        <div>
+                            <blockquote>
+                                Continuous Delivery is a software development discipline where you build software in such a way that the software can be released to production at any time.
+                            </blockquote>
+                            Martin Fowler
+                            <figure>
+                                <img src="img/Martin_Fowler.jpg" style="width: 25%; height: 25%;">
+                            </figure>
+                        </div>
+                    </section>
+                </section>
+                <section>
+					<section id="whenAreYouDoingCd">
+						<h2>You’re doing continuous delivery when...</h2>
+                        <div>
+                            <ul>
+                                <li>
+                                    Your software is deployable throughout its life-cycle
+                                </li>
+                                <li>
+                                    Your team prioritizes keeping the software deployable
+                                </li>
+                                <li>
+                                    Anybody can get fast, automated feedback on the production readiness
+                                </li>
+                                <li>
+                                    You can perform push-button deployments
+                                </li>
+                            </ul>
+                        </div>
+					</section>
+                </section>
+                <section>
+                    <section id="continuousWhat">
+                        <h2>Continuous What?</h2>
+						<div>
+                            <ul>
+                                <li>Continuous Integration</li>
+                                <li>Continuous Delivery</li>
+                                <li>Continuous Deployment</li>
+                            </ul>
+						</div>
+                    </section>
+                </section>
+                <section>
+                    <section id="tools">
+                        <h1>Tools</h1>
+                        <img src="img/tools.jpg">
+                    </section>
+                    <section id="toolsCi">
+						<h4>Tools</h4>
+                        <h2>Continuous Integration, Delivery and Deployment</h2>
+                        <div>
+                            <ul style="list-style-type: none; text-align: center; ">
+                                <li class="fragment" data-fragment-index="0">
+                                    <img src="img/jenkins.png" style="width: 25%; height: 25%; background-color: #ffffff; margin: 0;">
+                                </li>
+                                <li class="fragment" data-fragment-index="1">
+                                    <img src="img/bamboo.png" style="width: 25%; height: 25%; background-color: #ffffff; margin: 0;">
+                                </li>
+                                <li class="fragment" data-fragment-index="2">
+                                    <img src="img/travis.png" style="width: 25%; height: 25%; background-color: #ffffff; margin: 0;">
+                                </li>
+                                <li class="fragment" data-fragment-index="3">
+                                    <img src="img/circle.png" style="width: 25%; height: 25%; background-color: #ffffff; margin: 0;">
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+                    <section id="environments">
+                        <h4>Tools</h4>
+                        <h2>Environments</h2>
+                        <div>
+                            <ul style="list-style-type: none; text-align: center;">
+                                <li class="fragment" data-fragment-index="0">
+                                    <img src="img/vagrant.png" style="width: 75%; height: 75%; background-color: #ffffff; margin: 0;">
+                                </li>
+                                <li class="fragment" data-fragment-index="1">
+                                    <img src="img/docker.png" style="width: 75%; height: 75%; background-color: #ffffff; margin: 0;">
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+                    <section id="environmentSetupTools">
+                        <h4>Tools</h4>
+                        <h2>Provisioning</h2>
+                        <div>
+                            <img src="img/cfengine.png" style="width: 20%; height: 20%; background-color: #ffffff; margin: 0;" class="fragment" data-fragment-index="0">
+                            <img src="img/puppet.png" style="width: 20%; height: 20%; background-color: #ffffff; margin: 0;" class="fragment" data-fragment-index="1">
+                            <img src="img/chef.png" style="width: 20%; height: 20%; background-color: #ffffff; margin: 0;" class="fragment" data-fragment-index="2">
+                            <img src="img/ansible.png" style="width: 20%; height: 20%; background-color: #ffffff; margin: 0;" class="fragment" data-fragment-index="3">
+                        </div>
+                    </section>
+                </section>
+                <section>
+                    <section id="methodologies">
+                        <h2>Methodologies</h2>
+                        <div>
+                            <ul>
+                                <li>
+                                    Unit, functional, integration and stress tests
+                                </li>
+                                <li>
+                                    Test-driven development
+                                </li>
+                                <li>
+                                    Behaviour-driven development
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+                </section>
+                <section>
+                    <section id="flow">
+                        <h1>Flow</h1>
+                        <img src="img/flow.jpg">
+                    </section>
+                    <section id="flowSteps">
+                        <h4>Flow</h4>
+                        <img src="img/repeat.gif" style="width: 30%; height: 30%; float: right;">
+                        <div>
+                            <ol>
+                                <li>Checkout the code</li>
+                                <li>Static Analysis</li>
+                                <li>Unit & Functional Tests</li>
+                                <li>Code Coverage</li>
+                                <li>Packaging</li>
+                                <li>Deployment</li>
+                                <li>Integration Tests</li>
+                                <li>Stress Tests</li>
+                                <li>Deployment to Production</li>
+                            </ol>
+                        </div>
+                    </section>
+                </section>
+                <section>
+                    <section id="deployment">
+                        <h2>Deployment</h2>
+                        <img src="img/deployment.jpg" style="float: right; width: 50%; height: 50%;"/>
+                        <ul>
+                            <li>Often</li>
+                            <li>Automatic</li>
+                            <li>Fast</li>
+                            <li>Zero downtime</li>
+                            <li>Ability to roll back</li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section id="deploymentMutable">
+                        <img src="img/deployment_mutable.jpg" style="float: right; width: 50%; height: 50%;">
+                        <h3>Deployment</h3>
+                        <h2>Mutable Monster Server</h2>
+                    </section>
+                    <section id="deploymentMutableDiagram">
+                        <h3>Deployment</h3>
+                        <h2>Mutable Monster Server</h2>
+                        <div>
+                            <img src="img/deployment_01_mutable_server.gif">
+                        </div>
+                    </section>
+                </section>
+                <section>
+                    <section id="deploymentImmutable">
+                        <h3>Deployment</h3>
+                        <h2>Immutable Server</h2>
+                        <img src="img/deployment_immutable.png">
+                    </section>
+                    <section id="deploymentImmutableServer01">
+                        <h3>Deployment</h3>
+                        <h2>Immutable Server</h2>
+                        <div>
+                            <img src="img/deployment_02_immutable_servers_01.gif">
+                        </div>
+                    </section>
+                    <section id="deploymentImmutableServer02">
+                        <h3>Deployment</h3>
+                        <h2>Immutable Server</h2>
+                        <div>
+                            <img src="img/deployment_02_immutable_servers_02.gif">
+                        </div>
+                    </section>
+                    <section id="deploymentImmutableServer03">
+                        <h3>Deployment</h3>
+                        <h2>Immutable Server</h2>
+                        <div>
+                            <img src="img/deployment_02_immutable_servers_03.gif">
+                        </div>
+                    </section>
+                    <section id="deploymentImmutableServer04">
+                        <h3>Deployment</h3>
+                        <h2>Immutable Server</h2>
+                        <div>
+                            <img src="img/deployment_02_immutable_servers_04.gif">
+                        </div>
+                    </section>
+                </section>
+                <section>
+                    <section id="deploymentImmutableMicroservices01">
+                        <h3>Deployment</h3>
+                        <h2>Immutable Micro Services</h2>
+                        <div>
+                            <img src="img/deployment_03_immutable_microservices_01.gif">
+                        </div>
+                    </section>
+                    <section id="deploymentImmutableMicroservices02">
+                        <h3>Deployment</h3>
+                        <h2>Immutable Micro Services</h2>
+                        <div>
+                            <img src="img/deployment_03_immutable_microservices_02.gif">
+                        </div>
+                    </section>
+                    <section id="deploymentImmutableMicroservices03">
+                        <h3>Deployment</h3>
+                        <h2>Immutable Micro Services</h2>
+                        <div>
+                            <img src="img/deployment_03_immutable_microservices_03.gif">
+                        </div>
+                    </section>
+                    <section id="deploymentImmutableMicroservices04">
+                        <h3>Deployment</h3>
+                        <h2>Immutable Micro Services</h2>
+                        <div>
+                            <img src="img/deployment_03_immutable_microservices_04.gif">
+                        </div>
+                    </section>
+                    <section id="deploymentImmutableMicroservices05">
+                        <h3>Deployment</h3>
+                        <h2>Immutable Micro Services</h2>
+                        <div>
+                            <img src="img/deployment_03_immutable_microservices_05.gif">
+                        </div>
+                    </section>
+                    <section id="deploymentImmutableMicroservices06">
+                        <h3>Deployment</h3>
+                        <h2>Immutable Micro Services</h2>
+                        <div>
+                            <img src="img/deployment_03_immutable_microservices_06.gif">
+                        </div>
+                    </section>
+                </section>
+                <section>
+                    <section id="featureToggles">
+                        <h2>Feature Toggles (Switches or Flags)</h2>
+                        <h3 class="fragment">If you are using branches, you are not doing Continuous Integration/Delivery/Deployment</h3>
+                        <h4 class="fragment">Branches provide release <span class="fragment grow highlight-green">flexibility</span></h4>
+                        <h4 class="fragment">Branches cause <span class="fragment grow highlight-red">delay</span> until problems are discovered</h4>
+                    </section>
+                    <section id="featureTogglesExplained">
+                        <h2>Feature Toggles (Switches or Flags)</h2>
+                        <h3>Feature toggles provide:</h3>
+                        <ul>
+                            <li>release flexibility</li>
+                            <li>feature revert</li>
+                            <li>testing ground</li>
+                        </ul>
+                    </section>
+                </section>
+                <section id="qa">
+                    <section>
+                        <img src="img/questions.jpg">
+                    </section>
+                </section>
+                <section id="moreInfo">
+                    <section>
+                        <h2>Additional Information</h2>
+                        <h4>
+                            <a href="http://technologyconversations.com/category/continuous-integration-delivery-and-deployment/">
+                                Continuous Integration, Delivery and Deployment
+                            </a>
+                        </h4>
+                        <h4>
+                            <a href="http://technologyconversations.com/">
+                                TechnologyConversations.com
+                            </a>
+                        </h4>
+                    </section>
+                </section>
+                <section>
+                    <section id="theEnd">
+                        <img src="img/the_end.jpg" style="width: 40%; height: 40%; float: right;">
+                        <h1>Viktor Farcic</h1>
+                        <h3><a href="https://twitter.com/vfarcic">@vfarcic</a></h3>
+                        <h4><a href="http://technologyconversations.com">technologyconversations.com</a></h4>
+                    </section>
+                </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

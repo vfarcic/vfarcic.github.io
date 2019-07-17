@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>CloudBees Jenkins</title>
+
+		<meta name="author" content="Viktor Farcic">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="../css/reveal.css">
+        <link rel="stylesheet" href="../css/theme/black.css" id="theme">
+        <link rel="stylesheet" href="../css/theme/vfarcic.css">
+
+		<!--<link rel="stylesheet" href="../lib/css/zenburn.css">-->
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<header style="position: absolute;top: 50px; left: 100px; z-index:500; font-size:100px;background-color: rgba(0,0,0,0.5)"></header>
+			<div class="slides">
+				<section id="cover" data-background="../img/background/jenkins.png">
+					<h1>CloudBees Jenkins</h1>
+					<hr/>
+					<h2>
+						<a href="http://technologyconversations.com/about/">Viktor Farcic</a>
+					</h2>
+					<hr/>
+					<h4>
+						<a href="https://twitter.com/vfarcic">@vfarcic</a>
+					</h4>
+					<h4>
+						<a href="http://technologyconversations.com">TechnologyConversations.com</a>
+					</h4>
+					<h4>
+						<a href="https://www.cloudbees.com">CloudBees.com</a>
+					</h4>
+				</section>
+                <section data-background="../img/background/about-me.jpg">
+                    <section id="about-me">
+                        <h2>Viktor Farcic</h2>
+                        <img src="../img/viktor.jpg" style="width: 50%; height: 50%;" />
+                    </section>
+                    <section id="about-company">
+                        <a href="https://www.cloudbees.com">
+                            <img src="../img/company-big.png" style="background-color: white;" />
+                        </a>
+                    </section>
+                    <section id="about-docker">
+                        <a href="https://www.docker.com/community/docker-captains">
+                            <img src="../img/docker-captain.png" style="width: 50%; height: 50%;" />
+                        </a>
+                    </section>
+                    <section id="about-books">
+                        <figure style="width: 30%; height: 30%; float: left;">
+                            <a href="https://leanpub.com/the-devops-2-toolkit">
+                                <img src="../img/devops2.png" />
+                            </a>
+                        </figure>
+                        <figure style="width: 30%; height: 30%; float: left;">
+                            <a href="https://leanpub.com/the-devops-2-1-toolkit">
+                                <img src="../img/devops21.png" />
+                            </a>
+                        </figure>
+                        <figure style="width: 30%; height: 30%; float: left;">
+                            <a href="http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC">
+                                <img src="../img/tdd.jpg" />
+                            </a>
+                        </figure>
+                    </section>
+                </section>
+				<section data-background="../img/background/warning.jpg">
+					<section id="warning">
+						<h1>Warning</h1>
+						<hr/>
+						<ul>
+							<li class="fragment">I speak fast</li>
+							<li class="fragment">I do things even faster</li>
+							<li class="fragment">Stop me if you get lost</li>
+							<li class="fragment">It's OK to ask questions at any time</li>
+							<li class="fragment">You will not learn how to do something</li>
+							<li class="fragment">... but you will learn what can be done</li>
+							<li class="fragment">Everything is online</li>
+							<li class="fragment">I will make a mistake. Don't be judgemental!</li>
+						</ul>
+					</section>
+				</section>
+				<section data-background="../img/background/jenkins.png">
+					<section id="jenkins">
+						<h1>Jenkins</h1>
+						<hr/>
+						<ul>
+							<li class="fragment">Continuous Integration</li>
+							<li class="fragment">Continuous Delivery</li>
+							<li class="fragment">Continuous Deployment</li>
+							<li class="fragment">Orchestrator</li>
+							<li class="fragment">Awesome</li>
+						</ul>
+						<img src="../img/products/jenkins.png" style="background-color: white;" />
+					</section>
+					<section id="question">
+						<h1>Question</h1>
+						<hr/>
+						<h4 class="fragment">Can I set up a fully functioning production cluster with two Jenkins services registered in CJOC?</h4>
+						<h4 class="fragment">... and create a continuous deployment flow executing on each commit?</h4>
+						<h4 class="fragment">... and explain the process?</h4>
+						<h4 class="fragment">... and be over with it in 45 minutes?</h4>
+					</section>
+					<section id="tasks">
+						<h1>What?</h1>
+						<hr/>
+						<ul>
+							<li class="fragment">Create a Swarm cluster</li>
+							<li class="fragment">Create production services</li>
+							<li class="fragment">Create CJOC service</li>
+							<li class="fragment">Create two Jenkins master services</li>
+							<li class="fragment">Register Jenkins masters in CJOC</li>
+							<li class="fragment">Install plugins across all masters</li>
+							<li class="fragment">Create Jenkins agents</li>
+						</ul>
+						<h4 class="fragment">45 minutes?</h4>
+					</section>
+				</section>
+				<section data-background="../img/background/jenkins.png">
+					<section id="cjoc-masters">
+						<h1>CJOC</h1>
+						<hr/>
+						<h2 class="fragment">A central place to manage all masters</h2>
+						<h2 class="fragment">... because there might be too many</h2>
+					</section>
+				</section>
+				<section data-background="../img/background/manual.jpg">
+					<section id="jenkins-demo">
+						<h1>Hands-On Time</h1>
+						<hr/>
+						<div class="fragment">
+							<h3>Setting Up CJOC and masters</h3>
+						</div>
+					</section>
+					<section id="jenkins-cluster">
+						<h1>Creating a Cluster</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>git clone https://github.com/vfarcic/vfarcic.github.io.git
+
+cd vfarcic.github.io/jenkins
+
+./bootstrap-cb.sh
+
+eval $(docker-machine env swarm-1)
+
+docker node ls
+
+docker service ls
+
+curl -i $(docker-machine ip swarm-1)/demo/hello</code></pre>
+					</section>
+					<section id="jenkins-oc-services">
+						<h1>Creating CJOC Service</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker network create --driver overlay jenkins
+
+mkdir -p docker/jenkins-oc
+
+docker service create --name jenkins-oc \
+  --network jenkins -p 8090:8080 -p 50000:50000 \
+  --constraint 'node.labels.env == prod' --reserve-memory 300m \
+  --mount "type=bind,source=$PWD/docker/jenkins-oc,target=/var/jenkins_home" \
+  cloudbees/jenkins-operations-center:2.7.21.1
+
+docker service ps jenkins-oc</code></pre>
+					</section>
+					<section id="jenkins-services">
+						<h1>Creating Jenkins Services</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>for i in 1 2; do
+  mkdir -p docker/jenkins-$i
+
+  docker service create --name jenkins-$i \
+    --network jenkins -p 808$i:8080 -p 5000$i:50000 \
+    --constraint 'node.labels.env == prod' --reserve-memory 300m \
+    --mount "type=bind,source=$PWD/docker/jenkins-$i,target=/var/jenkins_home" \
+    cloudbees/jenkins-enterprise:2.7.21.1
+done
+
+docker service ps jenkins-1
+
+docker service ps jenkins-2</code></pre>
+					</section>
+					<section id="jenkins-oc-setup">
+						<h1>Setting Up CJOC</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8090
+
+cat docker/jenkins-oc/secrets/initialAdminPassword # CJOC password
+
+cat license-key.secret
+
+cat license-cert.secret
+
+# Use admin/admin as user/pass
+
+# Choose "Install Suggested Plugins"</code></pre>
+					</section>
+					<section id="jenkins-oc-masters">
+						<h1>Setting Up CJOC</h1>
+						<hr/>
+						<pre><code data-trim contenteditable># Create a new "Client Master" job "jenkins-1"
+
+echo http://$(docker-machine ip swarm-1):8081 # Master address
+
+cat docker/jenkins-1/secrets/initialAdminPassword # Master password
+
+# Install suggested plugins
+
+# Create a new "Client Master" job "jenkins-2"
+
+echo http://$(docker-machine ip swarm-1):8082
+
+cat docker/jenkins-2/secrets/initialAdminPassword # Master password
+
+# Install suggested plugins</code></pre>
+					</section>
+					<section id="jenkins-oc-plugins">
+						<h1>installing Plugins</h1>
+						<hr/>
+						<ul>
+							<li>Create new <code>Cluster Operations</code> job</li>
+							<li><code>Add Operation</code> > <code>Masters</code></li>
+							<li>Check <code>From Operations Center Root</code></li>
+							<li><code>Add Step</code> &gt; <code>Install Plugin</code></li>
+							<li>Plugin ID = <code>swarm</code></li>
+							<li>Version = <code>2.2</code></li>
+							<li><code>Save</code> &gt; <code>Run</code></li>
+						</ul>
+					</section>
+					<section id="jenkins-agents-1">
+						<h1>Creating Agents</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker-machine ssh swarm-4
+
+sudo mkdir -p /workspace && sudo chmod 777 /workspace && exit
+
+docker-machine ssh swarm-5
+
+sudo mkdir -p /workspace && sudo chmod 777 /workspace && exit
+
+export USER=admin
+
+export PASSWORD=admin</code></pre>
+					</section>
+					<section id="jenkins-agents-2">
+						<h1>Creating Agents</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker service create --name jenkins-agent \
+  --mode global --constraint 'node.labels.env == test' \
+  --network jenkins \
+  -e COMMAND_OPTIONS="-master http://jenkins-1:8080 -username $USER -password $PASSWORD -labels 'docker' -executors 5" \
+  --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
+  --mount "type=bind,source=$HOME/.docker/machine/machines,target=/machines" \
+  --mount "type=bind,source=/workspace,target=/workspace" \
+  vfarcic/jenkins-swarm-agent:latest
+
+open http://$(docker-machine ip swarm-1):8081/computer/
+
+docker service ps jenkins-agent</code></pre>
+					</section>
+					<section id="jenkins-env">
+						<h1>DRY</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8081/configure
+
+docker-machine ip swarm-1 # Env. var PROD_ID
+
+# PROD_NAME = swarm-1</code></pre>
+					</section>
+					<section id="prod-services">
+						<h1>Production Services</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker service ps go-demo</code></pre>
+					</section>
+					<section id="jenkins-pipeline-create">
+						<h1>Jenkins Pipeline</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8081/newJob
+
+# Name it "go-demo"
+
+# Select "Pipeline" as job type</code></pre>
+					</section>
+					<section id="jenkins-pipeline">
+						<h1>Jenkins Pipeline</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>node("docker") {
+
+  git "https://github.com/vfarcic/go-demo.git"
+
+  withEnv([
+    "COMPOSE_FILE=docker-compose-test-local.yml",
+    "COMPOSE_PROJECT_NAME=go-demo-master"
+  ]) {
+
+    stage "Unit"
+    sh "docker-compose run --rm unit"
+    sh "docker build -t go-demo ."
+
+    stage "Staging"
+    try {
+      sh "docker-compose up -d staging-dep"
+      sh 'HOST_IP=localhost docker-compose run --rm staging'
+    } catch(e) {
+      error "Staging failed"
+    } finally {
+      sh "docker-compose down"
+    }
+
+    stage "Publish"
+    sh "docker tag go-demo localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
+    sh "docker push localhost:5000/go-demo:2.${env.BUILD_NUMBER}"
+
+    stage "Production"
+    withEnv([
+      "DOCKER_TLS_VERIFY=1",
+      "DOCKER_HOST=tcp://${env.PROD_IP}:2376",
+      "DOCKER_CERT_PATH=/machines/${env.PROD_NAME}"
+    ]) {
+      sh "docker service update --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} go-demo"
+    }
+	for (i = 0; i <5; i++) {
+      sh "HOST_IP=${env.PROD_IP} docker-compose run --rm production"
+    }
+  }
+
+}</code></pre>
+					</section>
+					<section id="prod-updated">
+						<h1>Production Updated</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker service ps go-demo</code></pre>
+					</section>
+				</section>
+				<section data-background="../img/background/jenkins.png">
+					<section id="jenkinsfile">
+						<h1>Jenkinsfile</h1>
+						<hr/>
+						<h2 class="fragment">Decentralized job definitions</h2>
+						<h2 class="fragment">... in code repository</h2>
+						<h2 class="fragment">... where they belong</h2>
+					</section>
+				</section>
+				<section data-background="../img/background/manual.jpg">
+					<section id="jenkinsfile-demo">
+						<h1>Hands-On Time</h1>
+						<hr/>
+						<div class="fragment">
+							<h3>Defining jobs outside Jenkins</h3>
+						</div>
+					</section>
+					<section id="jenkinsfile-job">
+						<h1>Creating a Jenkinsfile job</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>open https://github.com/vfarcic/go-demo/blob/devops21-dm/Jenkinsfile
+
+open https://github.com/vfarcic/go-demo/blob/master/Jenkinsfile
+
+open http://$(docker-machine ip swarm-1):8081/newJob
+
+# Name it "go-demo-mb"
+
+# Select "Multibranch Pipeline" as job type
+
+# Add Source > GitHub
+
+# Owner = vfarcic
+
+# Repository = go-demo</code></pre>
+					</section>
+				</section>
+				<section data-background="../img/background/jenkins.png">
+					<section id="global-library">
+						<h1>Global Library</h1>
+						<hr/>
+						<h2 class="fragment">To not repeat yourself...</h2>
+					</section>
+				</section>
+				<section data-background="../img/background/manual.jpg">
+					<section id="global-library-demo">
+						<h1>Hands-On Time</h1>
+						<hr/>
+						<div class="fragment">
+							<h3>Defining global functions</h3>
+						</div>
+					</section>
+					<section id="global-library-job">
+						<h1>Global Functions</h1>
+						<hr/>
+					<pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8081/configure
+
+# Global Pipeline Libraries > Add
+# Name = my-lib
+# Default Version = master
+# Legacy SCM > Git
+# Repository URL = https://github.com/vfarcic/go-demo.git
+
+open http://$(docker-machine ip swarm-1):8081/job/go-demo-mb/job/global-lib/</code></pre>
+					</section>
+				</section>
+				<section data-background="../img/background/jenkins.png">
+					<section id="artifactory">
+						<h1>Artifactory</h1>
+						<hr/>
+						<h2 class="fragment">In case you need to store stuff...</h2>
+					</section>
+				</section>
+				<section data-background="../img/background/manual.jpg">
+					<section id="artifactory-demo">
+						<h1>Hands-On Time</h1>
+						<hr/>
+						<div class="fragment">
+							<h3>Storing artifacts in Artifactory</h3>
+						</div>
+					</section>
+					<section id="artifactory-service">
+						<h1>Artifactory Service</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker service create --name artifactory \
+  --constraint 'node.labels.env == prod' -p 8091:8081 \
+  docker.bintray.io/jfrog/artifactory-oss:latest
+
+docker service ps artifactory
+
+open http://$(docker-machine ip swarm-1):8091/artifactory/webapp/#/admin/repository/local/new
+
+# Use admin/password as user/pass
+
+# Add "Generic" repository called "go-demo"</code></pre>
+					</section>
+					<section id="jenkins-artifactory">
+						<h1>Artifactory in Jenkins</h1>
+						<hr/>
+					<pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8081/pluginManager/available
+
+# Install "Artifactory Plugin"
+
+open http://$(docker-machine ip swarm-1):8081/configure
+
+# Artifactory servers > Add
+
+# Server ID = artifactory-1
+
+# Username/Password = admin/password
+
+echo http://$(docker-machine ip swarm-1):8091/artifactory # URL</code></pre>
+					</section>
+					<section id="jenkinsfile-artifactory-run">
+						<h1>Running</h1>
+						<hr/>
+							<pre><code data-trim contenteditable>open https://github.com/vfarcic/go-demo/blob/artifactory/Jenkinsfile
+
+open http://$(docker-machine ip swarm-1):8081/job/go-demo-mb/job/artifactory/
+
+open http://$(docker-machine ip swarm-1):8091/artifactory/webapp/#/artifacts/browse/tree/General/go-demo</code></pre>
+					</section>
+				</section>
+				<section data-background="../img/background/jenkins.png">
+					<section id="rbac">
+						<h1>RBAC</h1>
+						<hr/>
+						<h2 class="fragment">When you have trust issues...</h2>
+					</section>
+				</section>
+				<section data-background="../img/background/manual.jpg">
+					<section id="rbac-demo">
+						<h1>Hands-On Time</h1>
+						<hr/>
+						<div class="fragment">
+							<h3>Securing Jenkins with RBAC</h3>
+						</div>
+					</section>
+					<section id="rbac-setup">
+						<h1>RBAC Setup</h1>
+						<hr/>
+							<pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8081/pluginManager/available
+
+# Install the "Mock Security Realm" plugin
+
+open http://$(docker-machine ip swarm-1):8081/configureSecurity
+
+# Select "Enable Security"
+
+# Select "Mock Security Realm"
+
+# Specify "god admin", "admin admin" and "developer devs" as users and groups
+
+# Select "Role-based matrix authorization strategy"</code></pre>
+					</section>
+					<section id="rbac-roles">
+						<h1>RBAC Setup</h1>
+						<hr/>
+							<pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8081/plugin/nectar-rbac/manage/
+# Add "administrator" role and select all permissions
+# Add "developer" role and select "Overall Read", "Job Build & Read" permissions
+open http://$(docker-machine ip swarm-1):8081/groups/newGroup
+# Type "admins" as "Group name"
+# Select "Granted" to "administrator"
+# Click "Add user/group" and type "admin"
+# Click "Back to Groups" &gt; "New Group"
+# Type "developers" as "Group name"
+# Select "Granted" to "developer"
+# Click "Add user/group" and type "dev"
+open http://$(docker-machine ip swarm-1):8081/plugin/nectar-rbac/manage/
+# Deselect all permissions to "authenticated"
+# Explore logging in as "dev" or "admin"</code></pre>
+					</section>
+				</section>
+				<section data-background="../img/background/jenkins.png">
+					<section id="folders">
+						<h1>Folders</h1>
+						<hr/>
+						<h2 class="fragment">Things should be organized...</h2>
+					</section>
+				</section>
+				<section data-background="../img/background/manual.jpg">
+					<section id="folders-demo">
+						<h1>Hands-On Time</h1>
+						<hr/>
+						<div class="fragment">
+							<h3>Organizing Jenkins jobs through folders</h3>
+						</div>
+					</section>
+					<section id="folders-setup">
+						<h1>Folders Setup</h1>
+						<hr/>
+							<pre><code data-trim contenteditable>open http://$(docker-machine ip swarm-1):8081
+
+# Click "New Item"
+
+# Name if "my-folder" and select "Folder" as type
+
+open http://$(docker-machine ip swarm-1):8081/job/go-demo/
+
+# Click "Move/Copy/Promote", write "/my-folder" as "Destination", click "Move"</code></pre>
+					</section>
+				</section>
+				<section data-background="../img/background/jenkins.png">
+					<section id="input">
+						<h1>Input</h1>
+						<hr/>
+						<h2 class="fragment">Because you have trust issues...</h2>
+					</section>
+				</section>
+				<section data-background="../img/background/manual.jpg">
+					<section id="input-demo">
+						<h1>Hands-On Time</h1>
+						<hr/>
+						<div class="fragment">
+							<h3>Waiting for a confirmation</h3>
+						</div>
+					</section>
+					<section id="input-setup">
+						<h1>Input step in a pipeline</h1>
+						<hr/>
+							<pre><code data-trim contenteditable>open https://github.com/vfarcic/go-demo/blob/trust-issues/Jenkinsfile</code></pre>
+					</section>
+				</section>
+				<section data-background="../img/background/jenkins.png">
+					<section id="notifications">
+						<h1>Notifications</h1>
+						<hr/>
+						<h2 class="fragment">To stop you from doing something else...</h2>
+					</section>
+				</section>
+				<section data-background="../img/background/manual.jpg">
+					<section id="notifications-demo">
+						<h1>Hands-On Time</h1>
+						<hr/>
+						<div class="fragment">
+							<h3>Sending email on buil failure</h3>
+						</div>
+					</section>
+					<section id="notifications-setup">
+						<h1>SMTP Service</h1>
+						<hr/>
+						<pre><code data-trim contenteditable>docker service create --name postfix --network jenkins -p 25:25 \
+    -e maildomain=mail.acme.com -e smtp_user=admin:admin \
+    catatnight/postfix:latest
+
+open http://$(docker-machine ip swarm-1):8081/configure
+
+# SMTP server = postfix
+# User Name / Password = admin/admin
+# SMTP Port = 25
+
+open https://github.com/vfarcic/go-demo/blob/notif/Jenkinsfile
+
+open http://$(docker-machine ip swarm-1):8081/job/go-demo-mb/job/notif/</code></pre>
+					</section>
+				</section>
+				<!--TODO: Manifest file (https://drive.google.com/drive/search?q=QCon%20presentation)-->
+				<!--TODO: Demonstration of release tagging with Nexus-->
+				<!--TODO: Best Practice for Pipeline Development-->
+				<section data-background="../img/background/best-practices.jpg">
+					<section id="jenkins-best-practices">
+						<h1>Jenkins Best Practices</h1>
+						<ul>
+							<li class="fragment">Always secure Jenkins</li>
+							<li class="fragment">Don't build on the master</li>
+							<li class="fragment">Backup Jenkins Home regularly</li>
+							<li class="fragment">Setup Jenkins on a fast hard disk</li>
+							<li class="fragment">Cleanup (remove) old builds</li>
+							<li class="fragment">Create a single Pipeline job for a project</li>
+							<li class="fragment">Fail fast</li>
+							<li class="fragment">Fixing a broken build has the highest priority</li>
+							<li class="fragment">DRY, define pipeline shared libraries</li>
+							<li class="fragment">Do not pull SCM, use web hooks</li>
+							<li class="fragment">Use Jenkinsfile</li>
+						</ul>
+					</section>
+                    <section id="pipeline-best-practices">
+                        <h1>Pipeline Best Practices</h1>
+                        <ul>
+                            <li class="fragment">Treat pipelines as code</li>
+                            <li class="fragment">Always work inside stages</li>
+                            <li class="fragment">Do all material work inside nodes</li>
+                            <li class="fragment">Run steps in parallel</li>
+                            <li class="fragment">Define nodes inside parallel steps</li>
+                            <li class="fragment">Don't use input inside a node</li>
+                            <li class="fragment">Wrap inputs with timeouts</li>
+                            <li class="fragment">Use <code>withEnv</code> instead global env. vars</li>
+                            <li class="fragment">Use <code>stash</code>/<code>unstash</code> to share files between nodes</li>
+                        </ul>
+                    </section>
+				</section>
+				<section data-background="../img/background/the_end.jpg">
+					<section id="the-end-blog">
+						<h2>Viktor Farcic</h2>
+						<hr/>
+						<h3><a href="https://twitter.com/vfarcic">@vfarcic</a></h3>
+						<hr/>
+						<figure>
+							<img src="../img/qr/technology-conversations.jpg"/>
+						</figure>
+						<h3><a href="http://technologyconversations.com">TechnologyConversations.com</a></h3>
+					</section>
+                    <section id="the-end-book">
+                        <div>
+                            <figure style="width: 25%; height: 25%; float: left;">
+                                <img src="../img/qr/devops2-amazon.jpg"/>
+                                <figcaption><a href="http://www.amazon.com/dp/B01BJ4V66M">Amazon</a></figcaption>
+                            </figure>
+                            <figure style="width: 25%; height: 25%; float: right;">
+                                <img src="../img/qr/devops2-leanpub.jpg"/>
+                                <figcaption><a href="https://leanpub.com/the-devops-2-toolkit">LeanPub</a></figcaption>
+                            </figure>
+                            <a href="http://www.amazon.com/dp/B01BJ4V66M">
+                                <img src="../img/devops2.png" style="width: 30%; height: 30%;" />
+                            </a>
+                        </div>
+                        <hr/>
+                        <div>
+                            <figure style="width: 25%; height: 25%; float: left;">
+                                &nbsp;
+                            </figure>
+                            <figure style="width: 25%; height: 25%; float: right;">
+                                <img src="../img/qr/devops21-leanpub.png"/>
+                                <figcaption><a href="https://leanpub.com/the-devops-2-1-toolkit">LeanPub</a></figcaption>
+                            </figure>
+                            <a href="https://leanpub.com/the-devops-2-1-toolkit">
+                                <img src="../img/devops21.png" style="width: 30%; height: 30%;" />
+                            </a>
+                        </div>
+                    </section>
+				</section>
+				<section data-background="../img/background/cleanup.jpg">
+					<section id="cleanup">
+                        <h1>Cleanup</h1>
+                        <pre><code data-trim contenteditable>docker-machine rm -f swarm-1 swarm-2 swarm-3 swarm-4 swarm-5
+
+rm -rf docker go-demo</code></pre>
+                    </section>
+                </section>
+			</div>
+
+		</div>
+
+		<script src="../lib/js/head.min.js"></script>
+		<script src="../js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+//					{ src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../plugin/zoom-js/zoom.js', async: true },
+					{ src: '../plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

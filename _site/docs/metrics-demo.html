@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/docs/metrics-demo.html" />
+<meta property="og:url" content="http://localhost:4000/docs/metrics-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/docs/metrics-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h2 id="expose-metrics-from-hardware-containers-and-the-proxy">Expose metrics from hardware, containers, and the proxy</h2>
+
+<h2 id="execute-ad-hoc-queries-and-create-dashboards">Execute ad-hoc queries and create dashboards</h2>
+
+<h2 id="metrics-stack">Metrics Stack</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source </span>creds
+
+curl <span class="nt">-o</span> metrics.yml <span class="se">\</span>
+  https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/metrics/docker-flow-monitor-full.yml
+
+<span class="nb">cat </span>metrics.yml
+
+docker network create <span class="nt">-d</span> overlay monitor
+</code></pre></div></div>
+
+<h2 id="metrics-stack-1">Metrics Stack</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"route:
+  repeat_interval: 30m
+  group_interval: 30m
+  receiver: 'slack'
+
+receivers:
+  - name: 'slack'
+    slack_configs:
+      - send_resolved: true
+        title: '[]  service is in danger!'
+        title_link: 'http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/monitor/alerts'
+        text: ''
+        api_url: 'https://hooks.slack.com/services/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'
+"</span> | docker secret create alert_manager_config -
+</code></pre></div></div>
+
+<h2 id="metrics-stack-2">Metrics Stack</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">DOMAIN</span><span class="o">=</span><span class="nv">$CLUSTER_DNS</span> docker stack deploy <span class="nt">-c</span> metrics.yml metrics
+
+docker stack ps <span class="nt">-f</span> desired-state<span class="o">=</span>running metrics
+</code></pre></div></div>
+
+<h2 id="node-exporter">Node Exporter</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker service create <span class="nt">--name</span> util2 <span class="se">\</span>
+  <span class="nt">--network</span> monitor <span class="nt">--mode</span> global alpine sleep 1000000000
+
+<span class="nv">UTIL_ID</span><span class="o">=</span><span class="k">$(</span>docker ps <span class="nt">-q</span> <span class="nt">-f</span> <span class="nv">label</span><span class="o">=</span>com.docker.swarm.service.name<span class="o">=</span>util2<span class="k">)</span>
+
+docker <span class="nb">exec</span> <span class="nt">-it</span> <span class="nv">$UTIL_ID</span> apk add <span class="nt">--update</span> curl
+
+docker <span class="nb">exec</span> <span class="nt">-it</span> <span class="nv">$UTIL_ID</span> <span class="se">\</span>
+    curl <span class="s2">"http://metrics_node-exporter:9100/metrics"</span>
+</code></pre></div></div>
+
+<h2 id="container-exporter">Container Exporter</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker <span class="nb">exec</span> <span class="nt">-it</span> <span class="nv">$UTIL_ID</span> curl http://metrics_cadvisor:8080/metrics
+</code></pre></div></div>
+
+<h2 id="prometheus">Prometheus</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">exit
+
+</span>open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/monitor"</span>
+
+<span class="c"># irate(node_cpu{mode="idle"}[5m])</span>
+
+<span class="c"># container_memory_usage_bytes{container_label_com_docker_swarm_service_name!=""}</span>
+
+<span class="c"># container_memory_usage_bytes{container_label_com_docker_swarm_service_name="metrics_cadvisor"}</span>
+
+<span class="c"># container_memory_usage_bytes{container_label_com_docker_swarm_service_name="go-demo-2_main"}</span>
+</code></pre></div></div>
+
+<h2 id="grafana">Grafana</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/grafana/"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>User/pass admin/admin</li>
+  <li>DS: http://metrics_monitor:9090/monitor</li>
+  <li>DS: http://logging_elasticsearch:9200</li>
+  <li><a href="https://grafana.net/dashboards/704">https://grafana.net/dashboards/704</a></li>
+  <li><a href="https://grafana.net/dashboards/405">https://grafana.net/dashboards/405</a></li>
+  <li><a href="https://grafana.net/dashboards/609">https://grafana.net/dashboards/609</a></li>
+</ul>
+
+<h2 id="alerts">Alerts</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/monitor/alerts"</span>
+</code></pre></div></div>
+
+<h2 id="going-back">Going Back</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-i</span> workshop.pem docker@<span class="nv">$CLUSTER_IP</span>
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/docs/metrics-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

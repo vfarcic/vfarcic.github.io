@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="vfarcic.github.io" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/articles/scm.html" />
+<meta property="og:url" content="http://localhost:4000/articles/scm.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/articles/scm.html","@type":"WebPage","headline":"vfarcic.github.io","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <p><strong>Q:</strong> What is SCM and has the process of SCM changed at all in recent years?</p>
+
+<p>SCM (short for Software Configuration Management) is a set of practices, backed by tools, which allow us to track and control changes introduced to software.</p>
+
+<p>Typically, developers would checkout code from an SCM tool, make modifications, and push those changes back. In many cases, those changes would be pushed to a branch (a copy) and, when the time comes to release the software (or immediately afterward), that branch would be merged to master (primary copy).</p>
+
+<p>In recent years it became apparent that Git is the tool to rule them all. As a result, many of the companies switched from their previous SCM choice to Git. Those few that are still using one of the other tools (e.g. SVN, CVS, Perforce, and so on) are most likely planning to switch to Git soon.</p>
+
+<p>With the adoption of Git, we got the adoption of different practices when working with SCM tools. Forking a repository and creating pull requests is becoming a norm. If branches are used, their lifespan is much shorter than it was before Git. Distributed repositories are allowing teams to communicate much better and work more efficiently.</p>
+
+<p><strong>Q:</strong> How does SCM fit in with continuous delivery and DevOps?</p>
+
+<p>SCM is the initiator of continuous delivery processes. It all starts with a change in SCM and ends in production. Every commit would trigger a build in one of the CD tools which would initiate the tasks that lead to software being deployed to our production clusters. That trigger is what makes the process continuous. Without it, we would be delivering periodically and could just as well call it <em>eventual delivery</em>.</p>
+
+<p>One of the changes that CD brought is that there is an increasing number of companies that are abandoning branches and committing code directly to master. That, on the first look, sounds like a step back. It took as many years to convince everyone that a good branching strategy is a must in every software development company. Working without branches was too risky due to conflicts and potential bugs that would be introduced through commits. Now we (proponents of continuous delivery and deployment) are telling those same teams that they should commit directly to master. What changed? Why was that a bad practice yesterday and it’s a good practice today.</p>
+
+<p>The difference is in the processes that are initiated on every commit. CD, together with microservices adoption and the ideas behind immutable deployments, allows us to have a robust set of automated pipeline steps that can provide a reasonable guarantee that a commit that passed them all is ready to be deployed to production. By committing to a master branch we have a truly continuous process and, as a result, the time between a feature being developed and its deployment to production is reduced to an absolute minimum. Time to market was never shorter, and it is not uncommon for an organization to have tens or even hundreds of deployments every day. The flexibility and the power behind Git is one of the essential pieces that allowed us to reach this speed.</p>
+
+<p>DevOps, on the other hand, depends heavily on automation with CD being one of the main driving factors behind it. The three (Git, CD, and DevOps) are almost indispensable. There is no CD without an SCM (and Git is the SCM tool of choice), and there is no DevOps without automation (and CD is the culmination of automated processes).</p>
+
+<p><strong>Q:</strong> Is Git the end all tool or are there other SCM tools out there that developers use?</p>
+
+<p>Git is the only tool that matters today. Nobody questions it anymore. Instead, the debate is which flavor one will choose. Will it be GitHub, GitLab, Bitbucket, or something else? All of those tools use Git as a backend and most of the differences are in the user interfaces.</p>
+
+<p>Git managed to accomplish something that very few did before. It became the de-facto standard and threw all other SCM tools into oblivion. That does not mean that others are still not used. They are. For example, quite a few companies are still running SVN. However, that is almost never by choice but because of their inability to modernize infrastructure and a fear of change.</p>
+
+<p><strong>Q:</strong> How does your company orchestrate the whole SCM process?</p>
+
+<p>CloudBees is developing Jenkins, the most popular continuous delivery (CD) tool in the market. It is only natural that we practice CD ourselves with Git being an integral part of it. Since every CD process is triggered by a commit to SCM, it’s only natural that our processes are following the same pattern. Every piece of code we develop is stored in Git. Each of us works on a fork, commits changes, and creates a pull request. We are firm believers in code reviews as a process that allows us not only to ensure quality but also as a way to share the knowledge. Therefore, each of the pull requests is reviewed (often within an hour) and merged to the original repository. From there on, GitHub triggers Jenkins pipeline and initiates a continuous delivery process.</p>
+
+<p><strong>Q:</strong> Why is SCM important?</p>
+
+<p>SCM is important because it is the only effective way to allow teams to work on the same code. Without SCM, we would not be able to work on our laptops but would need to develop code stored in a central server. Without it, we would need to coordinate among ourselves so that only one person would work on the same file. Without SCM code reviews would be too expensive, and we would not have a history of all the changes.</p>
+
+<p>SCM is arguably the only common thing all developers have and Git is the tool that rules the market. We are often arguing whether there is value in TDD, whether to adopt microservices, which tool to use to track our tasks, and so on and so forth. The only thing no one argues about is whether to use an SCM (we all do).</p>
+
+<p><strong>Q:</strong> Anything additional? Are there any areas of SCM you suggest SD Times focuses on?</p>
+
+<p>No</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/articles/scm.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

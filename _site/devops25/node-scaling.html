@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="vfarcic.github.io" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/devops25/node-scaling.html" />
+<meta property="og:url" content="http://localhost:4000/devops25/node-scaling.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/devops25/node-scaling.html","@type":"WebPage","headline":"vfarcic.github.io","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <!-- .slide: data-background="../img/background/why.jpg" -->
+<h1 id="a-long-time-ago-in-a-galaxy-far-far-away">A long time ago in a galaxy far, far away…</h1>
+
+<hr />
+
+<!-- .slide: data-background="../img/background/servers.jpg" -->
+<h2 id="you">You</h2>
+<h1 id="overprovisioned">overprovisioned</h1>
+<h2 id="nodes-just-in-case">nodes just in case</h2>
+
+<hr />
+
+<!-- .slide: data-background="../img/background/servers.jpg" -->
+<h2 id="you-forced-people-to-open">You forced people to open</h2>
+<h1 id="jira-tickets">JIRA tickets</h1>
+
+<hr />
+
+<!-- .slide: data-background="../img/background/monitoring.jpeg" -->
+<h2 id="you-stared-at">You stared at</h2>
+<h1 id="dashboards">dashboards</h1>
+<h2 id="to-find-out-when-to-scale-your-nodes">to find out when to scale your nodes</h2>
+
+<hr />
+
+<!-- .slide: data-background="../img/background/monitoring.jpeg" -->
+<h2 id="you-created">You created</h2>
+<h1 id="scaling-groups">scaling groups</h1>
+
+<hr />
+
+<!-- .slide: data-background="../img/background/monitoring.jpeg" -->
+<h2 id="you-scaled-nodes-when">You scaled nodes when</h2>
+<h2 id="theres-not-enough">there’s not enough</h2>
+<h1 id="available-resources">available resources</h1>
+
+<hr />
+
+<!-- .slide: data-background="../img/products/kubernetes.png" -->
+<h2 id="you-adopted">You adopted</h2>
+<h1 id="kubernetes">Kubernetes</h1>
+
+<hr />
+
+<!-- .slide: data-background="../img/products/kubernetes.png" -->
+<h2 id="you-realized-that">You realized that</h2>
+<h1 id="available-resources-1">available resources</h1>
+<h2 id="are-a-silly-thing-to-measure">are a silly thing to measure</h2>
+
+<hr />
+
+<!-- .slide: data-background="../img/products/kubernetes.png" -->
+<h2 id="you-discovered">You discovered</h2>
+<h1 id="cluster-autoscaler">Cluster Autoscaler</h1>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="nt">-f</span> scaling/go-demo-5-many.yml
+
+kubectl <span class="nt">-n</span> go-demo-5 get pods,nodes
+</code></pre></div></div>
+
+<!-- .slide: data-background="../img/background/angry.jpg" -->
+<h2 id="you-learned-that-the">You learned that the</h2>
+<h1 id="pending-state">pending state</h1>
+<h2 id="is-not-enough">is not enough</h2>
+
+<hr />
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/devops25/node-scaling.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

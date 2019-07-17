@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/devops21/jenkins-demo-short.html" />
+<meta property="og:url" content="http://localhost:4000/devops21/jenkins-demo-short.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/devops21/jenkins-demo-short.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h2 id="continuous-deployment-with-jenkins">Continuous Deployment With Jenkins</h2>
+
+<h2 id="jenkins-service">Jenkins Service</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-o</span> jenkins.yml <span class="se">\</span>
+  https://raw.githubusercontent.com/vfarcic/docker-flow-stacks/master/jenkins/vfarcic-jenkins-df-proxy-aws-full.yml
+
+<span class="nb">cat </span>jenkins.yml
+
+<span class="nb">echo</span> <span class="s2">"admin"</span> | docker secret create jenkins-user -
+
+<span class="nb">echo</span> <span class="s2">"admin"</span> | docker secret create jenkins-pass -
+
+<span class="nb">source </span>info
+
+<span class="nb">echo</span> <span class="s2">"hostIp=</span><span class="nv">$CLUSTER_DNS</span><span class="s2">
+dockerHubUser=vfarcic
+"</span> | docker secret create cluster-info.properties -
+</code></pre></div></div>
+
+<h2 id="jenkins-service-1">Jenkins Service</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">AGENT_LABELS</span><span class="o">=</span><span class="s2">"-labels test -labels prod"</span> <span class="se">\</span>
+    docker stack deploy <span class="nt">-c</span> jenkins.yml jenkins
+
+docker stack ps jenkins
+
+<span class="nb">exit
+
+</span>open <span class="s2">"https://github.com/vfarcic/go-demo-2/blob/master/Jenkinsfile"</span>
+
+open <span class="s2">"https://github.com/vfarcic/jenkins-shared-libraries/blob/master/vars/dockerRelease.groovy"</span>
+
+open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/jenkins"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Login using <em>admin</em> as <em>username</em> and <em>password</em></li>
+</ul>
+
+<h2 id="agents--credentials">Agents &amp; Credentials</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/jenkins/computer"</span>
+
+open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/jenkins/credentials/store/system/domain/_/newCredentials"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Type your Docker Hub <em>username</em> and <em>password</em></li>
+  <li>Type <em>docker</em> as <em>ID</em></li>
+</ul>
+
+<h2 id="building-all-branches">Building All Branches</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="nv">$CLUSTER_DNS</span><span class="s2">/jenkins/blue/pipelines"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Click the <em>New Pipeline</em> button</li>
+  <li>Select <em>GitHub</em></li>
+  <li>Enter the access token</li>
+  <li>Select <em>vfarcic</em> as repository organization</li>
+  <li>Choose <em>New Pipeline</em></li>
+  <li>Type <em>go-demo-2</em> as repository</li>
+  <li>Click the <em>Create Pipeline</em> button</li>
+</ul>
+
+<h2 id="going-back">Going Back</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-i</span> workshop.pem docker@<span class="nv">$CLUSTER_IP</span>
+
+docker stack ps <span class="nt">-f</span> desired-state<span class="o">=</span>running go-demo-2
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/devops21/jenkins-demo-short.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

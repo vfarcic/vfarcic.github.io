@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Hands-On Time | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Hands-On Time" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/jx/jx-versioning-demo.html" />
+<meta property="og:url" content="http://localhost:4000/jx/jx-versioning-demo.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/jx/jx-versioning-demo.html","@type":"WebPage","headline":"Hands-On Time","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="hands-on-time">Hands-On Time</h2>
+
+<hr />
+
+<h1 id="versioning-releases">Versioning Releases</h1>
+
+<h2 id="semantic-versioning">Semantic Versioning</h2>
+
+<hr />
+
+<p><strong>MAJOR.MINOR.PATCH</strong></p>
+
+<ul>
+  <li><em>Patch</em> is incremented when we release bug fixes.</li>
+  <li><em>Minor</em> is incremented when new functionality is added in a backward-compatible manner.</li>
+  <li><em>Major</em> is incremented when changes are not backward compatible.</li>
+</ul>
+
+<h2 id="versioning-from-pipelines">Versioning From Pipelines</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jx get applications <span class="nt">--env</span> staging
+
+<span class="nv">VERSION</span><span class="o">=[</span>...]
+
+<span class="nb">echo</span> <span class="s2">"VERSION := </span><span class="nv">$VERSION</span><span class="s2">"</span> | tee <span class="nt">-a</span> Makefile
+
+git add <span class="nb">.</span> 
+
+git commit <span class="nt">-m</span> <span class="s2">"Finally 1.0.0"</span>
+
+git push
+
+jx get activities <span class="nt">-f</span> go-demo-6 <span class="nt">-w</span>
+
+jx get applications <span class="nt">--env</span> staging
+</code></pre></div></div>
+
+<h2 id="versioning-from-pipelines-1">Versioning From Pipelines</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">GH_USER</span><span class="o">=[</span>...]
+
+open <span class="s2">"https://github.com/</span><span class="nv">$GH_USER</span><span class="s2">/go-demo-6/releases"</span>
+
+<span class="nb">echo</span> <span class="s2">"A silly change"</span> | tee README.md
+
+git add <span class="nb">.</span>
+
+git commit <span class="nt">-m</span> <span class="s2">"A silly change"</span>
+
+git push
+
+jx get activity <span class="nt">--filter</span> go-demo-6 <span class="nt">--watch</span>
+
+jx get applications <span class="nt">--env</span> staging
+
+<span class="nb">cd</span> ..
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/jx/jx-versioning-demo.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

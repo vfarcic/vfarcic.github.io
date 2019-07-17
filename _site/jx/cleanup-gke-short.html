@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Cleanup | vfarcic.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Cleanup" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/jx/cleanup-gke-short.html" />
+<meta property="og:url" content="http://localhost:4000/jx/cleanup-gke-short.html" />
+<meta property="og:site_name" content="vfarcic.github.io" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/jx/cleanup-gke-short.html","@type":"WebPage","headline":"Cleanup","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=d7b0fccce7a840960ab2c608e690e524c171b2d9">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">vfarcic.github.io</a></h1>
+      
+
+      <h2 id="cleanup">Cleanup</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gcloud container clusters delete jx-rocks <span class="nt">--region</span> us-east1 <span class="nt">--quiet</span>
+
+gcloud compute disks delete <span class="nt">--zone</span> us-east1-b <span class="k">$(</span>gcloud compute disks <span class="se">\</span>
+    list <span class="nt">--filter</span><span class="o">=</span><span class="s2">"zone:us-east1-b AND -users:*"</span> <span class="se">\</span>
+    <span class="nt">--format</span><span class="o">=</span><span class="s2">"value(id)"</span><span class="k">)</span> <span class="nt">--quiet</span>
+gcloud compute disks delete <span class="nt">--zone</span> us-east1-c <span class="k">$(</span>gcloud compute disks <span class="se">\</span>
+    list <span class="nt">--filter</span><span class="o">=</span><span class="s2">"zone:us-east1-c AND -users:*"</span> <span class="se">\</span>
+    <span class="nt">--format</span><span class="o">=</span><span class="s2">"value(id)"</span><span class="k">)</span> <span class="nt">--quiet</span>
+gcloud compute disks delete <span class="nt">--zone</span> us-east1-d <span class="k">$(</span>gcloud compute disks <span class="se">\</span>
+    list <span class="nt">--filter</span><span class="o">=</span><span class="s2">"zone:us-east1-d AND -users:*"</span> <span class="se">\</span>
+    <span class="nt">--format</span><span class="o">=</span><span class="s2">"value(id)"</span><span class="k">)</span> <span class="nt">--quiet</span>
+</code></pre></div></div>
+
+<h2 id="cleanup-1">Cleanup</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hub delete <span class="nt">-y</span> <span class="nv">$GH_USER</span>/environment-jx-rocks-staging
+
+hub delete <span class="nt">-y</span> <span class="nv">$GH_USER</span>/environment-jx-rocks-production
+
+hub delete <span class="nt">-y</span> <span class="nv">$GH_USER</span>/environment-tekton-staging
+
+hub delete <span class="nt">-y</span> <span class="nv">$GH_USER</span>/environment-tekton-production
+
+hub delete <span class="nt">-y</span> <span class="nv">$GH_USER</span>/jx-go
+
+hub delete <span class="nt">-y</span> <span class="nv">$GH_USER</span>/jx-serverless
+
+hub delete <span class="nt">-y</span> <span class="nv">$GH_USER</span>/jx-prow
+
+rm <span class="nt">-rf</span> ~/.jx/environments/<span class="nv">$GH_USER</span>/environment-tekton-<span class="k">*</span>
+</code></pre></div></div>
+
+<h2 id="cleanup-2">Cleanup</h2>
+
+<hr />
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ..
+
+rm <span class="nt">-rf</span> jx-go
+
+rm <span class="nt">-rf</span> jx-serverless
+
+rm <span class="nt">-rf</span> jx-prow
+
+rm <span class="nt">-rf</span> environment-jx-rocks-<span class="k">*</span>
+
+rm <span class="nt">-rf</span> environment-tekton-<span class="k">*</span>
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/vfarcic/vfarcic.github.io/edit/gh-pages/jx/cleanup-gke-short.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>
