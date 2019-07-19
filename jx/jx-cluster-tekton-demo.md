@@ -123,6 +123,8 @@ tar -czf kubeconfig.tar.gz build
 ```bash
 open "https://www.amazon.es/clouddrive/share/hJAF9Wi4Er6T966TlJjGCSC53CsWoTAomUK2eUCRs8I"
 
+# Download the file
+
 tar -xzvf kubeconfig.tar.gz
 
 export KUBECONFIG=$PWD/build/kubeconfig
@@ -140,7 +142,7 @@ export LB_IP=$(kubectl -n ingress-nginx get svc \
 echo $LB_IP
 
 # Only letters, numbers, dash (`-`) and underscore (`_`) charters
-NAMESPACE=[...] # Make it unique
+NAMESPACE=[...] # Make it unique (e.g., your GitHub username)
 
 jx install --provider kubernetes --external-ip $LB_IP \
     --domain $LB_IP.nip.io --default-admin-password=admin \
