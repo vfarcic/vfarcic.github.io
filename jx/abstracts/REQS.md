@@ -7,7 +7,10 @@
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * GitHub account
 
-You can choose to have a cluster in Google (GKE), Amazon (EKS), or Azure (AKS). Please follow the instructions for the cloud-specific requirements. If you're in doubt which one to choose, I strongly recommend GKE. If you register, you'll get 300$ in free credit and we won't spend more than a few $ during the workshop.
+You can choose to have a cluster in you own Google (GKE), Amazon (EKS), or Azure (AKS) account, or you can use one that will be avialable to you during the workshop.
+
+
+If you choose to use your own account, please follow the instructions for the cloud-specific requirements. If you're in doubt which one to choose, I strongly recommend GKE. If you register, you'll get 300$ in free credit and we won't spend more than a few $ during the workshop. On the other hand, if you do choose to use the cluster that will be available (and prepared by me) during the workshop, there is nothing else you need to do in advance.
 
 ## GKE (GCP)
 
