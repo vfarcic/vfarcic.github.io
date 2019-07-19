@@ -13,6 +13,18 @@
 ![TechnologyConversations.com](../img/qr/technology-conversations.jpg)
 
 
+# PodCast
+
+---
+
+![DevopsParadox.com](../img/qr/devops-paradox.png)
+
+---
+
+## [DevopsParadox.com](http://devopsparadox.com/)
+## [@DevOpsParadox](https://twitter.com/DevOpsParadox)
+
+
 ## [DevOpsToolkitSeries.com](http://www.devopstoolkitseries.com/)
 
 ---

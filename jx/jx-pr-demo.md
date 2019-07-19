@@ -99,7 +99,7 @@ curl "$PR_ADDR/demo/hello"
 * Click the *Confirm merge* button.
 
 ```bash
-jx get activity -f go-demo-6 -w
+jx get activity --filter go-demo-6 --watch
 
 jx get applications
 

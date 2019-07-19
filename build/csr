@@ -1,0 +1,12 @@
+{
+  "hosts": [
+  ],
+  "CN": "teleport",
+  "names": [{
+        "O": "system:masters"
+    }],
+  "key": {
+    "algo": "ecdsa",
+    "size": 256
+  }
+}

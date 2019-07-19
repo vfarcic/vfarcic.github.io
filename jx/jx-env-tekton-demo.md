@@ -136,18 +136,17 @@ jx get env -p Never
 cd ..
 
 git clone \
-    https://github.com/$GH_USER/environment-jx-rocks-staging.git
+    https://github.com/$GH_USER/environment-$NAMESPACE-staging.git
 
-cd environment-jx-rocks-staging
+cd environment-$NAMESPACE-staging
 
 ls -1
 
 cat Makefile
 
 # Make sure that you use tabs instead of spaces
-echo 'test:
-	ADDRESS=`kubectl -n cd-staging get ing go-demo-6 \\
-	-o jsonpath="{.spec.rules[0].host}"` go test -v' \
+echo "test:
+	ADDRESS=`kubectl -n $NAMESPACE-staging get ing go-demo-6 -o jsonpath=\"{.spec.rules[0].host}\"` go test -v" \
     | tee -a Makefile
 ```
 
@@ -185,11 +184,11 @@ git commit -m "Added tests"
 
 git push
 
-jx get activity -f environment-jx-rocks-staging --watch
+jx get activity -f environment-$NAMESPACE-staging --watch
 
 jx get build logs
 
-kubectl -n cd-staging get pods
+kubectl -n $NAMESPACE-staging get pods
 ```
 
 
@@ -209,10 +208,11 @@ cat env/requirements.yaml
 
 ---
 
+<!-- https://github.com/jenkins-x/jx/issues/4795 -->
 ```bash
 jx create env --name pre-production --label Pre-Production \
-     --git-owner $GH_USER --namespace jx-pre-production \
-     --promotion Manual --batch-mode
+     --git-owner $GH_USER --namespace $NAMESPACE-pre-production \
+     --promotion Manual --prefix $NAMESPACE --batch-mode
 
 jx get env
 
@@ -222,7 +222,9 @@ jx delete env pre-production
 
 GH_USER=[...]
 
-hub delete -y $GH_USER/environment-jx-pre-production
+hub delete -y $GH_USER/environment-$NAMESPACE-pre-production
+
+rm -rf ~/.jx/environments/$GH_USER/environment-$NAMESPACE-pre-production
 
 cd ..
 ```

@@ -39,6 +39,8 @@ git merge orig
 
 rm -rf charts
 
+ls -1
+
 git push
 
 jx import --batch-mode
@@ -58,9 +60,9 @@ jx get applications
 
 STAGING_ADDR=[...]
 
-curl "$STAGING_ADDR/demo/hello"
+curl "$STAGING_ADDR/demo/hello" # It fails
 
-kubectl --namespace cd-staging logs -l app=jx-go-demo-6
+kubectl --namespace $NAMESPACE-staging logs -l app=jx-go-demo-6
 ```
 
 
@@ -76,6 +78,8 @@ git merge -s ours master --no-edit
 git checkout master
 
 git merge buildpack
+
+cat charts/go-demo-6/requirements.yaml
 
 git push
 

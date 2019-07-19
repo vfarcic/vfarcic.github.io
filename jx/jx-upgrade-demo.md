@@ -60,6 +60,7 @@ jx get addons
 
 
 ## Upgrading Ingress Rules
+### (only if you have a spare domain)
 
 ---
 
@@ -70,25 +71,30 @@ STAGING_ADDR=[...]
 
 curl "$STAGING_ADDR/demo/hello"
 
+# If created the cluster with `jx create cluster`
 LB_IP=$(kubectl --namespace kube-system \
     get svc jxing-nginx-ingress-controller \
     -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
 
+# If installed `jx` in an existing cluster
+LB_IP=$(kubectl --namespace ingress-nginx \
+    get svc ingress-nginx \
+    -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+
 echo $LB_IP
-
-# If you do not have a domain
-DOMAIN=$LB_IP.nip.io
-
-# If you do have a domain and you changed DNS
-DOMAIN=[...]
 ```
 
 
 ## Upgrading Ingress Rules
+### (only if you have a spare domain)
 
 ---
 
-```bash 
+```bash
+# Update your domain DNSes
+
+DOMAIN=[...]
+
 jx upgrade ingress --cluster true --domain $DOMAIN
 
 jx get applications --env staging

@@ -23,7 +23,7 @@
 ```bash
 jx get applications --env staging
 
-VERSION=[...]
+VERSION=2.0.0
 
 echo "VERSION := $VERSION" | tee -a Makefile
 

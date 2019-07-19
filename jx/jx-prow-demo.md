@@ -38,9 +38,9 @@ jx create pr --title "PR with prow" --body "What I can say?" \
 * Type the text and press the *Comment* button
 
 ```
-/assign
-
 This PR is urgent, so please review it ASAP
+
+/assign
 ```
 
 * Type `/lgtm` and click the *Comment* button
@@ -84,6 +84,7 @@ git push
 open "https://github.com/$GH_USER/jx-prow/settings/collaboration"
 ```
 
+* Add the new collaborator, confirm it, and go back to the PR
 * Type `/assign @GH_APPROVER` and click the *Comment* button
 * As the approver, type `/approve` and click the *Comment* button
 
@@ -122,7 +123,7 @@ jx create pr --title "My PR" --body "What I can say?" --batch-mode
 * Comment `/lifecycle frozen`
 * Comment `/lifecycle stale`
 * Comment `/lifecycle rotten`
-* Comment `/remove-lifecycle stale`
+* Comment `/remove-lifecycle rotten`
 * Comment `/meow`
 * As the approver, comment `/lgtm`
 
@@ -132,7 +133,7 @@ jx create pr --title "My PR" --body "What I can say?" --batch-mode
 ---
 
 ```bash
-kubectl -n cd describe cm plugins
+kubectl -n $NAMESPACE describe cm plugins
 
 cd ..
 ```

@@ -95,9 +95,7 @@ Updated Jenkins X Pipeline file: jenkins-x.yml
 ```bash
 cat jenkins-x.yml
 
-git add .
-
-git commit --message "Trying to extend the pipeline"
+git add . && git commit --message "Trying to extend the pipeline"
 
 git push --set-upstream origin extension
 
@@ -107,6 +105,8 @@ jx create pullrequest --title "Extensions" --body "What I can say?" \
 PR_ADDR=[...] # e.g., `https://github.com/vfarcic/go-demo-6/pull/56`
 
 BRANCH=[...] # e.g., `PR-56`
+
+# Wait for a few moments
 
 jx get build logs --filter go-demo-6 --branch $BRANCH
 ```
@@ -128,6 +128,8 @@ git commit --message "Trying to extend the pipeline"
 
 git push
 
+# Wait for a few moments
+
 jx get build logs --filter go-demo-6 --branch $BRANCH
 ```
 
@@ -142,9 +144,11 @@ jx create step --pipeline pullrequest --lifecycle promote --mode post \
 
 git add .
 
-git commit --message "Added sully tests"
+git commit --message "Added silly tests"
 
 git push
+
+# Wait for a few moments
 
 jx get build logs --filter go-demo-6 --branch $BRANCH
 
@@ -176,7 +180,7 @@ cd ..
 
 GH_USER=[...]
 
-cd environment-jx-rocks-staging
+cd environment-$NAMESPACE-staging
 
 git pull
 
@@ -202,9 +206,14 @@ git commit --message "Added integ tests"
 
 git push
 
-jx get build logs --filter environment-tekton-staging --branch master
+# Wait for a few moments
+
+jx get build logs --filter environment-$NAMESPACE-staging \
+    --branch master
 
 open "$PR_ADDR"
+
+# Merge it
 
 cd ..
 ```
