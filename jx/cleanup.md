@@ -69,13 +69,11 @@ az group delete --name $NAME-group --yes
 ---
 
 ```bash
-hub delete -y $GH_USER/environment-jx-rocks-staging
+cd ..
 
-hub delete -y $GH_USER/environment-jx-rocks-production
+hub delete -y $GH_USER/environment-$NAMESPACE-staging
 
-hub delete -y $GH_USER/environment-tekton-staging
-
-hub delete -y $GH_USER/environment-tekton-production
+hub delete -y $GH_USER/environment-$NAMESPACE-production
 
 hub delete -y $GH_USER/jx-go
 
@@ -85,7 +83,7 @@ hub delete -y $GH_USER/jx-prow
 
 hub delete -y $GH_USER/jx-knative
 
-rm -rf ~/.jx/environments/$GH_USER/environment-tekton-*
+rm -rf ~/.jx/environments/$GH_USER/environment-$NAMESPACE-*
 ```
 
 
@@ -102,7 +100,5 @@ rm -rf jx-prow
 
 rm -rf jx-knative
 
-rm -rf environment-jx-rocks-*
-
-rm -rf environment-tekton-*
+rm -rf environment-$NAMESPACE-*
 ```

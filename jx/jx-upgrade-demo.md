@@ -60,7 +60,7 @@ jx get addons
 
 
 ## Upgrading Ingress Rules
-### (only if you have a spare domain)
+## (only me)
 
 ---
 
@@ -86,10 +86,11 @@ echo $LB_IP
 
 
 ## Upgrading Ingress Rules
-### (only if you have a spare domain)
+## (only me)
 
 ---
 
+<!-- https://github.com/jenkins-x/jx/issues/4802 -->
 ```bash
 # Update your domain DNSes
 
@@ -110,10 +111,11 @@ jx repo --batch-mode
 
 
 ## Upgrading Ingress Rules
+## (only me)
 
 ---
 
-```bash 
+```bash
 echo "I am too lazy to write a README" | tee README.md
 
 git add .
