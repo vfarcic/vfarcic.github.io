@@ -17,10 +17,13 @@
 <!-- .slide: data-background="../img/products/docker.png" data-background-size="contain" data-background-color="white" -->
 
 
+<!-- .slide: data-background="../img/products/mesos.jpg" data-background-size="contain" -->
+
+
 <!-- .slide: data-background="../img/swarm/swarm.png" data-background-size="contain" -->
 
 
-<!-- .slide: data-background="../img/swarm/kubernetes.png" data-background-size="contain" -->
+<!-- .slide: data-background="../img/products/kubernetes.png" data-background-size="contain" -->
 
 
 <!-- .slide: data-background="../img/background/service-discovery.png" -->
@@ -46,8 +49,10 @@
 <!-- .slide: data-background="../img/products/traefik.png" data-background-size="contain" data-background-color="white" -->
 
 
-<!-- .slide: data-background="../img/background/proxy.png" -->
-# [Docker Flow Proxy](http://proxy.dockerflow.com/)
+# Kubernetes Ingress
+
+
+<!-- .slide: data-background="../img/products/istio.png" data-background-size="contain" -->
 
 
 <!-- .slide: data-background="../img/background/pipeline.jpg" -->
@@ -55,6 +60,9 @@
 
 
 <!-- .slide: data-background="../img/products/jenkins.png" data-background-size="contain" data-background-color="white" -->
+
+
+<!-- .slide: data-background="../img/products/jenkins-x.png" data-background-size="contain" data-background-color="white" -->
 
 
 <!-- .slide: data-background="../img/background/logs.jpeg" -->
@@ -84,9 +92,6 @@
 
 <!-- .slide: data-background="../img/background/alerting.jpg" -->
 # Alertmanager
-
-
-<!-- .slide: data-background="../img/products/jenkins.png" data-background-size="contain" data-background-color="white" -->
 
 
 <!-- .slide: data-background="../img/products/slack.png" data-background-size="contain" data-background-color="white" -->
