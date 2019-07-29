@@ -3,6 +3,18 @@
 
 ---
 
+## CI vs CD vs CDP?
+
+* Continuous integration?<!-- .element: class="fragment" -->
+* Continuous delivery?<!-- .element: class="fragment" -->
+* Continuous deployment?<!-- .element: class="fragment" -->
+
+
+<!-- .slide: data-background="../img/background/why.jpg" -->
+# What?
+
+---
+
 ## What Do We Expect From Continuous Delivery?
 
 

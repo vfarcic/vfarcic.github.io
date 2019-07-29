@@ -114,6 +114,8 @@ rm -rf build
 ./get-kubeconfig.sh
 
 tar -czf kubeconfig.tar.gz build
+
+mv kubeconfig.tar.gz ~/Amazon\ Drive/tmp/.
 -->
 ## Using The Workshop Cluster
 

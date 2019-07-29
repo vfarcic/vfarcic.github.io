@@ -10,3 +10,4 @@ ms-lifecycle
 *.pem
 /cluster
 /customers
+/tmp
