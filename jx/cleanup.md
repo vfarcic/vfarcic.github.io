@@ -8,8 +8,6 @@ doctl kubernetes cluster delete jx-rocks -f
 -->
 ## Cleanup (GKE)
 
----
-
 ```bash
 gcloud container clusters delete jx-rocks --region us-east1 --quiet
 
@@ -27,8 +25,6 @@ gcloud compute disks delete --zone us-east1-d $(gcloud compute disks \
 
 ## Cleanup (EKS)
 
----
-
 ```bash
 # Only if there are no other ELBs in that region
 LB_NAME=$(aws elbv2 describe-load-balancers | jq -r \
@@ -40,7 +36,7 @@ aws elb delete-load-balancer --load-balancer-name $LB_NAME
 
 eksctl delete cluster -n $NAME
 
-for volume in `aws ec2 describe-volumes --output text| grep available | awk '{print $8}'`; do 
+for volume in `aws ec2 describe-volumes --output text| grep available | awk '{print $8}'`; do
     echo "Deleting volume $volume"
     aws ec2 delete-volume --volume-id $volume
 done
@@ -48,8 +44,6 @@ done
 
 
 ## Cleanup (AKS)
-
----
 
 ```bash
 az aks delete -n $NAME -g $NAME-group --yes
@@ -65,8 +59,6 @@ az group delete --name $NAME-group --yes
 
 
 ## Cleanup
-
----
 
 ```bash
 cd ..
@@ -88,8 +80,6 @@ rm -rf ~/.jx/environments/$GH_USER/environment-$NAMESPACE-*
 
 
 ## Cleanup
-
----
 
 ```bash
 rm -rf jx-go

@@ -1,13 +1,15 @@
-## Hands-On Time
-
----
-
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="img/hands-on.jpg" -->
 # Using The Pipeline Extension Model
 
+<div class="label">Hands-on Time</div>
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 10 of 12</div>
+<div class="label">Hands-on Time</div>
 
 ## In Case You Messed It Up
-
----
 
 ```bash
 cd go-demo-6
@@ -26,9 +28,11 @@ git push
 ```
 
 
-## Exploring Build Pack Pipelines
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 10 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Exploring Build Pack Pipelines
 
 ```bash
 git checkout master
@@ -57,12 +61,13 @@ jx get activities --filter go-demo-6 --watch
 ```
 
 
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 10 of 12</div>
+<div class="label">Hands-on Time</div>
+
 ## Extending Build Pack Pipelines
 
----
-
-```bash
-git checkout -b extension
+<pre><code class="language-bash" style="max-height:154px">git checkout -b extension
 
 cat charts/go-demo-6/values.yaml | sed -e \
     's@replicaCount: 1@replicaCount: 3@g' \
@@ -77,7 +82,7 @@ cat production_test.go | sed -e \
     | tee production_test.go
 
 jx create step
-```
+</code></pre>
 
 ```
 ? Pick the pipeline kind:  pullrequest
@@ -88,9 +93,11 @@ Updated Jenkins X Pipeline file: jenkins-x.yml
 ```
 
 
-## Extending Build Pack Pipelines
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 10 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Extending Build Pack Pipelines
 
 ```bash
 cat jenkins-x.yml
@@ -112,9 +119,11 @@ jx get build logs --filter go-demo-6 --branch $BRANCH
 ```
 
 
-## Extending Build Pack Pipelines
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 10 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Extending Build Pack Pipelines
 
 ```bash
 jx create step --pipeline pullrequest --lifecycle promote --mode post \
@@ -134,9 +143,11 @@ jx get build logs --filter go-demo-6 --branch $BRANCH
 ```
 
 
-## Extending Build Pack Pipelines
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 10 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Extending Build Pack Pipelines
 
 ```bash
 jx create step --pipeline pullrequest --lifecycle promote --mode post \
@@ -156,9 +167,11 @@ open "$PR_ADDR"
 ```
 
 
-## Extending Build Pack Pipelines
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 10 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Extending Build Pack Pipelines
 
 ```bash
 cat jenkins-x.yml | sed '$ d' | tee jenkins-x.yml
@@ -171,9 +184,11 @@ git push
 ```
 
 
-## Extending Environment Pipelines
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 10 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Extending Environment Pipelines
 
 ```bash
 cd ..
@@ -195,9 +210,11 @@ cat jenkins-x.yml
 ```
 
 
-## Extending Environment Pipelines
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 10 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Extending Environment Pipelines
 
 ```bash
 git add .

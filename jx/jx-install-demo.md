@@ -1,13 +1,15 @@
-## Hands-On Time
-
----
-
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="img/hands-on.jpg" -->
 # Installing jx
 
+<div class="label">Hands-on Time</div>
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 1 of 12</div>
+<div class="label">Hands-on Time</div>
 
 ## Installing jx (MacOS)
-
----
 
 ```bash
 brew tap jenkins-x/jx
@@ -16,9 +18,11 @@ brew install jx
 ```
 
 
-## Installing jx (Linux)
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 1 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Installing jx (Linux)
 
 ```bash
 mkdir -p ~/.jx/bin
@@ -31,9 +35,11 @@ echo 'export PATH=$PATH:~/.jx/bin' >> ~/.bashrc
 ```
 
 
-## Installing jx (Windows)
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 1 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Installing jx (Windows)
 
 ```bash
 choco install jenkins-x

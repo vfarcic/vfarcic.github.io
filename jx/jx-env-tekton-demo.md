@@ -1,98 +1,120 @@
-## Hands-On Time
-
----
-
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="img/hands-on.jpg" -->
 # Applying GitOps Principles
 
+<div class="label">Hands-on Time</div>
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 5 of 12</div>
+<div class="label">Hands-on Time</div>
 
 ## Ten Commandments Of GitOps Applied To Continuous Delivery
 
----
-
-# Git is the only source of truth
+### 1. Git is the only source of truth
 
 
-<!-- .slide: data-background="img/gitops-apps.png" data-background-size="contain" -->
+<img src="img/gitops-apps.png" style="width:648px;height:460px;padding:20px;background-color:white;">
 
 
-## Ten Commandments Of GitOps Applied To Continuous Delivery
-
----
-
-## Everything must be tracked, every action must be reproducible, and everything must be idempotent
-
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 5 of 12</div>
+<div class="label">Hands-on Time</div>
 
 ## Ten Commandments Of GitOps Applied To Continuous Delivery
 
----
-
-# Communication between processes must be asynchronous
+### 2. Everything must be tracked, every action must be reproducible, and everything must be idempotent
 
 
-<!-- .slide: data-background="img/gitops-webhooks.png" data-background-size="contain" -->
-
-
-## Ten Commandments Of GitOps Applied To Continuous Delivery
-
----
-
-# Processes should run for as long as needed, but not longer
-
-
-<!-- .slide: data-background="img/gitops-agents.png" data-background-size="contain" -->
-
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 5 of 12</div>
+<div class="label">Hands-on Time</div>
 
 ## Ten Commandments Of GitOps Applied To Continuous Delivery
 
----
-
-# All binaries must be stored in registries
+### 3. Communication between processes must be asynchronous
 
 
-<!-- .slide: data-background="img/gitops-registries.png" data-background-size="contain" -->
+<img src="img/gitops-webhooks.png" style="width:732px;height:460px;padding:20px;background-color:white;">
 
 
-## Ten Commandments Of GitOps Applied To Continuous Delivery
-
----
-
-## Information about all the releases must be stored in environment-specific repositories or branches
-
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 5 of 12</div>
+<div class="label">Hands-on Time</div>
 
 ## Ten Commandments Of GitOps Applied To Continuous Delivery
 
----
-
-# Everything must follow the same coding practices
+### 4. Processes should run for as long as needed, but not longer
 
 
-<!-- .slide: data-background="img/gitops-env.png" data-background-size="contain" -->
+<img src="img/gitops-agents.png" style="width:732px;height:460px;padding:20px;background-color:white;">
 
 
-## Ten Commandments Of GitOps Applied To Continuous Delivery
-
----
-
-# All deployments must be idempotent
-
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 5 of 12</div>
+<div class="label">Hands-on Time</div>
 
 ## Ten Commandments Of GitOps Applied To Continuous Delivery
 
----
+### 5. All binaries must be stored in registries
 
-## Git webhooks are the only ones allowed to initiate a change that will be applied to the system
 
+<img src="img/gitops-registries.png" style="width:732px;height:460px;padding:20px;background-color:white;">
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 5 of 12</div>
+<div class="label">Hands-on Time</div>
 
 ## Ten Commandments Of GitOps Applied To Continuous Delivery
 
----
+### 6. Information about all the releases must be stored in environment-specific repositories or branches
 
-# All the tools must be able to speak with each other through APIs
 
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 5 of 12</div>
+<div class="label">Hands-on Time</div>
+
+## Ten Commandments Of GitOps Applied To Continuous Delivery
+
+### 7. Everything must follow the same coding practices
+
+
+<img src="img/gitops-env.png" style="width:732px;height:460px;padding:20px;background-color:white;">
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 5 of 12</div>
+<div class="label">Hands-on Time</div>
+
+## Ten Commandments Of GitOps Applied To Continuous Delivery
+
+### 8. All deployments must be idempotent
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 5 of 12</div>
+<div class="label">Hands-on Time</div>
+
+## Ten Commandments Of GitOps Applied To Continuous Delivery
+
+### 9. Git webhooks are the only ones allowed to initiate a change that will be applied to the system
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 5 of 12</div>
+<div class="label">Hands-on Time</div>
+
+## Ten Commandments Of GitOps Applied To Continuous Delivery
+
+### 10. All the tools must be able to speak with each other through APIs
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 5 of 12</div>
+<div class="label">Hands-on Time</div>
 
 ## In case you messed it up
-
----
 
 ```bash
 git checkout buildpack
@@ -113,9 +135,11 @@ git push
 ```
 
 
-## Exploring Jenkins X Envs
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 5 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Exploring Jenkins X Envs
 
 ```bash
 jx get env
@@ -128,9 +152,11 @@ jx get env -p Never
 ```
 
 
-## Adapting The Staging Env
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 5 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Adapting The Staging Env
 
 ```bash
 cd ..
@@ -151,9 +177,11 @@ echo "test:
 ```
 
 
-## Adapting The Staging Env
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 5 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Adapting The Staging Env
 
 ```bash
 curl -sSLo integration_test.go https://bit.ly/2Do5LRN
@@ -173,9 +201,11 @@ cat env/requirements.yaml
 ```
 
 
-## Adapting The Staging Env
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 5 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Adapting The Staging Env
 
 ```bash
 git add .
@@ -192,21 +222,25 @@ kubectl -n $NAMESPACE-staging get pods
 ```
 
 
-## App <> Env Pipelines
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 5 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## App <> Env Pipelines
 
 ```bash
 cat env/requirements.yaml
 ```
 
 
-<!-- .slide: data-background="img/gitops-full-flow.png" data-background-size="contain" -->
+<img src="img/gitops-full-flow.png" style="width:732px;height:460px;padding:20px;background-color:white;">
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 5 of 12</div>
+<div class="label">Hands-on Time</div>
 
 ## Controlling The Environments
-
----
 
 <!-- https://github.com/jenkins-x/jx/issues/4795 -->
 ```bash

@@ -1,15 +1,15 @@
-## Hands-On Time
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="img/hands-on.jpg" -->
+# Creating A Jenkins X Cluster
 
----
+<div class="label">Hands-on Time</div>
 
-### Creating A
-# Jenkins-X
-## Cluster
 
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 2 of 12</div>
+<div class="label">Hands-on Time</div>
 
 ## Prerequisites
-
----
 
 * [Git](https://git-scm.com/)
 * GitBash (if using Windows)
@@ -20,9 +20,11 @@
 * If AWS: [AWS CLI](https://aws.amazon.com/cli/) and AWS admin permissions
 
 
-## Creating A Cluster With jx
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 2 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating A Cluster With jx
 
 ```bash
 NAMESPACE=cd
@@ -33,9 +35,11 @@ echo "nexus:
 ```
 
 
-## Creating A Cluster With jx (GKE)
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 2 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating A Cluster With jx (GKE)
 
 ```bash
 open "https://console.cloud.google.com/cloud-resource-manager"
@@ -52,9 +56,11 @@ jx create cluster gke -n jx-rocks -p $PROJECT -r us-east1 \
 ```
 
 
-## Creating A Cluster With jx (AKS)
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 2 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating A Cluster With jx (AKS)
 
 ```bash
 # Use default answers
@@ -66,9 +72,11 @@ jx create cluster aks -c jxrocks -n jxrocks-group -l eastus \
 ```
 
 
-## Creating A Cluster With jx (EKS)
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 2 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating A Cluster With jx (EKS)
 
 ```bash
 export AWS_ACCESS_KEY_ID=[...] # Replace [...] with the AWS Access Key ID
@@ -117,9 +125,11 @@ tar -czf kubeconfig.tar.gz build
 
 mv kubeconfig.tar.gz ~/Amazon\ Drive/tmp/.
 -->
-## Using The Workshop Cluster
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 2 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Using The Workshop Cluster
 
 <!-- TODO: Change me -->
 ```bash
@@ -133,9 +143,11 @@ export KUBECONFIG=$PWD/build/kubeconfig
 ```
 
 
-## Using The Workshop Cluster
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 2 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Using The Workshop Cluster
 
 ```bash
 export LB_IP=$(kubectl -n ingress-nginx get svc \
@@ -155,9 +167,11 @@ jx install --provider kubernetes --external-ip $LB_IP \
 ```
 
 
-## Verifying The Installation
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 2 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Verifying The Installation
 
 ```bash
 kubectl get pods
