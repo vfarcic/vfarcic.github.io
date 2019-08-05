@@ -1,11 +1,11 @@
 <!-- .slide: class="center" -->
-<div class="eyebrow">Section 2 of 12</div>
+<div class="eyebrow">Section 2</div>
 
 # Creating A CD Cluster
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 2 of 12</div>
+<div class="eyebrow">Section 2</div>
 
 # Creating A CD Cluster
 
@@ -13,7 +13,7 @@
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 2 of 12</div>
+<div class="eyebrow">Section 2</div>
 
 # What You'll Learn
 

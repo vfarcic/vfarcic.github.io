@@ -1,11 +1,11 @@
 <!-- .slide: class="center" -->
-<div class="eyebrow">Section 8 of 12</div>
+<div class="eyebrow">Section 8</div>
 
 # Versioning Releases
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 8 of 12</div>
+<div class="eyebrow">Section 8</div>
 
 # Versioning Releases
 
@@ -13,7 +13,7 @@
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 8 of 12</div>
+<div class="eyebrow">Section 8</div>
 
 # What You'll Learn
 

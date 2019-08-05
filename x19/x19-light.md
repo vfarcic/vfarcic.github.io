@@ -48,7 +48,7 @@ The "light" class also puts paragraph and list elements over a translucent white
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 1 of 12</div>
+<div class="eyebrow">Section 1</div>
 
 # What You'll Learn
 

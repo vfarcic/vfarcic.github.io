@@ -1,11 +1,11 @@
 <!-- .slide: class="center" -->
-<div class="eyebrow">Section 9 of 12</div>
+<div class="eyebrow">Section 9</div>
 
 # Implementing ChatOps
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 9 of 12</div>
+<div class="eyebrow">Section 9</div>
 
 ## Pull Request Process?
 
@@ -20,7 +20,7 @@
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 9 of 12</div>
+<div class="eyebrow">Section 9</div>
 
 ## Pull Request Process?
 
@@ -31,7 +31,7 @@
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 9 of 12</div>
+<div class="eyebrow">Section 9</div>
 
 ## Pull Request Process?
 
@@ -42,7 +42,7 @@
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 9 of 12</div>
+<div class="eyebrow">Section 9</div>
 
 # Implementing ChatOps
 
@@ -50,7 +50,7 @@
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 9 of 12</div>
+<div class="eyebrow">Section 9</div>
 
 # What You'll Learn
 

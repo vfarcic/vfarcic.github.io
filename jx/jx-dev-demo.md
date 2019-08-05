@@ -1,9 +1,13 @@
-## Hands-On Time
-
----
-
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="img/hands-on.jpg" -->
 # Improving And Simplifying Software Development
 
+<div class="label">Hands-on Time</div>
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 6</div>
+<div class="label">Hands-on Time</div>
 
 ## Exploring The Requirements Of Efficient Development Environment
 
@@ -13,6 +17,10 @@
 <!-- .slide: data-background="img/vs-code-jx.png" data-background-size="contain" -->
 
 
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 6</div>
+<div class="label">Hands-on Time</div>
+
 ## In Case You Messed It Up
 
 ---
@@ -20,15 +28,13 @@
 ```bash
 cd go-demo-6
 
-git checkout buildpack
+git checkout buildpack && git merge -s ours master --no-edit
 
-git merge -s ours master --no-edit
+git checkout master && git merge buildpack
 
-git checkout master
+echo "buildPack: go" | tee jenkins-x.yml
 
-git merge buildpack
-
-git push
+git add . && git commit -m "Added jenkins-x.yml" && git push
 ```
 
 
@@ -37,9 +43,7 @@ git push
 ---
 
 ```bash
-cd go-demo-6
-
-jx create devpod -b
+jx create devpod --batch-mode
 
 jx rsh -d
 
@@ -50,8 +54,6 @@ ls -1
 go mod init
 
 make linux
-
-cat skaffold.yaml
 ```
 
 
@@ -60,6 +62,8 @@ cat skaffold.yaml
 ---
 
 ```bash
+cat skaffold.yaml
+
 echo $DOCKER_REGISTRY
 
 env

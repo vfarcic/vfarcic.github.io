@@ -1,11 +1,11 @@
 <!-- .slide: class="center" -->
-<div class="eyebrow">Section 1 of 12</div>
+<div class="eyebrow">Section 1</div>
 
 # Installing jx
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 1 of 12</div>
+<div class="eyebrow">Section 1</div>
 
 # Installing jx
 
@@ -15,7 +15,7 @@
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 1 of 12</div>
+<div class="eyebrow">Section 1</div>
 
 # What You'll Learn
 

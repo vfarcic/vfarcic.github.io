@@ -6,7 +6,7 @@
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 <div class="label">Hands-on Time</div>
 
 ## Installing Gloo and Knative
@@ -23,13 +23,13 @@ jx edit deploy --team --kind knative --batch-mode
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 <div class="label">Hands-on Time</div>
 
 ## New Serverless Application
 
 ```bash
-jx create quickstart --language go --project-name jx-knative \
+jx create quickstart --filter golang-http --project-name jx-knative \
     --batch-mode
 
 cd jx-knative
@@ -41,26 +41,35 @@ ls -1 charts/jx-knative/templates
 cat charts/jx-knative/templates/deployment.yaml
 
 cat charts/jx-knative/templates/ksvc.yaml
-
-jx get activities --filter jx-knative --watch
-
-jx get activities --filter environment-tekton-staging/master --watch
 ```
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 <div class="label">Hands-on Time</div>
 
 ## New Serverless Application
 
 ```bash
+jx get activities --filter jx-knative --watch
+
+jx get activities --filter environment-tekton-staging/master --watch
+
 kubectl --namespace $NAMESPACE-staging get pods \
     --selector serving.knative.dev/service=jx-knative
 
 kubectl --namespace $NAMESPACE-staging describe pod \
     --selector serving.knative.dev/service=jx-knative
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12</div>
+<div class="label">Hands-on Time</div>
+
+## New Serverless Application
+
+```bash
 kubectl --namespace $NAMESPACE-staging get all
 
 jx get applications --env staging
@@ -75,7 +84,7 @@ curl "$ADDR"
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 <div class="label">Hands-on Time</div>
 
 ## New Serverless Application
@@ -92,13 +101,13 @@ kubectl --namespace knative-serving \
 
 kubectl --namespace $NAMESPACE-staging get pods \
     --selector serving.knative.dev/service=jx-knative
-
-# Make sure that the output is `no resources found`
 ```
+
+* Make sure that the output is `no resources found`
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 <div class="label">Hands-on Time</div>
 
 ## New Serverless Application
@@ -120,17 +129,13 @@ cat charts/jx-knative/templates/ksvc.yaml | sed -e \
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 <div class="label">Hands-on Time</div>
 
 ## New Serverless Application
 
 ```bash
-git add .
-
-git commit -m "Added Knative target"
-
-git push
+git add . && git commit -m "Added Knative target" && git push
 
 jx get activities --filter jx-knative --watch
 
@@ -146,7 +151,7 @@ kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 <div class="label">Hands-on Time</div>
 
 ## New Serverless Application
@@ -160,32 +165,28 @@ cat charts/jx-knative/templates/ksvc.yaml | sed -e \
             autoscaling.knative.dev/minScale: "1"@g' \
     | tee charts/jx-knative/templates/ksvc.yaml
 
-git add .
-
-git commit -m "Added Knative minScale"
-
-git push
-
-jx get activities --filter jx-knative --watch
-
-jx get activities --filter environment-tekton-staging/master --watch
+git add . && git commit -m "Added Knative minScale" && git push
 ```
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 <div class="label">Hands-on Time</div>
 
 ## New Serverless Application
 
 ```bash
+jx get activities --filter jx-knative --watch
+
+jx get activities --filter environment-tekton-staging/master --watch
+
 kubectl --namespace $NAMESPACE-staging get pods \
     --selector serving.knative.dev/service=jx-knative
 ```
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 <div class="label">Hands-on Time</div>
 
 ## Existing Projects To Serverless
@@ -200,7 +201,7 @@ ls -1 charts/go-demo-6/templates
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 <div class="label">Hands-on Time</div>
 
 ## Adding Knative Support Manually
@@ -217,14 +218,23 @@ echo "{{- if .Values.knativeDeploy }}
 {{- else }}
 $(cat charts/go-demo-6/templates/service.yaml)
 {{- end }}" | tee charts/go-demo-6/templates/service.yaml
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12</div>
+<div class="label">Hands-on Time</div>
+
+## Adding Knative Support Manually
+
+```bash
 curl -o tee charts/go-demo-6/templates/ksvc.yaml \
     https://gist.githubusercontent.com/vfarcic/cb7c79f25e65bcca5f6e553a2aa8a47c/raw/886508339a4c04b9e575b6f4d417e80018e4c3f6/ksvc.yaml
 ```
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 <div class="label">Hands-on Time</div>
 
 ## Turning On Knative Support
@@ -237,7 +247,7 @@ cat charts/go-demo-6/values.yaml | grep knative
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 <div class="label">Hands-on Time</div>
 
 ## Adding The Final Touches
@@ -250,21 +260,43 @@ cat charts/preview/Makefile | sed -e "s@vfarcic@$PROJECT@g" \
     | tee charts/preview/Makefile
 
 cat skaffold.yaml | sed -e "s@vfarcic@$PROJECT@g" | tee skaffold.yaml
+```
 
-cat jenkins-x.yml | sed '$ d' | tee jenkins-x.yml
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12</div>
+<div class="label">Hands-on Time</div>
+
+## Adding The Final Touches
+
+```bash
+echo "buildPack: go
+pipelineConfig:
+  pipelines:
+    pullRequest:
+      build:
+        preSteps:
+        - command: make unittest" | tee jenkins-x.yml
 
 curl -o Jenkinsfile https://gist.githubusercontent.com/vfarcic/56c986a29e0753076e08163a7c6a2051/raw/a8be26f33c877c0927e833b015c5620d150712d6/Jenkinsfile
+```
 
-git add .
 
-git commit -m "Added Knative"
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12</div>
+<div class="label">Hands-on Time</div>
+
+## Adding The Final Touches
+
+```bash
+git add . && git commit -m "Added Knative"
 
 git push --set-upstream origin serverless
 ```
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 <div class="label">Hands-on Time</div>
 
 ## Serverless With PRs
@@ -278,43 +310,45 @@ BRANCH=[...] # e.g., `PR-109`
 jx get activities --filter go-demo-6/$BRANCH --watch
 
 GH_USER=[...]
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12</div>
+<div class="label">Hands-on Time</div>
+
+## Serverless With PRs
+
+```bash
 PR_NAMESPACE=$(echo $NAMESPACE-$GH_USER-go-demo-6-$BRANCH \
   | tr '[:upper:]' '[:lower:]')
 
 echo $PR_NAMESPACE
 
 kubectl --namespace $PR_NAMESPACE get pods
+
+PR_ADDR=$(kubectl --namespace $PR_NAMESPACE get ksvc go-demo-6 \
+    --output jsonpath="{.status.domain}")
+
+echo $PR_ADDR
 ```
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 <div class="label">Hands-on Time</div>
 
 ## Serverless With PRs
 
 ```bash
-PR_ADDR=$(kubectl --namespace $PR_NAMESPACE get ksvc go-demo-6 \
-    --output jsonpath="{.status.domain}")
-
-echo $PR_ADDR
-
 curl "$PR_ADDR/demo/hello"
 
 kubectl --namespace cd-staging get pods
 
 jx repo
-
-# Merge the PR
 ```
 
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow">Section 12 of 12</div>
-<div class="label">Hands-on Time</div>
-
-## Serverless With PRs
+* Merge the PR
 
 ```bash
 git checkout master
@@ -332,7 +366,7 @@ kubectl --namespace $NAMESPACE-staging get pods
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 <div class="label">Hands-on Time</div>
 
 ## Serverless With PRs
@@ -348,7 +382,7 @@ curl "$ADDR/demo/hello"
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 <div class="label">Hands-on Time</div>
 
 ## Serverless With PRs Only
@@ -370,56 +404,35 @@ echo "go-demo-6:
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 <div class="label">Hands-on Time</div>
 
 ## Serverless With PRs Only
 
 ```bash
-git add .
+git add . && git commit -m "Removed Knative" && git pull && git push
 
-git commit -m "Removed Knative"
-
-git pull
-
-git push
-```
-
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow">Section 12 of 12</div>
-<div class="label">Hands-on Time</div>
-
-## Serverless With PRs Only
-
-```bash
 cd ../go-demo-6
 
 echo "go-demo-6 rocks" | tee README.md
 
-git add .
-
-git commit -m "Removed Knative"
-
-git pull
-
-git push
+git add . && git commit -m "Removed Knative" && git pull && git push
 
 jx get activities --filter go-demo-6/master --watch
 
 jx get activities --filter environment-tekton-staging/master --watch
-
-kubectl --namespace $NAMESPACE-staging get pods
 ```
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 <div class="label">Hands-on Time</div>
 
 ## Serverless With PRs Only
 
 ```bash
+kubectl --namespace $NAMESPACE-staging get pods
+
 ADDR=$(kubectl --namespace $NAMESPACE-staging get ing go-demo-6 \
     --output jsonpath="{.spec.rules[0].host}")
 

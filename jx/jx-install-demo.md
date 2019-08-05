@@ -6,7 +6,7 @@
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 1 of 12</div>
+<div class="eyebrow">Section 1</div>
 <div class="label">Hands-on Time</div>
 
 ## Installing jx (MacOS)
@@ -19,7 +19,7 @@ brew install jx
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 1 of 12</div>
+<div class="eyebrow">Section 1</div>
 <div class="label">Hands-on Time</div>
 
 ## Installing jx (Linux)
@@ -36,7 +36,7 @@ echo 'export PATH=$PATH:~/.jx/bin' >> ~/.bashrc
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 1 of 12</div>
+<div class="eyebrow">Section 1</div>
 <div class="label">Hands-on Time</div>
 
 ## Installing jx (Windows)

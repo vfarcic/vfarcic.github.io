@@ -1,11 +1,11 @@
 <!-- .slide: class="center" -->
-<div class="eyebrow">Section 10 of 12</div>
+<div class="eyebrow">Section 10</div>
 
 # Using The Pipeline Extension Model
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 10 of 12</div>
+<div class="eyebrow">Section 10</div>
 
 # Using The Pipeline Extension Model
 
@@ -13,7 +13,7 @@
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 10 of 12</div>
+<div class="eyebrow">Section 10</div>
 
 # What You'll Learn
 

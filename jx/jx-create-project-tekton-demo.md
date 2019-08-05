@@ -6,7 +6,7 @@
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 3 of 12</div>
+<div class="eyebrow">Section 3</div>
 <div class="label">Hands-on Time</div>
 
 ## Creating A Project
@@ -14,12 +14,21 @@
 ```bash
 jx create quickstart # Cancel with ctrl+c
 
-jx create quickstart --language go --project-name jx-go --batch-mode
+jx create quickstart --filter golang-http --project-name jx-go --batch-mode
 
 export GH_USER=[...] # Replace with your GitHub user
 
 open "https://github.com/$GH_USER/jx-go"
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 3</div>
+<div class="label">Hands-on Time</div>
+
+## Creating A Project
+
+```bash
 ls -l jx-go
 
 cat jx-go/Dockerfile
@@ -27,18 +36,18 @@ cat jx-go/Dockerfile
 cat jx-go/jenkins-x.yml
 
 cat jx-go/Makefile
+
+cat jx-go/skaffold.yaml
 ```
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 3 of 12</div>
+<div class="eyebrow">Section 3</div>
 <div class="label">Hands-on Time</div>
 
 ## Creating A Project
 
 ```bash
-cat jx-go/skaffold.yaml
-
 ls -l jx-go/charts
 
 ls -l jx-go/charts/jx-go
@@ -54,7 +63,7 @@ ls -l ~/.jx/draft/packs/github.com/jenkins-x-buildpacks/jenkins-x-kubernetes/pac
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 3 of 12</div>
+<div class="eyebrow">Section 3</div>
 <div class="label">Hands-on Time</div>
 
 ## Browsing The Project
@@ -68,12 +77,12 @@ jx get activities -f jx-go -w # Cancel with ctrl+c
 
 jx get build logs # Cancel with ctrl+c
 
-jx get build logs -f jx-go
+jx get build logs -f jx-go # Cancel with ctrl+c
 ```
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 3 of 12</div>
+<div class="eyebrow">Section 3</div>
 <div class="label">Hands-on Time</div>
 
 ## Browsing The Project

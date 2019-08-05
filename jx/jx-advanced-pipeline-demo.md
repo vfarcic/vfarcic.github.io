@@ -6,7 +6,7 @@
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 <div class="label">Hands-on Time</div>
 
 ## In Case You Messed It Up
@@ -16,29 +16,21 @@ cd go-demo-6
 
 git pull
 
-git checkout extension-model-cd
+git checkout extension-model-cd && git merge -s ours master --no-edit
 
-git merge -s ours master --no-edit
-
-git checkout master
-
-git merge extension-model-cd
+git checkout master && git merge extension-model-cd
 
 git push
-
-cd ..
 ```
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 <div class="label">Hands-on Time</div>
 
 ## Naming Steps And Using Multi-Line Commands
 
 ```bash
-cd go-demo-6
-
 cat jenkins-x.yml
 
 git checkout -b better-pipeline
@@ -46,7 +38,7 @@ git checkout -b better-pipeline
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 <div class="label">Hands-on Time</div>
 
 ## Naming Steps And Using Multi-Line Commands
@@ -77,7 +69,7 @@ pipelineConfig:
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 <div class="label">Hands-on Time</div>
 
 ## Naming Steps And Using Multi-Line Commands
@@ -85,9 +77,7 @@ pipelineConfig:
 ```bash
 jx step syntax validate pipeline
 
-git add .
-
-git commit -m "rollout status"
+git add . && git commit -m "rollout status"
 
 git push --set-upstream origin better-pipeline
 
@@ -95,7 +85,16 @@ jx create pullrequest --title "Better pipeline" \
     --body "What I can say?" --batch-mode
 
 BRANCH=[...] # e.g., PR-72
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11</div>
+<div class="label">Hands-on Time</div>
+
+## Naming Steps And Using Multi-Line Commands
+
+```bash
 jx get activities --filter go-demo-6/$BRANCH --watch
 
 jx get build logs --current
@@ -103,7 +102,7 @@ jx get build logs --current
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 <div class="label">Hands-on Time</div>
 
 ## Env Variables And Agents
@@ -121,7 +120,7 @@ open "https://github.com/vfarcic/codecov"
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 <div class="label">Hands-on Time</div>
 
 ## Env Variables And Agents
@@ -158,7 +157,7 @@ pipelineConfig:
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 <div class="label">Hands-on Time</div>
 
 ## Env Variables And Agents
@@ -166,11 +165,7 @@ pipelineConfig:
 ```bash
 jx step syntax validate pipeline
 
-git add .
-
-git commit -m "Code coverage"
-
-git push
+git add . && git commit -m "Code coverage" && git push
 
 jx get activities --filter go-demo-6/$BRANCH --watch
 
@@ -182,7 +177,7 @@ kubectl create secret generic codecov \
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 <div class="label">Hands-on Time</div>
 
 ## Env Variables And Agents
@@ -221,7 +216,7 @@ pipelineConfig:
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 <div class="label">Hands-on Time</div>
 
 ## Env Variables And Agents
@@ -229,14 +224,21 @@ pipelineConfig:
 ```bash
 jx step syntax validate pipeline
 
-git add .
-
-git commit -m "Code coverage secret"
-
-git push
+git add . && git commit -m "Code coverage secret" && git push
 
 jx get activities --filter go-demo-6/$BRANCH --watch
+```
 
+* Merge the PR
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11</div>
+<div class="label">Hands-on Time</div>
+
+## Env Variables And Agents
+
+```bash
 git checkout master
 
 git pull
@@ -246,7 +248,7 @@ git branch -d better-pipeline
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 <div class="label">Hands-on Time</div>
 
 ## Overrides And Loops
@@ -287,7 +289,7 @@ pipelineConfig:
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 <div class="label">Hands-on Time</div>
 
 ## Overrides And Loops
@@ -295,18 +297,14 @@ pipelineConfig:
 ```bash
 jx step syntax validate pipeline
 
-git add .
-
-git commit -m "Multi-architecture"
-
-git push
+git add . && git commit -m "Multi-architecture" && git push
 
 jx get activities --filter go-demo-6/master --watch
 ```
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 <div class="label">Hands-on Time</div>
 
 ## Overrides And Loops
@@ -356,7 +354,7 @@ pipelineConfig:
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 <div class="label">Hands-on Time</div>
 
 ## Overrides And Loops
@@ -364,18 +362,14 @@ pipelineConfig:
 ```bash
 jx step syntax validate pipeline
 
-git add .
-
-git commit -m "Multi-architecture"
-
-git push
+git add . && git commit -m "Multi-architecture" && git push
 
 jx get activities --filter go-demo-6/master --watch
 ```
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 <div class="label">Hands-on Time</div>
 
 ## Overrides And Loops
@@ -421,7 +415,7 @@ pipelineConfig:
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 <div class="label">Hands-on Time</div>
 
 ## Overrides And Loops
@@ -432,7 +426,7 @@ jx step syntax effective
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 <div class="label">Hands-on Time</div>
 
 ## Overrides And Loops
@@ -492,7 +486,7 @@ pipelineConfig:
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 <div class="label">Hands-on Time</div>
 
 ## Overrides And Loops
@@ -516,7 +510,7 @@ jx get activities --filter go-demo-6/master --watch
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 <div class="label">Hands-on Time</div>
 
 ## Overrides And Loops
@@ -539,7 +533,7 @@ pipelineConfig:
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 <div class="label">Hands-on Time</div>
 
 ## Overrides And Loops
@@ -556,7 +550,7 @@ jx get activities --filter go-demo-6/master --watch
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 <div class="label">Hands-on Time</div>
 
 ## Exploring The Syntax Schema
@@ -571,7 +565,7 @@ jx step syntax validate buildpacks
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 <div class="label">Hands-on Time</div>
 
 ## What Now?

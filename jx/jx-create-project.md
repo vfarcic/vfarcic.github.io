@@ -1,11 +1,11 @@
 <!-- .slide: class="center" -->
-<div class="eyebrow">Section 3 of 12</div>
+<div class="eyebrow">Section 3</div>
 
 # Creating A Quickstart Project
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 3 of 12</div>
+<div class="eyebrow">Section 3</div>
 
 # Creating A Quickstart Project
 
@@ -15,7 +15,7 @@
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 3 of 12</div>
+<div class="eyebrow">Section 3</div>
 
 # What You'll Learn
 

@@ -6,7 +6,7 @@
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 8 of 12</div>
+<div class="eyebrow">Section 8</div>
 <div class="label">Hands-on Time</div>
 
 ## Semantic Versioning
@@ -19,7 +19,7 @@
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 8 of 12</div>
+<div class="eyebrow">Section 8</div>
 <div class="label">Hands-on Time</div>
 
 ## Versioning From Pipelines
@@ -36,33 +36,42 @@ git add .
 git commit -m "Finally 1.0.0"
 
 git push
-
-jx get activities -f go-demo-6 -w
-
-jx get applications --env staging
 ```
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 8 of 12</div>
+<div class="eyebrow">Section 8</div>
 <div class="label">Hands-on Time</div>
 
 ## Versioning From Pipelines
 
 ```bash
+jx get activities --filter go-demo-6/master --watch
+
+jx get activities --filter environment-jx-rocks-staging/master --watch
+
+jx get applications --env staging
+
 GH_USER=[...]
 
 open "https://github.com/$GH_USER/go-demo-6/releases"
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 8</div>
+<div class="label">Hands-on Time</div>
+
+## Versioning From Pipelines
+
+```bash
 echo "A silly change" | tee README.md
 
-git add .
+git add . && git commit -m "A silly change" && git push
 
-git commit -m "A silly change"
+jx get activity --filter go-demo-6/master --watch
 
-git push
-
-jx get activity --filter go-demo-6 --watch
+jx get activities --filter environment-jx-rocks-staging/master --watch
 
 jx get applications --env staging
 

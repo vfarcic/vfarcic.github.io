@@ -6,7 +6,7 @@
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 5 of 12</div>
+<div class="eyebrow">Section 5</div>
 <div class="label">Hands-on Time</div>
 
 ## Ten Commandments Of GitOps Applied To Continuous Delivery
@@ -18,7 +18,7 @@
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 5 of 12</div>
+<div class="eyebrow">Section 5</div>
 <div class="label">Hands-on Time</div>
 
 ## Ten Commandments Of GitOps Applied To Continuous Delivery
@@ -27,7 +27,7 @@
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 5 of 12</div>
+<div class="eyebrow">Section 5</div>
 <div class="label">Hands-on Time</div>
 
 ## Ten Commandments Of GitOps Applied To Continuous Delivery
@@ -39,7 +39,7 @@
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 5 of 12</div>
+<div class="eyebrow">Section 5</div>
 <div class="label">Hands-on Time</div>
 
 ## Ten Commandments Of GitOps Applied To Continuous Delivery
@@ -51,7 +51,7 @@
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 5 of 12</div>
+<div class="eyebrow">Section 5</div>
 <div class="label">Hands-on Time</div>
 
 ## Ten Commandments Of GitOps Applied To Continuous Delivery
@@ -63,7 +63,7 @@
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 5 of 12</div>
+<div class="eyebrow">Section 5</div>
 <div class="label">Hands-on Time</div>
 
 ## Ten Commandments Of GitOps Applied To Continuous Delivery
@@ -72,7 +72,7 @@
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 5 of 12</div>
+<div class="eyebrow">Section 5</div>
 <div class="label">Hands-on Time</div>
 
 ## Ten Commandments Of GitOps Applied To Continuous Delivery
@@ -84,7 +84,7 @@
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 5 of 12</div>
+<div class="eyebrow">Section 5</div>
 <div class="label">Hands-on Time</div>
 
 ## Ten Commandments Of GitOps Applied To Continuous Delivery
@@ -93,7 +93,7 @@
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 5 of 12</div>
+<div class="eyebrow">Section 5</div>
 <div class="label">Hands-on Time</div>
 
 ## Ten Commandments Of GitOps Applied To Continuous Delivery
@@ -102,7 +102,7 @@
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 5 of 12</div>
+<div class="eyebrow">Section 5</div>
 <div class="label">Hands-on Time</div>
 
 ## Ten Commandments Of GitOps Applied To Continuous Delivery
@@ -111,32 +111,24 @@
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 5 of 12</div>
+<div class="eyebrow">Section 5</div>
 <div class="label">Hands-on Time</div>
 
 ## In case you messed it up
 
 ```bash
-git checkout buildpack
+git checkout buildpack && git merge -s ours master --no-edit
 
-git merge -s ours master --no-edit
-
-git checkout master
-
-git merge buildpack
+git checkout master && git merge buildpack
 
 echo "buildPack: go" | tee jenkins-x.yml
 
-git add .
-
-git commit -m "Added jenkins-x.yml"
-
-git push
+git add . && git commit -m "Added jenkins-x.yml" && git push
 ```
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 5 of 12</div>
+<div class="eyebrow">Section 5</div>
 <div class="label">Hands-on Time</div>
 
 ## Exploring Jenkins X Envs
@@ -153,7 +145,7 @@ jx get env -p Never
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 5 of 12</div>
+<div class="eyebrow">Section 5</div>
 <div class="label">Hands-on Time</div>
 
 ## Adapting The Staging Env
@@ -161,33 +153,41 @@ jx get env -p Never
 ```bash
 cd ..
 
-git clone \
-    https://github.com/$GH_USER/environment-$NAMESPACE-staging.git
+git clone https://github.com/$GH_USER/environment-jx-rocks-staging.git
 
-cd environment-$NAMESPACE-staging
+cd environment-jx-rocks-staging
 
 ls -1
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 5</div>
+<div class="label">Hands-on Time</div>
+
+## Adapting The Staging Env
+
+```bash
 cat Makefile
 
 # Make sure that you use tabs instead of spaces
 echo "test:
 	ADDRESS=`kubectl -n $NAMESPACE-staging get ing go-demo-6 -o jsonpath=\"{.spec.rules[0].host}\"` go test -v" \
     | tee -a Makefile
+
+curl -sSLo integration_test.go https://bit.ly/2Do5LRN
+
+cat integration_test.go
 ```
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 5 of 12</div>
+<div class="eyebrow">Section 5</div>
 <div class="label">Hands-on Time</div>
 
 ## Adapting The Staging Env
 
 ```bash
-curl -sSLo integration_test.go https://bit.ly/2Do5LRN
-
-cat integration_test.go
-
 cat jenkins-x.yml
 
 jx create step --pipeline release --lifecycle postbuild --mode post \
@@ -202,7 +202,7 @@ cat env/requirements.yaml
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 5 of 12</div>
+<div class="eyebrow">Section 5</div>
 <div class="label">Hands-on Time</div>
 
 ## Adapting The Staging Env
@@ -214,7 +214,7 @@ git commit -m "Added tests"
 
 git push
 
-jx get activity -f environment-$NAMESPACE-staging --watch
+jx get activity -f environment-jx-rocks-staging/master --watch
 
 jx get build logs
 
@@ -223,7 +223,7 @@ kubectl -n $NAMESPACE-staging get pods
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 5 of 12</div>
+<div class="eyebrow">Section 5</div>
 <div class="label">Hands-on Time</div>
 
 ## App <> Env Pipelines
@@ -237,7 +237,7 @@ cat env/requirements.yaml
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 5 of 12</div>
+<div class="eyebrow">Section 5</div>
 <div class="label">Hands-on Time</div>
 
 ## Controlling The Environments
@@ -250,10 +250,18 @@ jx create env --name pre-production --label Pre-Production \
 
 jx get env
 
-jx edit env --name pre-production --promotion Auto
-
 jx delete env pre-production
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 5</div>
+<div class="label">Hands-on Time</div>
+
+## Controlling The Environments
+
+<!-- https://github.com/jenkins-x/jx/issues/4795 -->
+```bash
 GH_USER=[...]
 
 hub delete -y $GH_USER/environment-$NAMESPACE-pre-production

@@ -1,11 +1,11 @@
 <!-- .slide: class="center" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 
 # Extending Jenkins X Pipelines
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 
 # Extending Jenkins X Pipelines
 
@@ -15,7 +15,7 @@
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 11 of 12</div>
+<div class="eyebrow">Section 11</div>
 
 # What You'll Learn
 

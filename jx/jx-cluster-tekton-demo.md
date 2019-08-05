@@ -6,7 +6,7 @@
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 2 of 12</div>
+<div class="eyebrow">Section 2</div>
 <div class="label">Hands-on Time</div>
 
 ## Prerequisites
@@ -21,7 +21,7 @@
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 2 of 12</div>
+<div class="eyebrow">Section 2</div>
 <div class="label">Hands-on Time</div>
 
 ## Creating A Cluster With jx
@@ -36,7 +36,7 @@ echo "nexus:
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 2 of 12</div>
+<div class="eyebrow">Section 2</div>
 <div class="label">Hands-on Time</div>
 
 ## Creating A Cluster With jx (GKE)
@@ -57,7 +57,7 @@ jx create cluster gke -n jx-rocks -p $PROJECT -r us-east1 \
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 2 of 12</div>
+<div class="eyebrow">Section 2</div>
 <div class="label">Hands-on Time</div>
 
 ## Creating A Cluster With jx (AKS)
@@ -73,7 +73,7 @@ jx create cluster aks -c jxrocks -n jxrocks-group -l eastus \
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 2 of 12</div>
+<div class="eyebrow">Section 2</div>
 <div class="label">Hands-on Time</div>
 
 ## Creating A Cluster With jx (EKS)
@@ -84,7 +84,16 @@ export AWS_ACCESS_KEY_ID=[...] # Replace [...] with the AWS Access Key ID
 export AWS_SECRET_ACCESS_KEY=[...] # Replace [...] with the AWS Secret Access Key
 
 export AWS_DEFAULT_REGION=us-west-2
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 2</div>
+<div class="label">Hands-on Time</div>
+
+## Creating A Cluster With jx (EKS)
+
+```bash
 # Use default answers except in the case specified below.
 # Answer with `n` to `Would you like to register a wildcard DNS ALIAS to point at this ELB address?`
 
@@ -126,7 +135,7 @@ tar -czf kubeconfig.tar.gz build
 mv kubeconfig.tar.gz ~/Amazon\ Drive/tmp/.
 -->
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 2 of 12</div>
+<div class="eyebrow">Section 2</div>
 <div class="label">Hands-on Time</div>
 
 ## Using The Workshop Cluster
@@ -140,21 +149,21 @@ open "https://www.amazon.es/clouddrive/share/hJAF9Wi4Er6T966TlJjGCSC53CsWoTAomUK
 tar -xzvf kubeconfig.tar.gz
 
 export KUBECONFIG=$PWD/build/kubeconfig
+
+export LB_IP=$(kubectl -n ingress-nginx get svc \
+    -o jsonpath="{.items[0].status.loadBalancer.ingress[0].ip}")
+
+echo $LB_IP
 ```
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 2 of 12</div>
+<div class="eyebrow">Section 2</div>
 <div class="label">Hands-on Time</div>
 
 ## Using The Workshop Cluster
 
 ```bash
-export LB_IP=$(kubectl -n ingress-nginx get svc \
-    -o jsonpath="{.items[0].status.loadBalancer.ingress[0].ip}")
-
-echo $LB_IP
-
 # Only letters, numbers, dash (`-`) and underscore (`_`) charters
 NAMESPACE=[...] # Make it unique (e.g., your GitHub username)
 
@@ -168,7 +177,7 @@ jx install --provider kubernetes --external-ip $LB_IP \
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 2 of 12</div>
+<div class="eyebrow">Section 2</div>
 <div class="label">Hands-on Time</div>
 
 ## Verifying The Installation

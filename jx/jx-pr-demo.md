@@ -6,7 +6,7 @@
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 6 of 12</div>
+<div class="eyebrow">Section 6</div>
 <div class="label">Hands-on Time</div>
 
 ## In case you messed it up
@@ -16,19 +16,31 @@ cd go-demo-6
 
 git pull
 
-git checkout dev
+git checkout dev && git merge -s ours master --no-edit
 
-git merge -s ours master --no-edit
-
-git checkout master
-
-git merge dev
+git checkout master && git merge dev
 
 echo "buildPack: go" | tee jenkins-x.yml
 
-git add . && git commit -m "Added jenkins-x.yml"
+git add . && git commit -m "Added jenkins-x.yml" && git push
+```
 
-git push
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 6</div>
+<div class="label">Hands-on Time</div>
+
+## In case you messed it up (GKE only)
+
+```bash
+cat charts/go-demo-6/Makefile | sed -e "s@vfarcic@$PROJECT@g" \
+    | tee charts/go-demo-6/Makefile
+
+cat charts/preview/Makefile | sed -e "s@vfarcic@$PROJECT@g" \
+    | tee charts/preview/Makefile
+
+cat skaffold.yaml | sed -e "s@vfarcic@$PROJECT@g" \
+    | tee skaffold.yaml
 ```
 
 
@@ -36,7 +48,7 @@ git push
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 6 of 12</div>
+<div class="eyebrow">Section 6</div>
 <div class="label">Hands-on Time</div>
 
 ## Creating Pull Requests
@@ -49,7 +61,16 @@ cat main.go | sed -e "s@hello, devpod with tests@hello, PR@g" \
 
 cat main_test.go | sed -e "s@hello, devpod with tests@hello, PR@g" \
     | tee main_test.go
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 6</div>
+<div class="label">Hands-on Time</div>
+
+## Creating Pull Requests
+
+```bash
 echo "
 
 db:
@@ -62,7 +83,7 @@ preview-db:
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 6 of 12</div>
+<div class="eyebrow">Section 6</div>
 <div class="label">Hands-on Time</div>
 
 ## Creating Pull Requests
@@ -84,7 +105,7 @@ jx create pullrequest \
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 6 of 12</div>
+<div class="eyebrow">Section 6</div>
 <div class="label">Hands-on Time</div>
 
 ## Creating Pull Requests
@@ -99,7 +120,7 @@ curl "$PR_ADDR/demo/hello"
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 6 of 12</div>
+<div class="eyebrow">Section 6</div>
 <div class="label">Hands-on Time</div>
 
 ## Merging A PR
@@ -111,6 +132,8 @@ curl "$PR_ADDR/demo/hello"
 ```bash
 jx get activity --filter go-demo-6 --watch
 
+jx get activity --filter environment-jx-rocks-staging --watch
+
 jx get applications
 
 STAGING_ADDR=[...] # Replace `[...]` with the URL
@@ -120,7 +143,7 @@ curl "$STAGING_ADDR/demo/hello"
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 6 of 12</div>
+<div class="eyebrow">Section 6</div>
 <div class="label">Hands-on Time</div>
 
 ## jx Garbage Collection

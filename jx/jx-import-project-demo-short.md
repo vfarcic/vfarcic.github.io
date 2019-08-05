@@ -6,7 +6,7 @@
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 4 of 12</div>
+<div class="eyebrow">Section 4</div>
 <div class="label">Hands-on Time</div>
 
 ## Importing A Project
@@ -27,7 +27,7 @@ cd go-demo-6
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 4 of 12</div>
+<div class="eyebrow">Section 4</div>
 <div class="label">Hands-on Time</div>
 
 ## Importing A Project
@@ -44,24 +44,33 @@ git merge orig
 rm -rf charts
 
 ls -1
-
-git push
-
-jx import --batch-mode
-
-ls -1
 ```
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 4 of 12</div>
+<div class="eyebrow">Section 4</div>
 <div class="label">Hands-on Time</div>
 
 ## Importing A Project
 
 ```bash
-jx get activities --filter go-demo-6 --watch # Stop with *ctrl*c*
+git push
 
+jx import --batch-mode
+
+ls -1
+
+jx get activities --filter go-demo-6 --watch # Stop with *ctrl*c*
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 4</div>
+<div class="label">Hands-on Time</div>
+
+## Importing A Project
+
+```bash
 jx get applications
 
 STAGING_ADDR=[...]
@@ -73,7 +82,7 @@ kubectl --namespace $NAMESPACE-staging logs -l app=jx-go-demo-6
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 4 of 12</div>
+<div class="eyebrow">Section 4</div>
 <div class="label">Hands-on Time</div>
 
 ## Fixing The Helm Chart
@@ -90,8 +99,19 @@ git merge buildpack
 cat charts/go-demo-6/requirements.yaml
 
 git push
+```
 
-jx get activities --filter go-demo-6 --watch # Stop with *ctrl*c*
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 4</div>
+<div class="label">Hands-on Time</div>
+
+## Fixing The Helm Chart
+
+```bash
+jx get activities --filter go-demo-6 --watch # Stop with *ctrl+c*
+
+jx get activities --filter environment-jx-rocks-staging/master --watch # Stop with *ctrl+c*
 
 curl "$STAGING_ADDR/demo/hello"
 ```

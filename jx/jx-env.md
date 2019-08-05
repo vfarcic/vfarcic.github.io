@@ -1,11 +1,11 @@
 <!-- .slide: class="center" -->
-<div class="eyebrow">Section 5 of 12</div>
+<div class="eyebrow">Section 5</div>
 
 # Applying GitOps Principles
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 5 of 12</div>
+<div class="eyebrow">Section 5</div>
 
 # Applying GitOps Principles
 
@@ -15,7 +15,7 @@
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 5 of 12</div>
+<div class="eyebrow">Section 5</div>
 
 # What You'll Learn
 

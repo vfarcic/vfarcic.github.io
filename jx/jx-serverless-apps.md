@@ -1,13 +1,13 @@
 <!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/servers.jpg) center / cover" -->
 <!-- .slide: class="center" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 
 # Defining And Running Serverless Deployments
 
 
 <!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(img/jenkins-x-wide.png) center / cover" -->
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 
 # Defining And Running Serverless Deployments
 
@@ -18,7 +18,7 @@
 
 <!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 
 # Defining And Running Serverless Deployments
 
@@ -29,7 +29,7 @@
 
 <!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 
 ## What Is Serverless Computing?
 
@@ -42,7 +42,7 @@ A long time ago, most of us were deploying our apps directly to servers
 
 <!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 
 ## What Is Serverless Computing?
 
@@ -55,7 +55,7 @@ But...
 
 <!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(img/kubernetes-wide.png) center / cover" -->
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 
 ## Why Not Use Kubernetes?
 
@@ -68,7 +68,7 @@ Serverless Deployments In Kubernetes
 
 <!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(img/knative-wide.png) center / cover" -->
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 
 ## Knative
 
@@ -82,7 +82,7 @@ Which Types Of Applications Should Run As Serverless?
 
 <!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(img/jenkins-x-wide.png) center / cover" -->
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 
 ## Why Do We Need Jenkins X To Be Serverless?
 
@@ -95,7 +95,7 @@ Which Types Of Applications Should Run As Serverless?
 
 <!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(img/jenkins-x-wide.png) center / cover" -->
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 
 ## Jenkins Had To Go Away For Jenkins X To Take Its Place
 
@@ -104,13 +104,13 @@ Which Types Of Applications Should Run As Serverless?
 
 <!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(img/tekton-wide.png) center / cover" -->
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 
 ## What Is Tekton? How Does It Fit Jenkins X?
 
 
 <!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/servers.jpg) center / cover" --><!-- .slide: class="light" -->
-<div class="eyebrow">Section 12 of 12</div>
+<div class="eyebrow">Section 12</div>
 
 # What You'll Learn
 

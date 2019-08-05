@@ -1,11 +1,11 @@
 <!-- .slide: class="center" -->
-<div class="eyebrow">Section 4 of 12</div>
+<div class="eyebrow">Section 4</div>
 
 # Importing Existing Projects Into Jenkins X
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 4 of 12</div>
+<div class="eyebrow">Section 4</div>
 
 # Importing Existing Projects Into Jenkins X
 
@@ -15,7 +15,7 @@
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 4 of 12</div>
+<div class="eyebrow">Section 4</div>
 
 # What You'll Learn
 

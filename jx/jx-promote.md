@@ -1,11 +1,11 @@
 <!-- .slide: class="center" -->
-<div class="eyebrow">Section 7 of 12</div>
+<div class="eyebrow">Section 7</div>
 
 # Promoting To Production
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 7 of 12</div>
+<div class="eyebrow">Section 7</div>
 
 # Promoting To Production
 
@@ -13,7 +13,7 @@
 
 
 <!-- .slide: class="light" -->
-<div class="eyebrow">Section 7 of 12</div>
+<div class="eyebrow">Section 7</div>
 
 # What You'll Learn
 

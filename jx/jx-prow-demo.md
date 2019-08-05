@@ -6,12 +6,14 @@
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 9 of 12</div>
+<div class="eyebrow">Section 9</div>
 <div class="label">Hands-on Time</div>
 
 ## The Basic PR Process
 
-<pre><code class="language-bash" style="max-height:270px">jx create quickstart -l go -p jx-prow -b
+```bash
+jx create quickstart --filter golang-http --project-name jx-prow \
+    --batch-mode
 
 cd jx-prow
 
@@ -19,25 +21,24 @@ git checkout -b chat-ops
 
 echo "ChatOps" | tee README.md
 
-git add .
-
-git commit -m "My first PR with prow"
+git add . && git commit -m "My first PR with prow"
 
 git push --set-upstream origin chat-ops
-
-jx create pr --title "PR with prow" --body "What I can say?" \
-    --batch-mode
-</code></pre>
-
-* Open the link from the output
+```
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 9 of 12</div>
+<div class="eyebrow">Section 9</div>
 <div class="label">Hands-on Time</div>
 
 ## The Basic PR Process
 
+```bash
+jx create pr --title "PR with prow" --body "What I can say?" \
+    --batch-mode
+```
+
+* Open the link from the output
 * Type the text and click *Comment*
 
 ```
@@ -51,7 +52,7 @@ This PR is urgent, so please review it ASAP
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 9 of 12</div>
+<div class="eyebrow">Section 9</div>
 <div class="label">Hands-on Time</div>
 
 ## The Basic PR Process
@@ -64,7 +65,16 @@ cat OWNERS
 GH_USER=[...]
 
 GH_APPROVER=[...]
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 9</div>
+<div class="label">Hands-on Time</div>
+
+## The Basic PR Process
+
+```bash
 echo "approvers:
 - $GH_USER
 - $GH_APPROVER
@@ -72,21 +82,8 @@ reviewers:
 - $GH_USER
 - $GH_APPROVER
 " | tee OWNERS
-```
 
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow">Section 9 of 12</div>
-<div class="label">Hands-on Time</div>
-
-## The Basic PR Process
-
-```bash
-git add .
-
-git commit -m "Added an owner"
-
-git push
+git add . && git commit -m "Added an owner" && git push
 
 open "https://github.com/$GH_USER/jx-prow/settings/collaboration"
 ```
@@ -97,23 +94,19 @@ open "https://github.com/$GH_USER/jx-prow/settings/collaboration"
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 9 of 12</div>
+<div class="eyebrow">Section 9</div>
 <div class="label">Hands-on Time</div>
 
 ## Additional Slash Commands
 
 ```bash
-git checkout master
-
-git pull
+git checkout master && git pull
 
 git checkout -b my-pr
 
 echo "My PR" | tee README.md
 
-git add .
-
-git commit -m "My second PR with prow"
+git add . && git commit -m "My second PR with prow"
 
 git push --set-upstream origin my-pr
 
@@ -122,7 +115,7 @@ jx create pr --title "My PR" --body "What I can say?" --batch-mode
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 9 of 12</div>
+<div class="eyebrow">Section 9</div>
 <div class="label">Hands-on Time</div>
 
 ## Additional Slash Commands
@@ -140,7 +133,7 @@ jx create pr --title "My PR" --body "What I can say?" --batch-mode
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 9 of 12</div>
+<div class="eyebrow">Section 9</div>
 <div class="label">Hands-on Time</div>
 
 ## Available Slash Commands
