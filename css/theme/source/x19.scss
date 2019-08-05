@@ -1,0 +1,534 @@
+/**
+ * x19, based on Black theme for reveal.js.
+ *
+ * Copyright (C) 2011-2012 Hakim El Hattab, http://hakim.se
+ */
+
+
+// Default mixins and settings -----------------
+@import "../template/mixins";
+@import "../template/settings";
+// ---------------------------------------------
+
+
+// Include theme-specific fonts
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
+
+
+// Brand colors
+$primary-gray: #344f61;
+$primary-blue: #1997b5;
+$primary-gray-lighter: #788594;
+$primary-gray-darker: #313a44;
+$secondary-green: #57b948;
+$secondary-orange-lighter: #f89C20;
+$secondary-orange-darker: #f47928;
+$secondary-gray: #d5e0e8;
+
+
+// Override theme settings (see ../template/settings.scss)
+$backgroundColor: #252c33;
+$mainFont: Arial, sans-serif;
+$linkColor: $secondary-orange-lighter;
+$linkColorHover: lighten( $linkColor, 20% );
+$headingFont: 'Lato', sans-serif;
+$headingTextShadow: 3px 3px 0 $primary-gray-darker;
+$headingTextTransform: none;
+$selectionBackgroundColor: #e7ad52;
+
+
+// Theme template ------------------------------
+@import "../template/theme";
+// ---------------------------------------------
+
+
+.reveal {
+    font-family: Arial, sans-serif;
+    font-size: 40px;
+    font-weight: normal;
+    color: $primary-gray-lighter;
+}
+
+.reveal .controls {
+    color: white;
+}
+
+.reveal .progress {
+    color: $secondary-green;
+}
+
+.reveal .sponsor {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1;
+
+    img {
+        width: 50%;
+        height: 50%;
+    }
+}
+
+.reveal .red {
+    color: #ff2c2d;
+}
+
+.reveal .green {
+    color: #17ff2e;
+}
+
+.reveal pre {
+    box-shadow: none;
+
+    code {
+        display: block;
+        border: 1px solid $primary-blue;
+        padding: 1.25em 1em;
+        overflow: auto;
+        max-height: 320px;
+        word-wrap: normal;
+        background: $primary-gray-darker;
+        line-height: 1.2em;
+        font-size: 0.9em;
+        color: white;
+        text-shadow: 1px 1px 0 #000;
+    }
+}
+
+.reveal h1 {
+    color: white;
+    font-size: 1.5em;
+    font-weight: 400;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.1em 1.15em;
+    box-sizing: border-box;
+    position: relative;
+    max-width: 80%;
+    text-shadow: 2px 2px 0 #000;
+
+    &::after {
+        position:absolute;
+        top: 10px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        transform: skewX(-25deg);
+        background-color: $primary-gray-darker;
+        z-index: -1;
+        content: '';
+    }
+}
+
+.reveal h2 {
+    font-size: 1.25em;
+    text-shadow: 2px 2px 0 #000;
+}
+
+.reveal h3 {
+    font-size: 1em;
+    text-shadow: 1px 1px 0 #000;
+}
+
+.reveal h4 {
+    font-size: 0.75em;
+    text-shadow: 1px 1px 0 #000;
+}
+
+.reveal .eyebrow {
+    color: $primary-gray-darker;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.5em;
+    font-weight: 700;
+    text-shadow: none;
+
+    + h1 {
+        margin-top: 0 !important;
+    }
+}
+
+.reveal .light {
+    padding: 0 !important;
+    color: $primary-gray;
+    text-align: left;
+    text-shadow: none;
+
+    h1 {
+        font-size: 1em;
+        margin: 0.75em 1.75em;
+        padding: 0.25em 1.25em;
+    }
+
+    h2 {
+        font-size: 1.125em;
+        display: block;
+        padding: 0;
+        max-width: 100%;
+        padding: 0.5em 1.25em;
+
+        &::after {
+            display: none;
+        }
+    }
+
+    h3 {
+        display: block;
+        text-align: center;
+        font-weight: 700;
+        font-size: 1.33em;
+        width: 83%;
+        padding: 0.75em 0.67em;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    p, ol, dl, ul {
+        background-color: rgba(255,255,255,0.75);
+        font-size: 0.75em;
+        display: block;
+        margin: 0 auto;
+    }
+
+    p {
+        padding: 1em 2.25em;
+    }
+
+    ol, dl, ul {
+        padding: 1em 3.25em;
+    }
+
+    blockquote {
+        display: block;
+        position: relative;
+        width: 88%;
+        margin: 0;
+        padding: 1em 1.5em 0.25em 1.5em;
+        color: white;
+        font-style: normal;
+        background: none;
+        box-shadow: none;
+
+        p {
+            width:100%;
+            display: inline-block;
+            background:none;
+            padding:0;
+            margin:0;
+        }
+    }
+
+    h1 + h2,
+    p + p, p + ol, p + dl, p + ul,
+    ol + p, ol + ol, ol + dl, ol + ul,
+    dl + p, dl + ol, dl + dl, dl + ul,
+    ul + p, ul + ol, ul + dl, ul + ul,
+    blockquote + blockquote {
+        padding-top: 0;
+    }
+
+    .eyebrow {
+        display: block;
+        font-size: 0.375em;
+        color: rgba(255,255,255,0.5);
+        padding: 0.5em 0 2em 4em;
+
+        + h2 {
+            padding-top: 0;
+        }
+    }
+}
+
+.reveal .dark {
+    padding: 0 !important;
+    color: white;
+
+    h1 {
+        display: block;
+        font-weight: 700;
+        font-size: 2em;
+        padding-bottom: 0; // Label should hug the header
+        margin-bottom: 0;
+        max-width: 90%;
+
+        &::after {
+            display: none;
+        }
+    }
+
+    h2 {
+        font-size: 1.125em;
+        display: block;
+        padding: 0;
+        max-width: 100%;
+        padding: 0 1.25em 0.75em 1.25em;
+        text-align:left;
+
+        &::after {
+            display:none;
+        }
+    }
+
+    h3 {
+        background-color: rgba(255,255,255,0.1);
+        display: block;
+        text-align: center;
+        font-weight: 700;
+        font-size: 1.33em;
+        width: 83%;
+        padding: 0.75em 0.67em;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    p, ol, dl, ul {
+        font-size: 0.75em;
+        display: block;
+        margin: 0 auto;
+    }
+
+    p {
+        padding: 1em 2.25em;
+    }
+
+    ol, dl, ul {
+        padding: 1em 3.25em;
+    }
+
+    blockquote {
+        display: block;
+        position: relative;
+        width: 88%;
+        margin: 0;
+        padding: 1em 1.5em 0.25em 1.5em;
+        color: white;
+        font-style: normal;
+        background: none;
+        box-shadow: none;
+
+        p {
+            width: 100%;
+            display: inline-block;
+            background: none;
+            padding: 0;
+            margin: 0;
+        }
+    }
+
+    h2 + p, h2 + ol, h2 + dl, h2 + ul,
+    h3 + p, h3 + ol, h3 + dl, h3 + ul,
+    p + p, p + ol, p + dl, p + ul,
+    ol + p, ol + ol, ol + dl, ol + ul,
+    dl + p, dl + ol, dl + dl, dl + ul,
+    ul + p, ul + ol, ul + dl, ul + ul,
+    pre + p, pre + ol, pre + dl, pre + ul,
+    blockquote + blockquote {
+        padding-top:0;
+    }
+
+    p + pre, ol + pre, dl + pre, ul + pre {
+        margin-top:0;
+    }
+
+    .eyebrow {
+        display: block;
+        font-size: 0.375em;
+        color: rgba(255,255,255,0.5);
+        padding: 0.5em 0 0.5em 4em;
+        text-align: left;
+
+        + h2 {
+            padding-top: 0;
+        }
+    }
+
+    .label {
+        color: white;
+        font-family: 'Lato', sans-serif;
+        font-size: 0.7em;
+        font-weight: 700;
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0.4em 1.15em 0.15em;
+        box-sizing: border-box;
+        position: relative;
+        max-width: 80%;
+        text-shadow: none;
+
+        &::after {
+            position: absolute;
+            top: 10px;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            transform: skewX( -25deg );
+            background: linear-gradient( to bottom right, rgb(25,151,181), rgb(87,185,72) );
+            z-index: -1;
+            content: '';
+        }
+    }
+
+    .eyebrow + .label {
+        float: right;
+        margin: 0 3em 1em 0;
+        font-size: 0.5em;
+        padding: 0.75em 1.15em 0.25em;
+    }
+}
+
+
+// Agenda styles adapted from https://codepen.io/mranenko/pen/wevamj
+
+// Agenda variables
+$agenda-toggle-bar-color: white;
+$agenda-toggle-bar-height: 0.25rem;
+$agenda-toggle-bar-width: 1.75rem;
+$agenda-background: rgba( 0, 0, 0, 0.85 );
+$agenda-color: white;
+$agenda-width: 100%;
+$z-agenda-toggle: 3;
+$z-agenda: 2;
+
+// Agenda mixins
+@mixin box-sizing( $box-sizing: border-box ) {
+    -webkit-box-sizing: $box-sizing;
+    -moz-box-sizing: $box-sizing;
+    box-sizing: $box-sizing;
+}
+
+@mixin center-vertically( $position: absolute ) {
+    position: $position;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+@mixin transform( $transform ) {
+    -ms-transform: $transform;
+    -webkit-transform: $transform;
+    transform: $transform;
+}
+
+@mixin transition( $parameters: all 0.5s ease ) {
+    -webkit-transition: $parameters;
+    -moz-transition: $parameters;
+    -ms-transition: $parameters;
+    -o-transition: $parameters;
+    transition: $parameters;
+}
+
+@mixin user-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+// Agenda styles
+* {
+    @include box-sizing;
+    &:focus { outline: none; }
+}
+
+.agenda-toggle {
+    @include user-select;
+    cursor: pointer;
+    height: 5 * $agenda-toggle-bar-height;
+    left: 1.25rem;
+    position: fixed;
+    top: 0.9rem;
+    width: $agenda-toggle-bar-width;
+    z-index: $z-agenda-toggle;
+
+    &:hover { opacity: 0.8; }
+
+    .agenda-toggle-bar,
+    .agenda-toggle-bar::after,
+    .agenda-toggle-bar::before {
+        @include center-vertically;
+        @include transition(all 0.5s ease);
+        background: $agenda-toggle-bar-color;
+        content: '';
+        height: $agenda-toggle-bar-height;
+        width: 100%;
+    }
+    .agenda-toggle-bar { margin-top: 0; }
+    .agenda-toggle-bar::after { margin-top: 2 * $agenda-toggle-bar-height; }
+    .agenda-toggle-bar::before { margin-top: -2 * $agenda-toggle-bar-height; }
+    &.expanded .agenda-toggle-bar { background: transparent; }
+    &.expanded .agenda-toggle-bar::after,
+    &.expanded .agenda-toggle-bar::before {
+        background: $agenda-color;
+        margin-top: 0;
+    }
+    &.expanded .agenda-toggle-bar::after { @include transform(rotate(45deg)); }
+    &.expanded .agenda-toggle-bar::before { @include transform(rotate(-45deg)); }
+}
+
+.agenda {
+    @include transition( left 0.5s ease );
+    background: $agenda-background;
+    color: $agenda-color;
+    font-family: 'Lato', sans-serif;
+    height: 100vh;
+    overflow-y:auto;
+    left: -$agenda-width;
+    padding:0 4rem;
+    position: fixed;
+    top: 0;
+    width: $agenda-width;
+    z-index: $z-agenda;
+    &.expanded { left: 0; }
+
+    .title-course {
+        margin: 0.3em 0 0.15em 0;
+        font-size: 2.75em;
+        background: linear-gradient( to bottom right, $primary-blue, $secondary-green );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .sponsor-course {
+        font-size: 1.5em;
+    }
+
+    .title-agenda {
+        color: $primary-blue;
+        font-size: 1.33em;
+        font-weight: 700;
+        margin: 1em 0;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        font-size: 1.25em;
+        line-height: 1.25em;
+        margin-bottom: 0.5em;
+    }
+
+    a {
+        color: $secondary-green;
+        margin-left: 0.375em;
+        margin-right: 0.375em;
+    }
+
+    @media only screen and (min-width: 1024px) {
+        .title-course {
+            font-size: 4em;
+        }
+
+        .title-agenda {
+            font-size: 2em;
+        }
+
+        li {
+            font-size: 1.75em;
+        }
+    }
+}

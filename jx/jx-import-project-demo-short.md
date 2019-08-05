@@ -1,19 +1,21 @@
-## Hands-On Time
-
----
-
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="img/hands-on.jpg" -->
 # Importing Existing Projects Into Jenkins X
 
+<div class="label">Hands-on Time</div>
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 4 of 12</div>
+<div class="label">Hands-on Time</div>
 
 ## Importing A Project
-
----
 
 ```bash
 open "https://github.com/vfarcic/go-demo-6"
 ```
 
-* Fork it.
+* Fork it
 
 ```bash
 GH_USER=[...]
@@ -24,9 +26,11 @@ cd go-demo-6
 ```
 
 
-## Importing A Project
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 4 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Importing A Project
 
 ```bash
 git checkout orig
@@ -49,9 +53,11 @@ ls -1
 ```
 
 
-## Importing A Project
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 4 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Importing A Project
 
 ```bash
 jx get activities --filter go-demo-6 --watch # Stop with *ctrl*c*
@@ -66,9 +72,11 @@ kubectl --namespace $NAMESPACE-staging logs -l app=jx-go-demo-6
 ```
 
 
-## Fixing The Helm Chart
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 4 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Fixing The Helm Chart
 
 ```bash
 git checkout buildpack

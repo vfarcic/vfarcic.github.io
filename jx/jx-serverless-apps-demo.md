@@ -1,13 +1,15 @@
-## Hands-On Time
-
----
-
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="img/hands-on.jpg" -->
 # Defining And Running Serverless Deployments
 
+<div class="label">Hands-on Time</div>
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12 of 12</div>
+<div class="label">Hands-on Time</div>
 
 ## Installing Gloo and Knative
-
----
 
 ```bash
 jx create addon gloo
@@ -20,9 +22,11 @@ jx edit deploy --team --kind knative --batch-mode
 ```
 
 
-## New Serverless Application
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## New Serverless Application
 
 ```bash
 jx create quickstart --language go --project-name jx-knative \
@@ -44,9 +48,11 @@ jx get activities --filter environment-tekton-staging/master --watch
 ```
 
 
-## New Serverless Application
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## New Serverless Application
 
 ```bash
 kubectl --namespace $NAMESPACE-staging get pods \
@@ -68,9 +74,11 @@ curl "$ADDR"
 ```
 
 
-## New Serverless Application
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## New Serverless Application
 
 ```bash
 kubectl --namespace $NAMESPACE-staging get pods \
@@ -89,9 +97,11 @@ kubectl --namespace $NAMESPACE-staging get pods \
 ```
 
 
-## New Serverless Application
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## New Serverless Application
 
 ```bash
 kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
@@ -109,9 +119,11 @@ cat charts/jx-knative/templates/ksvc.yaml | sed -e \
 ```
 
 
-## New Serverless Application
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## New Serverless Application
 
 ```bash
 git add .
@@ -133,9 +145,11 @@ kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
 ```
 
 
-## New Serverless Application
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## New Serverless Application
 
 ```bash
 kubectl --namespace $NAMESPACE-staging get pods \
@@ -158,9 +172,11 @@ jx get activities --filter environment-tekton-staging/master --watch
 ```
 
 
-## New Serverless Application
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## New Serverless Application
 
 ```bash
 kubectl --namespace $NAMESPACE-staging get pods \
@@ -168,9 +184,11 @@ kubectl --namespace $NAMESPACE-staging get pods \
 ```
 
 
-## Existing Projects To Serverless
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Existing Projects To Serverless
 
 ```bash
 cd ../go-demo-6
@@ -181,9 +199,11 @@ ls -1 charts/go-demo-6/templates
 ```
 
 
-### Adding Knative Support Manually
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Adding Knative Support Manually
 
 ```bash
 echo "knativeDeploy: false" | tee -a charts/go-demo-6/values.yaml
@@ -203,9 +223,11 @@ curl -o tee charts/go-demo-6/templates/ksvc.yaml \
 ```
 
 
-### Turning On Knative Support
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Turning On Knative Support
 
 ```bash
 jx edit deploy knative
@@ -214,9 +236,11 @@ cat charts/go-demo-6/values.yaml | grep knative
 ```
 
 
-### Adding The Final Touches
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Adding The Final Touches
 
 ```bash
 cat charts/go-demo-6/Makefile | sed -e "s@vfarcic@$PROJECT@g" \
@@ -239,9 +263,11 @@ git push --set-upstream origin serverless
 ```
 
 
-## Serverless With PRs
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Serverless With PRs
 
 ```bash
 jx create pullrequest --title "Serverless with Knative" \
@@ -262,9 +288,11 @@ kubectl --namespace $PR_NAMESPACE get pods
 ```
 
 
-## Serverless With PRs
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Serverless With PRs
 
 ```bash
 PR_ADDR=$(kubectl --namespace $PR_NAMESPACE get ksvc go-demo-6 \
@@ -282,9 +310,11 @@ jx repo
 ```
 
 
-## Serverless With PRs
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Serverless With PRs
 
 ```bash
 git checkout master
@@ -301,9 +331,11 @@ kubectl --namespace $NAMESPACE-staging get pods
 ```
 
 
-## Serverless With PRs
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Serverless With PRs
 
 ```bash
 ADDR=$(kubectl --namespace $NAMESPACE-staging get ksvc go-demo-6 \
@@ -315,9 +347,11 @@ curl "$ADDR/demo/hello"
 ```
 
 
-## Serverless With PRs Only
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Serverless With PRs Only
 
 ```bash
 STAGING_ENV=environment-tekton-staging
@@ -335,9 +369,11 @@ echo "go-demo-6:
 ```
 
 
-## Serverless With PRs Only
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Serverless With PRs Only
 
 ```bash
 git add .
@@ -350,9 +386,11 @@ git push
 ```
 
 
-## Serverless With PRs Only
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Serverless With PRs Only
 
 ```bash
 cd ../go-demo-6
@@ -375,9 +413,11 @@ kubectl --namespace $NAMESPACE-staging get pods
 ```
 
 
-## Serverless With PRs Only
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Serverless With PRs Only
 
 ```bash
 ADDR=$(kubectl --namespace $NAMESPACE-staging get ing go-demo-6 \

@@ -1,13 +1,15 @@
-## Hands-On Time
-
----
-
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="img/hands-on.jpg" -->
 # Working With Pull Requests And Preview Environments
 
+<div class="label">Hands-on Time</div>
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 6 of 12</div>
+<div class="label">Hands-on Time</div>
 
 ## In case you messed it up
-
----
 
 ```bash
 cd go-demo-6
@@ -30,12 +32,14 @@ git push
 ```
 
 
-<!-- .slide: data-background="img/pr.png" data-background-size="contain" -->
+<img src="img/pr.png" style="width:460px;height:460px;padding:20px;background-color:white;">
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 6 of 12</div>
+<div class="label">Hands-on Time</div>
 
 ## Creating Pull Requests
-
----
 
 ```bash
 git checkout -b my-new-pr
@@ -50,16 +54,18 @@ echo "
 
 db:
   enabled: false
-  
+
 preview-db:
   persistence:
     enabled: false" | tee -a charts/preview/values.yaml
 ```
 
 
-## Creating Pull Requests
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 6 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating Pull Requests
 
 ```bash
 git add .
@@ -77,9 +83,11 @@ jx create pullrequest \
 * Open the link
 
 
-## Creating Pull Requests
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 6 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating Pull Requests
 
 ```bash
 jx get previews
@@ -90,9 +98,11 @@ curl "$PR_ADDR/demo/hello"
 ```
 
 
-## Merging a PR
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 6 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Merging A PR
 
 * Open the pull request screen in GitHub
 * Click *Merge pull request* button
@@ -109,9 +119,11 @@ curl "$STAGING_ADDR/demo/hello"
 ```
 
 
-## jx Garbage Collection
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 6 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## jx Garbage Collection
 
 ```bash
 kubectl get cronjobs

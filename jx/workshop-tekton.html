@@ -1,157 +1,163 @@
 <!doctype html>
 <html lang="en">
 
-	<head>
-		<meta charset="utf-8">
+    <head>
+        <meta charset="utf-8">
 
-		<title>The DevOps 2.4 Toolkit: Continuous Deployment With Jenkins X And Kubernetes</title>
+        <title>The DevOps 2.6 Toolkit: Jenkins X Cloud-Native Kubernetes-First Serverless Continuous Delivery</title>
 
-		<meta name="author" content="Viktor Farcic">
+        <meta name="author" content="Viktor Farcic">
 
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
-		<link rel="stylesheet" href="../css/reveal.css">
-        <link rel="stylesheet" href="../css/theme/night.css" id="theme">
-        <link rel="stylesheet" href="../css/theme/vfarcic.css">
+        <link rel="stylesheet" href="../css/reset.css">
+        <link rel="stylesheet" href="../css/reveal.css">
+        <link rel="stylesheet" href="../css/theme/x19.css" id="theme">
 
-		<!-- Code syntax highlighting -->
-		<!--<link rel="stylesheet" href="lib/css/zenburn.css">-->
+        <!-- Code syntax highlighting -->
+        <!--<link rel="stylesheet" href="lib/css/zenburn.css">-->
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
 
-		<!--[if lt IE 9]>
-		<script src="../lib/js/html5shiv.js"></script>
-		<![endif]-->
-	</head>
+        <!--[if lt IE 9]>
+        <script src="../lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
 
-	<body>
+    <body>
 
-		<div class="reveal">
-			<header style="position: absolute;top: 50px; left: 100px; z-index:500; font-size:100px;background-color: rgba(0,0,0,0.5)"></header>
-			<!-- Any section element inside of this container is displayed as a slide -->
-			<div class="slides">
+        <div class="reveal">
+            <header style="position: absolute;top: 50px; left: 100px; z-index:500; font-size:100px;background-color: rgba(0,0,0,0.5)"></header>
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
                 <section id="cover"
                     data-markdown="cover-workshop-tekton.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
-                    data-background="../img/background/devops26.jpg">
-				</section>
-				<section id="about-me"
-                    data-markdown="../docs/about-me.md"
+                    data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/devops26.jpg) center / cover">
+                </section>
+                <section id="about-me"
+                    data-markdown="about-me.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
-                    data-background="../img/background/about-me.jpg">
+                    data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/about-me.jpg) center / cover">
                 </section>
-				<section id="address"
+                <section id="address"
                     data-markdown="address-tekton.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
-                    data-background="../img/background/why.jpg">
+                    data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover">
                 </section>
-				<section id="what"
-				    data-markdown="what.md"
-				    data-separator="^\n\n\n"
-				    data-separator-vertical="^\n\n"
-				    data-separator-notes="^Note:"
-				    data-charset="iso-8859-15">
+                <section id="what"
+                    data-markdown="what.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
                 </section>
-				<section id="jx-install"
+
+                <!-- Section 1 -->
+                <section id="jx-install"
                     data-markdown="jx-install.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
-                    data-background="img/cli.png">
-				</section>
-				<section id="jx-install-demo"
+                    data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(img/cli.png) center / cover">
+                </section>
+                <section id="jx-install-demo"
                     data-markdown="jx-install-demo.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/manual.jpg">
-				</section>
-				<section id="jx-cluster"
+                    data-charset="iso-8859-15">
+                </section>
+
+                <!-- Section 2 -->
+                <section id="jx-cluster"
                     data-markdown="jx-cluster.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
-                    data-background="../img/background/servers.jpg">
+                    data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/servers.jpg) center / cover">
                 </section>
-				<section id="jx-cluster-demo"
+                <section id="jx-cluster-demo"
                     data-markdown="jx-cluster-tekton-demo.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/manual.jpg">
+                    data-charset="iso-8859-15">
                 </section>
-				<section id="jx-create-project"
+
+                <!-- Section 3 -->
+                <section id="jx-create-project"
                     data-markdown="jx-create-project.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
-                    data-background="../img/background/automation.jpg">
+                    data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/automation.jpg) center / cover">
                 </section>
-				<section id="jx-create-project-demo"
+                <section id="jx-create-project-demo"
                     data-markdown="jx-create-project-tekton-demo.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/manual.jpg">
+                    data-charset="iso-8859-15">
                 </section>
-				<section id="jx-import-project"
+
+                <!-- Section 4 -->
+                <section id="jx-import-project"
                     data-markdown="jx-import-project.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
-                    data-background="../img/background/automation.jpg">
+                    data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/automation.jpg) center / cover">
                 </section>
-				<section id="jx-import-project-demo"
+                <section id="jx-import-project-demo"
                     data-markdown="jx-import-project-demo-short.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/manual.jpg">
+                    data-charset="iso-8859-15">
                 </section>
-				<section id="jx-env"
+
+                <!-- Section 5 -->
+                <section id="jx-env"
                     data-markdown="jx-env.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
-                    data-background="../img/products/git.png">
+                    data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/products/git.png) center / cover">
                 </section>
-				<section id="jx-env-demo"
+                <section id="jx-env-demo"
                     data-markdown="jx-env-tekton-demo.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/manual.jpg">
+                    data-charset="iso-8859-15">
                 </section>
-				<!-- <section id="jx-dev"
+
+                <!-- <section id="jx-dev"
                     data-markdown="jx-dev.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
@@ -159,7 +165,7 @@
                     data-charset="iso-8859-15"
                     data-background="../img/background/developer.jpeg">
                 </section>
-				<section id="jx-dev-demo"
+                <section id="jx-dev-demo"
                     data-markdown="jx-dev-demo.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
@@ -167,88 +173,94 @@
                     data-charset="iso-8859-15"
                     data-background="../img/background/manual.jpg">
                 </section> -->
-				<section id="jx-pr"
+
+                <!-- Section 6 -->
+                <section id="jx-pr"
                     data-markdown="jx-pr.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
-                    data-background="../img/products/git.png">
+                    data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/products/git.png) center / cover">
                 </section>
-				<section id="jx-pr-demo"
+                <section id="jx-pr-demo"
                     data-markdown="jx-pr-demo.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/manual.jpg">
+                    data-charset="iso-8859-15">
                 </section>
-				<section id="jx-promote"
+
+                <!-- Section 7 -->
+                <section id="jx-promote"
                     data-markdown="jx-promote.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
-                    data-background="../img/background/production.jpg">
+                    data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/production.jpg) center / cover">
                 </section>
-				<section id="jx-promote-demo"
+                <section id="jx-promote-demo"
                     data-markdown="jx-promote-demo.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/manual.jpg">
+                    data-charset="iso-8859-15">
                 </section>
-				<section id="jx-versioning"
+
+                <!-- Section 8 -->
+                <section id="jx-versioning"
                     data-markdown="jx-versioning.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
-                    data-background="../img/background/versioning.png">
+                    data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/versioning.png) center / cover">
                 </section>
-				<section id="jx-versioning-demo"
+                <section id="jx-versioning-demo"
                     data-markdown="jx-versioning-demo.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/manual.jpg">
+                    data-charset="iso-8859-15">
                 </section>
+
+                <!-- Section 9 -->
                 <!-- TODO: Continue review -->
-				<section id="jx-prow"
+                <section id="jx-prow"
                     data-markdown="jx-prow.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
-                    data-background="../img/background/communication.jpeg">
+                    data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/communication.jpeg) center / cover">
                 </section>
-				<section id="jx-prow-demo"
+                <section id="jx-prow-demo"
                     data-markdown="jx-prow-demo.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/manual.jpg">
+                    data-charset="iso-8859-15">
                 </section>
-				<section id="jx-extension"
+
+                <!-- Section 10 -->
+                <section id="jx-extension"
                     data-markdown="jx-extension.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
-                    data-background="../img/background/pipeline.jpg">
+                    data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/pipeline.jpg) center / cover">
                 </section>
-				<section id="jx-extension-demo"
+                <section id="jx-extension-demo"
                     data-markdown="jx-extension-demo.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/manual.jpg">
+                    data-charset="iso-8859-15">
                 </section>
-				<!-- <section id="jx-upgrade"
+
+                <!-- <section id="jx-upgrade"
                     data-markdown="jx-upgrade.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
@@ -256,7 +268,7 @@
                     data-charset="iso-8859-15"
                     data-background="../img/background/servers.jpg">
                 </section>
-				<section id="jx-upgrade-demo"
+                <section id="jx-upgrade-demo"
                     data-markdown="jx-upgrade-demo.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
@@ -264,22 +276,25 @@
                     data-charset="iso-8859-15"
                     data-background="../img/background/manual.jpg">
                 </section> -->
-				<section id="jx-advanced-pipeline"
+
+                <!-- Section 11 -->
+                <section id="jx-advanced-pipeline"
                     data-markdown="jx-advanced-pipeline.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
-                    data-background="img/jenkins-x-yaml.png">
+                    data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(img/jenkins-x-yaml.png) center / cover">
                 </section>
-				<section id="jx-advanced-pipeline-demo"
+                <section id="jx-advanced-pipeline-demo"
                     data-markdown="jx-advanced-pipeline-demo.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/manual.jpg">
+                    data-charset="iso-8859-15">
                 </section>
+
+                <!-- Section 12 -->
                 <section id="jx-serverless-apps"
                     data-markdown="jx-serverless-apps.md"
                     data-separator="^\n\n\n"
@@ -292,55 +307,113 @@
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/manual.jpg">
+                    data-charset="iso-8859-15">
                 </section>
+
+                <!-- The End -->
                 <section id="the-end"
-                    data-markdown="../docs/the-end.md"
+                    data-markdown="the-end.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
-                    data-background="../img/background/the_end.jpg">
-				</section>
-				<section id="the-end-cleanup"
+                    data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/the_end.jpg) center / cover">
+                </section>
+                <section id="the-end-cleanup"
                     data-markdown="cleanup.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
-                    data-background="../img/background/cleanup.jpg">
-				</section>
-			</div>
+                    data-background="linear-gradient(to bottom right, rgba(37,44,51,0.8), rgba(37,44,51,0.8)), url(../img/background/cleanup.jpg) center / cover">
+                </section>
+            </div>
+            <div class="sponsor"><img src="../img/presented-by-cloudbees.png"></div>
+        </div>
 
-		</div>
+        <!-- Agenda -->
+        <div class="agenda-toggle">
+            <div class="agenda-toggle-bar"></div>
+        </div>
+        <nav class="agenda">
+            <p class="title-course">The DevOps 2.6 Toolkit: Jenkins X</p>
+            <p class="sponsor-course">PRESENTED BY CLOUDBEES</p>
+            <p class="title-agenda">COURSE AGENDA</p>
+            <ul>
+                <!-- Named internal links work, but with visual glitches on slide transitions -->
+                <li>Section 1: Installing jx <a href="#/4" class="quicklink">Overview</a> | <a href="#/5" class="quicklink">Hands-on</a></li>
+                <li>Section 2: Creating A CD Cluster <a href="#/6" class="quicklink">Overview</a> | <a href="#/7" class="quicklink">Hands-on</a></li>
+                <li>Section 3: Creating A Quickstart Project <a href="#/8" class="quicklink">Overview</a> | <a href="#/9" class="quicklink">Hands-on</a></li>
+                <li>Section 4: Importing Existing Projects Into Jenkins X <a href="#/10" class="quicklink">Overview</a> | <a href="#/11" class="quicklink">Hands-on</a></li>
+                <li>Section 5: Applying GitOps Principles <a href="#/12" class="quicklink">Overview</a> | <a href="#/13" class="quicklink">Hands-on</a></li>
+                <li>Section 6: Working With Pull Requests And Preview Environments <a href="#/14" class="quicklink">Overview</a> | <a href="#/15" class="quicklink">Hands-on</a></li>
+                <li>Section 7: Promoting To Production <a href="#/16" class="quicklink">Overview</a> | <a href="#/17" class="quicklink">Hands-on</a></li>
+                <li>Section 8: Versioning Releases <a href="#/18" class="quicklink">Overview</a> | <a href="#/19" class="quicklink">Hands-on</a></li>
+                <li>Section 9: Implementing ChatOps <a href="#/20" class="quicklink">Overview</a> | <a href="#/21" class="quicklink">Hands-on</a></li>
+                <li>Section 10: Using The Pipeline Extension Model <a href="#/22" class="quicklink">Overview</a> | <a href="#/23" class="quicklink">Hands-on</a></li>
+                <li>Section 11: Extending Jenkins X Pipelines <a href="#/24" class="quicklink">Overview</a> | <a href="#/25" class="quicklink">Hands-on</a></li>
+                <li>Section 12: Defining And Running Serverless Deployments <a href="#/26" class="quicklink">Overview</a> | <a href="#/27" class="quicklink">Hands-on</a></li>
+            </ul>
+        </nav>
 
-		<script src="../lib/js/head.min.js"></script>
-		<script src="../js/reveal.js"></script>
+        <script src="../lib/js/head.min.js"></script>
+        <script src="../js/reveal.js"></script>
 
-		<script>
+        <script>
 
-			// Full list of configuration options available at:
-			// https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				controls: true,
-				progress: true,
-				history: true,
-				center: true,
+            // Full list of configuration options available at:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                center: false,
+                controls: true,
+                hash: true,
+                progress: true,
+                transition: 'slide', // none/fade/slide/convex/concave/zoom
 
-				transition: 'slide', // none/fade/slide/convex/concave/zoom
+                // The normal size is 960x700 (~4:3)
+                // The x19 theme is optimized for 1280x720 (16:9)
+                // Try 960x540 for a size bump at the same ratio
+                width: 1024,
+                height: 576,
 
-				// Optional reveal.js plugins
-				dependencies: [
-					{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-//					{ src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: '../plugin/zoom-js/zoom.js', async: true },
-					{ src: '../plugin/notes/notes.js', async: true }
-				]
-			});
+                // Optional reveal.js plugins
+                // Load promise.js before markdown.js for IE compatibility
+                dependencies: [
+                    { src: '../lib/js/promise.js', condition: function() { return !document.body.promise; } },
+                    { src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    // { src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: '../plugin/zoom-js/zoom.js', async: true },
+                    { src: '../plugin/notes/notes.js', async: true }
+                ]
+            });
 
-		</script>
-	</body>
+            (function() {
+
+                var hamburger = {
+                    agendaToggle: document.querySelector('.agenda-toggle'),
+                    agenda: document.querySelector('.agenda'),
+                    quicklinks: document.querySelector('.agenda').querySelectorAll('a'),
+
+                    doToggle: function(e) {
+                        e.preventDefault();
+                        this.agendaToggle.classList.toggle('expanded');
+                        this.agenda.classList.toggle('expanded');
+                    }
+                };
+
+                hamburger.agendaToggle.addEventListener('click', function(e) { hamburger.doToggle(e); });
+
+                for(var i = 0; i < hamburger.quicklinks.length; i++) {
+                    hamburger.quicklinks[i].addEventListener('click', function(e) {
+                        window.location = this.href;
+                        hamburger.doToggle(e);
+                    }, false);
+                }
+
+            }());
+
+        </script>
+    </body>
 </html>

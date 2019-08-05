@@ -1,13 +1,15 @@
-## Hands-On Time
-
----
-
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="img/hands-on.jpg" -->
 # Promoting Releases To Production
 
+<div class="label">Hands-on Time</div>
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 7 of 12</div>
+<div class="label">Hands-on Time</div>
 
 ## In case you messed it up
-
----
 
 ```bash
 git checkout master
@@ -30,9 +32,11 @@ git push
 ```
 
 
-## Promoting Production
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 7 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Promoting Production
 
 ```bash
 jx get applications --env production

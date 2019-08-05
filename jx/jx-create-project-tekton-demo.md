@@ -1,13 +1,15 @@
-## Hands-On Time
-
----
-
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="img/hands-on.jpg" -->
 # Creating A Quickstart Project
 
+<div class="label">Hands-on Time</div>
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 3 of 12</div>
+<div class="label">Hands-on Time</div>
 
 ## Creating A Project
-
----
 
 ```bash
 jx create quickstart # Cancel with ctrl+c
@@ -28,9 +30,11 @@ cat jx-go/Makefile
 ```
 
 
-## Creating A Project
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 3 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating A Project
 
 ```bash
 cat jx-go/skaffold.yaml
@@ -49,9 +53,11 @@ ls -l ~/.jx/draft/packs/github.com/jenkins-x-buildpacks/jenkins-x-kubernetes/pac
 ```
 
 
-## Browsing The Project
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 3 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Browsing The Project
 
 ```bash
 kubectl get pods
@@ -66,9 +72,11 @@ jx get build logs -f jx-go
 ```
 
 
-## Browsing The Project
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 3 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Browsing The Project
 
 ```bash
 jx get pipelines

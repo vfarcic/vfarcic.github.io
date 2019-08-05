@@ -1,16 +1,17 @@
-## Hands-On Time
-
----
-
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="img/hands-on.jpg" -->
 # Implementing ChatOps
 
+<div class="label">Hands-on Time</div>
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 9 of 12</div>
+<div class="label">Hands-on Time</div>
 
 ## The Basic PR Process
 
----
-
-```bash
-jx create quickstart -l go -p jx-prow -b
+<pre><code class="language-bash" style="max-height:270px">jx create quickstart -l go -p jx-prow -b
 
 cd jx-prow
 
@@ -26,16 +27,18 @@ git push --set-upstream origin chat-ops
 
 jx create pr --title "PR with prow" --body "What I can say?" \
     --batch-mode
-```
+</code></pre>
 
 * Open the link from the output
 
 
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 9 of 12</div>
+<div class="label">Hands-on Time</div>
+
 ## The Basic PR Process
 
----
-
-* Type the text and press the *Comment* button
+* Type the text and click *Comment*
 
 ```
 This PR is urgent, so please review it ASAP
@@ -43,13 +46,15 @@ This PR is urgent, so please review it ASAP
 /assign
 ```
 
-* Type `/lgtm` and click the *Comment* button
-* Type `/unassign` and click the *Comment* button
+* Type `/lgtm` and click *Comment*
+* Type `/unassign` and click *Comment*
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 9 of 12</div>
+<div class="label">Hands-on Time</div>
 
 ## The Basic PR Process
-
----
 
 ```bash
 git checkout master
@@ -70,9 +75,11 @@ reviewers:
 ```
 
 
-## The Basic PR Process
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 9 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## The Basic PR Process
 
 ```bash
 git add .
@@ -85,13 +92,15 @@ open "https://github.com/$GH_USER/jx-prow/settings/collaboration"
 ```
 
 * Add the new collaborator, confirm it, and go back to the PR
-* Type `/assign @GH_APPROVER` and click the *Comment* button
-* As the approver, type `/approve` and click the *Comment* button
+* Type `/assign @GH_APPROVER` and click *Comment*
+* As the approver, type `/approve` and click *Comment*
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 9 of 12</div>
+<div class="label">Hands-on Time</div>
 
 ## Additional Slash Commands
-
----
 
 ```bash
 git checkout master
@@ -112,9 +121,11 @@ jx create pr --title "My PR" --body "What I can say?" --batch-mode
 ```
 
 
-## Additional Slash Commands
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 9 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Additional Slash Commands
 
 * Comment `/hold`
 * Comment `/hold cancel`
@@ -128,9 +139,11 @@ jx create pr --title "My PR" --body "What I can say?" --batch-mode
 * As the approver, comment `/lgtm`
 
 
-## Available Slash Commands
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 9 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Available Slash Commands
 
 ```bash
 kubectl -n $NAMESPACE describe cm plugins

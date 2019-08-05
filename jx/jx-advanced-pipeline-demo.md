@@ -1,13 +1,15 @@
-## Hands-On Time
-
----
-
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="img/hands-on.jpg" -->
 # Extending Jenkins X Pipelines
 
+<div class="label">Hands-on Time</div>
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11 of 12</div>
+<div class="label">Hands-on Time</div>
 
 ## In Case You Messed It Up
-
----
 
 ```bash
 cd go-demo-6
@@ -28,9 +30,11 @@ cd ..
 ```
 
 
-## Naming Steps And Using Multi-Line Commands
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Naming Steps And Using Multi-Line Commands
 
 ```bash
 cd go-demo-6
@@ -41,9 +45,11 @@ git checkout -b better-pipeline
 ```
 
 
-## Naming Steps And Using Multi-Line Commands
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Naming Steps And Using Multi-Line Commands
 
 ```bash
 echo "buildPack: go
@@ -70,9 +76,11 @@ pipelineConfig:
 ```
 
 
-## Naming Steps And Using Multi-Line Commands
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Naming Steps And Using Multi-Line Commands
 
 ```bash
 jx step syntax validate pipeline
@@ -94,9 +102,11 @@ jx get build logs --current
 ```
 
 
-## Env Variables And Agents
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Env Variables And Agents
 
 ```bash
 curl -o Makefile \
@@ -110,9 +120,11 @@ open "https://github.com/vfarcic/codecov"
 ```
 
 
-## Env Variables And Agents
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Env Variables And Agents
 
 ```bash
 echo "buildPack: go
@@ -145,9 +157,11 @@ pipelineConfig:
 ```
 
 
-## Env Variables And Agents
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Env Variables And Agents
 
 ```bash
 jx step syntax validate pipeline
@@ -167,9 +181,11 @@ kubectl create secret generic codecov \
 ```
 
 
-## Env Variables And Agents
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Env Variables And Agents
 
 ```bash
 echo "buildPack: go
@@ -204,9 +220,11 @@ pipelineConfig:
 ```
 
 
-## Env Variables And Agents
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Env Variables And Agents
 
 ```bash
 jx step syntax validate pipeline
@@ -227,9 +245,11 @@ git branch -d better-pipeline
 ```
 
 
-## Overrides And Loops
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Overrides And Loops
 
 ```bash
 echo "buildPack: go
@@ -266,9 +286,11 @@ pipelineConfig:
 ```
 
 
-## Overrides And Loops
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Overrides And Loops
 
 ```bash
 jx step syntax validate pipeline
@@ -283,9 +305,11 @@ jx get activities --filter go-demo-6/master --watch
 ```
 
 
-## Overrides And Loops
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Overrides And Loops
 
 ```bash
 echo "buildPack: go
@@ -331,9 +355,11 @@ pipelineConfig:
 ```
 
 
-## Overrides And Loops
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Overrides And Loops
 
 ```bash
 jx step syntax validate pipeline
@@ -348,9 +374,11 @@ jx get activities --filter go-demo-6/master --watch
 ```
 
 
-## Overrides And Loops
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Overrides And Loops
 
 ```bash
 echo "buildPack: go
@@ -392,18 +420,22 @@ pipelineConfig:
 ```
 
 
-## Overrides And Loops
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Overrides And Loops
 
 ```bash
 jx step syntax effective
 ```
 
 
-## Overrides And Loops
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Overrides And Loops
 
 ```bash
 echo "buildPack: go
@@ -459,9 +491,11 @@ pipelineConfig:
 ```
 
 
-## Overrides And Loops
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Overrides And Loops
 
 ```bash
 jx step syntax validate pipeline
@@ -481,9 +515,11 @@ jx get activities --filter go-demo-6/master --watch
 ```
 
 
-## Overrides And Loops
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Overrides And Loops
 
 ```bash
 echo "buildPack: none
@@ -502,9 +538,11 @@ pipelineConfig:
 ```
 
 
-## Overrides And Loops
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Overrides And Loops
 
 ```bash
 git add .
@@ -517,9 +555,11 @@ jx get activities --filter go-demo-6/master --watch
 ```
 
 
-## Exploring The Syntax Schema
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## Exploring The Syntax Schema
 
 ```bash
 jx step syntax schema
@@ -530,9 +570,11 @@ jx step syntax validate buildpacks
 ```
 
 
-## What Now?
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 11 of 12</div>
+<div class="label">Hands-on Time</div>
 
----
+## What Now?
 
 ```bash
 git checkout extension-model-cd
