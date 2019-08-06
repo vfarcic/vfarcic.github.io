@@ -1,42 +1,33 @@
-<!-- .slide: data-background="../img/background/help.jpg" data-background-size="contain" -->
-# Take what you need, and give something back in return
+<!-- .slide: class="center" -->
+<!-- .slide: data-background="data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/help.jpg) center / cover" -->
+# Thank You
 
+## Take what you need,<br>and give something back in return
 
-<!-- .slide: data-background="../img/products/twitter.png" data-background-size="contain" -->
-# [@vfarcic](https://twitter.com/vfarcic)
+### [@vfarcic](https://twitter.com/vfarcic)
 
 
 ## [TechnologyConversations.com](http://technologyconversations.com)
 
----
-
 ![TechnologyConversations.com](../img/qr/technology-conversations.jpg)
 
 
-# PodCast
-
----
+## Podcast
 
 ![DevopsParadox.com](../img/qr/devops-paradox.png)
 
----
-
-## [DevopsParadox.com](http://devopsparadox.com/)
-## [@DevOpsParadox](https://twitter.com/DevOpsParadox)
+### [DevopsParadox.com](http://devopsparadox.com/) |  [@DevOpsParadox](https://twitter.com/DevOpsParadox)
 
 
 ## [DevOpsToolkitSeries.com](http://www.devopstoolkitseries.com/)
 
----
-
-<figure style="width: 40%; height: 40%; float: left;">
+<figure style="width: 40%; height: 40%; margin-left:100px;float: left;">
     <a href="https://www.devopstoolkitseries.com/">
         <img src="../img/devops-toolkit-series.png"/>
     </a>
-    <h4 style="background-color: black;">Mailing list:</h4>
-    <strong style="background-color: black;">http://eepurl.com/bXonVj</strong>
+    <h4>Mailing list: http://eepurl.com/bXonVj</h4>
 </figure>
-<figure style="width: 30%; height: 30%; float: right;">
+<figure style="width: 30%; height: 30%; margin-right:100px;float: right;">
     <a href="https://www.devopstoolkitseries.com/">
         <img src="../img/qr/devops-toolkit-series.png"/>
     </a>
