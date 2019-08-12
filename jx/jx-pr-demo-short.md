@@ -1,13 +1,15 @@
-## Hands-On Time
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="img/hands-on.jpg" -->
+# Working With Pull Requests And Preview Environments
 
----
+<div class="label">Hands-on Time</div>
 
-# Creating And Previewing Pull Requests
 
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
 
 ## Creating a PR
-
----
 
 ```bash
 cd jx-go
@@ -25,9 +27,11 @@ jx create pullrequest --title "My PR" --body "What I can say?" \
 ```
 
 
-## Merging a PR
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
 
----
+## Merging a PR
 
 * Post a comment with `/meow`
 * Post a comment with `/assign @YOUR_GITHUB_USER`

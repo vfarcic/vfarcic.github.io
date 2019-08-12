@@ -1,16 +1,18 @@
-## Hands-On Time
-
----
-
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="img/hands-on.jpg" -->
 # Creating A Quickstart Project
 
+<div class="label">Hands-on Time</div>
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
 
 ## Creating A Project
 
----
-
 ```bash
-jx create quickstart -l go -p jx-go -b
+jx create quickstart --filter golang-http -p jx-go -b
 
 export GH_USER=[...] # Replace with your GitHub user
 
@@ -21,16 +23,18 @@ ls -l jx-go
 cat jx-go/Dockerfile
 
 cat jx-go/jenkins-x.yml
-
-cat jx-go/Makefile
 ```
 
 
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
+
 ## Creating A Project
 
----
-
 ```bash
+cat jx-go/Makefile
+
 cat jx-go/skaffold.yaml
 
 ls -l jx-go/charts
@@ -43,9 +47,11 @@ open "https://github.com/$GH_USER/jx-go/settings/hooks"
 ```
 
 
-## Browsing The Project
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
 
----
+## Browsing The Project
 
 ```bash
 kubectl get pods
@@ -56,9 +62,11 @@ jx get build logs --filter jx-go
 ```
 
 
-## Browsing The Project
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
 
----
+## Browsing The Project
 
 ```bash
 jx get pipelines
@@ -68,7 +76,16 @@ jx get env
 jx get applications -e staging
 
 open "https://github.com/$GH_USER/jx-go/releases"
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
+
+## Browsing The Project
+
+```bash
 jx get applications
 
 STAGING_ADDR=[...]
@@ -77,9 +94,8 @@ curl "$STAGING_ADDR"
 ```
 
 
-<!-- .slide: data-background="../img/background/developer.jpeg" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/developer.jpeg) center / cover" -->
+<!-- .slide: class="center" -->
 ## You Do NOT Need To Do Any Of That
-
----
 
 # Focus On What You Should Do

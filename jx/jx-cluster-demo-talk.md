@@ -1,8 +1,15 @@
-### Creating A
-# Jenkins-X
-## Cluster
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="img/hands-on.jpg" -->
+# Creating A Jenkins X Cluster
 
----
+<div class="label">Hands-on Time</div>
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
+
+## Creating A Cluster With jx
 
 ```bash
 PROJECT=[...] # e.g. devops26
