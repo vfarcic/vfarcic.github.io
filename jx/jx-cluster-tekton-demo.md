@@ -171,7 +171,7 @@ jx install --provider kubernetes --external-ip $LB_IP \
     --domain $LB_IP.nip.io --default-admin-password=admin \
     --ingress-namespace ingress-nginx \
     --ingress-deployment nginx-ingress-controller \
-    --default-environment-prefix $NAMESPACE --git-provider-kind github \
+    --default-environment-prefix jx-rocks --git-provider-kind github \
     --namespace $NAMESPACE --prow --tekton
 ```
 
