@@ -44,7 +44,7 @@ echo "nexus:
 ```bash
 open "https://console.cloud.google.com/cloud-resource-manager"
 
-PROJECT=[...] # e.g. devops26
+export PROJECT=[...] # GCP Project ID (e.g., devops26)
 
 # Use default answers
 

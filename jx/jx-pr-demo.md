@@ -21,8 +21,6 @@ git checkout dev && git merge -s ours master --no-edit
 git checkout master && git merge dev
 
 echo "buildPack: go" | tee jenkins-x.yml
-
-git add . && git commit -m "Added jenkins-x.yml" && git push
 ```
 
 
@@ -41,6 +39,17 @@ cat charts/preview/Makefile | sed -e "s@vfarcic@$PROJECT@g" \
 
 cat skaffold.yaml | sed -e "s@vfarcic@$PROJECT@g" \
     | tee skaffold.yaml
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 6</div>
+<div class="label">Hands-on Time</div>
+
+## In case you messed it up
+
+```bash
+git add . && git commit -m "Added jenkins-x.yml" && git push
 ```
 
 
