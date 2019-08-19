@@ -33,7 +33,7 @@ echo "VERSION := $VERSION" | tee -a Makefile
 
 git add .
 
-git commit -m "Finally 1.0.0"
+git commit -m "Finally 2.0.0"
 
 git push
 ```

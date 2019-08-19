@@ -63,9 +63,11 @@ jx create cluster gke -n jx-rocks -p $PROJECT -r us-east1 \
 ## Creating A Cluster With jx (AKS)
 
 ```bash
+CLUSTER_NAME=[...]
+
 # Use default answers
 
-jx create cluster aks -c jxrocks -n jxrocks-group -l eastus \
+jx create cluster aks -c $CLUSTER_NAME -n jxrocks-group -l eastus \
     -s Standard_B2s --nodes 3 --default-admin-password=admin \
     --default-environment-prefix jx-rocks --git-provider-kind github \
     --namespace $NAMESPACE --prow --tekton

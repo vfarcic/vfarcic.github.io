@@ -46,7 +46,7 @@ done
 ## Cleanup (AKS)
 
 ```bash
-az aks delete -n $NAME -g $NAME-group --yes
+az aks delete -n $CLUSTER_NAME -g jxrocks-group --yes
 
 kubectl config delete-cluster jx-rocks
 
@@ -54,7 +54,7 @@ kubectl config delete-context jx-rocks
 
 kubectl config unset users.clusterUser_jx-rocks-group_jx-rocks
 
-az group delete --name $NAME-group --yes
+az group delete --name jxrocks-group --yes
 ```
 
 
