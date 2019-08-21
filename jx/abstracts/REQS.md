@@ -116,7 +116,7 @@ az aks create \
     --resource-group jxrocks-group \
     --name jxrocks-cluster \
     --node-count 3 \
-    --node-vm-size Standard_B2s \
+    --node-vm-size Standard_D4s_v3 \
     --generate-ssh-keys \
     --kubernetes-version 1.11.5
 
