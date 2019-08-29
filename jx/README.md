@@ -1,5 +1,6 @@
 # Jenkins X Talks and Workshops
 
+* [Talk: Choosing The Right Deployment Strategy](abstracts/deployment.md)
 * [Talk: Creating And Managing Serverless Deployments With Knative And Jenkins X](abstracts/serverless-apps.md)
 * [Talk: The Recipe For Continuous Delivery](abstracts/recipe.md)
 * [Talk: Ten Commandments Of GitOps Applied To Continuous Delivery](abstracts/ten-commandments.md)
