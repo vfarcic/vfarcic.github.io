@@ -32,3 +32,18 @@
         <img src="../img/qr/devops-toolkit-series.png"/>
     </a>
 </figure>
+
+
+## [DevOpsToolkitSeries.com](http://www.devopstoolkitseries.com/)
+
+<figure style="width: 40%; height: 40%; margin-left:100px;float: left;">
+    <a href="https://www.devopstoolkitseries.com/">
+        <img src="../img/devops-toolkit-series.png"/>
+    </a>
+    <h4>Mailing list: http://eepurl.com/bXonVj</h4>
+</figure>
+<figure style="width: 30%; height: 30%; margin-right:100px;float: right;">
+    <a href="https://www.devopstoolkitseries.com/">
+        <img src="../img/qr/devops-toolkit-series.png"/>
+    </a>
+</figure>
