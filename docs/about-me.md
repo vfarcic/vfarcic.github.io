@@ -19,6 +19,8 @@
 
 [![devopstoolkitseries.com](../img/devops-toolkit-series.png)](https://www.devopstoolkitseries.com/)
 
+[![devopsparadox.com](../img/products/devops-paradox.jpg)](https://www.devopsparadox.com)
+
 
 <!-- .slide: data-background="../img/products/twitter.png" data-background-size="contain" -->
 # [@vfarcic](https://twitter.com/vfarcic)

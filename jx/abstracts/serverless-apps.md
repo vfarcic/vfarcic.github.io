@@ -8,3 +8,7 @@ This talk with try to answer those and quite a few other questions and present K
 
 * Knative might become a standard for serverless deployments
 * Tekton is likely to become a standard for CI/CD type of serverless loads
+
+## Benefits
+
+Become familiar with Knative and its integration with Jenkins X

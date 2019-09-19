@@ -63,25 +63,25 @@ az group delete --name jxrocks-group --yes
 ```bash
 cd ..
 
-hub delete -y $GH_USER/environment-$NAMESPACE-staging
+hub delete -y $GH_USER/environment-jx-rocks-staging
 
-hub delete -y $GH_USER/environment-$NAMESPACE-production
+hub delete -y $GH_USER/environment-jx-rocks-production
 
 hub delete -y $GH_USER/jx-go
 
 hub delete -y $GH_USER/jx-serverless
 
 hub delete -y $GH_USER/jx-prow
-
-hub delete -y $GH_USER/jx-knative
-
-rm -rf ~/.jx/environments/$GH_USER/environment-$NAMESPACE-*
 ```
 
 
 ## Cleanup
 
 ```bash
+hub delete -y $GH_USER/jx-knative
+
+rm -rf ~/.jx/environments/$GH_USER/environment-jx-rocks-*
+
 rm -rf jx-go
 
 rm -rf jx-serverless
@@ -90,5 +90,5 @@ rm -rf jx-prow
 
 rm -rf jx-knative
 
-rm -rf environment-$NAMESPACE-*
+rm -rf environment-jx-rocks-*
 ```
