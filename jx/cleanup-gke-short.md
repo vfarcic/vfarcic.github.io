@@ -1,6 +1,6 @@
+<!-- .slide: class="center" -->
+<!-- .slide: data-background="data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/cleanup.jpg) center / cover" -->
 ## Cleanup
-
----
 
 ```bash
 gcloud container clusters delete jx-rocks --region us-east1 --quiet
@@ -17,15 +17,11 @@ gcloud compute disks delete --zone us-east1-d $(gcloud compute disks \
 ```
 
 
+<!-- .slide: class="center" -->
+<!-- .slide: data-background="data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/cleanup.jpg) center / cover" -->
 ## Cleanup
 
----
-
 ```bash
-hub delete -y $GH_USER/environment-jx-rocks-staging
-
-hub delete -y $GH_USER/environment-jx-rocks-production
-
 hub delete -y $GH_USER/environment-tekton-staging
 
 hub delete -y $GH_USER/environment-tekton-production
@@ -36,13 +32,13 @@ hub delete -y $GH_USER/jx-serverless
 
 hub delete -y $GH_USER/jx-prow
 
-rm -rf ~/.jx/environments/$GH_USER/environment-tekton-*
+hub delete -y $GH_USER/jx-knative
 ```
 
 
+<!-- .slide: class="center" -->
+<!-- .slide: data-background="data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/cleanup.jpg) center / cover" -->
 ## Cleanup
-
----
 
 ```bash
 cd ..
@@ -53,7 +49,16 @@ rm -rf jx-serverless
 
 rm -rf jx-prow
 
-rm -rf environment-jx-rocks-*
+rm -rf jx-knative
 
 rm -rf environment-tekton-*
+```
+
+
+<!-- .slide: class="center" -->
+<!-- .slide: data-background="data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/cleanup.jpg) center / cover" -->
+## Cleanup
+
+```bash
+rm -rf ~/.jx/environments/$GH_USER/environment-tekton-*
 ```
