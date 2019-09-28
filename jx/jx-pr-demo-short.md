@@ -40,7 +40,9 @@ jx create pullrequest --title "My PR" --body "What I can say?" \
 * Post a comment with `/lgtm`
 
 ```bash
-jx get activity -f jx-go/master -w
+jx get activity --filter jx-go/master --watch
+
+jx get activity --filter environment-tekton-staging/master --watch
 
 curl "$STAGING_ADDR"
 ```

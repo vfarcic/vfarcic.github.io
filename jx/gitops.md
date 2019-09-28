@@ -1,4 +1,4 @@
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/products/git.png) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/products/git.png) center / cover" -->
 <!-- .slide: class="center" -->
 
 # Code Repository
@@ -7,7 +7,7 @@ Note:
 Git is the de-facto code repository standard. Hardly anyone argues against that statement today. 
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/why.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/why.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 
 # The Only Source Of Truth?
@@ -20,7 +20,7 @@ When I speak with teams and ask them whether Git is their only source of truth, 
 GitOps is a way to do Continuous Delivery. It assumes that Git is a single source of truth and that both infrastructure and applications are defined using the declarative syntax (e.g., YAML). Changes to infrastructure or applications are made by pushing changes to Git, not by clicking buttons in Jenkins.
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/why.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/why.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 
 # Where Is Code, Tests, Build Scripts, Pipelines, etc?
@@ -29,7 +29,7 @@ Note:
 Developers understood the need for having a single source of truth for their applications a while back. Nobody argues anymore whether everything an application needs must be stored in the repository of that application. That's where the code is, that's where the tests are, that's where build scripts are located, and that's where the pipeline of that application is defined.
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/why.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/why.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 
 # How About Infrastructure, Environments, And Releases?
@@ -58,11 +58,11 @@ cd jx-go
 ```
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/god.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/god.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/products/git.png) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/products/git.png) center / cover" -->
 <!-- .slide: class="center" -->
 # 1.
 
@@ -96,7 +96,7 @@ jx get activities -f jx-go -w
 ```
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/products/git.png) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/products/git.png) center / cover" -->
 <!-- .slide: class="center" -->
 # 2.
 
@@ -108,7 +108,7 @@ So, let's create a second rule. **Everything must be tracked, every action must 
 Every change must be recorded (tracked). The most reliable and the easiest way to accomplish that is by allowing people only to push changes to Git. Just that and nothing else is the acceptable human action! What that means is that if we want our application to have a new feature, we need to write code and push it to Git. If we want it to be tested, we write tests and push them to Git, preferably at the same time as the code of the application. If we need to change a configuration, we update a file and push it to Git. If we need to install or upgrade OS, we make changes to files of whichever tool we're using to manage our infrastructure, and we push them to Git. Rules like those are apparent, and I can go on for a long time stating what we should do. It all boils down to sentences that end with *push it to Git*. What is more interesting is what we should NOT do.
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(img/confused.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(img/confused.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 
 Note:
@@ -117,42 +117,42 @@ You are not allowed to add a feature of an application by changing the code dire
 The real challenge is to decide how will that communication be performed. How do we express our desires in a way that machines can execute actions that will result in convergence of the actual state into the desired one? We can think of us as aristocracy and the machines as servants.
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(img/king.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(img/king.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 
 Note:
 The good thing about aristocracy is that there is no need to do much work. As a matter of fact, not doing any work is the main benefit of being a king, a queen, or an heir to the throne. Who would want to be a king if that means working as a car mechanic? No girl dreams of becoming a princess if that would mean working in a supermarket. Therefore, if being an aristocrat means not doing much work, we still need someone else to do it for us. Otherwise, how will our desires become a reality? That's why aristocracy needs servants. Their job is to do their biddings.
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(img/slave.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(img/slave.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 
 Note:
 Given that human servitude is forbidden in most of the world, we need to look for servants outside the human race. Today, servants are bytes that are converted into processes running inside machines. We (humans) are the overlords and machines are our slaves.
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/servers.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/servers.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 
 Note:
 However, since it is not legal to have slaves, nor it is politically correct to call them that, we will refer to them as agents. So, we (humans) are overlords of agents (machines).
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/communication.jpeg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/communication.jpeg) center / cover" -->
 <!-- .slide: class="center" -->
 
 Note:
 If we are true overlords that trust the machines to do our biddings, there is no need for that communication to be synchronous. When we trust someone always to do our bidding, we do not need to wait until our desires are fulfilled.
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(img/restaurant.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(img/restaurant.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 
 Note:
 Let's imagine that you are in a restaurant and you tell a waiter "I'd like a burger with cheese and fries." What do you do next? Do you get up, go outside the restaurant, purchase some land, and build a farm? Are you going to grow animals and potatoes? Will you wait until they are mature enough and take them back to the restaurant. Will you start frying potatoes and meat? To be clear, it's completely OK if you like owning land and if you are a farmer. There's nothing wrong in liking to cook. But, if you went to a restaurant, you did that precisely because you did not want to do those things. The idea behind an expression like "I'd like a burger with cheese and fries" is that we want to do something else, like chatting with friends and eating food. We know that a cook will prepare the meal and that our job is not to grow crops, to feed animals, or to cook. We want to be able to do other things before eating. We are like aristocracy and, in that context, farmers, cooks, and everyone else involved in the burger industry are our agents (remember that slavery is bad). So, when we request something, all we need is an acknowledgment. If the response to "I'd like a burger with cheese and fries" is "consider it done", we got the *ack* we need, and we can do other things while the process of creating the burger is executing. Farming, cooking, and eating can be parallel processes. For them to operate concurrently, the communication must be asynchronous. We request something, we receive an acknowledgment, and we move back to whatever we were doing. 
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/communication.jpeg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/communication.jpeg) center / cover" -->
 <!-- .slide: class="center" -->
 # 3.
 
@@ -170,7 +170,7 @@ We are yet to design such a system. For now, think of it a one or more entities 
 Depending on the desired state, the actor that should converge the system can be Kubernetes, Helm, Istio, a cloud or an on-prem provider, or one of many other tools. More often than not, multiple processes need to perform some actions in parallel. That would pose a problem if we'd rely only on webhooks. By their nature, they are not good at deciding who should do what. If we draw another parallel between aristocracy and servants (agents), we would quickly spot how it might be inconvenient for royalty to interact directly with their staff. Having one servant is not the same as having tens or hundreds. For that, royalty came to the idea to employ a butler. He is the chief manservant of a house (or a court). His job is to organize servants so that our desires are always fulfilled. He knows when you like to have lunch, when you'd want to have a cup of tea or a glass of Gin&Tonic, and he's always there when you need something he could not predict.
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(img/butler.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(img/butler.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 
 Note:
@@ -179,7 +179,7 @@ Given that our webhooks (requests for change) are dumb and incapable of transmit
 Every change to Git triggers a webhook request to a component in the Jenkins X bundle. It, in turn, responds only with an acknowledgment (ACK) letting Git know that it received a request. Think of *ack* as a subtle nod followed with the butler exiting the room and starting the process right away. He might call a cook, a person in charge of cleaning, or even an external service if your desire cannot be fulfilled with the internal staff. In our case, the staff (servants, slaves) are different tools and processes running inside the cluster. Just as a court has servants with different skillsets, our cluster has them as well. The question is how to organize that staff so that they are as efficient as possible. After all, even aristocracy cannot have unlimited manpower at their disposal.
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(img/buckingham-palace.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(img/buckingham-palace.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 
 Note:
@@ -188,21 +188,21 @@ Let's go big and declare ourselves royalty of a wealthy country like the United 
 Given that royalty might be a bit spoiled, they need people to be available almost instantly. "Look at that. I just broke a glass, and a minute later a new one materialized next to me, and the pieces of the broken glass disappeared."
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(img/hogwarts.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(img/hogwarts.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 
 Note:
 Since that is Buckingham Palace and not Hogwarts School of Witchcraft and Wizardry, the new glass did not materialize by magic, but by a butler that called a servant specialized in fixing the mess princesses and princes keep doing over and over again. Sometimes a single person can fix the mess (broken glass), and at other times a whole team is required (a royal ball turned into alcohol-induced shenanigans).
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(img/staff.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(img/staff.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 
 Note:
 Given that the needs can vary greatly, servants are often idle. That's why they have their own rooms. Most are called when needed, so only a fraction is doing something at any given moment. They need to be available at any time, but they also need to rest when their services are not required. They are like Schrodinger's cats that are both alive and dead. Except that being dead would be a problem due to technological backwardness that prevents us from reviving the dead. Therefore, when there is no work, a servant is idle (but still alive). In our case, making something dead or alive on a moments notice is not an issue since our agents are not humans, but bytes converted into processes. That's what containers give us, and that's what serverless is aiming for.
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/servers.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/servers.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 # 4.
 
@@ -229,7 +229,7 @@ kubectl get pods
 ```
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/servers.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/servers.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 # 5.
 
@@ -256,7 +256,7 @@ curl "http://$CM_ADDR/index.yaml"
 ```
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/why.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/why.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 # Where do we store environments definition?
 
@@ -274,7 +274,7 @@ When we write new code, we tend not to push directly to the master branch, but t
 If we are supposed to create pull requests of things we want to push to master branches of our applications, there is no reason why we shouldn't treat environments the same. What that means is not only that our application builds should push releases to environment-specific branches, but that they should do that by making pull requests.
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/products/git.png) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/products/git.png) center / cover" -->
 <!-- .slide: class="center" -->
 # 6.
 
@@ -297,7 +297,7 @@ open "https://github.com/vfarcic/environment-jx-rocks-staging/blob/master/env/re
 ```
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/best-practices.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/best-practices.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 # 7.
 
@@ -326,7 +326,7 @@ Note:
 The correct way to execute the flow while adhering to the rules we mentioned so far would be to have as many pipelines as there are applications, plus a pipeline for deployment to each of the environments. A push to the application repository should initiate a pipeline that builds, tests, and packages the application. It should end by pushing a change to the repository that defines a whole environment (e.g., staging, production, etc.). In turn, that should initiate a different pipeline that (re)deploys the entire environment. That way, we always have a single source of truth. Nothing is done without pushing code to a code repository.
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/deployment.png) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/deployment.png) center / cover" -->
 <!-- .slide: class="center" -->
 # 8.
 
@@ -338,7 +338,7 @@ Always deploying the whole environment would not work without idempotency. Fortu
 Having everything defined in code and stored in Git is not enough. We need those definitions and that code to be used reliably. Reproducibility is one of the key features we're looking for. Unfortunately, we (humans) are not good at performing reproducible actions. We make mistakes, and we are incapable of doing exactly the same thing twice. We are not reliable. Machines are. If conditions do not change, a script will do exactly the same thing every time we run it. While scripts provide repetition, declarative approach gives us idempotency.
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(img/desire.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(img/desire.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 
 Note:
@@ -382,7 +382,7 @@ kubectl -n jx-staging get pods
 ```
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/products/git.png) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/products/git.png) center / cover" -->
 <!-- .slide: class="center" -->
 # 9.
 
@@ -407,7 +407,7 @@ open "https://github.com/vfarcic/jx-go/settings/hooks"
 ```
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/communication.jpeg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/communication.jpeg) center / cover" -->
 <!-- .slide: class="center" -->
 # 10.
 
@@ -428,89 +428,89 @@ jx get applications -e staging
 
 VERSION=[...]
 
-jx promote jx-go --version $VERSION --env production -b
+jx promote jx-go --version $VERSION --env production --batch-mode
 
 cd ..
 ```
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/god.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/god.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 
 Note:
 The rules are not like those we can choose to follow or to ignore. They are all important. Without any of them, everything will fall apart. They are the commandments that must be obeyed both in our processes as well as in the architecture of our applications. They shape our culture, and they define our processes. We will not change those rules, they will change us, at least until we come up with a better way to deliver software.
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/god.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/god.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 # 1.
 
 # Git Is The Only Source Of Truth
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/god.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/god.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 # 2.
 
 # Everything must be tracked, every action must be reproducible, and everything must be idempotent
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/god.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/god.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 # 3.
 
 # Communication between processes must be asynchronous
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/god.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/god.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 # 4.
 
 # Processes should run for as long as needed, but not longer
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/god.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/god.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 # 5.
 
 # All binaries must be stored in registries
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/god.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/god.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 # 6.
 
 # Information about all the releases must be stored in environment-specific repositories or branches
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/god.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/god.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 # 7.
 
 # Everything must follow the same coding practices
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/god.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/god.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 # 8.
 
 # All deployments must be idempotent
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/god.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/god.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 # 9.
 
 # Git webhooks are the only ones allowed to initiate a change that will be applied to the system
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/god.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/god.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 # 10.
 
 # All the tools must be able to speak with each other through APIs
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/hell.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/hell.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 # Or...

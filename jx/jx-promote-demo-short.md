@@ -18,7 +18,7 @@ jx get applications -e staging
 
 VERSION=[...]
 
-jx promote jx-go --version $VERSION --env production -b
+jx promote jx-go --version $VERSION --env production --batch-mode
 ```
 
 
@@ -29,7 +29,7 @@ jx promote jx-go --version $VERSION --env production -b
 ## Promoting To Production
 
 ```bash
-jx get applications -e production
+jx get applications --env production
 
 PROD_ADDR=[...]
 

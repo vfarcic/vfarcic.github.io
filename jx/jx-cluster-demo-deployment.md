@@ -65,6 +65,10 @@ spec:
 ```bash
 jx create quickstart --filter golang-http --project-name jx-knative \
     --deploy-kind knative --batch-mode
+
+jx get activity --filter jx-knative --watch
+
+jx get activity --filter environment-tekton-staging/master --watch
 ```
 
 
@@ -94,6 +98,15 @@ git add . && git commit -m "Recreate"
 
 git push --set-upstream origin master
 
+jx get activity --filter jx-recreate --watch
+
+jx get activity --filter environment-tekton-staging/master --watch
+```
+
+
+## Setting The Scene (Recreate)
+
+```bash
 cd ..
 ```
 
@@ -118,6 +131,10 @@ cat charts/jx-rolling/values.yaml \
 git add . && git commit -m "Rolling"
 
 git push --set-upstream origin master
+
+jx get activity --filter jx-rolling --watch
+
+jx get activity --filter environment-tekton-staging/master --watch
 
 cd ..
 ```
@@ -248,7 +265,9 @@ cd ../jx-canary
 ```bash
 git add . && git commit -m "Canary"
 
+jx get activity --filter jx-canary --watch
+
+jx get activity --filter environment-tekton-staging/master --watch
+
 git push --set-upstream origin master
 ```
-
-

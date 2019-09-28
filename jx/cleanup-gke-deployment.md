@@ -33,6 +33,8 @@ hub delete -y $GH_USER/jx-recreate
 hub delete -y $GH_USER/jx-rolling
 
 hub delete -y $GH_USER/jx-canary
+
+hub delete -y $GH_USER/jx-go
 ```
 
 
@@ -50,6 +52,8 @@ rm -rf jx-recreate
 rm -rf jx-rolling
 
 rm -rf jx-canary
+
+rm -rf jx-go
 
 rm -rf ~/.jx/environments/$GH_USER/environment-tekton-*
 ```

@@ -1,11 +1,11 @@
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/servers.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/servers.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 <div class="eyebrow">Section 12</div>
 
 # Defining And Running Serverless Deployments
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(img/jenkins-x-wide.png) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(img/jenkins-x-wide.png) center / cover" -->
 <!-- .slide: class="light" -->
 <div class="eyebrow">Section 12</div>
 
@@ -16,7 +16,7 @@
 > That helps with many things, with better resource utilization and scalability being only a few of the benefits.
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/why.jpg) center / cover" -->
 <!-- .slide: class="light" -->
 <div class="eyebrow">Section 12</div>
 
@@ -27,7 +27,7 @@
 > <b>Can we make our applications serverless?</b>
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/why.jpg) center / cover" -->
 <!-- .slide: class="light" -->
 <div class="eyebrow">Section 12</div>
 
@@ -37,10 +37,10 @@ A long time ago, most of us were deploying our apps directly to servers
 
 * Then we got cloud computing<!-- .element: class="fragment" -->
 * And now we have containers and schedulers<!-- .element: class="fragment" -->
-* And we hot serverless functions<!-- .element: class="fragment" -->
+* And we got serverless functions<!-- .element: class="fragment" -->
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/why.jpg) center / cover" -->
 <!-- .slide: class="light" -->
 <div class="eyebrow">Section 12</div>
 
@@ -53,7 +53,7 @@ But...
 * Serverless functions might be limiting<!-- .element: class="fragment" -->
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(img/kubernetes-wide.png) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(img/kubernetes-wide.png) center / cover" -->
 <!-- .slide: class="light" -->
 <div class="eyebrow">Section 12</div>
 
@@ -66,7 +66,7 @@ Serverless Deployments In Kubernetes
 * No vendor lock-in<!-- .element: class="fragment" -->
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(img/knative-wide.png) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(img/knative-wide.png) center / cover" -->
 <!-- .slide: class="light" -->
 <div class="eyebrow">Section 12</div>
 
@@ -80,7 +80,7 @@ Which Types Of Applications Should Run As Serverless?
 * Preview environments are a no brainer<!-- .element: class="fragment" -->
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(img/jenkins-x-wide.png) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(img/jenkins-x-wide.png) center / cover" -->
 <!-- .slide: class="light" -->
 <div class="eyebrow">Section 12</div>
 
@@ -93,7 +93,7 @@ Which Types Of Applications Should Run As Serverless?
 * Jenkins (without X) is NOT API-driven<!-- .element: class="fragment" -->
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(img/jenkins-x-wide.png) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(img/jenkins-x-wide.png) center / cover" -->
 <!-- .slide: class="light" -->
 <div class="eyebrow">Section 12</div>
 
@@ -102,14 +102,14 @@ Which Types Of Applications Should Run As Serverless?
 ### Jenkins X Is Truly Serverless<!-- .element: class="fragment" -->
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(img/tekton-wide.png) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(img/tekton-wide.png) center / cover" -->
 <!-- .slide: class="light" -->
 <div class="eyebrow">Section 12</div>
 
 ## What Is Tekton? How Does It Fit Jenkins X?
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/servers.jpg) center / cover" --><!-- .slide: class="light" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/servers.jpg) center / cover" --><!-- .slide: class="light" -->
 <div class="eyebrow">Section 12</div>
 
 # What You'll Learn

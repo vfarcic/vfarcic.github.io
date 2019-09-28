@@ -5,6 +5,9 @@
 <div class="label">Hands-on Time</div>
 
 
+<!-- .slide: data-background="img/knative-request.png" data-background-size="contain" -->
+
+
 <!-- .slide: class="dark" -->
 <div class="eyebrow"></div>
 <div class="label">Hands-on Time</div>
@@ -15,13 +18,35 @@
 cat charts/jx-knative/templates/ksvc.yaml
 
 kubectl --namespace cd-staging get pods
+```
 
+
+<!-- .slide: data-background="img/knative-scale-to-zero.png" data-background-size="contain" -->
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## New Serverless Application
+
+```bash
 kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
      -it --rm -- -c 300 -t 20S "http://$ADDR/" \
      && kubectl --namespace cd-staging get pods
+```
 
-# Wait
 
+<!-- .slide: data-background="img/knative-scale-to-three.png" data-background-size="contain" -->
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## New Serverless Application
+
+```bash
 kubectl --namespace cd-staging get pods
 ```
 

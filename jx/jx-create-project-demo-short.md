@@ -12,7 +12,8 @@
 ## Creating A Project
 
 ```bash
-jx create quickstart --filter golang-http -p jx-go -b
+jx create quickstart --filter golang-http --project-name jx-go \
+    --batch-mode
 
 export GH_USER=[...] # Replace with your GitHub user
 
@@ -94,7 +95,7 @@ curl "$STAGING_ADDR"
 ```
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.6), rgba(87,185,72,0.6)), url(../img/background/developer.jpeg) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/developer.jpeg) center / cover" -->
 <!-- .slide: class="center" -->
 ## You Do NOT Need To Do Any Of That
 
