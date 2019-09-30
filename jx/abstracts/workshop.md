@@ -46,3 +46,7 @@ We'll explore how to create a fully operational continuous delivery pipeline usi
 
 * Going Serverless (1h)
 * Implementing ChatOps (1h)
+* Using The Pipeline Extension Model (1h)
+* Extending Jenkins X Pipelines (1h)
+* Defining And Running Serverless Deployments (1h)
+* Choosing The Right Deployment Strategy (1h)
