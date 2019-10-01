@@ -19,6 +19,13 @@
 * cost-effective <!-- .element: class="fragment" -->
 
 
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Serverless Strategy
+
+
 <!-- .slide: data-background="img/knative-request.png" data-background-size="contain" -->
 
 
@@ -31,18 +38,27 @@
 ```bash
 cat jx-knative/charts/jx-knative/templates/ksvc.yaml
 
-kubectl --namespace cd-staging get pods
+kubectl --namespace cd-staging get pods | grep knative
+```
 
+
+<!-- .slide: data-background="img/knative-scale-to-zero.png" data-background-size="contain" -->
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Serverless Strategy
+
+```bash
 KNATIVE_ADDR=$(kubectl --namespace cd-staging get ksvc jx-knative \
     --output jsonpath="{.status.domain}")
 
 kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
     -it --rm -- --concurrent 300 --time 20S "http://$KNATIVE_ADDR" \
-    && kubectl --namespace cd-staging get pods
+    && kubectl --namespace cd-staging get pods | grep knative
 ```
-
-
-<!-- .slide: data-background="img/knative-scale-to-zero.png" data-background-size="contain" -->
 
 
 <!-- .slide: data-background="img/knative-scale-to-three.png" data-background-size="contain" -->
@@ -52,7 +68,7 @@ kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
 <div class="eyebrow"></div>
 <div class="label">Hands-on Time</div>
 
-## Serverless Strategy (GKE only)
+## Serverless Strategy
 
 |Requirement        |Fullfilled|
 |-------------------|----------|
@@ -266,8 +282,48 @@ open "http://flagger-grafana.$LB_IP.nip.io"
 
 ## Which Should We Choose?
 
-* **Recreate**: when working with legacy applications that often do not scale, that are stateful without replication, and are lacking other features that make them not cloud-native.
-* **Rolling update**: with cloud-native applications which, for one reason or another, cannot use canary deployments.
-* **Canary**: instead of **rolling update** when you need the additional control when to roll forward and when to roll back.
-* **Serverless**: in permanent environments when you need excellent scaling capabilities or when an application is not in constant use.
-* **Serverless**: for all the deployments to preview environments, no matter which strategy you're using in staging and production.
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Which Should We Choose?
+
+### Recreate
+
+When working with legacy applications that often do not scale, that are stateful without replication, and are lacking other features that make them not cloud-native.
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Which Should We Choose?
+
+### Rolling update
+
+With cloud-native applications which, for one reason or another, cannot use canary deployments.
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Which Should We Choose?
+
+### Canary
+
+Instead of **rolling update** when you need the additional control when to roll forward and when to roll back.
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Which Should We Choose?
+
+### Serverless
+
+In permanent environments when you need excellent scaling capabilities or when an application is not in constant use.
+
+For all the deployments to preview environments, no matter which strategy you're using in staging and production.

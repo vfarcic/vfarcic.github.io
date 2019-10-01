@@ -67,8 +67,6 @@ jx create quickstart --filter golang-http --project-name jx-knative \
     --deploy-kind knative --batch-mode
 
 jx get activity --filter jx-knative --watch
-
-jx get activity --filter environment-tekton-staging/master --watch
 ```
 
 
@@ -77,6 +75,8 @@ jx get activity --filter environment-tekton-staging/master --watch
 ```bash
 jx create quickstart --filter golang-http --project-name jx-recreate \
     --deploy-kind default --batch-mode
+
+jx get activity --filter jx-recreate --watch
 
 cd jx-recreate
 
@@ -100,13 +100,6 @@ git push --set-upstream origin master
 
 jx get activity --filter jx-recreate --watch
 
-jx get activity --filter environment-tekton-staging/master --watch
-```
-
-
-## Setting The Scene (Recreate)
-
-```bash
 cd ..
 ```
 
@@ -116,6 +109,8 @@ cd ..
 ```bash
 jx create quickstart --filter golang-http --project-name jx-rolling \
     --deploy-kind default --batch-mode
+
+jx get activity --filter jx-rolling --watch
 
 cd jx-rolling
 
@@ -134,8 +129,6 @@ git push --set-upstream origin master
 
 jx get activity --filter jx-rolling --watch
 
-jx get activity --filter environment-tekton-staging/master --watch
-
 cd ..
 ```
 
@@ -145,6 +138,8 @@ cd ..
 ```bash
 jx create quickstart --filter golang-http --project-name jx-canary \
     --deploy-kind default --batch-mode
+
+jx get activity --filter jx-canary --watch
 
 cd jx-canary
 
@@ -234,6 +229,8 @@ cd ..
 
 GH_USER=[...]
 
+jx get activity --filter environment-tekton-staging/master --watch
+
 git clone \
     https://github.com/$GH_USER/environment-tekton-staging.git
 
@@ -256,18 +253,20 @@ echo "jx-canary:
 
 git add . && git commit -m "Added progressive deployment" && git push
 
-cd ../jx-canary
+jx get activity --filter environment-tekton-staging/master --watch
 ```
 
 
 ## Setting The Scene (Canary)
 
 ```bash
+cd ../jx-canary
+
 git add . && git commit -m "Canary"
+
+git push --set-upstream origin master
 
 jx get activity --filter jx-canary --watch
 
-jx get activity --filter environment-tekton-staging/master --watch
-
-git push --set-upstream origin master
+cd ..
 ```
