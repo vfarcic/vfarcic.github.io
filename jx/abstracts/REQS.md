@@ -7,10 +7,19 @@
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * GitHub account
 
-You can choose to have a cluster in you own Google (GKE), Amazon (EKS), or Azure (AKS) account, or you can use one that will be avialable to you during the workshop.
-
-
 If you choose to use your own account, please follow the instructions for the cloud-specific requirements. If you're in doubt which one to choose, I strongly recommend GKE. If you register, you'll get 300$ in free credit and we won't spend more than a few $ during the workshop. On the other hand, if you do choose to use the cluster that will be available (and prepared by me) during the workshop, there is nothing else you need to do in advance.
+
+If you are a **Windows user**, make sure that **TTY is enabled**. A simple test to detect whether TTY is enabled, assuming that you have Docker Desktop running, is as follows.
+
+```bash
+docker container run --rm -it alpine sh
+
+exit
+```
+
+If that produced an error, TTY is disabled. You will need to **enable TTY**. If you don't know how to do that, the alternative is to run Google Cloud Shell and, in that case, you will need a Google Cloud Platform account.
+
+You can choose to have a cluster in you own Google (GKE), Amazon (EKS), or Azure (AKS) account, or you can use one that will be available to you during the workshop.
 
 ## GKE (GCP)
 

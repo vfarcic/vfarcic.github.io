@@ -818,13 +818,53 @@ open "http://flagger-grafana.$LB_IP.nip.io"
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 13</div>
+<div class="eyebrow"></div>
 <div class="label">Hands-on Time</div>
 
 ## Which Should We Choose?
 
-* **Recreate**: when working with legacy applications that often do not scale, that are stateful without replication, and are lacking other features that make them not cloud-native.
-* **Rolling update**: with cloud-native applications which, for one reason or another, cannot use canary deployments.
-* **Canary**: instead of **rolling update** when you need the additional control when to roll forward and when to roll back.
-* **Serverless**: in permanent environments when you need excellent scaling capabilities or when an application is not in constant use.
-* **Serverless**: for all the deployments to preview environments, no matter which strategy you're using in staging and production.
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Which Should We Choose?
+
+### Recreate
+
+When working with legacy applications that often do not scale, that are stateful without replication, and are lacking other features that make them not cloud-native.
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Which Should We Choose?
+
+### Rolling update
+
+With cloud-native applications which, for one reason or another, cannot use canary deployments.
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Which Should We Choose?
+
+### Canary
+
+Instead of **rolling update** when you need the additional control when to roll forward and when to roll back.
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Which Should We Choose?
+
+### Serverless
+
+In permanent environments when you need excellent scaling capabilities or when an application is not in constant use.
+
+For all the deployments to preview environments, no matter which strategy you're using in staging and production.

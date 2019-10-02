@@ -39,6 +39,47 @@ echo "nexus:
 <div class="eyebrow">Section 2</div>
 <div class="label">Hands-on Time</div>
 
+## Creating A Cluster With jx (GCS)
+
+```bash
+open "https://console.cloud.google.com/cloud-resource-manager"
+```
+
+* Create a new project
+* Open Google Cloud Shell
+
+```bash
+NAMESPACE=cd
+
+echo "nexus:
+  enabled: false
+" | tee myvalues.yaml
+
+export PROJECT=[...] # GCP Project ID (e.g., devops26)
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 2</div>
+<div class="label">Hands-on Time</div>
+
+## Creating A Cluster With jx (GCS)
+
+```bash
+# Use default answers
+
+jx create cluster gke -n jx-rocks -p $PROJECT -r us-east1 \
+    -m n1-standard-4 --min-num-nodes 1 --max-num-nodes 2 \
+    --default-admin-password=admin \
+    --default-environment-prefix jx-rocks --git-provider-kind github \
+    --namespace $NAMESPACE --prow --tekton --skip-login
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 2</div>
+<div class="label">Hands-on Time</div>
+
 ## Creating A Cluster With jx (GKE)
 
 ```bash
@@ -108,7 +149,7 @@ jx create cluster eks -n jx-rocks -r $AWS_DEFAULT_REGION \
 
 
 <!--
-PROJECT=[...] # e.g. devops26
+PROJECT=[...] # e.g. devops-26
 
 gcloud container clusters create jx-rocks --region us-east1 \
     --machine-type n1-standard-8 --enable-autoscaling \

@@ -49,5 +49,7 @@ rm -rf jx-rolling
 
 rm -rf jx-canary
 
+rm -rf environment-tekton-staging
+
 rm -rf ~/.jx/environments/$GH_USER/environment-tekton-*
 ```
