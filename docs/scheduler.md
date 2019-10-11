@@ -1,10 +1,8 @@
-<!-- .slide: data-background="../img/background/why.jpg" -->
+<!-- .slide: class="center" -->
 # What Is a Container Scheduler?
 
----
 
-
-<!-- .slide: data-background="../img/background/kids-soccer.jpeg" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.7), rgba(87,185,72,0.7)), url(../img/background/kids-soccer.jpeg) center / cover" -->
 
 Note:
 Picture me as a young teenager. After school, we'd go a courtyard and play soccer. That was an exciting sight. A random number of us running around the yard without any orchestration. There was no offense and no defense. We'd just run after a ball. Everyone moves forward towards the ball, someone kicks it to the left, and we move in that direction, only to start running back because someone kicked the ball again. The strategy was simple. Run towards the ball, kick it if you can, wherever you can, repeat. To this day I do not understand how anyone managed to score. It was complete randomness applied to a bunch of kids. There was no strategy, no plan, and no understanding that winning required coordination. Even a goalkeeper would be in random locations on the field. If he caught the ball around the goal he's guarding, he'd continue running with the ball in front of him. Most of the goals were scored by shooting at an empty goal. It was an "every man for himself" type of ambition. Each one of us hoped to score and bring glory to his or her name. Fortunately, the main objective was to have fun so winning as a team did not matter that much. If we were a "real" team, we'd need a coach. We'd need someone to tell us what the strategy is, who should do what, and when to go on the offense or fall back to defend the goal. We'd need someone to orchestrate us. The field (a cluster) had a random number of people (services) with the common goal (to win). Since anyone could join the game at any time, the number of people (services) was continually changing. Someone would be injured and would have to be replaced or, when there was no replacement, the rest of us would have to take over his tasks (self-healing). Those football games can be easily translated into clusters. Just as we needed someone to tell us what to do (a coach), clusters need something to orchestrate all the services and resources. Both need not only to make up-front decisions, but also to continuously watch the game/cluster, and adapt the strategy/scheduling depending on the internal and external influences. We needed a coach and clusters need a scheduler. They need a framework that will decide where a service should be deployed and make sure that it maintains the desired run-time specification.
@@ -15,10 +13,10 @@ Container schedulers are based on the same principles as schedulers in general. 
 Containers provide benefits that other deployment mechanisms do not. Services deployed as containers are isolated and immutable. Isolation provides reliability. Isolation helps with networking and volume management. It avoids conflicts. It allows us to deploy anything, anywhere, without worrying whether that something will clash with other processes running on the same server. Schedulers, combined with containers and virtual machines, provide the ultimate cluster management nirvana. That will change in the future but, for now, container schedulers are the peak of engineering accomplishments. They allow us to combine the developer's necessity for rapid and frequent deployments with a sysadmin's goals of stability and reproducibility. And that leads us to Kubernetes...
 
 
-<!-- .slide: data-background="../img/products/kubernetes.png" data-background-size="contain" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.7), rgba(87,185,72,0.7)), url(../img/products/kubernetes.png) center / cover" -->
 
 
-<!-- .slide: data-background="../img/background/coach.jpeg" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.7), rgba(87,185,72,0.7)), url(../img/background/coach.jpeg) center / cover" -->
 
 Note:
 To understand Kubernetes, it is important to realize that running containers directly is a bad option for most use cases. Containers are low-level entities that require a framework on top. They need something that will provide all the additional features we expect from services deployed to clusters. In other words, containers are handy but are not supposed to be run directly. The reason is simple. Containers, by themselves, do not provide fault tolerance. They cannot be deployed easily to the optimum spot in a cluster, and, to cut a long story short, are not operator friendly. That does not mean that containers by themselves are not useful. They are, but they require much more if we are to harness their real power. If we need to operate containers at scale and if we need them to be fault tolerant and self-healing, and have the other features we expect from modern clusters, we need more. We need at least a scheduler, probably more.

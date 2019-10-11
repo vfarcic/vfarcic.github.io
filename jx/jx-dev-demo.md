@@ -1,5 +1,5 @@
 <!-- .slide: class="center dark" -->
-<!-- .slide: data-background="img/hands-on.jpg" -->
+<!-- .slide: data-background="../img/background/hands-on.jpg" -->
 # Improving And Simplifying Software Development
 
 <div class="label">Hands-on Time</div>

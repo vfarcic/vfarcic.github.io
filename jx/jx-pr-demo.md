@@ -1,5 +1,5 @@
 <!-- .slide: class="center dark" -->
-<!-- .slide: data-background="img/hands-on.jpg" -->
+<!-- .slide: data-background="../img/background/hands-on.jpg" -->
 # Working With Pull Requests And Preview Environments
 
 <div class="label">Hands-on Time</div>

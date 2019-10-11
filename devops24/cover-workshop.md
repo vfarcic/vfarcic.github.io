@@ -1,4 +1,5 @@
-### The DevOps 2.4 Toolkit
+<!-- .slide: class="center" -->
+## The DevOps 2.4 Toolkit
 
 # CD To Kubernetes
 

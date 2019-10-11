@@ -1,5 +1,5 @@
 <!-- .slide: class="center dark" -->
-<!-- .slide: data-background="img/hands-on.jpg" -->
+<!-- .slide: data-background="../img/background/hands-on.jpg" -->
 # Versioning Releases
 
 <div class="label">Hands-on Time</div>

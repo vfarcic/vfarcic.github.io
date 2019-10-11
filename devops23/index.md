@@ -1,3 +1,5 @@
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
+<!-- .slide: class="light" -->
 ## What Are We Going To Do?
 
 ---
@@ -11,9 +13,9 @@
 * [Scaling Pods With ReplicaSets](#/12)
 
 
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
+<!-- .slide: class="light" -->
 ## What Are We Going To Do?
-
----
 
 # Day 2
 
@@ -23,9 +25,9 @@
 * [Using Volumes To Access Host's File System](#/20)
 
 
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
+<!-- .slide: class="light" -->
 ## What Are We Going To Do?
-
----
 
 # Day 3
 
@@ -35,9 +37,9 @@
 * [Securing Kubernetes Clusters](#/28)
 
 
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
+<!-- .slide: class="light" -->
 ## What Are We Going To Do?
-
----
 
 # Day 4
 

@@ -1,5 +1,5 @@
 <!-- .slide: class="center dark" -->
-<!-- .slide: data-background="img/hands-on.jpg" -->
+<!-- .slide: data-background="../img/background/hands-on.jpg" -->
 # Promoting Releases To Production
 
 <div class="label">Hands-on Time</div>

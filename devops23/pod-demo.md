@@ -1,13 +1,15 @@
-## Hands-On Time
-
----
-
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="../img/background/hands-on.jpg" -->
 # Creating Pods
 
+<div class="label">Hands-on Time</div>
 
-## Quick And Dirty Way To Run Pods
 
----
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Quick Way To Run Pods
 
 ```bash
 kubectl run db --image mongo
@@ -22,9 +24,11 @@ kubectl delete deployment db
 ```
 
 
-## Quick And Dirty Way To Run Pods
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Quick Way To Run Pods
 
 * We used undocumented way to create Pods (and more)
 
@@ -35,9 +39,11 @@ We used the imperative way to tell Kubernetes what to do. Even though there are 
 <!-- .slide: data-background="img/pod-single-container.png" data-background-size="contain" -->
 
 
-## Declarative Syntax
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Declarative Syntax
 
 ```bash
 cat pod/db.yml
@@ -51,15 +57,24 @@ kubectl get pods -o wide
 kubectl get pods -o json
 
 kubectl get pods -o yaml
-
-kubectl describe pod db
-
-kubectl describe -f pod/db.yml
 ```
 
 Note:
 We are using v1 of Kubernetes Pods API. Both apiVersion and kind are mandatory. That way, Kubernetes knows what we want to do (create a Pod) and which API version to use. The next section is metadata.It provides information that does not influence how the Pod behaves. We used metadata to define the name of the Pod (db) and a few labels. Later on, when we move into Controllers, labels will have a practical purpose. For now, they are purely informational. The last section is the spec in which we defined a single container.  The container is defined with the name (db), the image (mongo), the command that should be executed when the container starts (mongod), and, finally, the set of arguments. The arguments are defined as an array with, in this case, two elements (--rest and --httpinterface).
 We will explore different means to retrieve information about running Pods
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Declarative Syntax
+
+```bash
+kubectl describe pod db
+
+kubectl describe -f pod/db.yml
+```
 
 
 <!-- .slide: data-background="img/seq_pod_ch03.png" data-background-size="contain" -->
@@ -74,9 +89,11 @@ Creating a POD:
 6. Finally, Kubelet sent a request to the API server notifying it that the Pod was created successfully.
 
 
-## Declarative Syntax
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Declarative Syntax
 
 ```bash
 kubectl exec db ps aux
@@ -88,23 +105,24 @@ echo 'db.stats()' | mongo localhost:27017/test
 exit
 
 kubectl logs db
-
-kubectl exec -it db pkill mongod
-
-kubectl get pods
 ```
 
 Note:
 * We executed processes inside a Pod
 * We retrieved logs of a Pod
-* We explored what happens when a container fails
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
 ## Declarative Syntax
 
----
-
 ```bash
+kubectl exec -it db pkill mongod
+
+kubectl get pods
+
 kubectl delete -f pod/db.yml
 
 kubectl get pods
@@ -115,12 +133,15 @@ kubectl get pods
 ```
 
 Note:
+* We explored what happens when a container fails
 * We deleted the Pod
 
 
-## Running Multiple Containers
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Running Multiple Containers
 
 ```bash
 cat pod/go-demo-2.yml
@@ -134,10 +155,6 @@ kubectl get -f pod/go-demo-2.yml -o json
 kubectl exec -it -c db go-demo-2 ps aux
 
 kubectl logs go-demo-2 -c db
-
-cat pod/go-demo-2-scaled.yml
-
-kubectl delete -f pod/go-demo-2.yml
 ```
 
 Note:
@@ -146,15 +163,18 @@ Pods are designed to run multiple cooperative processes that should act as a coh
 We explored how to execute processes inside a container in a multi-container Pod
 We explored how to retrieve logs of a container in a multi-container Pod
 
-For cat pod/go-demo-2-scaled.yml
-We defined two containers for the API and named them api-1 and api-2. The only thing left is to create the Pod. But, we’re not going to do that. We should not think of Pods as resources that should do anything beyond a definition of the smallest unit in our cluster. A Pod is a collection of containers that share the same resources. Not much more. Everything else should be accomplished with higher-level constructs. We’ll explore how to scale Pods without changing their definition in one of the next chapters. Let’s go back to our original multi-container Pod that defined api and db containers. That was a terrible design choice since it tightly couples one with the other. As a result, when we explore how to scale Pods (not containers), both would need to match. If, for example, we scale the Pod to three, we’d have three APIs and three DBs. Instead, we should have defined two Pods, one for each container (db and api). That would give us enough flexibility to treat each independently from the other.
 
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
 ## Monitoring Health
 
----
-
 ```bash
+cat pod/go-demo-2-scaled.yml
+
+kubectl delete -f pod/go-demo-2.yml
+
 cat pod/go-demo-2-health.yml
 
 kubectl create -f pod/go-demo-2-health.yml
@@ -163,13 +183,17 @@ kubectl describe -f pod/go-demo-2-health.yml
 ```
 
 Note:
+For cat pod/go-demo-2-scaled.yml
+We defined two containers for the API and named them api-1 and api-2. The only thing left is to create the Pod. But, we’re not going to do that. We should not think of Pods as resources that should do anything beyond a definition of the smallest unit in our cluster. A Pod is a collection of containers that share the same resources. Not much more. Everything else should be accomplished with higher-level constructs. We’ll explore how to scale Pods without changing their definition in one of the next chapters. Let’s go back to our original multi-container Pod that defined api and db containers. That was a terrible design choice since it tightly couples one with the other. As a result, when we explore how to scale Pods (not containers), both would need to match. If, for example, we scale the Pod to three, we’d have three APIs and three DBs. Instead, we should have defined two Pods, one for each container (db and api). That would give us enough flexibility to treat each independently from the other.
 Cat pod/go-demo-2-health.yml
 Further down, we declared that the first execution of the probe should be delayed by five seconds (initialDelaySeconds), that requests should timeout after two seconds (timeoutSeconds), that the process should be repeated every five seconds (periodSeconds), and (failureThreshold) define how many attempts it must try before giving up . The take aways here are livenessProbe 
 
 
-## Pods?
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Pods?
 
 * (Almost) Useless (By Themselves)<!-- .element: class="fragment" -->
 * Fundamental building block<!-- .element: class="fragment" -->
@@ -179,6 +203,10 @@ Further down, we declared that the first execution of the probe should be delaye
 
 <!-- .slide: data-background="img/pod-components.png" data-background-size="contain" -->
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
 ## What Now?
 

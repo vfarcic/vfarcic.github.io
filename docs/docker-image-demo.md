@@ -1,21 +1,25 @@
-## Hands-On Time
-
----
-
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="../img/background/hands-on.jpg" -->
 # Docker Images
 
+<div class="label">Hands-on Time</div>
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
 ## Requirements
-
----
 
 * Docker For Mac/Windows, or Docker installed on Linux
 * A Docker Hub user
 
 
-## Building Images
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Building Images
 
 ```bash
 git clone https://github.com/vfarcic/go-demo-2.git
@@ -30,9 +34,11 @@ docker image ls
 ```
 
 
-## Building Images
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Building Images
 
 * Docker's Multi-Stage Builds
 * Allows execution of multiple stages while maintaining small size of the final image
@@ -40,9 +46,11 @@ docker image ls
 * The result of the first stage (the binary) was used in the final stage to assemble the image
 
 
-## Pushing Images
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Pushing Images
 
 ```bash
 DOCKER_HUB_USER=[...]
@@ -57,9 +65,11 @@ cd ..
 ```
 
 
-## Pushing Images
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Pushing Images
 
 * We logged in to Docker Hub (it could be any other registry)
 * We tagged the image using a convention that clearly indicates that it is not fully tested

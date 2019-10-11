@@ -1,14 +1,18 @@
+<!-- .slide: class="center" -->
 # Using EKS As A Kubernetes Cluster In AWS
 
----
 
+<!-- .slide: class="light" -->
+<div class="eyebrow"></div>
 
-# EKS
+# What You'll Learn
 
----
+> Amazon Elastic Container Service for Kubernetes
 
-* Amazon Elastic Container Service for Kubernetes <!-- .element: class="fragment" -->
-* Multi-AZ <!-- .element: class="fragment" -->
-* Kubernetes conformant <!-- .element: class="fragment" -->
-* Managed control plane <!-- .element: class="fragment" -->
-* Secure <!-- .element: class="fragment" -->
+> Multi-AZ
+
+> Kubernetes conformant
+
+> Managed control plane
+
+> Secure
