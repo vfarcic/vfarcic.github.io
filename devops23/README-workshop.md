@@ -132,7 +132,7 @@ Having fault-tolerance and high-availability is of no use if we lose application
 
 ### Section 16: Deploying Stateful Applications At Scale
 
-Stateless and stateful application are quite different in their architecture. Those differences need to be reflected in Kubernetes as well. The fact that we can use Deployments with PersistentVolumes does not mean that is the best way to run stateful applications.
+Stateless and stateful applications are quite different in their architecture. Those differences need to be reflected in Kubernetes as well. The fact that we can use Deployments with PersistentVolumes does not mean that is the best way to run stateful applications.
 
 ### Wrap-up: Summary, Discussions
 
