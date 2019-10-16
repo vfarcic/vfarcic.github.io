@@ -26,7 +26,7 @@ kubectl expose rs go-demo-2 --name=go-demo-2-svc --target-port=28017 \
 ```
 
 Note:
-Looking at the yml file we customized the command and the arguments so that MongoDB exposes the REST interface. Those additions are needed so that we can test that the database is accessible through the Service. We can use the kubectl expose command to expose a resource as a new Kubernetes Service. That resource can be a Deployment, another Service, a ReplicaSet, a ReplicationController, or a Pod. We’ll expose the ReplicaSet since it is already running in the cluster. In this exercise we show how to create two different services.
+Looking at the yml file we customized the command and the arguments so that MongoDB exposes the REST interface. Those additions are needed so that we can test that the database is accessible through the Service. We can use the kubectl expose command to expose a resource as a new Kubernetes Service. That resource can be a Deployment, another Service, a ReplicaSet, a ReplicationController, or a Pod. We'll expose the ReplicaSet since it is already running in the cluster. In this exercise we show how to create two different services.
 * We recreated the *go-demo-2* ReplicaSet
 * We exposed the port `28017` of the ReplicaSet `go-demo-2` using imperative process
 * `NodePort` type exposes the port on all of the worker nodes of the cluster
@@ -42,7 +42,7 @@ Note:
 4. kube-proxy is watching for service and endpoint objects. It detected that there is a new Service and a new endpoint object.
 5. kube-proxy added iptables rules which capture traffic to the Service port and redirect it to endpoints. For each endpoint object, it adds iptables rule which selects a Pod.
 6. The kube-dns add-on is watching for Service. It detected that there is a new service.
-7. The kube-dns added db’s record to the dns
+7. The kube-dns added db's record to the dns
 
 <!-- .slide: data-background="img/comp_svc_ch05.png" data-background-size="contain" -->
 
@@ -199,7 +199,7 @@ kubectl create -f svc/go-demo-2-api-rs.yml
 
 Note:
 When we at the `go-demo-2-api-rs` file:
-The number of replicas is set to 3. That solves one of the main problems we had with the previous ReplicaSets that defined Pods with both containers. Now the number of replicas can differ, and we have one Pod for the database, and three for the backend API. The type label is set to api so that both the ReplicaSet and the (soon to come) Service can distinguish the Pods from those created for the database. We have the environment variable DB set to go-demo-2-db. The code behind the vfarcic/ go-demo-2 image is written in a way that the connection to the database is established by reading that variable. In this case, we can say that it will try to connect to the database running on the DNS go-demo-2-db. If you go back to the database Service definition, you’ll notice that its name is go-demo-2-db as well. If everything works correctly, we should expect that the DNS was created with the Service and that it’ll forward requests to the database. The `readinessProbe` has the same fields as the `livenessProbe`. We used the same values for both, except for the `periodSeconds`, where instead of relying on the default value of 10, we set it to 1. While livenessProbe is used to determine whether a Pod is alive or it should be replaced by a new one, the readinessProbe is used by the iptables. A Pod that does not pass the readinessProbe will be excluded and will not receive requests. In theory, Requests might be still sent to a faulty Pod, between two iterations. Still, such requests will be small in number since the iptables will change as soon as the next probe responds with HTTP code less than 200, or equal or greater than 400.
+The number of replicas is set to 3. That solves one of the main problems we had with the previous ReplicaSets that defined Pods with both containers. Now the number of replicas can differ, and we have one Pod for the database, and three for the backend API. The type label is set to api so that both the ReplicaSet and the (soon to come) Service can distinguish the Pods from those created for the database. We have the environment variable DB set to go-demo-2-db. The code behind the vfarcic/ go-demo-2 image is written in a way that the connection to the database is established by reading that variable. In this case, we can say that it will try to connect to the database running on the DNS go-demo-2-db. If you go back to the database Service definition, you'll notice that its name is go-demo-2-db as well. If everything works correctly, we should expect that the DNS was created with the Service and that it'll forward requests to the database. The `readinessProbe` has the same fields as the `livenessProbe`. We used the same values for both, except for the `periodSeconds`, where instead of relying on the default value of 10, we set it to 1. While livenessProbe is used to determine whether a Pod is alive or it should be replaced by a new one, the readinessProbe is used by the iptables. A Pod that does not pass the readinessProbe will be excluded and will not receive requests. In theory, Requests might be still sent to a faulty Pod, between two iterations. Still, such requests will be small in number since the iptables will change as soon as the next probe responds with HTTP code less than 200, or equal or greater than 400.
 
 * We created a ReplicaSet with a DB
 * We created a Service type `ClusterIP` for the DB
@@ -348,7 +348,7 @@ kubectl exec $POD_NAME env
 Note:
 * We are going to send a request to confirm that the API is accessible through the Service
 * We going to list the environment variables in one of the Pods to display Service-specific info
-The first five variables are using the Docker format. If you already worked with Docker networking, you should be familiar with them. At least, if you’re familiar with the way Swarm (standalone) and Docker Compose operate. Later version of Swarm (Mode) still generate the environment variables but they are mostly abandoned by the users in flavor of DNSes.
+The first five variables are using the Docker format. If you already worked with Docker networking, you should be familiar with them. At least, if you're familiar with the way Swarm (standalone) and Docker Compose operate. Later version of Swarm (Mode) still generate the environment variables but they are mostly abandoned by the users in flavor of DNSes.
  1. GO_DEMO_2_DB_PORT = tcp:// 10.0.0.250: 27017
  2. GO_DEMO_2_DB_PORT_27017_TCP_ADDR = 10.0.0.250
  3. GO_DEMO_2_DB_PORT_27017_TCP_PROTO = tcp

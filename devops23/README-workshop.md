@@ -82,7 +82,7 @@ A Pod encapsulates one or more containers. It provides a unique network IP, it a
 
 ### Section 5: Scaling Pods With ReplicaSets
 
-ReplicaSet’s primary, and pretty much only function, is to ensure that a specified number of replicas of a Pod matches the actual state (almost) all the time. That means that ReplicaSets make Pods scalable.
+ReplicaSet's primary, and pretty much only function, is to ensure that a specified number of replicas of a Pod matches the actual state (almost) all the time. That means that ReplicaSets make Pods scalable.
 
 ## Day 2 (4 hours)
 
