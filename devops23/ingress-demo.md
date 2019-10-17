@@ -22,7 +22,7 @@ kubectl get pods
 ```
 
 Note:
-We cannot explore solutions before we know what the problems are. Therefore, we’ll re-create a few objects using the knowledge we already gained. That will let us see whether Kubernetes Services satisfy all the needs users of our applications might have. Or, to be more explicit, we’ll explore which features we’re missing when making our applications accessible to users. We already discussed that it is a bad practice to publish fixed ports through Services. That method is likely to result in conflicts or, at the very least, create the additional burden of carefully keeping track of which port belongs to which Service. We already discarded that option before, and we won’t change our minds now. Since we’ve clarified that, let’s go back and create the Deployments and the Services from the previous chapter.
+We cannot explore solutions before we know what the problems are. Therefore, we'll re-create a few objects using the knowledge we already gained. That will let us see whether Kubernetes Services satisfy all the needs users of our applications might have. Or, to be more explicit, we'll explore which features we're missing when making our applications accessible to users. We already discussed that it is a bad practice to publish fixed ports through Services. That method is likely to result in conflicts or, at the very least, create the additional burden of carefully keeping track of which port belongs to which Service. We already discarded that option before, and we won't change our minds now. Since we've clarified that, let's go back and create the Deployments and the Services from the previous chapter.
 
 
 ## Services Deficiencies
@@ -63,7 +63,7 @@ curl -i "http://$API_IP:$API_PORT/demo/hello"
 ```
 
 Note:
-While publishing a random, or even a hard-coded port of a single application might not be so bad, if we’d apply the same principle to more applications, the user experience would be horrible. To make the point a bit clearer, we’ll deploy another application. In this exercise we will:
+While publishing a random, or even a hard-coded port of a single application might not be so bad, if we'd apply the same principle to more applications, the user experience would be horrible. To make the point a bit clearer, we'll deploy another application. In this exercise we will:
 * Retrieve port of the API Service
 * Run a curl command and confirmed that it is accessible
 
@@ -178,13 +178,13 @@ IP=$(minikube ip)
 
 ```bash
 kubectl apply \
-    -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
+    -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
 
 kubectl apply \
-    -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/aws/service-l4.yaml
+    -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/aws/service-l4.yaml
 
 kubectl apply \
-    -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/aws/patch-configmap-l4.yaml
+    -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/aws/patch-configmap-l4.yaml
 
 IP=$(kubectl -n ingress-nginx get svc ingress-nginx \
     -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
@@ -234,7 +234,7 @@ curl -i "http://$IP/something"
 ```
 
 Note:
-The `curl` command on `healthz` responded with the status code 200 OK, thus indicating that it is healthy and ready to serve requests. There’s not much more to it so we’ll move to the second endpoint. The Ingress Controller has a default catch-all endpoint that is used when a request does not match any of the other criteria. Since we did not yet create any Ingress Resource, this endpoint should provide the same response to all requests except /healthz.
+The `curl` command on `healthz` responded with the status code 200 OK, thus indicating that it is healthy and ready to serve requests. There's not much more to it so we'll move to the second endpoint. The Ingress Controller has a default catch-all endpoint that is used when a request does not match any of the other criteria. Since we did not yet create any Ingress Resource, this endpoint should provide the same response to all requests except /healthz.
 
 
 ## Ingress Based On Paths
@@ -258,7 +258,7 @@ kubectl delete -f ingress/devops-toolkit-dep.yml
 ```
 
 Note:
-Looking at the YAML file this time, metadata contains a field we haven’t used before. The annotations section allows us to provide additional information to the Ingress Controller. As you’ll see soon, Ingress API specification is concise and limited. That is done on purpose. The specification API defines only the fields that are mandatory for all Ingress Controllers. All the additional info an Ingress Controller needs is specified through annotations. That way, the community behind the Controllers can progress at great speed, while still providing basic general compatibility and standards. Here we will create Ingress resource tied to `go-demo-2-api` Service and `/demo` path. When we send a request to `/demo/hello` and got a response from the API. Then we can delete all the resources we created
+Looking at the YAML file this time, metadata contains a field we haven't used before. The annotations section allows us to provide additional information to the Ingress Controller. As you'll see soon, Ingress API specification is concise and limited. That is done on purpose. The specification API defines only the fields that are mandatory for all Ingress Controllers. All the additional info an Ingress Controller needs is specified through annotations. That way, the community behind the Controllers can progress at great speed, while still providing basic general compatibility and standards. Here we will create Ingress resource tied to `go-demo-2-api` Service and `/demo` path. When we send a request to `/demo/hello` and got a response from the API. Then we can delete all the resources we created
 
 
 ## Ingress Based On Paths

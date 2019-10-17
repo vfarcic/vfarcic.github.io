@@ -55,9 +55,12 @@ export AWS_SECRET_ACCESS_KEY=[...]
 
 export AWS_DEFAULT_REGION=us-west-2
 
+# Replace [...] with the name of your cluster
+export CLUSTER_NAME=[...]
+
 mkdir -p cluster
 
-eksctl create cluster -n devops24 --kubeconfig cluster/kubecfg-eks \
+eksctl create cluster -n $CLUSTER_NAME --kubeconfig cluster/kubecfg-eks \
     --node-type t2.medium --nodes 3 -r $AWS_DEFAULT_REGION
 ```
 
@@ -81,7 +84,7 @@ kubectl get nodes
 
 ## Creating A Cluster
 
-* We created a few environment variable that allow us to connect to AWS API
-* We created a 2 node cluster with managed masters using `eksctl`.
+* We created a few environment variables that allow us to connect to AWS API
+* We created a 3 node cluster with managed masters using `eksctl`.
 * We set `KUBECONFIG` variable to the path of the configuration created through `eksctl`.
 * We confirmed that the cluster is accessible by listing the nodes using `kubectl`.

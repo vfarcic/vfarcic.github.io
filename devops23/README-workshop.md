@@ -82,7 +82,7 @@ A Pod encapsulates one or more containers. It provides a unique network IP, it a
 
 ### Section 5: Scaling Pods With ReplicaSets
 
-ReplicaSet’s primary, and pretty much only function, is to ensure that a specified number of replicas of a Pod matches the actual state (almost) all the time. That means that ReplicaSets make Pods scalable.
+ReplicaSet's primary, and pretty much only function, is to ensure that a specified number of replicas of a Pod matches the actual state (almost) all the time. That means that ReplicaSets make Pods scalable.
 
 ## Day 2 (4 hours)
 
@@ -132,7 +132,7 @@ Having fault-tolerance and high-availability is of no use if we lose application
 
 ### Section 16: Deploying Stateful Applications At Scale
 
-Stateless and stateful application are quite different in their architecture. Those differences need to be reflected in Kubernetes as well. The fact that we can use Deployments with PersistentVolumes does not mean that is the best way to run stateful applications.
+Stateless and stateful applications are quite different in their architecture. Those differences need to be reflected in Kubernetes as well. The fact that we can use Deployments with PersistentVolumes does not mean that is the best way to run stateful applications.
 
 ### Wrap-up: Summary, Discussions
 

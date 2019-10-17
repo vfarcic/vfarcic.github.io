@@ -97,7 +97,7 @@ open "http://$IP/jenkins"
 ---
 
 * We applied a new Jenkins definition with the Secret (the custom image expects them)
-* We retrieved the files from the `jenkins-user` directory and confirmed that both entries of the Secret are avilable as files
+* We retrieved the files from the `jenkins-user` directory and confirmed that both entries of the Secret are available as files
 * We opened Jenkins and confirmed that authentication works
 
 
