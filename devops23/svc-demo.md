@@ -1,13 +1,15 @@
-## Hands-On Time
-
----
-
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="../img/background/hands-on.jpg" -->
 # Using Services To Enable Communication Between Pods
 
+<div class="label">Hands-on Time</div>
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
 ## Exposing Ports
-
----
 
 ```bash
 cat svc/go-demo-2-rs.yml
@@ -15,7 +17,16 @@ cat svc/go-demo-2-rs.yml
 kubectl create -f svc/go-demo-2-rs.yml
 
 kubectl get -f svc/go-demo-2-rs.yml
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Exposing Ports
+
+```bash
 # If minikube
 kubectl expose rs go-demo-2 --name=go-demo-2-svc --target-port=28017 \
     --type=NodePort
@@ -47,9 +58,11 @@ Note:
 <!-- .slide: data-background="img/comp_svc_ch05.png" data-background-size="contain" -->
 
 
-## Exposing Ports
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Exposing Ports
 
 ```bash
 kubectl describe svc go-demo-2-svc
@@ -68,9 +81,11 @@ Note:
 * EKS and GKE opened the same port in `loadBalancer` as the target port, and it forwards requests to the randomly generated NodePort
 
 
-## Exposing Ports
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Exposing Ports
 
 ```bash
 # If minikube
@@ -92,9 +107,11 @@ Note:
 * GKE' address is the IP of the ELB
 
 
-## Exposing Ports
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Exposing Ports
 
 ```bash
 open "http://$IP:$PORT"
@@ -110,9 +127,11 @@ Note:
 <!-- .slide: data-background="img/svc-expose-rs.png" data-background-size="contain" -->
 
 
-## Declarative Syntax
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Declarative Syntax
 
 ```bash
 # If minikube
@@ -126,7 +145,16 @@ kubectl create -f svc/go-demo-2-svc.yml
 
 # If EKS or GKE
 kubectl create -f svc/go-demo-2-svc-lb.yml
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Declarative Syntax
+
+```bash
 kubectl get -f svc/go-demo-2-svc.yml
 ```
 
@@ -137,9 +165,11 @@ Note:
 * The difference between minikube and EKS/GKE Service is in `type` (`NodePort` or `LoadBalancer`)
 
 
-## Declarative Syntax
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Declarative Syntax
 
 ```bash
 # If EKS
@@ -165,9 +195,11 @@ Note:
 <!-- .slide: data-background="img/svc-hard-coded-port.png" data-background-size="contain" -->
 
 
-## Declarative Syntax
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Declarative Syntax
 
 ```bash
 kubectl delete -f svc/go-demo-2-svc.yml
@@ -179,9 +211,11 @@ Note:
 Now we can clean up the cluster by deleting the ReplicaSet and Service
 
 
-## Communication Through Services
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Communication Through Services
 
 ```bash
 cat svc/go-demo-2-db-rs.yml
@@ -206,9 +240,11 @@ The number of replicas is set to 3. That solves one of the main problems we had 
 * We created a ReplicaSet with the API
 
 
-## Communication Through Services
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Communication Through Services
 
 ```bash
 # If minikube
@@ -222,7 +258,16 @@ kubectl create -f svc/go-demo-2-api-svc.yml
 
 # If EKS or GKE
 kubectl create -f svc/go-demo-2-api-svc-lb.yml
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Communication Through Services
+
+```bash
 kubectl get all
 ```
 
@@ -233,9 +278,11 @@ Note:
 * For EKS or GKE we used Service type `LoadBalancer`
 
 
-## Communication Through Services
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Communication Through Services
 
 ```bash
 # If EKS
@@ -249,7 +296,16 @@ IP=$(kubectl get svc go-demo-2-api \
 # If minikube
 PORT=$(kubectl get svc go-demo-2-api \
     -o jsonpath="{.spec.ports[0].nodePort}")
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Communication Through Services
+
+```bash
 # If EKS or GKE
 PORT=8080
 
@@ -265,9 +321,11 @@ Before running `kubectl get svc...` it is worth mentioning that the code behind 
 * The port of the Service in EKS or GKE is the same as the target port
 
 
-## Communication Through Services
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Communication Through Services
 
 ```bash
 kubectl delete -f svc/go-demo-2-db-rs.yml
@@ -283,9 +341,11 @@ Note:
 Now we are going to cleanup the cluster by deleting everything created from the various yml files.
 
 
-## Multiple Resources In YAML
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Multiple Resources In YAML
 
 ```bash
 # If minikube
@@ -299,7 +359,16 @@ kubectl create -f svc/go-demo-2.yml
 
 # If EKS or GKE
 kubectl create -f svc/go-demo-2-lb.yml
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Multiple Resources In YAML
+
+```bash
 kubectl get -f svc/go-demo-2.yml
 ```
 
@@ -307,9 +376,11 @@ Note:
 The vfarcic/ go-demo-2 and mongo images form the same stack. They work together and having four YAML definitions is confusing. It would get even more confusing later on since we are going to add more objects to the stack. Things would be much simpler and easier if we would move all the objects we created thus far into a single YAML definition. Fortunately, that is very easy to accomplish. In the following example we created all the resources from a single YAML file. Afterwards we will confirm all the resources are created.
 
 
-## Multiple Resources In YAML
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Multiple Resources In YAML
 
 ```bash
 # If EKS
@@ -331,9 +402,11 @@ Note:
 * The Service in minikube exposed a new random port
 
 
-## Multiple Resources In YAML
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Multiple Resources In YAML
 
 ```bash
 curl -i "http://$IP:$PORT/demo/hello"
@@ -369,9 +442,11 @@ Note:
 4. Since we only have one replica of the go-demo-2-db Pod, iptables forwards requests to just one endpoint. If we had multiple replicas, iptables would act as a load balancer and forward requests randomly among Endpoints of the Service.
 
 
-## Services?
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Services?
 
 * Communication between Pods<!-- .element: class="fragment" -->
 * Communication from outside the cluster<!-- .element: class="fragment" -->
@@ -380,9 +455,11 @@ Note:
 <!-- .slide: data-background="img/svc-components.png" data-background-size="contain" -->
 
 
-## What Now?
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## What Now?
 
 ```bash
 kubectl delete -f svc/go-demo-2.yml

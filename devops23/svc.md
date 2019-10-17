@@ -1,10 +1,12 @@
-<!-- .slide: data-background="../img/background/why.jpg" -->
+<!-- .slide: class="center" -->
 # Using Services To Enable Communication Between Pods
 
----
 
+<!-- .slide: class="light" -->
+<div class="eyebrow"></div>
 
-<!-- .slide: data-background="../img/background/communication.jpeg" -->
+# What You'll Learn
+
 > Applications that cannot communicate with each other or are not accessible to end-users are worthless. Only once the communication paths are established, can applications fulfill their role.
 
 Note:

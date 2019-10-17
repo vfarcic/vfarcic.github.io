@@ -1,13 +1,15 @@
-## Hands-On Time
-
----
-
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="../img/background/hands-on.jpg" -->
 # Scaling Pods With ReplicaSets
 
+<div class="label">Hands-on Time</div>
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
 ## Creating ReplicaSets
-
----
 
 ```bash
 cat rs/go-demo-2.yml
@@ -50,9 +52,11 @@ Sequence of events
 <!-- .slide: data-background="img/rs.png" data-background-size="contain" -->
 
 
-## Operating ReplicaSets
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Operating ReplicaSets
 
 ```bash
 kubectl delete -f rs/go-demo-2.yml --cascade=false
@@ -64,25 +68,22 @@ kubectl get pods
 kubectl create -f rs/go-demo-2.yml --save-config
 
 kubectl get pods
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Operating ReplicaSets
+
+```bash
 cat rs/go-demo-2-scaled.yml
 
 kubectl apply -f rs/go-demo-2-scaled.yml
 
 kubectl get pods
 
-```
-Note:
-Deleting the replicaSets with cascade=false will delete only the rs, leaving the pods intact. This is due to the loose coupling of replicas and pods. We can see this when looking at the following commands.
-
-The save-config option will save the configuration of the ReplicaSet thus allowing us to perform a few additional operations later on. Since we saved the configuration, we can apply an updated definition of the ReplicaSet. For example, we can use rs/go-demo-2-scaled.yml file that differs only in the number of replicas set to 4. We could have created the ReplicaSet with apply in the first place, but we didn't. The apply command automatically saves the configuration so that we can edit it later on. The create command does not do such thing by default so we had to save it with --save-config
-
-
-## Operating ReplicaSets
-
----
-
-```bash
 POD_NAME=$(kubectl get pods -o name | tail -1)
 
 kubectl delete $POD_NAME
@@ -95,9 +96,11 @@ Note:
 * We observed how ReplicaSet recreates failed Pods
 
 
-## Operating ReplicaSets
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Operating ReplicaSets
 
 ```bash
 POD_NAME=$(kubectl get pods -o name | tail -1)
@@ -121,9 +124,11 @@ Note:
 * We observed that ReplicaSet removed one of the Pods to satisfy the desired number of replicas
 
 
-## ReplicaSets?
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## ReplicaSets?
 
 * Guarantee that replicas of a Pod are running<!-- .element: class="fragment" -->
 * Rarely created independently but through Deployments<!-- .element: class="fragment" -->
