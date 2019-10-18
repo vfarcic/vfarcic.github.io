@@ -1,13 +1,15 @@
-## Hands-On Time
-
----
-
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="../img/background/hands-on.jpg" -->
 # Deploying Releases With Zero-Downtime
 
+<div class="label">Hands-on Time</div>
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
 ## Deploying New Releases
-
----
 
 ```bash
 cat deploy/go-demo-2-db.yml
@@ -35,9 +37,11 @@ You'll notice that contained within the name of the Pod is a hash which matches 
 <!-- .slide: data-background="img/seq_deploy_ch06.png" data-background-size="contain" -->
 
 
-## Updating Deployments
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Updating Deployments
 
 ```bash
 kubectl set image -f deploy/go-demo-2-db.yml db=mongo:3.4 --record
@@ -61,9 +65,11 @@ Note:
 * We created a Service for the DB
 
 
-## Zero-Downtime Deployments
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Zero-Downtime Deployments
 
 ```bash
 cat deploy/go-demo-2-api.yml
@@ -100,9 +106,11 @@ Regarding `cat go-demo-2-api`
 <!-- .slide: data-background="img/flow_deploy_ch06.png" data-background-size="contain" -->
 
 
-## Rolling Back Or Forward?
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Rolling Back Or Forward?
 
 ```bash
 kubectl rollout undo -f deploy/go-demo-2-api.yml
@@ -115,7 +123,16 @@ kubectl set image -f deploy/go-demo-2-api.yml \
     api=vfarcic/go-demo-2:3.0 --record
 
 kubectl rollout status -f deploy/go-demo-2-api.yml
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Rolling Back Or Forward?
+
+```bash
 kubectl set image -f deploy/go-demo-2-api.yml \
     api=vfarcic/go-demo-2:4.0 --record
 
@@ -129,9 +146,11 @@ Note:
 * We updated the image of the `api` twice to generate a few more revisions
 
 
-## Rolling Back Or Forward?
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Rolling Back Or Forward?
 
 ```bash
 kubectl rollout history -f deploy/go-demo-2-api.yml
@@ -151,9 +170,11 @@ Note:
 * We going to observe through `rollout history` that rollback to a specific revision was indeed performed
 
 
-## Rolling Back Failures
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Rolling Back Failures
 
 ```bash
 kubectl set image -f deploy/go-demo-2-api.yml \
@@ -174,9 +195,11 @@ Note:
 The output of the `set` command seems to imply that the `does-not-exist` image was successful deployed, when in fact it was not. Executing at `rollout status` confirms the deployment didn't proceed. The new Pods are not running, and the limit was reached. There's no point to continue trying. If you expected that the Deployment would roll back after it failed, you're wrong. It will not do such a thing. At least, not without additional addons.  Running `echo $?`confirms the return code of the command is 1. Now that we witnessed the failure we can undo the rollout, and verify that our api is running.
 
 
-## Rolling Back Failures
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Rolling Back Failures
 
 ```bash
 kubectl delete -f deploy/go-demo-2-db.yml
@@ -190,9 +213,11 @@ Note:
 Now that we have learned how to rollback no matter whether the problem is a critical bug or inability to run the new release, we can take a short pause from learning new stuff and merge all the definitions we explored thus far into a single YAML file. But, before we do that, we'll remove the objects we created.
 
 
-## Merging Everything
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Merging Everything
 
 ```bash
 cat deploy/go-demo-2.yml
@@ -206,9 +231,11 @@ Note:
 If you start searching for differences with the previous definitions, you will find a few. The `minReadySeconds`, `progressDeadlineSeconds`, `revisionHistoryLimit`, and strategy fields are removed from the go-demo-2-api Deployment. We used them mostly as a way to demonstrate their usage. But, since Kubernetes has sensible defaults, we omitted them from this definition. You'll also notice that there are two Services even though we created only one in this chapter. We did not need the go-demo-2-api Service in our examples since we didn't need to access the API. But, for the sake of completeness, it is included in this definition. Finally, the strategy for deploying the database is set to `recreate`. As explained earlier, it is more suited for a single-replica database, even though we did not mount a volume that would preserve the data. Let's create the objects defined in deploy/ go-demo-2. yml. Remember, with --save-config we're making sure we can edit the configuration later. The alternative would be to use kubectl apply instead.
 
 
-## Updating Multiple Objects
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Updating Multiple Objects
 
 ```bash
 cat deploy/different-app-db.yml
@@ -229,9 +256,11 @@ Note:
 This this exercise we are creating another `db` applications. The purpose of this is to demonstrate how to update multiple objects using labels. Almost everything in Kubernetes is operated using label selectors. It's just that sometimes that is obscured from us. We do not have to update an object only by specifying its name or the YAML file where its definition resides. We can also use labels to decide which object should be updated. That opens some interesting possibilities since the selectors might match multiple objects. Imagine that we are running several Deployments with Mongo databases and that the time has come to update them all to a newer release. Before we explore how we could do that, we'll create another Deployment so that we have at least two with the database Pods. Here we are going to find all the deployments that are a `db` type, with `MongoLabs` vendor. Then we will update all the images that use those labels to a new version of mongo. Finally we will confirm that all mongo images are running `3.4`
 
 
-## Scaling Deployments
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Scaling Deployments
 
 ```bash
 cat deploy/go-demo-2-scaled.yml
@@ -252,9 +281,11 @@ Note:
 * We retrieved the resources and observed that Deployment was changed to have eight replicas
 
 
-## Deployments
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Deployments
 
 * Zero-downtime updates<!-- .element: class="fragment" -->
 
@@ -262,9 +293,11 @@ Note:
 <!-- .slide: data-background="img/deploy-components.png" data-background-size="contain" -->
 
 
-## What Now?
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## What Now?
 
 ```bash
 kubectl delete -f deploy/go-demo-2.yml

@@ -1,10 +1,12 @@
-<!-- .slide: data-background="../img/background/why.jpg" -->
+<!-- .slide: class="center" -->
 # Using Ingress To Forward Traffic
 
----
 
+<!-- .slide: class="light" -->
+<div class="eyebrow"></div>
 
-<!-- .slide: data-background="img/door.jpeg" -->
+# What You'll Learn
+
 > Applications that are not accessible to users are useless. Kubernetes Services provide accessibility with a usability cost. Each application can be reached through a different port. We cannot expect users to know the port of each service in our cluster.
 
 Note:

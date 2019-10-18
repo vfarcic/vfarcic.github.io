@@ -1,10 +1,12 @@
-<!-- .slide: data-background="../img/background/why.jpg" -->
+<!-- .slide: class="center" -->
 # Using Secrets To Hide Confidential Information
 
----
 
+<!-- .slide: class="light" -->
+<div class="eyebrow"></div>
 
-<!-- .slide: data-background="img/secrets.jpeg" -->
+# What You'll Learn
+
 > We cannot treat all information equally. Sensitive data needs to be handled with additional care. Kubernetes provides an additional level of protection through Secrets.
 
 Note:

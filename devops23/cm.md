@@ -1,10 +1,12 @@
-<!-- .slide: data-background="../img/background/why.jpg" -->
+<!-- .slide: class="center" -->
 # Using ConfigMaps To Inject Configuration Files
 
----
 
+<!-- .slide: class="light" -->
+<div class="eyebrow"></div>
 
-<!-- .slide: data-background="img/configuration.jpeg" -->
+# What You'll Learn
+
 > ConfigMaps allow us to keep configurations separate from application images. Such separation is useful when other alternatives are not a good fit.
 
 Note:

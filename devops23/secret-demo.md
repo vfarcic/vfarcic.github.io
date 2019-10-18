@@ -1,13 +1,15 @@
-## Hands-On Time
-
----
-
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="../img/background/hands-on.jpg" -->
 # Using Secrets To Hide Confidential Information
 
+<div class="label">Hands-on Time</div>
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
 ## Exploring Built-In Secrets
-
----
 
 ```bash
 kubectl create -f secret/jenkins-unprotected.yml \
@@ -18,7 +20,16 @@ kubectl rollout status deploy jenkins
 open "http://$IP/jenkins"
 
 kubectl get secrets
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Exploring Built-In Secrets
+
+```bash
 kubectl describe pods
 
 POD_NAME=$(kubectl get pods -l service=jenkins,type=master \
@@ -29,9 +40,11 @@ kubectl exec -it $POD_NAME -- ls \
 ```
 
 
-## Exploring Built-In Secrets
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Exploring Built-In Secrets
 
 * We created a Jenkins Deployment
 * We opened Jenkins UI and confirmed that it's running and that it was unprotected
@@ -40,9 +53,11 @@ kubectl exec -it $POD_NAME -- ls \
 * We output the files in the `serviceaccount` directory and discovered that a couple of files were mounted
 
 
-## Creating And Mounting Generic Secrets
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating And Mounting Generic Secrets
 
 ```bash
 kubectl create secret generic my-creds \
@@ -60,9 +75,11 @@ kubectl get secret my-creds -o jsonpath="{.data.password}" \
 ```
 
 
-## Creating And Mounting Generic Secrets
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating And Mounting Generic Secrets
 
 * We created a Secret with a `username` and `password`
 * We output the secrets and confirmed that `my-creds` is available
@@ -70,9 +87,11 @@ kubectl get secret my-creds -o jsonpath="{.data.password}" \
 * We output and decoded the `username` and the `password`
 
 
-## Creating And Mounting Generic Secrets
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating And Mounting Generic Secrets
 
 ```bash
 cat secret/jenkins.yml
@@ -87,14 +106,25 @@ POD_NAME=$(kubectl get pods -l service=jenkins,type=master \
 kubectl exec -it $POD_NAME -- ls /etc/secrets
 
 kubectl exec -it $POD_NAME -- cat /etc/secrets/jenkins-user
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Creating And Mounting Generic Secrets
+
+```bash
 open "http://$IP/jenkins"
 ```
 
 
-## Creating And Mounting Generic Secrets
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating And Mounting Generic Secrets
 
 * We applied a new Jenkins definition with the Secret (the custom image expects them)
 * We retrieved the files from the `jenkins-user` directory and confirmed that both entries of the Secret are available as files
@@ -104,9 +134,11 @@ open "http://$IP/jenkins"
 <!-- .slide: data-background="img/secret-components.png" data-background-size="contain" -->
 
 
-## What Now?
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## What Now?
 
 ```bash
 kubectl delete -f secret/jenkins.yml
