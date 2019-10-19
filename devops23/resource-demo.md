@@ -1,13 +1,15 @@
-## Hands-On Time
-
----
-
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="../img/background/hands-on.jpg" -->
 # Managing Resources
 
+<div class="label">Hands-on Time</div>
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
 ## Enabling Heapster
-
----
 
 ```bash
 # If minikube
@@ -21,21 +23,23 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/de
 
 # If EKS
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/rbac/heapster-rbac.yaml
-
-# GKE already has it pre-installed
 ```
 
 
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
 ## Enabling Heapster
 
----
+* We installed Heapster and InfluxDB (GKE already has it pre-installed)
 
-* We installed Heapster and InfluxDB
 
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
 ## Memory And CPU Resources
-
----
 
 ```bash
 cat res/go-demo-2-random.yml
@@ -50,17 +54,21 @@ kubectl describe nodes
 ```
 
 
-## Memory And CPU Resources
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Memory And CPU Resources
 
 * We installed *go-demo-2* with randomly defined resource requests and limits
 * We described the nodes and observed resource utilization
 
 
-## Measuring Consumption
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Measuring Consumption
 
 ```bash
 kubectl -n kube-system get pods
@@ -72,7 +80,16 @@ kubectl -n kube-system expose rc heapster \
 # If EKS
 kubectl -n kube-system expose deployment heapster \
     --name heapster-api --port 8082 --type LoadBalancer
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Measuring Consumption
+
+```bash
 # If GKE
 kubectl -n kube-system expose deployment heapster-v1.5.2 \
     --name heapster-api --port 8082 --type LoadBalancer
@@ -81,16 +98,20 @@ kubectl -n kube-system get svc heapster-api -o json
 ```
 
 
-## Measuring Consumption
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Measuring Consumption
 
 * We exposed Heapster API and confirmed that the service was created
 
 
-## Measuring Consumption
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Measuring Consumption
 
 ```bash
 # If minikube
@@ -99,7 +120,16 @@ PORT=$(kubectl -n kube-system get svc heapster-api \
 
 # If EKS or GKE
 PORT=8082
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Measuring Consumption
+
+```bash
 # If minikube
 ADDR=$(minikube ip)
 
@@ -113,16 +143,20 @@ ADDR=$(kubectl -n kube-system get svc heapster-api \
 ```
 
 
-## Measuring Consumption
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Measuring Consumption
 
 * We retrieved Heapster's address and the port
 
 
-## Measuring Consumption
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Measuring Consumption
 
 ```bash
 BASE_URL="http://$ADDR:$PORT/api/v1/model/namespaces/default/pods"
@@ -140,20 +174,24 @@ curl "$BASE_URL/$DB_POD_NAME/containers/db/metrics/cpu/usage_rate"
 ```
 
 
-## Measuring Consumption
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Measuring Consumption
 
 * We generated a base URL for requests to Heapster
 * We retrieved from Heapster the Pods from the default Namespace
 * We retrieved the name of the DB Pod
 * We retrieved the list of the available metrics
-* We retrieved DBs memory (~33MB) and CPU (~0.002) usage
+* We retrieved DBs memory (~ 33MB) and CPU (~ 0.002) usage
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
 ## Resource Discrepancies
-
----
 
 ```bash
 cat res/go-demo-2-insuf-mem.yml
@@ -167,16 +205,27 @@ kubectl describe pod go-demo-2-db
 cat res/go-demo-2-insuf-node.yml
 
 kubectl apply -f res/go-demo-2-insuf-node.yml --record
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Resource Discrepancies
+
+```bash
 kubectl get pods
 
 kubectl describe pod go-demo-2-db
 ```
 
 
-## Resource Discrepancies
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Resource Discrepancies
 
 * We updated the DB by setting insufficient memory
 * We retrieved the Pods and observed that the status of the DB is `OOMKilled`
@@ -186,9 +235,11 @@ kubectl describe pod go-demo-2-db
 * We described DB Pod and observed that there are no nodes available due to insufficient memory
 
 
-## Resource Discrepancies
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Resource Discrepancies
 
 ```bash
 kubectl apply -f res/go-demo-2-random.yml --record
@@ -199,16 +250,20 @@ kubectl rollout status deployment go-demo-2-api
 ```
 
 
-## Resource Discrepancies
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Resource Discrepancies
 
 * We updated the application back to the definition that worked
 
 
-## Adjusting Resources
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Adjusting Resources
 
 ```bash
 DB_POD_NAME=$(kubectl get pods -l service=go-demo-2 \
@@ -217,7 +272,16 @@ DB_POD_NAME=$(kubectl get pods -l service=go-demo-2 \
 curl "$BASE_URL/$DB_POD_NAME/containers/db/metrics/memory/usage"
 
 curl "$BASE_URL/$DB_POD_NAME/containers/db/metrics/cpu/usage_rate"
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Adjusting Resources
+
+```bash
 API_POD_NAME=$(kubectl get pods -l service=go-demo-2 \
     -l type=api -o jsonpath="{.items[0].metadata.name}")
 
@@ -227,16 +291,20 @@ curl "$BASE_URL/$API_POD_NAME/containers/api/metrics/cpu/usage_rate"
 ```
 
 
-## Adjusting Resources
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Adjusting Resources
 
 * We retrieved memory and CPU usage of the DB and the API Pods
 
 
-## Adjusting Resources
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Adjusting Resources
 
 ```bash
 cat res/go-demo-2.yml
@@ -247,38 +315,48 @@ kubectl rollout status deployment go-demo-2-api
 ```
 
 
-## Adjusting Resources
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Adjusting Resources
 
 * We updated the definitions so that memory and CPU usage and limits reflect the actual usage
 
 
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
 ## Quality Of Service (QoS)
 
----
 
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
 ## Guaranteed QoS 
-
----
 
 * Both memory and CPU limits must be set.
 * Memory and CPU requests must be set to the same values as the limits, or they can be left empty, in which case they default to the limits (we'll explore them soon).
 * Pods with Guaranteed QoS assigned are the top priority and will never be killed unless they exceed their limits or are unhealthy.
 
 
-## Burstable QoS
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Burstable QoS
 
 * Assigned to Pods that do not meet the criteria for Guaranteed QoS but have at least one container with memory or CPU requests defined.
 * Guaranteed minimal (requested) memory usage.
 
 
-## BestEffort QoS
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## BestEffort QoS
 
 * Pods that do not qualify as Guaranteed or Burstable.
 * Consist of containers that have none of the resources defined.
@@ -286,9 +364,11 @@ kubectl rollout status deployment go-demo-2-api
 * When in need of more resources, Kubernetes will start killing containers residing in the Pods with BestEffort QoS.
 
 
-## Quality Of Service (QoS)
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Quality Of Service (QoS)
 
 ```bash
 kubectl describe pod go-demo-2-db
@@ -302,14 +382,25 @@ kubectl rollout status deployment go-demo-2-db
 kubectl describe pod go-demo-2-db
 
 kubectl describe pod go-demo-2-api
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Quality Of Service (QoS)
+
+```bash
 kubectl delete -f res/go-demo-2-qos.yml
 ```
 
 
-## Quality Of Service (QoS)
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Quality Of Service (QoS)
 
 * We described DB Pod and observed observed that the QoS is `Burstable`
 * We updated the DB to have the same values for `requests` and `limits`
@@ -319,9 +410,11 @@ kubectl delete -f res/go-demo-2-qos.yml
 * We deleted the applicaation
 
 
-## Defaults and Limitations
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Defaults and Limitations
 
 ```bash
 kubectl create namespace test
@@ -332,7 +425,16 @@ kubectl -n test create -f res/limit-range.yml \
     --save-config --record
 
 kubectl describe namespace test
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Defaults and Limitations
+
+```bash
 cat res/go-demo-2-no-res.yml
 
 kubectl -n test create -f res/go-demo-2-no-res.yml \
@@ -342,18 +444,22 @@ kubectl -n test rollout status deployment go-demo-2-api
 ```
 
 
-## Defaults and Limitations
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Defaults and Limitations
 
 * We created the `test` Namespace with `LimitRange`
 * We described the Namespace and observed the limits
 * We installed the application without resources
 
 
-## Defaults and Limitations
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Defaults and Limitations
 
 ```bash
 kubectl -n test describe pod go-demo-2-db
@@ -363,7 +469,16 @@ cat res/go-demo-2.yml
 kubectl -n test apply -f res/go-demo-2.yml --record
 
 kubectl -n test get events -w
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Defaults and Limitations
+
+```bash
 kubectl -n test run test --image alpine --requests memory=100Mi \
     --restart Never sleep 10000
 
@@ -374,9 +489,11 @@ kubectl delete namespace test
 ```
 
 
-## Defaults and Limitations
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Defaults and Limitations
 
 * We described the DB Pod and observed that it was assigned default limits and requests
 * We updated DB by setting memory above the limit and the API by setting memory below the limit
@@ -386,9 +503,11 @@ kubectl delete namespace test
 * We deleted the `test` Namespace
 
 
-## Resource Quotas
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Resource Quotas
 
 ```bash
 cat res/dev.yml
@@ -405,18 +524,22 @@ kubectl -n dev describe quota dev
 ```
 
 
-## Resource Quotas
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Resource Quotas
 
 * We created the `dev` Namespace with `ResourceQuota`
 * We installed the applicatiton
 * We described the `quota` and observed `Used` and `Hard` values
 
 
-## Resource Quotas
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Resource Quotas
 
 ```bash
 cat res/go-demo-2-scaled.yml
@@ -428,16 +551,27 @@ kubectl -n dev get events
 kubectl describe namespace dev
 
 kubectl get pods -n dev
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Resource Quotas
+
+```bash
 kubectl -n dev apply -f res/go-demo-2.yml --record
 
 kubectl -n dev rollout status deployment go-demo-2-api
 ```
 
 
-## Resource Quotas
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Resource Quotas
 
 * We updated the application by increasing the number of API replicas to `15`.
 * We retrieved the events and observed that creating of some Pods was forbidden due to CPU and Pods limits
@@ -446,9 +580,11 @@ kubectl -n dev rollout status deployment go-demo-2-api
 * We updated the application to the previous working version
 
 
-## Resource Quotas
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Resource Quotas
 
 ```bash
 cat res/go-demo-2-mem.yml
@@ -458,7 +594,16 @@ kubectl -n dev apply -f res/go-demo-2-mem.yml --record
 kubectl -n dev get events | grep mem
 
 kubectl describe namespace dev
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Resource Quotas
+
+```bash
 kubectl -n dev apply -f res/go-demo-2.yml --record
 
 kubectl -n dev rollout status deployment go-demo-2-api
@@ -468,9 +613,11 @@ kubectl expose deployment go-demo-2-api -n dev \
 ```
 
 
-## Resource Quotas
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Resource Quotas
 
 * We increased the memory of the API Pods
 * We retrieved the events and observed that creation of some Pods was forbidden
@@ -479,9 +626,11 @@ kubectl expose deployment go-demo-2-api -n dev \
 * We failed to expose a `NodePort`
 
 
-## What Now?
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## What Now?
 
 ```bash
 kubectl delete ns dev

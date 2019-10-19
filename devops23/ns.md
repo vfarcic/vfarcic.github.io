@@ -1,10 +1,12 @@
-<!-- .slide: data-background="../img/background/why.jpg" -->
+<!-- .slide: class="center" -->
 # Dividing A Cluster Into Namespaces
 
----
 
+<!-- .slide: class="light" -->
+<div class="eyebrow"></div>
 
-<!-- .slide: data-background="img/doors.jpeg" -->
+# What You'll Learn
+
 > Applications and corresponding objects often need to be separated from each other to avoid conflicts and other undesired effects.
 
 Note:

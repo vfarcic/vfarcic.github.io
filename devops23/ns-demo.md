@@ -1,13 +1,15 @@
-## Hands-On Time
-
----
-
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="../img/background/hands-on.jpg" -->
 # Dividing A Cluster Into Namespaces
 
+<div class="label">Hands-on Time</div>
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
 ## Deploying The First Release
-
----
 
 ```bash
 cat ns/go-demo-2.yml
@@ -23,17 +25,21 @@ kubectl rollout status deploy go-demo-2-api
 ```
 
 
-## Deploying The First Release
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Deploying The First Release
 
 * We deployed *go-demo-2* resources with a specific image tag
 * We waited until the deployment rolls out
 
 
-## Exploring Virtual Clusters
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Exploring Virtual Clusters
 
 ```bash
 # If minikube
@@ -46,16 +52,27 @@ IP=$(kubectl -n ingress-nginx get svc ingress-nginx \
 # If GKE
 IP=$(kubectl -n ingress-nginx get svc ingress-nginx \
     -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Exploring Virtual Clusters
+
+```bash
 curl -H "Host: go-demo-2.com" "http://$IP/demo/hello"
 
 kubectl get all
 ```
 
 
-## Exploring Virtual Clusters
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Exploring Virtual Clusters
 
 * We retrieved the IP of the cluster
 * We sent a request to the production release tied to the `go-demo-2.com` domain
@@ -65,18 +82,22 @@ kubectl get all
 <!-- .slide: data-background="img/go-demo-2.png" data-background-size="contain" -->
 
 
-## Exploring The Existing Namespaces
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## The Existing Namespaces
 
 ```bash
 kubectl get ns
 ```
 
 
-## Exploring The Existing Namespaces
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## The Existing Namespaces
 
 * We retrieved the list of all the Namespaces
 
@@ -84,9 +105,11 @@ kubectl get ns
 <!-- .slide: data-background="img/default-ns.png" data-background-size="contain" -->
 
 
-## Exploring The Existing Namespaces
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## The Existing Namespaces
 
 ```bash
 kubectl -n kube-public get all
@@ -95,9 +118,11 @@ kubectl -n kube-system get all
 ```
 
 
-## Exploring The Existing Namespaces
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## The Existing Namespaces
 
 * We retrieved the list of all the resources in `kube-public` and `kube-system` Namespaces
 
@@ -105,9 +130,11 @@ kubectl -n kube-system get all
 <!-- .slide: data-background="img/kube-system-ns.png" data-background-size="contain" -->
 
 
-## Deploying To A New Namespace
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Deploying To A New Namespace
 
 ```bash
 kubectl create ns testing
@@ -116,17 +143,21 @@ kubectl get ns
 ```
 
 
-## Deploying To A New Namespace
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Deploying To A New Namespace
 
 * We created a new Namespace called `testing`
 * We retrieved the list of all the Namespaces and confirmed that `testing` is available
 
 
-## Deploying To A New Namespace
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Deploying To A New Namespace
 
 ```bash
 # If minikube
@@ -137,7 +168,16 @@ kubectl config set-context testing --namespace testing \
 kubectl config set-context testing --namespace testing \
     --cluster devops24.$AWS_DEFAULT_REGION.eksctl.io \
     --user iam-root-account@devops24.$AWS_DEFAULT_REGION.eksctl.io
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Deploying To A New Namespace
+
+```bash
 # If GKE
 DEFAULT_CONTEXT=$(kubectl config current-context)
 
@@ -147,17 +187,21 @@ kubectl config set-context testing --namespace testing \
 ```
 
 
-## Deploying To A New Namespace
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Deploying To A New Namespace
 
 * We created a new context with the `testing` Namespace as the default
 * We viewed the `kubectl` configuration and observed that the current context is still using the `default` Namespace
 
 
-## Deploying To A New Namespace
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Deploying To A New Namespace
 
 ```bash
 kubectl config view
@@ -165,7 +209,16 @@ kubectl config view
 kubectl config use-context testing
 
 kubectl get all
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Deploying To A New Namespace
+
+```bash
 TAG=2.0
 
 DOM=go-demo-2.com
@@ -178,9 +231,11 @@ kubectl rollout status deploy go-demo-2-api
 ```
 
 
-## Deploying To A New Namespace
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Deploying To A New Namespace
 
 * We switched to the `testing` context
 * We listed all the resources in the `testing` Namespace
@@ -190,6 +245,10 @@ kubectl rollout status deploy go-demo-2-api
 
 <!-- .slide: data-background="img/testing-ns.png" data-background-size="contain" -->
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
 ## Deploying To A New Namespace
 
@@ -202,16 +261,20 @@ curl -H "Host: 2.0.go-demo-2.com" "http://$IP/demo/hello"
 ```
 
 
-## Deploying To A New Namespace
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Deploying To A New Namespace
 
 * We confirmed that both installations are running (in separate Namespaces) by sending a request to each
 
 
-## Communicating Btw Namespaces
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Communicating Btw Namespaces
 
 ```bash
 # If minikube
@@ -222,7 +285,16 @@ kubectl config use-context iam-root-account@devops24.$AWS_DEFAULT_REGION.eksctl.
 
 # If GKE
 kubectl config use-context $DEFAULT_CONTEXT
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Communicating Btw Namespaces
+
+```bash
 kubectl run test --image=alpine --restart=Never sleep 10000
 
 kubectl get pod test
@@ -231,18 +303,22 @@ kubectl exec -it test -- apk add -U curl
 ```
 
 
-## Communicating Btw Namespaces
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Communicating Btw Namespaces
 
 * We switched back to the previous context
 * We run a Pod based on `alpine`
 * Inside the container of the new Pod, we installed `curl`
 
 
-## Communicating Btw Namespaces
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Communicating Btw Namespaces
 
 ```bash
 kubectl exec -it test -- curl "http://go-demo-2-api:8080/demo/hello"
@@ -252,17 +328,21 @@ kubectl exec -it test \
 ```
 
 
-## Communicating Btw Namespaces
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Communicating Btw Namespaces
 
 * We sent a request to the API in the same Namespace
 * We sent a request to the API in the `testing` Namespace
 
 
-## Deleting A Namespace
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Deleting A Namespace
 
 ```bash
 kubectl delete ns testing
@@ -280,9 +360,11 @@ curl -H "Host: go-demo-2.com" "http://$IP/demo/hello"
 ```
 
 
-## Deleting A Namespace
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Deleting A Namespace
 
 * We deleted the `testing` Namespace
 * We observed that all the resources from the Namespace were deleted as well
@@ -290,9 +372,11 @@ curl -H "Host: go-demo-2.com" "http://$IP/demo/hello"
 * We upgraded the release to `2.0` and confirmed that it is running
 
 
-## What Now?
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## What Now?
 
 ```bash
 kubectl delete -f ns/go-demo-2.yml
