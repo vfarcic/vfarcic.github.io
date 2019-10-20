@@ -1,10 +1,12 @@
-<!-- .slide: data-background="../img/background/why.jpg" -->
+<!-- .slide: class="center" -->
 # Persisting State
 
----
 
+<!-- .slide: class="light" -->
+<div class="eyebrow"></div>
 
-<!-- .slide: data-background="img/jars.jpeg" -->
+# What You'll Learn
+
 > Having fault-tolerance and high-availability is of no use if we lose application state during rescheduling. Having state is unavoidable, and we need to preserve it no matter what happens to our applications, servers, or even a whole datacenter.
 
 Note:

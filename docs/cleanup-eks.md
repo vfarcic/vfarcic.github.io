@@ -1,4 +1,4 @@
-# Cleanup
+## Cleanup
 
 ```bash
 LB_NAME=$(aws elb describe-load-balancers | jq -r \

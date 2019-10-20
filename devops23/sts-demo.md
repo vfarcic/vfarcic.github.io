@@ -1,13 +1,15 @@
-## Hands-On Time
-
----
-
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="../img/background/hands-on.jpg" -->
 # Deploying Stateful Applications At Scale
 
+<div class="label">Hands-on Time</div>
 
-## Using StatefulSets To Run Stateful Applications
 
----
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Running Stateful Applications
 
 ```bash
 cat sts/jenkins.yml
@@ -22,17 +24,21 @@ kubectl -n jenkins get pv
 ```
 
 
-## Using StatefulSets To Run Stateful Applications
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Running Stateful Applications
 
 * We observed that StatefulSets use `volumeClaimTemplate` instead of a separate PersistentVolumeClaim
 * We used StatefulSet to run Jenkins
 
 
-## Using StatefulSets To Run Stateful Applications
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Running Stateful Applications
 
 ```bash
 # If EKS
@@ -49,17 +55,21 @@ kubectl delete ns jenkins
 ```
 
 
-## Using StatefulSets To Run Stateful Applications
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Running Stateful Applications
 
 * We did NOT observe any significant difference between running a single replica Jenkins as a StatefulSet when compared to Deployments
 * We deleted the `jenkins` Namespace
 
 
-## Using Deployments To Run Stateful Applications At Scale
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Using Deployments To Run Stateful Applications At Scale
 
 ```bash
 cat sts/go-demo-3-deploy.yml
@@ -69,7 +79,16 @@ kubectl apply -f sts/go-demo-3-deploy.yml --record
 kubectl -n go-demo-3 rollout status deployment api
 
 kubectl -n go-demo-3 get pods
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Using Deployments To Run Stateful Applications At Scale
+
+```bash
 DB_1=$(kubectl -n go-demo-3 get pods -l app=db \
     -o jsonpath="{.items[0].metadata.name}")
 
@@ -78,18 +97,22 @@ DB_2=$(kubectl -n go-demo-3 get pods -l app=db \
 ```
 
 
-## Using Deployments To Run Stateful Applications At Scale
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Using Deployments To Run Stateful Applications At Scale
 
 * We installed *go-demo-3* API and DB as Deployments with multiple replicas
 * We retrieved the Pods and observed that all but one DB failed
 * We retrieved names of two DB Pods
 
 
-## Using Deployments To Run Stateful Applications At Scale
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Using Deployments To Run Stateful Applications At Scale
 
 ```bash
 kubectl -n go-demo-3 logs $DB_1
@@ -102,9 +125,11 @@ kubectl delete ns go-demo-3
 ```
 
 
-## Using Deployments To Run Stateful Applications At Scale
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Using Deployments To Run Stateful Applications At Scale
 
 * We observed from the logs that at least one DB Pod could not get a lock on the storage file
 * We retrieved the PersistentVolumes and observed that only one was created for all three replicas of the DB
@@ -114,9 +139,11 @@ kubectl delete ns go-demo-3
 <!-- .slide: data-background="img/sts-deployment.png" data-background-size="contain" -->
 
 
-## Using StatefulSets To Run Stateful Applications At Scale
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Stateful Applications At Scale
 
 ```bash
 cat sts/go-demo-3-sts.yml
@@ -129,9 +156,11 @@ kubectl get pv
 ```
 
 
-## Using StatefulSets To Run Stateful Applications At Scale
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Stateful Applications At Scale
 
 * We installed *go-demo-3* with DB replicas defined as StatefulSet
 * We retrieved the Pods and observed that DB Pods are created sequentially (and that API Pods are failing)
@@ -141,15 +170,26 @@ kubectl get pv
 <!-- .slide: data-background="img/sts.png" data-background-size="contain" -->
 
 
-## Using StatefulSets To Run Stateful Applications At Scale
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Stateful Applications At Scale
 
 ```bash
 kubectl -n go-demo-3 exec -it db-0 -- sh
 
 mongo
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Stateful Applications At Scale
+
+```bash
 rs.initiate( {
    _id : "rs0",
    members: [
@@ -163,16 +203,20 @@ rs.status()
 ```
 
 
-## Using StatefulSets To Run Stateful Applications At Scale
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Stateful Applications At Scale
 
 * We entered into one of the DB Pods and created a MongoDB replica set
 
 
-## Using StatefulSets To Run Stateful Applications At Scale
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Stateful Applications At Scale
 
 ```bash
 exit
@@ -183,16 +227,20 @@ kubectl -n go-demo-3 get pods
 ```
 
 
-## Using StatefulSets To Run Stateful Applications At Scale
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Stateful Applications At Scale
 
 * We retrieved the Pods and observed that API is not failing to connect to the DB any more
 
 
-## Using StatefulSets To Run Stateful Applications At Scale
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Stateful Applications At Scale
 
 ```bash
 diff sts/go-demo-3-sts.yml sts/go-demo-3-sts-upd.yml
@@ -205,18 +253,22 @@ kubectl delete ns go-demo-3
 ```
 
 
-## Using StatefulSets To Run Stateful Applications At Scale
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Stateful Applications At Scale
 
 * We updated the DB to the new image tag
 * We observed that the Pods are updated in sequential order, from the last to the first
 * We deleted the *go-demo-3* Namespace
 
 
-## Using Sidecar Containers To Initialize Applications
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Sidecar Containers
 
 ```bash
 cat sts/go-demo-3.yml
@@ -231,18 +283,22 @@ kubectl delete ns go-demo-3
 ```
 
 
-## Using Sidecar Containers To Initialize Applications
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Sidecar Containers
 
 * We installed *go-demo-3* with DB StatefulSet containing a sidecar in charge of creating MongoDB replica set
 * We retrieved the sidecar logs and observed that it is forbidden from listing the Pods
 * We deleted the Namespace
 
 
-## Using Sidecar Containers To Initialize Applications
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Sidecar Containers
 
 ```bash
 cat sa/go-demo-3.yml
@@ -255,14 +311,20 @@ kubectl -n go-demo-3 logs db-0 -c db-sidecar
 ```
 
 
-## Using Sidecar Containers To Initialize Applications
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Sidecar Containers
 
 * We created the DB StatefulSet attached to the ServiceAccount and provides the necessary permissions
 * We observed that all the Pods were created
 * We observed that sidecar logs do not show any issues
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
 ## What Now?
 

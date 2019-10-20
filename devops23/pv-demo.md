@@ -1,13 +1,15 @@
-## Hands-On Time
-
----
-
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="../img/background/hands-on.jpg" -->
 # Persisting State
 
+<div class="label">Hands-on Time</div>
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
 ## Creating An EKS Cluster
-
----
 
 ```bash
 # Follow the instructions from
@@ -18,7 +20,16 @@ export AWS_ACCESS_KEY_ID=[...] # Replace [...] with AWS access key ID
 export AWS_SECRET_ACCESS_KEY=[...] # Replace [...] with AWS secret access key
 
 export AWS_DEFAULT_REGION=us-west-2
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Creating An EKS Cluster
+
+```bash
 mkdir -p cluster
 
 eksctl create cluster -n devops23 -r $AWS_DEFAULT_REGION \
@@ -29,9 +40,11 @@ export KUBECONFIG=$PWD/cluster/kubecfg-eks
 ```
 
 
-## Creating An EKS Cluster
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating An EKS Cluster
 
 ```bash
 kubectl apply \
@@ -45,9 +58,11 @@ kubectl apply \
 ```
 
 
-## Without Persisting State
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Without Persisting State
 
 ```bash
 cat pv/jenkins-no-pv.yml
@@ -64,9 +79,11 @@ kubectl -n jenkins rollout status deployment jenkins
 ```
 
 
-## Without Persisting State
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Without Persisting State
 
 * We installed Jenkins
 * We retrieved the events and observed that it is failing because the `jenkins-creds` Secret is missing
@@ -74,9 +91,11 @@ kubectl -n jenkins rollout status deployment jenkins
 * We waited until Jenkins rolled out and opened it in browser
 
 
-## Without Persisting State
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Without Persisting State
 
 ```bash
 # If minikube
@@ -89,7 +108,16 @@ JENKINS_ADDR=$(kubectl -n jenkins get ing jenkins \
 # If GKE
 JENKINS_ADDR=$(kubectl -n jenkins get ing jenkins \
     -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Without Persisting State
+
+```bash
 echo $JENKINS_ADDR
 
 open "http://$JENKINS_ADDR/jenkins"
@@ -98,16 +126,20 @@ open "http://$JENKINS_ADDR/jenkins"
 * Log in with user *jdoe* and the password *incognito*
 
 
-## Without Persisting State
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Without Persisting State
 
 * We opened Jenkins in browser
 
 
-## Without Persisting State
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Without Persisting State
 
 * Create a job
 
@@ -125,18 +157,22 @@ open "http://$JENKINS_ADDR/jenkins"
 ```
 
 
-## Without Persisting State
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Without Persisting State
 
 * We created a new job
 * We simulated failure by killing the `java` process
 * We observed that Jenkins recuperated from the failure, but it lost its state (the job)
 
 
-## Creating Volumes (AWS)
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating Volumes (AWS)
 
 ```bash
 aws ec2 describe-instances
@@ -154,22 +190,35 @@ aws ec2 describe-instances | jq -r ".Reservations[].Instances[] \
 ```
 
 
-## Creating Volumes (AWS)
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating Volumes (AWS)
 
 * We retrieved the zones of our cluster
 
 
-## Creating Volumes (AWS)
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating Volumes (AWS)
 
 ```bash
 AZ_1=$(cat zones | head -n 1)
 
 AZ_2=$(cat zones | tail -n 1)
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Creating Volumes (AWS)
+
+```bash
 VOLUME_ID_1=$(aws ec2 create-volume --availability-zone $AZ_1 \
     --tag-specifications "ResourceType=volume,Tags=[{Key=KubernetesCluster,Value=devops23}]" \
     --size 10 --volume-type gp2 | jq -r '.VolumeId')
@@ -184,16 +233,20 @@ VOLUME_ID_3=$(aws ec2 create-volume --availability-zone $AZ_1 \
 ```
 
 
-## Creating Volumes (AWS)
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating Volumes (AWS)
 
 * We created three volumes spread in two zones
 
 
-## Creating Volumes (AWS)
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating Volumes (AWS)
 
 ```bash
 echo $VOLUME_ID_1
@@ -202,16 +255,20 @@ aws ec2 describe-volumes --volume-ids $VOLUME_ID_1
 ```
 
 
-## Creating Volumes (AWS)
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating Volumes (AWS)
 
 * We described one of the volumes as a way to confirm that it was created correctly
 
 
-## Creating Volumes (GKE)
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating Volumes (GKE)
 
 ```bash
 gcloud compute instances list --filter="name:('gke-devops23*')" \
@@ -231,17 +288,21 @@ gcloud compute disks create disk3 --zone $AZ_3
 ```
 
 
-## Creating Volumes (GKE)
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating Volumes (GKE)
 
 * We retrieved the zones of our cluster
 * We created three volumes spread in three zones
 
 
-## Creating Volumes (GKE)
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating Volumes (GKE)
 
 ```bash
 VOLUME_ID_1=disk1
@@ -254,9 +315,11 @@ gcloud compute disks describe VOLUME_ID_1
 ```
 
 
-## Creating Volumes (GKE)
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating Volumes (GKE)
 
 * We described one of the volumes as a way to confirm that it was created correctly
 
@@ -264,9 +327,11 @@ gcloud compute disks describe VOLUME_ID_1
 <!-- .slide: data-background="img/persistent-volume-ebs.png" data-background-size="contain" -->
 
 
-## k8s Persistent Volumes
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## k8s Persistent Volumes
 
 ```bash
 # If EKS
@@ -277,8 +342,7 @@ YAML=pv/pv-gke.yml
 
 cat $YAML
 
-cat $YAML \
-    | sed -e "s@REPLACE_ME_1@$VOLUME_ID_1@g" \
+cat $YAML | sed -e "s@REPLACE_ME_1@$VOLUME_ID_1@g" \
     | sed -e "s@REPLACE_ME_2@$VOLUME_ID_2@g" \
     | sed -e "s@REPLACE_ME_3@$VOLUME_ID_3@g" \
     | kubectl create -f - --save-config --record
@@ -287,9 +351,11 @@ kubectl get pv
 ```
 
 
-## k8s Persistent Volumes
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## k8s Persistent Volumes
 
 * We created three PersistentVolumes matching the three external drives
 
@@ -297,9 +363,11 @@ kubectl get pv
 <!-- .slide: data-background="img/persistent-volume-pv.png" data-background-size="contain" -->
 
 
-## Claiming Persistent Volumes
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Claiming Persistent Volumes
 
 ```bash
 cat pv/pvc.yml
@@ -312,9 +380,11 @@ kubectl get pv
 ```
 
 
-## Claiming Persistent Volumes
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Claiming Persistent Volumes
 
 * We created a PersistentVolumeClaim that uses the StorageClass `manual-ebs`
 * We retrieved the PersistentVolumes and observed that one of them is `Bound` to the claim
@@ -323,9 +393,11 @@ kubectl get pv
 <!-- .slide: data-background="img/persistent-volume-pvc.png" data-background-size="contain" -->
 
 
-## Attaching Claimed Volumes
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Attaching Claimed Volumes
 
 ```bash
 cat pv/jenkins-pv.yml
@@ -336,9 +408,11 @@ kubectl -n jenkins rollout status deployment jenkins
 ```
 
 
-## Attaching Claimed Volumes
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Attaching Claimed Volumes
 
 * We updated Jenkins by adding a mount that uses the PersistentVolumeClaim
 
@@ -346,9 +420,11 @@ kubectl -n jenkins rollout status deployment jenkins
 <!-- .slide: data-background="img/persistent-volume-pod.png" data-background-size="contain" -->
 
 
-## Attaching Claimed Volumes
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Attaching Claimed Volumes
 
 ```bash
 open "http://$JENKINS_ADDR/jenkins"
@@ -372,9 +448,11 @@ kubectl get pv
 ```
 
 
-## Attaching Claimed Volumes
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Attaching Claimed Volumes
 
 * We created a new Job
 * We simulated failure
@@ -383,9 +461,11 @@ kubectl get pv
 * We observed that the PVC and PV are still bound
 
 
-## Attaching Claimed Volumes
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Attaching Claimed Volumes
 
 ```bash
 kubectl -n jenkins delete pvc jenkins
@@ -393,30 +473,54 @@ kubectl -n jenkins delete pvc jenkins
 kubectl get pv
 
 kubectl delete -f pv/pv.yml
+```
 
-# If EKS
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Attaching Claimed Volumes (EKS)
+
+```bash
 aws ec2 delete-volume --volume-id $VOLUME_ID_1
-aws ec2 delete-volume --volume-id $VOLUME_ID_2
-aws ec2 delete-volume --volume-id $VOLUME_ID_3
 
-# If GKE
+aws ec2 delete-volume --volume-id $VOLUME_ID_2
+
+aws ec2 delete-volume --volume-id $VOLUME_ID_3
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Attaching Claimed Volumes (GKE)
+
+```bash
 gcloud compute disks delete $VOLUME_ID_1 --zone $AZ_1 --quiet
+
 gcloud compute disks delete $VOLUME_ID_2 --zone $AZ_2 --quiet
+
 gcloud compute disks delete $VOLUME_ID_3 --zone $AZ_3 --quiet
 ```
 
 
-## Attaching Claimed Volumes
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Attaching Claimed Volumes
 
 * We removed the PersistentVolumeClaim and observed that the PV was released
 * We deleted the PVs and the external drives
 
 
-## Using Storage Classes (EKS)
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Using Storage Classes
 
 ```bash
 kubectl get sc
@@ -429,7 +533,16 @@ cat pv/jenkins-dynamic-gke.yml
 
 # If EKS
 kubectl apply -f pv/jenkins-dynamic.yml --record
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Using Storage Classes
+
+```bash
 # If GKE
 kubectl apply -f pv/jenkins-dynamic-gke.yml --record
 
@@ -437,17 +550,21 @@ kubectl -n jenkins rollout status deployment jenkins
 ```
 
 
-## Using Storage Classes
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Using Storage Classes
 
 * We output a new Jenkins definition with a PersistentVolumeClaim that uses the StorageClass
 * We updated Jenkins
 
 
-## Using Storage Classes
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Using Storage Classes
 
 ```bash
 kubectl -n jenkins get events
@@ -455,7 +572,16 @@ kubectl -n jenkins get events
 kubectl -n jenkins get pvc
 
 kubectl get pv
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Using Storage Classes
+
+```bash
 # If EKS
 aws ec2 describe-volumes \
     --filters 'Name=tag-key,Values="kubernetes.io/created-for/pvc/name"'
@@ -468,9 +594,11 @@ gcloud compute disks list --filter="name:('$PV_NAME')"
 ```
 
 
-## Using Storage Classes
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Using Storage Classes
 
 * We retrieved the events and observed that it provisioned a new volume
 * We retrieved PersistentVolumeClaims and observed that it is bound to a new volume
@@ -478,9 +606,11 @@ gcloud compute disks list --filter="name:('$PV_NAME')"
 * We observed that a new external drive was created
 
 
-## Using Storage Classes
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Using Storage Classes
 
 ```bash
 kubectl -n jenkins delete deploy,pvc jenkins
@@ -496,18 +626,22 @@ gcloud compute disks list --filter="name:('$PV_NAME')"
 ```
 
 
-## Using Storage Classes
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Using Storage Classes
 
 * We deleted Jenkins Deployment and PersistentVolumeClaim
 * We retrieved PersistentVolumes and observed that the one we used before was automatically removed with the removal of the PersistentVolumeClaim
 * We retrieved external drives and observed that the one created by the PersitentVolume was removed
 
 
-## Default Storage Classes
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Default Storage Classes
 
 ```bash
 kubectl get sc
@@ -524,9 +658,11 @@ kubectl get pv
 ```
 
 
-## Default Storage Classes
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Default Storage Classes
 
 * In case of EKS, we patched the StorageClass to make it default (most of the other flavors have it out-of-the-box)
 * We confirmed that the StorageClass is set to be `default`
@@ -534,9 +670,11 @@ kubectl get pv
 * We retrieved PersistentVolumes and observed that a new one was created
 
 
-## Creating Storage Classes
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating Storage Classes
 
 ```bash
 kubectl -n jenkins delete deploy,pvc jenkins
@@ -546,7 +684,16 @@ YAML=sc.yml
 
 # If GKE
 YAML=sc-gke.yml
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Creating Storage Classes
+
+```bash
 cat pv/$YAML
 
 kubectl create -f pv/$YAML
@@ -555,23 +702,36 @@ kubectl get sc
 ```
 
 
-## Creating Storage Classes
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating Storage Classes
 
 * We deleted Jenkins Deployment and PersistentVolumeClaim
 * We created a new StorageClass based on a different EBS type
 
 
-## Creating Storage Classes
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating Storage Classes
 
 ```bash
 cat pv/jenkins-sc.yml
 
 kubectl apply -f pv/jenkins-sc.yml --record
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Creating Storage Classes
+
+```bash
 # If EKS
 aws ec2 describe-volumes \
     --filters 'Name=tag-key,Values="kubernetes.io/created-for/pvc/name"'
@@ -584,9 +744,11 @@ gcloud compute disks list --filter="name:('$PV_NAME')"
 ```
 
 
-## Creating Storage Classes
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Creating Storage Classes
 
 * We Updated Jenkins to use the new StorageClass
 * We retrieved external disks and observed that the newly created one is based on the `fast` type
@@ -595,9 +757,11 @@ gcloud compute disks list --filter="name:('$PV_NAME')"
 <!-- .slide: data-background="img/persistent-volume-sc.png" data-background-size="contain" -->
 
 
-## What Now?
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## What Now?
 
 ```bash
 kubectl delete ns jenkins
