@@ -223,7 +223,7 @@ kubectl get cm my-config -o yaml
 ## Configs From Environment Files
 
 * We created a ConfigMap using a file with key/value entries
-* We confirmed that each key/value pair is a separate data intry in the map
+* We confirmed that each key/value pair is a separate data entry in the map
 
 
 <!-- .slide: class="dark" -->
