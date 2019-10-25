@@ -407,7 +407,7 @@ kubectl delete -f res/go-demo-2-qos.yml
 * We updated the API by removing the `requests` and `limits`
 * We described the DB Pod and observed that the QoS is `Guaranteed`
 * We described the API Pod and observed that the QoS is `BestEffort`
-* We deleted the applicaation
+* We deleted the application
 
 
 <!-- .slide: class="dark" -->
