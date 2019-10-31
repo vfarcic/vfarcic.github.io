@@ -72,7 +72,7 @@ jx create cluster gke -n jx-rocks -p $PROJECT -r us-east1 \
     -m n1-standard-4 --min-num-nodes 1 --max-num-nodes 2 \
     --default-admin-password=admin \
     --default-environment-prefix jx-rocks --git-provider-kind github \
-    --namespace $NAMESPACE --prow --tekton --skip-login
+    --namespace $NAMESPACE --prow --tekton --skip-login --git-public
 ```
 
 
