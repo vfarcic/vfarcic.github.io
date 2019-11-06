@@ -1,7 +1,5 @@
 # Choosing The Right Deployment Strategy
 
-# Exploring Deployment Strategies Through Jenkins X
-
 ## Short Abstract
 
 Deployment strategies affect everyone, no matter whether we are focused only on a single aspect of the application lifecycle or we are in full control. The way we deploy affects the architecture, testing, monitoring, and many other aspects. And not only that, but we can say that architecture, testing, and monitoring affect the way we deploy. All those things are closely related and affect each other.
