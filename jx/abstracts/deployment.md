@@ -19,3 +19,7 @@ We'll explore **serverless, recreate, rolling update, and canary deployment stra
 ## Benefits
 
 Become familiar with different deployment strategies in Kubernetes. Some of those are out-of-the-box strategies like **recreate** and **rolling updates**, **serverless** with **Knative**, **canary** with **Flagger** and **Istio**, etc. 
+
+## The Pitch
+
+Do you really know how to deploy your applications?

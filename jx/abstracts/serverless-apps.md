@@ -12,3 +12,7 @@ This talk with try to answer those and quite a few other questions and present K
 ## Benefits
 
 Become familiar with Knative and its integration with Jenkins X
+
+## The Pitch
+
+You don't have to be locked in to use serverless.
