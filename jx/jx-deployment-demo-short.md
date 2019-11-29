@@ -36,7 +36,7 @@
 ## Serverless Strategy
 
 ```bash
-cat jx-knative/charts/jx-knative/templates/ksvc.yaml
+kubectl --namespace cd-staging get ksvc jx-knative --output yaml
 
 kubectl --namespace cd-staging get pods | grep knative
 ```

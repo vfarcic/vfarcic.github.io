@@ -395,7 +395,7 @@ curl "$PRODUCTION_ADDR/demo/hello"
 ## Istio, Prometheus, Flagger, Grafana
 
 ```bash
-jx create addon istio --version 1.1.7
+jx create addon istio
 
 # If NOT EKS
 ISTIO_IP=$(kubectl --namespace istio-system \

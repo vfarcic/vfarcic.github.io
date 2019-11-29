@@ -20,9 +20,39 @@ jx create cluster gke --cluster-name jx-rocks --project-id $PROJECT \
     --default-environment-prefix tekton --git-provider-kind github \
     --namespace cd --prow --tekton --batch-mode
 
-jx create addon gloo && jx create addon istio --version 1.1.7
+jx create addon gloo && jx create addon istio
 
 jx create addon flagger
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
+
+## Creating A Cluster With jx
+
+```bash
+KNATIVE_IP=$(kubectl --namespace gloo-system \
+    get service knative-external-proxy \
+    --output jsonpath="{.status.loadBalancer.ingress[0].ip}")
+
+echo "apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-domain
+  namespace: knative-serving
+data:
+  # These are example settings of domain.
+  # example.org will be used for routes having app=prod.
+  example.org: |
+    selector:
+      app: prod
+  # Default value for domain, for routes that does not have app=prod labels.
+  # Although it will match all routes, it is the least-specific rule so it
+  # will only be used if no other domain matches.
+  $KNATIVE_IP.nip.io: \"\"" \
+    | kubectl apply --filename -
 ```
 
 

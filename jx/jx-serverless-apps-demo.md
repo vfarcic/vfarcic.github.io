@@ -26,6 +26,36 @@ jx edit deploy --team --kind knative --batch-mode
 <div class="eyebrow">Section 12</div>
 <div class="label">Hands-on Time</div>
 
+## Creating A Cluster With jx
+
+```bash
+KNATIVE_IP=$(kubectl --namespace gloo-system \
+    get service knative-external-proxy \
+    --output jsonpath="{.status.loadBalancer.ingress[0].ip}")
+
+echo "apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-domain
+  namespace: knative-serving
+data:
+  # These are example settings of domain.
+  # example.org will be used for routes having app=prod.
+  example.org: |
+    selector:
+      app: prod
+  # Default value for domain, for routes that does not have app=prod labels.
+  # Although it will match all routes, it is the least-specific rule so it
+  # will only be used if no other domain matches.
+  $KNATIVE_IP.nip.io: \"\"" \
+    | kubectl apply --filename -
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12</div>
+<div class="label">Hands-on Time</div>
+
 ## New Serverless Application
 
 ```bash
