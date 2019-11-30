@@ -32,7 +32,7 @@ kubectl --namespace cd-staging get pods
 
 ```bash
 kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
-     -it --rm -- -c 300 -t 20S "http://$ADDR/" \
+     -it --rm -- -c 300 -t 20S "$ADDR/" \
      && kubectl --namespace cd-staging get pods
 ```
 

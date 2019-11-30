@@ -145,6 +145,9 @@ jx create cluster eks -n jx-rocks -r $AWS_DEFAULT_REGION \
     --default-admin-password=admin \
     --default-environment-prefix jx-rocks --git-provider-kind github \
     --namespace $NAMESPACE --prow --tekton
+
+# If you get stuck with the `waiting for external loadbalancer to be created and update the nginx-ingress-controller service in kube-system namespace`, you probably encountered a bug.
+# To fix it, open the AWS console and remove the `kubernetes.io/cluster/jx-rocks` tag from the security group `eks-cluster-sg-*`.
 ```
 
 

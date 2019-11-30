@@ -128,7 +128,7 @@ kubectl \
 ```bash
 kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
     -it --rm -- --concurrent 300 --time 20S \
-    "http://$STAGING_ADDR/demo/hello" \
+    "$STAGING_ADDR/demo/hello" \
     && kubectl --namespace $NAMESPACE-staging get pods
 ```
 
@@ -395,7 +395,7 @@ curl "$PRODUCTION_ADDR/demo/hello"
 ## Istio, Prometheus, Flagger, Grafana
 
 ```bash
-jx create addon istio --version 1.1.7
+jx create addon istio
 
 # If NOT EKS
 ISTIO_IP=$(kubectl --namespace istio-system \

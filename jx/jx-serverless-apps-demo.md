@@ -12,13 +12,35 @@
 ## Installing Gloo and Knative
 
 ```bash
-jx create addon gloo
+jx create addon gloo --install-knative-version=0.9.0
 
 kubectl get namespaces
 
 jx edit deploy --team --kind default --batch-mode
 
 jx edit deploy --team --kind knative --batch-mode
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 12</div>
+<div class="label">Hands-on Time</div>
+
+## Creating A Cluster With jx
+
+```bash
+KNATIVE_IP=$(kubectl --namespace gloo-system \
+    get service knative-external-proxy \
+    --output jsonpath="{.status.loadBalancer.ingress[0].ip}")
+
+echo "apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-domain
+  namespace: knative-serving
+data:
+  $KNATIVE_IP.nip.io: \"\"" \
+    | kubectl apply --filename -
 ```
 
 
@@ -75,7 +97,7 @@ kubectl --namespace $NAMESPACE-staging get all
 jx get applications --env staging
 
 ADDR=$(kubectl --namespace $NAMESPACE-staging get ksvc jx-knative \
-    --output jsonpath="{.status.domain}")
+    --output jsonpath="{.status.url}")
 
 echo $ADDR
 
@@ -114,7 +136,7 @@ kubectl --namespace $NAMESPACE-staging get pods \
 
 ```bash
 kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
-     -it --rm -- -c 300 -t 20S "http://$ADDR/" \
+     -it --rm -- -c 300 -t 20S "$ADDR/" \
      && kubectl --namespace $NAMESPACE-staging get pods \
     --selector serving.knative.dev/service=jx-knative
 
@@ -144,7 +166,7 @@ jx get activities --filter environment-tekton-staging/master --watch
 curl "http://$ADDR/"
 
 kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
-     -it --rm -- -c 400 -t 60S "http://$ADDR/" \
+     -it --rm -- -c 400 -t 60S "$ADDR/" \
      && kubectl --namespace $NAMESPACE-staging get pods \
     --selector serving.knative.dev/service=jx-knative
 ```

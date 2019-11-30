@@ -1,7 +1,5 @@
 # Choosing The Right Deployment Strategy
 
-# Exploring Deployment Strategies Through Jenkins X
-
 ## Short Abstract
 
 Deployment strategies affect everyone, no matter whether we are focused only on a single aspect of the application lifecycle or we are in full control. The way we deploy affects the architecture, testing, monitoring, and many other aspects. And not only that, but we can say that architecture, testing, and monitoring affect the way we deploy. All those things are closely related and affect each other.
@@ -21,3 +19,7 @@ We'll explore **serverless, recreate, rolling update, and canary deployment stra
 ## Benefits
 
 Become familiar with different deployment strategies in Kubernetes. Some of those are out-of-the-box strategies like **recreate** and **rolling updates**, **serverless** with **Knative**, **canary** with **Flagger** and **Istio**, etc. 
+
+## The Pitch
+
+Do you really know how to deploy your applications?
