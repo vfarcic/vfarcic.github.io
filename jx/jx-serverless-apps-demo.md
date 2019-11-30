@@ -12,7 +12,7 @@
 ## Installing Gloo and Knative
 
 ```bash
-jx create addon gloo
+jx create addon gloo --install-knative-version=0.9.0
 
 kubectl get namespaces
 
@@ -39,14 +39,6 @@ metadata:
   name: config-domain
   namespace: knative-serving
 data:
-  # These are example settings of domain.
-  # example.org will be used for routes having app=prod.
-  example.org: |
-    selector:
-      app: prod
-  # Default value for domain, for routes that does not have app=prod labels.
-  # Although it will match all routes, it is the least-specific rule so it
-  # will only be used if no other domain matches.
   $KNATIVE_IP.nip.io: \"\"" \
     | kubectl apply --filename -
 ```
@@ -105,7 +97,7 @@ kubectl --namespace $NAMESPACE-staging get all
 jx get applications --env staging
 
 ADDR=$(kubectl --namespace $NAMESPACE-staging get ksvc jx-knative \
-    --output jsonpath="{.status.domain}")
+    --output jsonpath="{.status.url}")
 
 echo $ADDR
 
@@ -144,7 +136,7 @@ kubectl --namespace $NAMESPACE-staging get pods \
 
 ```bash
 kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
-     -it --rm -- -c 300 -t 20S "http://$ADDR/" \
+     -it --rm -- -c 300 -t 20S "$ADDR/" \
      && kubectl --namespace $NAMESPACE-staging get pods \
     --selector serving.knative.dev/service=jx-knative
 
@@ -174,7 +166,7 @@ jx get activities --filter environment-tekton-staging/master --watch
 curl "http://$ADDR/"
 
 kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
-     -it --rm -- -c 400 -t 60S "http://$ADDR/" \
+     -it --rm -- -c 400 -t 60S "$ADDR/" \
      && kubectl --namespace $NAMESPACE-staging get pods \
     --selector serving.knative.dev/service=jx-knative
 ```

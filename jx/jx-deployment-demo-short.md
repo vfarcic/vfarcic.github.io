@@ -53,10 +53,10 @@ kubectl --namespace cd-staging get pods | grep knative
 
 ```bash
 KNATIVE_ADDR=$(kubectl --namespace cd-staging get ksvc jx-knative \
-    --output jsonpath="{.status.domain}")
+    --output jsonpath="{.status.url}")
 
 kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
-    -it --rm -- --concurrent 300 --time 20S "http://$KNATIVE_ADDR" \
+    -it --rm -- --concurrent 300 --time 20S "$KNATIVE_ADDR" \
     && kubectl --namespace cd-staging get pods | grep knative
 ```
 
@@ -98,9 +98,6 @@ cd ..
 ```
 
 
-<!-- .slide: data-background="img/recreate.png" data-background-size="contain" -->
-
-
 <!-- .slide: class="dark" -->
 <div class="eyebrow"></div>
 <div class="label">Hands-on Time</div>
@@ -120,6 +117,9 @@ done
 ```
 
 * Go to the **first terminal**
+
+
+<!-- .slide: data-background="img/recreate.png" data-background-size="contain" -->
 
 
 <!-- .slide: class="dark" -->
@@ -154,9 +154,6 @@ cd ..
 ```
 
 
-<!-- .slide: data-background="img/rolling-update.png" data-background-size="contain" -->
-
-
 <!-- .slide: class="dark" -->
 <div class="eyebrow"></div>
 <div class="label">Hands-on Time</div>
@@ -176,6 +173,9 @@ done
 ```
 
 * Go to the **first terminal**
+
+
+<!-- .slide: data-background="img/rolling-update.png" data-background-size="contain" -->
 
 
 <!-- .slide: class="dark" -->
@@ -220,9 +220,6 @@ cd ..
 ```
 
 
-<!-- .slide: data-background="img/canary-rollout.png" data-background-size="contain" -->
-
-
 <!-- .slide: class="dark" -->
 <div class="eyebrow"></div>
 <div class="label">Hands-on Time</div>
@@ -245,6 +242,9 @@ done
 ```
 
 * Go to the **first terminal**
+
+
+<!-- .slide: data-background="img/canary-rollout.png" data-background-size="contain" -->
 
 
 <!-- .slide: data-background="img/canary-rollback.png" data-background-size="contain" -->

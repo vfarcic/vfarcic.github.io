@@ -20,7 +20,7 @@ jx create cluster gke --cluster-name jx-rocks --project-id $PROJECT \
     --default-environment-prefix tekton --git-provider-kind github \
     --namespace cd --prow --tekton --batch-mode
 
-jx create addon gloo
+jx create addon gloo --install-knative-version=0.9.0
 
 jx create quickstart --filter golang-http --project-name jx-knative \
     --batch-mode
@@ -44,14 +44,6 @@ metadata:
   name: config-domain
   namespace: knative-serving
 data:
-  # These are example settings of domain.
-  # example.org will be used for routes having app=prod.
-  example.org: |
-    selector:
-      app: prod
-  # Default value for domain, for routes that does not have app=prod labels.
-  # Although it will match all routes, it is the least-specific rule so it
-  # will only be used if no other domain matches.
   $KNATIVE_IP.nip.io: \"\"" \
     | kubectl apply --filename -
 ```
@@ -69,7 +61,7 @@ jx get activities --filter jx-knative --watch
 jx get activities --filter environment-tekton-staging/master --watch
 
 ADDR=$(kubectl --namespace cd-staging get ksvc jx-knative \
-    --output jsonpath="{.status.domain}")
+    --output jsonpath="{.status.url}")
 
 curl $ADDR
 ```
