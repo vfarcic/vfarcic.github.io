@@ -23,56 +23,11 @@
 <div class="eyebrow">Section 13</div>
 <div class="label">Hands-on Time</div>
 
-## In Case You Messed It Up
+## The Setup
 
 ```bash
-cd go-demo-6
-
-git pull
-
-# If GKE
-BRANCH=knative-$NAMESPACE
-
-# If NOT GKE
-BRANCH=extension-tekton
-```
-
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow">Section 13</div>
-<div class="label">Hands-on Time</div>
-
-## In Case You Messed It Up
-
-```bash
-git checkout $BRANCH
-
-git merge -s ours master --no-edit
-
-git checkout master
-
-git merge $BRANCH
-
-git push
-```
-
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow">Section 13</div>
-<div class="label">Hands-on Time</div>
-
-## In Case You Messed It Up (GKE Only)
-
-```bash
-cat charts/go-demo-6/Makefile | sed -e "s@vfarcic@$PROJECT@g" \
-    | tee charts/go-demo-6/Makefile
-
-cat charts/preview/Makefile | sed -e "s@vfarcic@$PROJECT@g" \
-    | tee charts/preview/Makefile
-
-cat skaffold.yaml | sed -e "s@vfarcic@$PROJECT@g" | tee skaffold.yaml
-
-git add . && git commit -m "Fixed the project" && git push
+jx create quickstart --filter golang-http --project-name jx-progressive \
+    --batch-mode
 ```
 
 
@@ -83,18 +38,29 @@ git add . && git commit -m "Fixed the project" && git push
 ## Serverless Strategy (GKE only)
 
 ```bash
-cat charts/go-demo-6/templates/ksvc.yaml
+cd jx-progressive
 
-jx get activities --filter go-demo-6 --watch
+cat charts/jx-progressive/templates/ksvc.yaml
 
-jx get activities --filter environment-tekton-staging/master --watch
+jx get activities --filter jx-progressive --watch
 
-kubectl --namespace $NAMESPACE-staging get pods
+jx get activities --filter environment-jx-rocks-staging/master --watch
 
-STAGING_ADDR=$(kubectl --namespace $NAMESPACE-staging get ksvc go-demo-6 \
-    --output jsonpath="{.status.domain}")
+kubectl --namespace jx-staging get pods
+```
 
-curl "http://$STAGING_ADDR/demo/hello"
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 13</div>
+<div class="label">Hands-on Time</div>
+
+## Serverless Strategy (GKE only)
+
+```bash
+STAGING_ADDR=$(kubectl --namespace jx-staging get ksvc jx-progressive \
+    --output jsonpath="{.status.url}")
+
+curl "$STAGING_ADDR"
 ```
 
 
@@ -107,12 +73,8 @@ curl "http://$STAGING_ADDR/demo/hello"
 
 ## Serverless Strategy (GKE only)
 
-* Wait for 5-10 minutes
-
 ```bash
-kubectl \
-    --namespace $NAMESPACE-staging \
-    get pods
+kubectl --namespace jx-staging get pods
 ```
 
 
@@ -127,9 +89,8 @@ kubectl \
 
 ```bash
 kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
-    -it --rm -- --concurrent 300 --time 20S \
-    "$STAGING_ADDR/demo/hello" \
-    && kubectl --namespace $NAMESPACE-staging get pods
+    -it --rm -- --concurrent 300 --time 20S "$STAGING_ADDR" \
+    && kubectl --namespace jx-staging get pods
 ```
 
 
@@ -160,7 +121,9 @@ kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
 ```bash
 jx edit deploy --kind default --batch-mode
 
-cat charts/go-demo-6/values.yaml | grep knative
+cat charts/jx-progressive/values.yaml | grep knative
+
+cd ..
 ```
 
 
@@ -171,14 +134,17 @@ cat charts/go-demo-6/values.yaml | grep knative
 ## Recreate Strategy
 
 ```bash
-cat charts/go-demo-6/templates/deployment.yaml | sed -e \
+cd jx-progressive
+
+cat charts/jx-progressive/values.yaml | sed -e \
+    's@replicaCount: 1@replicaCount: 3@g' \
+    | tee charts/jx-progressive/values.yaml
+
+cat charts/jx-progressive/templates/deployment.yaml | sed -e \
     's@  replicas:@  strategy:\
     type: Recreate\
-  replicas:@g' | tee charts/go-demo-6/templates/deployment.yaml
-
-cat charts/go-demo-6/templates/deployment.yaml
-
-git add . && git commit -m "Recreate strategy" && git push
+  replicas:@g' \
+    | tee charts/jx-progressive/templates/deployment.yaml
 ```
 
 
@@ -189,15 +155,17 @@ git add . && git commit -m "Recreate strategy" && git push
 ## Recreate Strategy
 
 ```bash
-jx get activities --filter go-demo-6/master --watch
+cat charts/jx-progressive/templates/deployment.yaml
 
-jx get activities --filter environment-tekton-staging/master --watch
+git add .
 
-kubectl --namespace $NAMESPACE-staging get pods
+git commit -m "Recreate strategy"
 
-kubectl --namespace $NAMESPACE-staging describe deployment jx-go-demo-6
+git push --set-upstream origin master
 
-kubectl --namespace $NAMESPACE-staging get ing
+jx get activities --filter jx-progressive/master --watch
+
+jx get activities --filter environment-jx-rocks-staging/master --watch
 ```
 
 
@@ -208,18 +176,13 @@ kubectl --namespace $NAMESPACE-staging get ing
 ## Recreate Strategy
 
 ```bash
+kubectl --namespace jx-staging get pods
+
+kubectl --namespace jx-staging describe deployment jx-jx-progressive
+
+kubectl --namespace jx-staging get ing
+
 echo "something" | tee README.md
-
-git add . && git commit -m "Recreate strategy" && git push
-
-kubectl --namespace $NAMESPACE-staging get ing
-
-cat main.go | sed -e "s@hello, PR@hello, recreate@g" | tee main.go
-
-cat main_test.go | sed -e "s@hello, PR@hello, recreate@g" \
-    | tee main_test.go
-
-git add . && git commit -m "Recreate strategy" && git push
 ```
 
 
@@ -229,9 +192,43 @@ git add . && git commit -m "Recreate strategy" && git push
 
 ## Recreate Strategy
 
-* Open a **second terminal**
+```bash
+git add .
+
+git commit -m "Recreate strategy"
+
+git push
+
+kubectl --namespace jx-staging get ing
+
+cat main.go | sed -e "s@example@recreate@g" | tee main.go
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 13</div>
+<div class="label">Hands-on Time</div>
+
+## Recreate Strategy
 
 ```bash
+git add .
+
+git commit -m "Recreate strategy"
+
+git push
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 13</div>
+<div class="label">Hands-on Time</div>
+
+## Recreate Strategy
+
+```bash
+# Go to the second terminal session
+
 # If EKS
 export AWS_ACCESS_KEY_ID=[...]
 
@@ -239,11 +236,7 @@ export AWS_ACCESS_KEY_ID=[...]
 export AWS_SECRET_ACCESS_KEY=[...]
 
 # If EKS
-export AWS_DEFAULT_REGION=us-west-2
-
-jx get applications --env staging
-
-STAGING_ADDR=[...]
+export AWS_DEFAULT_REGION=us-east-1
 ```
 
 
@@ -253,17 +246,19 @@ STAGING_ADDR=[...]
 
 ## Recreate Strategy
 
-* Go to the **second terminal**
-
 ```bash
+jx get applications --env staging
+
+STAGING_ADDR=[...]
+
 while true
 do
-    curl "$STAGING_ADDR/demo/hello"
+    curl "$STAGING_ADDR"
     sleep 0.2
 done
-```
 
-* Go to the **first terminal**
+# Stop and go to the first terminal session
+```
 
 
 <!-- .slide: data-background="img/recreate.png" data-background-size="contain" -->
@@ -291,17 +286,17 @@ done
 ## RollingUpdate Strategy
 
 ```bash
-cat charts/go-demo-6/templates/deployment.yaml | sed -e \
+cat charts/jx-progressive/templates/deployment.yaml | sed -e \
     's@type: Recreate@type: RollingUpdate@g' \
-    | tee charts/go-demo-6/templates/deployment.yaml
+    | tee charts/jx-progressive/templates/deployment.yaml
 
-cat main.go | sed -e "s@hello, recreate@hello, rolling update@g" \
-    | tee main.go
+cat main.go | sed -e "s@recreate@rolling update@g" | tee main.go
 
-cat main_test.go | sed -e "s@hello, recreate@hello, rolling update@g" \
-    | tee main_test.go
+git add .
 
-git add . && git commit -m "Recreate strategy" && git push
+git commit -m "Recreate strategy"
+
+git push
 ```
 
 
@@ -311,20 +306,18 @@ git add . && git commit -m "Recreate strategy" && git push
 
 ## RollingUpdate Strategy
 
-* Go to the **second terminal**
-
 ```bash
+# Go to the second terminal session
+
 while true
 do
-    curl "$STAGING_ADDR/demo/hello"
+    curl "$STAGING_ADDR"
     sleep 0.2
 done
-```
 
-* Go to the **first terminal**
+# Stop and go to the first terminal session
 
-```bash
-kubectl --namespace $NAMESPACE-staging describe deployment jx-go-demo-6
+kubectl --namespace jx-staging describe deployment jx-jx-progressive
 ```
 
 
@@ -350,7 +343,7 @@ kubectl --namespace $NAMESPACE-staging describe deployment jx-go-demo-6
 <div class="eyebrow">Section 13</div>
 <div class="label">Hands-on Time</div>
 
-## Blue-Green Strategy
+## Blue-Green Deployments
 
 
 <!-- .slide: data-background="img/blue-green.png" data-background-size="contain" -->
@@ -360,16 +353,16 @@ kubectl --namespace $NAMESPACE-staging describe deployment jx-go-demo-6
 <div class="eyebrow">Section 13</div>
 <div class="label">Hands-on Time</div>
 
-## Blue-Green Strategy
+## Blue-Green Deployments
 
 ```bash
 jx get applications --env staging
 
 VERSION=[...]
 
-jx promote go-demo-6 --version $VERSION --env production --batch-mode
+jx promote jx-progressive --version $VERSION --env production --batch-mode
 
-jx get activities --filter environment-tekton-production/master --watch
+jx get activities --filter environment-jx-rocks-production/master --watch
 ```
 
 
@@ -377,14 +370,14 @@ jx get activities --filter environment-tekton-production/master --watch
 <div class="eyebrow">Section 13</div>
 <div class="label">Hands-on Time</div>
 
-## Blue-Green Strategy
+## Blue-Green Deployments
 
 ```bash
 jx get applications --env production
 
 PRODUCTION_ADDR=[...]
 
-curl "$PRODUCTION_ADDR/demo/hello"
+curl "$PRODUCTION_ADDR"
 ```
 
 
@@ -392,7 +385,7 @@ curl "$PRODUCTION_ADDR/demo/hello"
 <div class="eyebrow">Section 13</div>
 <div class="label">Hands-on Time</div>
 
-## Istio, Prometheus, Flagger, Grafana
+## Istio, Prometheus, Flagger, And Grafana
 
 ```bash
 jx create addon istio
@@ -400,26 +393,28 @@ jx create addon istio
 # If NOT EKS
 ISTIO_IP=$(kubectl --namespace istio-system \
     get service istio-ingressgateway \
-    --output jsonpath='{.status.loadBalancer.ingress[0].secondp}')
+    --output jsonpath='{.status.loadBalancer.ingress[0].ip}')
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 13</div>
+<div class="label">Hands-on Time</div>
+
+## Istio, Prometheus, Flagger, And Grafana
+
+```bash
 # If EKS
 ISTIO_HOST=$(kubectl --namespace istio-system \
     get service istio-ingressgateway \
     --output jsonpath='{.status.loadBalancer.ingress[0].hostname}')
-```
 
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow">Section 13</div>
-<div class="label">Hands-on Time</div>
-
-## Istio, Prometheus, Flagger, Grafana
-
-```bash
 # If EKS
 export ISTIO_IP="$(dig +short $ISTIO_HOST | tail -n 1)"
 
 echo $ISTIO_IP
+
+jx create addon flagger
 ```
 
 
@@ -427,21 +422,18 @@ echo $ISTIO_IP
 <div class="eyebrow">Section 13</div>
 <div class="label">Hands-on Time</div>
 
-## Istio, Prometheus, Flagger, Grafana
+## Istio, Prometheus, Flagger, And Grafana
 
 ```bash
-jx create addon flagger
-
 kubectl --namespace istio-system get pods
 
-kubectl describe namespace $NAMESPACE-production
+kubectl describe namespace jx-production
 
-kubectl describe namespace $NAMESPACE-staging
+kubectl describe namespace jx-staging
 
-kubectl label namespace $NAMESPACE-staging istio-injection=enabled \
-    --overwrite
+kubectl label namespace jx-staging istio-injection=enabled --overwrite
 
-kubectl describe namespace $NAMESPACE-staging
+kubectl describe namespace jx-staging
 ```
 
 
@@ -449,7 +441,7 @@ kubectl describe namespace $NAMESPACE-staging
 <div class="eyebrow">Section 13</div>
 <div class="label">Hands-on Time</div>
 
-## Creating Canary Resources
+## Canary Resources With Flagger
 
 ```bash
 echo "{{- if .Values.canary.enable }}
@@ -484,7 +476,7 @@ spec:
 {{ toYaml .Values.canary.canaryAnalysis.metrics | indent 4 }}
 {{- end }}
 {{- end }}
-" | tee charts/go-demo-6/templates/canary.yaml
+" | tee charts/jx-progressive/templates/canary.yaml
 ```
 
 
@@ -492,7 +484,7 @@ spec:
 <div class="eyebrow">Section 13</div>
 <div class="label">Hands-on Time</div>
 
-## Creating Canary Resources
+## Canary Resources With Flagger
 
 ```bash
 echo "
@@ -501,7 +493,7 @@ canary:
   provider: istio
   service:
     hosts:
-    - go-demo-6.$ISTIO_IP.nip.io
+    - jx-progressive.$ISTIO_IP.nip.io
     gateways:
     - jx-gateway.istio-system.svc.cluster.local
   canaryAnalysis:
@@ -516,7 +508,7 @@ canary:
     - name: request-duration
       threshold: 500
       interval: 120s
-" | tee -a charts/go-demo-6/values.yaml
+" | tee -a charts/jx-progressive/values.yaml
 ```
 
 
@@ -524,34 +516,20 @@ canary:
 <div class="eyebrow">Section 13</div>
 <div class="label">Hands-on Time</div>
 
-## Creating Canary Resources
+## Canary Resources With Flagger
 
 ```bash
-cat charts/go-demo-6/values.yaml | sed -e 's@go-demo-6-db:@go-demo-6-db:\
-  podAnnotations:\
-    sidecar.istio.io/inject: "false"@g' | tee charts/go-demo-6/values.yaml
-
 cd ..
 
-ENVIRONMENT=tekton
+rm -rf environment-jx-rocks-staging
 
-rm -rf environment-$ENVIRONMENT-staging
-```
-
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow">Section 13</div>
-<div class="label">Hands-on Time</div>
-
-## Creating Canary Resources
-
-```bash
 GH_USER=[...]
 
-git clone \
-    https://github.com/$GH_USER/environment-$ENVIRONMENT-staging.git
+git clone https://github.com/$GH_USER/environment-jx-rocks-staging.git
 
-cd environment-$ENVIRONMENT-staging
+cd environment-jx-rocks-staging
+
+STAGING_ADDR=staging.jx-progressive.$ISTIO_IP.nip.io
 ```
 
 
@@ -559,20 +537,21 @@ cd environment-$ENVIRONMENT-staging
 <div class="eyebrow">Section 13</div>
 <div class="label">Hands-on Time</div>
 
-## Creating Canary Resources
+## Canary Resources With Flagger
 
 ```bash
-STAGING_ADDR=staging.go-demo-6.$ISTIO_IP.nip.io
-
-echo "go-demo-6:
+echo "jx-progressive:
   canary:
     enable: true
     service:
       hosts:
-      - $STAGING_ADDR" \
-    | tee -a env/values.yaml
+      - $STAGING_ADDR" | tee -a env/values.yaml
 
-git add . && git commit -m "Added progressive deployment" && git push
+git add .
+
+git commit -m "Added progressive deployment"
+
+git push
 ```
 
 
@@ -580,16 +559,20 @@ git add . && git commit -m "Added progressive deployment" && git push
 <div class="eyebrow">Section 13</div>
 <div class="label">Hands-on Time</div>
 
-## Creating Canary Resources
+## Canary Resources With Flagger
 
 ```bash
-cd ../go-demo-6
+cd ../jx-progressive
 
-git add . && git commit -m "Added progressive deployment" &6 git push
+git add .
 
-jx get activities --filter go-demo-6/master --watch
+git commit -m "Added progressive deployment"
 
-jx get activities --filter environment-tekton-staging/master --watch
+git push
+
+jx get activities --filter jx-progressive/master --watch
+
+jx get activities --filter environment-jx-rocks-staging/master --watch
 ```
 
 
@@ -602,14 +585,16 @@ jx get activities --filter environment-tekton-staging/master --watch
 ```bash
 curl $STAGING_ADDR/demo/hello
 
-kubectl --namespace $NAMESPACE-staging get pods
+kubectl --namespace jx-staging get pods
 
-kubectl --namespace $NAMESPACE-staging get canary
+kubectl --namespace jx-staging get canary
 
-kubectl --namespace $NAMESPACE-staging \
-    get virtualservice.networking.istio.io
+kubectl --namespace jx-staging get virtualservices.networking.istio.io
 
-kubectl --namespace istio-system logs --selector app.kubernetes.io/name=flagger
+kubectl --namespace istio-system logs \
+    --selector app.kubernetes.io/name=flagger
+
+cat main.go | sed -e "s@rolling update@progressive@g" | tee main.go
 ```
 
 
@@ -620,13 +605,11 @@ kubectl --namespace istio-system logs --selector app.kubernetes.io/name=flagger
 ## Canary Strategy
 
 ```bash
-cat main.go | sed -e "s@hello, rolling update@hello, progressive@g" \
-    | tee main.go
+git add .
 
-cat main_test.go | sed -e "s@hello, rolling update@hello, progressive@g" \
-    | tee main_test.go
+git commit -m "Added progressive deployment"
 
-git add . && git commit -m "Added progressive deployment" && git push
+git push
 
 echo $STAGING_ADDR
 ```
@@ -638,19 +621,19 @@ echo $STAGING_ADDR
 
 ## Canary Strategy
 
-* Go to the **second terminal**
-
 ```bash
+# Go to the second terminal
+
 STAGING_ADDR=[...]
 
 while true
 do
-    curl "$STAGING_ADDR/demo/hello"
+    curl "$STAGING_ADDR"
     sleep 0.2
 done
-```
 
-* Go to the **first terminal**
+# Go to the fist terminal
+```
 
 
 <!-- .slide: class="dark" -->
@@ -660,14 +643,14 @@ done
 ## Canary Strategy
 
 ```bash
-kubectl --namespace $NAMESPACE-staging get pods
+kubectl --namespace jx-staging get pods
 
-kubectl --namespace $NAMESPACE-staging \
-    get virtualservice.networking.istio.io jx-go-demo-6 --output yaml
+kubectl --namespace jx-staging get virtualservice.networking.istio.io \
+    jx-jx-progressive --output yaml
 
-kubectl -n $NAMESPACE-staging get canary
+kubectl --namespace jx-staging get canary
 
-kubectl --namespace $NAMESPACE-staging describe canary jx-go-demo-6
+kubectl --namespace jx-staging describe canary jx-jx-progressive
 ```
 
 
@@ -678,65 +661,7 @@ kubectl --namespace $NAMESPACE-staging describe canary jx-go-demo-6
 <div class="eyebrow">Section 13</div>
 <div class="label">Hands-on Time</div>
 
-## Rolling Back Canary Deployments
-
-```bash
-cat main.go | sed -e \
-    "s@Everything is still OK@Everything is still OK with progressive delivery@g" \
-    | tee main.go
-
-cat main_test.go | sed -e \
-    "s@Everything is still OK@Everything is still OK with progressive delivery@g" \
-    | tee main_test.go
-
-git add . && git commit -m "Added progressive deployment" && git push
-```
-
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow">Section 13</div>
-<div class="label">Hands-on Time</div>
-
-## Rolling Back Canary Deployments
-
-* Go to the **second terminal**
-
-```bash
-while true
-do
-    curl "$STAGING_ADDR/demo/random-error"
-    sleep 0.2
-done
-```
-
-* Go to the **first terminal**
-
-```bash
-kubectl \
-    --namespace $NAMESPACE-staging \
-    describe canary jx-go-demo-6
-```
-
-
-<!-- .slide: data-background="img/canary-rollback.png" data-background-size="contain" -->
-
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow">Section 13</div>
-<div class="label">Hands-on Time</div>
-
-## Rolling Back Canary Deployments
-
-* Go to the **second terminal**
-* Stop the loop
-* Go to the **first terminal**
-
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow">Section 13</div>
-<div class="label">Hands-on Time</div>
-
-## To Canary Or Not To Canary?
+## Canary Strategy
 
 |Requirement        |Fullfilled|
 |-------------------|----------|
@@ -757,7 +682,7 @@ kubectl \
 # If NOT EKS
 LB_IP=$(kubectl --namespace kube-system \
     get svc jxing-nginx-ingress-controller \
-    -o jsonpath="{.status.loadBalancer.ingress[0].secondp}")
+    -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
 
 # If EKS
 LB_HOST=$(kubectl --namespace kube-system \
@@ -777,16 +702,7 @@ export LB_IP="$(dig +short $LB_HOST | tail -n 1)"
 
 ```bash
 echo $LB_IP
-```
 
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow">Section 13</div>
-<div class="label">Hands-on Time</div>
-
-## Visualizing Canary Deployments
-
-```bash
 echo "apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -818,53 +734,38 @@ open "http://flagger-grafana.$LB_IP.nip.io"
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow"></div>
+<div class="eyebrow">Section 13</div>
 <div class="label">Hands-on Time</div>
 
-## Which Should We Choose?
+## Which Strategy Should We Choose?
+
+Use the **recreate** strategy when working with legacy applications that often do not scale, that are stateful without replication, and are lacking other features that make them not cloud-native.
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow"></div>
+<div class="eyebrow">Section 13</div>
 <div class="label">Hands-on Time</div>
 
-## Which Should We Choose?
+## Which Strategy Should We Choose?
 
-### Recreate
-
-When working with legacy applications that often do not scale, that are stateful without replication, and are lacking other features that make them not cloud-native.
+Use the **rolling update** strategy with cloud-native applications which, for one reason or another, cannot use canary deployments.
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow"></div>
+<div class="eyebrow">Section 13</div>
 <div class="label">Hands-on Time</div>
 
-## Which Should We Choose?
+## Which Strategy Should We Choose?
 
-### Rolling update
-
-With cloud-native applications which, for one reason or another, cannot use canary deployments.
+Use the **canary** strategy instead of **rolling update** when you need the additional control when to roll forward and when to roll back.
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow"></div>
+<div class="eyebrow">Section 13</div>
 <div class="label">Hands-on Time</div>
 
-## Which Should We Choose?
+## Which Strategy Should We Choose?
 
-### Canary
+Use **serverless** deployments in permanent environments when you need excellent scaling capabilities or when an application is not in constant use.
 
-Instead of **rolling update** when you need the additional control when to roll forward and when to roll back.
-
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow"></div>
-<div class="label">Hands-on Time</div>
-
-## Which Should We Choose?
-
-### Serverless
-
-In permanent environments when you need excellent scaling capabilities or when an application is not in constant use.
-
-For all the deployments to preview environments, no matter which strategy you're using in staging and production.
+Finally, use **serverless** for all the deployments to preview environments, no matter which strategy you're using in staging and production.
