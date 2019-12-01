@@ -16,9 +16,9 @@ cd go-demo-6
 
 git pull
 
-git checkout versioning && git merge -s ours master --no-edit
+git checkout versioning-tekton && git merge -s ours master --no-edit
 
-git checkout master && git merge versioning
+git checkout master && git merge versioning-tekton
 
 git push
 ```

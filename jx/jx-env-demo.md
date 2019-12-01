@@ -95,13 +95,13 @@
 ---
 
 ```bash
-git checkout buildpack
+git checkout buildpack-tekton
 
 git merge -s ours master --no-edit
 
 git checkout master
 
-git merge buildpack
+git merge buildpack-tekton
 
 git push
 ```

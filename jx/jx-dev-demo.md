@@ -28,9 +28,9 @@
 ```bash
 cd go-demo-6
 
-git checkout buildpack && git merge -s ours master --no-edit
+git checkout buildpack-tekton && git merge -s ours master --no-edit
 
-git checkout master && git merge buildpack
+git checkout master && git merge buildpack-tekton
 
 echo "buildPack: go" | tee jenkins-x.yml
 

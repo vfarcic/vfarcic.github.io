@@ -16,9 +16,9 @@ cd go-demo-6
 
 git pull
 
-git checkout dev && git merge -s ours master --no-edit
+git checkout dev-tekton && git merge -s ours master --no-edit
 
-git checkout master && git merge dev
+git checkout master && git merge dev-tekton
 
 echo "buildPack: go" | tee jenkins-x.yml
 ```

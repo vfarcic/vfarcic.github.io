@@ -34,7 +34,7 @@ git pull
 BRANCH=knative-$NAMESPACE
 
 # If NOT GKE
-BRANCH=extension-model-$NAMESPACE
+BRANCH=extension-tekton
 ```
 
 

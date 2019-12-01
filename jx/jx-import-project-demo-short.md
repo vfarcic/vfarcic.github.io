@@ -88,13 +88,13 @@ kubectl --namespace $NAMESPACE-staging logs -l app=jx-go-demo-6
 ## Fixing The Helm Chart
 
 ```bash
-git checkout buildpack
+git checkout buildpack-tekton
 
 git merge -s ours master --no-edit
 
 git checkout master
 
-git merge buildpack
+git merge buildpack-tekton
 
 cat charts/go-demo-6/requirements.yaml
 

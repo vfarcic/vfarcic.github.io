@@ -16,9 +16,9 @@ cd go-demo-6
 
 git pull
 
-git checkout extension-model-cd && git merge -s ours master --no-edit
+git checkout extension-tekton && git merge -s ours master --no-edit
 
-git checkout master && git merge extension-model-cd
+git checkout master && git merge extension-tekton
 
 git push
 ```
@@ -571,13 +571,13 @@ jx step syntax validate buildpacks
 ## What Now?
 
 ```bash
-git checkout extension-model-cd
+git checkout extension-tekton
 
 git merge -s ours master --no-edit
 
 git checkout master
 
-git merge extension-model-cd
+git merge extension-tekton
 
 git push
 ```

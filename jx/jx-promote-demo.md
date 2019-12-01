@@ -16,9 +16,9 @@ git checkout master
 
 git pull
 
-git checkout pr && git merge -s ours master --no-edit
+git checkout pr-tekton && git merge -s ours master --no-edit
 
-git checkout master && git merge pr
+git checkout master && git merge pr-tekton
 
 echo "buildPack: go" | tee jenkins-x.yml
 
