@@ -151,6 +151,77 @@ jx create cluster eks -n jx-rocks -r $AWS_DEFAULT_REGION \
 ```
 
 
+<!--
+PROJECT=[...] # e.g. devops-26
+
+gcloud container clusters create jx-rocks --region us-east1 \
+    --machine-type n1-standard-8 --enable-autoscaling \
+    --num-nodes 1 --max-nodes 10 --min-nodes 1 --project $PROJECT
+
+kubectl create clusterrolebinding cluster-admin-binding \
+    --clusterrole cluster-admin --user $(gcloud config get-value account)
+
+kubectl apply \
+    -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/1cd17cd12c98563407ad03812aebac46ca4442f2/deploy/mandatory.yaml
+
+kubectl apply \
+    -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/1cd17cd12c98563407ad03812aebac46ca4442f2/deploy/provider/cloud-generic.yaml
+
+curl -o get-kubeconfig.sh \
+    https://raw.githubusercontent.com/gravitational/teleport/master/examples/gke-auth/get-kubeconfig.sh
+
+chmod +x get-kubeconfig.sh
+
+rm -rf build
+
+./get-kubeconfig.sh
+
+tar -czf kubeconfig.tar.gz build
+
+mv kubeconfig.tar.gz ~/Amazon\ Drive/tmp/.
+-->
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 2</div>
+<div class="label">Hands-on Time</div>
+
+<!-- ## Using The Workshop Cluster
+
+<!-- TODO: Change me -->
+```bash
+open "https://www.amazon.es/clouddrive/share/hJAF9Wi4Er6T966TlJjGCSC53CsWoTAomUK2eUCRs8I"
+
+# Download the file
+
+tar -xzvf kubeconfig.tar.gz
+
+export KUBECONFIG=$PWD/build/kubeconfig
+
+export LB_IP=$(kubectl -n ingress-nginx get svc \
+    -o jsonpath="{.items[0].status.loadBalancer.ingress[0].ip}")
+
+echo $LB_IP
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 2</div>
+<div class="label">Hands-on Time</div>
+
+## Using The Workshop Cluster
+
+```bash
+# Only letters, numbers, dash (`-`) and underscore (`_`) charters
+NAMESPACE=[...] # Make it unique (e.g., your GitHub username)
+
+jx install --provider kubernetes --external-ip $LB_IP \
+    --domain $LB_IP.nip.io --default-admin-password=admin \
+    --ingress-namespace ingress-nginx \
+    --ingress-deployment nginx-ingress-controller \
+    --default-environment-prefix jx-rocks --git-provider-kind github \
+    --namespace $NAMESPACE --prow --tekton
+``` -->
+
+
 <!-- .slide: class="dark" -->
 <div class="eyebrow">Section 2</div>
 <div class="label">Hands-on Time</div>
