@@ -20,7 +20,7 @@ jx create cluster gke --cluster-name jx-rocks --project-id $PROJECT \
     --default-environment-prefix tekton --git-provider-kind github \
     --namespace cd --prow --tekton --batch-mode
 
-jx create addon gloo --install-knative-version=0.9.0
+glooctl install knative --install-knative-version=0.9.0
 
 jx create addon istio && jx create addon flagger
 ```

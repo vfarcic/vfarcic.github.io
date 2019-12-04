@@ -83,7 +83,7 @@ reviewers:
 - $GH_APPROVER
 " | tee OWNERS
 
-git add . && git commit -m "Added an owner" && git push
+git add . && git commit -m "Added an owner" && git push --set-upstream origin master
 
 open "https://github.com/$GH_USER/jx-prow/settings/collaboration"
 ```

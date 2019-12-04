@@ -20,10 +20,7 @@ jx create cluster gke --cluster-name jx-rocks --project-id $PROJECT \
     --default-environment-prefix tekton --git-provider-kind github \
     --namespace cd --prow --tekton --batch-mode
 
-jx create addon gloo --install-knative-version=0.9.0
-
-jx create quickstart --filter golang-http --project-name jx-knative \
-    --batch-mode
+glooctl install knative --install-knative-version=0.9.0
 ```
 
 
@@ -46,6 +43,20 @@ metadata:
 data:
   $KNATIVE_IP.nip.io: \"\"" \
     | kubectl apply --filename -
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
+
+## Creating A Cluster With jx
+
+```bash
+jx edit deploy --team --kind knative --batch-mode
+
+jx create quickstart --filter golang-http --project-name jx-knative \
+    --batch-mode
 ```
 
 
