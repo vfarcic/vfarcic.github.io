@@ -17,6 +17,8 @@
 ```bash
 cat charts/jx-knative/templates/ksvc.yaml
 
+cat charts/jx-knative/values.yaml
+
 kubectl --namespace cd-staging get pods
 ```
 
@@ -55,6 +57,11 @@ kubectl --namespace cd-staging get pods
 <div class="eyebrow"></div>
 <div class="label">Hands-on Time</div>
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
 ## Serverless With PRs
 
 ```bash
@@ -69,6 +76,11 @@ git push --set-upstream origin my-pr
 jx create pullrequest --title "Serverless with Knative" \
     --body "What I can say?" --batch-mode
 ```
+
+
+## Serverless With PRs
+
+# It's a no-brainer
 
 
 <!-- .slide: class="dark" -->
@@ -98,10 +110,14 @@ kubectl --namespace $PR_NAMESPACE get pods
 ## Serverless With PRs
 
 ```bash
-jx repo
+PR_ADDR=$(kubectl --namespace $PR_NAMESPACE get ksvc jx-knative \
+    --output jsonpath="{.status.url}")
+
+curl "$PR_ADDR"
+
+jx repo --batch-mode
 ```
 
-* Open the app
 * Merge the PR
 
 ```bash
@@ -109,7 +125,7 @@ jx get activities --filter jx-knative/master --watch
 
 jx get activities --filter environment-tekton-staging/master --watch
 
-curl "http://$ADDR/"
+curl "$ADDR/"
 
 kubectl --namespace cd-staging get pods
 

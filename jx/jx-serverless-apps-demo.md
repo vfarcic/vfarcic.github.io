@@ -177,7 +177,7 @@ kubectl --namespace jx-staging get pods \
 
 ```bash
 kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
-    -it --rm -- --concurrent 300 --time 20S "$ADDR" \
+    -it --rm -- --concurrent 300 --time 30S "$ADDR" \
     && kubectl --namespace jx-staging get pods \
     --selector serving.knative.dev/service=jx-knative
 

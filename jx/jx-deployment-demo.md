@@ -89,7 +89,7 @@ kubectl --namespace jx-staging get pods
 
 ```bash
 kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
-    -it --rm -- --concurrent 300 --time 20S "$STAGING_ADDR" \
+    -it --rm -- --concurrent 300 --time 30S "$STAGING_ADDR" \
     && kubectl --namespace jx-staging get pods
 ```
 

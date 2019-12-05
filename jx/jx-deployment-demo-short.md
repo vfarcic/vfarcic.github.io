@@ -56,7 +56,7 @@ KNATIVE_ADDR=$(kubectl --namespace cd-staging get ksvc jx-knative \
     --output jsonpath="{.status.url}")
 
 kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
-    -it --rm -- --concurrent 300 --time 20S "$KNATIVE_ADDR" \
+    -it --rm -- --concurrent 300 --time 30S "$KNATIVE_ADDR" \
     && kubectl --namespace cd-staging get pods | grep knative
 ```
 
