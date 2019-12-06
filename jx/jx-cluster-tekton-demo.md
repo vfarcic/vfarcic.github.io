@@ -14,7 +14,7 @@
 * [Git](https://git-scm.com/)
 * GitBash (if using Windows)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-* [Helm](https://helm.sh/)
+* [Helm](https://helm.sh/) (MUST BE `helm` 2.+)
 * If Google: [gcloud CLI](https://cloud.google.com/sdk/docs/quickstarts) and GCP admin permissions
 * If Azure: [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) and Azure admin permissions
 * If AWS: [AWS CLI](https://aws.amazon.com/cli/) and AWS admin permissions
