@@ -176,11 +176,11 @@ jx get activities --filter environment-jx-rocks-staging/master --watch
 ## Recreate Strategy
 
 ```bash
-kubectl --namespace jx-staging get pods
+kubectl --namespace $NAMESPACE-staging get pods
 
-kubectl --namespace jx-staging describe deployment jx-jx-progressive
+kubectl --namespace $NAMESPACE-staging describe deployment jx-jx-progressive
 
-kubectl --namespace jx-staging get ing
+kubectl --namespace $NAMESPACE-staging get ing
 
 echo "something" | tee README.md
 ```
@@ -427,13 +427,13 @@ jx create addon flagger
 ```bash
 kubectl --namespace istio-system get pods
 
-kubectl describe namespace jx-production
+kubectl describe namespace $NAMESPACE-production
 
-kubectl describe namespace jx-staging
+kubectl describe namespace $NAMESPACE-staging
 
-kubectl label namespace jx-staging istio-injection=enabled --overwrite
+kubectl label namespace $NAMESPACE-staging istio-injection=enabled --overwrite
 
-kubectl describe namespace jx-staging
+kubectl describe namespace $NAMESPACE-staging
 ```
 
 
@@ -585,11 +585,11 @@ jx get activities --filter environment-jx-rocks-staging/master --watch
 ```bash
 curl $STAGING_ADDR/demo/hello
 
-kubectl --namespace jx-staging get pods
+kubectl --namespace $NAMESPACE-staging get pods
 
-kubectl --namespace jx-staging get canary
+kubectl --namespace $NAMESPACE-staging get canary
 
-kubectl --namespace jx-staging get virtualservices.networking.istio.io
+kubectl --namespace $NAMESPACE-staging get virtualservices.networking.istio.io
 
 kubectl --namespace istio-system logs \
     --selector app.kubernetes.io/name=flagger
@@ -643,14 +643,14 @@ done
 ## Canary Strategy
 
 ```bash
-kubectl --namespace jx-staging get pods
+kubectl --namespace $NAMESPACE-staging get pods
 
-kubectl --namespace jx-staging get virtualservice.networking.istio.io \
+kubectl --namespace $NAMESPACE-staging get virtualservice.networking.istio.io \
     jx-jx-progressive --output yaml
 
-kubectl --namespace jx-staging get canary
+kubectl --namespace $NAMESPACE-staging get canary
 
-kubectl --namespace jx-staging describe canary jx-jx-progressive
+kubectl --namespace $NAMESPACE-staging describe canary jx-jx-progressive
 ```
 
 

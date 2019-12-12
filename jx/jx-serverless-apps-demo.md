@@ -119,13 +119,13 @@ jx get activities --filter jx-knative --watch
 
 jx get activities --filter environment-jx-rocks-staging/master --watch
 
-kubectl --namespace jx-staging get pods \
+kubectl --namespace $NAMESPACE-staging get pods \
     --selector serving.knative.dev/service=jx-knative
 
-kubectl --namespace jx-staging describe pod \
+kubectl --namespace  $NAMESPACE-staging describe pod \
     --selector serving.knative.dev/service=jx-knative
 
-kubectl --namespace jx-staging get all
+kubectl --namespace $NAMESPACE-staging get all
 ```
 
 
@@ -138,14 +138,14 @@ kubectl --namespace jx-staging get all
 ```bash
 jx get applications --env staging
 
-ADDR=$(kubectl --namespace jx-staging get ksvc jx-knative \
+ADDR=$(kubectl --namespace $NAMESPACE-staging get ksvc jx-knative \
     --output jsonpath="{.status.url}")
 
 echo $ADDR
 
 curl "$ADDR"
 
-kubectl --namespace jx-staging get pods \
+kubectl --namespace $NAMESPACE-staging get pods \
     --selector serving.knative.dev/service=jx-knative
 ```
 
@@ -159,12 +159,12 @@ kubectl --namespace jx-staging get pods \
 ```bash
 # Wait for a while
 
-kubectl --namespace jx-staging get pods \
+kubectl --namespace $NAMESPACE-staging get pods \
     --selector serving.knative.dev/service=jx-knative
 
 kubectl --namespace knative-serving describe configmap config-autoscaler
 
-kubectl --namespace jx-staging get pods \
+kubectl --namespace $NAMESPACE-staging get pods \
     --selector serving.knative.dev/service=jx-knative
 ```
 
@@ -178,7 +178,7 @@ kubectl --namespace jx-staging get pods \
 ```bash
 kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
     -it --rm -- --concurrent 300 --time 30S "$ADDR" \
-    && kubectl --namespace jx-staging get pods \
+    && kubectl --namespace $NAMESPACE-staging get pods \
     --selector serving.knative.dev/service=jx-knative
 
 cat charts/jx-knative/templates/ksvc.yaml | sed -e \
@@ -221,13 +221,13 @@ curl "$ADDR/"
 ```bash
 kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
     -it --rm -- --concurrent 400 --time 60S "$ADDR" \
-    && kubectl --namespace jx-staging get pods \
+    && kubectl --namespace $NAMESPACE-staging get pods \
     --selector serving.knative.dev/service=jx-knative
 
-kubectl --namespace jx-staging get pods \
+kubectl --namespace $NAMESPACE-staging get pods \
     --selector serving.knative.dev/service=jx-knative
 
-kubectl --namespace jx-staging get pods \
+kubectl --namespace $NAMESPACE-staging get pods \
     --selector serving.knative.dev/service=jx-knative
 ```
 
