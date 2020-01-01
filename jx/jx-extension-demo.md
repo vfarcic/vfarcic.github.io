@@ -32,12 +32,15 @@ git push
 
 ```bash
 cat charts/go-demo-6/Makefile | sed -e "s@vfarcic@$PROJECT@g" \
+    | sed -e "s@devops-26@$PROJECT@g" \
     | tee charts/go-demo-6/Makefile
 
 cat charts/preview/Makefile | sed -e "s@vfarcic@$PROJECT@g" \
+    | sed -e "s@devops-26@$PROJECT@g" \
     | tee charts/preview/Makefile
 
 cat skaffold.yaml | sed -e "s@vfarcic@$PROJECT@g" \
+    | sed -e "s@devops-26@$PROJECT@g" \
     | tee skaffold.yaml
 ```
 
