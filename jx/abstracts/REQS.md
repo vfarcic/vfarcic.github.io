@@ -6,6 +6,7 @@
 * GitBash (if using Windows)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * GitHub account
+* [Helm v2.x](https://github.com/helm/helm/releases) (IT CANNOT BE HELM v3.x)
 
 If you choose to use your own account, please follow the instructions for the cloud-specific requirements. If you're in doubt which one to choose, I strongly recommend GKE. If you register, you'll get 300$ in free credit and we won't spend more than a few $ during the workshop. On the other hand, if you do choose to use the cluster that will be available (and prepared by me) during the workshop, there is nothing else you need to do in advance.
 
