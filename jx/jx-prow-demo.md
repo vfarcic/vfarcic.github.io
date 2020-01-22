@@ -47,6 +47,13 @@ This PR is urgent, so please review it ASAP
 /assign
 ```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 9</div>
+<div class="label">Hands-on Time</div>
+
+## The Basic PR Process
+
 * Type `/lgtm` and click *Comment*
 * Type `/unassign` and click *Comment*
 

@@ -48,11 +48,9 @@ git push
 ```bash
 jx get activities --filter go-demo-6/master --watch
 
-jx get activities --filter environment-jx-rocks-staging/master --watch
+jx get activities --filter environment-jx-workshop-staging/master --watch
 
 jx get applications --env staging
-
-GH_USER=[...]
 
 open "https://github.com/$GH_USER/go-demo-6/releases"
 ```
@@ -71,7 +69,7 @@ git add . && git commit -m "A silly change" && git push
 
 jx get activity --filter go-demo-6/master --watch
 
-jx get activities --filter environment-jx-rocks-staging/master --watch
+jx get activities --filter environment-jx-workshop-staging/master --watch
 
 jx get applications --env staging
 

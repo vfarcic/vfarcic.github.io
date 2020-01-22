@@ -134,7 +134,7 @@ curl "$PR_ADDR/demo/hello"
 ```bash
 jx get activity --filter go-demo-6 --watch
 
-jx get activity --filter environment-jx-rocks-staging --watch
+jx get activity --filter environment-jx-workshop-staging --watch
 
 jx get applications
 

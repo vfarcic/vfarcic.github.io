@@ -31,16 +31,13 @@ git push
 ## In case you messed it up (GKE only)
 
 ```bash
-cat charts/go-demo-6/Makefile | sed -e "s@vfarcic@$PROJECT@g" \
-    | sed -e "s@devops-26@$PROJECT@g" \
+cat charts/go-demo-6/Makefile | sed -e "s@devops-26@$PROJECT@g" \
     | tee charts/go-demo-6/Makefile
 
-cat charts/preview/Makefile | sed -e "s@vfarcic@$PROJECT@g" \
-    | sed -e "s@devops-26@$PROJECT@g" \
+cat charts/preview/Makefile | sed -e "s@devops-26@$PROJECT@g" \
     | tee charts/preview/Makefile
 
-cat skaffold.yaml | sed -e "s@vfarcic@$PROJECT@g" \
-    | sed -e "s@devops-26@$PROJECT@g" \
+cat skaffold.yaml | sed -e "s@devops-26@$PROJECT@g" \
     | tee skaffold.yaml
 ```
 
@@ -52,8 +49,6 @@ cat skaffold.yaml | sed -e "s@vfarcic@$PROJECT@g" \
 ## Exploring Build Pack Pipelines
 
 ```bash
-git checkout master
-
 echo "buildPack: go" | tee jenkins-x.yml
 
 git add . && git commit -m "jenkins-x.yml" && git push
@@ -107,22 +102,17 @@ cat functional_test.go | sed -e \
 ## Extending Build Pack Pipelines
 
 ```bash
-cat production_test.go | sed -e \
-    's@fmt.Sprintf("http://@fmt.Sprintf("@g' \
+cat production_test.go | sed -e 's@fmt.Sprintf("http://@fmt.Sprintf("@g' \
     | tee production_test.go
 
-jx create step
-```
+echo "buildPack: go
+pipelineConfig:
+  pipelines:
+    pullRequest:
+      build:
+        preSteps:
+        - command: make unittest" | tee jenkins-x.yml
 
-```
-? Pick the pipeline kind:  pullrequest
-? Pick the lifecycle:  build
-? Pick the create mode:  pre
-? Command for the new step:  make unittest
-Updated Jenkins X Pipeline file: jenkins-x.yml
-```
-
-```bash
 cat jenkins-x.yml
 ```
 
