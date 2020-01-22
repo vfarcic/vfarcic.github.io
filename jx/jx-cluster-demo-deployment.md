@@ -12,17 +12,106 @@
 ## Creating A Cluster With jx
 
 ```bash
-PROJECT=[...] # e.g. devops26
+export PROJECT=[...] # Replace `[...]` with the project ID
 
-jx create cluster gke --cluster-name jx-rocks --project-id $PROJECT \
-    --region us-east1 -m n1-standard-2 --min-num-nodes 1 \
-    --max-num-nodes 2 --default-admin-password=admin \
-    --default-environment-prefix tekton --git-provider-kind github \
-    --namespace cd --prow --tekton --batch-mode
+git clone https://github.com/vfarcic/terraform-gke.git
 
+cd terraform-gke
+
+git checkout jx-deployment
+
+git pull
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
+
+## Creating A Cluster With jx
+
+```bash
+# Create a service account (https://console.cloud.google.com/apis/credentials/serviceaccountkey)
+
+# Download the JSON and store it as account.json in this directory
+
+terraform apply
+
+export CLUSTER_NAME=$(terraform output cluster_name)
+
+export KUBECONFIG=$PWD/kubeconfig
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
+
+## Creating A Cluster With jx
+
+```bash
+gcloud container clusters \
+    get-credentials $(terraform output cluster_name) \
+    --project $(terraform output project_id) \
+        --region $(terraform output region)
+
+kubectl create clusterrolebinding \
+    cluster-admin-binding \
+    --clusterrole cluster-admin \
+    --user $(gcloud config get-value account)
+
+cd ..
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
+
+## Creating A Cluster With jx
+
+```bash
+git clone \
+    https://github.com/jenkins-x/jenkins-x-boot-config.git \
+    environment-$CLUSTER_NAME-dev
+
+cd environment-$CLUSTER_NAME-dev
+
+vim jx-requirements.yml
+
+# Set `cluster.clusterName` to `devops-27-demo`
+# Set `cluster.environmentGitOwner`
+# Set `cluster.project` to `devops-27`
+# Set `cluster.zone` to `us-east1`
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
+
+## Creating A Cluster With jx
+
+```bash
+jx boot
+
+cd ..
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
+
+## Creating A Cluster With jx
+
+```bash
 glooctl install knative --install-knative-version=0.9.0
 
-jx create addon istio && jx create addon flagger
+istioctl manifest apply --skip-confirmation
+
+kubectl apply \
+    --kustomize github.com/weaveworks/flagger/kustomize/istio
 ```
 
 
@@ -163,102 +252,27 @@ jx create quickstart --filter golang-http --project-name jx-canary \
 
 jx get activity --filter jx-canary --watch
 
-cd jx-canary
+kubectl label namespace jx-staging istio-injection=enabled --overwrite
 
-cat charts/jx-canary/values.yaml \
-    | sed -e 's@replicaCount: 1@replicaCount: 5@g' \
-    | tee charts/jx-canary/values.yaml
+export GH_USER=[...]
 
-kubectl label namespace cd-staging istio-injection=enabled --overwrite
-```
-
-
-## Setting The Scene (Canary)
-
-```bash
-echo "{{- if .Values.canary.enable }}
-apiVersion: flagger.app/v1alpha2
-kind: Canary
-metadata:
-  name: {{ template \"fullname\" . }}
-spec:
-  provider: {{.Values.canary.provider}}
-  targetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: {{ template \"fullname\" . }}
-  progressDeadlineSeconds: 60
-  service:
-    port: {{.Values.service.internalPort}}
-{{- if .Values.canary.service.gateways }}
-    gateways:
-{{ toYaml .Values.canary.service.gateways | indent 4 }}
-{{- end }}
-{{- if .Values.canary.service.hosts }}
-    hosts:
-{{ toYaml .Values.canary.service.hosts | indent 4 }}
-{{- end }}
-  canaryAnalysis:
-    interval: {{ .Values.canary.canaryAnalysis.interval }}
-    threshold: {{ .Values.canary.canaryAnalysis.threshold }}
-    maxWeight: {{ .Values.canary.canaryAnalysis.maxWeight }}
-    stepWeight: {{ .Values.canary.canaryAnalysis.stepWeight }}
-{{- if .Values.canary.canaryAnalysis.metrics }}
-    metrics:
-{{ toYaml .Values.canary.canaryAnalysis.metrics | indent 4 }}
-{{- end }}
-{{- end }}
-" | tee charts/jx-canary/templates/canary.yaml
-```
-
-
-## Setting The Scene (Canary)
-
-```bash
-ISTIO_IP=$(kubectl --namespace istio-system \
+export ISTIO_IP=$(kubectl --namespace istio-system \
     get service istio-ingressgateway \
     --output jsonpath='{.status.loadBalancer.ingress[0].ip}')
-
-echo "
-canary:
-  enable: false
-  provider: istio
-  service:
-    hosts:
-    - jx-canary.$ISTIO_IP.nip.io
-    gateways:
-    - jx-gateway.istio-system.svc.cluster.local
-  canaryAnalysis:
-    interval: 30s
-    threshold: 5
-    maxWeight: 70
-    stepWeight: 20
-    metrics:
-    - name: request-success-rate
-      threshold: 99
-      interval: 120s
-    - name: request-duration
-      threshold: 500
-      interval: 120s
-" | tee -a charts/jx-canary/values.yaml
 ```
 
 
 ## Setting The Scene (Canary)
 
 ```bash
-cd ..
+export CANARY_ADDR=staging.jx-canary.$ISTIO_IP.nip.io
 
-GH_USER=[...]
-
-jx get activity --filter environment-tekton-staging/master --watch
+jx get activity --filter environment-$CLUSTER_NAME-staging/master --watch
 
 git clone \
-    https://github.com/$GH_USER/environment-tekton-staging.git
+    https://github.com/$GH_USER/environment-$CLUSTER_NAME-staging.git
 
-cd environment-tekton-staging
-
-STAGING_ADDR=staging.jx-canary.$ISTIO_IP.nip.io
+cd environment-$CLUSTER_NAME-staging
 ```
 
 
@@ -266,29 +280,21 @@ STAGING_ADDR=staging.jx-canary.$ISTIO_IP.nip.io
 
 ```bash
 echo "jx-canary:
+  hpa:
+    enabled: true
+    minReplicas: 5
   canary:
-    enable: true
-    service:
-      hosts:
-      - $STAGING_ADDR" \
-    | tee -a env/values.yaml
+    enabled: true
+    host: $CANARY_ADDR
+" | tee -a env/values.yaml
 
 git add . && git commit -m "Added progressive deployment" && git push
-
-jx get activity --filter environment-tekton-staging/master --watch
 ```
 
 
 ## Setting The Scene (Canary)
 
 ```bash
-cd ../jx-canary
-
-git add . && git commit -m "Canary"
-
-git push --set-upstream origin master
-
-jx get activity --filter jx-canary --watch
-
-cd ..
+jx get activity --filter environment-$CLUSTER_NAME-staging/master \
+    --watch
 ```

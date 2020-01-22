@@ -36,9 +36,9 @@
 ## Serverless Strategy
 
 ```bash
-kubectl --namespace cd-staging get ksvc jx-knative --output yaml
+kubectl --namespace jx-staging get ksvc jx-knative --output yaml
 
-kubectl --namespace cd-staging get pods | grep knative
+kubectl --namespace jx-staging get pods | grep knative
 ```
 
 
@@ -52,12 +52,12 @@ kubectl --namespace cd-staging get pods | grep knative
 ## Serverless Strategy
 
 ```bash
-KNATIVE_ADDR=$(kubectl --namespace cd-staging get ksvc jx-knative \
-    --output jsonpath="{.status.url}")
+export KNATIVE_ADDR=$(kubectl --namespace jx-staging \
+    get ksvc jx-knative --output jsonpath="{.status.url}")
 
 kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
     -it --rm -- --concurrent 300 --time 30S "$KNATIVE_ADDR" \
-    && kubectl --namespace cd-staging get pods | grep knative
+    && kubectl --namespace jx-staging get pods | grep knative
 ```
 
 
@@ -88,7 +88,7 @@ kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
 ```bash
 cd jx-recreate
 
-kubectl --namespace cd-staging get pods
+kubectl --namespace jx-staging get pods --selector app=jx-jx-recreate
 
 cat main.go | sed -e "s@example@recreate@g" | tee main.go
 
@@ -107,12 +107,14 @@ cd ..
 * Open a **second terminal**
 
 ```bash
-RECREATE_ADDR=$(kubectl --namespace cd-staging get ing jx-recreate \
+export KUBECONFIG=$PWD/terraform-gke/kubeconfig
+
+RECREATE_ADDR=$(kubectl --namespace jx-staging get ing jx-recreate \
     --output jsonpath="{.spec.rules[0].host}")
 
 while true; do
     curl "$RECREATE_ADDR"
-    sleep 0.1
+    sleep 0.5
 done
 ```
 
@@ -163,12 +165,12 @@ cd ..
 * Go to the **second terminal**
 
 ```bash
-ROLLING_ADDR=$(kubectl --namespace cd-staging get ing jx-rolling \
+ROLLING_ADDR=$(kubectl --namespace jx-staging get ing jx-rolling \
     --output jsonpath="{.spec.rules[0].host}")
 
 while true; do
     curl "$ROLLING_ADDR"
-    sleep 0.1
+    sleep 0.5
 done
 ```
 
@@ -214,7 +216,9 @@ cd jx-canary
 
 cat main.go | sed -e "s@example@canary@g" | tee main.go
 
-git add . && git commit -m "Canary" && git push
+git add . && git commit -m "Canary"
+
+git push --set-upstream origin master
 
 cd ..
 ```
@@ -237,7 +241,7 @@ CANARY_ADDR=staging.jx-canary.$CANARY_IP.nip.io
 
 while true; do
     curl "$CANARY_ADDR"
-    sleep 0.1
+    sleep 0.5
 done
 ```
 
@@ -264,21 +268,6 @@ done
 |Rollback           |Fully     |
 |Cost-effectiveness |Not       |
 
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow"></div>
-<div class="label">Hands-on Time</div>
-
-## Visualizing Canary Deployments
-
-```bash
-open "http://flagger-grafana.$LB_IP.nip.io"
-```
-
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow"></div>
-<div class="label">Hands-on Time</div>
 
 ## Which Should We Choose?
 

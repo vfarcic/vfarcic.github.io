@@ -14,7 +14,7 @@
 * [Git](https://git-scm.com/)
 * GitBash (if using Windows)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-* [Helm](https://helm.sh/) (MUST BE `helm` 2.+)
+* [Helm](https://github.com/helm/helm/releases) (MUST BE `helm` 2.x)
 * If Google: [gcloud CLI](https://cloud.google.com/sdk/docs/quickstarts) and GCP admin permissions
 * If Azure: [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) and Azure admin permissions
 * If AWS: [AWS CLI](https://aws.amazon.com/cli/) and AWS admin permissions
@@ -104,6 +104,9 @@ jx create cluster gke -n jx-rocks -p $PROJECT -r us-east1 \
 ## Creating A Cluster With jx (AKS)
 
 ```bash
+# Please replace [...] with a unique name (e.g., your GitHub user and a day and month).
+# Otherwise, it might fail to create a registry.
+# The name of the cluster must conform to the following pattern: '^[a-zA-Z0-9]*$'.
 CLUSTER_NAME=[...]
 
 # Use default answers

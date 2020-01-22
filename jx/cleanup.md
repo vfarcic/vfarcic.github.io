@@ -26,15 +26,7 @@ gcloud compute disks delete --zone us-east1-d $(gcloud compute disks \
 ## Cleanup (EKS)
 
 ```bash
-# Only if there are no other ELBs in that region
-LB_NAME=$(aws elbv2 describe-load-balancers | jq -r \
-    ".LoadBalancers[0].LoadBalancerName")
-
-echo $LB_NAME
-
-aws elb delete-load-balancer --load-balancer-name $LB_NAME
-
-eksctl delete cluster -n $NAME
+eksctl delete cluster -n jx-rocks
 
 for volume in `aws ec2 describe-volumes --output text| grep available | awk '{print $8}'`; do
     echo "Deleting volume $volume"
@@ -48,11 +40,11 @@ done
 ```bash
 az aks delete -n $CLUSTER_NAME -g jxrocks-group --yes
 
-kubectl config delete-cluster jx-rocks
+kubectl config delete-cluster $CLUSTER_NAME
 
-kubectl config delete-context jx-rocks
+kubectl config delete-context $CLUSTER_NAME
 
-kubectl config unset users.clusterUser_jx-rocks-group_jx-rocks
+kubectl config unset users.clusterUser_jxrocks-group_$CLUSTER_NAME
 
 az group delete --name jxrocks-group --yes
 ```
