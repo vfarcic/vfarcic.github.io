@@ -31,27 +31,17 @@ echo "buildPack: go" | tee jenkins-x.yml
 ## In case you messed it up (GKE only)
 
 ```bash
-cat charts/go-demo-6/Makefile | sed -e "s@vfarcic@$PROJECT@g" \
-    | sed -e "s@devops-26@$PROJECT@g" \
+export PROJECT=devops-27
+
+cat charts/go-demo-6/Makefile | sed -e "s@devops-26@$PROJECT@g" \
     | tee charts/go-demo-6/Makefile
 
-cat charts/preview/Makefile | sed -e "s@vfarcic@$PROJECT@g" \
-    | sed -e "s@devops-26@$PROJECT@g" \
+cat charts/preview/Makefile | sed -e "s@devops-26@$PROJECT@g" \
     | tee charts/preview/Makefile
 
-cat skaffold.yaml | sed -e "s@vfarcic@$PROJECT@g" \
-    | sed -e "s@devops-26@$PROJECT@g" \
+cat skaffold.yaml | sed -e "s@devops-26@$PROJECT@g" \
     | tee skaffold.yaml
-```
 
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow">Section 6</div>
-<div class="label">Hands-on Time</div>
-
-## In case you messed it up
-
-```bash
 git add . && git commit -m "Added jenkins-x.yml" && git push
 ```
 

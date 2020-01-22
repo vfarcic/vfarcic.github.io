@@ -18,8 +18,6 @@ open "https://github.com/vfarcic/go-demo-6"
 * Fork it
 
 ```bash
-GH_USER=[...]
-
 git clone https://github.com/$GH_USER/go-demo-6.git
 
 cd go-demo-6
@@ -77,7 +75,7 @@ STAGING_ADDR=[...]
 
 curl "$STAGING_ADDR/demo/hello" # It fails
 
-kubectl --namespace $NAMESPACE-staging logs -l app=jx-go-demo-6
+kubectl --namespace $NAMESPACE-staging logs --selector app=jx-go-demo-6
 ```
 
 
@@ -109,9 +107,13 @@ git push
 ## Fixing The Helm Chart
 
 ```bash
-jx get activities --filter go-demo-6 --watch # Stop with *ctrl+c*
+jx get activities --filter go-demo-6 --watch
 
-jx get activities --filter environment-jx-rocks-staging/master --watch # Stop with *ctrl+c*
+# Stop with *ctrl+c*
+
+jx get activities --filter environment-jx-workshop-staging/master --watch
+
+# Stop with *ctrl+c*
 
 curl "$STAGING_ADDR/demo/hello"
 ```

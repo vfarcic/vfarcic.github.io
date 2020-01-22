@@ -153,9 +153,9 @@ jx get env -p Never
 ```bash
 cd ..
 
-git clone https://github.com/$GH_USER/environment-jx-rocks-staging.git
+git clone https://github.com/$GH_USER/environment-jx-workshop-staging.git
 
-cd environment-jx-rocks-staging
+cd environment-jx-workshop-staging
 
 ls -1
 ```
@@ -190,11 +190,26 @@ cat integration_test.go
 ```bash
 cat jenkins-x.yml
 
-jx create step --pipeline release --lifecycle postbuild --mode post \
-    --sh 'make test'
+cat jenkins-x.yml \
+    | sed -e \
+    's@pipelines: {}@pipelines:\
+    release:\
+      postBuild:\
+        steps:\
+        - command: make test@g' \
+    | tee jenkins-x.yml
 
 cat jenkins-x.yml
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 5</div>
+<div class="label">Hands-on Time</div>
+
+## Adapting The Staging Env
+
+```bash
 ls -1 env
 
 cat env/requirements.yaml
@@ -214,11 +229,11 @@ git commit -m "Added tests"
 
 git push
 
-jx get activity -f environment-jx-rocks-staging/master --watch
+jx get activity --filter environment-jx-workshop-staging/master --watch
 
 jx get build logs
 
-kubectl -n $NAMESPACE-staging get pods
+kubectl --namespace $NAMESPACE-staging get pods
 ```
 
 
@@ -262,8 +277,6 @@ jx delete env pre-production
 
 <!-- https://github.com/jenkins-x/jx/issues/4795 -->
 ```bash
-GH_USER=[...]
-
 hub delete -y $GH_USER/environment-$NAMESPACE-pre-production
 
 rm -rf ~/.jx/environments/$GH_USER/environment-$NAMESPACE-pre-production

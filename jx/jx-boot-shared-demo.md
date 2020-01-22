@@ -17,22 +17,74 @@
 * [Helm](https://helm.sh/) (MUST BE `helm` 2.+)
 
 
-<!--
-export PROJECT=[...] # e.g. devops-27
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 2</div>
+<div class="label">Hands-on Time</div>
 
-gcloud container clusters create jx-rocks --region us-east1 \
-    --machine-type n1-standard-8 --enable-autoscaling \
-    --num-nodes 1 --max-nodes 10 --min-nodes 1 --project $PROJECT
+## Creating A GKE Cluster (Instructor)
 
-kubectl create clusterrolebinding cluster-admin-binding \
-    --clusterrole cluster-admin --user $(gcloud config get-value account)
+```bash
+export PROJECT=[...] # Replace `[...]` with the project ID
 
-kubectl apply \
-    -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/1cd17cd12c98563407ad03812aebac46ca4442f2/deploy/mandatory.yaml
+git clone https://github.com/vfarcic/terraform-gke.git
 
-kubectl apply \
-    -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/1cd17cd12c98563407ad03812aebac46ca4442f2/deploy/provider/cloud-generic.yaml
+cd terraform-gke
 
+git checkout jx-workshop
+
+git pull
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 2</div>
+<div class="label">Hands-on Time</div>
+
+## Creating A GKE Cluster (Instructor)
+
+```bash
+# Create a service account (https://console.cloud.google.com/apis/credentials/serviceaccountkey)
+
+# Download the JSON and store it as account.json in this directory
+
+terraform init
+
+terraform apply
+
+export CLUSTER_NAME=$(terraform output cluster_name)
+
+export KUBECONFIG=$PWD/kubeconfig
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 2</div>
+<div class="label">Hands-on Time</div>
+
+## Creating A GKE Cluster (Instructor)
+
+```bash
+gcloud container clusters \
+    get-credentials $(terraform output cluster_name) \
+    --project $(terraform output project_id) \
+        --region $(terraform output region)
+
+kubectl create clusterrolebinding \
+    cluster-admin-binding \
+    --clusterrole cluster-admin \
+    --user $(gcloud config get-value account)
+
+cd ..
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 2</div>
+<div class="label">Hands-on Time</div>
+
+## Creating Kube Config (Instructor)
+
+```bash
 curl -o get-kubeconfig.sh \
     https://raw.githubusercontent.com/gravitational/teleport/master/examples/gke-auth/get-kubeconfig.sh
 
@@ -44,29 +96,43 @@ rm -rf build
 
 tar -czf kubeconfig.tar.gz build
 
-mv kubeconfig.tar.gz ~/Amazon\ Drive/tmp/.
+mv kubeconfig.tar.gz ~/Amazon\ Drive/tmp/. # Share the config
+```
 
-git clone https://github.com/vfarcic/jenkins-x-boot-config-workshop.git
 
-# TODO: Pull upstream
--->
 <!-- .slide: class="dark" -->
 <div class="eyebrow">Section 2</div>
 <div class="label">Hands-on Time</div>
 
-## Jenkins X Boot
+## Retrieving Kube Config
 
-<!-- TODO: Change me -->
 ```bash
-open "https://www.amazon.es/clouddrive/share/Bjuj4XBDO2XFrHf5NSa4b3aUe9TzgSvHZKRyBEwqXov"
+# Instructor: Change me!
+open "https://www.amazon.es/clouddrive/share/lQxadr8PoTY3p1RqiBjnOVjipgpSGgZJU8oUMSDfETl"
 
 # Download the file
 
 tar -xzvf kubeconfig.tar.gz
 
 export KUBECONFIG=$PWD/build/kubeconfig
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 2</div>
+<div class="label">Hands-on Time</div>
+
+## Jenkins X Boot
+
+```bash
 export GH_USER=[...] # Replace `[...]` with your GitHub user
+
+git clone https://github.com/vfarcic/jenkins-x-boot-config-workshop.git \
+    environment-jx-workshop-dev
+
+cd environment-jx-workshop-dev
+
+export NAMESPACE=$GH_USER
 ```
 
 
@@ -77,28 +143,10 @@ export GH_USER=[...] # Replace `[...]` with your GitHub user
 ## Jenkins X Boot
 
 ```bash
-git clone \
-    https://github.com/vfarcic/jenkins-x-boot-config.git \
-    environment-jx-rocks-dev
-
-cd environment-jx-rocks-dev
-
-NAMESPACE=$GH_USER
-```
-
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow">Section 2</div>
-<div class="label">Hands-on Time</div>
-
-## Jenkins X Boot
-
-```bash
-# Open `jx-requirements.yml`
-
+# Open `jx-requirements.yml` in an editor
+# Set `cluster.environmentGitOwner` to `[GH_USER]`
 # Add `cluster.namespace: [GH_USER]`
-
-# Save & exit
+# Save & Exit
 
 jx boot
 

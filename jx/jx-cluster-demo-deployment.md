@@ -77,12 +77,12 @@ git clone \
 
 cd environment-$CLUSTER_NAME-dev
 
-vim jx-requirements.yml
-
+# Open `jx-requirements.yml` in an editor
 # Set `cluster.clusterName` to `devops-27-demo`
 # Set `cluster.environmentGitOwner`
 # Set `cluster.project` to `devops-27`
 # Set `cluster.zone` to `us-east1`
+# Save & Exit
 ```
 
 
