@@ -157,18 +157,17 @@ jx get build logs --filter go-demo-6 --branch $BRANCH
 ## Extending Build Pack Pipelines
 
 ```bash
-jx create step --pipeline pullrequest --lifecycle promote --mode post \
-    --sh 'ADDRESS=`jx get preview --current 2>&1` make functest'
+# Make sure to use tabs instead of spaces
+echo 'functest: 
+	CGO_ENABLED=$(CGO_ENABLED) $(GO) test -test.v --run FunctionalTest --cover
+' | tee -a Makefile
+
+echo '      promote:
+        steps:
+        - command: ADDRESS=`jx get preview --current 2>&1` make functest' | \
+    tee -a jenkins-x.yml
 
 cat jenkins-x.yml
-
-git add . && git commit --message "Trying to extend the pipeline"
-
-git push
-
-# Wait for a few moments
-
-jx get build logs --filter go-demo-6 --branch $BRANCH
 ```
 
 
@@ -179,9 +178,24 @@ jx get build logs --filter go-demo-6 --branch $BRANCH
 ## Extending Build Pack Pipelines
 
 ```bash
+git add . && git commit --message "Trying to extend the pipeline"
+
+git push
+
+jx get build logs --filter go-demo-6 --branch $BRANCH
+
 jx create step --pipeline pullrequest --lifecycle promote --mode post \
     --sh 'ADDRESS=http://this-domain-does-not-exist.com make functest'
+```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 10</div>
+<div class="label">Hands-on Time</div>
+
+## Extending Build Pack Pipelines
+
+```bash
 git add .
 
 git commit --message "Added silly tests"

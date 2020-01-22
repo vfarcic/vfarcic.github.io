@@ -153,9 +153,9 @@ jx get env -p Never
 ```bash
 cd ..
 
-git clone https://github.com/$GH_USER/environment-jx-workshop-staging.git
+git clone https://github.com/$GH_USER/environment-$CLUSTER_NAME-staging.git
 
-cd environment-jx-workshop-staging
+cd environment-$CLUSTER_NAME-staging
 
 ls -1
 ```
@@ -229,7 +229,7 @@ git commit -m "Added tests"
 
 git push
 
-jx get activity --filter environment-jx-workshop-staging/master --watch
+jx get activity --filter environment-$CLUSTER_NAME-staging/master --watch
 
 jx get build logs
 

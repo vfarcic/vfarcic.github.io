@@ -128,9 +128,9 @@ export KUBECONFIG=$PWD/build/kubeconfig
 export GH_USER=[...] # Replace `[...]` with your GitHub user
 
 git clone https://github.com/vfarcic/jenkins-x-boot-config-workshop.git \
-    environment-jx-workshop-dev
+    environment-$CLUSTER_NAME-dev
 
-cd environment-jx-workshop-dev
+cd environment-$CLUSTER_NAME-dev
 
 export NAMESPACE=$GH_USER
 ```

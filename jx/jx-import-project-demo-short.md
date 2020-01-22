@@ -111,7 +111,7 @@ jx get activities --filter go-demo-6 --watch
 
 # Stop with *ctrl+c*
 
-jx get activities --filter environment-jx-workshop-staging/master --watch
+jx get activities --filter environment-$CLUSTER_NAME-staging/master --watch
 
 # Stop with *ctrl+c*
 

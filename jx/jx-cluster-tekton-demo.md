@@ -27,7 +27,9 @@
 ## Creating A Cluster With jx
 
 ```bash
-NAMESPACE=cd
+export NAMESPACE=jx
+
+export GH_USER=[...] # Replace `[...]` with your GitHub user
 
 echo "nexus:
   enabled: false
@@ -66,12 +68,14 @@ export PROJECT=[...] # GCP Project ID (e.g., devops26)
 ## Creating A Cluster With jx (GCS)
 
 ```bash
+export CLUSTER_NAME=jx-workshop
+
 # Use default answers
 
-jx create cluster gke -n jx-rocks -p $PROJECT -r us-east1 \
+jx create cluster gke -n $CLUSTER_NAME -p $PROJECT -r us-east1 \
     -m n1-standard-4 --min-num-nodes 1 --max-num-nodes 2 \
     --default-admin-password=admin \
-    --default-environment-prefix jx-rocks --git-provider-kind github \
+    --default-environment-prefix $CLUSTER_NAME --git-provider-kind github \
     --namespace $NAMESPACE --prow --tekton --skip-login
 ```
 
@@ -83,16 +87,18 @@ jx create cluster gke -n jx-rocks -p $PROJECT -r us-east1 \
 ## Creating A Cluster With jx (GKE)
 
 ```bash
+export CLUSTER_NAME=jx-workshop
+
 open "https://console.cloud.google.com/cloud-resource-manager"
 
 export PROJECT=[...] # GCP Project ID (e.g., devops26)
 
 # Use default answers
 
-jx create cluster gke -n jx-rocks -p $PROJECT -r us-east1 \
+jx create cluster gke -n $CLUSTER_NAME -p $PROJECT -r us-east1 \
     -m n1-standard-4 --min-num-nodes 1 --max-num-nodes 2 \
     --default-admin-password=admin \
-    --default-environment-prefix jx-rocks --git-provider-kind github \
+    --default-environment-prefix $CLUSTER_NAME --git-provider-kind github \
     --namespace $NAMESPACE --prow --tekton
 ```
 
@@ -113,7 +119,7 @@ CLUSTER_NAME=[...]
 
 jx create cluster aks -c $CLUSTER_NAME -n jxrocks-group -l eastus \
     -s Standard_D4s_v3 --nodes 3 --default-admin-password=admin \
-    --default-environment-prefix jx-rocks --git-provider-kind github \
+    --default-environment-prefix $CLUSTER_NAME --git-provider-kind github \
     --namespace $NAMESPACE --prow --tekton
 ```
 
@@ -140,17 +146,19 @@ export AWS_DEFAULT_REGION=us-west-2
 ## Creating A Cluster With jx (EKS)
 
 ```bash
+export CLUSTER_NAME=jx-workshop
+
 # Use default answers except in the case specified below.
 # Answer with `n` to `Would you like to register a wildcard DNS ALIAS to point at this ELB address?`
 
-jx create cluster eks -n jx-rocks -r $AWS_DEFAULT_REGION \
+jx create cluster eks -n $CLUSTER_NAME -r $AWS_DEFAULT_REGION \
     --node-type t2.xlarge --nodes 3 --nodes-min 3 --nodes-max 6 \
     --default-admin-password=admin \
-    --default-environment-prefix jx-rocks --git-provider-kind github \
+    --default-environment-prefix $CLUSTER_NAME --git-provider-kind github \
     --namespace $NAMESPACE --prow --tekton
 
 # If you get stuck with the `waiting for external loadbalancer to be created and update the nginx-ingress-controller service in kube-system namespace`, you probably encountered a bug.
-# To fix it, open the AWS console and remove the `kubernetes.io/cluster/jx-rocks` tag from the security group `eks-cluster-sg-*`.
+# To fix it, open the AWS console and remove the `kubernetes.io/cluster/$CLUSTER_NAME` tag from the security group `eks-cluster-sg-*`.
 ```
 
 
