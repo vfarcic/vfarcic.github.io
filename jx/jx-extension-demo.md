@@ -184,8 +184,8 @@ git push
 
 jx get build logs --filter go-demo-6 --branch $BRANCH
 
-jx create step --pipeline pullrequest --lifecycle promote --mode post \
-    --sh 'ADDRESS=http://this-domain-does-not-exist.com make functest'
+echo '        - command: ADDRESS=http://this-domain-does-not-exist.com make functest' | \
+    tee -a jenkins-x.yml
 ```
 
 
@@ -252,8 +252,14 @@ curl https://raw.githubusercontent.com/jenkins-x-buildpacks/jenkins-x-kubernetes
 ## Extending Environment Pipelines
 
 ```bash
-jx create step --pipeline release --lifecycle postbuild --mode post \
-    --sh 'echo "Running integ tests!!!"'
+cat jenkins-x.yml \
+    | sed -e \
+    's@pipelines: {}@pipelines:\
+    release:\
+      postBuild:\
+        steps:\
+        - command: echo "Running integ tests!!!"@g' \
+    | tee jenkins-x.yml
 
 cat jenkins-x.yml
 
