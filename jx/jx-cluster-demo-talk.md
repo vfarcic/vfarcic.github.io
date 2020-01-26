@@ -12,11 +12,88 @@
 ## Creating A Cluster With jx
 
 ```bash
-PROJECT=[...] # e.g. devops26
+export PROJECT=[...] # Replace `[...]` with the project ID
 
-jx create cluster gke --cluster-name jx-rocks --project-id $PROJECT \
-    --region us-east1 -m n1-standard-2 --min-num-nodes 1 \
-    --max-num-nodes 2 --default-admin-password=admin \
-    --default-environment-prefix tekton --git-provider-kind github \
-    --namespace cd --prow --tekton --batch-mode
+git clone https://github.com/vfarcic/terraform-gke.git
+
+cd terraform-gke
+
+git checkout jx-deployment
+
+git pull
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
+
+## Creating A Cluster With jx
+
+```bash
+# Create a service account (https://console.cloud.google.com/apis/credentials/serviceaccountkey)
+
+# Download the JSON and store it as account.json in this directory
+
+terraform apply
+
+export CLUSTER_NAME=$(terraform output cluster_name)
+
+export KUBECONFIG=$PWD/kubeconfig
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
+
+## Creating A Cluster With jx
+
+```bash
+gcloud container clusters \
+    get-credentials $(terraform output cluster_name) \
+    --project $(terraform output project_id) \
+        --region $(terraform output region)
+
+kubectl create clusterrolebinding \
+    cluster-admin-binding \
+    --clusterrole cluster-admin \
+    --user $(gcloud config get-value account)
+
+cd ..
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
+
+## Creating A Cluster With jx
+
+```bash
+git clone \
+    https://github.com/jenkins-x/jenkins-x-boot-config.git \
+    environment-$CLUSTER_NAME-dev
+
+cd environment-$CLUSTER_NAME-dev
+
+# Open `jx-requirements.yml` in an editor
+# Set `cluster.clusterName` to `devops-27-demo`
+# Set `cluster.environmentGitOwner`
+# Set `cluster.project` to `devops-27`
+# Set `cluster.zone` to `us-east1`
+# Save & Exit
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
+
+## Creating A Cluster With jx
+
+```bash
+jx boot
+
+cd ..
 ```

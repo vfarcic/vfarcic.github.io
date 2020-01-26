@@ -25,19 +25,35 @@ git push
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 6</div>
+<div class="eyebrow">Section 10</div>
 <div class="label">Hands-on Time</div>
 
-## In case you messed it up (GKE only)
+## In case you messed it up
 
 ```bash
-cat charts/go-demo-6/Makefile | sed -e "s@devops-26@$PROJECT@g" \
+# If GKE
+export REGISTRY_OWNER=$PROJECT
+
+# If EKS or AKS
+# Replace `[...]` with your GitHub user
+export REGISTRY_OWNER=[...]
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 10</div>
+<div class="label">Hands-on Time</div>
+
+## In case you messed it up
+
+```bash
+cat charts/go-demo-6/Makefile | sed -e "s@devops-26@$REGISTRY_OWNER@g" \
     | tee charts/go-demo-6/Makefile
 
-cat charts/preview/Makefile | sed -e "s@devops-26@$PROJECT@g" \
+cat charts/preview/Makefile | sed -e "s@devops-26@$REGISTRY_OWNER@g" \
     | tee charts/preview/Makefile
 
-cat skaffold.yaml | sed -e "s@devops-26@$PROJECT@g" \
+cat skaffold.yaml | sed -e "s@devops-26@$REGISTRY_OWNER@g" \
     | tee skaffold.yaml
 ```
 
@@ -233,9 +249,7 @@ git add . && git commit --message "Removed the silly test" && git push
 ```bash
 cd ..
 
-GH_USER=[...]
-
-cd environment-jx-rocks-staging
+cd environment-$CLUSTER_NAME-staging
 
 git pull
 
@@ -264,10 +278,6 @@ cat jenkins-x.yml \
 cat jenkins-x.yml
 
 git add . && git commit --message "Added integ tests" && git push
-
-# Wait for a few moments
-
-jx get build logs --filter environment-jx-rocks-staging --branch master
 ```
 
 
@@ -278,6 +288,10 @@ jx get build logs --filter environment-jx-rocks-staging --branch master
 ## Extending Environment Pipelines
 
 ```bash
+# Wait for a few moments
+
+jx get build logs --filter environment-$CLUSTER_NAME-staging --branch master
+
 open "$PR_ADDR"
 
 # Merge it

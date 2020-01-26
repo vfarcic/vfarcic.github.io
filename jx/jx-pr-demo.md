@@ -25,24 +25,36 @@ echo "buildPack: go" | tee jenkins-x.yml
 
 
 <!-- .slide: class="dark" -->
-<div class="eyebrow">Section 6</div>
+<div class="eyebrow">Section 10</div>
 <div class="label">Hands-on Time</div>
 
-## In case you messed it up (GKE only)
+## In case you messed it up
 
 ```bash
-export PROJECT=devops-27
+# If GKE
+export REGISTRY_OWNER=$PROJECT
 
-cat charts/go-demo-6/Makefile | sed -e "s@devops-26@$PROJECT@g" \
+# If EKS or AKS
+# Replace `[...]` with your GitHub user
+export REGISTRY_OWNER=[...]
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 10</div>
+<div class="label">Hands-on Time</div>
+
+## In case you messed it up
+
+```bash
+cat charts/go-demo-6/Makefile | sed -e "s@devops-26@$REGISTRY_OWNER@g" \
     | tee charts/go-demo-6/Makefile
 
-cat charts/preview/Makefile | sed -e "s@devops-26@$PROJECT@g" \
+cat charts/preview/Makefile | sed -e "s@devops-26@$REGISTRY_OWNER@g" \
     | tee charts/preview/Makefile
 
-cat skaffold.yaml | sed -e "s@devops-26@$PROJECT@g" \
+cat skaffold.yaml | sed -e "s@devops-26@$REGISTRY_OWNER@g" \
     | tee skaffold.yaml
-
-git add . && git commit -m "Added jenkins-x.yml" && git push
 ```
 
 

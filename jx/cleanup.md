@@ -1,15 +1,7 @@
-<!--
-doctl kubernetes cluster delete jx-rocks -f
-
-# TODO: Remove the volumes
-# doctl compute volume list -o json
-
-# TODO: Remove the LB
--->
 ## Cleanup (GKE)
 
 ```bash
-gcloud container clusters delete jx-rocks --region us-east1 --quiet
+gcloud container clusters delete $CLUSTER_NAME --region us-east1 --quiet
 
 gcloud compute disks delete --zone us-east1-b $(gcloud compute disks \
     list --filter="zone:us-east1-b AND -users:*" \
@@ -26,7 +18,7 @@ gcloud compute disks delete --zone us-east1-d $(gcloud compute disks \
 ## Cleanup (EKS)
 
 ```bash
-eksctl delete cluster -n jx-rocks
+eksctl delete cluster -n $CLUSTER_NAME
 
 for volume in `aws ec2 describe-volumes --output text| grep available | awk '{print $8}'`; do
     echo "Deleting volume $volume"
@@ -55,9 +47,9 @@ az group delete --name jxrocks-group --yes
 ```bash
 cd ..
 
-hub delete -y $GH_USER/environment-jx-rocks-staging
+hub delete -y $GH_USER/environment-$CLUSTER_NAME-staging
 
-hub delete -y $GH_USER/environment-jx-rocks-production
+hub delete -y $GH_USER/environment-$CLUSTER_NAME-production
 
 hub delete -y $GH_USER/jx-go
 
@@ -72,7 +64,7 @@ hub delete -y $GH_USER/jx-prow
 ```bash
 hub delete -y $GH_USER/jx-knative
 
-rm -rf ~/.jx/environments/$GH_USER/environment-jx-rocks-*
+rm -rf ~/.jx/environments/$GH_USER/environment-$CLUSTER_NAME-*
 
 rm -rf jx-go
 
@@ -82,5 +74,5 @@ rm -rf jx-prow
 
 rm -rf jx-knative
 
-rm -rf environment-jx-rocks-*
+rm -rf environment-$CLUSTER_NAME-*
 ```
