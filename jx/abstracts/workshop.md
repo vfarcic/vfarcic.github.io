@@ -16,7 +16,7 @@ Jenkins X is a combination of best of breed tools and software for Kubernetes. I
 
 It is the CI/CD solution for development of modern cloud applications on Kubernetes.
 
-We'll explore how to create a fully operational continuous delivery pipeline using containers, Kubernetes, Jenkins X, and quite a few other tools.
+We'll explore how to create a fully operational continuous delivery pipeline using containers, Kubernetes, Jenkins X, and quite a few other tools. We'll **continuously build, test, deploy**, and run any other tasks related to lifecycle of our applications. Our goal will be to have a fully automated pipeline of everything happening after we push changes to our code repositories.
 
 ## The Schedule
 
