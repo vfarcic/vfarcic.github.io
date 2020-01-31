@@ -53,8 +53,3 @@
         <img src="../img/qr/devops-toolkit-series.png"/>
     </a>
 </figure>
-
-
-# Additional Info
-
-![](img/the-end-prow.png)
