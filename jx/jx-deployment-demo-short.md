@@ -90,7 +90,7 @@ cd jx-recreate
 
 kubectl --namespace jx-staging get pods --selector app=jx-jx-recreate
 
-cat main.go | sed -e "s@example@recreate@g" | tee main.go
+sed -e "s@example@recreate@g" -i main.go
 
 git add . && git commit -m "Recreate strategy" && git push
 
@@ -148,7 +148,7 @@ done
 ```bash
 cd jx-rolling
 
-cat main.go | sed -e "s@example@rolling update@g" | tee main.go
+sed -e "s@example@rolling update@g" -i main.go
 
 git add . && git commit -m "Rolling update" && git push
 
@@ -214,7 +214,7 @@ done
 ```bash
 cd jx-canary
 
-cat main.go | sed -e "s@example@canary@g" | tee main.go
+sed -e "s@example@canary@g" -i main.go
 
 git add . && git commit -m "Canary"
 

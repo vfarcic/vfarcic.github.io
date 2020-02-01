@@ -47,14 +47,14 @@ export REGISTRY_OWNER=[...]
 ## In case you messed it up
 
 ```bash
-cat charts/go-demo-6/Makefile | sed -e "s@devops-26@$REGISTRY_OWNER@g" \
-    | tee charts/go-demo-6/Makefile
+sed -e "s@devops-26@$REGISTRY_OWNER@g" \
+    -i charts/go-demo-6/Makefile
 
-cat charts/preview/Makefile | sed -e "s@devops-26@$REGISTRY_OWNER@g" \
-    | tee charts/preview/Makefile
+sed -e "s@devops-26@$REGISTRY_OWNER@g" \
+    -i charts/preview/Makefile
 
-cat skaffold.yaml | sed -e "s@devops-26@$REGISTRY_OWNER@g" \
-    | tee skaffold.yaml
+sed -e "s@devops-26@$REGISTRY_OWNER@g" \
+    -i skaffold.yaml
 ```
 
 
@@ -70,11 +70,11 @@ cat skaffold.yaml | sed -e "s@devops-26@$REGISTRY_OWNER@g" \
 ```bash
 git checkout -b my-new-pr
 
-cat main.go | sed -e "s@hello, devpod with tests@hello, PR@g" \
-    | tee main.go
+sed -e "s@hello, devpod with tests@hello, PR@g" \
+    -i main.go
 
-cat main_test.go | sed -e "s@hello, devpod with tests@hello, PR@g" \
-    | tee main_test.go
+sed -e "s@hello, devpod with tests@hello, PR@g" \
+    -i main_test.go
 ```
 
 

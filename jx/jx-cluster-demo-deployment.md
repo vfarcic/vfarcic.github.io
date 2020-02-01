@@ -191,19 +191,19 @@ jx get activity --filter jx-recreate --watch
 
 cd jx-recreate
 
-cat charts/jx-recreate/templates/deployment.yaml | sed -e \
+sed -e \
     's@  replicas:@  strategy:\
     type: Recreate\
-  replicas:@g' | tee charts/jx-recreate/templates/deployment.yaml
+  replicas:@g' \
+    -i charts/jx-recreate/templates/deployment.yaml
 ```
 
 
 ## Setting The Scene (Recreate)
 
 ```bash
-cat charts/jx-recreate/values.yaml \
-    | sed -e 's@replicaCount: 1@replicaCount: 5@g' \
-    | tee charts/jx-recreate/values.yaml
+sed -e 's@replicaCount: 1@replicaCount: 5@g' \
+    -i charts/jx-recreate/values.yaml
 
 git add . && git commit -m "Recreate"
 
@@ -225,9 +225,8 @@ jx get activity --filter jx-rolling --watch
 
 cd jx-rolling
 
-cat charts/jx-rolling/values.yaml \
-    | sed -e 's@replicaCount: 1@replicaCount: 5@g' \
-    | tee charts/jx-rolling/values.yaml
+sed -e 's@replicaCount: 1@replicaCount: 5@g' \
+    -i charts/jx-rolling/values.yaml
 ```
 
 

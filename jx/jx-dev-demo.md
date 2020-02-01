@@ -129,9 +129,9 @@ echo 'unittest:
 	CGO_ENABLED=$(CGO_ENABLED) $(GO) test --run UnitTest -v
 ' | tee -a Makefile
 
-cat watch.sh | sed -e \
+sed -e \
     's@linux \&\& skaffold@linux \&\& make unittest \&\& skaffold@g' \
-    | tee watch.sh
+    -i watch.sh
 
 jx sync --daemon
 
@@ -162,11 +162,11 @@ chmod +x watch.sh
 ```bash
 curl "$URL/demo/hello"
 
-cat main.go | sed -e \
-    's@hello, world@hello, devpod with tests@g' | tee main.go
+sed -e 's@hello, world@hello, devpod with tests@g' \
+    -i main.go
 
-cat main_test.go | sed -e \
-    's@hello, world@hello, devpod with tests@g' | tee main_test.go
+sed -e 's@hello, world@hello, devpod with tests@g' \
+    -i main_test.go
 ```
 
 * Go back to the second terminal and observe the output

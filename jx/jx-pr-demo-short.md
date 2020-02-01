@@ -16,7 +16,7 @@ cd jx-go
 
 git checkout -b my-pr
 
-cat main.go | sed -e "s@http example@http PR@g" | tee main.go
+sed -e "s@http example@http PR@g" -i main.go
 
 git add . && git commit -m "This is a PR"
 
