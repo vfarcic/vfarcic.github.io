@@ -42,9 +42,6 @@ kubectl --namespace jx-staging get pods | grep knative
 ```
 
 
-<!-- .slide: data-background="img/knative-scale-to-zero.png" data-background-size="contain" -->
-
-
 <!-- .slide: class="dark" -->
 <div class="eyebrow"></div>
 <div class="label">Hands-on Time</div>
@@ -59,6 +56,9 @@ kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
     -it --rm -- --concurrent 300 --time 30S "$KNATIVE_ADDR" \
     && kubectl --namespace jx-staging get pods | grep knative
 ```
+
+
+<!-- .slide: data-background="img/knative-scale-to-zero.png" data-background-size="contain" -->
 
 
 <!-- .slide: data-background="img/knative-scale-to-three.png" data-background-size="contain" -->
