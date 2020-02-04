@@ -47,14 +47,14 @@ export REGISTRY_OWNER=[...]
 ## In case you messed it up
 
 ```bash
-cat charts/go-demo-6/Makefile | sed -e "s@devops-26@$REGISTRY_OWNER@g" \
-    | tee charts/go-demo-6/Makefile
+sed -e "s@devops-26@$REGISTRY_OWNER@g" \
+    -i charts/go-demo-6/Makefile
 
-cat charts/preview/Makefile | sed -e "s@devops-26@$REGISTRY_OWNER@g" \
-    | tee charts/preview/Makefile
+sed -e "s@devops-26@$REGISTRY_OWNER@g" \
+    -i charts/preview/Makefile
 
-cat skaffold.yaml | sed -e "s@devops-26@$REGISTRY_OWNER@g" \
-    | tee skaffold.yaml
+sed -e "s@devops-26@$REGISTRY_OWNER@g" \
+    -i skaffold.yaml
 ```
 
 
@@ -101,13 +101,11 @@ jx get activities --filter go-demo-6 --watch
 ```bash
 git checkout -b extension
 
-cat charts/go-demo-6/values.yaml | sed -e \
-    's@replicaCount: 1@replicaCount: 3@g' \
-    | tee charts/go-demo-6/values.yaml
+sed -e 's@replicaCount: 1@replicaCount: 3@g' \
+    -i charts/go-demo-6/values.yaml
 
-cat functional_test.go | sed -e \
-    's@fmt.Sprintf("http://@fmt.Sprintf("@g' \
-    | tee functional_test.go
+sed -e 's@fmt.Sprintf("http://@fmt.Sprintf("@g' \
+    -i functional_test.go
 ```
 
 
@@ -118,8 +116,8 @@ cat functional_test.go | sed -e \
 ## Extending Build Pack Pipelines
 
 ```bash
-cat production_test.go | sed -e 's@fmt.Sprintf("http://@fmt.Sprintf("@g' \
-    | tee production_test.go
+sed -e 's@fmt.Sprintf("http://@fmt.Sprintf("@g' \
+    -i production_test.go
 
 echo "buildPack: go
 pipelineConfig:
@@ -127,7 +125,8 @@ pipelineConfig:
     pullRequest:
       build:
         preSteps:
-        - command: make unittest" | tee jenkins-x.yml
+        - command: make unittest" \
+    | tee jenkins-x.yml
 
 cat jenkins-x.yml
 ```
@@ -234,7 +233,7 @@ open "$PR_ADDR"
 
 ```bash
 # Repeat until `promote` extension is removed
-cat jenkins-x.yml | sed '$ d' | tee jenkins-x.yml
+sed -e '$ d' -i jenkins-x.yml
 
 git add . && git commit --message "Removed the silly test" && git push
 ```
@@ -266,14 +265,13 @@ curl https://raw.githubusercontent.com/jenkins-x-buildpacks/jenkins-x-kubernetes
 ## Extending Environment Pipelines
 
 ```bash
-cat jenkins-x.yml \
-    | sed -e \
+sed -e \
     's@pipelines: {}@pipelines:\
     release:\
       postBuild:\
         steps:\
         - command: echo "Running integ tests!!!"@g' \
-    | tee jenkins-x.yml
+    -i jenkins-x.yml
 
 cat jenkins-x.yml
 

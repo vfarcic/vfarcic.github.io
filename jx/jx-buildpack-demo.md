@@ -35,12 +35,12 @@ cp -R packs/go packs/go-mongo
 ---
 
 ```bash
-cat packs/go-mongo/charts/templates/deployment.yaml | sed -e \
+sed -e \
     's@ports:@env:\
         - name: DB\
           value: {{ template "fullname" . }}-db\
         ports:@g' \
-    | tee packs/go-mongo/charts/templates/deployment.yaml
+    -i packs/go-mongo/charts/templates/deployment.yaml
 
 echo "dependencies:
 - name: mongodb
@@ -72,18 +72,17 @@ ls -1 packs/go-mongo/preview
 
 cat packs/go-mongo/preview/requirements.yaml
 
-cat packs/go-mongo/preview/requirements.yaml \
-    | sed -e \
+sed -e \
     's@  # !! "alias@- name: mongodb\
   alias: preview-db\
   version: 5.3.0\
   repository:  https://kubernetes-charts.storage.googleapis.com\
 \
   # !! "alias@g' \
-    | tee packs/go-mongo/preview/requirements.yaml
+    -i packs/go-mongo/preview/requirements.yaml
 
 echo '
-' | tee -a packs/go-mongo/preview/requirements.yaml 
+' >> packs/go-mongo/preview/requirements.yaml
 ```
 
 
@@ -157,9 +156,8 @@ kubectl -n jx-staging describe pod -l app=jx-staging-go-demo-6
 
 cat charts/go-demo-6/values.yaml
 
-cat charts/go-demo-6/values.yaml | sed -e \
-    's@probePath: /@probePath: /demo/hello?health=true@g' \
-    | tee charts/go-demo-6/values.yaml
+sed -e 's@probePath: /@probePath: /demo/hello?health=true@g' \
+    -i charts/go-demo-6/values.yaml
 
 echo '
   probePath: /demo/hello?health=true' \

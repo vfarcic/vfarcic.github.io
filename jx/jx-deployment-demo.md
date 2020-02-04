@@ -136,15 +136,14 @@ cd ..
 ```bash
 cd jx-progressive
 
-cat charts/jx-progressive/values.yaml | sed -e \
-    's@replicaCount: 1@replicaCount: 3@g' \
-    | tee charts/jx-progressive/values.yaml
+sed -e 's@replicaCount: 1@replicaCount: 3@g' \
+    -i charts/jx-progressive/values.yaml
 
-cat charts/jx-progressive/templates/deployment.yaml | sed -e \
+sed -e \
     's@  replicas:@  strategy:\
     type: Recreate\
   replicas:@g' \
-    | tee charts/jx-progressive/templates/deployment.yaml
+    -i charts/jx-progressive/templates/deployment.yaml
 ```
 
 
@@ -201,7 +200,7 @@ git push
 
 kubectl --namespace jx-staging get ing
 
-cat main.go | sed -e "s@example@recreate@g" | tee main.go
+sed -e "s@example@recreate@g" -i main.go
 ```
 
 
@@ -286,11 +285,10 @@ done
 ## RollingUpdate Strategy
 
 ```bash
-cat charts/jx-progressive/templates/deployment.yaml | sed -e \
-    's@type: Recreate@type: RollingUpdate@g' \
-    | tee charts/jx-progressive/templates/deployment.yaml
+sed -e 's@type: Recreate@type: RollingUpdate@g' \
+    -i charts/jx-progressive/templates/deployment.yaml
 
-cat main.go | sed -e "s@recreate@rolling update@g" | tee main.go
+sed -e "s@recreate@rolling update@g" -i main.go
 
 git add .
 
@@ -594,7 +592,7 @@ kubectl --namespace $NAMESPACE-staging get virtualservices.networking.istio.io
 kubectl --namespace istio-system logs \
     --selector app.kubernetes.io/name=flagger
 
-cat main.go | sed -e "s@rolling update@progressive@g" | tee main.go
+sed -e "s@rolling update@progressive@g" -i main.go
 ```
 
 

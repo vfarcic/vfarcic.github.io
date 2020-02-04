@@ -84,7 +84,7 @@ While there is no doubt among developers where to store the files they create, t
 ## Git Is The Only Source Of Truth
 
 ```bash
-cat main.go | sed -e "s@golang http@GitOps@g" | tee main.go
+sed -e "s@golang http@GitOps@g" -i main.go
 
 git add .
 
@@ -363,9 +363,8 @@ cd environment-jx-rocks-staging/env
 CM_ADDR=$(kubectl get ing chartmuseum \
     -o jsonpath="{.spec.rules[0].host}")
 
-cat requirements.yaml | sed -e \
-    "s@http://jenkins-x-chartmuseum:8080@http://$CM_ADDR@g" \
-    | tee requirements.yaml
+sed -e "s@http://jenkins-x-chartmuseum:8080@http://$CM_ADDR@g" \
+    -i requirements.yaml
 ```
 
 

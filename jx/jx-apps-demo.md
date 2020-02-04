@@ -229,8 +229,8 @@ ls -1 env
 
 cat env/nexus/values.yaml
 
-cat env/nexus/values.yaml | sed -e 's@enabled: true@enabled: false@g' \
-    | tee env/nexus/values.yaml
+sed -e 's@enabled: true@enabled: false@g' \
+    -i env/nexus/values.yaml
 ```
 
 
@@ -421,9 +421,9 @@ cp -r env/istio-init env/istio
 ```bash
 cat env/istio/templates/app.yaml
 
-cat env/istio/templates/app.yaml | sed -e 's@istio-init@istio@g' \
-    | sed -e 's@initialize Istio CRDs@install Istio@g' \
-    | tee env/istio/templates/app.yaml
+sed -e 's@istio-init@istio@g' \
+    -e 's@initialize Istio CRDs@install Istio@g' \
+    -i env/istio/templates/app.yaml
 
 cat env/requirements.yaml
 
