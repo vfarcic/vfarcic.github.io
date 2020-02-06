@@ -87,12 +87,12 @@ curl $ADDR
 ```bash
 cd jx-knative
 
-cat charts/jx-knative/templates/ksvc.yaml | sed -e \
+sed -e \
     's@revisionTemplate:@revisionTemplate:\
         metadata:\
           annotations:\
             autoscaling.knative.dev/maxScale: "5"@g' \
-    | tee charts/jx-knative/templates/ksvc.yaml
+    -i charts/jx-knative/templates/ksvc.yaml
 ```
 
 

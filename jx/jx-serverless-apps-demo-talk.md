@@ -67,7 +67,7 @@ kubectl --namespace cd-staging get pods
 ```bash
 git checkout -b my-pr
 
-cat main.go | sed -e "s@example@Knative@g" | tee main.go
+sed -e "s@example@Knative@g" -i main.go
 
 git add . && git commit -m "Added something"
 

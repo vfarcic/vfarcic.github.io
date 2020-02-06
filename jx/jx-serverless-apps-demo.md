@@ -181,13 +181,13 @@ kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
     && kubectl --namespace $NAMESPACE-staging get pods \
     --selector serving.knative.dev/service=jx-knative
 
-cat charts/jx-knative/templates/ksvc.yaml | sed -e \
+sed -e \
     's@revisionTemplate:@revisionTemplate:\
         metadata:\
           annotations:\
             autoscaling.knative.dev/target: "3"\
             autoscaling.knative.dev/maxScale: "5"@g' \
-    | tee charts/jx-knative/templates/ksvc.yaml
+    -i charts/jx-knative/templates/ksvc.yaml
 ```
 
 
@@ -239,10 +239,10 @@ kubectl --namespace $NAMESPACE-staging get pods \
 ## New Serverless Application
 
 ```bash
-cat charts/jx-knative/templates/ksvc.yaml | sed -e \
+sed -e \
     's@autoscaling.knative.dev/target: "3"@autoscaling.knative.dev/target: "3"\
             autoscaling.knative.dev/minScale: "1"@g' \
-    | tee charts/jx-knative/templates/ksvc.yaml
+    -i charts/jx-knative/templates/ksvc.yaml
 
 git add .
 

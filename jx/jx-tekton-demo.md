@@ -65,7 +65,8 @@ echo "approvers:
 - $GH_APPROVER
 reviewers:
 - $GH_USER
-- $GH_APPROVER" | tee OWNERS
+- $GH_APPROVER" \
+    | tee OWNERS
 
 git commit -am "Added the other me"
 

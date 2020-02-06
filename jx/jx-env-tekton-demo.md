@@ -190,14 +190,13 @@ cat integration_test.go
 ```bash
 cat jenkins-x.yml
 
-cat jenkins-x.yml \
-    | sed -e \
+sed -e \
     's@pipelines: {}@pipelines:\
     release:\
       postBuild:\
         steps:\
         - command: make test@g' \
-    | tee jenkins-x.yml
+    -i jenkins-x.yml
 
 cat jenkins-x.yml
 ```

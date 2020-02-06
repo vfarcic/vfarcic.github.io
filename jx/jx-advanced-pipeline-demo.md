@@ -47,14 +47,14 @@ export REGISTRY_OWNER=[...]
 ## In case you messed it up
 
 ```bash
-cat charts/go-demo-6/Makefile | sed -e "s@devops-26@$REGISTRY_OWNER@g" \
-    | tee charts/go-demo-6/Makefile
+sed -e "s@devops-26@$REGISTRY_OWNER@g" \
+    -i charts/go-demo-6/Makefile
 
-cat charts/preview/Makefile | sed -e "s@devops-26@$REGISTRY_OWNER@g" \
-    | tee charts/preview/Makefile
+sed -e "s@devops-26@$REGISTRY_OWNER@g" \
+    -i charts/preview/Makefile
 
-cat skaffold.yaml | sed -e "s@devops-26@$REGISTRY_OWNER@g" \
-    | tee skaffold.yaml
+sed -e "s@devops-26@$REGISTRY_OWNER@g" \
+    -i skaffold.yaml
 
 git add . && git commit -m "Registry owner" && git push
 ```
@@ -532,8 +532,8 @@ jx step syntax validate pipeline
 
 cat Dockerfile
 
-cat Dockerfile | sed -e 's@/bin/ /@/bin/go-demo-6_linux /go-demo-6@g' \
-    | tee Dockerfile
+sed -e 's@/bin/ /@/bin/go-demo-6_linux /go-demo-6@g' \
+    -i Dockerfile
 
 git add .
 
