@@ -178,6 +178,11 @@ jx create quickstart --filter golang-http --project-name jx-knative \
     --deploy-kind knative --batch-mode
 
 jx get activity --filter jx-knative --watch
+
+export KNATIVE_ADDR=$(kubectl --namespace jx-staging \
+    get ksvc jx-knative --output jsonpath="{.status.url}")
+
+curl $KNATIVE_ADDR
 ```
 
 
