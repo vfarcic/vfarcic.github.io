@@ -35,17 +35,17 @@ gcloud compute disks delete --zone us-east1-d $(gcloud compute disks \
 ## Cleanup
 
 ```bash
-hub delete -y $GH_USER/environment-tekton-staging
+hub delete -y $GH_USER/environment-$CLUSTER_NAME-staging
 
-hub delete -y $GH_USER/environment-tekton-production
+hub delete -y $GH_USER/environment-$CLUSTER_NAME-production
+
+hub delete -y $GH_USER/environment-$CLUSTER_NAME-dev
 
 hub delete -y $GH_USER/jx-go
 
 hub delete -y $GH_USER/jx-serverless
 
 hub delete -y $GH_USER/jx-prow
-
-hub delete -y $GH_USER/jx-knative
 ```
 
 
@@ -54,7 +54,7 @@ hub delete -y $GH_USER/jx-knative
 ## Cleanup
 
 ```bash
-cd ..
+hub delete -y $GH_USER/jx-knative
 
 rm -rf jx-go
 
@@ -64,14 +64,5 @@ rm -rf jx-prow
 
 rm -rf jx-knative
 
-rm -rf environment-tekton-*
-```
-
-
-<!-- .slide: class="center" -->
-<!-- .slide: data-background="data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/cleanup.jpg) center / cover" -->
-## Cleanup
-
-```bash
-rm -rf ~/.jx/environments/$GH_USER/environment-tekton-*
+rm -rf environment-$CLUSTER_NAME-*
 ```

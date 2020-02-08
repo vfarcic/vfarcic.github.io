@@ -19,7 +19,7 @@ cat charts/jx-knative/templates/ksvc.yaml
 
 cat charts/jx-knative/values.yaml
 
-kubectl --namespace cd-staging get pods
+kubectl --namespace jx-staging get pods
 ```
 
 
@@ -35,7 +35,7 @@ kubectl --namespace cd-staging get pods
 ```bash
 kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
      -it --rm -- -c 300 -t 20S "$ADDR/" \
-     && kubectl --namespace cd-staging get pods
+     && kubectl --namespace jx-staging get pods
 ```
 
 
@@ -49,13 +49,8 @@ kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
 ## New Serverless Application
 
 ```bash
-kubectl --namespace cd-staging get pods
+kubectl --namespace jx-staging get pods
 ```
-
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow"></div>
-<div class="label">Hands-on Time</div>
 
 
 <!-- .slide: class="dark" -->
@@ -67,7 +62,7 @@ kubectl --namespace cd-staging get pods
 ```bash
 git checkout -b my-pr
 
-sed -e "s@example@Knative@g" -i main.go
+cat main.go | sed -e "s@example@Knative@g" | tee main.go
 
 git add . && git commit -m "Added something"
 
@@ -77,6 +72,10 @@ jx create pullrequest --title "Serverless with Knative" \
     --body "What I can say?" --batch-mode
 ```
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
 ## Serverless With PRs
 
@@ -90,14 +89,14 @@ jx create pullrequest --title "Serverless with Knative" \
 ## Serverless With PRs
 
 ```bash
-BRANCH=[...] # e.g., `PR-109`
+export BRANCH=[...] # e.g., `PR-109`
 
 jx get activities --filter jx-knative/$BRANCH --watch
 
-GH_USER=[...]
+export GH_USER=[...]
 
-PR_NAMESPACE=$(echo cd-$GH_USER-jx-knative-$BRANCH \
-  | tr '[:upper:]' '[:lower:]')
+PR_NAMESPACE=$(echo jx-$GH_USER-jx-knative-$BRANCH \
+    | tr '[:upper:]' '[:lower:]')
 
 kubectl --namespace $PR_NAMESPACE get pods
 ```
@@ -110,8 +109,8 @@ kubectl --namespace $PR_NAMESPACE get pods
 ## Serverless With PRs
 
 ```bash
-PR_ADDR=$(kubectl --namespace $PR_NAMESPACE get ksvc jx-knative \
-    --output jsonpath="{.status.url}")
+export PR_ADDR=$(kubectl --namespace $PR_NAMESPACE \
+    get ksvc jx-knative --output jsonpath="{.status.url}")
 
 curl "$PR_ADDR"
 
@@ -120,14 +119,24 @@ jx repo --batch-mode
 
 * Merge the PR
 
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Serverless With PRs
+
 ```bash
 jx get activities --filter jx-knative/master --watch
 
-jx get activities --filter environment-tekton-staging/master --watch
+jx get activities --filter environment-$CLUSTER_NAME-staging/master \
+    --watch
 
 curl "$ADDR/"
 
-kubectl --namespace cd-staging get pods
-
 kubectl --namespace $PR_NAMESPACE get pods
+
+kubectl --namespace jx-staging get pods
+
+cd ..
 ```
