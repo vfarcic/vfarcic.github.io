@@ -67,11 +67,9 @@ cat skaffold.yaml | sed -e "s@devops-26@$REGISTRY_OWNER@g" | tee skaffold.yaml
 ```bash
 git checkout -b my-new-pr
 
-sed -e "s@hello, devpod with tests@hello, PR@g" \
-    -i main.go
+cat main.go | sed -e "s@hello, devpod with tests@hello, PR@g" | tee main.go
 
-sed -e "s@hello, devpod with tests@hello, PR@g" \
-    -i main_test.go
+cat main_test.go | sed -e "s@hello, devpod with tests@hello, PR@g" | tee main_test.go
 ```
 
 
