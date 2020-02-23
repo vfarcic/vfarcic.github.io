@@ -136,14 +136,12 @@ cd ..
 ```bash
 cd jx-progressive
 
-sed -e 's@replicaCount: 1@replicaCount: 3@g' \
-    -i charts/jx-progressive/values.yaml
+cat charts/jx-progressive/values.yaml | sed -e 's@replicaCount: 1@replicaCount: 3@g' | tee charts/jx-progressive/values.yaml
 
-sed -e \
+cat charts/jx-progressive/templates/deployment.yaml | sed -e \
     's@  replicas:@  strategy:\
     type: Recreate\
-  replicas:@g' \
-    -i charts/jx-progressive/templates/deployment.yaml
+  replicas:@g' | tee charts/jx-progressive/templates/deployment.yaml
 ```
 
 
@@ -164,7 +162,7 @@ git push --set-upstream origin master
 
 jx get activities --filter jx-progressive/master --watch
 
-jx get activities --filter environment-jx-rocks-staging/master --watch
+jx get activities --filter environment-$CLUSTER_NAME-staging/master --watch
 ```
 
 
@@ -200,7 +198,7 @@ git push
 
 kubectl --namespace jx-staging get ing
 
-sed -e "s@example@recreate@g" -i main.go
+cat main.go | sed -e "s@example@recreate@g" | tee main.go
 ```
 
 

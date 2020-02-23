@@ -117,13 +117,9 @@ cat charts/jx-knative/templates/ksvc.yaml
 ```bash
 jx get activities --filter jx-knative --watch
 
-jx get activities --filter environment-jx-rocks-staging/master --watch
+jx get activities --filter environment-$CLUSTER_NAME-staging/master --watch
 
-kubectl --namespace $NAMESPACE-staging get pods \
-    --selector serving.knative.dev/service=jx-knative
-
-kubectl --namespace  $NAMESPACE-staging describe pod \
-    --selector serving.knative.dev/service=jx-knative
+kubectl --namespace $NAMESPACE-staging get pods
 
 kubectl --namespace $NAMESPACE-staging get all
 ```
@@ -145,8 +141,7 @@ echo $ADDR
 
 curl "$ADDR"
 
-kubectl --namespace $NAMESPACE-staging get pods \
-    --selector serving.knative.dev/service=jx-knative
+kubectl --namespace $NAMESPACE-staging get pods
 ```
 
 
@@ -159,13 +154,11 @@ kubectl --namespace $NAMESPACE-staging get pods \
 ```bash
 # Wait for a while
 
-kubectl --namespace $NAMESPACE-staging get pods \
-    --selector serving.knative.dev/service=jx-knative
+kubectl --namespace $NAMESPACE-staging get pods
 
 kubectl --namespace knative-serving describe configmap config-autoscaler
 
-kubectl --namespace $NAMESPACE-staging get pods \
-    --selector serving.knative.dev/service=jx-knative
+kubectl --namespace $NAMESPACE-staging get pods
 ```
 
 
@@ -178,8 +171,7 @@ kubectl --namespace $NAMESPACE-staging get pods \
 ```bash
 kubectl run siege --image yokogawa/siege --generator "run-pod/v1" \
     -it --rm -- --concurrent 300 --time 30S "$ADDR" \
-    && kubectl --namespace $NAMESPACE-staging get pods \
-    --selector serving.knative.dev/service=jx-knative
+    && kubectl --namespace $NAMESPACE-staging get pods
 
 sed -e \
     's@revisionTemplate:@revisionTemplate:\
