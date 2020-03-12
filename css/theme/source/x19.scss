@@ -57,6 +57,16 @@ $selectionBackgroundColor: #e7ad52;
     color: $secondary-green;
 }
 
+.reveal .twitter {
+    position: absolute;
+    bottom: 20px;
+    right: 120px;
+    color: white;
+    z-index: 2; }
+    .reveal .twitter img {
+      width: 50%;
+      height: 50%; }
+
 .reveal .sponsor {
     position: absolute;
     bottom: 20px;

@@ -41,7 +41,7 @@
 
 * Adopt Kubernetes as the major cross-platform cloud-agnostic container scheduler <!-- .element: class="fragment" -->
 * Adopt tekton as serverless solution for pipelines in Kubernetes <!-- .element: class="fragment" -->
-* Adopt prow as GitOps and ChatOps <!-- .element: class="fragment" -->
+* Create a ChatOps gateway in between <!-- .element: class="fragment" -->
 * Adopt Helm as the standard Kubernetes packaging solution <!-- .element: class="fragment" -->
 * Facilitate quickstarts <!-- .element: class="fragment" -->
 
