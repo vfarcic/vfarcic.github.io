@@ -33,5 +33,7 @@ jx get applications --env production
 
 PROD_ADDR=[...]
 
-curl "$PROD_ADDR/demo/hello"
+curl "$PROD_ADDR"
+
+cd ..
 ```

@@ -12,8 +12,7 @@
 ## Creating A Project
 
 ```bash
-jx create quickstart --filter golang-http --project-name jx-go \
-    --batch-mode
+jx create quickstart --filter golang-http --project-name jx-go
 
 export GH_USER=[...] # Replace with your GitHub user
 
