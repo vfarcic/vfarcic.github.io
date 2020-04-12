@@ -35,6 +35,8 @@ git pull
 
 # Download the JSON and store it as account.json in this directory
 
+terraform init
+
 terraform apply
 
 export CLUSTER_NAME=$(terraform output cluster_name)
@@ -179,6 +181,9 @@ jx create quickstart --filter golang-http --project-name jx-knative \
 
 jx get activity --filter jx-knative --watch
 
+jx get activity --filter environment-devops-27-demo-staging/master \
+    --watch
+
 export KNATIVE_ADDR=$(kubectl --namespace jx-staging \
     get ksvc jx-knative --output jsonpath="{.status.url}")
 
@@ -196,19 +201,19 @@ jx get activity --filter jx-recreate --watch
 
 cd jx-recreate
 
-sed -e \
-    's@  replicas:@  strategy:\
+cat charts/jx-recreate/templates/deployment.yaml \
+    | sed -e 's@  replicas:@  strategy:\
     type: Recreate\
-  replicas:@g' \
-    -i charts/jx-recreate/templates/deployment.yaml
+  replicas:@g' | tee charts/jx-recreate/templates/deployment.yaml
 ```
 
 
 ## Setting The Scene (Recreate)
 
 ```bash
-sed -e 's@replicaCount: 1@replicaCount: 5@g' \
-    -i charts/jx-recreate/values.yaml
+cat charts/jx-recreate/values.yaml \
+    | sed -e 's@replicaCount: 1@replicaCount: 5@g' \
+    | tee charts/jx-recreate/values.yaml
 
 git add . && git commit -m "Recreate"
 
@@ -230,8 +235,9 @@ jx get activity --filter jx-rolling --watch
 
 cd jx-rolling
 
-sed -e 's@replicaCount: 1@replicaCount: 5@g' \
-    -i charts/jx-rolling/values.yaml
+cat charts/jx-rolling/values.yaml \
+    | sed -e 's@replicaCount: 1@replicaCount: 5@g' \
+    | tee charts/jx-rolling/values.yaml
 ```
 
 
@@ -271,7 +277,8 @@ export ISTIO_IP=$(kubectl --namespace istio-system \
 ```bash
 export CANARY_ADDR=staging.jx-canary.$ISTIO_IP.nip.io
 
-jx get activity --filter environment-$CLUSTER_NAME-staging/master --watch
+jx get activity --filter environment-$CLUSTER_NAME-staging/master \
+    --watch
 
 git clone \
     https://github.com/$GH_USER/environment-$CLUSTER_NAME-staging.git
