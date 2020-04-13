@@ -78,7 +78,7 @@ git clone \
 cd environment-$CLUSTER_NAME-dev
 
 # Open `jx-requirements.yml` in an editor
-# Set `cluster.clusterName` to the name of the cluster (e.g. `devops-27-demo`)
+# Set `cluster.clusterName` to the name of the cluster (e.g. `jx-demo-project`)
 # Set `cluster.environmentGitOwner`
 # Set `cluster.project` to the GCP project (e.g., `devops-27`)
 # Set `cluster.zone` to the zone  (e.g., `us-east1`)
