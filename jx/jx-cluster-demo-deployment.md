@@ -80,9 +80,9 @@ git clone \
 cd environment-$CLUSTER_NAME-dev
 
 # Open `jx-requirements.yml` in an editor
-# Set `cluster.clusterName` to `jx-demo-project`
+# Set `cluster.clusterName` to `jx-demo`
 # Set `cluster.environmentGitOwner`
-# Set `cluster.project` to `devops-27`
+# Set `cluster.project` to `devops-27-project`
 # Set `cluster.zone` to `us-east1`
 # Save & Exit
 ```
@@ -181,7 +181,7 @@ jx create quickstart --filter golang-http --project-name jx-knative \
 
 jx get activity --filter jx-knative --watch
 
-jx get activity --filter environment-jx-demo-project-staging/master \
+jx get activity --filter environment-jx-demo-staging/master \
     --watch
 
 export KNATIVE_ADDR=$(kubectl --namespace jx-staging \
