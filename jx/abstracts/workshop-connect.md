@@ -16,39 +16,11 @@ Jenkins X is a combination of best of breed tools and software for Kubernetes. I
 
 It is the CI/CD solution for development of modern cloud applications on Kubernetes.
 
-We'll explore how to create a fully operational continuous delivery pipeline using containers, Kubernetes, Jenkins X, and quite a few other tools.
-
-## The Schedule
-
-The agenda that follows is only a rough estimation. Depending on how fast we progress, we might be able to cover more or less of the items listed below.
-
-There will be an hour break for lunch, and shorter periodic breaks approximatelly once an hour.
-
-### Agenda (one day)
-
-* What Do We Expect From Continuous Delivery? (15 min.)
-* What Is Jenkins X? (15 min.)
-* Exploring Quickstart Projects (1h)
-* Importing Existing Projects Into Jenkins X (1h)
-* Creating Custom Build Packs (1h)
-* Applying GitOps Principles (1h)
-* Improving And Simplifying Software Development (1h)
-* Working With Pull Requests And Preview Environments (1h)
-* Promoting Releases To Production (30 min)
-* Going Serverless (1h)
-
-### Other potential subjects in case we have extra time
-
-* Versioning Releases (30 min.)
-* Implementing ChatOps (1h)
-* Using The Pipeline Extension Model (1h)
-* Extending Jenkins X Pipelines (1h)
-* Defining And Running Serverless Deployments (1h)
-* Choosing The Right Deployment Strategy (1h)
+We'll explore how to create a fully operational continuous delivery pipeline using containers, Kubernetes, Jenkins X, and quite a few other tools. We'll **continuously build, test, deploy**, and run any other tasks related to lifecycle of our applications. Our goal will be to have a fully automated pipeline of everything happening after we push changes to our code repositories.
 
 ## Requirements
 
-Each participant of the workshop will have a fully operational GKE cluster with Jenkins X pre-installed.
+Please take a look at [REQS](REQS.md) for the detailled list of the requirements.
 
 ## Reference Materials
 

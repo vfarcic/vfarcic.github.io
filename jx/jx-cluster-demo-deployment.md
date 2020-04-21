@@ -308,4 +308,6 @@ git add . && git commit -m "Added progressive deployment" && git push
 ```bash
 jx get activity --filter environment-$CLUSTER_NAME-staging/master \
     --watch
+
+cd ..
 ```
