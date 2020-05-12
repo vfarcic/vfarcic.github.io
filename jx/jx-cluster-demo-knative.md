@@ -80,7 +80,7 @@ cd environment-$CLUSTER_NAME-dev
 # Open `jx-requirements.yml` in an editor
 # Set `cluster.clusterName` to `jx-demo`
 # Set `cluster.environmentGitOwner`
-# Set `cluster.project` to `jx-demo-project`
+# Set `cluster.project` to `jx-demo-276816`
 # Set `cluster.zone` to `us-east1`
 # Save & Exit
 ```

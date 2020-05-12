@@ -82,7 +82,7 @@ cd environment-$CLUSTER_NAME-dev
 # Open `jx-requirements.yml` in an editor
 # Set `cluster.clusterName` to `jx-demo`
 # Set `cluster.environmentGitOwner`
-# Set `cluster.project` to `jx-demo-project`
+# Set `cluster.project` to `jx-demo-276816`
 # Set `cluster.zone` to `us-east1`
 # Save & Exit
 ```
@@ -177,7 +177,7 @@ spec:
 
 ```bash
 jx create quickstart --filter golang-http --project-name jx-knative \
-    --deploy-kind knative --batch-mode
+    --name jx-knative --deploy-kind knative
 
 jx get activity --filter jx-knative --watch
 
@@ -195,7 +195,7 @@ curl $KNATIVE_ADDR
 
 ```bash
 jx create quickstart --filter golang-http --project-name jx-recreate \
-    --deploy-kind default --batch-mode
+    --name jx-recreate --deploy-kind default
 
 jx get activity --filter jx-recreate --watch
 
@@ -229,7 +229,7 @@ cd ..
 
 ```bash
 jx create quickstart --filter golang-http --project-name jx-rolling \
-    --deploy-kind default --batch-mode
+    --name jx-rolling --deploy-kind default
 
 jx get activity --filter jx-rolling --watch
 
@@ -258,7 +258,7 @@ cd ..
 
 ```bash
 jx create quickstart --filter golang-http --project-name jx-canary \
-    --deploy-kind default --batch-mode
+    --name jx-canary --deploy-kind default
 
 jx get activity --filter jx-canary --watch
 

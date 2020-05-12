@@ -80,7 +80,7 @@ cd environment-$CLUSTER_NAME-dev
 # Open `jx-requirements.yml` in an editor
 # Set `cluster.clusterName` to the name of the cluster (e.g. `jx-demo`)
 # Set `cluster.environmentGitOwner`
-# Set `cluster.project` to the GCP project (e.g., `jx-demo-project`)
+# Set `cluster.project` to the GCP project (e.g., `jx-demo-276816`)
 # Set `cluster.zone` to the zone  (e.g., `us-east1`)
 # Save & Exit
 ```
