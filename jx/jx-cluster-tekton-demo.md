@@ -53,7 +53,7 @@ export PROJECT=[...] # GCP Project ID (e.g., devops26)
 # Use default answers
 
 jx create cluster gke -n $CLUSTER_NAME -p $PROJECT -r us-east1 \
-    -m n1-standard-4 --min-num-nodes 1 --max-num-nodes 2 \
+    -m e2-standard-4 --min-num-nodes 1 --max-num-nodes 2 \
     --default-admin-password=admin \
     --default-environment-prefix $CLUSTER_NAME --git-provider-kind github \
     --namespace $NAMESPACE --prow --tekton

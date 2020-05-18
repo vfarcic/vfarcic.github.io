@@ -14,9 +14,11 @@
 ```bash
 jx create quickstart # Cancel with ctrl+c
 
-jx create quickstart --filter golang-http --project-name jx-go --batch-mode
+jx create quickstart --filter golang-http --project-name jx-go --name jx-go
 
-open "https://github.com/$GH_USER/jx-go"
+cd jx-go
+
+jx repo --batch-mode
 ```
 
 
@@ -27,15 +29,15 @@ open "https://github.com/$GH_USER/jx-go"
 ## Creating A Project
 
 ```bash
-ls -l jx-go
+ls -l
 
-cat jx-go/Dockerfile
+cat Dockerfile
 
-cat jx-go/jenkins-x.yml
+cat jenkins-x.yml
 
-cat jx-go/Makefile
+cat Makefile
 
-cat jx-go/skaffold.yaml
+cat skaffold.yaml
 ```
 
 
@@ -46,13 +48,13 @@ cat jx-go/skaffold.yaml
 ## Creating A Project
 
 ```bash
-ls -l jx-go/charts
+ls -l charts
 
-ls -l jx-go/charts/jx-go
+ls -l charts/jx-go
 
-ls -l jx-go/charts/preview
+ls -l charts/preview
 
-open "https://github.com/$GH_USER/jx-go/settings/hooks"
+jx repo --batch-mode # Open Settings > Webhooks
 
 open "https://github.com/jenkins-x-quickstarts"
 
@@ -94,5 +96,7 @@ jx get env
 
 jx get applications --env staging
 
-open "https://github.com/$GH_USER/jx-go/releases"
+jx repo --batch-mode # Open releases
+
+cd ..
 ```
