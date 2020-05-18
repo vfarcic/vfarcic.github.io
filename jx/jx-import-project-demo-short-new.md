@@ -18,6 +18,8 @@ open "https://github.com/vfarcic/go-demo-6"
 * Fork it
 
 ```bash
+export GH_USER=[...] # Replace `[...]` with your GitHub user
+
 git clone https://github.com/$GH_USER/go-demo-6.git
 
 cd go-demo-6

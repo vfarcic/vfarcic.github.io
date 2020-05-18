@@ -70,7 +70,7 @@ jx create cluster gke -n $CLUSTER_NAME -p $PROJECT -r us-east1 \
 # Please replace [...] with a unique name (e.g., your GitHub user and a day and month).
 # Otherwise, it might fail to create a registry.
 # The name of the cluster must conform to the following pattern: '^[a-zA-Z0-9]*$'.
-CLUSTER_NAME=[...]
+export CLUSTER_NAME=[...]
 
 # Use default answers
 
@@ -103,8 +103,6 @@ export AWS_DEFAULT_REGION=us-west-2
 ## Creating A Cluster With jx (EKS)
 
 ```bash
-export CLUSTER_NAME=jx-workshop
-
 # Use default answers except in the case specified below.
 # Answer with `n` to `Would you like to register a wildcard DNS ALIAS to point at this ELB address?`
 
