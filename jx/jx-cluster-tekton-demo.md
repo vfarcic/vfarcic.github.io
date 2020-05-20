@@ -18,6 +18,7 @@
 * If Google: [gcloud CLI](https://cloud.google.com/sdk/docs/quickstarts) and GCP admin permissions
 * If Azure: [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) and Azure admin permissions
 * If AWS: [AWS CLI](https://aws.amazon.com/cli/) and AWS admin permissions
+* [Terraform](https://www.terraform.io/downloads.html)
 
 
 <!-- .slide: class="dark" -->
@@ -35,6 +36,15 @@ echo "nexus:
   enabled: false
 " | tee myvalues.yaml
 ```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow">Section 2</div>
+<div class="label">Hands-on Time</div>
+
+## Creating A Cluster With jx (GKE)
+
+* Follow the [Getting Started](https://jenkins-x.io/docs/getting-started/) instructions
 
 
 <!-- .slide: class="dark" -->

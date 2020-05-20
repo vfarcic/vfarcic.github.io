@@ -12,7 +12,11 @@
 ## Creating A Cluster With jx
 
 ```bash
-export PROJECT=[...] # Replace `[...]` with the project ID
+export GH_USER=[...] # Replace `[...]` with your GitHub user
+
+export PROJECT_ID=[...] # Replace `[...]` with the project ID
+
+export REGION=us-east1
 
 git clone https://github.com/vfarcic/terraform-gke.git
 
@@ -40,25 +44,6 @@ terraform apply
 export CLUSTER_NAME=$(terraform output cluster_name)
 
 export KUBECONFIG=$PWD/kubeconfig
-```
-
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow"> </div>
-<div class="label">Hands-on Time</div>
-
-## Creating A Cluster With jx
-
-```bash
-gcloud container clusters \
-    get-credentials $(terraform output cluster_name) \
-    --project $(terraform output project_id) \
-        --region $(terraform output region)
-
-kubectl create clusterrolebinding \
-    cluster-admin-binding \
-    --clusterrole cluster-admin \
-    --user $(gcloud config get-value account)
 
 cd ..
 ```
@@ -77,12 +62,12 @@ git clone \
 
 cd environment-$CLUSTER_NAME-dev
 
-# Open `jx-requirements.yml` in an editor
-# Set `cluster.clusterName` to the name of the cluster (e.g. `jx-demo`)
-# Set `cluster.environmentGitOwner`
-# Set `cluster.project` to the GCP project (e.g., `jx-demo-276816`)
-# Set `cluster.zone` to the zone  (e.g., `us-east1`)
-# Save & Exit
+cat jx-requirements.yml \
+    | sed -e "s@clusterName: \"\"@clusterName: \"$CLUSTER_NAME\"@g" \
+    | sed -e "s@environmentGitOwner: \"\"@environmentGitOwner: \"$GH_USER\"@g" \
+    | sed -e "s@project: \"\"@project: \"$PROJECT_ID\"@g" \
+    | sed -e "s@zone: \"\"@zone: \"$REGION\"@g" \
+    | tee jx-requirements.yml
 ```
 
 
