@@ -31,10 +31,6 @@
 export NAMESPACE=jx
 
 export GH_USER=[...] # Replace `[...]` with your GitHub user
-
-echo "nexus:
-  enabled: false
-" | tee myvalues.yaml
 ```
 
 
