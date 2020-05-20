@@ -42,7 +42,7 @@ echo "nexus:
 <div class="eyebrow">Section 2</div>
 <div class="label">Hands-on Time</div>
 
-## Creating A Cluster With jx (GKE)
+## Creating A Cluster With jx
 
 * Follow the [Getting Started](https://jenkins-x.io/docs/getting-started/) instructions
 
