@@ -9,38 +9,27 @@
 <div class="eyebrow">Section 1</div>
 <div class="label">Hands-on Time</div>
 
-## Installing jx (MacOS)
+## Promotion
 
 ```bash
-brew tap jenkins-x/jx
+jx get applications
 
-brew install jx
-```
+open https://github.com/$GH_USER/environment-$CLUSTER_NAME-production
 
+while true; do 
+    curl $APP_ADDR
+    sleep 0.5
+done
 
-<!-- .slide: class="dark" -->
-<div class="eyebrow">Section 1</div>
-<div class="label">Hands-on Time</div>
+# Open a second terminal
 
-## Installing jx (Linux)
+export KUBECONFIG=../terraform-gke/kubeconfig
 
-```bash
-mkdir -p ~/.jx/bin
+istioctl dashboard prometheus
 
-curl -L "https://github.com/jenkins-x/jx/releases/download/$(curl --silent "https://github.com/jenkins-x/jx/releases/latest" | sed 's#.*tag/\(.*\)\".*#\1#')/jx-linux-amd64.tar.gz" | tar xzv -C ~/.jx/bin
+# sum(rate(istio_requests_total{destination_workload="jx-my-app-primary", reporter="destination",response_code!~"5.*"}[1m])) / sum(rate(istio_requests_total{destination_workload="jx-my-app-primary", reporter="destination"}[1m]))
 
-export PATH=$PATH:~/.jx/bin
+# sum(rate(istio_request_duration_milliseconds_sum{destination_workload="jx-my-app-primary", reporter="destination"}[1m])) / sum(rate(istio_request_duration_milliseconds_count{destination_workload="jx-my-app-primary", reporter="destination"}[1m]))
 
-echo 'export PATH=$PATH:~/.jx/bin' >> ~/.bashrc
-```
-
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow">Section 1</div>
-<div class="label">Hands-on Time</div>
-
-## Installing jx (Windows)
-
-```bash
-choco install jenkins-x
+kubectl --namespace jx-production get canaries
 ```
