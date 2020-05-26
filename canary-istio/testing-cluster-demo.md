@@ -91,7 +91,8 @@ cd ..
 ## Creating A Cluster With jx
 
 ```bash
-istioctl manifest apply --skip-confirmation
+istioctl manifest apply --set values.grafana.enabled=true \
+    --set values.kiali.enabled=true  --skip-confirmation
 
 kubectl apply \
     --kustomize github.com/weaveworks/flagger/kustomize/istio
@@ -110,6 +111,8 @@ jx get activity --filter my-app --watch
 ## Creating A Cluster With jx
 
 ```bash
+kubectl create namespace jx-production
+
 kubectl label namespace jx-production istio-injection=enabled --overwrite
 
 export ISTIO_IP=$(kubectl --namespace istio-system \
@@ -118,7 +121,8 @@ export ISTIO_IP=$(kubectl --namespace istio-system \
 
 export APP_ADDR=my-app.$ISTIO_IP.nip.io
 
-jx get activity --filter environment-$CLUSTER_NAME-staging/master --watch
+git clone \
+    https://github.com/$GH_USER/environment-$CLUSTER_NAME-production.git
 ```
 
 
@@ -129,8 +133,6 @@ jx get activity --filter environment-$CLUSTER_NAME-staging/master --watch
 ## Creating A Cluster With jx
 
 ```bash
-git clone https://github.com/$GH_USER/environment-$CLUSTER_NAME-production.git
-
 cd environment-$CLUSTER_NAME-production
 
 echo "my-app:
@@ -180,7 +182,9 @@ cd ../my-app
 cat main.go | sed -e "s@Jenkins X golang http example@Something else@g" \
     | tee main.go
 
-git add . && git commit -m "Progressive deployment" && git push
+git add . && git commit -m "Progressive deployment"
+
+git push --set-upstream origin master
 ```
 
 
@@ -197,6 +201,25 @@ jx get activity --filter environment-$CLUSTER_NAME-staging/master \
     --watch
 
 jx get applications
+```
 
-export VERSION=[...]
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
+
+## Creating A Cluster With jx
+
+```bash
+cat main.go | sed -e "s@Something else@This is not good@g" \
+    | tee main.go
+
+git add . && git commit -m "Progressive deployment" && git push
+
+jx get activity --filter my-app --watch
+
+jx get activity --filter environment-$CLUSTER_NAME-staging/master \
+    --watch
+
+jx get applications
 ```
