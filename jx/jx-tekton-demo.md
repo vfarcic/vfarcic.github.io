@@ -1,13 +1,15 @@
-## Hands-On Time
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="../img/background/hands-on.jpg" -->
+# Running Serverless Continuous Delivery
 
----
+<div class="label">Hands-on Time</div>
 
-# Running Serverless CD
 
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
 ## Where Is Jenkins?
-
----
 
 ```bash
 kubectl get pods
@@ -16,13 +18,15 @@ kubectl top pods
 ```
 
 
-## Starting A New Project
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Starting A New Project
 
 ```bash
 jx create quickstart --language go --project-name jx-serverless \
-    --batch-mode
+    --name jx-serverless
 
 cd jx-serverless
 
@@ -33,17 +37,19 @@ cat Dockerfile
 ls -1 charts/jx-serverless
 
 cat skaffold.yaml
-
-cat jenkins-x.yml
 ```
 
 
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
 ## Starting A New Project
 
----
-
 ```bash
-kubectl get pods --watch
+cat jenkins-x.yml
+
+kubectl get pods
 
 jx get activities --filter jx-serverless --watch
 
@@ -51,14 +57,16 @@ jx get applications
 ```
 
 
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
 ## Defining Owners
 
----
-
 ```bash
-GH_USER=[...]
+export GH_USER=[...]
 
-GH_APPROVER=[...]
+export GH_APPROVER=[...]
 
 echo "approvers:
 - $GH_USER
@@ -67,18 +75,27 @@ reviewers:
 - $GH_USER
 - $GH_APPROVER" \
     | tee OWNERS
-
-git commit -am "Added the other me"
-
-git push
-
-jx repo --batch-mode
 ```
 
 
-## Creating A Pull Request
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Defining Owners
+
+```bash
+git commit -am "Added the other me"
+
+git push --set-upstream origin master
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Creating A Pull Request
 
 ```bash
 git checkout -b my-pr
@@ -91,14 +108,15 @@ git commit -m "My first PR with serverless jx"
 
 git push --set-upstream origin my-pr
 
-jx create pullrequest --title "My PR" --body "What I can say?" \
-    --batch-mode
+jx repo --batch-mode
 ```
 
 
-## Approving The Pull Request
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Approving The Pull Request
 
 * Comment `/close`
 * Comment `/reopen`
@@ -106,14 +124,16 @@ jx create pullrequest --title "My PR" --body "What I can say?" \
 * Comment `/lgtm`
 
 
-## Promoting To Production
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
 
----
+## Promoting To Production
 
 ```bash
 jx get applications
 
-VERSION=[...]
+export VERSION=[...]
 
 jx promote jx-serverless --version $VERSION --env production \
     --batch-mode
@@ -122,7 +142,18 @@ open "https://github.com/$GH_USER/environment-tekton-production"
 
 jx get applications
 
-PROD_ADDR=[...]
+export PROD_ADDR=[...]
+```
 
-open "$PROD_ADDR"
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"></div>
+<div class="label">Hands-on Time</div>
+
+## Promoting To Production
+
+```bash
+curl $PROD_ADDR
+
+cd ..
 ```

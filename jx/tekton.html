@@ -13,9 +13,9 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
+        <link rel="stylesheet" href="../css/reset.css">
         <link rel="stylesheet" href="../css/reveal.css">
-        <link rel="stylesheet" href="../css/theme/night.css" id="theme">
-        <link rel="stylesheet" href="../css/theme/vfarcic.css">
+        <link rel="stylesheet" href="../css/theme/x19.css" id="theme">
 
 		<!--<link rel="stylesheet" href="../lib/css/zenburn.css">-->
 
@@ -39,51 +39,49 @@
 			<header style="position: absolute;top: 50px; left: 100px; z-index:500; font-size:100px;background-color: rgba(0,0,0,0.5)"></header>
 			<div class="slides">
 				<section id="cover"
-                         data-markdown="cover-tekton.md"
-                         data-separator="^\n\n\n"
-                         data-separator-vertical="^\n\n"
-                         data-separator-notes="^Note:"
-                         data-charset="iso-8859-15"
-                         data-background="../img/background/devops26.jpg">
-                    </section>
-				<section id="jx-cluster"
-                         data-markdown="jx-cluster.md"
-                         data-separator="^\n\n\n"
-                         data-separator-vertical="^\n\n"
-                         data-separator-notes="^Note:"
-                         data-charset="iso-8859-15"
-                         data-background="../img/background/servers.jpg">
-                    </section>
-				<section id="jx-cluster-demo"
-                         data-markdown="jx-cluster-demo-talk.md"
-                         data-separator="^\n\n\n"
-                         data-separator-vertical="^\n\n"
-                         data-separator-notes="^Note:"
-                         data-charset="iso-8859-15"
-                         data-background="../img/background/manual.jpg">
+					data-markdown="cover-tekton.md"
+					data-separator="^\n\n\n"
+					data-separator-vertical="^\n\n"
+					data-separator-notes="^Note:"
+					data-charset="iso-8859-15"
+					data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/devops26.jpg) center / cover">
 				</section>
 				<section id="about-me"
-                         data-markdown="../docs/about-me.md"
-                         data-separator="^\n\n\n"
-                         data-separator-vertical="^\n\n"
-                         data-separator-notes="^Note:"
-                         data-charset="iso-8859-15"
-                         data-background="../img/background/about-me.jpg">
-                    </section>
+                    data-markdown="../docs/about-me.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15"
+                    data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/about-me.jpg) center / cover">
+				</section>
+				<section id="jx-cluster"
+					data-markdown="jx-cluster.md"
+					data-separator="^\n\n\n"
+					data-separator-vertical="^\n\n"
+					data-separator-notes="^Note:"
+					data-charset="iso-8859-15"
+					data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/servers.jpg) center / cover">
+				</section>
+				<section id="jx-cluster-demo"
+					data-markdown="jx-cluster-demo-talk.md"
+					data-separator="^\n\n\n"
+					data-separator-vertical="^\n\n"
+					data-separator-notes="^Note:"
+					data-charset="iso-8859-15">
+				</section>
 				<section id="jx-serverless"
                     data-markdown="jx-serverless.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
-                    data-charset="iso-8859-15">
+					data-charset="iso-8859-15">
                 </section>
 				<section id="jx-tekton-demo"
                     data-markdown="jx-tekton-demo.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/manual.jpg">
+                    data-charset="iso-8859-15">
                 </section>
 				<section id="the-end"
                     data-markdown="../docs/the-end.md"
@@ -91,18 +89,19 @@
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
-                    data-background="../img/background/the_end.jpg">
+                    data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/the_end.jpg) center / cover">
 				</section>
 				<section id="the-end-cleanup"
-                    data-markdown="cleanup-gke-short.md"
+                    data-markdown="cleanup-gke-serverless.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
                     data-charset="iso-8859-15"
-                    data-background="../img/background/cleanup.jpg">
+                    data-background="linear-gradient(to bottom right, rgba(37,44,51,0.8), rgba(37,44,51,0.8)), url(../img/background/cleanup.jpg) center / cover">
 				</section>
 			</div>
-
+			<div class="sponsor"><img src="../img/presented-by-cloudbees.png"></div>
+			<div class="twitter">@vfarcic</div>
 		</div>
 
 		<script src="../lib/js/head.min.js"></script>

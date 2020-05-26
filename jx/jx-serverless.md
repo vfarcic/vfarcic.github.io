@@ -1,4 +1,4 @@
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9))) center / cover" -->
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/servers.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 <div class="eyebrow"></div>
 
