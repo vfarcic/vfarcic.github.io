@@ -11,7 +11,7 @@
 
 # Going Serverless
 
-> Traditional Jenkins does not scale, it does not provide high-availability, and it is either wasting your resources or it does not have enough of them.
+> How does Jenkins scale?
 
 
 <!-- .slide: data-background="img/serverless-static.png" data-background-size="contain" -->

@@ -99,27 +99,4 @@ What matters is that we did not try to reinvent the wheel. We joined the exting 
 <!-- .slide: data-background="../img/products/cd-foundation.jpg" -->
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(img/ninja.jpg) center / cover" -->
-<!-- .slide: class="center" -->
-# Are You A Ninja?
-
-
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(img/ninja.jpg) center / cover" -->
-<!-- .slide: class="light" -->
-## Are You A Ninja?
-
-* Are you an expert in Kubernetes? <!-- .element: class="fragment" -->
-* Do you know how to create Helm charts? <!-- .element: class="fragment" -->
-* Do you understand the intricacies of Tekton? <!-- .element: class="fragment" -->
-* How about Skaffold, ChartMuseum, ksync, ...? <!-- .element: class="fragment" -->
-* Do you know how to configure GitOps and GitChat? <!-- .element: class="fragment" -->
-* Do you expect everyone in your organization to know all that? <!-- .element: class="fragment" -->
-* Do all your projects employ continuous delivery? <!-- .element: class="fragment" -->
-
-
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-<!-- .slide: class="center" -->
-## If The Answer To Any Of Those Is No,<br>How Do You Plan To Be Competitive?
-
-
 <!-- .slide: data-background="img/jenkins-x-wide.png" -->
