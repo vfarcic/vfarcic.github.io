@@ -9,7 +9,7 @@
 
 <p style="display:inline-block"><img src="../img/gde.png" style="width:300px;height:300px;"></p> <!-- .element: class="fragment" -->
 
-<p style="display:inline-block"><img src="../img/products/cloudbees.png" style="width:300px;height:300px;"></p>
+<p style="display:inline-block"><img src="../img/products/cloudbees.png" style="background-color: white;width:300px;height:300px;"></p>
 
 <p style="display:inline-block"><img src="../img/docker-captain.png" style="width:300px;height:300px;"></p> <!-- .element: class="fragment" -->
 
