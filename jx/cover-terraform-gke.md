@@ -1,7 +1,7 @@
 <!-- .slide: class="center" -->
 ## The DevOps Toolkit
 
-# Ten Commandments Of GitOps
+# Installing And Managing Jenkins X
 
 ## [Viktor Farcic](http://technologyconversations.com/about/)
 
