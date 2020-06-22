@@ -55,6 +55,28 @@ jx create quickstart --filter golang-http --project-name jx-go \
     --batch-mode
 
 cd jx-go
+
+jx repo --batch-mode
+
+# Add `vfarcic` as a collaborator
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
+
+## Creating A Project
+
+```bash
+echo "approvers:
+- $GH_USER
+- vfarciccb
+reviewers:
+- $GH_USER
+- vfarciccb" | tee OWNERS
+
+git push --set-upstream origin master
 ```
 
 
@@ -84,15 +106,37 @@ While there is no doubt among developers where to store the files they create, t
 ## Git Is The Only Source Of Truth
 
 ```bash
-sed -e "s@golang http@GitOps@g" -i main.go
+git checkout -b my-feature
 
-git add .
+cat main.go | sed -e "s@golang http@GitOps@g" | tee main.go
 
-git commit -m "This is GitOps"
+git add . && git commit -m "This is GitOps"
 
-git push
+git push --set-upstream origin my-feature
 
-jx get activities -f jx-go -w
+jx create pullrequest --title "Better pipeline" \
+    --body "What I can say?" --batch-mode
+
+jx get activities --filter jx-go --watch
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
+
+## Git Is The Only Source Of Truth (Deeper)
+
+```bash
+kubectl get pods
+
+kubectl describe pod --selector app=lighthouse-webhooks
+
+kubectl describe pod --selector app=tekton-pipelines-controller
+
+kubectl describe task [...]
+
+kubectl describe taskrun [...]
 ```
 
 
@@ -149,7 +193,26 @@ If we are true overlords that trust the machines to do our biddings, there is no
 <!-- .slide: class="center" -->
 
 Note:
-Let's imagine that you are in a restaurant and you tell a waiter "I'd like a burger with cheese and fries." What do you do next? Do you get up, go outside the restaurant, purchase some land, and build a farm? Are you going to grow animals and potatoes? Will you wait until they are mature enough and take them back to the restaurant. Will you start frying potatoes and meat? To be clear, it's completely OK if you like owning land and if you are a farmer. There's nothing wrong in liking to cook. But, if you went to a restaurant, you did that precisely because you did not want to do those things. The idea behind an expression like "I'd like a burger with cheese and fries" is that we want to do something else, like chatting with friends and eating food. We know that a cook will prepare the meal and that our job is not to grow crops, to feed animals, or to cook. We want to be able to do other things before eating. We are like aristocracy and, in that context, farmers, cooks, and everyone else involved in the burger industry are our agents (remember that slavery is bad). So, when we request something, all we need is an acknowledgment. If the response to "I'd like a burger with cheese and fries" is "consider it done", we got the *ack* we need, and we can do other things while the process of creating the burger is executing. Farming, cooking, and eating can be parallel processes. For them to operate concurrently, the communication must be asynchronous. We request something, we receive an acknowledgment, and we move back to whatever we were doing. 
+Let's imagine that you are in a restaurant and you tell a waiter "I'd like a burger with cheese and fries." What do you do next? Do you get up, go outside the restaurant, purchase some land, and build a farm? Are you going to grow animals and potatoes? Will you wait until they are mature enough and take them back to the restaurant. Will you start frying potatoes and meat? To be clear, it's completely OK if you like owning land and if you are a farmer. There's nothing wrong in liking to cook. But, if you went to a restaurant, you did that precisely because you did not want to do those things. The idea behind an expression like "I'd like a burger with cheese and fries" is that we want to do something else, like chatting with friends and eating food. We know that a cook will prepare the meal and that our job is not to grow crops, to feed animals, or to cook. We want to be able to do other things before eating. We are like aristocracy and, in that context, farmers, cooks, and everyone else involved in the burger industry are our agents (remember that slavery is bad). So, when we request something, all we need is an acknowledgment. If the response to "I'd like a burger with cheese and fries" is "consider it done", we got the *ack* we need, and we can do other things while the process of creating the burger is executing. Farming, cooking, and eating can be parallel processes. For them to operate concurrently, the communication must be asynchronous. We request something, we receive an acknowledgment, and we move back to whatever we were doing.
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
+
+## Everything must be tracked, every action must be reproducible, and everything must be idempotent
+
+```bash
+jx repo --batch-mode
+
+# /close
+
+# /reopen
+
+# /meow
+
+# /lgtm
+```
 
 
 <!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/communication.jpeg) center / cover" -->
@@ -202,6 +265,17 @@ Note:
 Given that the needs can vary greatly, servants are often idle. That's why they have their own rooms. Most are called when needed, so only a fraction is doing something at any given moment. They need to be available at any time, but they also need to rest when their services are not required. They are like Schrodinger's cats that are both alive and dead. Except that being dead would be a problem due to technological backwardness that prevents us from reviving the dead. Therefore, when there is no work, a servant is idle (but still alive). In our case, making something dead or alive on a moments notice is not an issue since our agents are not humans, but bytes converted into processes. That's what containers give us, and that's what serverless is aiming for.
 
 
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
+
+## Communication between processes must be asynchronous
+
+```bash
+jx get activities --filter jx-go --watch
+```
+
+
 <!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/servers.jpg) center / cover" -->
 <!-- .slide: class="center" -->
 # 4.
@@ -226,6 +300,8 @@ Today, containers (in the form of Pods) allow us just that. We can start any pro
 
 ```bash
 kubectl get pods
+
+kubectl top pods
 ```
 
 
@@ -290,10 +366,8 @@ Taking all that into account the next two rules should state that **information 
 
 ## Releases in env-specific repos
 
----
-
 ```bash
-open "https://github.com/vfarcic/environment-jx-rocks-staging/blob/master/env/requirements.yaml"
+open "https://github.com/vfarcic/environment-jenkins-x-staging/blob/master/env/requirements.yaml"
 ```
 
 
@@ -316,10 +390,8 @@ Note:
 
 ## The same coding practices
 
----
-
 ```bash
-open "https://github.com/vfarcic/environment-jx-rocks-staging/pulls"
+open "https://github.com/vfarcic/environment-jenkins-x-staging/pulls"
 ```
 
 Note:
@@ -356,28 +428,15 @@ Where we do excel is creativity. We are good at writing scripts and configuratio
 ```bash
 cd ..
 
-git clone https://github.com/vfarcic/environment-jx-rocks-staging.git
+git clone https://github.com/vfarcic/environment-jenkins-x-dev.git
 
-cd environment-jx-rocks-staging/env
+cd environment-jenkins-x-dev
 
-CM_ADDR=$(kubectl get ing chartmuseum \
-    -o jsonpath="{.spec.rules[0].host}")
+cat jx-requirements.yml
 
-sed -e "s@http://jenkins-x-chartmuseum:8080@http://$CM_ADDR@g" \
-    -i requirements.yaml
-```
+jx start pipeline $GH_USER/environment-jenkins-x-dev/master
 
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow"> </div>
-<div class="label">Hands-on Time</div>
-
-## Idempotent deployments
-
-```bash
-jx step helm apply --namespace jx-staging
-
-kubectl -n jx-staging get pods
+jx get activities --filter environment-jenkins-x-dev --watch
 ```
 
 
@@ -425,7 +484,7 @@ That leads us to the last rule. **All the tools must be able to speak with each 
 ```bash
 jx get applications -e staging
 
-VERSION=[...]
+export VERSION=[...]
 
 jx promote jx-go --version $VERSION --env production --batch-mode
 

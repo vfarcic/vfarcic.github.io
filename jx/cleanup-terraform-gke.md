@@ -3,8 +3,6 @@
 ## Cleanup
 
 ```bash
-gcloud projects delete $PROJECT_ID
-
 rm -rf jx-infra
 
 rm -rf jenkins-x-boot-config
@@ -16,11 +14,13 @@ rm -rf jenkins-x-boot-config
 ## Cleanup
 
 ```bash
-hub delete -y $GH_USER/jenkins-x-boot-config
+hub delete -y $GH_USER/jx-infra
 
 hub delete -y $GH_USER/environment-jenkins-x-staging
 
 hub delete -y $GH_USER/environment-jenkins-x-production
 
 hub delete -y $GH_USER/environment-jenkins-x-dev
+
+gcloud projects delete $PROJECT_ID
 ```

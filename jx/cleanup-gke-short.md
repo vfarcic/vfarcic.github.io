@@ -3,13 +3,9 @@
 ## Cleanup
 
 ```bash
-cd terraform-gke
+gcloud projects delete $PROJECT_ID
 
-terraform destroy
-
-rm -f kubeconfig
-
-cd ..
+rm -rf jx-infra
 ```
 
 
@@ -18,28 +14,11 @@ cd ..
 ## Cleanup
 
 ```bash
-gcloud compute disks delete --zone us-east1-b $(gcloud compute disks \
-    list --filter="zone:us-east1-b AND -users:*" \
-    --format="value(id)") --quiet
-gcloud compute disks delete --zone us-east1-c $(gcloud compute disks \
-    list --filter="zone:us-east1-c AND -users:*" \
-    --format="value(id)") --quiet
-gcloud compute disks delete --zone us-east1-d $(gcloud compute disks \
-    list --filter="zone:us-east1-d AND -users:*" \
-    --format="value(id)") --quiet
-```
+hub delete -y $GH_USER/environment-jenkins-x-staging
 
+hub delete -y $GH_USER/environment-jenkins-x-production
 
-<!-- .slide: class="center" -->
-<!-- .slide: data-background="data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/cleanup.jpg) center / cover" -->
-## Cleanup
-
-```bash
-hub delete -y $GH_USER/environment-$CLUSTER_NAME-staging
-
-hub delete -y $GH_USER/environment-$CLUSTER_NAME-production
-
-hub delete -y $GH_USER/environment-$CLUSTER_NAME-dev
+hub delete -y $GH_USER/environment-jenkins-x-dev
 
 hub delete -y $GH_USER/jx-go
 
@@ -64,5 +43,7 @@ rm -rf jx-prow
 
 rm -rf jx-knative
 
-rm -rf environment-$CLUSTER_NAME-*
+rm -rf environment-jenkins-x-*
+
+rm -rf jenkins-x-boot-config
 ```
