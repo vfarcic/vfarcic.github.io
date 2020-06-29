@@ -14,13 +14,13 @@ gcloud container clusters delete chaos --region us-east1 --quiet \
 
 ```bash
 # Remove unused disks to avoid reaching the quota (and save a bit of money)
-gcloud compute disks delete --zone us-east1-b $(gcloud compute disks \
-    list --filter="zone:us-east1-b AND -users:*" \
-    --format="value(id)")
-gcloud compute disks delete --zone us-east1-c $(gcloud compute disks \
-    list --filter="zone:us-east1-c AND -users:*" \
-    --format="value(id)")
-gcloud compute disks delete --zone us-east1-d $(gcloud compute disks \
-    list --filter="zone:us-east1-d AND -users:*" \
-    --format="value(id)")
+gcloud compute disks delete --project $PROJECT_ID --zone us-east1-b \
+    $(gcloud compute disks list --filter="zone:us-east1-b AND -users:*" \
+    --format="value(id)" --project $PROJECT_ID)
+gcloud compute disks delete --project $PROJECT_ID --zone us-east1-c \
+    $(gcloud compute disks list --filter="zone:us-east1-b AND -users:*" \
+    --format="value(id)" --project $PROJECT_ID)
+gcloud compute disks delete --project $PROJECT_ID --zone us-east1-d \
+    $(gcloud compute disks list --filter="zone:us-east1-b AND -users:*" \
+    --format="value(id)" --project $PROJECT_ID)
 ```

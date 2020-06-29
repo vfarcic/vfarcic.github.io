@@ -12,7 +12,7 @@ What would you say if I tell you that we can be rewarded for destruction and tha
 
 Chaos engineering tries to find the limits of our system. It helps us deduce what are the consequences when bad things happen. We are trying to simulate the adverse effects in a controlled way. We are trying to do that as a way to improve our systems to make them more resilient and capable of recuperating and resisting harmful and unpredictable events.
 
-That's our mission. We will try to find ways how we can improve our systems based on the knowledge that we will obtain through the chaos.
+That's our mission. We are trying to find ways how we can improve our systems based on the knowledge that we will obtain through the chaos.
 
 
 <!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
@@ -87,7 +87,7 @@ We want to automate our experiments to run continuously. It would be pointless t
 
 Finally, we want to reduce the blast radius. In the beginning, we want to start small and to have a relatively small blast radius of the things that might explode. And then, over time, as we are increasing confidence in our work, we might be expanding that radius. Eventually, we might reach the level when we're doing experiments across the whole system, but that comes later. In the beginning, we want to start small. We want to be tiny.
 
-The summary of the principles we discussed is as follows.
+So, the summary of the principles is:
 
 * **Build a hypothesis around steady-state**
 * **Simulate real-world events**
@@ -111,7 +111,7 @@ Now that it is a bit clearer what chaos engineering is and what are the principl
 Note:
 To begin with, we want to define a steady-state hypothesis. We want to know how does the system look like before and after some actions. We want to confirm the steady-state, and then we want to simulate some real-world events. And after those events, we want to confirm the steady-state again. We also want to collect metrics, to observe dashboards, and to have alerts that will notify us when our system misbehaves. In other words, we're trying very hard to disrupt the steady-state. The less damage we're able to do, the more confidence we will have in our system.
 
-The summary of the process we discussed is as follows.
+So, the summary of the processes is:
 
 1. **Define the steady-state hypothesis**
 2. **Confirm the steady-state**
