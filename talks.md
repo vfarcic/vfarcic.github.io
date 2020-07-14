@@ -2,7 +2,6 @@
 
 ---
 
-* Automating Infrastructure Management With Jenkins X ([abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/catalog/abstracts/iac-jx.md))
 * The History Of Infrastructure Management ([abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/catalog/abstracts/iac-history.md))
 * [Testing In Production](canary-istio/testing-production.html) ([abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/canary-istio/abstracts/testing-production.md))
 * [Kubernetes Chaos Engineering](chaos/index.html) ([abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/chaos/README.md))
