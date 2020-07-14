@@ -12,7 +12,7 @@ Using a CLI might seem like a good idea at first. We can, for example, create a 
 
 We'll explore how to define and manage Infrastructure as Code (IaC) using Terraform. We will create a fully operational production-ready managed Kubernetes cluster. You will be able to choose between AWS (EKS), Azure (AKS), and Google Cloud (GKE).
 
-## Agenda
+## Agenda
 
 * Introduction to creating And Managing managed Kubernetes With Terraform
 * Exploring Terraform Variables
