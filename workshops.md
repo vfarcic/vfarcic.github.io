@@ -3,6 +3,8 @@
 ---
 
 * Using Terraform To Define Infrastructure as Code For Managed Kubernetes Clusters ([abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/catalog/abstracts/iac-workshop.md)) 
+* Kubernetes Chaos Engineering With Chaos Toolkit And Istio ([abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/chaos/abstracts/workshop.md)) 
+* Canary Deployments To Kubernetes Using Istio and Friends ([abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/canary-istio/abstracts/workshop.md)) 
 * [Cloud-Native Kubernetes-First Serverless Continuous Delivery](jx/workshop-tekton.html) 
 * [Beyond Kubernetes Deployments: Monitoring, Logging, and Auto-Scaling Kubernetes](devops25/workshop.html)
 
