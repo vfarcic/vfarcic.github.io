@@ -1,0 +1,5 @@
+# Logging Is NOT About Files, It's About Streaming
+
+A long time ago in a galaxy far, far away... We used to store logs in files. That wasn't so bad when we had a few applications, and they were running on dedicated servers. Finding logs was easy given the nature of static infrastructure. Locating issues was easy as well when there was only an application or two. But times changed. Infrastructure grew in size. Now we have tens, hundreds, or even thousands of nodes. The number of applications increased as well. More importantly, everything became dynamic. Nodes are being created and destroyed. We started scaling them up and down. We began using schedulers, and that means that our applications started "floating" inside our clusters. Everything became dynamic and volatile. Everything increased in size. As a result, "hunting" logs and going through endless entries to find issues became unacceptable. We needed a better way.
+
+We'll explore the expectations behind the logging needs in dynamic environments through practical examples using the Loki stack.
