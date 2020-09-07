@@ -102,6 +102,14 @@ That’s our mission. We will try to find ways how we can improve our systems ba
 * Terminating Random Nodes
 * Monitoring And Alerting With Prometheus
 
+## Audience
+
+Testers, developers, DevOps engineers, SREs, sysadmins, operators, or anyone else interested in making applications and systems more resilient and reliable.
+
+## Prerequisite Experience
+
+There are no prerequisites in terms of experience. I will explain and provide code and commands for everything we need to do. However, I will not explain things indirectly related to the subject, at least not in details. A basic understanding of containers and Kubernetes is welcome. Depending on the choice of the location of a cluster, a basic understanding of AWS, Azure, or Google Cloud, is needed as well (unless running local clusters).
+
 ## Requirements
 
 The full list of the requirements is as follows.
@@ -109,9 +117,17 @@ The full list of the requirements is as follows.
 * [Git](https://git-scm.com/)
 * WSL or GitBash (if using Windows)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-* A Docker Desktop, Minikube, GKE, EKS, AKS, or any other Kubernetes cluster
-* [Helm v3.x](https://helm.sh/docs/intro/install/) (if EKS)
+* [Helm v3.x](https://helm.sh/docs/intro/install/) (if using EKS)
 * [Python v3.x](https://www.python.org/downloads)
 * [pip](https://pip.pypa.io/en/stable/installing)
+* A Docker Desktop, Minikube, GKE, EKS, AKS, or any other Kubernetes cluster. Gists with the instructions how to create a cluster are below.
 
-Please make sure that you have the requirements before the workshop session.
+Please choose one of the "flavors" of a Kubernetes cluster and make sure that it is operational before the course.
+
+* Docker Desktop with Istio: https://gist.github.com/9a9752cf5355f1b8095bd34565b80aae
+* Minikube with Istio: https://gist.github.com/a5870806ae6f21de271bf9214e523b53
+* Regional and scalable GKE with Istio: https://gist.github.com/88e810413e2519932b61d81217072daf
+* Regional and scalable EKS with Istio: https://gist.github.com/d73fb6f4ff490f7e56963ca543481c09
+* Regional and scalable AKS with Istio: https://gist.github.com/b068c3eadbc4140aed14b49141790940
+
+**All the beforementioned requirements MUST be met before the workshop session.**
