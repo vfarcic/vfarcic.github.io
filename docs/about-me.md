@@ -2,16 +2,16 @@
 
 ## Viktor Farcic
 
-<img src="../img/viktor.jpg" style="width:291px;height:360px;">
+<img src="../img/viktor.jpg" style="width:60%;height:60%;">
 
 
 <!-- .slide: class="center" -->
 
-<p style="display:inline-block"><img src="../img/gde.png" style="width:300px;height:300px;"></p> <!-- .element: class="fragment" -->
+<p style="display:inline-block"><img src="../img/gde.png" style="background-color: white;width:300px;height:300px;"></p> <!-- .element: class="fragment" -->
 
-<p style="display:inline-block"><img src="../img/products/cloudbees.png" style="background-color: white;width:300px;height:300px;"></p>
+<p style="display:inline-block"><img src="../img/products/codefresh.jpg" style="background-color: white;width:300px;height:300px;"></p>
 
-<p style="display:inline-block"><img src="../img/docker-captain.png" style="width:300px;height:300px;"></p> <!-- .element: class="fragment" -->
+<p style="display:inline-block"><img src="../img/docker-captain.png" style="background-color: white;width:300px;height:300px;"></p> <!-- .element: class="fragment" -->
 
 
 [![technologyconversations.com](../img/technology-conversations.png)](https://technologyconversations.com)
