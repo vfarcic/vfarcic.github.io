@@ -2,7 +2,17 @@
 
 ---
 
-* Applying GitOps And Continuous Delivery (CD) On Infrastructure Using Terraform And Codefresh ([abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/terraform-cd.md))
+* [Combining Progresive Delivery With GitOps And Continuous Delivery](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/progressive.md)
+* [Managing Full Application Lifecycle Using GitOps](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/gitops-cd.md)
+* [The Objectives And The Principles Behind GitOps](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/gitops.md)
+* [Applying GitOps To Continuous Delivery](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/gitops-cf.md)
+* [Applying GitOps And Continuous Delivery (CD) On Infrastructure Using Terraform And Codefresh](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/terraform-cf.md)
+
+
+# Talks
+
+---
+
 * Logging Is NOT About Files, It's About Streaming ([abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/catalog/abstracts/loki.md))
 * The Objectives And The Principles Behind GitOps ([abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/gitops.md))
 * Demystifying Serverless Computing ([abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/catalog/abstracts/serverless.md))
