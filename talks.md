@@ -2,6 +2,12 @@
 
 ---
 
+* [What The Heck Is Progressive Delivery?](https://github.com/vfarcic/vfarcic.github.io/blob/master/progressive/abstracts/progressive.md)
+
+# Talks
+
+---
+
 * [Combining Progresive Delivery With GitOps And Continuous Delivery](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/progressive.md)
 * [Managing Full Application Lifecycle Using GitOps](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/gitops-cd.md)
 * [The Objectives And The Principles Behind GitOps](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/gitops.md)
