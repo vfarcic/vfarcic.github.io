@@ -3,7 +3,7 @@
 ---
 
 * How to Implement a Secure GitOps Workflow ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/security.md))
-* [What The Heck Is Progressive Delivery? ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/progressive/abstracts/progressive.md))
+* What The Heck Is Progressive Delivery? ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/progressive/abstracts/progressive.md))
 
 
 # Talks
