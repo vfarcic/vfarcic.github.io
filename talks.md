@@ -2,19 +2,19 @@
 
 ---
 
-* [How to Implement a Secure GitOps Workflow](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/security.md)
-* [What The Heck Is Progressive Delivery?](https://github.com/vfarcic/vfarcic.github.io/blob/master/progressive/abstracts/progressive.md)
+* How to Implement a Secure GitOps Workflow ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/security.md))
+* [What The Heck Is Progressive Delivery? ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/progressive/abstracts/progressive.md))
 
 
 # Talks
 
 ---
 
-* [Combining Progresive Delivery With GitOps And Continuous Delivery](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/progressive.md)
-* [Managing Full Application Lifecycle Using GitOps](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/gitops-cd.md)
-* [The Objectives And The Principles Behind GitOps](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/gitops.md)
-* [Applying GitOps To Continuous Delivery](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/gitops-cf.md)
-* [Applying GitOps And Continuous Delivery (CD) On Infrastructure Using Terraform And Codefresh](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/terraform-cf.md)
+* Combining Progresive Delivery With GitOps And Continuous Delivery ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/progressive.md))
+* Managing Full Application Lifecycle Using GitOps ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/gitops-cd.md))
+* The Objectives And The Principles Behind GitOps ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/gitops.md))
+* Applying GitOps To Continuous Delivery ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/gitops-cf.md))
+* Applying GitOps And Continuous Delivery (CD) On Infrastructure Using Terraform And Codefresh ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/terraform-cf.md))
 
 
 # Talks
