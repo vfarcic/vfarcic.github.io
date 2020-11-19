@@ -2,6 +2,7 @@
 
 ---
 
+* Combining Progressive Delivery With GitOps And Continuous Delivery ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/progressive/abstracts/progressive-gitops-cd.md))
 * How to Implement a Secure GitOps Workflow ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/security.md))
 * What The Heck Is Progressive Delivery? ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/progressive/abstracts/progressive.md))
 
