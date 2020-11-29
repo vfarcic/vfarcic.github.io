@@ -8,6 +8,7 @@
 
 # Conferences
 
+* [Managing Full Application Lifecycle Using GitOps](https://embed.emamo.com/event/developerweek-austin-2020/s/managing-full-application-lifecycle-using-gitops-o2XQRa) at [Developer Week Austin](https://www.developerweek.com/Austin/conference/) (17th of November 2020)
 * [Kubernetes GitOps for Mere Mortals](https://embed.emamo.com/event/api-world-2020/s/microservices-kubernetes-gitops-for-mere-mortals-WR3ZAo) at [API World](https://embed.emamo.com/event/api-world-2020) (29th of October 2020)
 * Managing Full Application's Lifecycle Using GitOps at [Europe Clouds Summit](https://www.europecloudsummit.com/) (20th of October 2020)
 * [The Objectives And The Principles Behind GitOps](https://cdcon2020.sched.com/event/dpvT?iframe=no) at [CD Con](https://events.linuxfoundation.org/cdcon/) (8th of October 2020)
@@ -115,6 +116,7 @@
 
 # Meetups
 
+* [Managing Full Application Lifecycle Using GitOps](https://www.meetup.com/Mountain-View-Kubernetes-Meetup/events/274045001/) at [Mountain View Kubernetes Meetup](https://www.meetup.com/Mountain-View-Kubernetes-Meetup) (12th of November 2020)
 * [Future-Proofing your Applications for the cloud](https://www.brighttalk.com/webcast/12529/436311?utm_source=viktor&utm_medium=sales&utm_campaign=2020-thought-leadership-webinar) at [BrightTALK](https://www.brighttalk.com/) (9th of September 2020)
 * [What is GitOps and Why should I care about it?](https://www.meetup.com/AgileAustin/events/272808873/) at [Agile Austin](https://www.meetup.com/AgileAustin/) (2nd of September 2020)
 * [GitOps: Taking Stock, Looking Ahead](https://www.meetup.com/Software-Circus/events/270500889/) at [Software Circus - Amsterdam](https://www.meetup.com/Software-Circus) (14th of May 2020)
