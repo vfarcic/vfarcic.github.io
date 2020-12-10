@@ -1,5 +1,3 @@
-# All We Need Is a Browser
+# All That Developers Need Is a Browser (or How to Be More Productive by Having Less)
 
-What would you say if I would tell you that you can be as productive with the cheapest laptop as with the one you already have? Would you believe me if I would say that there is no need for you to install an IDE, compilers, CLIs, Docker, and whatever else you might have on your laptop? How about having a full development environment created whenever you need it instead of dealing with virtual machines and whatever else might constitute your development needs? What if I say that all you need is a browser?
-
-What I'm offering is to get everything we might need with a single click of a button and without anything installed, configured, or running on our laptops. If that did not spark interest, nothing will.
+What would you say if I would tell you that you can be as productive with the cheapest laptop as with the one you already have? Would you believe me if I would say that there is no need for you to install an IDE, compilers, CLIs, Docker, and whatever else you might have on your laptop? How about having a full development environment created whenever you need it instead of dealing with virtual machines and whatever else might be fulfilling your development needs? What if I say that all you need is a browser and that it doesn't matter whether you have a laptop, desktop, Chromebook, or a tablet? On top of all that, I will even claim that you can be more productive without all those things.
