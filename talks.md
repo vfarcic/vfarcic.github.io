@@ -2,6 +2,7 @@
 
 ---
 
+* All That Developers Need Is a Browser (or How to Be More Productive by Having Less) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/dev/abstracts/gitpod.md))
 * Docker Is No More! What Now? How Are We Going To Live Without It? ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/containers/abstracts/kaniko.md))
 * Combining Progressive Delivery With GitOps And Continuous Delivery ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/progressive/abstracts/progressive-gitops-cd.md))
 * How to Implement a Secure GitOps Workflow ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/security.md))
