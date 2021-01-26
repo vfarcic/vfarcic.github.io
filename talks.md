@@ -2,6 +2,13 @@
 
 ---
 
+* Should We Template or Patch Kubernetes Manifests? ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/deploy/abstracts/helm-vs-kustomize.md))
+
+
+# Talks
+
+---
+
 * All That Developers Need Is a Browser (or How to Be More Productive by Having Less) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/dev/abstracts/gitpod.md))
 * Docker Is No More! What Now? How Are We Going To Live Without It? ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/containers/abstracts/kaniko.md))
 * Combining Progressive Delivery With GitOps And Continuous Delivery ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/progressive/abstracts/progressive-gitops-cd.md))
