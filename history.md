@@ -8,6 +8,7 @@
 
 # Conferences
 
+* [How to Implement a Secure GitOps Workflow](https://fincondx.com/speakers/viktor-farcic/) at [FinConDX](https://fincondx.com/) (3rd of December 2020)
 * [Combining Progressive Delivery With GitOps And Continuous Delivery](https://2020.devopsunicorns.com/sessions/combining-progressive-delivery-with-gitops-and-continuous-delivery/) at [DevOps Unicorns](https://2020.devopsunicorns.com/) (25th of November 2020)
 * [Managing Full Application Lifecycle Using GitOps](https://embed.emamo.com/event/developerweek-austin-2020/s/managing-full-application-lifecycle-using-gitops-o2XQRa) at [Developer Week Austin](https://www.developerweek.com/Austin/conference/) (17th of November 2020)
 * [Kubernetes GitOps for Mere Mortals](https://embed.emamo.com/event/api-world-2020/s/microservices-kubernetes-gitops-for-mere-mortals-WR3ZAo) at [API World](https://embed.emamo.com/event/api-world-2020) (29th of October 2020)
@@ -115,8 +116,10 @@
 * [Continuous Delivery Workshop](http://craft-conf.com/2015#workshops/ViktorFarcic) at [Craft 2015 Budapest](http://craft-conf.com/2015) (22nd of April 2015)
 * Continuous Deployment: The Ultimate Culmination of Software Craftsmanship at [Booster 2015](http://www.boosterconf.no/talks/413) (13th of March 2015)
 
-# Meetups
+# Meetups / Webinars
 
+* [Combining Progressive Delivery With GitOps And Continuous Delivery](https://www.meetup.com/SFBayLUG/events/275036752/) at [SFBayLUG (San Francisco Bay Area Linux Users Group)](https://www.meetup.com/SFBayLUG) (14th of January 2021)
+* [How to Implement a Secure GitOps Workflow](https://learningactors.com/product/how-to-implement-a-secure-gitops-workflow/) at [Agile Actors](https://learningactors.com/) (16th of December 2020)
 * [Applying GitOps To Continuous Delivery](https://www.meetup.com/Cloud-Native-Computing-Iberia/events/274432877/) at [Cloud Native Computing Iberia](https://www.meetup.com/Cloud-Native-Computing-Iberia) (25th of November 2020)
 * [Managing Full Application Lifecycle Using GitOps](https://www.meetup.com/Mountain-View-Kubernetes-Meetup/events/274045001/) at [Mountain View Kubernetes Meetup](https://www.meetup.com/Mountain-View-Kubernetes-Meetup) (12th of November 2020)
 * [Future-Proofing your Applications for the cloud](https://www.brighttalk.com/webcast/12529/436311?utm_source=viktor&utm_medium=sales&utm_campaign=2020-thought-leadership-webinar) at [BrightTALK](https://www.brighttalk.com/) (9th of September 2020)
