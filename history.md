@@ -8,6 +8,8 @@
 
 # Conferences
 
+* [Combining Progressive Delivery With GitOps And Continuous Delivery](https://fosdem.org/2021/schedule/event/combining_progressive_delivery_with_gitops_and_continuous_delivery/) at [Fosdem](https://fosdem.org/2021/) (6th of February 2021)
+* [Docker Is No More! What Now?](https://fosdem.org/2021/schedule/event/containers_k8s_docker/) at [Fosdem](https://fosdem.org/2021/) (6th of February 2021)
 * [How to Implement a Secure GitOps Workflow](https://fincondx.com/speakers/viktor-farcic/) at [FinConDX](https://fincondx.com/) (3rd of December 2020)
 * [Combining Progressive Delivery With GitOps And Continuous Delivery](https://2020.devopsunicorns.com/sessions/combining-progressive-delivery-with-gitops-and-continuous-delivery/) at [DevOps Unicorns](https://2020.devopsunicorns.com/) (25th of November 2020)
 * [Managing Full Application Lifecycle Using GitOps](https://embed.emamo.com/event/developerweek-austin-2020/s/managing-full-application-lifecycle-using-gitops-o2XQRa) at [Developer Week Austin](https://www.developerweek.com/Austin/conference/) (17th of November 2020)
