@@ -2,6 +2,7 @@
 
 ---
 
+* Developers do not need Kubernetes ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/k8s/abstracts/developers-do-not-need-kubernetes.md))
 * How To Apply GitOps On Infrastructure (For Real) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/argo/abstracts/crossplane.md))
 * How To Automate Everything In 2021 ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/argo/abstracts/combined.md))
 * Should We Template or Patch Kubernetes Manifests? ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/deploy/abstracts/helm-vs-kustomize.md))

@@ -1,9 +1,11 @@
+# Source: https://gist.github.com/34bb5268261285f10fecefb990cfee3a
+
 #########
 # Setup #
 #########
 
 # Requirements:
-# - k8s v1.19+ cluster with nginx Ingress (e.g., https://gist.github.com/925653c9fbf8cce23c35eedcd57de86e)
+# - k8s v1.19+ cluster with nginx Ingress (e.g., https://gist.github.com/e24b00a29c66d5478b4054065d9ea156)
 
 # Replace `[...]` with the GitHub organization or the username
 export GH_ORG=[...]
@@ -182,6 +184,13 @@ argocd login \
 argocd account update-password \
     --current-password $PASS \
     --new-password admin
+
+argocd login \
+    --insecure \
+    --username admin \
+    --password admin \
+    --grpc-web \
+    argo-cd.$BASE_HOST
 
 cat project.yaml
 
