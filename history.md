@@ -8,6 +8,7 @@
 
 # Conferences
 
+* [Combining Progressive Delivery With GitOps And Continuous Delivery](https://progressivedeliveryconf21.heysummit.com/talks/combining-progressive-delivery-with-gitops-and-continuous-delivery-1/) at [Progressive Delivery Conf](https://progressivedeliveryconf21.heysummit.com/) (18th of March 2021)
 * [Combining Progressive Delivery With GitOps And Continuous Delivery](https://fosdem.org/2021/schedule/event/combining_progressive_delivery_with_gitops_and_continuous_delivery/) at [Fosdem](https://fosdem.org/2021/) (6th of February 2021)
 * [Docker Is No More! What Now?](https://fosdem.org/2021/schedule/event/containers_k8s_docker/) at [Fosdem](https://fosdem.org/2021/) (6th of February 2021)
 * [How to Implement a Secure GitOps Workflow](https://fincondx.com/speakers/viktor-farcic/) at [FinConDX](https://fincondx.com/) (3rd of December 2020)
@@ -120,6 +121,7 @@
 
 # Meetups / Webinars
 
+* [GitOps-based Infrastructure as Code through Kubernetes API](https://www.cncf.io/webinars/this-week-in-cloud-native-crossplane-gitops-based-infrastructure-as-code-through-kubernetes-api/) at [Cloud Native Live](https://www.cncf.io/webinars/) (24th of March 2021)
 * [Combining Progressive Delivery With GitOps And Continuous Delivery](https://www.meetup.com/SFBayLUG/events/275036752/) at [SFBayLUG (San Francisco Bay Area Linux Users Group)](https://www.meetup.com/SFBayLUG) (14th of January 2021)
 * [How to Implement a Secure GitOps Workflow](https://learningactors.com/product/how-to-implement-a-secure-gitops-workflow/) at [Agile Actors](https://learningactors.com/) (16th of December 2020)
 * [Applying GitOps To Continuous Delivery](https://www.meetup.com/Cloud-Native-Computing-Iberia/events/274432877/) at [Cloud Native Computing Iberia](https://www.meetup.com/Cloud-Native-Computing-Iberia) (25th of November 2020)
