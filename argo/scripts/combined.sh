@@ -174,8 +174,6 @@ open http://argo-cd.$BASE_HOST
 
 # Both user and password are `admin`
 
-cat projects.yaml
-
 kubectl apply --filename projects.yaml
 
 cd ..
@@ -216,6 +214,8 @@ cd ../argo-combined-demo
 # Created a k8s cluster
 # Installed Argo CD
 # ... and nothing else
+
+# Show Argo CD UI
 
 cat apps.yaml
 
