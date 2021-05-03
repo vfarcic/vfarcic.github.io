@@ -2,6 +2,13 @@
 
 ---
 
+* Continuous delivery with Ketch, GitHub Actions, and k3d ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ketch/abstracts/github-actions.md))
+
+
+# Talks
+
+---
+
 * How To Apply GitOps Without Making Developers Go Crazy ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ketch/abstracts/gitops.md))
 * Developers do not need Kubernetes ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/k8s/abstracts/developers-do-not-need-kubernetes.md))
 * How To Apply GitOps On Infrastructure (For Real) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/argo/abstracts/crossplane.md))
