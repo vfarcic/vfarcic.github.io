@@ -26,7 +26,7 @@ git clone https://github.com/$GH_ORG/crossplane-demo.git
 cd crossplane-demo
 
 # Replace `[...]` with the base host accessible through NGINX Ingress
-export BASE_HOST=[...] # e.g., `$(minikube ip).xip.io`
+export BASE_HOST=[...] # e.g., `$(minikube ip).nip.io`
 
 #########################
 # Setup: Deploy Argo CD #
@@ -210,6 +210,8 @@ git add .
 git commit -m "GKE"
 
 git push
+
+open http://argo-cd.$BASE_HOST
 
 watch kubectl get nodes
 

@@ -5,13 +5,13 @@
 #########
 
 # Requirements:
-# - k8s v1.19+ cluster with nginx Ingress (e.g., https://gist.github.com/e24b00a29c66d5478b4054065d9ea156)
+# - k8s v1.19+ cluster with nginx Ingress (e.g., https://gist.github.com/18734cea86bb31c8146fbbe55adfb874)
 
 # Replace `[...]` with the GitHub organization or the username
 export GH_ORG=[...]
 
 # Replace `[...]` with the base host accessible through NGINX Ingress
-export BASE_HOST=[...] # e.g., $INGRESS_HOST.xip.io
+export BASE_HOST=[...] # e.g., $INGRESS_HOST.nip.io
 
 export REGISTRY_SERVER=https://index.docker.io/v1/
 
@@ -192,9 +192,9 @@ argocd login \
     --grpc-web \
     argo-cd.$BASE_HOST
 
-cat project.yaml
+cat projects.yaml
 
-kubectl apply --filename project.yaml
+kubectl apply --filename projects.yaml
 
 cat apps.yaml
 
@@ -206,18 +206,32 @@ open http://argo-cd.$BASE_HOST
 
 cd ../argo-combined-app
 
-# This might not work with providers that do not expose the IP but a host (e.g., AWS EKS)
+# If NOT EKS
 export ISTIO_HOST=$(kubectl \
     --namespace istio-system \
     get svc istio-ingressgateway \
     --output jsonpath="{.status.loadBalancer.ingress[0].ip}")
 
+# If EKS
+export ISTIO_HOSTNAME=$(kubectl \
+    --namespace istio-system \
+    get svc istio-ingressgateway \
+    --output jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+
+# If EKS
+export ISTIO_HOST=$(\
+    dig +short $ISTIO_HOSTNAME)
+
 echo $ISTIO_HOST
+
+# Repeat the `export` commands if the output of the `echo` command is empty
+# If the output contains more than one IP, wait for a while longer, and repeat the `export` commands.
+# If the output continues having more than one IP, choose one of them and execute `export INGRESS_HOST=[...]` with `[...]` being the selected IP.
 
 # Repeat if the output is empty
 
 cat kustomize/base/istio.yaml \
-    | sed -e "s@acme.com@argo-combined-app.$ISTIO_HOST.xip.io@g" \
+    | sed -e "s@acme.com@argo-combined-app.$ISTIO_HOST.nip.io@g" \
     | tee kustomize/overlays/production/istio.yaml
 
 git add .
@@ -307,4 +321,4 @@ kubectl argo rollouts \
     get rollout argo-combined-app \
     --watch
 
-open http://argo-combined-app.$ISTIO_HOST.xip.io
+open http://argo-combined-app.$ISTIO_HOST.nip.io
