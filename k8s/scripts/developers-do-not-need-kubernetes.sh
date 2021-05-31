@@ -6,7 +6,7 @@
 # Setup #
 #########
 
-# Create a Kubernetes cluster in a single zone (regional clusters are supported only in the paid version)
+# Create a Kubernetes cluster
 
 curl -s https://storage.googleapis.com/shipa-client/install.sh \
     | bash
@@ -31,7 +31,11 @@ cat helm/templates/*
 
 cat helm/values.yaml
 
-# You're not in control any more. You cannot define what your app is.
+# Dev's are not in control any more. They cannot define what your app is.
+# Is it stateless or stateful.
+# Does it scale automatically or not?
+# Is it publicly explosed or not?
+# etc.
 
 # Developers do not need Kubernetes.
 # They need to write code, and they need an easy way to build, test, and deploy their applications.
@@ -42,13 +46,21 @@ cat helm/values.yaml
 # On the other hand, operators and sysadmins do need Kubernetes.
 # It gives them all they need to run systems at scale.
 # Nevertheless, operators also need to empower developers to deploy their own applications.
-# They need to enable developers by providing services rather than doing actual deployments.
+# They need to enable developers by providing services rather than doing actual deployments or defining app manifests.
 
 # So, we have conflicting needs.
 # Kubernetes is necessary to some and a burden to others.
 # Can we satisfy all?
 # Can we have a system that is based on Kubernetes yet easy to operate?
 # Can we make Kubernetes disappear and become an implementation detail running in the background?
+
+#######################
+# Creating frameworks #
+#######################
+
+# Create a framework
+
+# Add a cluster
 
 ########################################
 # Deploying apps from container images #
@@ -60,14 +72,12 @@ shipa app deploy \
     --app devops-toolkit \
     --image vfarcic/devops-toolkit-series
 
-shipa app list
+shipa app info --app devops-toolkit
 
 # Open the link
 
 kubectl --namespace shipa-my-framework \
     get all,ingresses
-
-shipa app deploy list --app devops-toolkit
 
 ####################
 # Adding platforms #
