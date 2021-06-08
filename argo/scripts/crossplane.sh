@@ -154,6 +154,8 @@ spec:
 # Intro #
 #########
 
+kubectl apply --filename gke.yaml
+
 # IaC - Any tool can do it
 # We need more
 # We need to avoid fragmentation and use a single API that can be used to manage everything (Kube API)
@@ -164,11 +166,11 @@ spec:
 # Create resources #
 ####################
 
-kubectl apply --filename gke.yaml
-
 cat gke.yaml
 
 echo https://console.cloud.google.com/kubernetes/list?project=$PROJECT_ID
+
+# Open it
 
 watch kubectl get gkeclusters
 
@@ -196,12 +198,6 @@ watch kubectl get nodes
 cat gke-region.yaml
 
 diff gke-region.yaml gke.yaml
-
-# We could use a command like the one below
-# kubectl apply \
-#     --filename gke-region.yaml
-
-# Open the Argo CD UI
 
 cp gke-region.yaml production/gke.yaml
 

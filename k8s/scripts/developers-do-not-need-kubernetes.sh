@@ -6,16 +6,55 @@
 # Setup #
 #########
 
-# Create a Kubernetes cluster
+# Create a Kubernetes cluster with Ingress
 
 curl -s https://storage.googleapis.com/shipa-client/install.sh \
     | bash
 
-git clone https://github.com/vfarcic/shipa-demo.git
+git clone https://github.com/vfarcic/kubevela-demo.git
 
-cd shipa-demo
+cd kubevela-demo
 
 # Follow the instructions in https://learn.shipa.io/docs/setup-shipa-cloud
+
+# If NOT EKS
+export INGRESS_HOST=$(kubectl \
+    --namespace ingress-nginx \
+    get svc ingress-nginx-controller \
+    --output jsonpath="{.status.loadBalancer.ingress[0].ip}")
+
+# If EKS
+export INGRESS_HOSTNAME=$(kubectl \
+    --namespace ingress-nginx \
+    get svc ingress-nginx-controller \
+    --output jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+
+# If EKS
+export INGRESS_HOST=$(\
+    dig +short $INGRESS_HOSTNAME)
+
+echo $INGRESS_HOST
+
+# Repeat the `export` commands if the output is empty
+
+# If the output contains more than one IP, wait for a while longer, and repeat the `export` commands.
+
+# If the output continues having more than one IP, choose one of them and execute `export INGRESS_HOST=[...]` with `[...]` being the selected IP.
+
+cat dt-simple.yaml \
+    | sed -e "s@localhost@demo.$INGRESS_HOST.nip.io@g" \
+    | tee dt-simple.yaml
+
+helm repo add kubevela \
+    https://kubevelacharts.oss-cn-hangzhou.aliyuncs.com/core
+
+helm repo update
+
+helm upgrade --install \
+    kubevela kubevela/vela-core \
+    --namespace vela-system \
+    --create-namespace \
+    --wait
 
 #######
 # k8s #
@@ -24,12 +63,8 @@ cd shipa-demo
 # Since the emergence of Kubernetes, we hoped that developers will adopt it.
 # That did not happen, and it will likely never happen.
 
-cat helm/templates/*
-
 # It's too complicated.
 # What if someone else created that for you
-
-cat helm/values.yaml
 
 # Dev's are not in control any more. They cannot define what your app is.
 # Is it stateless or stateful.
@@ -54,17 +89,17 @@ cat helm/values.yaml
 # Can we have a system that is based on Kubernetes yet easy to operate?
 # Can we make Kubernetes disappear and become an implementation detail running in the background?
 
-#######################
-# Creating frameworks #
-#######################
+cat helm/templates/*
+
+cat helm/values.yaml
+
+#########
+# Shipa #
+#########
 
 # Create a framework
 
 # Add a cluster
-
-########################################
-# Deploying apps from container images #
-########################################
 
 shipa app create devops-toolkit
 
@@ -79,52 +114,42 @@ shipa app info --app devops-toolkit
 kubectl --namespace shipa-my-framework \
     get all,ingresses
 
-####################
-# Adding platforms #
-####################
+##################
+# OAM / KubeVela #
+##################
 
-# Open https://learn.shipa.io/docs/platforms-1
+cat dt-simple.yaml
 
-ls -1
+kubectl apply \
+    --filename dt-simple.yaml
 
-shipa platform list
+kubectl get all,ingresses
 
-shipa platform add go
+echo http://demo.$INGRESS_HOST.nip.io
 
-shipa platform list
+# Open it
 
-###################################
-# Deploying apps from source code #
-###################################
+kubectl get crds | grep oam
 
-shipa app create shipa-demo go
+kubectl delete \
+    --filename dt-simple.yaml
 
-shipa app deploy \
-    --app shipa-demo \
-    --files-only .
+vela components
 
-shipa app info --app shipa-demo
+kubectl get componentdefinitions -A
 
-# Open the link
+cat components.yaml
 
-##########################
-# Deploying new releases #
-##########################
+# https://cuelang.org/
 
-# Modify main.go
+kubectl apply --filename components.yaml
 
-shipa app deploy \
-    --app shipa-demo \
-    --files-only .
+cat traits.yaml
 
-shipa app list
+kubectl apply --filename traits.yaml
 
-shipa app deploy list --app shipa-demo
+cat dt-full.yaml
 
-########################
-# Scaling applications #
-########################
+kubectl apply --filename dt-full.yaml
 
-shipa unit add 2 --app shipa-demo
-
-
+kubectl get all,ingresses
