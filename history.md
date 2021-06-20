@@ -8,6 +8,9 @@
 
 # Conferences
 
+* [How To Automate Everything In 2021](https://www.developerweek.com/europe/speakers/) at [DeveloperWeek Europe](https://www.developerweek.com/europe/) (27th of April 2021)
+* [How To Automate Everything In 2021](https://konghq.com/events/destination-scale/speakers) at [Destination Scale](https://konghq.com/events/destination-scale/) (21th of April 2021)
+* [How To Automate Everything In 2021](https://events.codemotion.com/conferences/online/2021/online-tech-conference-spanish-edition-spring/agenda) at [Codemotion Spain](https://events.codemotion.com/conferences/online/2021/online-tech-conference-spanish-edition-spring) (20th of April 2021)
 * [Combining Progressive Delivery With GitOps And Continuous Delivery](https://progressivedeliveryconf21.heysummit.com/talks/combining-progressive-delivery-with-gitops-and-continuous-delivery-1/) at [Progressive Delivery Conf](https://progressivedeliveryconf21.heysummit.com/) (18th of March 2021)
 * [Combining Progressive Delivery With GitOps And Continuous Delivery](https://fosdem.org/2021/schedule/event/combining_progressive_delivery_with_gitops_and_continuous_delivery/) at [Fosdem](https://fosdem.org/2021/) (6th of February 2021)
 * [Docker Is No More! What Now?](https://fosdem.org/2021/schedule/event/containers_k8s_docker/) at [Fosdem](https://fosdem.org/2021/) (6th of February 2021)
