@@ -8,6 +8,9 @@
 
 # Conferences
 
+* [What is next for DevOps?](https://devopspro.lt/schedule/) at [DevOps Pro Europe](https://devopspro.lt/) (12th of May 2021)
+* [Combining Progressive Delivery With GitOps And Continuous Delivery](https://devopspro.lt/Viktor-Farci/) at [DevOps Pro Europe](https://devopspro.lt/) (12th of Map 2021)
+* GitOps with Ketch at [DevOps Bootcamp](https://devopsbootcamp.estabilis.com/) (29th of April 2021)
 * [How To Automate Everything In 2021](https://www.developerweek.com/europe/speakers/) at [DeveloperWeek Europe](https://www.developerweek.com/europe/) (27th of April 2021)
 * [How To Automate Everything In 2021](https://konghq.com/events/destination-scale/speakers) at [Destination Scale](https://konghq.com/events/destination-scale/) (21th of April 2021)
 * [How To Automate Everything In 2021](https://events.codemotion.com/conferences/online/2021/online-tech-conference-spanish-edition-spring/agenda) at [Codemotion Spain](https://events.codemotion.com/conferences/online/2021/online-tech-conference-spanish-edition-spring) (20th of April 2021)
@@ -124,6 +127,7 @@
 
 # Meetups / Webinars
 
+* How To Apply GitOps On Infrastructure (For Real) at [NADOG](https://nadog.com/) (19th of May 2021)
 * [GitOps-based Infrastructure as Code through Kubernetes API](https://www.cncf.io/webinars/this-week-in-cloud-native-crossplane-gitops-based-infrastructure-as-code-through-kubernetes-api/) at [Cloud Native Live](https://www.cncf.io/webinars/) (24th of March 2021)
 * [Combining Progressive Delivery With GitOps And Continuous Delivery](https://www.meetup.com/SFBayLUG/events/275036752/) at [SFBayLUG (San Francisco Bay Area Linux Users Group)](https://www.meetup.com/SFBayLUG) (14th of January 2021)
 * [How to Implement a Secure GitOps Workflow](https://learningactors.com/product/how-to-implement-a-secure-gitops-workflow/) at [Agile Actors](https://learningactors.com/) (16th of December 2020)
