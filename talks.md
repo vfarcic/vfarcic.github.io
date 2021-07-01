@@ -2,6 +2,7 @@
 
 ---
 
+* Using Kubernetes API To Manage Everything ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/universal-control-plane.md))
 * Empowering Developers To Manage Infrastructure ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/composites.md))
 * Continuous delivery with Ketch, GitHub Actions, and k3d ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ketch/abstracts/github-actions.md))
 
