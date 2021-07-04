@@ -8,6 +8,7 @@
 
 # Conferences
 
+* Combining Progressive Delivery With GitOps And Continuous Delivery at [SpainCloud Summit](https://www.spaincloudsummit.com/) (25th of May 2021)
 * [What is next for DevOps?](https://devopspro.lt/schedule/) at [DevOps Pro Europe](https://devopspro.lt/) (12th of May 2021)
 * [Combining Progressive Delivery With GitOps And Continuous Delivery](https://devopspro.lt/Viktor-Farci/) at [DevOps Pro Europe](https://devopspro.lt/) (12th of Map 2021)
 * GitOps with Ketch at [DevOps Bootcamp](https://devopsbootcamp.estabilis.com/) (29th of April 2021)
@@ -80,6 +81,8 @@
 
 # Workshops
 
+* How to Deploy & Manage Kubernetes Applications Directly from JFrog Artifactory, Pipelines with Shipa at [JFrog SwampUp EU](https://swampup.jfrog.com/) (3rd of June 2021)
+* How to Deploy & Manage Kubernetes Applications Directly from JFrog Artifactory, Pipelines with Shipa at [JFrog SwampUp US](https://swampup.jfrog.com/) (27th of May 2021)
 * [Introduction To Jenkins X](https://cloudbeesconnect.com/speakers/viktor-farcic/) at [CloudBees Connect](https://cloudbeesconnect.com/) (20th of May 2020)
 * [Cloud-Native Kubernetes-First Serverless Continuous Delivery With Jenkins X, Kubernetes, And Friends](https://www.eventbrite.com/e/workshop-cloud-native-kubernetes-first-serverless-continuous-delivery-with-jenkins-x-kubernetes-and-tickets-87082627483#) at [pre-Fosdem](https://fosdem.org/2020/) (30th of January 2020)
 * [Cloud-Native Kubernetes-First Continuous Delivery With Jenkins X, Kubernetes, And Friends](https://devopsworldjenkinsworld2019lisbo.sched.com/event/UVUT/350-continuous-delivery-with-jenkins-x?iframe=no&w=100%&sidebar=yes&bg=no) at [DevOps World](https://www.previous.cloudbees.com/devops-world/lisbon) (3rd of December 2019)
