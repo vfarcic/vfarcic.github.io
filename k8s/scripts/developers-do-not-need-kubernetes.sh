@@ -6,150 +6,196 @@
 # Setup #
 #########
 
-# Create a Kubernetes cluster with Ingress
+# Feel free to use any other Kubernetes distribution
+minikube start
 
-curl -s https://storage.googleapis.com/shipa-client/install.sh \
-    | bash
+# If not using Minikube, install Ingress in whichever way is suitable for your Kubernetes distribution
+minikube addons enable ingress
 
-git clone https://github.com/vfarcic/kubevela-demo.git
+# If not using Minikube, replace the value with the IP through which the Ingress Service can be accessed.
+export INGRESS_HOST=$(minikube ip)
 
-cd kubevela-demo
+cd crossplane-kubevela-argocd-demo
 
-# Follow the instructions in https://learn.shipa.io/docs/setup-shipa-cloud
+cat argo-cd/overlays/production/ingress.yaml \
+    | sed -e "s@host: .*@host: argo-cd.$INGRESS_HOST.nip.io@g" \
+    | tee argo-cd/overlays/production/ingress.yaml
 
-# If NOT EKS
-export INGRESS_HOST=$(kubectl \
-    --namespace ingress-nginx \
-    get svc ingress-nginx-controller \
-    --output jsonpath="{.status.loadBalancer.ingress[0].ip}")
+kubectl apply --filename sealed-secrets
 
-# If EKS
-export INGRESS_HOSTNAME=$(kubectl \
-    --namespace ingress-nginx \
-    get svc ingress-nginx-controller \
-    --output jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+# Replace `[...]` with your access key ID`
+export AWS_ACCESS_KEY_ID=[...]
 
-# If EKS
-export INGRESS_HOST=$(\
-    dig +short $INGRESS_HOSTNAME)
+# Replace `[...]` with your secret access key
+export AWS_SECRET_ACCESS_KEY=[...]
 
-echo $INGRESS_HOST
+echo "[default]
+aws_access_key_id = $AWS_ACCESS_KEY_ID
+aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
+" | tee aws-creds.conf
 
-# Repeat the `export` commands if the output is empty
+kubectl --namespace crossplane-system \
+    create secret generic aws-creds \
+    --from-file creds=./aws-creds.conf \
+    --output json \
+    --dry-run=client \
+    | kubeseal --format yaml \
+    | tee crossplane-configs/aws-creds.yaml
 
-# If the output contains more than one IP, wait for a while longer, and repeat the `export` commands.
+git add .
 
-# If the output continues having more than one IP, choose one of them and execute `export INGRESS_HOST=[...]` with `[...]` being the selected IP.
+git commit -m "Personalization"
 
-cat dt-simple.yaml \
-    | sed -e "s@localhost@demo.$INGRESS_HOST.nip.io@g" \
-    | tee dt-simple.yaml
+git push
 
-helm repo add kubevela \
-    https://kubevelacharts.oss-cn-hangzhou.aliyuncs.com/core
+kustomize build \
+    argo-cd/overlays/production \
+    | kubectl apply --filename -
 
-helm repo update
+kubectl --namespace argocd \
+    rollout status \
+    deployment argocd-server
 
-helm upgrade --install \
-    kubevela kubevela/vela-core \
-    --namespace vela-system \
-    --create-namespace \
-    --wait
+kubectl apply --filename project.yaml
 
-#######
-# k8s #
-#######
+kubectl apply --filename apps.yaml
 
-# Since the emergence of Kubernetes, we hoped that developers will adopt it.
-# That did not happen, and it will likely never happen.
+export PASS=$(kubectl \
+    --namespace argocd \
+    get secret argocd-initial-admin-secret \
+    --output jsonpath="{.data.password}" \
+    | base64 --decode)
 
-# It's too complicated.
-# What if someone else created that for you
+argocd login \
+    --insecure \
+    --username admin \
+    --password $PASS \
+    --grpc-web \
+    argo-cd.$INGRESS_HOST.nip.io
 
-# Dev's are not in control any more. They cannot define what your app is.
-# Is it stateless or stateful.
-# Does it scale automatically or not?
-# Is it publicly explosed or not?
-# etc.
+argocd account update-password \
+    --current-password $PASS \
+    --new-password admin
 
-# Developers do not need Kubernetes.
-# They need to write code, and they need an easy way to build, test, and deploy their applications.
-# It is unrealistic to expect developers to spend years learning Kubernetes.
-# Devs need a way to define applications, and not Kubernetes resources
-# Devs need a way to just say "here's my code, run it!"
+echo http://argo-cd.$INGRESS_HOST.nip.io
 
-# On the other hand, operators and sysadmins do need Kubernetes.
-# It gives them all they need to run systems at scale.
-# Nevertheless, operators also need to empower developers to deploy their own applications.
-# They need to enable developers by providing services rather than doing actual deployments or defining app manifests.
+cp orig/cluster.yaml team-a-infra/.
 
-# So, we have conflicting needs.
-# Kubernetes is necessary to some and a burden to others.
-# Can we satisfy all?
-# Can we have a system that is based on Kubernetes yet easy to operate?
-# Can we make Kubernetes disappear and become an implementation detail running in the background?
+git add .
 
-cat helm/templates/*
+git commit -m "Team A infra"
 
-cat helm/values.yaml
+git push
 
-#########
-# Shipa #
-#########
+cp orig/cluster.yaml team-a-infra/.
 
-# Create a framework
+watch kubectl get clusters,nodegroup,iamroles,iamrolepolicyattachments,vpcs,securitygroups,subnets,internetgateways,routetables,providerconfigs,releases
 
-# Add a cluster
+./config-cluster-aws.sh team-a
 
-shipa app create devops-toolkit
-
-shipa app deploy \
-    --app devops-toolkit \
-    --image vfarcic/devops-toolkit-series
-
-shipa app info --app devops-toolkit
-
-# Open the link
-
-kubectl --namespace shipa-my-framework \
-    get all,ingresses
+# In the second terminal
+export KUBECONFIG=$PWD/kubeconfig.yaml
 
 ##################
-# OAM / KubeVela #
+# Infrastructure #
 ##################
 
-cat dt-simple.yaml
+cat team-a-infra/cluster.yaml
 
-kubectl apply \
-    --filename dt-simple.yaml
+# Show Argo CD
 
-kubectl get all,ingresses
+# In a second terminal
+kubectl get clusters,nodegroup,iamroles,iamrolepolicyattachments,vpcs,securitygroups,subnets,internetgateways,routetables,providerconfigs,releases
 
-echo http://demo.$INGRESS_HOST.nip.io
+# Wait until all the resources are ready and synced
 
-# Open it
+################
+# Applications #
+################
 
-kubectl get crds | grep oam
+cat orig/my-app.yaml
 
-kubectl delete \
-    --filename dt-simple.yaml
+cp orig/my-app.yaml team-a-apps/.
 
-vela components
+git add .
 
-kubectl get componentdefinitions -A
+git commit -m "Team A apps"
 
-cat components.yaml
+git push
 
-# https://cuelang.org/
+# In the second terminal
+watch kubectl --namespace production \
+    get all,hpa,ingress
 
-kubectl apply --filename components.yaml
+##########################
+# How did it all happen? #
+##########################
 
-cat traits.yaml
+# In the second terminal
+cat apps.yaml
 
-kubectl apply --filename traits.yaml
+# In the second terminal
+ls -1 production
 
-cat dt-full.yaml
+# In the second terminal
+cat production/team-a-infra.yaml 
 
-kubectl apply --filename dt-full.yaml
+# In the second terminal
+cat crossplane-compositions/definition.yaml
 
-kubectl get all,ingresses
+# In the second terminal
+cat crossplane-compositions/cluster-aws.yaml
+
+cat team-a-infra/cluster.yaml
+
+# In the second terminal
+cat production/team-a-apps.yaml
+
+# In the second terminal
+cat team-a-app-reqs/kubevela.yaml
+
+cat team-a-apps/my-app.yaml
+
+# Show Argo CD
+
+###########################
+# Deleting infrastructure #
+###########################
+
+rm team-a-infra/cluster.yaml
+
+git add .
+
+git commit -m "Remove the cluster"
+
+git push
+
+# In the second terminal
+unset KUBECONFIG
+
+# In the second terminal
+watch kubectl get clusters,nodegroup,iamroles,iamrolepolicyattachments,vpcs,securitygroups,subnets,internetgateways,routetables,providerconfigs
+
+###########
+# Destroy #
+###########
+
+# Wait until all the resources are removed
+
+rm -rf team-a-apps
+
+rm -rf team-a-app-reqs
+
+rm production/team-a-apps.yaml
+
+rm production/team-a-app-reqs.yaml
+
+git add .
+
+git commit -m "Revert"
+
+git push
+
+minikube delete
+
+# TODO: Link to the video
