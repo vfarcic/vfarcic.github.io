@@ -87,8 +87,6 @@ git commit -m "Team A infra"
 
 git push
 
-cp orig/cluster.yaml team-a-infra/.
-
 watch kubectl get clusters,nodegroup,iamroles,iamrolepolicyattachments,vpcs,securitygroups,subnets,internetgateways,routetables,providerconfigs,releases
 
 ./config-cluster-aws.sh team-a
