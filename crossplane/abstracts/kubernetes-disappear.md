@@ -1,0 +1,3 @@
+# Freedom Means That Kubernetes Needs To Disappear
+
+We are all developing services. Some are working on those used by external users, while others are creating those for internal teams. That includes services that enable the rest of the company to manage infrastructure and applications. Nevertheless, it is unrealistic that everyone will become an expert everything, especially Kubernetes. Yet, Kubernetes is here to stay, and we need to figure out TODO:

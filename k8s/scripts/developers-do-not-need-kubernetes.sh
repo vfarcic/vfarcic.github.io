@@ -91,9 +91,6 @@ watch kubectl get clusters,nodegroup,iamroles,iamrolepolicyattachments,vpcs,secu
 
 ./config-cluster-aws.sh team-a
 
-# In the second terminal
-export KUBECONFIG=$PWD/kubeconfig.yaml
-
 ##################
 # Infrastructure #
 ##################
@@ -120,6 +117,9 @@ git add .
 git commit -m "Team A apps"
 
 git push
+
+# In the second terminal
+export KUBECONFIG=$PWD/kubeconfig.yaml
 
 # In the second terminal
 watch kubectl --namespace production \
@@ -195,5 +195,3 @@ git commit -m "Revert"
 git push
 
 minikube delete
-
-# TODO: Link to the video
