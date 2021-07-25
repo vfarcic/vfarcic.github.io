@@ -8,6 +8,8 @@
 
 # Conferences
 
+* [How To Apply GitOps On Infrastructure (For Real)](https://www.gitopsdays.com/speaker/viktor-farcic/) at [GitOps Days](https://www.gitopsdays.com/) (10th of June 2021)
+* [Developers do not need Kubernetes](https://craft-conf.com/speaker/ViktorFarcic) at [Craft](https://craft-conf.com) (4th of June 2021)
 * [How To Apply GitOps On Infrastructure (For Real)](https://www.usenix.org/conference/lisa21/presentation/farcic) at [LISA 21](https://www.usenix.org/conference/lisa21) (1st of June 2021)
 * Combining Progressive Delivery With GitOps And Continuous Delivery at [SpainCloud Summit](https://www.spaincloudsummit.com/) (25th of May 2021)
 * [What is next for DevOps?](https://devopspro.lt/schedule/) at [DevOps Pro Europe](https://devopspro.lt/) (12th of May 2021)
