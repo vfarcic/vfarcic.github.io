@@ -1,5 +1,3 @@
-<!--more-->
-
 # Books
 
 * [DevOps Paradox](https://amzn.to/2myrYYA)
