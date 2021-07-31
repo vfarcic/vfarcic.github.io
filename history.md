@@ -8,6 +8,7 @@
 
 # Conferences
 
+* [Combining Progressive Delivery With GitOps And Continuous Delivery](https://gitopssummit2021.sched.com/event/il6p/combining-progressive-delivery-with-gitops-and-continuous-delivery-viktor-farcic-shipa) at [GitOps Summit](https://events.linuxfoundation.org/gitops-summit/) (22nd of June 2021)
 * Combining Progressive Delivery With GitOps And Continuous Delivery at [SpainCloud Summit](https://www.spaincloudsummit.com/) (25th of May 2021)
 * [What is next for DevOps?](https://devopspro.lt/schedule/) at [DevOps Pro Europe](https://devopspro.lt/) (12th of May 2021)
 * [Combining Progressive Delivery With GitOps And Continuous Delivery](https://devopspro.lt/Viktor-Farci/) at [DevOps Pro Europe](https://devopspro.lt/) (12th of Map 2021)
@@ -130,6 +131,7 @@
 
 # Meetups / Webinars
 
+* [How to Build-up DevOps Toolstack?](https://www.eventbrite.co.uk/e/devopsx-talks-8-how-to-build-up-devops-toolstack-tickets-157589471351) at [DevOpsX Talks](https://continium.io/en/devops-events/devopsx-talks/) (23nd of June 2021)
 * How To Apply GitOps On Infrastructure (For Real) at [NADOG](https://nadog.com/) (19th of May 2021)
 * [GitOps-based Infrastructure as Code through Kubernetes API](https://www.cncf.io/webinars/this-week-in-cloud-native-crossplane-gitops-based-infrastructure-as-code-through-kubernetes-api/) at [Cloud Native Live](https://www.cncf.io/webinars/) (24th of March 2021)
 * [Combining Progressive Delivery With GitOps And Continuous Delivery](https://www.meetup.com/SFBayLUG/events/275036752/) at [SFBayLUG (San Francisco Bay Area Linux Users Group)](https://www.meetup.com/SFBayLUG) (14th of January 2021)
