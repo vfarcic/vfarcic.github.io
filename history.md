@@ -6,6 +6,7 @@
 
 # Conferences
 
+* [How To Automate Everything In 2021](https://events.linuxfoundation.org/cdcon/program/schedule/) at [CD Con](https://events.linuxfoundation.org/cdcon/) (23nd of June 2021)
 * [Combining Progressive Delivery With GitOps And Continuous Delivery](https://gitopssummit2021.sched.com/event/il6p/combining-progressive-delivery-with-gitops-and-continuous-delivery-viktor-farcic-shipa) at [GitOps Summit](https://events.linuxfoundation.org/gitops-summit/) (22nd of June 2021)
 * [How To Apply GitOps On Infrastructure (For Real)](https://www.gitopsdays.com/speaker/viktor-farcic/) at [GitOps Days](https://www.gitopsdays.com/) (10th of June 2021)
 * [Developers do not need Kubernetes](https://craft-conf.com/speaker/ViktorFarcic) at [Craft](https://craft-conf.com) (4th of June 2021)
