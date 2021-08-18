@@ -6,20 +6,12 @@
 # Setup #
 #########
 
-# Feel free to use any other Kubernetes distribution
-minikube start
+# Create a Kubernetes cluster with Ingress (e.g., https://gist.github.com/925653c9fbf8cce23c35eedcd57de86e)
 
-# If not using Minikube, install Ingress in whichever way is suitable for your Kubernetes distribution
-minikube addons enable ingress
-
-# If not using Minikube, replace the value with the IP through which the Ingress Service can be accessed.
-export INGRESS_HOST=$(minikube ip)
+# Replace `[...]` with the Ingress Service external IP
+export INGRESS_HOST=[...]
 
 cd crossplane-kubevela-argocd-demo
-
-cat argo-cd/overlays/production/ingress.yaml \
-    | sed -e "s@host: .*@host: argo-cd.$INGRESS_HOST.nip.io@g" \
-    | tee argo-cd/overlays/production/ingress.yaml
 
 kubectl apply --filename sealed-secrets
 
@@ -48,13 +40,20 @@ git commit -m "Personalization"
 
 git push
 
-kustomize build \
-    argo-cd/overlays/production \
-    | kubectl apply --filename -
+helm repo add argo \
+    https://argoproj.github.io/argo-helm
 
-kubectl --namespace argocd \
-    rollout status \
-    deployment argocd-server
+helm repo update
+
+helm upgrade --install \
+    argocd argo/argo-cd \
+    --namespace argocd \
+    --create-namespace \
+    --set server.ingress.hosts="{argo-cd.$INGRESS_HOST.nip.io}" \
+    --set server.ingress.enabled=true \
+    --set server.extraArgs="{--insecure}" \
+    --set controller.args.appResyncPeriod=30 \
+    --wait
 
 kubectl apply --filename project.yaml
 
@@ -87,20 +86,39 @@ git commit -m "Team A infra"
 
 git push
 
-watch kubectl get clusters,nodegroup,iamroles,iamrolepolicyattachments,vpcs,securitygroups,subnets,internetgateways,routetables,providerconfigs,releases
+watch kubectl get managed,releases
 
 ./config-cluster-aws.sh team-a
+
+# Open a second terminal
+# Enter the same directory as the one used in the first terminal
+
+
+# In the second terminal
+# Replace `[...]` with your access key ID`
+export AWS_ACCESS_KEY_ID=[...]
+
+# In the second terminal
+# Replace `[...]` with your secret access key
+export AWS_SECRET_ACCESS_KEY=[...]
+
+# In the second terminal
+export KUBECONFIG=$PWD/kubeconfig.yaml
 
 ##################
 # Infrastructure #
 ##################
 
+# In the second terminal
 cat team-a-infra/cluster.yaml
+
+# In the second terminal
+gh repo view --web
 
 # Show Argo CD
 
-# In a second terminal
-kubectl get clusters,nodegroup,iamroles,iamrolepolicyattachments,vpcs,securitygroups,subnets,internetgateways,routetables,providerconfigs,releases
+# In the first terminal
+kubectl get managed,releases
 
 # Wait until all the resources are ready and synced
 
@@ -108,18 +126,20 @@ kubectl get clusters,nodegroup,iamroles,iamrolepolicyattachments,vpcs,securitygr
 # Applications #
 ################
 
+# In the second terminal
 cat orig/my-app.yaml
 
+# In the second terminal
 cp orig/my-app.yaml team-a-apps/.
 
+# In the second terminal
 git add .
 
+# In the second terminal
 git commit -m "Team A apps"
 
-git push
-
 # In the second terminal
-export KUBECONFIG=$PWD/kubeconfig.yaml
+git push
 
 # In the second terminal
 watch kubectl --namespace production \
@@ -129,29 +149,31 @@ watch kubectl --namespace production \
 # How did it all happen? #
 ##########################
 
-# In the second terminal
+# In the first terminal
 cat apps.yaml
 
-# In the second terminal
+# In the first terminal
 ls -1 production
 
-# In the second terminal
+# In the first terminal
 cat production/team-a-infra.yaml 
 
-# In the second terminal
+# In the first terminal
 cat crossplane-compositions/definition.yaml
 
-# In the second terminal
+# In the first terminal
 cat crossplane-compositions/cluster-aws.yaml
 
+# In the second terminal
 cat team-a-infra/cluster.yaml
 
-# In the second terminal
+# In the first terminal
 cat production/team-a-apps.yaml
 
-# In the second terminal
+# In the first terminal
 cat team-a-app-reqs/kubevela.yaml
 
+# In the second terminal
 cat team-a-apps/my-app.yaml
 
 # Show Argo CD
@@ -160,19 +182,20 @@ cat team-a-apps/my-app.yaml
 # Deleting infrastructure #
 ###########################
 
+# In the second terminal
 rm team-a-infra/cluster.yaml
 
+# In the second terminal
 git add .
 
+# In the second terminal
 git commit -m "Remove the cluster"
 
+# In the second terminal
 git push
 
-# In the second terminal
-unset KUBECONFIG
-
-# In the second terminal
-watch kubectl get clusters,nodegroup,iamroles,iamrolepolicyattachments,vpcs,securitygroups,subnets,internetgateways,routetables,providerconfigs
+# In the first terminal
+watch kubectl get managed
 
 ###########
 # Destroy #
@@ -180,18 +203,25 @@ watch kubectl get clusters,nodegroup,iamroles,iamrolepolicyattachments,vpcs,secu
 
 # Wait until all the resources are removed
 
+# In the second terminal
 rm -rf team-a-apps
 
+# In the second terminal
 rm -rf team-a-app-reqs
 
+# In the second terminal
 rm production/team-a-apps.yaml
 
+# In the second terminal
 rm production/team-a-app-reqs.yaml
 
+# In the second terminal
 git add .
 
+# In the second terminal
 git commit -m "Revert"
 
+# In the second terminal
 git push
 
-minikube delete
+# Delete the initial cluster
