@@ -93,7 +93,6 @@ watch kubectl get managed,releases
 # Open a second terminal
 # Enter the same directory as the one used in the first terminal
 
-
 # In the second terminal
 # Replace `[...]` with your access key ID`
 export AWS_ACCESS_KEY_ID=[...]
