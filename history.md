@@ -1,7 +1,13 @@
+# YouTube Channels & Podcasts
+
+* YouTube: [The DevOps Toolkit](https://youtube.com/c/devopstoolkit)
+* YouTube: [DevOps Paradox](https://www.youtube.com/channel/UCOSojkwOYL-9q9LzzERAihA)
+* Podcast: [DevOps Paradox](https://www.devopsparadox.com/)
+
 # Books
 
-* [DevOps Paradox](https://amzn.to/2myrYYA)
 * [The DevOps Toolkit Series](https://www.devopstoolkitseries.com/)
+* [DevOps Paradox](https://amzn.to/2myrYYA)
 * [Test-Driven Java Development](http://www.amazon.com/Test-Driven-Java-Development-Viktor-Farcic-ebook/dp/B00YSIM3SC)
 
 # Conferences
