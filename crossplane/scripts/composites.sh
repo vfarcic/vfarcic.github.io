@@ -133,7 +133,7 @@ kubectl apply --filename gke.yaml
 
 cat gke.yaml
 
-watch kubectl get managed
+kubectl get managed
 
 open "https://console.cloud.google.com/kubernetes/list?project=$PROJECT_ID"
 
