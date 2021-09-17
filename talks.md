@@ -2,6 +2,7 @@
 
 ---
 
+* How To Manage Infrastructure With Helm ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/helm.md))
 * Automated Drift Detection And Reconciliation Applied To Infrastructure ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/reconciliation.md))
 
 
