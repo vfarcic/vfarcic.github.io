@@ -12,6 +12,8 @@
 
 # Conferences
 
+* [Developers do not need Kubernetes](https://www.containerdays.io/agenda/conferenceday2/#developers-do-n) at [Container Days](https://www.containerdays.io/) (22nd of September 2021)
+* [The Future of Kubernetes](https://worldfestival.com/conference/schedule/) at [World Festival](https://worldfestival.com/) (19th of August 2021)
 * [Developers do not need Kubernetes (in Spanish)](https://www.jbcnconf.com/2021/infoSpeaker.html?ref=0ba89c51baf9f8542188bd750973e0767fbcaa68) at [JBCN Conf](https://www.jbcnconf.com/2021/) (23rd of July 2021)
 * [Developers do not need Kubernetes](https://konghq.com/events/destination-automation/agenda) at [Destination: Automation](https://konghq.com/events/destination-automation/) (14th of July 2021)
 * [How To Automate Everything In 2021](https://events.linuxfoundation.org/cdcon/program/schedule/) at [CD Con](https://events.linuxfoundation.org/cdcon/) (23nd of June 2021)
