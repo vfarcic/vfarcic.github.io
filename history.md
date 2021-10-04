@@ -12,6 +12,8 @@
 
 # Conferences
 
+* [How To Apply GitOps Without Making Developers Go Crazy](https://www.devopsworld.com/agenda/session/596734) at [DevOps World](https://www.devopsworld.com/) (30th of September 2021)
+* How To Apply GitOps On Infrastructure at [GitOps Evolution](https://www.mediaopsevents.com/gitopsevolution) (23rd of September 2021)
 * [Developers do not need Kubernetes](https://www.containerdays.io/agenda/conferenceday2/#developers-do-n) at [Container Days](https://www.containerdays.io/) (22nd of September 2021)
 * [The Future of Kubernetes](https://worldfestival.com/conference/schedule/) at [World Festival](https://worldfestival.com/) (19th of August 2021)
 * [Developers do not need Kubernetes (in Spanish)](https://www.jbcnconf.com/2021/infoSpeaker.html?ref=0ba89c51baf9f8542188bd750973e0767fbcaa68) at [JBCN Conf](https://www.jbcnconf.com/2021/) (23rd of July 2021)
