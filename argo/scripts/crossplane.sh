@@ -1,62 +1,51 @@
-#########
-# Setup #
-#########
+TODO: Intro
 
-# The examples are using Google Cloud (GCP)!
+#################
+# Setup Cluster #
+#################
 
-# Create an account in https://cloud.upbound.io/register or https://crossplane.io/docs/v1.0/getting-started/install-configure.html#start-with-a-self-hosted-crossplane
+git clone https://github.com/vfarcic/devops-toolkit-crossplane
 
-curl -sL https://raw.githubusercontent.com/crossplane/crossplane/release-1.0/install.sh | sh
+cd devops-toolkit-crossplane
 
-# Read the instructions from the output to finish the installation
+# Please watch https://youtu.be/C0v5gJSWuSo if you are not familiar with kind
+# Feel free to use any other Kubernetes platform
+kind create cluster --config kind.yaml
 
-minikube start
+# Only if using kind.
+# If you are not using kind, please install Ingress any way that fits your Kubernetes distribution
+kubectl apply \
+    --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/kind/deploy.yaml
 
-minikube addons enable ingress
+kubectl create namespace crossplane-system
 
-# Open https://github.com/vfarcic/crossplane-demo.git
+kubectl create namespace a-team
 
-# Fork it!
+#################
+# Setup Argo CD #
+#################
 
-# Replace `[...]` with the GitHub organization or the username
-export GH_ORG=[...]
+# If not using kind, replace `127.0.0.1` with the base host accessible through NGINX Ingress
+export INGRESS_HOST=127.0.0.1
 
-git clone https://github.com/$GH_ORG/crossplane-demo.git
+helm repo add argo \
+    https://argoproj.github.io/argo-helm
 
-cd crossplane-demo
+helm repo update
 
-# Replace `[...]` with the base host accessible through NGINX Ingress
-export BASE_HOST=[...] # e.g., `$(minikube ip).nip.io`
+helm upgrade --install \
+    argocd argo/argo-cd \
+    --namespace argocd \
+    --create-namespace \
+    --set server.ingress.hosts="{argo-cd.$INGRESS_HOST.nip.io}" \
+    --set server.ingress.enabled=true \
+    --set server.extraArgs="{--insecure}" \
+    --set controller.args.appResyncPeriod=30 \
+    --wait
 
-#########################
-# Setup: Deploy Argo CD #
-#########################
+kubectl create namespace production
 
-cat argo-cd/base/ingress.yaml \
-    | sed -e "s@acme.com@argo-cd.$BASE_HOST@g" \
-    | tee argo-cd/overlays/production/ingress.yaml
-
-cat production/argo-cd.yaml \
-    | sed -e "s@vfarcic@$GH_ORG@g" \
-    | tee production/argo-cd.yaml
-
-cat apps.yaml \
-    | sed -e "s@vfarcic@$GH_ORG@g" \
-    | tee apps.yaml
-
-git add .
-
-git commit -m "Initial commit"
-
-git push
-
-kustomize build \
-    argo-cd/overlays/production \
-    | kubectl apply --filename -
-
-kubectl --namespace argocd \
-    rollout status \
-    deployment argocd-server
+kubectl apply --filename argocd-app.yaml
 
 export PASS=$(kubectl \
     --namespace argocd \
@@ -69,15 +58,178 @@ argocd login \
     --username admin \
     --password $PASS \
     --grpc-web \
-    argo-cd.$BASE_HOST
+    argo-cd.$INGRESS_HOST.nip.io
 
 argocd account update-password \
     --current-password $PASS \
-    --new-password admin
+    --new-password admin123
 
-kubectl apply --filename project.yaml
+echo http://argo-cd.$INGRESS_HOST.nip.io
 
-kubectl apply --filename apps.yaml
+#############
+# Setup AWS #
+#############
+
+# Replace `[...]` with your access key ID`
+export AWS_ACCESS_KEY_ID=[...]
+
+# Replace `[...]` with your secret access key
+export AWS_SECRET_ACCESS_KEY=[...]
+
+echo "[default]
+aws_access_key_id = $AWS_ACCESS_KEY_ID
+aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
+" >aws-creds.conf
+
+kubectl --namespace crossplane-system \
+    create secret generic aws-creds \
+    --from-file creds=./aws-creds.conf
+
+#############
+# Setup GCP #
+#############
+
+export PROJECT_ID=devops-toolkit-$(date +%Y%m%d%H%M%S)
+
+gcloud projects create $PROJECT_ID
+
+echo "https://console.cloud.google.com/billing/enable?project=$PROJECT_ID"
+
+# Set the billing account
+
+echo "https://console.developers.google.com/apis/api/container.googleapis.com/overview?project=$PROJECT_ID"
+
+# Open the URL and *ENABLE API*
+
+echo "https://console.cloud.google.com/apis/library/sqladmin.googleapis.com?project=$PROJECT_ID"
+
+# Open the URL and *ENABLE API*
+
+export SA_NAME=devops-toolkit
+
+export SA="${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
+
+gcloud iam service-accounts \
+    create $SA_NAME \
+    --project $PROJECT_ID
+
+gcloud projects add-iam-policy-binding \
+    --role roles/admin $PROJECT_ID \
+    --member serviceAccount:$SA
+
+gcloud iam service-accounts keys \
+    create gcp-creds.json \
+    --project $PROJECT_ID \
+    --iam-account $SA
+
+kubectl --namespace crossplane-system \
+    create secret generic gcp-creds \
+    --from-file creds=./gcp-creds.json
+
+cat crossplane-config/providers.yaml \
+    | sed -e "s@projectID: .*@projectID: $PROJECT_ID@g" \
+    | tee crossplane-config/providers.yaml
+
+####################
+# Setup Crossplane #
+####################
+
+helm repo add crossplane-stable \
+    https://charts.crossplane.io/stable
+
+helm repo update
+
+helm upgrade --install \
+    crossplane crossplane-stable/crossplane \
+    --namespace crossplane-system \
+    --create-namespace \
+    --wait
+
+kubectl apply \
+    --filename crossplane-config
+
+# Please re-run the previous command if the output is `unable to recognize ...`
+
+###########################
+# Crossplane Compositions #
+###########################
+
+cat crossplane-config/definition-k8s.yaml
+
+cat crossplane-config/composition-eks.yaml
+
+cat examples/aws-eks-no-claim.yaml
+
+cp examples/aws-eks-no-claim.yaml \
+    infra/aws-eks.yaml
+
+git add .
+
+git commit -m "EKS"
+
+git push
+
+# TODO: Continue
+
+# GitOps?
+
+kubectl get managed,releases
+
+cat examples/google-gke-no-claim.yaml
+
+cp examples/google-gke-no-claim.yaml \
+    infra/google-gke.yaml
+
+git add .
+
+git commit -m "EKS"
+
+git push
+
+kubectl get managed,releases
+
+kubectl get gcp
+
+cat examples/google-mysql-no-claim.yaml
+
+cp examples/google-mysql-no-claim.yaml \
+    infra/google-mysql.yaml
+
+git add .
+
+git commit -m "EKS"
+
+git push
+
+kubectl get gcp
+
+###########
+# Destroy #
+###########
+
+rm -rf infra/*.yaml
+
+git add .
+
+git commit -m "Destroy everything"
+
+git push
+
+kubectl get managed,releases
+
+kind delete cluster
+
+gcloud projects delete $PROJECT_ID
+
+
+
+
+
+
+
+
+
+
 
 ############################
 # Setup: Deploy Crossplane #
