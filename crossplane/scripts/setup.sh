@@ -1,5 +1,3 @@
-TODO: Intro
-
 #################
 # Setup Cluster #
 #################
@@ -12,11 +10,59 @@ cd devops-toolkit-crossplane
 # Feel free to use any other Kubernetes platform
 kind create cluster --config kind.yaml
 
+# Only if using kind.
+# If you are not using kind, please install Ingress any way that fits your Kubernetes distribution
+kubectl apply \
+    --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/kind/deploy.yaml
+
 kubectl create namespace crossplane-system
 
 kubectl create namespace a-team
 
-kubectl create namespace b-team
+#################
+# Setup Argo CD #
+#################
+
+# If not using kind, replace `127.0.0.1` with the base host accessible through NGINX Ingress
+export INGRESS_HOST=127.0.0.1
+
+helm repo add argo \
+    https://argoproj.github.io/argo-helm
+
+helm repo update
+
+helm upgrade --install \
+    argocd argo/argo-cd \
+    --namespace argocd \
+    --create-namespace \
+    --set server.ingress.hosts="{argo-cd.$INGRESS_HOST.nip.io}" \
+    --set server.ingress.enabled=true \
+    --set server.extraArgs="{--insecure}" \
+    --set controller.args.appResyncPeriod=30 \
+    --wait
+
+kubectl create namespace production
+
+kubectl apply --filename argocd-app.yaml
+
+export PASS=$(kubectl \
+    --namespace argocd \
+    get secret argocd-initial-admin-secret \
+    --output jsonpath="{.data.password}" \
+    | base64 --decode)
+
+argocd login \
+    --insecure \
+    --username admin \
+    --password $PASS \
+    --grpc-web \
+    argo-cd.$INGRESS_HOST.nip.io
+
+argocd account update-password \
+    --current-password $PASS \
+    --new-password admin123
+
+echo http://argo-cd.$INGRESS_HOST.nip.io
 
 #############
 # Setup AWS #
@@ -82,6 +128,26 @@ cat crossplane-config/providers.yaml \
     | sed -e "s@projectID: .*@projectID: $PROJECT_ID@g" \
     | tee crossplane-config/providers.yaml
 
+##############
+# Setup Civo #
+##############
+
+# Replace `[...]` with your Civo token
+export CIVO_TOKEN=[...]
+
+export CIVO_TOKEN_ENCODED=$(\
+    echo $CIVO_TOKEN | base64)
+
+echo "apiVersion: v1
+kind: Secret
+metadata:
+  namespace: crossplane-system
+  name: civo-creds
+type: Opaque
+data:
+  credentials: $CIVO_TOKEN_ENCODED" \
+    | kubectl apply --filename -
+
 ####################
 # Setup Crossplane #
 ####################
@@ -102,53 +168,9 @@ kubectl apply \
 
 # Please re-run the previous command if the output is `unable to recognize ...`
 
-###########################
-# Crossplane Compositions #
-###########################
-
-cat examples/google-gke-no-xrd.yaml
-
-cat crossplane-config/definition-k8s.yaml
-
-cat crossplane-config/composition-eks.yaml
-
-cat examples/aws-eks.yaml
-
-kubectl --namespace a-team apply \
-    --filename examples/aws-eks.yaml
-
-kubectl get managed,releases
-
-cat examples/google-gke.yaml
-
-kubectl --namespace a-team apply \
-    --filename examples/google-gke.yaml
-
-kubectl get managed,releases
-
-kubectl get gcp
-
-cat examples/google-mysql.yaml
-
-kubectl --namespace a-team apply \
-    --filename examples/google-mysql.yaml
-
-kubectl get gcp
-
 ###########
 # Destroy #
 ###########
-
-kubectl --namespace a-team delete \
-    --filename examples/aws-eks.yaml
-
-kubectl --namespace a-team delete \
-    --filename examples/google-gke.yaml
-
-kubectl --namespace a-team delete \
-    --filename examples/google-mysql.yaml
-
-kubectl get managed,releases
 
 kind delete cluster
 

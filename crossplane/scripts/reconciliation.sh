@@ -106,34 +106,26 @@ kubectl apply \
 # Crossplane Compositions #
 ###########################
 
-cat examples/google-gke-no-xrd.yaml
+cat examples/google-gke.yaml
 
-cat crossplane-config/definition-k8s.yaml
-
-cat crossplane-config/composition-eks.yaml
+kubectl --namespace a-team apply \
+    --filename examples/google-gke.yaml
 
 cat examples/aws-eks.yaml
 
 kubectl --namespace a-team apply \
     --filename examples/aws-eks.yaml
 
-kubectl get managed,releases
-
-cat examples/google-gke.yaml
-
-kubectl --namespace a-team apply \
-    --filename examples/google-gke.yaml
-
-kubectl get managed,releases
-
-kubectl get gcp
-
 cat examples/google-mysql.yaml
 
 kubectl --namespace a-team apply \
     --filename examples/google-mysql.yaml
 
-kubectl get gcp
+kubectl get managed,releases
+
+# Destroy stuff
+
+kubectl get managed,releases
 
 ###########
 # Destroy #

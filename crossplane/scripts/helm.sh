@@ -1,27 +1,24 @@
 # TODO: Intro
 
-#########
-# Setup #
-#########
+#################
+# Setup Cluster #
+#################
 
 git clone https://github.com/vfarcic/devops-toolkit-crossplane
 
 cd devops-toolkit-crossplane
 
+# Please watch https://youtu.be/C0v5gJSWuSo if you are not familiar with kind
+# Feel free to use any other Kubernetes platform
 kind create cluster --config kind.yaml
 
-kubectl create namespace infra
+kubectl create namespace crossplane-system
 
-helm repo add crossplane-stable \
-    https://charts.crossplane.io/stable
+kubectl create namespace a-team
 
-helm repo update
-
-helm upgrade --install \
-    crossplane crossplane-stable/crossplane \
-    --namespace crossplane-system \
-    --create-namespace \
-    --wait
+#############
+# Setup AWS #
+#############
 
 # Replace `[...]` with your access key ID`
 export AWS_ACCESS_KEY_ID=[...]
@@ -37,6 +34,10 @@ aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
 kubectl --namespace crossplane-system \
     create secret generic aws-creds \
     --from-file creds=./aws-creds.conf
+
+##############
+# Setup Civo #
+##############
 
 # Replace `[...]` with your Civo token
 export CIVO_TOKEN=[...]
@@ -54,6 +55,21 @@ data:
   credentials: $CIVO_TOKEN_ENCODED" \
     | kubectl apply --filename -
 
+####################
+# Setup Crossplane #
+####################
+
+helm repo add crossplane-stable \
+    https://charts.crossplane.io/stable
+
+helm repo update
+
+helm upgrade --install \
+    crossplane crossplane-stable/crossplane \
+    --namespace crossplane-system \
+    --create-namespace \
+    --wait
+
 kubectl apply \
     --filename crossplane-config
 
@@ -65,31 +81,32 @@ kubectl apply \
 
 # Most of the time, it should be composites
 
+cat examples/aws-eks.yaml
+
 cd charts/aws
 
 cat values.yaml
 
 helm upgrade --install eks . \
-    --namespace infra \
-    --create-namespace
+    --namespace a-team
 
-helm --namespace infra ls
+helm --namespace a-team ls
 
 kubectl get aws
 
 kubectl get managed
 
-helm status eks --namespace infra
+cat templates/cluster.yaml
+
+helm status eks --namespace a-team
 
 # Execute the commands from the output
 
 kubectl get nodes
 
-cat templates/cluster.yaml
-
 unset KUBECONFIG
 
-helm delete eks --namespace infra
+helm delete eks --namespace a-team
 
 kubectl get managed
 
@@ -104,26 +121,26 @@ cat values.yaml
 cat templates/cluster.yaml
 
 helm upgrade --install civo . \
-    --namespace infra --create-namespace
+    --namespace a-team
 
 kubectl get civo
 
-export CLUSTER_NAME=b-team
-
-kubectl --namespace infra \
-    get secret cluster-$CLUSTER_NAME \
+kubectl --namespace a-team \
+    get secret cluster-b-team \
     --output jsonpath="{.data.kubeconfig}" \
-    | base64 -d >kubeconfig-$CLUSTER_NAME.yaml
+    | base64 -d >kubeconfig-b-team.yaml
 
-export KUBECONFIG=$PWD/kubeconfig-$CLUSTER_NAME.yaml
+export KUBECONFIG=$PWD/kubeconfig-b-team.yaml
 
 kubectl get nodes
+
+kubectl --namespace kube-system get pods
 
 unset KUBECONFIG
 
 # Delete one of the clusters from the Civo console
 
-helm delete civo --namespace infra
+helm delete civo --namespace a-team
 
 cd ../civo-bulk
 
@@ -132,11 +149,11 @@ cat values.yaml
 cat templates/cluster.yaml
 
 helm upgrade --install civo . \
-    --namespace infra --create-namespace
+    --namespace a-team
 
 kubectl get civo
 
-helm delete civo --namespace infra
+helm delete civo --namespace a-team
 
 kubectl get managed
 

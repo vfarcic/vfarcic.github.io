@@ -130,6 +130,26 @@ cat crossplane-config/providers.yaml \
     | sed -e "s@projectID: .*@projectID: $PROJECT_ID@g" \
     | tee crossplane-config/providers.yaml
 
+##############
+# Setup Civo #
+##############
+
+# Replace `[...]` with your Civo token
+export CIVO_TOKEN=[...]
+
+export CIVO_TOKEN_ENCODED=$(\
+    echo $CIVO_TOKEN | base64)
+
+echo "apiVersion: v1
+kind: Secret
+metadata:
+  namespace: crossplane-system
+  name: civo-creds
+type: Opaque
+data:
+  credentials: $CIVO_TOKEN_ENCODED" \
+    | kubectl apply --filename -
+
 ####################
 # Setup Crossplane #
 ####################
@@ -169,11 +189,32 @@ git commit -m "EKS"
 
 git push
 
-# TODO: Continue
-
-# GitOps?
-
 kubectl get managed,releases
+
+cat examples/civo-no-claim.yaml
+
+cp examples/civo-no-claim.yaml \
+    infra/civo.yaml
+
+git add .
+
+git commit -m "Civo"
+
+git push
+
+kubectl get managed
+
+kubectl get civo
+
+cat infra/civo.yaml \
+    | sed -e "s@minNodeCount: .*@minNodeCount: 3@g" \
+    | tee infra/civo.yaml
+
+git add .
+
+git commit -m "Civo"
+
+git push
 
 cat examples/google-gke-no-claim.yaml
 
@@ -221,173 +262,9 @@ kind delete cluster
 
 gcloud projects delete $PROJECT_ID
 
+export CIVO_REGION=[...]
 
-
-
-
-
-
-
-
-
-
-############################
-# Setup: Deploy Crossplane #
-############################
-
-helm repo add crossplane-stable \
-    https://charts.crossplane.io/stable
-
-helm repo update
-
-helm upgrade --install \
-    crossplane crossplane-stable/crossplane \
-    --namespace crossplane-system \
-    --create-namespace \
-    --wait
-
-##############
-# Setup: GCP #
-##############
-
-export PROJECT_ID=devops-toolkit-$(date +%Y%m%d%H%M%S)
-
-gcloud projects create $PROJECT_ID
-
-echo https://console.cloud.google.com/marketplace/product/google/container.googleapis.com?project=$PROJECT_ID
-
-# Open the URL and *ENABLE* the API
-
-export SA_NAME=devops-toolkit
-
-export SA="${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
-
-gcloud iam service-accounts \
-    create $SA_NAME \
-    --project $PROJECT_ID
-
-export ROLE=roles/admin
-
-gcloud projects add-iam-policy-binding \
-    --role $ROLE $PROJECT_ID \
-    --member serviceAccount:$SA
-
-gcloud iam service-accounts keys \
-    create creds.json \
-    --project $PROJECT_ID \
-    --iam-account $SA
-
-kubectl --namespace crossplane-system \
-    create secret generic gcp-creds \
-    --from-file key=./creds.json
-
-kubectl crossplane install provider \
-    crossplane/provider-gcp:v0.15.0
-
-kubectl get providers
-
-# Repeat the previous command until `HEALTHY` column is set to `True`
-
-echo "apiVersion: gcp.crossplane.io/v1beta1
-kind: ProviderConfig
-metadata:
-  name: default
-spec:
-  projectID: $PROJECT_ID
-  credentials:
-    source: Secret
-    secretRef:
-      namespace: crossplane-system
-      name: gcp-creds
-      key: key" \
-    | kubectl apply --filename -
-
-#########
-# Intro #
-#########
-
-kubectl apply --filename gke.yaml
-
-# IaC - Any tool can do it
-# We need more
-# We need to avoid fragmentation and use a single API that can be used to manage everything (Kube API)
-# We need to be able to leverage Kubernetes ecosystem
-# We need to be able to create contracts with processes that will ensure that the actual state is almost always the same as the desired state (GitOps)
-
-####################
-# Create resources #
-####################
-
-cat gke.yaml
-
-echo https://console.cloud.google.com/kubernetes/list?project=$PROJECT_ID
-
-# Open it
-
-watch kubectl get gkeclusters
-
-watch kubectl get nodepools
-
-################################
-# Doing what shouldn't be done #
-################################
-
-export KUBECONFIG=$PWD/kubeconfig.yaml
-
-gcloud container clusters \
-    get-credentials devops-toolkit \
-    --region us-east1 \
-    --project $PROJECT_ID
-
-watch kubectl get nodes
-
-# Open the Web console and add the missing zones
-
-####################
-# Update resources #
-####################
-
-cat gke-region.yaml
-
-diff gke-region.yaml gke.yaml
-
-cp gke-region.yaml production/gke.yaml
-
-git add .
-
-git commit -m "GKE"
-
-git push
-
-open http://argo-cd.$BASE_HOST
-
-watch kubectl get nodes
-
-#####################
-# Destroy resources #
-#####################
-
-rm production/gke.yaml
-
-git add .
-
-git commit -m "GKE"
-
-git push
-
-gcloud projects delete $PROJECT_ID
-
-minikube delete
-
-##################
-# Final thoughts #
-##################
-
-# Cons:
-# - Needs a k8s cluster (local or "real")
-# - Growing, but still small number of CRDs
-
-# Pros:
-# - Auto drift detection and sync
-# - GitOps-friendly
-# - Works well inside the k8s ecosystem
+civo firewall remove \
+    "Kubernetes cluster: a-team-ck" \
+    --region $CIVO_REGION \
+    --yes
