@@ -12,6 +12,7 @@
 
 # Conferences
 
+* [Developers do not need Kubernetes (keynote)](https://testistanbul.org/viktor-farcic/) at [TestIstanbul Conference](https://testistanbul.org/) (7th of October 2021)
 * [How To Apply GitOps Without Making Developers Go Crazy](https://www.devopsworld.com/agenda/session/596734) at [DevOps World](https://www.devopsworld.com/) (30th of September 2021)
 * How To Apply GitOps On Infrastructure at [GitOps Evolution](https://www.mediaopsevents.com/gitopsevolution) (23rd of September 2021)
 * [Developers do not need Kubernetes](https://www.containerdays.io/agenda/conferenceday2/#developers-do-n) at [Container Days](https://www.containerdays.io/) (22nd of September 2021)
