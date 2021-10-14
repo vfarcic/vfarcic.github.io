@@ -15,6 +15,9 @@ kind create cluster --config kind.yaml
 kubectl apply \
     --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/kind/deploy.yaml
 
+# If not using kind, replace `127.0.0.1` with the base host accessible through NGINX Ingress
+export INGRESS_HOST=127.0.0.1
+
 kubectl create namespace crossplane-system
 
 kubectl create namespace a-team
@@ -22,9 +25,6 @@ kubectl create namespace a-team
 #################
 # Setup Argo CD #
 #################
-
-# If not using kind, replace `127.0.0.1` with the base host accessible through NGINX Ingress
-export INGRESS_HOST=127.0.0.1
 
 helm repo add argo \
     https://argoproj.github.io/argo-helm

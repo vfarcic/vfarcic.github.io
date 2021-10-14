@@ -81,6 +81,8 @@ kubectl apply \
 
 # Most of the time, it should be composites
 
+cat crossplane-config/composition-eks.yaml
+
 cat examples/aws-eks.yaml
 
 cd charts/aws
