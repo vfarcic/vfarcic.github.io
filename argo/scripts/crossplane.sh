@@ -10,14 +10,7 @@ git clone https://github.com/vfarcic/devops-toolkit-crossplane
 
 cd devops-toolkit-crossplane
 
-# Please watch https://youtu.be/C0v5gJSWuSo if you are not familiar with kind
-# Feel free to use any other Kubernetes platform
-kind create cluster --config kind.yaml
-
-# Only if using kind.
-# If you are not using kind, please install Ingress any way that fits your Kubernetes distribution
-kubectl apply \
-    --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/kind/deploy.yaml
+# Start Rancher Desktop
 
 kubectl create namespace crossplane-system
 
@@ -172,6 +165,25 @@ kubectl apply \
 
 # Please re-run the previous command if the output is `unable to recognize ...`
 
+###########
+# Argo CD #
+###########
+
+cat orig/devops-toolkit.yaml
+
+# Show the Argo CD UI
+
+cp orig/devops-toolkit.yaml apps/.
+
+git add .
+
+git commit -m "My app"
+
+git push
+
+kubectl --namespace production \
+    get all,ingresses
+
 ###########################
 # Crossplane Compositions #
 ###########################
@@ -183,7 +195,7 @@ cat crossplane-config/composition-eks.yaml
 cat examples/aws-eks-no-claim.yaml
 
 cp examples/aws-eks-no-claim.yaml \
-    infra/aws-eks.yaml
+    infra/.
 
 git add .
 
@@ -196,7 +208,7 @@ kubectl get managed,releases
 cat examples/civo-no-claim.yaml
 
 cp examples/civo-no-claim.yaml \
-    infra/civo.yaml
+    infra/.
 
 git add .
 
@@ -250,6 +262,8 @@ kubectl get gcp
 # Destroy #
 ###########
 
+rm -rf apps/*.yaml
+
 rm -rf infra/*.yaml
 
 git add .
@@ -260,7 +274,7 @@ git push
 
 kubectl get managed,releases
 
-kind delete cluster
+# Reset the Rancher Desktop cluster
 
 gcloud projects delete $PROJECT_ID
 
