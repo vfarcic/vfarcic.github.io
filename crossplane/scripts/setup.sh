@@ -128,6 +128,42 @@ cat crossplane-config/providers.yaml \
     | sed -e "s@projectID: .*@projectID: $PROJECT_ID@g" \
     | tee crossplane-config/providers.yaml
 
+###############
+# Setup Azure #
+###############
+
+az ad sp create-for-rbac \
+    --sdk-auth \
+    --role Owner \
+    | tee azure-creds.json
+
+export AZURE_CLIENT_ID=$(\
+    cat azure-creds.json \
+    | grep clientId \
+    | cut -c 16-51)
+
+export AAD_GRAPH_API=00000003-0000-0000-c000-000000000000
+
+az ad app permission add \
+    --id "${AZURE_CLIENT_ID}" \
+    --api ${AAD_GRAPH_API} \
+    --api-permissions \
+    e1fe6dd8-ba31-4d61-89e7-88639da4683d=Scope \
+    06da0dbc-49e2-44d2-8312-53f166ab848a=Scope \
+    7ab1d382-f21e-4acd-a863-ba3e13f7da61=Role
+
+az ad app permission grant \
+    --id "${AZURE_CLIENT_ID}" \
+    --api ${AAD_GRAPH_API} \
+    --expires never
+
+az ad app permission admin-consent \
+    --id "${AZURE_CLIENT_ID}"
+
+kubectl --namespace crossplane-system \
+    create secret generic azure-creds \
+    --from-file creds=./azure-creds.json
+
 ##############
 # Setup Civo #
 ##############

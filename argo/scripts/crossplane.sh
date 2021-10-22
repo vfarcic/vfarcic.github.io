@@ -10,7 +10,7 @@ git clone https://github.com/vfarcic/devops-toolkit-crossplane
 
 cd devops-toolkit-crossplane
 
-# Start Rancher Desktop
+# Start Rancher Desktop or use any other Kubernetes distribution
 
 kubectl create namespace crossplane-system
 
@@ -20,7 +20,7 @@ kubectl create namespace a-team
 # Setup Argo CD #
 #################
 
-# If not using kind, replace `127.0.0.1` with the base host accessible through NGINX Ingress
+# If not using Rancher Desktop, replace `127.0.0.1` with the base host accessible through NGINX Ingress
 export INGRESS_HOST=127.0.0.1
 
 helm repo add argo \
