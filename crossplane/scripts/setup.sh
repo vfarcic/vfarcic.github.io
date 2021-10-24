@@ -6,21 +6,16 @@ git clone https://github.com/vfarcic/devops-toolkit-crossplane
 
 cd devops-toolkit-crossplane
 
-# Please watch https://youtu.be/C0v5gJSWuSo if you are not familiar with kind
-# Feel free to use any other Kubernetes platform
-kind create cluster --config kind.yaml
+# Using Rancher Desktop for the demo, but it can be any other Kubernetes cluster with Ingress
 
-# Only if using kind.
-# If you are not using kind, please install Ingress any way that fits your Kubernetes distribution
-kubectl apply \
-    --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/kind/deploy.yaml
-
-# If not using kind, replace `127.0.0.1` with the base host accessible through NGINX Ingress
+# If not using Rancher Desktop, replace `127.0.0.1` with the base host accessible through NGINX Ingress
 export INGRESS_HOST=127.0.0.1
 
 kubectl create namespace crossplane-system
 
 kubectl create namespace a-team
+
+kubectl create namespace production
 
 #################
 # Setup Argo CD #
@@ -40,8 +35,6 @@ helm upgrade --install \
     --set server.extraArgs="{--insecure}" \
     --set controller.args.appResyncPeriod=30 \
     --wait
-
-kubectl create namespace production
 
 kubectl apply --filename argocd-app.yaml
 
