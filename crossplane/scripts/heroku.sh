@@ -78,9 +78,9 @@ kubectl --namespace crossplane-system \
     create secret generic gcp-creds \
     --from-file creds=./gcp-creds.json
 
-cat crossplane-config/providers.yaml \
+cat crossplane-config/provider-gcp.yaml \
     | sed -e "s@projectID: .*@projectID: $PROJECT_ID@g" \
-    | tee crossplane-config/providers.yaml
+    | tee crossplane-config/provider-gcp.yaml
 
 ####################
 # Setup Crossplane #
