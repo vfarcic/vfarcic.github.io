@@ -12,6 +12,9 @@
 
 # Conferences
 
+* [How To Apply GitOps Without Making Developers Go Crazy](https://events.codemotion.com/conferences/online/2021/online-tech-conference-italian-edition-autumn/agenda) at [Codemotion Online Tech Conference 2021 - Italian Edition](https://events.codemotion.com/conferences/online/2021/online-tech-conference-italian-edition-autumn) (10th of November 2021)
+* The Future Is Above Clouds at [DevOps Experience: The Roaring 2020s](https://www.techstrongevents.com/devopsexperience) (27th of October 2021)
+* Using Kubernetes API To Manage Everything at [API World](https://apiworld.co/) (26th of October 2021)
 * [Developers do not need Kubernetes (in Spanish)](https://www.jbcnconf.com/2021/infoSpeaker.html?ref=0ba89c51baf9f8542188bd750973e0767fbcaa68) at [JBCN Conf](https://www.jbcnconf.com/2021/) (23rd of July 2021)
 * [Developers do not need Kubernetes](https://konghq.com/events/destination-automation/agenda) at [Destination: Automation](https://konghq.com/events/destination-automation/) (14th of July 2021)
 * [How To Automate Everything In 2021](https://events.linuxfoundation.org/cdcon/program/schedule/) at [CD Con](https://events.linuxfoundation.org/cdcon/) (23nd of June 2021)
