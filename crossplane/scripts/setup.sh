@@ -1,7 +1,3 @@
-# Source: https://gist.github.com/868c50d44618a6fa046405d309a6b104
-
-TODO: Intro
-
 #################
 # Setup Cluster #
 #################
@@ -10,18 +6,20 @@ git clone https://github.com/vfarcic/devops-toolkit-crossplane
 
 cd devops-toolkit-crossplane
 
-# Start Rancher Desktop or use any other Kubernetes distribution
+# Using Rancher Desktop for the demo, but it can be any other Kubernetes cluster with Ingress
+
+# If not using Rancher Desktop, replace `127.0.0.1` with the base host accessible through NGINX Ingress
+export INGRESS_HOST=127.0.0.1
 
 kubectl create namespace crossplane-system
 
 kubectl create namespace a-team
 
+kubectl create namespace production
+
 #################
 # Setup Argo CD #
 #################
-
-# If not using Rancher Desktop, replace `127.0.0.1` with the base host accessible through NGINX Ingress
-export INGRESS_HOST=127.0.0.1
 
 helm repo add argo \
     https://argoproj.github.io/argo-helm
@@ -37,8 +35,6 @@ helm upgrade --install \
     --set server.extraArgs="{--insecure}" \
     --set controller.args.appResyncPeriod=30 \
     --wait
-
-kubectl create namespace production
 
 kubectl apply --filename argocd-app.yaml
 
@@ -125,6 +121,42 @@ cat crossplane-config/provider-gcp.yaml \
     | sed -e "s@projectID: .*@projectID: $PROJECT_ID@g" \
     | tee crossplane-config/provider-gcp.yaml
 
+###############
+# Setup Azure #
+###############
+
+az ad sp create-for-rbac \
+    --sdk-auth \
+    --role Owner \
+    | tee azure-creds.json
+
+export AZURE_CLIENT_ID=$(\
+    cat azure-creds.json \
+    | grep clientId \
+    | cut -c 16-51)
+
+export AAD_GRAPH_API=00000003-0000-0000-c000-000000000000
+
+az ad app permission add \
+    --id "${AZURE_CLIENT_ID}" \
+    --api ${AAD_GRAPH_API} \
+    --api-permissions \
+    e1fe6dd8-ba31-4d61-89e7-88639da4683d=Scope \
+    06da0dbc-49e2-44d2-8312-53f166ab848a=Scope \
+    7ab1d382-f21e-4acd-a863-ba3e13f7da61=Role
+
+az ad app permission grant \
+    --id "${AZURE_CLIENT_ID}" \
+    --api ${AAD_GRAPH_API} \
+    --expires never
+
+az ad app permission admin-consent \
+    --id "${AZURE_CLIENT_ID}"
+
+kubectl --namespace crossplane-system \
+    create secret generic azure-creds \
+    --from-file creds=./azure-creds.json
+
 ##############
 # Setup Civo #
 ##############
@@ -166,121 +198,9 @@ kubectl apply \
 # Please re-run the previous command if the output is `unable to recognize ...`
 
 ###########
-# Argo CD #
-###########
-
-cat orig/devops-toolkit.yaml
-
-# Show the Argo CD UI
-
-cp orig/devops-toolkit.yaml apps/.
-
-git add .
-
-git commit -m "My app"
-
-git push
-
-kubectl --namespace production \
-    get all,ingresses
-
-###########################
-# Crossplane Compositions #
-###########################
-
-cat crossplane-config/definition-k8s.yaml
-
-cat crossplane-config/composition-eks.yaml
-
-cat examples/aws-eks-no-claim.yaml
-
-cp examples/aws-eks-no-claim.yaml \
-    infra/.
-
-git add .
-
-git commit -m "EKS"
-
-git push
-
-kubectl get managed,releases
-
-cat examples/civo-no-claim.yaml
-
-cp examples/civo-no-claim.yaml \
-    infra/.
-
-git add .
-
-git commit -m "Civo"
-
-git push
-
-kubectl get managed
-
-kubectl get civo
-
-cat infra/civo.yaml \
-    | sed -e "s@minNodeCount: .*@minNodeCount: 3@g" \
-    | tee infra/civo.yaml
-
-git add .
-
-git commit -m "Civo"
-
-git push
-
-cat examples/google-gke-no-claim.yaml
-
-cp examples/google-gke-no-claim.yaml \
-    infra/google-gke.yaml
-
-git add .
-
-git commit -m "EKS"
-
-git push
-
-kubectl get managed,releases
-
-kubectl get gcp
-
-cat examples/google-mysql-no-claim.yaml
-
-cp examples/google-mysql-no-claim.yaml \
-    infra/google-mysql.yaml
-
-git add .
-
-git commit -m "EKS"
-
-git push
-
-kubectl get gcp
-
-###########
 # Destroy #
 ###########
 
-rm -rf apps/*.yaml
-
-rm -rf infra/*.yaml
-
-git add .
-
-git commit -m "Destroy everything"
-
-git push
-
-kubectl get managed,releases
-
-# Reset the Rancher Desktop cluster
+kind delete cluster
 
 gcloud projects delete $PROJECT_ID
-
-export CIVO_REGION=[...]
-
-civo firewall remove \
-    "Kubernetes cluster: a-team-ck" \
-    --region $CIVO_REGION \
-    --yes

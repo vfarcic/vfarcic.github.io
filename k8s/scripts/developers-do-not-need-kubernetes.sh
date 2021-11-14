@@ -74,9 +74,9 @@ argocd login \
 
 argocd account update-password \
     --current-password $PASS \
-    --new-password admin
+    --new-password admin123
 
-echo http://argo-cd.$INGRESS_HOST.nip.io
+open http://argo-cd.$INGRESS_HOST.nip.io
 
 cp orig/cluster.yaml team-a-infra/.
 
@@ -87,6 +87,8 @@ git commit -m "Team A infra"
 git push
 
 watch kubectl get managed,releases
+
+# Wait until the `cluster` resource is ready.
 
 ./config-cluster-aws.sh team-a
 

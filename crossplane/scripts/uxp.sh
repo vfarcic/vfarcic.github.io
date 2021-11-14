@@ -1,12 +1,17 @@
+# TODO: EKS cluster
+# TODO: NGINX Ingress
+# TODO: SQL in GCP
+
 #########
 # Setup #
 #########
 
-git clone https://github.com/vfarcic/crossplane-composite-demo
+git clone https://github.com/vfarcic/devops-toolkit-crossplane
 
-cd crossplane-composite-demo
+cd devops-toolkit-crossplane
 
-cp cluster-orig.yaml cluster.yaml
+# TODO: Remove
+# cp cluster-orig.yaml cluster.yaml
 
 # Install Crossplane CLI from https://crossplane.io/docs/v1.3/getting-started/install-configure.html#start-with-a-self-hosted-crossplane
 

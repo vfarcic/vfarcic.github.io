@@ -2,6 +2,8 @@
 # Developers do not need Kubernetes #
 #####################################
 
+# Use 099-crossplane-kubevela-argocd instead
+
 #########
 # Setup #
 #########
