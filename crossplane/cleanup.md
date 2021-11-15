@@ -11,6 +11,8 @@ pkill kubectl
 
 rm infra/*.yaml
 
+rm apps/*.yaml
+
 git add . && git commit -m "Removing dot" && git push
 ```
 
