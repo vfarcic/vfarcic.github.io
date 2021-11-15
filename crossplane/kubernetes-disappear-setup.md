@@ -1,0 +1,127 @@
+<!-- .slide: class="center dark" -->
+<!-- .slide: data-background="../img/background/hands-on.jpg" -->
+# Setup
+
+<div class="label">Hands-on Time</div>
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
+
+## Setup Cluster
+
+```bash
+gh repo fork vfarcic/devops-toolkit-crossplane \
+    --clone
+
+cd devops-toolkit-crossplane
+
+export INGRESS_HOST=[...] # Replace `[...]` with your Ingress host
+
+kubectl create namespace crossplane-system
+
+kubectl create namespace a-team
+
+kubectl create namespace production
+```
+
+
+## Setup Cluster
+
+```bash
+export GIT_URL=$(git remote get-url origin)
+
+cat examples/aws-eks-gitops.yaml \
+    | sed -e "s@gitOpsRepo: .*@gitOpsRepo: $GIT_URL@g" \
+    | tee examples/aws-eks-gitops.yaml
+
+cat argocd/apps.yaml \
+    | sed -e "s@repoURL: .*@repoURL: $GIT_URL@g" \
+    | tee argocd/apps.yaml
+```
+
+
+## Setup Cluster
+
+```bash
+cat argocd/infra.yaml \
+    | sed -e "s@repoURL: .*@repoURL: $GIT_URL@g" \
+    | tee argocd/infra.yaml
+```
+
+
+## Setup AWS
+
+```bash
+export AWS_ACCESS_KEY_ID=[...] # Replace `[...]` with access key ID
+
+export AWS_SECRET_ACCESS_KEY=[...] # Replace `[...]` with secret access key
+
+echo "[default]
+aws_access_key_id = $AWS_ACCESS_KEY_ID
+aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
+" >aws-creds.conf
+
+kubectl --namespace crossplane-system create secret generic aws-creds \
+    --from-file creds=./aws-creds.conf
+```
+
+
+## Setup Crossplane
+
+```bash
+helm repo add crossplane-stable https://charts.crossplane.io/stable
+
+helm repo update
+
+helm upgrade --install crossplane crossplane-stable/crossplane \
+    --namespace crossplane-system --create-namespace --wait
+
+kubectl apply --filename crossplane-config/provider-aws.yaml
+
+# Re-run the previous command if the output is `unable to recognize ...`
+```
+
+
+## Setup Crossplane
+
+```bash
+kubectl apply --filename crossplane-config/provider-helm.yaml
+
+kubectl apply --filename crossplane-config/provider-kubernetes.yaml
+
+kubectl apply --filename crossplane-config/definition-k8s.yaml
+
+kubectl apply --filename crossplane-config/composition-eks.yaml
+```
+
+
+## Setup Argo CD
+
+```bash
+helm repo add argo https://argoproj.github.io/argo-helm
+
+helm repo update
+
+helm upgrade --install argocd argo/argo-cd --namespace argocd \
+    --create-namespace --values argocd/helm-values.yaml \
+    --set server.ingress.hosts="{argo-cd.$INGRESS_HOST.nip.io}" --wait
+
+kubectl apply --filename argocd/project.yaml
+
+kubectl apply --filename argocd/infra.yaml
+```
+
+
+## Setup Argo CD
+
+```bash
+echo http://argo-cd.$INGRESS_HOST.nip.io
+
+# Open it in a browser
+
+# User `admin`, password `admin123`
+
+# Modify `spec.parameters.gitOpsRepo` in `infra/aws-eks.yaml`
+```

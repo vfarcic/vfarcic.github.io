@@ -7,9 +7,18 @@
 ### [@vfarcic](https://twitter.com/vfarcic)
 
 
-## [TechnologyConversations.com](http://technologyconversations.com)
+## [DevOps Toolkit YouTube](https://youtube.com/c/devopstoolkit)
 
-![TechnologyConversations.com](../img/qr/technology-conversations.jpg)
+<figure style="width: 50%; margin-left:100px;float: left;">
+    <a href="https://www.youtube.com/c/devopstoolkit">
+        <img src="../img/dot.png"/>
+    </a>
+</figure>
+<figure style="width: 30%; margin-right:100px;float: right;">
+    <a href="https://www.youtube.com/c/devopstoolkit">
+        <img src="../img/qr/dot.png"/>
+    </a>
+</figure>
 
 
 ## [DevOpsParadox.com Podcast](https://www.devopsparadox.com)
