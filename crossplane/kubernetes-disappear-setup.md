@@ -17,21 +17,30 @@ gh repo fork vfarcic/devops-toolkit-crossplane \
 
 cd devops-toolkit-crossplane
 
+kind create cluster --config kind.yaml
+
+kubectl apply --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/kind/deploy.yaml
+
 export INGRESS_HOST=[...] # Replace `[...]` with your Ingress host
-
-kubectl create namespace crossplane-system
-
-kubectl create namespace a-team
-
-kubectl create namespace production
 ```
 
 
 ## Setup Cluster
 
 ```bash
-export GIT_URL=$(git remote get-url origin)
+kubectl create namespace crossplane-system
 
+kubectl create namespace a-team
+
+kubectl create namespace production
+
+export GIT_URL=$(git remote get-url origin)
+```
+
+
+## Setup Cluster
+
+```bash
 cat examples/aws-eks-gitops.yaml \
     | sed -e "s@gitOpsRepo: .*@gitOpsRepo: $GIT_URL@g" \
     | tee examples/aws-eks-gitops.yaml
@@ -39,12 +48,7 @@ cat examples/aws-eks-gitops.yaml \
 cat argocd/apps.yaml \
     | sed -e "s@repoURL: .*@repoURL: $GIT_URL@g" \
     | tee argocd/apps.yaml
-```
 
-
-## Setup Cluster
-
-```bash
 cat argocd/infra.yaml \
     | sed -e "s@repoURL: .*@repoURL: $GIT_URL@g" \
     | tee argocd/infra.yaml
