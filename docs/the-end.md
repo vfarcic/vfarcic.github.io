@@ -7,16 +7,16 @@
 ### [@vfarcic](https://twitter.com/vfarcic)
 
 
-## [DevOps Toolkit YouTube](https://youtube.com/c/devopstoolkit)
+## Upbound & Crossplane
 
-<figure style="width: 50%; margin-left:100px;float: left;">
-    <a href="https://www.youtube.com/c/devopstoolkit">
-        <img src="../img/dot.png"/>
+<figure style="width: 40%; margin-left:100px;float: left;">
+    <a href="https://upbound.io">
+        <img src="../img/upbound.png"/>
     </a>
 </figure>
-<figure style="width: 30%; margin-right:100px;float: right;">
-    <a href="https://www.youtube.com/c/devopstoolkit">
-        <img src="../img/qr/dot.png"/>
+<figure style="width: 40%; margin-right:100px;float: right;">
+    <a href="https://crossplane.io">
+        <img src="../img/products/crossplane.png"/>
     </a>
 </figure>
 
@@ -60,5 +60,19 @@
 <figure style="width: 30%; height: 30%; margin-right:100px;float: right;">
     <a href="https://www.devopstoolkitseries.com/">
         <img src="../img/qr/devops-toolkit-series.png"/>
+    </a>
+</figure>
+
+
+## [DevOps Toolkit YouTube](https://youtube.com/c/devopstoolkit)
+
+<figure style="width: 50%; margin-left:100px;float: left;">
+    <a href="https://www.youtube.com/c/devopstoolkit">
+        <img src="../img/dot.png"/>
+    </a>
+</figure>
+<figure style="width: 30%; margin-right:100px;float: right;">
+    <a href="https://www.youtube.com/c/devopstoolkit">
+        <img src="../img/qr/dot.png"/>
     </a>
 </figure>
