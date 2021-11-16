@@ -13,11 +13,13 @@
     <a href="https://upbound.io">
         <img src="../img/upbound.png"/>
     </a>
+    <a href="https://upbound.io">upbound.io</a>
 </figure>
 <figure style="width: 40%; margin-right:100px;float: right;">
     <a href="https://crossplane.io">
         <img src="../img/products/crossplane.png"/>
     </a>
+    <a href="https://crossplane.io">crossplane.io</a>
 </figure>
 
 
