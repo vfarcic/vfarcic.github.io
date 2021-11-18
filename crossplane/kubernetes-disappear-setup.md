@@ -84,6 +84,8 @@ helm upgrade --install crossplane crossplane-stable/crossplane \
 
 kubectl apply --filename crossplane-config/provider-aws.yaml
 
+kubectl apply --filename crossplane-config/provider-config-aws.yaml
+
 # Re-run the previous command if the output is `unable to recognize ...`
 ```
 
