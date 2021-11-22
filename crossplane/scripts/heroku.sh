@@ -8,9 +8,7 @@ git clone https://github.com/vfarcic/devops-toolkit-crossplane
 
 cd devops-toolkit-crossplane
 
-# Please watch https://youtu.be/C0v5gJSWuSo if you are not familiar with kind
-# Feel free to use any other Kubernetes platform
-kind create cluster --config kind.yaml
+# Create a Kubernetes cluster
 
 kubectl create namespace crossplane-system
 
@@ -98,9 +96,38 @@ helm upgrade --install \
     --wait
 
 kubectl apply \
-    --filename crossplane-config
+    --filename crossplane-config/provider-aws.yaml
+
+kubectl apply \
+    --filename crossplane-config/provider-config-aws.yaml
 
 # Please re-run the previous command if the output is `unable to recognize ...`
+
+kubectl apply \
+    --filename crossplane-config/provider-gcp.yaml
+
+# Please re-run the previous command if the output is `unable to recognize ...`
+
+kubectl apply \
+    --filename crossplane-config/provider-helm.yaml
+
+kubectl apply \
+    --filename crossplane-config/provider-kubernetes.yaml
+
+kubectl apply \
+    --filename crossplane-config/definition-k8s.yaml
+
+kubectl apply \
+    --filename crossplane-config/composition-eks.yaml
+
+kubectl apply \
+    --filename crossplane-config/composition-gke.yaml
+
+kubectl apply \
+    --filename crossplane-config/definition-sql.yaml
+
+kubectl apply \
+    --filename crossplane-config/composition-sql-google.yaml
 
 ###########################
 # Crossplane Compositions #
@@ -150,6 +177,6 @@ kubectl --namespace a-team delete \
 
 kubectl get managed,releases
 
-kind delete cluster
+# Destroy the cluster
 
 gcloud projects delete $PROJECT_ID
