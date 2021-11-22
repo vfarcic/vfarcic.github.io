@@ -31,7 +31,7 @@ git push
 ## Infra For Ops
 
 ```bash
-kubectl get managed,releases,objects.kubernetes.crossplane.io
+kubectl get managed,releases,objects
 
 cat crossplane-config/definition-k8s.yaml
 
@@ -39,7 +39,7 @@ cat crossplane-config/composition-eks.yaml
 
 cat infra/aws-eks.yaml
 
-kubectl get managed,releases,objects.kubernetes.crossplane.io
+kubectl get managed,releases,objects
 ```
 
 

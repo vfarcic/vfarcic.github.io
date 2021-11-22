@@ -34,6 +34,14 @@
 
 <!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 <!-- .slide: class="center" -->
+# What if we use a highly opinionated solution?
+
+## Not flexible
+## Needs to be 100% of what we need
+
+
+<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
+<!-- .slide: class="center" -->
 # What devs need?
 
 ## Kubernetes?
@@ -63,7 +71,7 @@
 <!-- .slide: class="center" -->
 # Kubernetes and Cloud...
 
-## All we need run systems at scale
+## All we need to run systems at scale
 
 
 <!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
