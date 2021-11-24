@@ -14,8 +14,6 @@ kubectl create namespace crossplane-system
 
 kubectl create namespace a-team
 
-kubectl create namespace b-team
-
 #############
 # Setup AWS #
 #############
@@ -115,13 +113,7 @@ kubectl apply \
     --filename crossplane-config/provider-kubernetes.yaml
 
 kubectl apply \
-    --filename crossplane-config/definition-k8s.yaml
-
-kubectl apply \
-    --filename crossplane-config/composition-eks.yaml
-
-kubectl apply \
-    --filename crossplane-config/composition-gke.yaml
+    --filename crossplane-config/config-k8s.yaml
 
 kubectl apply \
     --filename crossplane-config/definition-sql.yaml
@@ -133,11 +125,13 @@ kubectl apply \
 # Crossplane Compositions #
 ###########################
 
+cat crossplane-config/config-k8s.yaml
+
 cat examples/google-gke-no-xrd.yaml
 
-cat crossplane-config/definition-k8s.yaml
+cat packages/k8s/definition.yaml
 
-cat crossplane-config/composition-eks.yaml
+cat packages/k8s/eks.yaml
 
 cat examples/aws-eks.yaml
 
@@ -162,9 +156,33 @@ kubectl --namespace a-team apply \
 
 kubectl get gcp
 
+kubectl --namespace crossplane-system \
+    get secret a-team-eks-no-claim-ekscluster \
+    --output jsonpath="{.data.kubeconfig}" \
+    | base64 -d >kubeconfig.yaml
+
+export KUBECONFIG=$PWD/kubeconfig.yaml
+
+cat examples/app-frontend.yaml
+
+cat examples/app-backend.yaml
+
+kubectl create namespace a-team
+
+kubectl --namespace a-team apply \
+    --filename examples/app-frontend.yaml
+
+kubectl --namespace a-team apply \
+    --filename examples/app-backend.yaml
+
+kubectl --namespace production \
+    get all,ingresses
+
 ###########
 # Destroy #
 ###########
+
+unset KUBECONFIG
 
 kubectl --namespace a-team delete \
     --filename examples/aws-eks.yaml
