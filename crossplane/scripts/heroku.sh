@@ -125,13 +125,13 @@ kubectl apply \
 # Crossplane Compositions #
 ###########################
 
-cat crossplane-config/config-k8s.yaml
-
 cat examples/google-gke-no-xrd.yaml
 
 cat packages/k8s/definition.yaml
 
 cat packages/k8s/eks.yaml
+
+cat crossplane-config/config-k8s.yaml
 
 cat examples/aws-eks.yaml
 
@@ -193,7 +193,7 @@ kubectl --namespace a-team delete \
 kubectl --namespace a-team delete \
     --filename examples/google-mysql.yaml
 
-kubectl get managed,releases
+kubectl get managed
 
 # Destroy the cluster
 
