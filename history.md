@@ -12,6 +12,8 @@
 
 # Conferences
 
+* [How To Build Your Own Heroku in 2021?](https://www.eventbrite.es/e/entradas-spainclouds-kubernetes-day-190608604467) at [Spain Cloud](https://www.spainclouds.com/) (25th of November 2021)
+* Freedom Means That Kubernetes Needs To Disappear at [DevOps D-Day](https://www.2021-devops-dday.com/) (18th of November 2021)
 * [How To Apply GitOps Without Making Developers Go Crazy](https://events.codemotion.com/conferences/online/2021/online-tech-conference-italian-edition-autumn/agenda) at [Codemotion Online Tech Conference 2021 - Italian Edition](https://events.codemotion.com/conferences/online/2021/online-tech-conference-italian-edition-autumn) (10th of November 2021)
 * The Future Is Above Clouds at [DevOps Experience: The Roaring 2020s](https://www.techstrongevents.com/devopsexperience) (27th of October 2021)
 * Using Kubernetes API To Manage Everything at [API World](https://apiworld.co/) (26th of October 2021)
