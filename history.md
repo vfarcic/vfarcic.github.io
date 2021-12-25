@@ -12,6 +12,7 @@
 
 # Conferences
 
+* [Crossplane: Compose Infrastructure and Services Into Custom Platform APIs](https://kccncosschn21.sched.com/event/pcci) at [KubeCon China](https://www.lfasiallc.com/kubecon-cloudnativecon-open-source-summit-china/) (9th of December 2021)
 * [How To Build Your Own Heroku in 2021?](https://www.eventbrite.es/e/entradas-spainclouds-kubernetes-day-190608604467) at [Spain Cloud](https://www.spainclouds.com/) (25th of November 2021)
 * Freedom Means That Kubernetes Needs To Disappear at [DevOps D-Day](https://www.2021-devops-dday.com/) (18th of November 2021)
 * [How To Apply GitOps Without Making Developers Go Crazy](https://events.codemotion.com/conferences/online/2021/online-tech-conference-italian-edition-autumn/agenda) at [Codemotion Online Tech Conference 2021 - Italian Edition](https://events.codemotion.com/conferences/online/2021/online-tech-conference-italian-edition-autumn) (10th of November 2021)
