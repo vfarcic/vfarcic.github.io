@@ -1,4 +1,4 @@
-# How To Build Your Own Heroku in 2021?
+# How To Build Your Own Heroku in 2022?
 
 Heroku was one of the most innovative and useful platforms ever created. Yet, its appeal slowly faded, even though most companies are trying to build their own "Heroku". Why did that happen? How can we build self-serving, opinionated, tailor-made platforms that fulfill specific needs and be easy to use without sacrificing anything? What is the recipe?
 
