@@ -97,9 +97,13 @@ kubectl apply --filename crossplane-config/provider-helm.yaml
 
 kubectl apply --filename crossplane-config/provider-kubernetes.yaml
 
-kubectl apply --filename crossplane-config/definition-k8s.yaml
+kubectl apply --filename crossplane-config/config-k8s.yaml
 
-kubectl apply --filename crossplane-config/composition-eks.yaml
+kubectl apply --filename crossplane-config/config-gitops.yaml
+
+kubectl get pkgrev
+
+# Wait until all the packages are healthy
 ```
 
 
@@ -129,5 +133,5 @@ echo http://argo-cd.$INGRESS_HOST.nip.io
 
 # User `admin`, password `admin123`
 
-# Modify `spec.parameters.gitOpsRepo` in `infra/aws-eks.yaml`
+# Modify `spec.parameters.gitOpsRepo` in `examples/aws-eks-gitops-no-claim.yaml`
 ```

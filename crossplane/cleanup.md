@@ -3,10 +3,6 @@
 ## Cleanup
 
 ```bash
-unset KUBECONFIG
-
-cd ../devops-toolkit-crossplane
-
 pkill kubectl
 
 rm infra/*.yaml

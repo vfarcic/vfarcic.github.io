@@ -31,15 +31,28 @@ git push
 ## Infra For Ops
 
 ```bash
-kubectl get managed,releases,objects
+kubectl get managed,releases
 
-cat crossplane-config/definition-k8s.yaml
+cat packages/k8s/definition.yaml
 
-cat crossplane-config/composition-eks.yaml
+cat packages/k8s/eks.yaml
 
+cat packages/gitops/definition.yaml
+
+cat packages/gitops/argo-cd.yaml
+```
+
+
+<!-- .slide: class="dark" -->
+<div class="eyebrow"> </div>
+<div class="label">Hands-on Time</div>
+
+## Infra For Ops
+
+```bash
 cat infra/aws-eks.yaml
 
-kubectl get managed,releases,objects
+kubectl get managed,releases
 ```
 
 
@@ -51,17 +64,15 @@ kubectl get managed,releases,objects
 
 ```bash
 kubectl --namespace crossplane-system get secret \
-    a-team-eks-no-claim-ekscluster --output jsonpath="{.data.kubeconfig}" \
+    a-team-eks-no-claim-cluster --output jsonpath="{.data.kubeconfig}" \
     | base64 -d >kubeconfig.yaml
 
-export KUBECONFIG=$PWD/kubeconfig.yaml
+kubectl --kubeconfig kubeconfig.yaml get namespaces
 
-kubectl get namespaces
+kubectl --kubeconfig kubeconfig.yaml --namespace argocd get applications
 
-kubectl --namespace argocd get applications
-
-kubectl --namespace argocd port-forward \
-    svc/a-team-eks-no-claim-argocd-server 8080:443 &
+kubectl --kubeconfig kubeconfig.yaml --namespace argocd port-forward \
+    svc/a-team-gitops-no-claim-argocd-server 8080:443 &
 ```
 
 
@@ -75,8 +86,6 @@ kubectl --namespace argocd port-forward \
 # Open http://localhost:8080 in a browser
 
 # User `admin`, password `admin123`
-
-unset KUBECONFIG
 ```
 
 

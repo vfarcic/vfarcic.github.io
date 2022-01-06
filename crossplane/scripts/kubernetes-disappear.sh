@@ -79,8 +79,6 @@ helm upgrade --install \
 kubectl apply \
     --filename crossplane-config/provider-aws.yaml
 
-# Please re-run the previous command if the output is `unable to recognize ...`
-
 kubectl apply \
     --filename crossplane-config/provider-helm.yaml
 
@@ -88,10 +86,7 @@ kubectl apply \
     --filename crossplane-config/provider-kubernetes.yaml
 
 kubectl apply \
-    --filename crossplane-config/definition-k8s.yaml
-
-kubectl apply \
-    --filename crossplane-config/composition-eks.yaml
+    --filename crossplane-config/config-k8s.yaml
 
 # TODO: Remove
 # kubectl apply \
