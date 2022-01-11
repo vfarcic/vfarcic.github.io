@@ -8,9 +8,6 @@ cd devops-toolkit-crossplane
 
 # Using Rancher Desktop for the demo, but it can be any other Kubernetes cluster with Ingress
 
-# If not using Rancher Desktop, replace `127.0.0.1` with the base host accessible through NGINX Ingress
-export INGRESS_HOST=127.0.0.1
-
 kubectl create namespace crossplane-system
 
 kubectl create namespace a-team
@@ -77,9 +74,9 @@ kubectl --namespace crossplane-system \
     create secret generic gcp-creds \
     --from-file creds=./gcp-creds.json
 
-cat crossplane-config/provider-gcp.yaml \
+cat crossplane-config/provider-config-gcp.yaml \
     | sed -e "s@projectID: .*@projectID: $PROJECT_ID@g" \
-    | tee crossplane-config/provider-gcp.yaml
+    | tee crossplane-config/provider-config-gcp.yaml
 
 ####################
 # Setup Crossplane #
@@ -99,18 +96,28 @@ helm upgrade --install \
 kubectl apply \
     --filename crossplane-config/provider-gcp.yaml
 
-# Please re-run the previous command if the output is `unable to recognize ...`
-
 kubectl apply \
     --filename crossplane-config/provider-aws.yaml
 
+kubectl apply \
+    --filename crossplane-config/provider-kubernetes.yaml
+
+kubectl apply \
+    --filename crossplane-config/provider-config-gcp.yaml
+
 # Please re-run the previous command if the output is `unable to recognize ...`
 
 kubectl apply \
-    --filename crossplane-config/definition-k8s.yaml
+    --filename crossplane-config/provider-config-aws.yaml
+
+# Please re-run the previous command if the output is `unable to recognize ...`
 
 kubectl apply \
-    --filename crossplane-config/composition-eks.yaml
+    --filename crossplane-config/config-k8s.yaml
+
+kubectl get pkgrev
+
+# Wait until all the packages are healthy
 
 #########
 # Intro #
@@ -133,6 +140,9 @@ kubectl apply \
 # - There is a scheduler with automatic drift detection and reconciliation
 
 kubectl --namespace production \
+    get pods
+
+kubectl --namespace production \
     delete pods \
     --selector app=devops-toolkit
 
@@ -151,7 +161,7 @@ kubectl --namespace production \
 # - An API must have a control plane behind it
 
 # None of the IaC tools do that
-# - `aws`, `gcloud`, `az`, etc. are only CLIs
+# - `aws`, `gcloud`, `az`, etc. are only CLIs that hide the API
 # - CloudFormation, ARM, etc. is vendor-specific
 # - Terraform, Pulumi, Ansible, etc do not have an API nor they have a scheduler (drift detection and reconciliation)
 # - etc.
@@ -173,7 +183,7 @@ kubectl --namespace production \
 # - They are vendor specific
 # - They often do not allow us to define the desired state
 
-# We choose NOT to use vendor-specific APIs in favor of CLI-only type of tools, namely IaC
+# We chose NOT to use vendor-specific APIs in favor of CLI-only type of tools, namely IaC
 # We chose a unified CLI-only approach because it allows us to unify all those APIs at the expense of not having an API at all.
 # Cloud is fragmented and without a standard and (almost) no one is thinking to create an API to manage them all.
 
@@ -185,7 +195,7 @@ kubectl --namespace production \
 # - Extend an API
 
 # That's where Kubernetes comes in.
-# It is considered a universal API but only for applications.
+# It is considered a universal API, but only for applications.
 # It has (probably) the most advanced scheduler
 # Why not extend it to everything?
 # Why not leverage Kubernetes API to build an API that can be used for everything, from applications, through infrastructure, all the way until services?
@@ -236,9 +246,9 @@ kubectl delete \
 # Extending the API #
 #####################
 
-cat crossplane-config/definition-k8s.yaml
+cat packages/k8s/definition.yaml
 
-cat crossplane-config/composition-eks.yaml
+cat packages/k8s/eks.yaml
 
 cat examples/aws-eks.yaml
 
