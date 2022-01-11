@@ -6,6 +6,6 @@ All the ingredients are already available. We know that the base platform should
 
 We need a way for operators (SREs, DevOps) to create services that everyone else can easily consume while still doing everything we need those services to do. That's where Heroku failed. It was an opinionated platform created with the idea that the same opinions work for everyone. Instead, we should aim for platforms that enable us to create opinions instead of the tools with opinions baked in.
 
-The missing ingredient are Crossplane Compositions. If we add those two to the mix, we can build our own Heroku that will be just as simple yet tailor-made for our specific needs.
+The missing ingredient is Crossplane Compositions. If we add those two to the mix, we can build our own Heroku that will be just as simple yet tailor-made for our specific needs.
 
 Let's see (through a hands-on demo) how we can create our own Heroku.
