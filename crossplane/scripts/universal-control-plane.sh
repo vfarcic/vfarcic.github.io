@@ -137,10 +137,10 @@ cat devops-toolkit/base/deployment.yaml
 kubectl apply \
     --kustomize devops-toolkit/overlays/production
 
-# - There is a scheduler with automatic drift detection and reconciliation
-
 kubectl --namespace production \
     get pods
+
+# - There is a scheduler with automatic drift detection and reconciliation
 
 kubectl --namespace production \
     delete pods \
@@ -161,7 +161,7 @@ kubectl --namespace production \
 # - An API must have a control plane behind it
 
 # None of the IaC tools do that
-# - `aws`, `gcloud`, `az`, etc. are only CLIs that hide the API
+# - `aws`, `gcloud`, `az`, etc. are imperative
 # - CloudFormation, ARM, etc. is vendor-specific
 # - Terraform, Pulumi, Ansible, etc do not have an API nor they have a scheduler (drift detection and reconciliation)
 # - etc.
