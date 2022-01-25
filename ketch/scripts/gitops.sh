@@ -2,61 +2,142 @@
 # Developers do not need Kubernetes #
 #####################################
 
-# Use 099-crossplane-kubevela-argocd instead
-
 #########
 # Setup #
 #########
 
-# Create a Kubernetes cluster with Ingress
+# Using Rancher Desktop for the demo, but it can be any other Kubernetes cluster with Ingress
 
-curl -s https://storage.googleapis.com/shipa-client/install.sh \
-    | bash
+# If not using Rancher Desktop, replace `127.0.0.1` with the base host accessible through Ingress
+export INGRESS_HOST=127.0.0.1
 
-git clone https://github.com/vfarcic/kubevela-demo.git
+git clone \
+    https://github.com/vfarcic/devops-toolkit-crossplane
 
-cd kubevela-demo
+cd devops-toolkit-crossplane
 
-# Follow the instructions in https://learn.shipa.io/docs/setup-shipa-cloud
+kubectl create namespace a-team
 
-# If NOT EKS
-export INGRESS_HOST=$(kubectl \
-    --namespace ingress-nginx \
-    get svc ingress-nginx-controller \
-    --output jsonpath="{.status.loadBalancer.ingress[0].ip}")
+kubectl create namespace production
 
-# If EKS
-export INGRESS_HOSTNAME=$(kubectl \
-    --namespace ingress-nginx \
-    get svc ingress-nginx-controller \
-    --output jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+kubectl create namespace crossplane-system
 
-# If EKS
-export INGRESS_HOST=$(\
-    dig +short $INGRESS_HOSTNAME)
+cat charts/sql/values.yaml \
+    | sed -e "s@host: .*@host: devops-toolkit.$INGRESS_HOST.nip.io@g" \
+    | tee charts/sql/values.yaml
 
-echo $INGRESS_HOST
+cat examples/app-backend-sql.yaml \
+    | sed -e "s@host: .*@host: devops-toolkit.$INGRESS_HOST.nip.io@g" \
+    | tee examples/app-backend-sql.yaml
 
-# Repeat the `export` commands if the output is empty
+#############
+# Setup GCP #
+#############
 
-# If the output contains more than one IP, wait for a while longer, and repeat the `export` commands.
+export PROJECT_ID=devops-toolkit-$(date +%Y%m%d%H%M%S)
 
-# If the output continues having more than one IP, choose one of them and execute `export INGRESS_HOST=[...]` with `[...]` being the selected IP.
+gcloud projects create $PROJECT_ID
 
-cat dt-simple.yaml \
-    | sed -e "s@localhost@demo.$INGRESS_HOST.nip.io@g" \
-    | tee dt-simple.yaml
+echo "https://console.cloud.google.com/billing/enable?project=$PROJECT_ID"
 
-helm repo add kubevela \
-    https://kubevelacharts.oss-cn-hangzhou.aliyuncs.com/core
+# Set the billing account
+
+echo "https://console.cloud.google.com/apis/library/sqladmin.googleapis.com?project=$PROJECT_ID"
+
+# Open the URL and *ENABLE API*
+
+export SA_NAME=devops-toolkit
+
+export SA="${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
+
+gcloud iam service-accounts \
+    create $SA_NAME \
+    --project $PROJECT_ID
+
+export ROLE=roles/admin
+
+gcloud projects add-iam-policy-binding \
+    --role $ROLE $PROJECT_ID \
+    --member serviceAccount:$SA
+
+gcloud iam service-accounts keys \
+    create gcp-creds.json \
+    --project $PROJECT_ID \
+    --iam-account $SA
+
+kubectl --namespace crossplane-system \
+    create secret generic gcp-creds \
+    --from-file creds=./gcp-creds.json
+
+cat crossplane-config/provider-config-gcp.yaml \
+    | sed -e "s@projectID: .*@projectID: $PROJECT_ID@g" \
+    | tee crossplane-config/provider-config-gcp.yaml
+
+####################
+# Setup Crossplane #
+####################
+
+helm repo add crossplane-stable \
+    https://charts.crossplane.io/stable
 
 helm repo update
 
 helm upgrade --install \
-    kubevela kubevela/vela-core \
-    --namespace vela-system \
+    crossplane crossplane-stable/crossplane \
+    --namespace crossplane-system \
     --create-namespace \
     --wait
+
+kubectl apply \
+    --filename crossplane-config/provider-sql.yaml
+
+kubectl apply \
+    --filename crossplane-config/config-sql.yaml
+
+kubectl apply \
+    --filename crossplane-config/config-app.yaml
+
+kubectl apply \
+    --filename crossplane-config/provider-kubernetes-incluster.yaml
+
+kubectl apply \
+    --filename crossplane-config/provider-config-gcp.yaml
+
+# Please re-run the previous command if the output is `unable to recognize ...`
+
+#################
+# Setup Argo CD #
+#################
+
+helm repo add argo \
+    https://argoproj.github.io/argo-helm
+
+helm repo update
+
+helm upgrade --install \
+    argocd argo/argo-cd \
+    --namespace argocd \
+    --create-namespace \
+    --set server.ingress.hosts="{argo-cd.$INGRESS_HOST.nip.io}" \
+    --values argocd/helm-values.yaml \
+    --wait
+
+kubectl apply --filename argocd/project.yaml
+
+kubectl apply --filename argocd/apps.yaml
+
+echo http://argo-cd.$INGRESS_HOST.nip.io
+
+# Open it in a browser
+# User `admin`, password `admin123`
+
+####################
+# Setup SchemaHero #
+####################
+
+kubectl krew install schemahero
+
+kubectl schemahero install
 
 #######
 # k8s #
@@ -91,67 +172,124 @@ helm upgrade --install \
 # Can we have a system that is based on Kubernetes yet easy to operate?
 # Can we make Kubernetes disappear and become an implementation detail running in the background?
 
-cat helm/templates/*
+########
+# Demo #
+########
 
-cat helm/values.yaml
+helm upgrade --install \
+    sql-demo charts/sql/. \
+    --namespace a-team \
+    --create-namespace
 
-#########
-# Shipa #
-#########
+kubectl --namespace a-team \
+    get pods
 
-# Create a framework
+kubectl --namespace a-team \
+    describe pod --selector app=sql-demo
 
-# Add a cluster
+cat charts/sql/templates/app.yaml
 
-shipa app create devops-toolkit
+kubectl get managed
 
-shipa app deploy \
-    --app devops-toolkit \
-    --image vfarcic/devops-toolkit-series
+cat packages/sql/google.yaml
 
-shipa app info --app devops-toolkit
+cat charts/sql/templates/db.yaml
 
-# Open the link
+kubectl --namespace a-team \
+    get pods
 
-kubectl --namespace shipa-my-framework \
-    get all,ingresses
+curl "http://devops-toolkit.$INGRESS_HOST.nip.io/addVideo?id=RaoKcJGchKM&name=Terraform+vs+Pulumi+vs+Crossplane&url=https://youtu.be/RaoKcJGchKM"
 
-##################
-# OAM / KubeVela #
-##################
+kubectl --namespace a-team logs \
+    --selector app=sql-demo
 
-cat dt-simple.yaml
+kubectl --namespace a-team \
+    get secrets
 
-kubectl apply \
-    --filename dt-simple.yaml
+export DB_ENDPOINT=$(kubectl \
+    --namespace a-team \
+    get secret sql-demo \
+    --output jsonpath="{.data.endpoint}" \
+    | base64 -d)
 
-kubectl get all,ingresses
+export DB_PASS=$(kubectl \
+    --namespace a-team \
+    get secret sql-demo \
+    --output jsonpath="{.data.password}" \
+    | base64 -d)
 
-echo http://demo.$INGRESS_HOST.nip.io
+helm upgrade --install \
+    sql-demo charts/sql/. \
+    --namespace a-team \
+    --set schema.endpoint=$DB_ENDPOINT \
+    --set schema.password=$DB_PASS \
+    --wait
 
-# Open it
+cat charts/sql/templates/schema.yaml
 
-kubectl get crds | grep oam
+curl "http://devops-toolkit.$INGRESS_HOST.nip.io/addVideo?id=RaoKcJGchKM&name=Terraform+vs+Pulumi+vs+Crossplane&url=https://youtu.be/RaoKcJGchKM"
 
-kubectl delete \
-    --filename dt-simple.yaml
+curl "http://devops-toolkit.$INGRESS_HOST.nip.io/addVideo?id=yrj4lmScKHQ&name=Crossplane+with+Terraform&url=https://youtu.be/yrj4lmScKHQ"
 
-vela components
+curl "http://devops-toolkit.$INGRESS_HOST.nip.io/getVideos"
 
-kubectl get componentdefinitions -A
+cat charts/sql/templates/app.yaml
 
-cat components.yaml
+cat charts/sql/templates/crossplane-app.yaml
 
-# https://cuelang.org/
+helm upgrade --install \
+    sql-demo charts/sql/. \
+    --namespace a-team \
+    --set crossplaneApp=true \
+    --reuse-values \
+    --wait
 
-kubectl apply --filename components.yaml
+kubectl --namespace a-team get appclaims
 
-cat traits.yaml
+kubectl --namespace a-team get all,ingresses
 
-kubectl apply --filename traits.yaml
+curl "http://devops-toolkit.$INGRESS_HOST.nip.io/getVideos"
 
-cat dt-full.yaml
+helm delete sql-demo --namespace a-team
 
-kubectl apply --filename dt-full.yaml
+cat examples/app-backend-sql-no-claim.yaml
 
-kubectl get all,ingresses
+# Show Argo CD
+
+cp examples/app-backend-sql-no-claim.yaml \
+    apps/.
+
+git add .
+
+git commit -m "My app"
+
+git push
+
+# Show Argo CD
+
+kubectl --namespace a-team \
+    get all,ingresses,appclaims,cloudsqlinstances
+
+cat packages/sql/definition.yaml
+
+cat packages/sql/google.yaml
+
+###########
+# Destroy #
+###########
+
+rm apps/*.yaml
+
+git add .
+
+git commit -m "Destroy everything"
+
+git push
+
+kubectl get managed
+
+# Repeat the previous command until all the managed resources are removed
+
+gcloud projects delete $PROJECT_ID
+
+# Destroy or reset the management cluster
