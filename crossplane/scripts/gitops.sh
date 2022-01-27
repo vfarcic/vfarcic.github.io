@@ -147,13 +147,15 @@ kubectl schemahero install
 # That did not happen, and it will likely never happen.
 
 # It's too complicated.
-# What if someone else created that for you
 
-# Dev's are not in control any more. They cannot define what your app is.
-# Is it stateless or stateful.
+# Is it stateless or stateful?
 # Does it scale automatically or not?
 # Is it publicly explosed or not?
 # etc.
+
+# What if someone else created everything for you?
+
+# Dev's are not in control any more. They cannot define what an app is.
 
 # Developers do not need Kubernetes.
 # They need to write code, and they need an easy way to build, test, and deploy their applications.
@@ -189,11 +191,11 @@ kubectl --namespace a-team \
 
 cat charts/sql/templates/app.yaml
 
-kubectl get managed
-
 cat packages/sql/google.yaml
 
 cat charts/sql/templates/db.yaml
+
+kubectl get managed
 
 kubectl --namespace a-team \
     get pods
@@ -286,7 +288,7 @@ git commit -m "Destroy everything"
 
 git push
 
-kubectl get managed
+kubectl get cloudsqlinstances
 
 # Repeat the previous command until all the managed resources are removed
 

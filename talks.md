@@ -23,7 +23,7 @@
 
 ---
 
-* How To Apply GitOps Without Making Developers Go Crazy ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ketch/abstracts/gitops.md))
+* How To Apply GitOps Without Making Developers Go Crazy ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/gitops.md))
 * Developers do not need Kubernetes ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/k8s/abstracts/developers-do-not-need-kubernetes.md))
 * How To Apply GitOps On Infrastructure (For Real) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/argo/abstracts/crossplane.md))
 * How To Automate Everything In 2021 ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/argo/abstracts/combined.md))
