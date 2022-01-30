@@ -12,6 +12,7 @@
 
 # Conferences
 
+* How To Apply GitOps Without Making Developers Go Crazy at [DevOpStars'22](https://geekle.us/devops) (27th of January 2022)
 * [Crossplane: Compose Infrastructure and Services Into Custom Platform APIs](https://kccncosschn21.sched.com/event/pcci) at [KubeCon China](https://www.lfasiallc.com/kubecon-cloudnativecon-open-source-summit-china/) (9th of December 2021)
 * [How To Build Your Own Heroku in 2021?](https://www.eventbrite.es/e/entradas-spainclouds-kubernetes-day-190608604467) at [Spain Cloud](https://www.spainclouds.com/) (25th of November 2021)
 * Freedom Means That Kubernetes Needs To Disappear at [DevOps D-Day](https://www.2021-devops-dday.com/) (18th of November 2021)
@@ -152,6 +153,7 @@
 
 # Meetups / Webinars
 
+* [Using GitOps for Infrastructure and Applications with Crossplane & Argo CD](https://youtu.be/pdECNa80pfk) at [Codefresh](https://www.youtube.com/channel/UC9r94SY6BqN05kXPIHsDXPg) (18th of January 2022)
 * [How to Build-up DevOps Toolstack?](https://www.eventbrite.co.uk/e/devopsx-talks-8-how-to-build-up-devops-toolstack-tickets-157589471351) at [DevOpsX Talks](https://continium.io/en/devops-events/devopsx-talks/) (23nd of June 2021)
 * [Developers do not need Kubernetes](https://www.meetup.com/Cloud-Native-London/events/274954127/) at [Cloud Native London](https://www.meetup.com/Cloud-Native-London) (2nd of June 2021)
 * How To Apply GitOps On Infrastructure (For Real) at [NADOG](https://nadog.com/) (19th of May 2021)
