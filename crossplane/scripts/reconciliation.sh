@@ -4,13 +4,11 @@ TODO: Intro
 # Setup Cluster #
 #################
 
+# Create a management Kubernetes cluster (any should do)
+
 git clone https://github.com/vfarcic/devops-toolkit-crossplane
 
 cd devops-toolkit-crossplane
-
-# Please watch https://youtu.be/C0v5gJSWuSo if you are not familiar with kind
-# Feel free to use any other Kubernetes platform
-kind create cluster --config kind.yaml
 
 kubectl create namespace crossplane-system
 
@@ -78,9 +76,9 @@ kubectl --namespace crossplane-system \
     create secret generic gcp-creds \
     --from-file creds=./gcp-creds.json
 
-cat crossplane-config/provider-gcp.yaml \
+cat crossplane-config/provider-config-gcp.yaml \
     | sed -e "s@projectID: .*@projectID: $PROJECT_ID@g" \
-    | tee crossplane-config/provider-gcp.yaml
+    | tee crossplane-config/provider-config-gcp.yaml
 
 ####################
 # Setup Crossplane #
@@ -98,7 +96,21 @@ helm upgrade --install \
     --wait
 
 kubectl apply \
-    --filename crossplane-config
+    --filename crossplane-config/config-k8s.yaml
+
+kubectl apply \
+    --filename crossplane-config/config-sql.yaml
+
+kubectl apply \
+    --filename crossplane-config/provider-kubernetes.yaml
+
+kubectl apply \
+    --filename crossplane-config/provider-config-gcp.yaml
+
+# Please re-run the previous command if the output is `unable to recognize ...`
+
+kubectl apply \
+    --filename crossplane-config/provider-config-aws.yaml
 
 # Please re-run the previous command if the output is `unable to recognize ...`
 
@@ -121,11 +133,23 @@ cat examples/google-mysql.yaml
 kubectl --namespace a-team apply \
     --filename examples/google-mysql.yaml
 
-kubectl get managed,releases
+kubectl get managed
+
+kubectl get gcp
 
 # Destroy stuff
 
-kubectl get managed,releases
+cat packages/k8s/definition.yaml
+
+ls -1 packages/k8s/
+
+cat packages/k8s/eks.yaml
+
+cat packages/sql/definition.yaml
+
+cat packages/sql/google.yaml
+
+kubectl get managed
 
 ###########
 # Destroy #
@@ -140,8 +164,8 @@ kubectl --namespace a-team delete \
 kubectl --namespace a-team delete \
     --filename examples/google-mysql.yaml
 
-kubectl get managed,releases
+kubectl get managed
 
-kind delete cluster
+# Destroy or reset the management cluster
 
 gcloud projects delete $PROJECT_ID
