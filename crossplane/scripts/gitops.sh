@@ -254,11 +254,11 @@ curl "http://devops-toolkit.$INGRESS_HOST.nip.io/getVideos"
 
 helm delete sql-demo --namespace a-team
 
-cat examples/app-backend-sql-no-claim.yaml
+cat examples/app/backend-sql-no-claim.yaml
 
 # Show Argo CD
 
-cp examples/app-backend-sql-no-claim.yaml \
+cp examples/app/backend-sql-no-claim.yaml \
     apps/.
 
 git add .

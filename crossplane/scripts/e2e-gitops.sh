@@ -85,15 +85,15 @@ cp examples/crossplane.yaml \
     examples/crossplane-provider-configs.yaml \
     infra/.
 
-#################
-# Setup Argo CD #
-#################
-
 git add .
 
 git commit -m "Infra"
 
 git push
+
+#################
+# Setup Argo CD #
+#################
 
 helm repo add argo \
     https://argoproj.github.io/argo-helm
@@ -238,6 +238,8 @@ kubectl --namespace crossplane-system \
     --output jsonpath="{.data.kubeconfig}" \
     | base64 -d >kubeconfig.yaml
 
+# TODO: Add AWS creds
+
 kubectl --kubeconfig kubeconfig.yaml \
     get namespaces
 
@@ -255,6 +257,24 @@ kubectl \
 # User `admin`, password `admin123`
 
 mkdir -p apps
+
+# TODO: Continue
+
+cat examples/app/backend-local-k8s-postgresql-no-claim.yaml
+
+cp examples/app/backend-local-k8s-postgresql-no-claim.yaml \
+    apps-dev/.
+
+git add .
+
+git commit -m "Adding apps to dev"
+
+git push
+
+kubectl \
+    --kubeconfig kubeconfig.yaml \
+    --namespace dev \
+    get all,ingresses,appclaims,sqlclaims
 
 cat examples/app-frontend-no-claim.yaml
 
@@ -276,6 +296,8 @@ kubectl --kubeconfig kubeconfig.yaml \
     --namespace production \
     get all,ingresses
 
+# TOOD: Production
+
 ###########
 # Destroy #
 ###########
@@ -292,7 +314,7 @@ git push
 
 kubectl get managed
 
-# Repeat the previous command until all the managed resources are removed
+# Repeat the previous command until all the managed resources are removed (except `object` and `release` resources)
 
 rm crossplane-definitions/*.yaml
 
@@ -301,6 +323,8 @@ rm crossplane-provider-configs/*.yaml
 rm infra/*.yaml
 
 rm apps/*.yaml
+
+rm apps-dev/*.yaml
 
 git add .
 
