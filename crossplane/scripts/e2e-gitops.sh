@@ -253,12 +253,13 @@ kubectl \
     svc/a-team-gitops-no-claim-argocd-server \
     8080:443 &
 
+# If one of the commands that use `kubeconfig.yaml` return an
+#   error message `You must be logged in to the server`,
+#   the credentials expired and you'll need to retrieve it again
+#   with the previous command.
+
 # Open http://localhost:8080 in a browser
 # User `admin`, password `admin123`
-
-mkdir -p apps
-
-# TODO: Continue
 
 cat examples/app/backend-local-k8s-postgresql-no-claim.yaml
 
@@ -274,16 +275,14 @@ git push
 kubectl \
     --kubeconfig kubeconfig.yaml \
     --namespace dev \
-    get all,ingresses,appclaims,sqlclaims
+    get all,ingresses
 
-cat examples/app-frontend-no-claim.yaml
+cat examples/app/backend-aws-postgresql.yaml
 
-cp examples/app-frontend-no-claim.yaml \
-    apps/.
+diff examples/app/backend-aws-postgresql-no-claim.yaml \
+    examples/app/backend-local-k8s-postgresql-no-claim.yaml
 
-cat examples/app-backend-no-claim.yaml
-
-cp examples/app-backend-no-claim.yaml \
+cp examples/app/backend-aws-postgresql-no-claim.yaml \
     apps/.
 
 git add .
@@ -292,11 +291,24 @@ git commit -m "Adding dot"
 
 git push
 
-kubectl --kubeconfig kubeconfig.yaml \
+kubectl \
+    --kubeconfig kubeconfig.yaml \
     --namespace production \
     get all,ingresses
 
-# TOOD: Production
+kubectl \
+    --kubeconfig kubeconfig.yaml \
+    get apps,sqls
+
+kubectl \
+    --kubeconfig kubeconfig.yaml \
+    get managed
+
+cat packages/sql/definition.yaml
+
+cat packages/sql/local-k8s.yaml
+
+cat packages/sql/aws.yaml
 
 ###########
 # Destroy #
@@ -316,7 +328,7 @@ kubectl get managed
 
 # Repeat the previous command until all the managed resources are removed (except `object` and `release` resources)
 
-rm crossplane-definitions/*.yaml
+`rm crossplane-definitions/*.yaml
 
 rm crossplane-provider-configs/*.yaml
 
@@ -330,7 +342,7 @@ git add .
 
 git commit -m "Destroy everything"
 
-git push
+git push`
 
 # Destroy or reset the management cluster
 
