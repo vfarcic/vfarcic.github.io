@@ -233,17 +233,24 @@ git push
 
 kubectl get managed
 
+# You might need to execute this command later if you see `You must be logged in to the server (Unauthorized)` messages when interacting with the new cluster.
 kubectl --namespace crossplane-system \
     get secret a-team-eks-no-claim-cluster \
     --output jsonpath="{.data.kubeconfig}" \
     | base64 -d >kubeconfig.yaml
 
-# TODO: Add AWS creds
+kubectl \
+    --kubeconfig kubeconfig.yaml \
+    --namespace crossplane-system \
+    create secret generic aws-creds \
+    --from-file creds=./aws-creds.conf
 
-kubectl --kubeconfig kubeconfig.yaml \
+kubectl \
+    --kubeconfig kubeconfig.yaml \
     get namespaces
 
-kubectl --kubeconfig kubeconfig.yaml \
+kubectl \
+    --kubeconfig kubeconfig.yaml \
     --namespace argocd \
     get applications
 
@@ -274,13 +281,14 @@ git push
 
 kubectl \
     --kubeconfig kubeconfig.yaml \
+    get apps,sqls
+
+kubectl \
+    --kubeconfig kubeconfig.yaml \
     --namespace dev \
     get all,ingresses
 
 cat examples/app/backend-aws-postgresql.yaml
-
-diff examples/app/backend-aws-postgresql-no-claim.yaml \
-    examples/app/backend-local-k8s-postgresql-no-claim.yaml
 
 cp examples/app/backend-aws-postgresql-no-claim.yaml \
     apps/.
@@ -293,12 +301,12 @@ git push
 
 kubectl \
     --kubeconfig kubeconfig.yaml \
-    --namespace production \
-    get all,ingresses
+    get apps,sqls
 
 kubectl \
     --kubeconfig kubeconfig.yaml \
-    get apps,sqls
+    --namespace production \
+    get all,ingresses
 
 kubectl \
     --kubeconfig kubeconfig.yaml \
@@ -316,6 +324,21 @@ cat packages/sql/aws.yaml
 
 pkill kubectl
 
+rm apps/*.yaml
+
+rm apps-dev/*.yaml
+
+git add .
+
+git commit -m "Destroy apps"
+
+git push
+
+kubectl --kubeconfig kubeconfig.yaml \
+    get managed
+
+# Repeat the previous command until all the managed resources are removed (except `object` and `release` resources)
+
 rm infra/aws-eks.yaml
 
 git add .
@@ -328,21 +351,17 @@ kubectl get managed
 
 # Repeat the previous command until all the managed resources are removed (except `object` and `release` resources)
 
-`rm crossplane-definitions/*.yaml
+rm crossplane-definitions/*.yaml
 
 rm crossplane-provider-configs/*.yaml
 
 rm infra/*.yaml
 
-rm apps/*.yaml
-
-rm apps-dev/*.yaml
-
 git add .
 
 git commit -m "Destroy everything"
 
-git push`
+git push
 
 # Destroy or reset the management cluster
 
