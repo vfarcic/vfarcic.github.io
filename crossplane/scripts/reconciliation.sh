@@ -1,5 +1,3 @@
-TODO: Intro
-
 #################
 # Setup Cluster #
 #################
@@ -114,9 +112,15 @@ kubectl apply \
 
 # Please re-run the previous command if the output is `unable to recognize ...`
 
-###########################
-# Crossplane Compositions #
-###########################
+#########
+# Intro #
+#########
+
+# TODO:
+
+########
+# Demo #
+########
 
 cat examples/google-gke.yaml
 
@@ -145,9 +149,15 @@ ls -1 packages/k8s/
 
 cat packages/k8s/eks.yaml
 
+cat examples/aws-eks.yaml
+
 cat packages/sql/definition.yaml
 
 cat packages/sql/google.yaml
+
+cat examples/google-mysql.yaml
+
+kubectl get nodepools
 
 kubectl get managed
 
