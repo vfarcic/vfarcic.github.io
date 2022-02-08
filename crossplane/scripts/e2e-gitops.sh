@@ -288,7 +288,7 @@ kubectl \
     --namespace dev \
     get all,ingresses
 
-cat examples/app/backend-aws-postgresql.yaml
+cat examples/app/backend-aws-postgresql-no-claim.yaml
 
 cp examples/app/backend-aws-postgresql-no-claim.yaml \
     apps/.
