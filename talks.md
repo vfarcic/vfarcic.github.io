@@ -2,6 +2,13 @@
 
 ---
 
+* DevOps Is All About Building Internal Developer Platform (IDP) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/idp.md))
+
+
+# Talks
+
+---
+
 * End-To-End GitOps ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/e2e-gitops.md))
 * The Future Is Above Clouds ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/uxp.md))
 * How To Manage Infrastructure With Helm ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/helm.md))
