@@ -19,9 +19,6 @@
 <p style="display:inline-block"><img src="../img/docker-captain.png" style="background-color: white;width:300px;height:300px;"></p> <!-- .element: class="fragment" -->
 
 
-[![DevOps Toolkit YouTube](../img/dot.png)](https://www.youtube.com/c/devopstoolkit)
-
-
 [![devopstoolkitseries.com](../img/devops-toolkit-series.png)](https://www.devopstoolkitseries.com/)
 
 
@@ -29,6 +26,9 @@
 
 
 <a href="https://www.devopsparadox.com"><img src="../img/products/devops-paradox.jpg" style="width: 60%; height: 60%;"></a>
+
+
+[![DevOps Toolkit YouTube](../img/dot.png)](https://www.youtube.com/c/devopstoolkit)
 
 
 <!-- .slide: data-background="../img/products/twitter.png" data-background-size="contain" -->
