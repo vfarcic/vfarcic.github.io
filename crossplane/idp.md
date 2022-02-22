@@ -1,4 +1,3 @@
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 # DevOps
 
 ### Containers, Kubernetes, cloud,
@@ -10,14 +9,12 @@
 ## Ops tools
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 # Developers
 
 ## Should they use those tools?
 ## Can they use those tools?
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 # DevOps
 
 ## Enabling devs to be self-sufficient
@@ -25,14 +22,12 @@
 ## NOT "now you do it!"
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 # DevOps
 
 ## Creating services that use ops tools...
 ## ...and enable devs
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 # Internal Developer Platform (IDP)
 
 ## **Internal**: Meant for internal usage
@@ -40,7 +35,6 @@
 ## **Platform**: Where it all comes together
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 # IDP
 
 ## A layer on top of the tech and tooling
@@ -48,13 +42,11 @@
 ## What Ops/SREs/DevOps teams create to enable developer self-service.
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 # Why Self-Service?
 
 ## Free ops to do what matters
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 # Why Self-Service?
 
 ## Increase productivity
@@ -65,7 +57,6 @@
 ## etc.
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 # Full live-cycle of everything
 
 ## Change the desired state
@@ -74,7 +65,6 @@
 ## Observe
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 # The Actual State
 
 ## **Providers**: AWS, Azure, Google Cloud, on-prem, DataDog, Elastic, Splunk, etc.
@@ -82,7 +72,6 @@
 ## **Apps**: yours and 3rd-party self-hosted
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 # The Desired State
 
 ## App Code, manifests, configs, etc.
@@ -90,7 +79,6 @@
 ## Must be in Git
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 # The Tools
 
 ## Pipelines
@@ -100,7 +88,6 @@
 ## etc.
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 # User Interface (UI)
 
 ## Web UI or CLI or IDE or all?
@@ -110,7 +97,6 @@
 ## It must be Kubernetes
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 # Universal API (KubeAPI)
 
 ## Single API for everything
@@ -119,7 +105,6 @@
 ## It's not (only) about running containers
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 # CRDs And CRs
 
 ## Who writes manifests?
@@ -129,17 +114,14 @@
 ## Devs write CR manifests
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 # The Tools
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 # App And Infra Specs
 
 ## Kubernetes CRDs
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 # Pipelines
 
 ## Preferably those with k8s CRs
@@ -147,7 +129,6 @@
 ## Tekton
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 # Synchronization
 
 ## Argo CD
@@ -155,7 +136,6 @@
 ## Rancher Fleet
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 # Infra Orchestration
 
 ## Crossplane
@@ -164,7 +144,6 @@
 ## etc.
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
 # App Orchestration
 
 ## OAM/KubeVela

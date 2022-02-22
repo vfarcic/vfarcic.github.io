@@ -1,246 +1,277 @@
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# DevOps
+# DevOps Categories
 
-### Containers, Kubernetes, cloud,
-### GitOps, CI/CD, logging,
-### monitoring, IaC, troubleshooting,
-### security, service mesh,
-### ...
+### Application Management
+### Infrastructure & Services
+### GitOps
+### Progressive Delivery
+### Security
+### Development
 
-## Ops tools
 
+# DevOps Categories
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# Developers
+### CI/CD Pipelines
+### Logging, Monitoring, And Troubleshooting
+### Kubernetes Dashboards
+### Containers
+### Kubernetes
 
-## Should they use those tools?
-## Can they use those tools?
 
+# Self-Managed Apps
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# DevOps
+<figure>
+    <img src="../img/products/ketch.png" style="width: 30%;"/>
+    <img src="../img/products/shipa.png" style="width: 30%;"/>
+    <img src="../img/products/knative.png" style="width: 30%;"/>
+</figure>
+<figure>
+    <img src="../img/products/kubevela.png" style="width: 45%;"/>
+    <img src="../img/products/crossplane.png" style="width: 45%;"/>
+</figure>
 
-## Enabling devs to be self-sufficient
-## Shift left
-## NOT "now you do it!"
 
+# Self-Managed Apps
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# DevOps
+<figure>
+    <img src="../img/products/kubevela.png" style="width: 50%;"/>
+    <img src="../img/products/knative.png" style="width: 40%;"/>
+</figure>
 
-## Creating services that use ops tools...
-## ...and enable devs
 
+# Managed Apps
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# Internal Developer Platform (IDP)
+<figure>
+    <img src="../img/products/fly.png" style="width: 30%;"/>
+    <img src="../img/products/gcr.png" style="width: 20%;"/>
+    <img src="../img/products/azure-container-apps.jpeg" style="width: 20%;"/>
+</figure>
+<figure>
+    <img src="../img/products/aws-lightsail.png" style="width: 20%;"/>
+    <img src="../img/products/aws-ecs.png" style="width: 20%;"/>
+    <img src="../img/products/aws-lambda.png" style="width: 20%;"/>
+</figure>
 
-## **Internal**: Meant for internal usage
-## **Developer**: App developer is the customer
-## **Platform**: Where it all comes together
 
+# Managed Apps
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# IDP
+<img src="../img/products/gcr.png" style="width: 50%;"/>
 
-## A layer on top of the tech and tooling
-## Shift-left (for real)
-## What Ops/SREs/DevOps teams create to enable developer self-service.
 
+# Infra & Services
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# Why Self-Service?
+<figure>
+    <img src="../img/products/terraform.png" style="width: 25%;"/>
+    <img src="../img/products/weaveworks.png" style="width: 25%;"/>
+    <img src="../img/products/ansible.png" style="width: 20%;"/>
+</figure>
+<figure>
+    <img src="../img/products/pulumi.svg" style="width: 45%;"/>
+    <img src="../img/products/crossplane.png" style="width: 45%;"/>
+</figure>
 
-## Free ops to do what matters
 
+# Infra & Services
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# Why Self-Service?
+<img src="../img/products/crossplane.png"/>
 
-## Increase productivity
-## Reduce lean-time
-## Increase deployment frequency
-## Decrease mean time to repair (MTTR)
-## Decrease change failure rate (CFR)
-## etc.
 
+# GitOps
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# Full live-cycle of everything
+<figure>
+    <img src="../img/products/flux.png" style="width: 35%;"/>
+    <img src="../img/products/argo.png" style="width: 40%;"/>
+    <img src="../img/products/rancher-fleet.png" style="width: 60%;"/>
+</figure>
 
-## Change the desired state
-## Perform actions
-## Converge the actual into the desired state
-## Observe
 
+# GitOps
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# The Actual State
+<img src="../img/products/argo.png" style="width: 80%;"/>
 
-## **Providers**: AWS, Azure, Google Cloud, on-prem, DataDog, Elastic, Splunk, etc.
-## **Infrastructure**: servers, clusters, DBs, etc.
-## **Apps**: yours and 3rd-party self-hosted
 
+# Progressive Delivery
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# The Desired State
+<figure>
+    <img src="../img/products/flagger.png" style="width: 45%;"/>
+    <img src="../img/products/argo.png" style="width: 35%;"/>
+</figure>
 
-## App Code, manifests, configs, etc.
-## Manifests (cannot be building blocks)
-## Must be in Git
 
+# Progressive Delivery
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# The Tools
+<img src="../img/products/argo.png" style="width: 80%;"/>
 
-## Pipelines
-## GitOps
-## Infra
-## RBAC
-## etc.
 
+# Security
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# User Interface (UI)
+<figure>
+    <img src="../img/products/snyk.png" style="width: 20%;"/>
+    <img src="../img/products/opa.png" style="width: 20%;"/>
+    <img src="../img/products/kubescape.png" style="width: 20%;"/>
+</figure>
+<figure>
+    <img src="../img/products/kyverno.png" style="width: 55%;"/>
+</figure>
 
-## Web UI or CLI or IDE or all?
-## NOT links
-## Not embeeded tools
-## Only if there are APIs for everything
-## It must be Kubernetes
 
+# Security
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# Universal API (KubeAPI)
+<img src="../img/products/kyverno.png" style="width: 80%;"/>
 
-## Single API for everything
-## Continuous drift-detection and reconciliation
-## Designed to be extensible
-## It's not (only) about running containers
 
+# Dev Environment
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# CRDs And CRs
+<figure>
+    <img src="../img/products/gitpod.png" style="width: 30%;"/>
+    <img src="../img/products/okteto.png" style="width: 30%;"/>
+    <img src="../img/products/codezero.png" style="width: 30%;"/>
+</figure>
+<figure>
+    <img src="../img/products/devspace.png" style="width: 30%;"/>
+    <img src="../img/products/skaffold.png" style="width: 30%;"/>
+</figure>
 
-## Who writes manifests?
-## Opportunity to define what something is
-## Opportunity to simplify
-## Opportunity for ops to create compositions
-## Devs write CR manifests
 
+# Dev Environment
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# The Tools
+<img src="../img/products/gitpod.png" style="width: 80%;"/>
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# App And Infra Specs
+# Dev k8s Cluster
 
-## Kubernetes CRDs
+<figure>
+    <img src="../img/products/kind.png" style="width: 30%;"/>
+    <img src="../img/products/k3d.png" style="width: 30%;"/>
+    <img src="../img/products/microk8s.png" style="width: 30%;"/>
+</figure>
+<figure>
+    <img src="../img/products/rancher-desktop.png" style="width: 30%;"/>
+    <img src="../img/products/capsule.png" style="width: 30%;"/>
+    <img src="../img/products/vcluster.png" style="width: 30%;"/>
+</figure>
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# Pipelines
+# Dev k8s Cluster
 
-## Preferably those with k8s CRs
-## Argo Workflows
-## Tekton
+<figure>
+    <img src="../img/products/rancher-desktop.png" style="width: 50%;"/>
+    <img src="../img/products/vcluster.png" style="width: 50%;"/>
+</figure>
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# Synchronization
+# CI/CD Pipelines
 
-## Argo CD
-## Flux
-## Rancher Fleet
+<figure>
+    <img src="../img/products/circle-ci.png" style="width: 20%;"/>
+    <img src="../img/products/codefresh.png" style="width: 20%;"/>
+    <img src="../img/products/argo.png" style="width: 30%;"/>
+</figure>
+<figure>
+    <img src="../img/products/tekton.png" style="width: 30%;"/>
+    <img src="../img/products/github-actions.png" style="width: 20%;"/>
+    <img src="../img/products/devtron.png" style="width: 20%;"/>
+</figure>
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# Infra Orchestration
+# CI/CD Pipelines
 
-## Crossplane
-## ACK
-## IaC with Kubernetes operators
-## etc.
+<figure>
+    <img src="../img/products/argo.png" style="width: 50%;"/>
+    <img src="../img/products/github-actions.png" style="width: 30%;"/>
+</figure>
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# App Orchestration
+# Logging
 
-## OAM/KubeVela
-## Crossplane
-## etc.
+<figure>
+    <img src="../img/products/loki.png"/>
+</figure>
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# RBAC
+# Monitoring
 
-## Desired state: Git
-## Actual state: Kubernetes
+<figure>
+    <img src="../img/products/prometheus.png" style="width: 70%;"/>
+</figure>
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# The Process
+# Visualization
 
-## Dev writes code and pushes it to Git
-## Pipeline executes one-shot builds
-## Dev stores (CR) manifests in Git
-## GitOps detects the drift
-## GitOps converges the states
-## The CR does drift-detection and reconciliation
+<figure>
+    <img src="../img/products/grafana.png" style="width: 40%;"/>
+</figure>
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# What Do We Do In IDP?
+# Troubleshooting
 
-## Write manifests based on CRDs
-## Push manifests to Git
-## Observe the desired state
-## Observe the actual state
+<figure>
+    <img src="../img/products/troubleshoot.jpeg" style="width: 50%;"/>
+    <img src="../img/products/komodor.png" style="width: 50%;"/>
+</figure>
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# What Do We Do In IDP?
+# Troubleshooting
 
-## Everything is tailor-made to match dev needs
+<figure>
+    <img src="../img/products/komodor.png"/>
+</figure>
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# Build vs. Buy
+# Kubernetes Dashboards
 
-## **Buy**: Small company starting now
-## **Build**: Bigger company that already has assets
-## Build from scratch?
+<figure>
+    <img src="../img/products/k9s.png" style="width: 30%;"/>
+    <img src="../img/products/kubeapps.png" style="width: 20%;"/>
+    <img src="../img/products/kubesphere.png" style="width: 30%;"/>
+    <img src="../img/products/lens.png" style="width: 30%;"/>
+    <img src="../img/products/octant.png" style="width: 30%;"/>
+    <img src="../img/products/rancher.png" style="width: 30%;"/>
+</figure>
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# Build vs. Buy
+# Kubernetes Dashboards
 
-## We need tools that enable us to build opinionated platforms (IDPs)
+<figure>
+    <img src="../img/products/k9s.png" style="width: 45%;"/>
+    <img src="../img/products/rancher.png" style="width: 45%;"/>
+</figure>
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# Build vs. Buy
+# Containers
 
-## Must store changes to Git
-## Must use Git as the source of the desired state
-## Must have a universal API
-## Must be a universal control plane
+<figure>
+    <img src="../img/products/docker.png" style="width: 40%;"/>
+    <img src="../img/products/kaniko.png" style="width: 30%;"/>
+    <img src="../img/products/shipwright.png" style="width: 20%;"/>
+    <img src="../img/products/containerd.png" style="width: 70%;"/>
+</figure>
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# Today?
+# Containers
 
-## Backstage
-## Crossplane
-## Argo CD or Flux
-## Pipelines
-## Everything else
+<figure>
+    <img src="../img/products/kaniko.png" style="width: 45%;"/>
+    <img src="../img/products/containerd.png" style="width: 45%;"/>
+    <img src="../img/products/shipwright.png" style="width: 30%;"/>
+</figure>
 
 
-<!-- .slide: data-background="linear-gradient(to bottom right, rgba(25,151,181,0.9), rgba(87,185,72,0.9)), url(../img/background/why.jpg) center / cover" -->
-# Tomorrow?
+# Kubernetes
 
-## Upcoming wave
-## One of the main focuses of the industry in 2022 and beyond
-## Kubernetes evolution beyond running containers
+<figure>
+    <img src="../img/products/gke.png" style="width: 20%;"/>
+    <img src="../img/products/aws-fargate.jpeg" style="width: 30%;"/>
+    <img src="../img/products/aks.png" style="width: 30%;"/>
+    <img src="../img/products/aws-eks.png" style="width: 20%;"/>
+    <img src="../img/products/linode.png" style="width: 20%;"/>
+    <img src="../img/products/digitalocean.png" style="width: 20%;"/>
+    <img src="../img/products/civo.svg" style="width: 20%;"/>
+</figure>
+
+
+# Kubernetes
+
+<figure>
+    <img src="../img/products/gke.png" style="width: 30%;"/>
+    <img src="../img/products/civo.svg" style="width: 50%;"/>
+</figure>
