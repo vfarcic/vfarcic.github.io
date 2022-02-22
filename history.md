@@ -12,6 +12,8 @@
 
 # Conferences
 
+* [Using Kubernetes API To Manage Everything](https://fosdem.org/2022/schedule/event/using_kubernetes_api_to_manage_everything/) at [Fosdem](https://fosdem.org/2022/) (6th of February 2022)
+* [Freedom Means That Kubernetes Needs To Disappear](https://fosdem.org/2022/schedule/event/container_k8s_disappear/) at [Fosdem](https://fosdem.org/2022/) (6th of February 2022)
 * How To Apply GitOps Without Making Developers Go Crazy at [DevOpStars'22](https://geekle.us/devops) (27th of January 2022)
 * [Crossplane: Compose Infrastructure and Services Into Custom Platform APIs](https://kccncosschn21.sched.com/event/pcci) at [KubeCon China](https://www.lfasiallc.com/kubecon-cloudnativecon-open-source-summit-china/) (9th of December 2021)
 * [How To Build Your Own Heroku in 2021?](https://www.eventbrite.es/e/entradas-spainclouds-kubernetes-day-190608604467) at [Spain Cloud](https://www.spainclouds.com/) (25th of November 2021)
