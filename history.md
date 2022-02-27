@@ -12,6 +12,8 @@
 
 # Conferences
 
+* Automated Drift Detection And Reconciliation Applied To Infrastructure at [SkilUp Days: SRE](https://sessionize.com/site-reliability-engineering-skilupday) (17th of February 2022)
+* [Automated Drift Detection And Reconciliation Applied To Infrastructure](https://www.developerweek.com/conference/speakers/) at [DeveloperWeek](https://www.developerweek.com) (7th of February 2022)
 * [Using Kubernetes API To Manage Everything](https://fosdem.org/2022/schedule/event/using_kubernetes_api_to_manage_everything/) at [Fosdem](https://fosdem.org/2022/) (6th of February 2022)
 * [Freedom Means That Kubernetes Needs To Disappear](https://fosdem.org/2022/schedule/event/container_k8s_disappear/) at [Fosdem](https://fosdem.org/2022/) (6th of February 2022)
 * How To Apply GitOps Without Making Developers Go Crazy at [DevOpStars'22](https://geekle.us/devops) (27th of January 2022)
