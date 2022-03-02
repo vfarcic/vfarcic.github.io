@@ -1,4 +1,4 @@
-# How To Apply Automated Drift Detection And Reconciliation Applied To Infrastructure
+# How To Apply Automated Drift Detection And Reconciliation To Infrastructure
 
 By now, most of us have experienced the benefits of automated drift detection and reconciliation. Any application running in Kubernetes is benefiting from those. No matter what happens to our resources, Kubernetes will always try to converge the actual into the desired state without human intervention.
 
