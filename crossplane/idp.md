@@ -57,7 +57,7 @@
 ## etc.
 
 
-# Full live-cycle of everything
+# Full life-cycle of everything
 
 ## Change the desired state
 ## Perform actions
