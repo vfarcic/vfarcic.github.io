@@ -25,9 +25,9 @@ cp examples/namespaces.yaml infra/.
 ```bash
 export GIT_URL=$(git remote get-url origin)
 
-cat examples/aws-eks-gitops.yaml \
+cat examples/k8s/aws-eks-gitops.yaml \
     | sed -e "s@gitOpsRepo: .*@gitOpsRepo: $GIT_URL@g" \
-    | tee examples/aws-eks-gitops.yaml
+    | tee examples/k8s/aws-eks-gitops.yaml
 
 cat argocd/apps.yaml | sed -e "s@repoURL: .*@repoURL: $GIT_URL@g" \
     | tee argocd/apps.yaml
@@ -82,6 +82,7 @@ kubectl --namespace crossplane-system create secret generic aws-creds \
 cp crossplane-config/provider-kubernetes.yaml \
     crossplane-config/config-k8s.yaml \
     crossplane-config/config-gitops.yaml \
+    crossplane-config/provider-aws.yaml \
     crossplane-definitions/.
 
 cp crossplane-config/provider-config-aws.yaml \
@@ -131,7 +132,7 @@ echo http://argo-cd.$INGRESS_HOST.nip.io
 # Open it in a browser
 # User `admin`, password `admin123`
 
-cp examples/aws-eks-gitops-no-claim.yaml infra/aws-eks.yaml
+cp examples/k8s/aws-eks-gitops-no-claim.yaml infra/aws-eks.yaml
 
 # Modify `spec.parameters.gitOpsRepo` in `infra/aws-eks.yaml`
 ```

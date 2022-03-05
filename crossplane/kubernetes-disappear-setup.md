@@ -41,9 +41,9 @@ export GIT_URL=$(git remote get-url origin)
 ## Setup Cluster
 
 ```bash
-cat examples/aws-eks-gitops.yaml \
+cat examples/k8s/aws-eks-gitops.yaml \
     | sed -e "s@gitOpsRepo: .*@gitOpsRepo: $GIT_URL@g" \
-    | tee examples/aws-eks-gitops.yaml
+    | tee examples/k8s/aws-eks-gitops.yaml
 
 cat argocd/apps.yaml \
     | sed -e "s@repoURL: .*@repoURL: $GIT_URL@g" \
