@@ -130,3 +130,16 @@ cat packages/sql/local-k8s.yaml
 
 cat packages/sql/aws.yaml
 ```
+
+
+## Monitoring
+
+```bash
+cat examples/monitoring/prom-loki-no-claim.yaml
+
+cp examples/monitoring/prom-loki-no-claim.yaml apps/.
+
+git add . && git commit -m "Monitoring" && git push
+
+kubectl --kubeconfig kubeconfig.yaml get monitoring
+```
