@@ -12,6 +12,7 @@
 
 # Conferences
 
+* DevOps Roadmap 2022 at [Dawn Of Cloud](https://www.linkedin.com/events/technote-dawnofthecloud6894940524034564096/) (5th of March 2022)
 * Automated Drift Detection And Reconciliation Applied To Infrastructure at [SkilUp Days: SRE](https://sessionize.com/site-reliability-engineering-skilupday) (17th of February 2022)
 * [Automated Drift Detection And Reconciliation Applied To Infrastructure](https://www.developerweek.com/conference/speakers/) at [DeveloperWeek](https://www.developerweek.com) (7th of February 2022)
 * [Using Kubernetes API To Manage Everything](https://fosdem.org/2022/schedule/event/using_kubernetes_api_to_manage_everything/) at [Fosdem](https://fosdem.org/2022/) (6th of February 2022)
@@ -157,6 +158,8 @@
 
 # Meetups / Webinars
 
+* [Load testing for DevOps](https://youtu.be/xUlNdsr6y_E) at [k6](https://www.youtube.com/channel/UC8ryLdIbmkVJq4Zt613oZPQ) (11th of March 2022)
+* Round table - Cloud security in 2022 at [CloudWize](https://hopin.com/events/round-table-cloud-security-in-2022/registration) (2nd of March 2022)
 * [Using GitOps for Infrastructure and Applications with Crossplane & Argo CD](https://youtu.be/pdECNa80pfk) at [Codefresh](https://www.youtube.com/channel/UC9r94SY6BqN05kXPIHsDXPg) (18th of January 2022)
 * [How to Build-up DevOps Toolstack?](https://www.eventbrite.co.uk/e/devopsx-talks-8-how-to-build-up-devops-toolstack-tickets-157589471351) at [DevOpsX Talks](https://continium.io/en/devops-events/devopsx-talks/) (23nd of June 2021)
 * [Developers do not need Kubernetes](https://www.meetup.com/Cloud-Native-London/events/274954127/) at [Cloud Native London](https://www.meetup.com/Cloud-Native-London) (2nd of June 2021)
@@ -202,6 +205,10 @@
 * Specification by Example at Universitat Politecnica de Barcelona (UPC) (28th of April 2014)
 * BDD Workshop at Barcelona Software Craftsmanship (4th of March 2014)
 * Specification by Example at Barcelona Software Craftsmanship (4th of February 2014)
+
+## Articles
+
+* [The Dev-X Project: Featuring Viktor Farcic](https://livecycle.io/blogs/the-dev-x-project-viktor-farcic/) at [Livecycle](https://livecycle.io) (10th of March 2022)
 
 ## Slides
 
