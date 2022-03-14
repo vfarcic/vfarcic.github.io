@@ -79,8 +79,7 @@ kubectl --namespace crossplane-system create secret generic aws-creds \
 ## Setup Crossplane
 
 ```bash
-cp crossplane-config/provider-kubernetes.yaml \
-    crossplane-config/config-k8s.yaml \
+cp crossplane-config/config-k8s.yaml \
     crossplane-config/config-gitops.yaml \
     crossplane-config/provider-aws.yaml crossplane-definitions/.
 

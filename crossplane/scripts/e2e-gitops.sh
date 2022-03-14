@@ -72,8 +72,7 @@ kubectl --namespace crossplane-system \
 # Setup Crossplane #
 ####################
 
-cp crossplane-config/provider-kubernetes.yaml \
-    crossplane-config/config-k8s.yaml \
+cp crossplane-config/config-k8s.yaml \
     crossplane-config/config-gitops.yaml \
     crossplane-definitions/.
 
