@@ -132,14 +132,29 @@ cat packages/sql/aws.yaml
 ```
 
 
-## Monitoring
+## Monitoring
 
 ```bash
-cat examples/monitoring/prom-loki-no-claim.yaml
+kubectl --kubeconfig kubeconfig.yaml --namespace dev get all,ingresses
+```
 
-cp examples/monitoring/prom-loki-no-claim.yaml apps/.
+
+## Monitoring
+
+```bash
+cat tmp/prom-loki-no-claim.yaml
+
+cp tmp/prom-loki-no-claim.yaml apps/.
 
 git add . && git commit -m "Monitoring" && git push
 
 kubectl --kubeconfig kubeconfig.yaml get monitoring
+
+kubectl --kubeconfig kubeconfig.yaml --namespace monitoring get all,ingresses,configmaps,secrets
+
+echo "http://dashboard.$INGRESS_HOST.nip.io"
+
+kubectl --kubeconfig kubeconfig.yaml --namespace monitoring \
+    get secret monitoring-grafana --output jsonpath="{.data.admin-password}" \
+    | base64 --decode
 ```

@@ -22,6 +22,9 @@ kubectl --kubeconfig kubeconfig.yaml get managed
 ## Cleanup
 
 ```bash
+kubectl --kubeconfig kubeconfig.yaml --namespace ingress-nginx \
+    delete service ingress-nginx-controller
+
 rm infra/aws-eks.yaml
 
 git add . && git commit -m "Destroy everything" && git push
