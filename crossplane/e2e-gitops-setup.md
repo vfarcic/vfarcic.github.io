@@ -159,8 +159,14 @@ kubectl get releases
 kubectl --namespace crossplane-system \
     get secret a-team-eks-no-claim-cluster \
     --output jsonpath="{.data.kubeconfig}" | base64 -d >kubeconfig.yaml
+```
 
-export INGRESS_HOSTNAME=$(kubectl --kubeconfig kubeconfig.yaml --namespace ingress-nginx \
+
+## Get LB IP
+
+```bash
+export INGRESS_HOSTNAME=$(kubectl --kubeconfig kubeconfig.yaml \
+    --namespace ingress-nginx \
     get svc a-team-eks-no-claim-ingress-ingress-nginx-controller \
     --output jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 

@@ -52,7 +52,7 @@ git commit -m "My cluster"
 
 git push
 
-kubectl get managed
+kubectl get nodegroups
 ```
 
 
@@ -135,13 +135,6 @@ cat packages/sql/aws.yaml
 ## Monitoring
 
 ```bash
-kubectl --kubeconfig kubeconfig.yaml --namespace dev get all,ingresses
-```
-
-
-## Monitoring
-
-```bash
 cat tmp/prom-loki-no-claim.yaml
 
 cp tmp/prom-loki-no-claim.yaml apps/.
@@ -151,7 +144,12 @@ git add . && git commit -m "Monitoring" && git push
 kubectl --kubeconfig kubeconfig.yaml get monitoring
 
 kubectl --kubeconfig kubeconfig.yaml --namespace monitoring get all,ingresses,configmaps,secrets
+```
 
+
+## Monitoring
+
+```bash
 echo "http://dashboard.$INGRESS_HOST.nip.io"
 
 kubectl --kubeconfig kubeconfig.yaml --namespace monitoring \
