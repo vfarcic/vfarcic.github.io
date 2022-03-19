@@ -158,6 +158,7 @@
 
 # Meetups / Webinars
 
+* [How to make Kubernetes clusters production-ready with Crossplane](https://youtu.be/cPVrCNhHo7Q) at [k6](https://www.youtube.com/channel/UC8ryLdIbmkVJq4Zt613oZPQ) (18th of March 2022)
 * [Load testing for DevOps](https://youtu.be/xUlNdsr6y_E) at [k6](https://www.youtube.com/channel/UC8ryLdIbmkVJq4Zt613oZPQ) (11th of March 2022)
 * Round table - Cloud security in 2022 at [CloudWize](https://hopin.com/events/round-table-cloud-security-in-2022/registration) (2nd of March 2022)
 * [Using GitOps for Infrastructure and Applications with Crossplane & Argo CD](https://youtu.be/pdECNa80pfk) at [Codefresh](https://www.youtube.com/channel/UC9r94SY6BqN05kXPIHsDXPg) (18th of January 2022)
