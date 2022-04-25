@@ -9,7 +9,7 @@
 
 <figure style="width: 80%; margin-left:100px;float: left;">
     <a href="https://upbound.io">
-        <img src="../img/upbound.png"/>
+        <img src="../img/products/upbound.png"/>
     </a>
     <a href="https://upbound.io">upbound.io</a>
 </figure>

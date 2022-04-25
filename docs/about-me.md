@@ -7,7 +7,7 @@
 
 <!-- .slide: class="center" -->
 
-<p style="display:inline-block"><img src="../img/upbound.png" style="background-color: black;"></p>
+<p style="display:inline-block"><img src="../img/products/upbound.png" style="background-color: black;"></p>
 
 
 <!-- .slide: class="center" -->
