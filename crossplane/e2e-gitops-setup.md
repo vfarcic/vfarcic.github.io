@@ -54,7 +54,10 @@ cat examples/crossplane-provider-configs.yaml \
 
 ```bash
 kubectl apply \
-    --filename https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.17.2/controller.yaml
+    --filename https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.17.5/controller.yaml
+
+# Install `kubeseal` from
+#   https://github.com/bitnami-labs/sealed-secrets/releases
 ```
 
 
@@ -76,14 +79,30 @@ kubectl --namespace crossplane-system create secret generic aws-creds \
 ```
 
 
-## Setup Crossplane
+## Setup Civo
+
+```bash
+# Replace `[...]` with your Civo token
+export CIVO_TOKEN=[...]
+
+kubectl --namespace crossplane-system create secret generic civo-creds \
+    --from-literal credentials=$CIVO_TOKEN \
+    --output json --dry-run=client \
+    | kubeseal --format yaml \
+    | tee crossplane-provider-configs/civo-creds.yaml
+```
+
+
+## Setup Providers
 
 ```bash
 cp crossplane-config/config-k8s.yaml \
     crossplane-config/config-gitops.yaml \
-    crossplane-config/provider-aws.yaml crossplane-definitions/.
+    crossplane-config/provider-aws.yaml \
+    crossplane-config/provider-civo.yaml crossplane-definitions/.
 
 cp crossplane-config/provider-config-aws.yaml \
+    crossplane-config/provider-config-civo.yaml \
     crossplane-provider-configs/.
 
 cp examples/crossplane.yaml examples/crossplane-definitions.yaml \
@@ -91,7 +110,7 @@ cp examples/crossplane.yaml examples/crossplane-definitions.yaml \
 ```
 
 
-## Setup Crossplane
+## To Git!
 
 ```bash
 git add .
@@ -117,74 +136,4 @@ helm upgrade --install argocd argo/argo-cd \
 kubectl apply --filename argocd/project.yaml
 
 kubectl apply --filename argocd/infra.yaml
-```
-
-
-## Create A Cluster
-
-```bash
-echo http://argo-cd.$INGRESS_HOST.nip.io
-
-# Open it in a browser
-# User `admin`, password `admin123`
-
-cp examples/k8s/aws-eks-gitops-no-claim.yaml infra/aws-eks.yaml
-
-# Modify `spec.parameters.gitOpsRepo` in `infra/aws-eks.yaml`
-```
-
-
-## Create A Cluster
-```bash
-git add .
-
-git commit -m "My cluster"
-
-git push
-```
-
-
-## Create A Cluster
-
-```bash
-kubectl get releases
-
-# Wait until all releases are synced
-```
-
-
-## Get LB IP
-
-```bash
-kubectl --namespace crossplane-system \
-    get secret a-team-eks-no-claim-cluster \
-    --output jsonpath="{.data.kubeconfig}" | base64 -d >kubeconfig.yaml
-```
-
-
-## Get LB IP
-
-```bash
-export INGRESS_HOSTNAME=$(kubectl --kubeconfig kubeconfig.yaml \
-    --namespace ingress-nginx \
-    get svc a-team-eks-no-claim-ingress-ingress-nginx-controller \
-    --output jsonpath="{.status.loadBalancer.ingress[0].hostname}")
-
-export INGRESS_HOST=$(dig +short $INGRESS_HOSTNAME)
-
-echo $INGRESS_HOST
-
-# Repeat the `export` commands if the output is empty
-# If the output contains more than one IP, wait for a while longer, and repeat the `export` commands.
-# If the output continues having more than one IP, choose one of them and execute `export INGRESS_HOST=[...]` with `[...]` being the selected IP.
-```
-
-
-## Set Hosts
-
-```bash
-mkdir -p tmp
-
-cat examples/monitoring/prom-loki-no-claim.yaml | sed -e "s@127.0.0.1@$INGRESS_HOST@g" \
-    | tee tmp/prom-loki-no-claim.yaml
 ```

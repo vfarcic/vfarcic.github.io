@@ -11,7 +11,7 @@ rm apps-dev/*.yaml
 
 git add . && git commit -m "Destroy apps" && git push
 
-kubectl --kubeconfig kubeconfig.yaml get managed
+kubectl --kubeconfig kubeconfig-eks.yaml get managed
 
 # Repeat the previous command until all the managed resources are removed
 #   (except `object` and `release` resources)
@@ -23,16 +23,17 @@ kubectl --kubeconfig kubeconfig.yaml get managed
 ## Cleanup
 
 ```bash
-kubectl --kubeconfig kubeconfig.yaml --namespace ingress-nginx \
+kubectl --kubeconfig kubeconfig-eks.yaml --namespace ingress-nginx \
     delete service a-team-eks-no-claim-ingress-ingress-nginx-controller
 
-rm infra/aws-eks.yaml
+rm infra/civo.yaml infra/aws-eks.yaml
 
 git add . && git commit -m "Destroy everything" && git push
 
 kubectl get managed
 
-# Repeat the previous command until all the managed resources are removed (except `object` and `release` resources)
+# Repeat the previous command until all the managed resources are removed
+#   (except `object` and `release` resources)
 ```
 
 

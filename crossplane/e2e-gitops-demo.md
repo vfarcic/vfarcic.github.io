@@ -1,16 +1,60 @@
 <!-- .slide: class="center dark" -->
 <!-- .slide: data-background="../img/background/hands-on.jpg" -->
-# Demo
+# Workshop
 
 <div class="label">Hands-on Time</div>
 
 
-## What Happened?
+## GitOps
 
 ```bash
-cat infra/aws-eks.yaml
+echo http://argo-cd.$INGRESS_HOST.nip.io
+
+# Open it in a browser
+# User `admin`, password `admin123`
+```
+
+
+## Create Clusters
+
+```bash
+cat examples/k8s/civo-no-claim.yaml
+
+cat examples/k8s/aws-eks-gitops-no-claim.yaml
+
+cp examples/k8s/civo-no-claim.yaml infra/civo.yaml
+
+cp examples/k8s/aws-eks-gitops-no-claim.yaml infra/aws-eks.yaml
+
+# Modify `spec.parameters.gitOpsRepo` in `infra/aws-eks.yaml`
+```
+
+
+## Create Clusters
+
+```bash
+git add .
+
+git commit -m "My cluster"
+
+git push
 
 kubectl get managed
+
+# Wait until all releases are synced
+```
+
+
+## Use
+
+```bash
+kubectl get civokubernetes
+
+kubectl --namespace crossplane-system get secret cluster-civo-a-team-ck \
+    --output jsonpath="{.data.kubeconfig}" \
+    | base64 -d >kubeconfig-civo.yaml
+
+kubectl --kubeconfig kubeconfig-civo.yaml get nodes
 ```
 
 
@@ -20,6 +64,8 @@ kubectl get managed
 cat packages/k8s/definition.yaml
 
 cat packages/k8s/eks.yaml
+
+ls -1 packages/k8s
 
 cat crossplane-config/config-k8s.yaml
 ```
@@ -35,16 +81,25 @@ cat packages/gitops/argo-cd.yaml
 cat crossplane-config/config-gitops.yaml
 
 cat infra/aws-eks.yaml
+```
+
+
+## What Happened?
+
+```bash
+cat infra/civo.yaml
+
+cat infra/aws-eks.yaml
 
 kubectl get managed
 ```
 
 
-## Upgrade
+## Update
 
 ```bash
-cat infra/aws-eks.yaml | sed -e "s@minNodeCount: .*@minNodeCount: 5@g" \
-    | tee infra/aws-eks.yaml
+cat infra/civo.yaml | sed -e "s@minNodeCount: .*@minNodeCount: 3@g" \
+    | tee infra/civo.yaml
 
 git add .
 
@@ -52,30 +107,42 @@ git commit -m "My cluster"
 
 git push
 
-kubectl get nodegroups
+kubectl --kubeconfig kubeconfig-civo.yaml get nodes
 ```
 
 
-## Use
+## Secrets
 
 ```bash
+kubectl get cluster.eks.aws.crossplane.io
+
+# Wait until the cluster is `READY`
+
 kubectl --namespace crossplane-system \
     get secret a-team-eks-no-claim-cluster \
-    --output jsonpath="{.data.kubeconfig}" | base64 -d >kubeconfig.yaml
+    --output jsonpath="{.data.kubeconfig}" | base64 -d >kubeconfig-eks.yaml
 
-kubectl --kubeconfig kubeconfig.yaml --namespace crossplane-system \
+# EKS creds are temporary!
+
+kubectl --kubeconfig kubeconfig-eks.yaml --namespace crossplane-system \
     create secret generic aws-creds --from-file creds=./aws-creds.conf
+```
 
-kubectl --kubeconfig kubeconfig.yaml get namespaces
 
-kubectl --kubeconfig kubeconfig.yaml --namespace argocd get applications
+## Production-Ready
+
+```bash
+kubectl --kubeconfig kubeconfig-eks.yaml get namespaces
+
+kubectl --kubeconfig kubeconfig-eks.yaml --namespace argocd \
+    get applications
 ```
 
 
 ## Pretty Colors
 
 ```bash
-kubectl --kubeconfig kubeconfig.yaml --namespace argocd port-forward \
+kubectl --kubeconfig kubeconfig-eks.yaml --namespace argocd port-forward \
     svc/a-team-gitops-no-claim-argocd-server 8080:443 &
 
 # Open http://localhost:8080 in a browser
@@ -147,10 +214,38 @@ kubectl --kubeconfig kubeconfig.yaml --namespace monitoring get all,ingresses,co
 ```
 
 
+## Get LB IP
+
+```bash
+export EKS_INGRESS_HOSTNAME=$(kubectl --kubeconfig kubeconfig-eks.yaml \
+    --namespace ingress-nginx \
+    get svc a-team-eks-no-claim-ingress-ingress-nginx-controller \
+    --output jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+
+export EKS_INGRESS_HOST=$(dig +short $EKS_INGRESS_HOSTNAME)
+
+echo $EKS_INGRESS_HOST
+
+# Repeat the `export` commands if the output is empty
+# If the output contains more than one IP, wait for a while longer, and repeat the `export` commands.
+# If the output continues having more than one IP, choose one of them and execute `export EKS_INGRESS_HOST=[...]` with `[...]` being the selected IP.
+```
+
+
+## Set Hosts
+
+```bash
+mkdir -p tmp
+
+cat examples/monitoring/prom-loki-no-claim.yaml | sed -e "s@127.0.0.1@$EKS_INGRESS_HOST@g" \
+    | tee tmp/prom-loki-no-claim.yaml
+```
+
+
 ## Monitoring
 
 ```bash
-echo "http://dashboard.$INGRESS_HOST.nip.io"
+echo "http://dashboard.$EKS_INGRESS_HOST.nip.io"
 
 kubectl --kubeconfig kubeconfig.yaml --namespace monitoring \
     get secret monitoring-grafana --output jsonpath="{.data.admin-password}" \
