@@ -12,6 +12,7 @@
 
 # Conferences
 
+* [The Only Thing That Matters In DevOps Is...](https://www.conf42.com/Cloud_Native_2022_Viktor_Farcic_only_thing_that_matters_in_devops) at [Conf42](https://www.conf42.com/cloud2022) (28th of April, 2022)
 * DevOps Roadmap 2022 at [Dawn Of Cloud](https://www.linkedin.com/events/technote-dawnofthecloud6894940524034564096/) (5th of March 2022)
 * Automated Drift Detection And Reconciliation Applied To Infrastructure at [SkilUp Days: SRE](https://sessionize.com/site-reliability-engineering-skilupday) (17th of February 2022)
 * [Automated Drift Detection And Reconciliation Applied To Infrastructure](https://www.developerweek.com/conference/speakers/) at [DeveloperWeek](https://www.developerweek.com) (7th of February 2022)
