@@ -159,7 +159,7 @@ cp examples/app/backend-local-k8s-postgresql-no-claim.yaml apps-dev/.
 
 git add . && git commit -m "Adding apps to dev" && git push
 
-kubectl --kubeconfig kubeconfig.yaml get apps,sqls
+kubectl --kubeconfig kubeconfig-eks.yaml get apps,sqls
 ```
 
 
@@ -172,19 +172,19 @@ cp examples/app/backend-aws-postgresql-no-claim.yaml apps/.
 
 git add . && git commit -m "Adding dot" && git push
 
-kubectl --kubeconfig kubeconfig.yaml get apps,sqls
+kubectl --kubeconfig kubeconfig-eks.yaml get apps,sqls
 ```
 
 
 ## Ops
 
 ```bash
-kubectl --kubeconfig kubeconfig.yaml --namespace dev get all,ingresses
+kubectl --kubeconfig kubeconfig-eks.yaml --namespace dev get all,ingresses
 
-kubectl --kubeconfig kubeconfig.yaml --namespace production \
+kubectl --kubeconfig kubeconfig-eks.yaml --namespace production \
     get all,ingresses
 
-kubectl --kubeconfig kubeconfig.yaml get managed
+kubectl --kubeconfig kubeconfig-eks.yaml get managed
 ```
 
 
