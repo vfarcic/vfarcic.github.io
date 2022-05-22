@@ -1,5 +1,5 @@
 <!-- .slide: class="center" -->
-# The Only Thing That Matters In DevOps Is...
+# What Matters In DevOps Is...
 
 ## [Viktor Farcic](http://technologyconversations.com/about/)
 

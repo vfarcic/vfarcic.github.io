@@ -1,35 +1,71 @@
 # A long time ago...
 
-## ... baremetal servers in our own datacenters
+
+## Baremetal servers in our own datacenters
 
 
-# Then ...
+# Then...
 
-## ... progressed towards VMs
-## ... we got services, APIs, and control planes
-## ... and moved into Clouds
+
+## Virtual Machines
+## Services
+## API
+## Control planes
+## Moved into Clouds
 
 
 # Today...
 
-## ... we're raising above clouds
+
+## We're raising above clouds
 
 
 # Baremetal On-Prem
 
-## Static infrastructure
-## Patience is a virtue
-## No services, no APIs, no control planes
-## Mostly SSH
-## One server at a time
+
+<!-- .slide: data-background="img/idp-baremetal-01.jpg" data-background-size="cover" -->
 
 
-# VMs
+<!-- .slide: data-background="img/idp-baremetal-02.jpg" data-background-size="cover" -->
 
-## Create servers on a whim
-## Still (mostly) mutable
-## Easier for ops...
-## ...the same for everyone else
+
+<!-- .slide: data-background="img/idp-baremetal-03.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-baremetal-04.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-baremetal-05.jpg" data-background-size="cover" -->
+
+
+# Baremetal On-Prem
+
+* Static infrastructure
+* Patience is a virtue
+* No services, no APIs
+* No control planes
+* Mostly SSH
+* One server at a time
+
+
+# Virtual Machines
+
+
+<!-- .slide: data-background="img/idp-vm-01.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-vm-02.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-vm-03.jpg" data-background-size="cover" -->
+
+
+# Virtual Machines
+
+* Create servers on a whim
+* Still (mostly) mutable
+* Easier for ops...
+* ...the same for everyone else
 
 
 # Moving To Cloud
@@ -37,9 +73,10 @@
 
 # Cloud Before
 
-## APIs, control planes
-## VMs and storage as services
-## Dynamic
+* APIs
+* Control planes
+* VMs and storage as services
+* Dynamic
 
 
 # Cloud Before
@@ -50,43 +87,74 @@
 # Cloud Before
 
 ## Now we got (better)...
-## ... Services
-## ... APIs
-## ... Control planes
+
+* Services
+* APIs
+* Control planes
 
 
 # Cloud Before
 
-## Could we do it outselves?
-## Was it worth it doing it ourselves?
+* Could we do it outselves?
+* Was it worth it doing it ourselves?
 
 
 # Cloud Today
 
-## Services for everything
-## Services behind APIs
-## Managed by control planes
+
+<!-- .slide: data-background="img/idp-cloud-01.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-cloud-02.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-cloud-03.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-cloud-04.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-cloud-05.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-cloud-06.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-cloud-07.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-cloud-08.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-cloud-09.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-cloud-10.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-cloud-11.jpg" data-background-size="cover" -->
+
+
+# Cloud Today
+
+* Services for everything
+* Services behind APIs
+* Managed by control planes
 
 
 # Multi-Cloud
 
 
-![](../img/products/aws.png)
+<!-- .slide: data-background="img/idp-multi-cloud-01.jpg" data-background-size="cover" -->
 
 
-![](../img/products/azure.png)
+<!-- .slide: data-background="img/idp-multi-cloud-02.jpg" data-background-size="cover" -->
 
 
-![](../img/products/google-cloud-platform.png)
+<!-- .slide: data-background="img/idp-multi-cloud-03.jpg" data-background-size="cover" -->
 
 
-![](../img/products/alibaba.png)
-
-
-![](../img/products/linode.png)
-
-
-<img src="../img/products/digitalocean.png" style="width: 70%;">
+<!-- .slide: data-background="img/idp-multi-cloud-04.jpg" data-background-size="cover" -->
 
 
 # (Almost) Everyone ...
@@ -94,51 +162,27 @@
 ## ... Is Multi-Cloud
 
 
-# Really?
+# How Does Cloud Work?
 
 
-# Using Any Of Those?
+<!-- .slide: data-background="img/idp-cloud-how-01.jpg" data-background-size="cover" -->
 
 
-![](../img/products/github.png)
+<!-- .slide: data-background="img/idp-cloud-how-02.jpg" data-background-size="cover" -->
 
 
-![](../img/products/elastic.png)
+<!-- .slide: data-background="img/idp-cloud-how-03.jpg" data-background-size="cover" -->
 
 
-<img src="../img/products/datadog.png" style="width: 50%;">
-
-
-<img src="../img/products/grafana.png" style="width: 50%;">
-
-
-![](../img/products/snyk.png)
-
-
-![](../img/products/hashicorp.png)
-
-
-# (Almost) Everyone Is Multi-Cloud
-
-## Likely not using all of those
-
-
-# (Almost) Everyone Is Multi-Cloud
-
-## But (almost) surely using more than one
-
-
-# (Almost) Everyone Is Multi-Cloud
-
-## You are multi-cloud!
+<!-- .slide: data-background="img/idp-cloud-how-04.jpg" data-background-size="cover" -->
 
 
 # How Does Cloud Work?
 
-## UI/CLI > API > Control Plane > Something
+### UI/CLI > API > Control Plane > Something
 
 
-# Problems?
+# Problems? TODO: Continue
 
 ## Fragmentation
 ## Too many UIs, CLIs, and APIs
