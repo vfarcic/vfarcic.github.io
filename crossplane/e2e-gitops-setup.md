@@ -1,4 +1,3 @@
-<!-- .slide: class="center dark" -->
 <!-- .slide: data-background="../img/background/hands-on.jpg" -->
 # Setup
 
@@ -29,10 +28,12 @@ cat examples/k8s/aws-eks-gitops.yaml \
     | sed -e "s@gitOpsRepo: .*@gitOpsRepo: $GIT_URL@g" \
     | tee examples/k8s/aws-eks-gitops.yaml
 
-cat argocd/apps.yaml | sed -e "s@repoURL: .*@repoURL: $GIT_URL@g" \
+cat argocd/apps.yaml \
+    | sed -e "s@repoURL: .*@repoURL: $GIT_URL@g" \
     | tee argocd/apps.yaml
 
-cat argocd/infra.yaml | sed -e "s@repoURL: .*@repoURL: $GIT_URL@g" \
+cat argocd/infra.yaml \
+    | sed -e "s@repoURL: .*@repoURL: $GIT_URL@g" \
     | tee argocd/infra.yaml
 ```
 
@@ -64,16 +65,19 @@ kubectl apply \
 ## Setup AWS
 
 ```bash
-export AWS_ACCESS_KEY_ID=[...] # Replace `[...]` with your access key ID`
+# Replace `[...]` with your access key ID`
+export AWS_ACCESS_KEY_ID=[...]
 
-export AWS_SECRET_ACCESS_KEY=[...] # Replace `[...]` with your secret access key
+# Replace `[...]` with your secret access key
+export AWS_SECRET_ACCESS_KEY=[...]
 
 echo "[default]
 aws_access_key_id = $AWS_ACCESS_KEY_ID
 aws_secret_access_key = $AWS_SECRET_ACCESS_KEY" >aws-creds.conf
 
-kubectl --namespace crossplane-system create secret generic aws-creds \
-    --from-file creds=./aws-creds.conf --output json --dry-run=client \
+kubectl --namespace crossplane-system create secret \
+    generic aws-creds --from-file creds=./aws-creds.conf \
+    --output json --dry-run=client \
     | kubeseal --format yaml \
     | tee crossplane-provider-configs/aws-creds.yaml
 ```
@@ -85,8 +89,8 @@ kubectl --namespace crossplane-system create secret generic aws-creds \
 # Replace `[...]` with your Civo token
 export CIVO_TOKEN=[...]
 
-kubectl --namespace crossplane-system create secret generic civo-creds \
-    --from-literal credentials=$CIVO_TOKEN \
+kubectl --namespace crossplane-system create secret \
+    generic civo-creds --from-literal credentials=$CIVO_TOKEN \
     --output json --dry-run=client \
     | kubeseal --format yaml \
     | tee crossplane-provider-configs/civo-creds.yaml
@@ -99,14 +103,18 @@ kubectl --namespace crossplane-system create secret generic civo-creds \
 cp crossplane-config/config-k8s.yaml \
     crossplane-config/config-gitops.yaml \
     crossplane-config/provider-aws.yaml \
-    crossplane-config/provider-civo.yaml crossplane-definitions/.
+    crossplane-config/provider-civo.yaml \
+    crossplane-definitions/.
 
 cp crossplane-config/provider-config-aws.yaml \
     crossplane-config/provider-config-civo.yaml \
     crossplane-provider-configs/.
 
-cp examples/crossplane.yaml examples/crossplane-definitions.yaml \
+cp examples/crossplane.yaml \
+    examples/crossplane-definitions.yaml \
     examples/crossplane-provider-configs.yaml infra/.
+
+cp examples/k8s/aws-eks-gitops-no-claim.yaml infra/aws-eks.yaml
 ```
 
 

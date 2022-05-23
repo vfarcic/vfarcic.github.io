@@ -1,5 +1,3 @@
-<!-- .slide: class="center" -->
-<!-- .slide: data-background="data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/cleanup.jpg) center / cover" -->
 ## Cleanup
 
 ```bash
@@ -13,18 +11,17 @@ git add . && git commit -m "Destroy apps" && git push
 
 kubectl --kubeconfig kubeconfig-eks.yaml get managed
 
-# Repeat the previous command until all the managed resources are removed
-#   (except `object` and `release` resources)
+# Repeat the previous command until all the managed resources
+#   are removed (except `object` and `release` resources)
 ```
 
 
-<!-- .slide: class="center" -->
-<!-- .slide: data-background="data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/cleanup.jpg) center / cover" -->
 ## Cleanup
 
 ```bash
-kubectl --kubeconfig kubeconfig-eks.yaml --namespace ingress-nginx \
-    delete service a-team-eks-no-claim-ingress-ingress-nginx-controller
+kubectl --kubeconfig kubeconfig-eks.yaml \
+    --namespace ingress-nginx delete service \
+    a-team-eks-no-claim-ingress-ingress-nginx-controller
 
 rm infra/civo.yaml infra/aws-eks.yaml
 
@@ -32,13 +29,11 @@ git add . && git commit -m "Destroy everything" && git push
 
 kubectl get managed
 
-# Repeat the previous command until all the managed resources are removed
-#   (except `object` and `release` resources)
+# Repeat the previous command until all the managed resources
+#   are removed (except `object` and `release` resources)
 ```
 
 
-<!-- .slide: class="center" -->
-<!-- .slide: data-background="data-background="linear-gradient(to bottom right, rgba(25,151,181,0.8), rgba(87,185,72,0.8)), url(../img/background/cleanup.jpg) center / cover" -->
 ## Cleanup
 
 ```bash

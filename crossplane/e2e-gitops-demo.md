@@ -18,30 +18,28 @@ echo http://argo-cd.$INGRESS_HOST.nip.io
 ## Create Clusters
 
 ```bash
-cat examples/k8s/civo-no-claim.yaml
-
-cat examples/k8s/aws-eks-gitops-no-claim.yaml
-
 cp examples/k8s/civo-no-claim.yaml infra/civo.yaml
 
 cp examples/k8s/aws-eks-gitops-no-claim.yaml infra/aws-eks.yaml
 
 # Modify `spec.parameters.gitOpsRepo` in `infra/aws-eks.yaml`
+
+git add .
+
+git commit -m "My cluster"
+
+git push
 ```
 
 
 ## Create Clusters
 
 ```bash
-git add .
+cat examples/k8s/civo-no-claim.yaml
 
-git commit -m "My cluster"
-
-git push
+cat examples/k8s/aws-eks-gitops-no-claim.yaml
 
 kubectl get managed
-
-# Wait until all releases are synced
 ```
 
 
@@ -50,7 +48,8 @@ kubectl get managed
 ```bash
 kubectl get civokubernetes
 
-kubectl --namespace crossplane-system get secret cluster-civo-a-team-ck \
+kubectl --namespace crossplane-system  \
+    get secret cluster-civo-a-team-ck \
     --output jsonpath="{.data.kubeconfig}" \
     | base64 -d >kubeconfig-civo.yaml
 
@@ -79,8 +78,6 @@ cat packages/gitops/definition.yaml
 cat packages/gitops/argo-cd.yaml
 
 cat crossplane-config/config-gitops.yaml
-
-cat infra/aws-eks.yaml
 ```
 
 
@@ -98,7 +95,8 @@ kubectl get managed
 ## Update
 
 ```bash
-cat infra/civo.yaml | sed -e "s@minNodeCount: .*@minNodeCount: 3@g" \
+cat infra/civo.yaml \
+    | sed -e "s@minNodeCount: .*@minNodeCount: 3@g" \
     | tee infra/civo.yaml
 
 git add .

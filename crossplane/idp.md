@@ -1,12 +1,20 @@
 # DevOps
 
-### Containers, Kubernetes, cloud,
-### GitOps, CI/CD, logging,
-### monitoring, IaC, troubleshooting,
-### security, service mesh,
-### ...
 
-## Ops tools
+# DevOps
+
+* Containers, Kubernetes
+* Cloud
+* CI/CD, GitOps
+* Monitoring, logging, troubleshooting
+* IaC
+* Security
+* Service mesh
+* ...
+
+
+## Those are
+# Ops tools
 
 
 # Developers
@@ -17,55 +25,57 @@
 
 # DevOps
 
-## Enabling devs to be self-sufficient
-## Shift left
-## NOT "now you do it!"
+* Enabling devs to be self-sufficient
+* Shift left
+* NOT "now you do it!"
 
 
 # DevOps
 
-## Creating services that use ops tools...
-## ...and enable devs
+* Creating services that use ops tools...
+* ...and enable devs
 
 
-# Internal Developer Platform (IDP)
+## Internal Developer Platform
+# IDP
 
-## **Internal**: Meant for internal usage
-## **Developer**: App developer is the customer
-## **Platform**: Where it all comes together
+* **Internal**: Meant for internal usage
+* **Developer**: App developer is the customer
+* **Platform**: Where it all comes together
 
 
 # IDP
 
-## A layer on top of the tech and tooling
-## Shift-left (for real)
-## What Ops/SREs/DevOps teams create to enable developer self-service.
+* A layer on top of the tech and tooling
+* Shift-left (for real)
+* What Ops/SREs/DevOps teams create to enable developer self-service.
+
+
+## Why Self-Service?
+# Free ops to do
+# what matters
 
 
 # Why Self-Service?
 
-## Free ops to do what matters
+* Increase productivity
+* Reduce lean-time
+* Increase deployment frequency
+* Decrease mean time to repair (MTTR)
+* Decrease change failure rate (CFR)
+* etc.
 
 
-# Why Self-Service?
+## Full life-cycle of
+# everything
 
-## Increase productivity
-## Reduce lean-time
-## Increase deployment frequency
-## Decrease mean time to repair (MTTR)
-## Decrease change failure rate (CFR)
-## etc.
-
-
-# Full life-cycle of everything
-
-## Change the desired state
-## Perform actions
-## Converge the actual into the desired state
-## Observe
+* Change the desired state
+* Perform actions
+* Converge the actual into the desired state
+* Observe
 
 
-<!-- .slide: data-background="url(img/diag-01.png) center / cover" -->
+<!-- .slide: data-background="img/diag-01.png" data-background-size="contain" -->
 
 
 # The Tools
@@ -73,92 +83,94 @@
 
 # App And Infra Specs
 
-## Kubernetes CRDs
+* Kubernetes CRDs
 
 
 # Pipelines
 
-## Preferably those with k8s CRs
-## Argo Workflows
-## Tekton
+* Preferably those with k8s CRs
+* Argo Workflows
+* Tekton
 
 
 # Synchronization
 
-## Argo CD
-## Flux
-## Rancher Fleet
+* Argo CD
+* Flux
+* Rancher Fleet
 
 
 # Infra Orchestration
 
-## Crossplane
-## ACK
-## IaC with Kubernetes operators
-## etc.
+* Crossplane
+* ACK
+* IaC with Kubernetes operators
+* etc.
 
 
 # App Orchestration
 
-## OAM/KubeVela
-## Crossplane
-## etc.
+* OAM/KubeVela
+* Crossplane
+* etc.
 
 
 # RBAC
 
-## Desired state: Git
-## Actual state: Kubernetes
+* Desired state: Git
+* Actual state: Kubernetes
 
 
 # The Process
 
 
-<!-- .slide: data-background="url(img/diag-02.png) center / cover" -->
+<!-- .slide: data-background="img/diag-02.png" data-background-size="contain" -->
 
 
-# What Do We Do In IDP?
+## What Do We Do In
+# IDP?
 
 
-<!-- .slide: data-background="url(img/diag-03.png) center / cover" -->
+<!-- .slide: data-background="img/diag-03.png" data-background-size="contain" -->
 
 
-# What Do We Do In IDP?
+## What Do We Do In
+# IDP?
 
-## Everything is tailor-made to match dev needs
-
-
-# Build vs. Buy
-
-## **Buy**: Small company starting now
-## **Build**: Bigger company that already has assets
-## Build from scratch?
+* Everything is tailor-made to match dev needs
 
 
 # Build vs. Buy
 
-## We need tools that enable us to build opinionated platforms (IDPs)
+* **Buy**: Small company starting now
+* **Build**: Bigger company that already has assets
+* Build from scratch?
 
 
 # Build vs. Buy
 
-## Must store changes to Git
-## Must use Git as the source of the desired state
-## Must have a universal API
-## Must be a universal control plane
+* We need tools that enable us to build opinionated platforms (IDPs)
+
+
+# Build vs. Buy
+
+* Must store changes to Git
+* Must use Git as the source of the desired state
+* Must have a universal API
+* Must be a universal control plane
 
 
 # Today?
 
-## Backstage
-## Crossplane
-## Argo CD or Flux
-## Pipelines
-## Everything else
+* Backstage
+* Crossplane
+* Argo CD or Flux
+* Pipelines
+* Everything else
 
 
 # Tomorrow?
 
-## Upcoming wave
-## One of the main focuses of the industry in 2022 and beyond
-## Kubernetes evolution beyond running containers
+* Upcoming wave
+* The main focus of the industry in 2022 and beyond
+* Kubernetes evolution beyond running containers

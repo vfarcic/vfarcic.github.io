@@ -1,13 +1,9 @@
 # Talks
 
----
-
 * [The Only Thing That Matters In DevOps Is...](crossplane/idp.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/idp.md))
 
 
 # Talks
-
----
 
 * End-To-End GitOps ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/e2e-gitops.md))
 * [The Future Is Above Clouds](crossplane/uxp.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/uxp.md))
@@ -17,9 +13,7 @@
 
 # Talks
 
----
-
-* [How To Build Your Own Heroku in 2021? (workshop)](crossplane/heroku-workshop.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/heroku.md))
+* [How To Build Your Own Heroku in 2021?](crossplane/heroku.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/heroku.md))
 * [Making Kubernetes Disappear](crossplane/kubernetes-disappear.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/kubernetes-disappear.md))
 * Using Kubernetes API To Manage Everything ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/universal-control-plane.md))
 * Empowering Developers To Manage Infrastructure ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/composites.md))
@@ -27,8 +21,6 @@
 
 
 # Talks
-
----
 
 * How To Apply GitOps Without Making Developers Go Crazy ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/gitops.md))
 * Developers do not need Kubernetes ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/k8s/abstracts/developers-do-not-need-kubernetes.md))
@@ -39,8 +31,6 @@
 
 # Talks
 
----
-
 * All That Developers Need Is a Browser (or How to Be More Productive by Having Less) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/dev/abstracts/gitpod.md))
 * Docker Is No More! What Now? How Are We Going To Live Without It? ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/containers/abstracts/kaniko.md))
 * Combining Progressive Delivery With GitOps And Continuous Delivery ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/progressive/abstracts/progressive-gitops-cd.md))
@@ -49,8 +39,6 @@
 
 
 # Talks
-
----
 
 * Combining Progresive Delivery With GitOps And Continuous Delivery ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/progressive.md))
 * Managing Full Application Lifecycle Using GitOps ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/gitops-cd.md))
@@ -61,8 +49,6 @@
 
 # Talks
 
----
-
 * Logging Is NOT About Files, It's About Streaming ([abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/catalog/abstracts/loki.md))
 * The Objectives And The Principles Behind GitOps ([abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/gitops/abstracts/gitops.md))
 * Demystifying Serverless Computing ([abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/catalog/abstracts/serverless.md))
@@ -70,8 +56,6 @@
 
 
 # Talks
-
----
 
 * [Testing In Production](canary-istio/testing-production.html) ([abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/canary-istio/abstracts/testing-production.md))
 * [Kubernetes Chaos Engineering](chaos/index.html) ([abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/chaos/README.md))
@@ -82,8 +66,6 @@
 
 # Talks
 
----
-
 * [Combining Serverless Continuous Delivery With ChatOps](jx/prow.html) ([abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/jx/abstracts/prow.md))
 * [Ten Commandments Of GitOps Applied To Continuous Delivery](jx/gitops.html) ([abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/jx/abstracts/ten-commandments.md))
 * [The Recipe For Continuous Delivery](jx/recipe.html) ([abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/jx/abstracts/recipe.md))
@@ -92,8 +74,6 @@
 
 
 # Talks
-
----
 
 * [Managing And Maintaining a DevOps Assembly Line](devops-assembly/index.html)
 * [The State Of DevOps](devops20/index.html)
@@ -104,8 +84,6 @@
 
 # Talks
 
----
-
 * [Auto-Scaling Services](devops22/auto-scaling.html)
 * [Monitoring Swarm Services](devops21/monitoring.html)
 * [Docker Swarm](devops21/index.html)
@@ -115,8 +93,6 @@
 
 # Talks
 
----
-
 * [Scaling and Clustering with Docker Swarm](docker-swarm/index.html)
 * [Continuously Deploying Microservices](cd-microservices/index.html)
 * [Continuously Deploying Containers with Jenkins Pipeline To a Docker Swarm Cluster](cd-pipeline-swarm/index.html)
@@ -125,8 +101,6 @@
 
 
 # Talks
-
----
 
 * [Scaling To Infinity: The Quest For Fully Automated, Scalable, Self-Healing System With Zero-Downtime](scaling/index.html)
 * [Continuous Deployment: The Ultimate Culmination of Software Craftsmanship](cd/index.html)

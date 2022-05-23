@@ -1,0 +1,23 @@
+.reveal .twitter {
+    position: absolute;
+    bottom: 35px;
+    right: 120px;
+    color: white;
+    font-size: 40px;
+    font-weight: 800;
+    z-index: 2; 
+}
+.reveal .twitter img {
+    width: 50%;
+    height: 50%;
+}
+.reveal .sponsor {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    z-index: 1; 
+}
+.reveal .sponsor img {
+    width: 30%;
+    height: 30%; 
+}
