@@ -49,20 +49,13 @@ kubectl --namespace crossplane-system create secret generic \
 ```
 
 
-## Setup Equinix Metal
+## Setup Digital Ocean
 
 ```bash
-# Replace `[...]` with your Equinix API token
-export EQUINIX_API_TOKEN=[...]
+# Replace `[...]` with the DigitalOcean token
+export DO_TOKEN=[...]
 
-echo "{
-  \"auth_token\": \"$EQUINIX_API_TOKEN\",
-  \"max_retries\": \"10\",
-  \"max_retry_wait_seconds\": \"30\"
-}" >equinix-creds.conf
-
-kubectl --namespace crossplane-system create secret \
-    generic equinix-creds --from-file creds=./equinix-creds.conf
+export DO_TOKEN_ENCODED=$(echo $DO_TOKEN | base64)
 ```
 
 
@@ -77,6 +70,8 @@ kubectl apply --filename crossplane-config/config-app.yaml
 
 kubectl apply --filename crossplane-config/provider-equinix.yaml
 
+kubectl apply --filename crossplane-config/provider-do.yaml
+
 kubectl get pkgrev
 
 # Wait until all the packages are healthy
@@ -89,8 +84,9 @@ kubectl get pkgrev
 kubectl apply --filename \
     crossplane-config/provider-config-aws.yaml
 
-kubectl apply --filename \
-    crossplane-config/provider-config-equinix.yaml
+cat crossplane-config/provider-config-do.yaml \
+    | sed -e "s@token: .*@token: $DO_TOKEN_ENCODED@g" \
+    | kubectl apply --filename -
 
 kubectl create namespace a-team
 ```

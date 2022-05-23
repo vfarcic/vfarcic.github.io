@@ -7,9 +7,9 @@
 # Cloud Resources
 
 ```bash
-cat examples/vm/equinix.yaml
+cat examples/vm/digital-ocean.yaml
 
-kubectl apply --filename examples/vm/equinix.yaml
+kubectl apply --filename examples/vm/digital-ocean.yaml
 ```
 
 
@@ -35,9 +35,9 @@ kubectl get managed
 # Tailor-Made Platforms
 
 ```bash
-cat packages/k8s/eks.yaml
-
 cat packages/k8s/definition.yaml
+
+cat packages/k8s/eks.yaml
 ```
 
 

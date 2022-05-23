@@ -1,8 +1,7 @@
-<!-- .slide: data-background="../img/background/hands-on.jpg" -->
 ## Cleanup
 
 ```bash
-kubectl delete --filename examples/vm/equinix.yaml
+kubectl delete --filename examples/vm/digital-ocean.yaml
 
 kubectl --namespace a-team delete \
     --filename examples/k8s/aws-eks.yaml
@@ -10,6 +9,7 @@ kubectl --namespace a-team delete \
 kubectl get managed
 
 # Wait until all the resources are removed
+#   (except `object` and `release`)
 
 # Destroy the management cluster
 ```
