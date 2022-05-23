@@ -182,21 +182,66 @@
 ### UI/CLI > API > Control Plane > Something
 
 
-# Problems? TODO: Continue
+# Problems?
 
-## Fragmentation
-## Too many UIs, CLIs, and APIs
-## Hard to manage
-## Hard to coordinate
-## Hard to observe
-## Mostly building blocks
+
+<!-- .slide: data-background="img/idp-cloud-problems-01.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-cloud-problems-02.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-cloud-problems-03.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-cloud-problems-04.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-cloud-problems-05.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-cloud-problems-06.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-cloud-problems-07.jpg" data-background-size="cover" -->
+
+
+# Problems?
+
+* Fragmentation
+* Too many UIs, CLIs, and APIs
+* Hard to manage
+* Hard to coordinate
+* Hard to observe
+* Mostly building blocks
 
 
 # The Solution?
 
-## Universal API
-## Universal control plane
-## Raise above clouds
+
+<!-- .slide: data-background="img/idp-above-clouds-01.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-above-clouds-02.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-above-clouds-03.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-above-clouds-04.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-above-clouds-05.jpg" data-background-size="cover" -->
+
+
+<!-- .slide: data-background="img/idp-above-clouds-06.jpg" data-background-size="cover" -->
+
+
+# The Solution?
+
+* Universal API
+* Universal control plane
+* Raise above clouds
 
 
 ![](../img/products/crossplane.png)
@@ -207,6 +252,6 @@
 
 # The Solution?
 
-## Tailor-made services
-## Tailor-made platforms
-## Shift-Left
+* Tailor-made services
+* Tailor-made platforms
+* Shift-Left

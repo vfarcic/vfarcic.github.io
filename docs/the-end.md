@@ -37,7 +37,7 @@
 
 ## [DevOps Toolkit YouTube](https://youtube.com/c/devopstoolkit)
 
-<figure style="width: 50%; margin-left:100px;float: left;">
+<figure style="width: 45%; margin-left:100px;float: left;">
     <a href="https://www.youtube.com/c/devopstoolkit">
         <img src="../img/dot.png"/>
     </a>

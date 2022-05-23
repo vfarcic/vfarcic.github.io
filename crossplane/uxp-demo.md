@@ -1,4 +1,3 @@
-<!-- .slide: class="center dark" -->
 <!-- .slide: data-background="../img/background/hands-on.jpg" -->
 # Demo
 
@@ -19,7 +18,8 @@ kubectl apply --filename examples/vm/equinix.yaml
 ```bash
 cat examples/k8s/aws-eks.yaml
 
-kubectl --namespace a-team apply --filename examples/k8s/aws-eks.yaml
+kubectl --namespace a-team apply \
+    --filename examples/k8s/aws-eks.yaml
 
 kubectl --namespace a-team get clusterclaims
 ```

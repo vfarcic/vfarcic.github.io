@@ -1,4 +1,3 @@
-<!-- .slide: class="center dark" -->
 <!-- .slide: data-background="../img/background/hands-on.jpg" -->
 # Setup
 
@@ -45,8 +44,8 @@ echo "[default]
 aws_access_key_id = $AWS_ACCESS_KEY_ID
 aws_secret_access_key = $AWS_SECRET_ACCESS_KEY" >aws-creds.conf
 
-kubectl --namespace crossplane-system create secret generic aws-creds \
-    --from-file creds=./aws-creds.conf
+kubectl --namespace crossplane-system create secret generic \
+    aws-creds --from-file creds=./aws-creds.conf
 ```
 
 
@@ -87,9 +86,11 @@ kubectl get pkgrev
 ## Install Providers
 
 ```bash
-kubectl apply --filename crossplane-config/provider-config-aws.yaml
+kubectl apply --filename \
+    crossplane-config/provider-config-aws.yaml
 
-kubectl apply --filename crossplane-config/provider-config-equinix.yaml
+kubectl apply --filename \
+    crossplane-config/provider-config-equinix.yaml
 
 kubectl create namespace a-team
 ```
