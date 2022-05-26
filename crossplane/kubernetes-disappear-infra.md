@@ -1,13 +1,8 @@
-<!-- .slide: class="center dark" -->
 <!-- .slide: data-background="../img/background/hands-on.jpg" -->
 # Infra For Devs
 
-<div class="label">Hands-on Time</div>
+## Hands-on Time
 
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow"> </div>
-<div class="label">Hands-on Time</div>
 
 ## Infra For Devs
 
@@ -24,10 +19,6 @@ git push
 ```
 
 
-<!-- .slide: class="dark" -->
-<div class="eyebrow"> </div>
-<div class="label">Hands-on Time</div>
-
 ## Infra For Ops
 
 ```bash
@@ -43,10 +34,6 @@ cat packages/gitops/argo-cd.yaml
 ```
 
 
-<!-- .slide: class="dark" -->
-<div class="eyebrow"> </div>
-<div class="label">Hands-on Time</div>
-
 ## Infra For Ops
 
 ```bash
@@ -56,29 +43,24 @@ kubectl get managed,releases
 ```
 
 
-<!-- .slide: class="dark" -->
-<div class="eyebrow"> </div>
-<div class="label">Hands-on Time</div>
-
 ## Infra For Ops
 
 ```bash
 kubectl --namespace crossplane-system get secret \
-    a-team-eks-no-claim-cluster --output jsonpath="{.data.kubeconfig}" \
+    a-team-eks-no-claim-cluster \
+    --output jsonpath="{.data.kubeconfig}" \
     | base64 -d >kubeconfig.yaml
 
 kubectl --kubeconfig kubeconfig.yaml get namespaces
 
-kubectl --kubeconfig kubeconfig.yaml --namespace argocd get applications
+kubectl --kubeconfig kubeconfig.yaml --namespace argocd \
+    get applications
 
-kubectl --kubeconfig kubeconfig.yaml --namespace argocd port-forward \
-    svc/a-team-gitops-no-claim-argocd-server 8080:443 &
+kubectl --kubeconfig kubeconfig.yaml --namespace argocd \
+    port-forward svc/a-team-gitops-no-claim-argocd-server \
+    8080:443 &
 ```
 
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow"> </div>
-<div class="label">Hands-on Time</div>
 
 ## Infra For Devs
 

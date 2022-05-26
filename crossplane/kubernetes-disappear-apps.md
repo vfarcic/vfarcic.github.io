@@ -2,12 +2,8 @@
 <!-- .slide: data-background="../img/background/hands-on.jpg" -->
 # Apps For Devs
 
-<div class="label">Hands-on Time</div>
+## Hands-on Time
 
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow"> </div>
-<div class="label">Hands-on Time</div>
 
 ## Apps For Devs
 
@@ -24,10 +20,6 @@ cp examples/app-backend-no-claim.yaml apps/
 ```
 
 
-<!-- .slide: class="dark" -->
-<div class="eyebrow"> </div>
-<div class="label">Hands-on Time</div>
-
 ## Apps For Ops
 
 ```bash
@@ -39,16 +31,14 @@ git push
 ```
 
 
-<!-- .slide: class="dark" -->
-<div class="eyebrow"> </div>
-<div class="label">Hands-on Time</div>
-
 ## Apps For Ops
 
 ```bash
 kubectl --namespace crossplane-system get secret \
-    a-team-eks-no-claim-cluster --output jsonpath="{.data.kubeconfig}" \
+    a-team-eks-no-claim-cluster \
+    --output jsonpath="{.data.kubeconfig}" \
     | base64 -d >kubeconfig.yaml
 
-kubectl --kubeconfig kubeconfig.yaml --namespace production get all,hpa,ingresses
+kubectl --kubeconfig kubeconfig.yaml --namespace production \
+    get all,hpa,ingresses
 ```

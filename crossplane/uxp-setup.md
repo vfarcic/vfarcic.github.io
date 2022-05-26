@@ -66,9 +66,11 @@ kubectl apply --filename crossplane-config/provider-aws.yaml
 
 kubectl apply --filename crossplane-config/config-k8s.yaml
 
-kubectl apply --filename crossplane-config/config-app.yaml
+kubectl apply --filename crossplane-config/config-gitops.yaml
 
-kubectl apply --filename crossplane-config/provider-equinix.yaml
+kubectl apply --filename crossplane-config/config-sql.yaml
+
+kubectl apply --filename crossplane-config/config-app.yaml
 
 kubectl apply --filename crossplane-config/provider-do.yaml
 

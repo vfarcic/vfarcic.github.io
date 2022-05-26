@@ -1,13 +1,8 @@
-<!-- .slide: class="center dark" -->
 <!-- .slide: data-background="../img/background/hands-on.jpg" -->
 # Setup
 
 <div class="label">Hands-on Time</div>
 
-
-<!-- .slide: class="dark" -->
-<div class="eyebrow"> </div>
-<div class="label">Hands-on Time</div>
 
 ## Setup Cluster
 
@@ -21,7 +16,8 @@ kind create cluster --config kind.yaml
 
 kubectl apply --filename https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/kind/deploy.yaml
 
-export INGRESS_HOST=[...] # Replace `[...]` with your Ingress host
+# Replace `[...]` with your Ingress host
+export INGRESS_HOST=[...]
 ```
 
 
@@ -58,24 +54,27 @@ cat argocd/infra.yaml \
 ## Setup AWS
 
 ```bash
-export AWS_ACCESS_KEY_ID=[...] # Replace `[...]` with access key ID
+# Replace `[...]` with access key ID
+export AWS_ACCESS_KEY_ID=[...]
 
-export AWS_SECRET_ACCESS_KEY=[...] # Replace `[...]` with secret access key
+# Replace `[...]` with secret access key
+export AWS_SECRET_ACCESS_KEY=[...]
 
 echo "[default]
 aws_access_key_id = $AWS_ACCESS_KEY_ID
 aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
 " >aws-creds.conf
 
-kubectl --namespace crossplane-system create secret generic aws-creds \
-    --from-file creds=./aws-creds.conf
+kubectl --namespace crossplane-system create secret \
+    generic aws-creds --from-file creds=./aws-creds.conf
 ```
 
 
 ## Setup Crossplane
 
 ```bash
-helm repo add crossplane-stable https://charts.crossplane.io/stable
+helm repo add crossplane-stable \
+    https://charts.crossplane.io/stable
 
 helm repo update
 
@@ -84,9 +83,11 @@ helm upgrade --install crossplane crossplane-stable/crossplane \
 
 kubectl apply --filename crossplane-config/provider-aws.yaml
 
-kubectl apply --filename crossplane-config/provider-config-aws.yaml
+kubectl apply \
+    --filename crossplane-config/provider-config-aws.yaml
 
-# Re-run the previous command if the output is `unable to recognize ...`
+# Re-run the previous command if the output is
+#   `unable to recognize ...`
 ```
 
 
@@ -95,7 +96,8 @@ kubectl apply --filename crossplane-config/provider-config-aws.yaml
 ```bash
 kubectl apply --filename crossplane-config/provider-helm.yaml
 
-kubectl apply --filename crossplane-config/provider-kubernetes.yaml
+kubectl apply \
+    --filename crossplane-config/provider-kubernetes.yaml
 
 kubectl apply --filename crossplane-config/config-k8s.yaml
 
@@ -116,7 +118,8 @@ helm repo update
 
 helm upgrade --install argocd argo/argo-cd --namespace argocd \
     --create-namespace --values argocd/helm-values.yaml \
-    --set server.ingress.hosts="{argo-cd.$INGRESS_HOST.nip.io}" --wait
+    --set server.ingress.hosts="{argo-cd.$INGRESS_HOST.nip.io}" \
+    --wait
 
 kubectl apply --filename argocd/project.yaml
 
@@ -133,5 +136,6 @@ echo http://argo-cd.$INGRESS_HOST.nip.io
 
 # User `admin`, password `admin123`
 
-# Modify `spec.parameters.gitOpsRepo` in `examples/aws-eks-gitops-no-claim.yaml`
+# Modify `spec.parameters.gitOpsRepo` 
+#   in `examples/aws-eks-gitops-no-claim.yaml`
 ```
