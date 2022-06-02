@@ -12,6 +12,8 @@
 
 # Conferences
 
+* [The future of GitOps](https://devopspro.lt/the-future-of-gitops/) at [DevOps Pro Europe](https://devopspro.lt/) (25th of May, 2022)
+* [The Future Is Above Clouds](https://devopspro.lt/Viktor-Farcic/) at [DevOps Pro Europe](https://devopspro.lt/) (25th of May, 2022)
 * [Production-scale Containerized Game Platform Practice in Bytedance](https://sched.co/ytna) at [KubeCon](https://events.linuxfoundation.org/kubecon-cloudnativecon-europe/) (18th of May, 2022)
 * [The Only Thing That Matters In DevOps Is...](https://www.conf42.com/Cloud_Native_2022_Viktor_Farcic_only_thing_that_matters_in_devops) at [Conf42](https://www.conf42.com/cloud2022) (28th of April, 2022)
 * DevOps Roadmap 2022 at [Dawn Of Cloud](https://www.linkedin.com/events/technote-dawnofthecloud6894940524034564096/) (5th of March 2022)
@@ -160,6 +162,7 @@
 
 # Meetups / Webinars
 
+* [Introduction To Crossplane](https://youtu.be/m5_7M9Xe9cc) at [Cloud Native Islamabad](https://www.youtube.com/c/CloudNativeIslamabad) (26th of May 2022)
 * [DevOps: Building Internal Developer Platform (IDP)](https://app.livestorm.co/malt-community/devops-building-internal-developer-platform-idp) at Malt (22nd of March 2022)
 * [How to make Kubernetes clusters production-ready with Crossplane](https://youtu.be/cPVrCNhHo7Q) at [k6](https://www.youtube.com/channel/UC8ryLdIbmkVJq4Zt613oZPQ) (18th of March 2022)
 * [Load testing for DevOps](https://youtu.be/xUlNdsr6y_E) at [k6](https://www.youtube.com/channel/UC8ryLdIbmkVJq4Zt613oZPQ) (11th of March 2022)
