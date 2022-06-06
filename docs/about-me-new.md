@@ -5,6 +5,10 @@
 <!-- .slide: data-background="../img/products/upbound.png" data-background-size="contain" -->
 
 
+<!-- .slide: data-background="../img/products/twitter.png" data-background-size="contain" -->
+# @vfarcic
+
+
 <!-- .slide: class="center" -->
 
 <p style="display:inline-block"><img src="../img/gde.png" style="background-color: white;width:300px;height:300px;"></p> <!-- .element: class="fragment" -->
@@ -14,17 +18,14 @@
 <p style="display:inline-block"><img src="../img/docker-captain.png" style="background-color: white;width:300px;height:300px;"></p> <!-- .element: class="fragment" -->
 
 
-[![devopstoolkitseries.com](../img/devops-toolkit-series.png)](https://www.devopstoolkitseries.com/)
+<a href="https://www.devopstoolkitseries.com"><img src="../img/devops-toolkit-series.png" style="width: 70%; height: 70%;"></a>
+devopstoolkitseries.com
 
 
-<a href="https://www.amazon.com/gp/product/B07R23CJN7"><img src="../img/products/devops-paradox-book.png" style="width: 40%; height: 40%;"></a>
+<a href="https://www.devopsparadox.com"><img src="../img/products/devops-paradox.jpg" style="width: 50%; height: 60%;"></a>
 
-
-<a href="https://www.devopsparadox.com"><img src="../img/products/devops-paradox.jpg" style="width: 60%; height: 60%;"></a>
+devopsparadox.com
 
 
 [![DevOps Toolkit YouTube](../img/dot.png)](https://www.youtube.com/c/devopstoolkit)
-
-
-<!-- .slide: data-background="../img/products/twitter.png" data-background-size="contain" -->
-# @vfarcic
+youtube.com/c/devopstoolkit

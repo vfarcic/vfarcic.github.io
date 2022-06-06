@@ -1,4 +1,4 @@
-# End-To-End GitOps
+# Applying GitOps To Everything
 
 You are likely already using GitOps for your applications, but not for everything else. You are likely not using Argo CD, Flux, Rancher Fleet, or similar tools to manage the state of your infrastructure and services. Why is that? If GitOps is a great solution for apps, isn't it safe to assume that it would be equally beneficial for anything else? What is missing?
 

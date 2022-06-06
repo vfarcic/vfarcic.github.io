@@ -5,7 +5,7 @@
 
 # Talks
 
-* End-To-End GitOps ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/e2e-gitops.md))
+* [Applying GitOps To Everything](crossplane/e2e-gitops.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/e2e-gitops.md))
 * [The Future Is Above Clouds](crossplane/uxp.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/uxp.md))
 * How To Manage Infrastructure With Helm ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/helm.md))
 * Automated Drift Detection And Reconciliation Applied To Infrastructure ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/reconciliation.md))
