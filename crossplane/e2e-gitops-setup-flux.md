@@ -28,7 +28,8 @@ export AWS_ACCESS_KEY_ID=[...]
 # Replace `[...]` with your secret access key
 export AWS_SECRET_ACCESS_KEY=[...]
 
-eksctl create cluster --name management --region us-east-1
+eksctl create cluster --name management --region us-east-1 \
+    --node-type t2.large --nodes 3
 
 kubectl create namespace crossplane-system
 
