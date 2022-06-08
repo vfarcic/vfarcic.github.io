@@ -16,7 +16,12 @@ kubectl \
 
 kubectl --namespace a-team delete \
     --filename examples/k8s/aws-eks.yaml
+```
 
+
+## Cleanup
+
+```bash
 kubectl get managed
 
 # Wait until all the resources are removed
