@@ -7,22 +7,42 @@
 ## Infra For Devs
 
 ```bash
-cat examples/aws-eks-gitops-no-claim.yaml
+# Open the Upbound control plane
 
-cp examples/aws-eks-gitops-no-claim.yaml infra/aws-eks.yaml
+# Create a new `ClusterClaim` with the following values:
+# - metadata.name = a-team-eks
+# - metadata.namespace = upbound-system
+# - spec.id = a-team-eks
+# - spec.compositionSelector.matchLabels[0] = provider=aws
+# - spec.compositionSelector.matchLabels[1] = cluster=eks
+# - spec.parameters.minNodeCount = 3
+# - spec.parameters.nodeSize = medium
+# - spec.writeConnectionSecretToRef.name = a-team-eks
 
-git add .
+# Click the `Continue` button
+```
 
-git commit -m "My cluster"
 
-git push
+## Infra For Devs
+
+```bash
+# Create a new `GitOpsClaim` with the following values:
+# - metadata.name = a-team-gitops
+# - metadata.namespace = upbound-system
+# - spec.id = a-team-gitops
+# - spec.compositionSelector.matchLabels[0] = provider=argo
+# - spec.parameters.gitOpsRepo = https://github.com/vfarcic/devops-toolkit-crossplane.git
+# - spec.parameters.kubeConfig.secretName = a-team-eks
+# - spec.parameters.kubeConfig.secretNamespace = upbound-system
+
+# Click the `Continue` button
 ```
 
 
 ## Infra For Ops
 
 ```bash
-kubectl get managed,releases
+kubectl get managed
 
 cat packages/k8s/definition.yaml
 
@@ -37,17 +57,7 @@ cat packages/gitops/argo-cd.yaml
 ## Infra For Ops
 
 ```bash
-cat infra/aws-eks.yaml
-
-kubectl get managed,releases
-```
-
-
-## Infra For Ops
-
-```bash
-kubectl --namespace crossplane-system get secret \
-    a-team-eks-no-claim-cluster \
+kubectl --namespace upbound-system get secret a-team-eks \
     --output jsonpath="{.data.kubeconfig}" \
     | base64 -d >kubeconfig.yaml
 
@@ -57,7 +67,7 @@ kubectl --kubeconfig kubeconfig.yaml --namespace argocd \
     get applications
 
 kubectl --kubeconfig kubeconfig.yaml --namespace argocd \
-    port-forward svc/a-team-gitops-no-claim-argocd-server \
+    port-forward svc/a-team-gitops-argocd-server \
     8080:443 &
 ```
 
