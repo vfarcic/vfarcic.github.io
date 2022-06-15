@@ -7,8 +7,7 @@
 ## Setup Control Plane
 
 ```bash
-gh repo fork vfarcic/devops-toolkit-crossplane \
-    --clone
+git clone https://github.com/vfarcic/devops-toolkit-crossplane
 
 cd devops-toolkit-crossplane
 
