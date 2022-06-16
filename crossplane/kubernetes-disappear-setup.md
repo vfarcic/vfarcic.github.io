@@ -13,21 +13,6 @@ cd devops-toolkit-crossplane
 
 # Create a control plane in https://cloud.upbound.io
 #   and connect to it using CLI
-
-export GIT_URL=$(git remote get-url origin)
-```
-
-
-## Setup Control Plane
-
-```bash
-cat argocd/apps.yaml \
-    | sed -e "s@repoURL: .*@repoURL: $GIT_URL@g" \
-    | tee argocd/apps.yaml
-
-cat argocd/infra.yaml \
-    | sed -e "s@repoURL: .*@repoURL: $GIT_URL@g" \
-    | tee argocd/infra.yaml
 ```
 
 
@@ -66,9 +51,7 @@ kubectl apply \
 ## Setup Configurations
 
 ```bash
-# Open https://marketplace.upbound.io
-
-# Search for `dot` configurations
+# Open https://marketplace.upbound.io/configurations?query=dot
 
 # `Run in Upbound` the following configurations:
 # - dot-kubernetes
