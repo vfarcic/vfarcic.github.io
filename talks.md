@@ -1,6 +1,6 @@
 # Talks
 
-* What (Really) Is Kubernetes? ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/kubernetes/abstracts/what.md))
+* [What (Really) Is Kubernetes?](kubernetes/what.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/kubernetes/abstracts/what.md))
 * [The Only Thing That Matters In DevOps Is...](crossplane/idp.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/idp.md))
 
 
