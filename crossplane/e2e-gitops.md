@@ -64,7 +64,7 @@
 ## Custom Resource Definitions (CRD)
 
 
-## We need CRDs and operators that represent "real" resources
+## We need Custome Resource Definitions and operators that represent "real" resources
 
 
 ![](../img/products/crossplane.png)
