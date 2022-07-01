@@ -12,10 +12,19 @@
 
 # Conferences
 
-* [The future of GitOps](https://devopspro.lt/the-future-of-gitops/) at [DevOps Pro Europe](https://devopspro.lt/) (25th of May, 2022)
-* [The Future Is Above Clouds](https://devopspro.lt/Viktor-Farcic/) at [DevOps Pro Europe](https://devopspro.lt/) (25th of May, 2022)
-* [Production-scale Containerized Game Platform Practice in Bytedance](https://sched.co/ytna) at [KubeCon](https://events.linuxfoundation.org/kubecon-cloudnativecon-europe/) (18th of May, 2022)
-* [The Only Thing That Matters In DevOps Is...](https://www.conf42.com/Cloud_Native_2022_Viktor_Farcic_only_thing_that_matters_in_devops) at [Conf42](https://www.conf42.com/cloud2022) (28th of April, 2022)
+* End-To-End GitOps at [KCD Berlin](https://community.cncf.io/events/details/cncf-kcd-berlin-presents-kubernetes-community-days-berlin-2022-1) (29th of June 2022)
+* [AMA (Ask Me Anything) Session: Kubernetes](https://devopscon.io/kubernetes-ecosystem/ama-ask-me-anything-session-kubernetes/) at [DevOpsCon](https://devopscon.io/berlin) (21th of June 2022)
+* [Freedom Means That Kubernetes Needs To Disappear](https://devopscon.io/kubernetes-ecosystem/freedom-means-that-kubernetes-needs-to-disappear/) at [DevOpsCon](https://devopscon.io/berlin) (21th of June 2022)
+* [Applying GitOps to Everything with Crossplane + Flux](https://www.gitopsdays.com/speaker/viktor-farcic/) at [GitOps Days](https://www.gitopsdays.com) (9th of June 2022)
+* [How to build an IDP with Backstage, Crossplane and Argo CD](https://platformcon.com/talk/how-to-build-an-idp-with-backstage-crossplane-and-argo-cd) at [PlatformCon](https://platformcon.com/) (9th of June 2022)
+* [The Only Thing That Matters In DevOps Is...](https://platformcon.com/talk/the-only-thing-that-matters-in-devops-is) at [PlatformCon](https://platformcon.com/) (9th of June 2022)
+* [The Future Is Above Clouds](https://www.devtalks.ro/agenda/1-day-1#devops-stage) at [DevTalks](https://www.devtalks.ro) (8th of June 2022)
+* [How To Build Your Own Heroku in 2022?](https://craft-conf.com/talks) at [Craft](https://craft-conf.com/) (2nd of June 2022)
+* The Future Is Above Clouds at [Spain Clouds Summit](https://www.eventbrite.es/e/entradas-spainclouds-summit-2022-332834024527) (1st of June 2022)
+* [The future of GitOps](https://devopspro.lt/the-future-of-gitops/) at [DevOps Pro Europe](https://devopspro.lt/) (25th of May 2022)
+* [The Future Is Above Clouds](https://devopspro.lt/Viktor-Farcic/) at [DevOps Pro Europe](https://devopspro.lt/) (25th of May 2022)
+* [Production-scale Containerized Game Platform Practice in Bytedance](https://sched.co/ytna) at [KubeCon](https://events.linuxfoundation.org/kubecon-cloudnativecon-europe/) (18th of May 2022)
+* [The Only Thing That Matters In DevOps Is...](https://www.conf42.com/Cloud_Native_2022_Viktor_Farcic_only_thing_that_matters_in_devops) at [Conf42](https://www.conf42.com/cloud2022) (28th of April 2022)
 * DevOps Roadmap 2022 at [Dawn Of Cloud](https://www.linkedin.com/events/technote-dawnofthecloud6894940524034564096/) (5th of March 2022)
 * Automated Drift Detection And Reconciliation Applied To Infrastructure at [SkilUp Days: SRE](https://sessionize.com/site-reliability-engineering-skilupday) (17th of February 2022)
 * [Automated Drift Detection And Reconciliation Applied To Infrastructure](https://www.developerweek.com/conference/speakers/) at [DeveloperWeek](https://www.developerweek.com) (7th of February 2022)
@@ -162,6 +171,7 @@
 
 # Meetups / Webinars
 
+* The Future Is Above Clouds at [Docker Meetup Budapest](https://www.meetup.com/Docker-Budapest-Hungary/events/285965800/) (1st of June 2022)
 * [Introduction To Crossplane](https://youtu.be/m5_7M9Xe9cc) at [Cloud Native Islamabad](https://www.youtube.com/c/CloudNativeIslamabad) (26th of May 2022)
 * [DevOps: Building Internal Developer Platform (IDP)](https://app.livestorm.co/malt-community/devops-building-internal-developer-platform-idp) at Malt (22nd of March 2022)
 * [How to make Kubernetes clusters production-ready with Crossplane](https://youtu.be/cPVrCNhHo7Q) at [k6](https://www.youtube.com/channel/UC8ryLdIbmkVJq4Zt613oZPQ) (18th of March 2022)
