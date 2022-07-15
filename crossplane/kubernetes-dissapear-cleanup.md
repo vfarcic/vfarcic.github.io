@@ -7,6 +7,10 @@ rm apps/*.yaml
 
 git add . && git commit -m "Destroy apps" && git push
 
+kubectl --namespace upbound-system get secret \
+    a-team-eks --output jsonpath="{.data.kubeconfig}" \
+    | base64 -d >kubeconfig.yaml
+
 kubectl --kubeconfig kubeconfig.yaml get managed
 ```
 

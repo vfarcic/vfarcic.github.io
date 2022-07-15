@@ -13,10 +13,10 @@
 # - metadata.name = a-team-eks
 # - metadata.namespace = upbound-system
 # - spec.id = a-team-eks
+# - spec.parameters.nodeSize = medium
 # - spec.compositionSelector.matchLabels[0] = provider=aws
 # - spec.compositionSelector.matchLabels[1] = cluster=eks
 # - spec.parameters.minNodeCount = 3
-# - spec.parameters.nodeSize = medium
 # - spec.writeConnectionSecretToRef.name = a-team-eks
 
 # Click the `Continue` button
@@ -30,9 +30,9 @@
 # - metadata.name = a-team-gitops
 # - metadata.namespace = upbound-system
 # - spec.id = a-team-gitops
+# - spec.parameters.kubeConfig.secretName = a-team-eks
 # - spec.compositionSelector.matchLabels[0] = provider=argo
 # - spec.parameters.gitOpsRepo = https://github.com/vfarcic/devops-toolkit-crossplane.git
-# - spec.parameters.kubeConfig.secretName = a-team-eks
 # - spec.parameters.kubeConfig.secretNamespace = upbound-system
 
 # Click the `Continue` button
