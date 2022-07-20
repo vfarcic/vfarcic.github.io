@@ -4,10 +4,10 @@
 # Manage Virtual Machines
 
 
-<!-- .slide: data-background="img/what/vm-01.png" data-background-size="cover" -->
+<!-- .slide: data-background="img/what/vm-01.png" data-background-size="contain" -->
 
 
-<!-- .slide: data-background="img/what/vm-02.png" data-background-size="cover" -->
+<!-- .slide: data-background="img/what/vm-02.png" data-background-size="contain" -->
 
 
-<!-- .slide: data-background="img/what/vm-03.png" data-background-size="cover" -->
+<!-- .slide: data-background="img/what/vm-03.png" data-background-size="contain" -->
