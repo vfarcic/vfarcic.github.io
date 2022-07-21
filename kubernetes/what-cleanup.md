@@ -1,6 +1,8 @@
 ## Cleanup
 
 ```bash
+# TODO: Delete Ingress service
+
 kubectl --namespace production delete \
     --filename crossplane-examples/
 
