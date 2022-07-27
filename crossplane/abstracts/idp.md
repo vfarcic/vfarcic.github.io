@@ -5,3 +5,7 @@ DevOps engineers tend to be obsessed with their favorite tools and platforms. Th
 This session will explore the architecture and the critical ingredients needed for an IDP. We'll also discuss the key benefits of an IDP, and we'll see, through a demo, how we could build one.
 
 We'll combine tools like Backstage, Argo CD, Crossplane, and quite a few others into a platform that everyone can use, no matter their experience level.
+
+## Benefit the ecosystem?
+
+This presentation covers a set of tools inside the CNCF ecosystem (Backstage, Argo CD, Crossplane, etc.) that can be used to build a custom Internal Developer Platform (IDP).
