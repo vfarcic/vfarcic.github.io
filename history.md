@@ -12,6 +12,8 @@
 
 # Conferences
 
+* [What (Really) Is Kubernetes?](https://www.skilupdays.io/cloud-native-22/agenda/session/952548) at [SkilUp Day: Cloud Native](https://www.skilupdays.io/cloud-native-22) (21th of July 2022)
+* [Freedom Means That Kubernetes Needs To Disappear (in Spanish)](https://www.jbcnconf.com/2022/infoTalk.html?id=61f1a0e0c4c4120b9d29afa0) at [JBCNConf](https://www.jbcnconf.com/2022/) (19th of July 2022)
 * End-To-End GitOps at [KCD Berlin](https://community.cncf.io/events/details/cncf-kcd-berlin-presents-kubernetes-community-days-berlin-2022-1) (29th of June 2022)
 * [AMA (Ask Me Anything) Session: Kubernetes](https://devopscon.io/kubernetes-ecosystem/ama-ask-me-anything-session-kubernetes/) at [DevOpsCon](https://devopscon.io/berlin) (21th of June 2022)
 * [Freedom Means That Kubernetes Needs To Disappear](https://devopscon.io/kubernetes-ecosystem/freedom-means-that-kubernetes-needs-to-disappear/) at [DevOpsCon](https://devopscon.io/berlin) (21th of June 2022)
@@ -171,6 +173,7 @@
 
 # Meetups / Webinars
 
+* [Crossplane: Control Plane of Control Planes](https://tanzu.vmware.com/developer/tv/enlightning/15/) at [Enlightning](https://tanzu.vmware.com/developer/tv/enlightning/) (28th of July 2022)
 * The Future Is Above Clouds at [Docker Meetup Budapest](https://www.meetup.com/Docker-Budapest-Hungary/events/285965800/) (1st of June 2022)
 * [Introduction To Crossplane](https://youtu.be/m5_7M9Xe9cc) at [Cloud Native Islamabad](https://www.youtube.com/c/CloudNativeIslamabad) (26th of May 2022)
 * [DevOps: Building Internal Developer Platform (IDP)](https://app.livestorm.co/malt-community/devops-building-internal-developer-platform-idp) at Malt (22nd of March 2022)
