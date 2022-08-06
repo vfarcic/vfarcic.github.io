@@ -1,6 +1,6 @@
 # Workshops
 
-* Crossplane: Using Kubernetes API To Manage Everything ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/workshop.md))
+* [Crossplane: Using Kubernetes API To Manage Everything](crossplane/workshop.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/workshop.md))
 * [How To Build Your Own Heroku in 2021?](crossplane/heroku-workshop.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/heroku.md))
 
 

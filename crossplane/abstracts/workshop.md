@@ -24,6 +24,12 @@ This workshop is for anyone looking into improving management of resources of an
 
 Basic Kubernetes knowledge is required.
 
-All attendees should have an AWS account and a laptop with a Bash terminal.
+All attendees should have an AWS account.
 
 NOTE: The material might include instructions how to accomplish the same in Azure and Google Cloud but, at this moment, that is not guaranteed.
+
+Please prepare the following before the workshop:
+* **A Kubernetes cluster**: A local cluster like Rancher Desktop (https://youtu.be/bYVfCp9dRTE, https://youtu.be/evWPib0iNgY), Docker Desktop, Minikube, or KinD should work. The workshop was tested on Rancher Desktop with 4 GB of RAM and 2 CPUs, but it should work on any relatively new Kubernetes cluster (local or remote).
+* Install `kubectl`, `helm`, and `yq` (https://github.com/mikefarah/yq) CLIs.
+* **Bash or ZSH** terminal
+* `aws`, TODO: `gcloud`, or TODO: `az` CLIs (depending on the provider you prefer)
