@@ -7,9 +7,9 @@
 ## Create A Database
 
 ```bash
-cat examples/sql/$PROVIDER-xrs.yaml
+cat examples/sql/$PROVIDER-mrs.yaml
 
-kubectl apply --filename examples/sql/$PROVIDER-xrs.yaml
+kubectl apply --filename examples/sql/$PROVIDER-mrs.yaml
 ```
 
 
@@ -21,17 +21,26 @@ kubectl get crd
 # If AWS
 kubectl explain rdsinstance --recursive
 
+# If Google Cloud
+kubectl explain cloudsqlinstance --recursive
+
 # If AWS
 # Open https://marketplace.upbound.io/providers/crossplane/provider-aws
 
-# If AWS
-# Seach for `RDSInstance`
+# If Google Cloud
+# Open https://marketplace.upbound.io/providers/crossplane/provider-gcp
 ```
 
 
-## Query Managed Resources
+## Crossplane Resource Definitions
 
 ```bash
+# If AWS
+# Seach for `RDSInstance`
+
+# If Google Cloud
+# Seach for `CloudSQLInstance`
+
 kubectl get managed
 
 # Wait until all the resources are `READY`
@@ -58,7 +67,7 @@ kubectl get managed
 ## Delete The Database
 
 ```bash
-kubectl delete --filename examples/sql/$PROVIDER-xrs.yaml
+kubectl delete --filename examples/sql/$PROVIDER-mrs.yaml
 
 kubectl get managed 
 ```

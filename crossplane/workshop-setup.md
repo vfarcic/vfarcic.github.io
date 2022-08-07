@@ -34,7 +34,7 @@ helm upgrade --install crossplane crossplane-stable/crossplane \
 ## Setup AWS
 
 ```bash
-# Run the commands in this section only if you prefer using AWS
+# Run the commands in this section only if you are using AWS
 
 export PROVIDER=aws
 
@@ -53,7 +53,7 @@ aws_secret_access_key = $AWS_SECRET_ACCESS_KEY" >aws-creds.conf
 ## Setup AWS
 
 ```bash
-# Run the commands in this section only if you prefer using AWS
+# Run the commands in this section only if you are using AWS
 
 kubectl --namespace crossplane-system create secret generic \
     aws-creds --from-file creds=./aws-creds.conf
@@ -72,7 +72,7 @@ kubectl apply --filename \
 ## Setup Google Cloud
 
 ```bash
-# Run the commands in this section only if you prefer using
+# Run the commands in this section only if you are using
 # Google Cloud
 
 export PROVIDER=gcp
@@ -84,6 +84,18 @@ gcloud projects create $PROJECT_ID
 echo "https://console.cloud.google.com/marketplace/product/google/container.googleapis.com?project=$PROJECT_ID"
 
 # Open the URL and *ENABLE* the API
+```
+
+
+## Setup Google Cloud
+
+```bash
+# Run the commands in this section only if you are using
+# Google Cloud
+
+echo "https://console.developers.google.com/apis/api/sqladmin.googleapis.com/overview?project=$PROJECT_ID"
+
+# Open the URL and *ENABLE* the API
 
 export SA_NAME=devops-toolkit
 ```
@@ -92,7 +104,7 @@ export SA_NAME=devops-toolkit
 ## Setup Google Cloud
 
 ```bash
-# Run the commands in this section only if you prefer using
+# Run the commands in this section only if you are using
 # Google Cloud
 
 export SA="${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
@@ -112,7 +124,7 @@ gcloud iam service-accounts keys create gcp-creds.json \
 ## Setup Google Cloud
 
 ```bash
-# Run the commands in this section only if you prefer using
+# Run the commands in this section only if you are using
 # Google Cloud
 
 kubectl --namespace crossplane-system create secret generic \
@@ -129,7 +141,7 @@ kubectl get pkgrev
 ## Setup Google Cloud
 
 ```bash
-# Run the commands in this section only if you prefer using
+# Run the commands in this section only if you are using
 # Google Cloud
 
 yq --inplace ".spec.projectID = \"$PROJECT_ID\"" \
@@ -143,52 +155,52 @@ kubectl apply --filename \
 ## Setup Azure
 
 ```bash
-# TODO: Rewrite
+# Run the commands in this section only if you are using Azure
 
-# Run the commands in this section only if you prefer using Azure
+export PROVIDER=azure
 
 az ad sp create-for-rbac --sdk-auth --role Owner \
     | tee azure-creds.json
 
-export AZURE_CLIENT_ID=$(cat azure-creds.json \
-    | grep clientId \
+export AZURE_CLIENT_ID=$(cat azure-creds.json | grep clientId \
     | cut -c 16-51)
 
 export AAD_GRAPH_API=00000003-0000-0000-c000-000000000000
+```
 
-az ad app permission add \
-    --id "${AZURE_CLIENT_ID}" \
-    --api ${AAD_GRAPH_API} \
-    --api-permissions \
+
+## Setup Azure
+
+```bash
+# Run the commands in this section only if you are using Azure
+
+az ad app permission add --id "${AZURE_CLIENT_ID}" \
+    --api ${AAD_GRAPH_API} --api-permissions \
     e1fe6dd8-ba31-4d61-89e7-88639da4683d=Scope \
     06da0dbc-49e2-44d2-8312-53f166ab848a=Scope \
     7ab1d382-f21e-4acd-a863-ba3e13f7da61=Role
 
-az ad app permission grant \
-    --id $AZURE_CLIENT_ID \
-    --api $AAD_GRAPH_API \
-    --expires never
+az ad app permission grant --id $AZURE_CLIENT_ID \
+    --api $AAD_GRAPH_API --expires never
 
-az ad app permission admin-consent \
-    --id "${AZURE_CLIENT_ID}"
+az ad app permission admin-consent --id "${AZURE_CLIENT_ID}"
 
-kubectl --namespace crossplane-system \
-    create secret generic azure-creds \
+kubectl --namespace crossplane-system create secret generic azure-creds \
     --from-file creds=./azure-creds.json
+```
 
-helm repo add crossplane-stable \
-    https://charts.crossplane.io/stable
 
-helm repo update
+## Setup Azure
 
-helm upgrade --install \
-    crossplane crossplane-stable/crossplane \
-    --namespace crossplane-system \
-    --create-namespace \
-    --wait
+```bash
+# Run the commands in this section only if you are using Azure
 
 kubectl apply \
     --filename crossplane-config/provider-azure.yaml
+
+kubectl get pkgrev
+
+# Wait until the provider is healthy
 
 kubectl apply \
     --filename crossplane-config/provider-config-azure.yaml
@@ -215,7 +227,7 @@ kubectl apply --filename crossplane-config/provider-do.yaml
 ```
 
 
-## Install Providers
+## Almost Done
 
 ```bash
 kubectl create namespace a-team
