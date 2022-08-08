@@ -7,6 +7,11 @@
 ## Create A Database
 
 ```bash
+# If Azure
+kubectl --namespace crossplane-system \
+    create secret generic my-db-creds \
+    --from-literal password=ComplexPassword123@
+
 cat examples/sql/$PROVIDER-mrs.yaml
 
 kubectl apply --filename examples/sql/$PROVIDER-mrs.yaml
@@ -24,11 +29,22 @@ kubectl explain rdsinstance --recursive
 # If Google Cloud
 kubectl explain cloudsqlinstance --recursive
 
+# If Azure
+kubectl explain server --recursive
+```
+
+
+## Crossplane Resource Definitions
+
+```bash
 # If AWS
 # Open https://marketplace.upbound.io/providers/crossplane/provider-aws
 
 # If Google Cloud
 # Open https://marketplace.upbound.io/providers/crossplane/provider-gcp
+
+# If Azure
+# Open https://doc.crds.dev/github.com/crossplane-contrib/provider-jet-azure
 ```
 
 
@@ -40,6 +56,9 @@ kubectl explain cloudsqlinstance --recursive
 
 # If Google Cloud
 # Seach for `CloudSQLInstance`
+
+# If Azure
+# Seach for `Server` in the `dbforpostgresql.azure.jet.crossplane.io` group
 
 kubectl get managed
 
