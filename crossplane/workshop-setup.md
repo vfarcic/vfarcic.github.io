@@ -211,19 +211,19 @@ kubectl apply \
 
 ```bash
 # TODO: Uncomment if needed
-kubectl apply --filename crossplane-config/config-k8s.yaml
+# kubectl apply --filename crossplane-config/config-k8s.yaml
 
 # TODO: Uncomment if needed
-kubectl apply --filename crossplane-config/config-gitops.yaml
+# kubectl apply --filename crossplane-config/config-gitops.yaml
 
 # TODO: Uncomment if needed
-kubectl apply --filename crossplane-config/config-sql.yaml
+# kubectl apply --filename crossplane-config/config-sql.yaml
 
 # TODO: Uncomment if needed
-kubectl apply --filename crossplane-config/config-app.yaml
+# kubectl apply --filename crossplane-config/config-app.yaml
 
 # TODO: Uncomment if needed
-kubectl apply --filename crossplane-config/provider-do.yaml
+# kubectl apply --filename crossplane-config/provider-do.yaml
 ```
 
 
