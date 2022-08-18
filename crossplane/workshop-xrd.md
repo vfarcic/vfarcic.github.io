@@ -18,7 +18,7 @@ kubectl --namespace a-team apply \
 ```
 
 
-## Eplore Configurations
+## Explore Configurations
 
 ```bash
 cat packages/sql/definition.yaml
@@ -31,7 +31,7 @@ cat packages/sql/README.md
 ```
 
 
-## Eplore Configurations
+## Explore Configurations
 
 ```bash
 cat crossplane-config/config-sql.yaml
@@ -40,7 +40,7 @@ cat crossplane-config/config-sql.yaml
 
 kubectl get crds | grep devopstoolkitseries.com
 
-kubectl explain sql --recursive
+kubectl explain sqlclaim --recursive
 ```
 
 
@@ -59,6 +59,12 @@ kubectl get managed
 
 ```bash
 kubectl --namespace a-team get secret my-db --output yaml
+
+kubectl --namespace a-team get secret my-db \
+    --output jsonpath="{.data}"
+
+kubectl --namespace a-team get secret my-db \
+    --output jsonpath="{.data.endpoint}" | base64 -d
 ```
 
 
@@ -84,7 +90,8 @@ export CLUSTER_TYPE=aks
 # If Google Cloud
 export CLUSTER_TYPE=gke
 
-# TODO: Continue
+cat crossplane-config/config-k8s.yaml
+
 kubectl apply --filename crossplane-config/config-k8s.yaml
 
 kubectl get pkgrev
@@ -106,11 +113,11 @@ kubectl --namespace a-team apply \
 ```bash
 cat packages/k8s/definition.yaml
 
-cat packages/sql/$PROVIDER.yaml
+cat packages/k8s/$CLUSTER_TYPE.yaml
 
-cat packages/sql/crossplane.yaml
+cat packages/k8s/crossplane.yaml
 
-cat packages/sql/README.md
+cat packages/k8s/README.md
 ```
 
 
@@ -121,33 +128,38 @@ kubectl get pkgrev
 
 kubectl get crds | grep devopstoolkitseries.com
 
-kubectl explain compositecluster --recursive
+kubectl explain clusterclaim --recursive
 ```
 
 
 ## Query Resources
 
 ```bash
-kubectl --namespace a-team get sqlclaims
+kubectl --namespace a-team get clusterclaims
 
-kubectl get sqls
+kubectl get compositeclusters
 
 kubectl get managed
+
+kubectl --namespace a-team get clusterclaims
+
+# Wait until it's `READY`
 ```
 
 
-## Access The Database
+## Access The Cluster
 
 ```bash
-kubectl --namespace a-team get secret my-db --output yaml
-```
+kubectl --namespace a-team get secret a-team-$CLUSTER_TYPE \
+    --output yaml
 
+cat examples/k8s/get-kubeconfig-$CLUSTER_TYPE.sh
 
-## Delete The Database
+chmod +x examples/k8s/get-kubeconfig-$CLUSTER_TYPE.sh
 
-```bash
-kubectl --namespace a-team delete \
-    --filename examples/sql/$PROVIDER.yaml
+./examples/k8s/get-kubeconfig-$CLUSTER_TYPE.sh
 
-kubectl get managed 
+kubectl --kubeconfig kubeconfig.yaml get namespaces
+
+kubectl --kubeconfig kubeconfig.yaml get crds
 ```
