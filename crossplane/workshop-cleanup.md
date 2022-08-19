@@ -1,6 +1,10 @@
 ## Cleanup
 
 ```bash
+# If AWS
+kubectl --kubeconfig kubeconfig.yaml --namespace ingress-nginx \
+    delete service a-team-eks-ingress-ingress-nginx-controller
+
 kubectl --namespace a-team delete \
     --filename examples/k8s/$PROVIDER-$CLUSTER_TYPE.yaml
 

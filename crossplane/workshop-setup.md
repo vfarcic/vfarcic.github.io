@@ -64,8 +64,8 @@ kubectl get pkgrev
 
 # Wait until the provider is healthy
 
-kubectl apply --filename \
-    crossplane-config/provider-config-aws.yaml
+kubectl apply \
+    --filename crossplane-config/provider-config-aws.yaml
 ```
 
 
