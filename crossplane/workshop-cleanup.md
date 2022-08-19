@@ -7,7 +7,6 @@ kubectl --namespace a-team delete \
 kubectl get managed
 
 # Wait until all the managed resources are deleted
-#   (excluding `object` and `release`)
 
 # If Google Cloud
 gcloud projects delete $PROJECT_ID

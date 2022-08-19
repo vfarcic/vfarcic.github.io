@@ -7,6 +7,24 @@
 ## Create A Database
 
 ```bash
+# If Azure
+export RESOURCE_GROUP=dot$(date +%Y%m%d%H%M%S)
+
+# If Azure
+yq --inplace \
+    ".spec.id = \"$RESOURCE_GROUP\"" \
+    examples/sql/$PROVIDER.yaml
+
+# If Azure
+kubectl --namespace crossplane-system \
+    create secret generic $RESOURCE_GROUP-creds \
+    --from-literal password=ComplexPassword123@
+```
+
+
+## Create A Database
+
+```bash
 kubectl apply --filename crossplane-config/config-sql.yaml
 
 kubectl get pkgrev
@@ -58,11 +76,14 @@ kubectl get managed
 ## Access The Database
 
 ```bash
+# If NOT Azure
 kubectl --namespace a-team get secret my-db --output yaml
 
+# If NOT Azure
 kubectl --namespace a-team get secret my-db \
     --output jsonpath="{.data}"
 
+# If NOT Azure
 kubectl --namespace a-team get secret my-db \
     --output jsonpath="{.data.endpoint}" | base64 -d
 ```
@@ -153,10 +174,23 @@ kubectl --namespace a-team get clusterclaims
 kubectl --namespace a-team get secret a-team-$CLUSTER_TYPE \
     --output yaml
 
+# If Google
+KUBECONFIG=$PWD/kubeconfig.yaml gcloud container clusters \
+    get-credentials a-team-gke --project $PROJECT_ID \
+    --region us-east1
+
+# If NOT Google
 cat examples/k8s/get-kubeconfig-$CLUSTER_TYPE.sh
 
+# If NOT Google
 chmod +x examples/k8s/get-kubeconfig-$CLUSTER_TYPE.sh
+```
 
+
+## Access The Cluster
+
+```bash
+# If NOT Google
 ./examples/k8s/get-kubeconfig-$CLUSTER_TYPE.sh
 
 kubectl --kubeconfig kubeconfig.yaml get namespaces

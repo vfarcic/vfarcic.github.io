@@ -153,7 +153,7 @@ cat examples/aws-eks.yaml
 
 cat packages/sql/definition.yaml
 
-cat packages/sql/google.yaml
+cat packages/sql/gcp.yaml
 
 cat examples/google-mysql.yaml
 

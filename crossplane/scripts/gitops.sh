@@ -191,7 +191,7 @@ kubectl --namespace a-team \
 
 cat charts/sql/templates/app.yaml
 
-cat packages/sql/google.yaml
+cat packages/sql/gcp.yaml
 
 cat charts/sql/templates/db.yaml
 
@@ -274,7 +274,7 @@ kubectl --namespace a-team \
 
 cat packages/sql/definition.yaml
 
-cat packages/sql/google.yaml
+cat packages/sql/gcp.yaml
 
 ###########
 # Destroy #
