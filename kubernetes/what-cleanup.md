@@ -1,7 +1,12 @@
 ## Cleanup
 
 ```bash
-# TODO: Delete Ingress service
+kubectl --namespace production get secret a-team-eks \
+    --output jsonpath="{.data.kubeconfig}" \
+    | base64 -d | tee kubeconfig.yaml
+
+kubectl --kubeconfig kubeconfig.yaml --namespace ingress-nginx \
+    delete service a-team-eks-ingress-ingress-nginx-controller
 
 kubectl --namespace production delete \
     --filename crossplane-examples/
