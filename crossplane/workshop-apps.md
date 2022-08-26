@@ -4,6 +4,42 @@
 # Apps And Infra
 
 
+## Setup
+
+```bash
+# If AWS
+export CLUSTER_TYPE=eks
+
+# If Azure
+export CLUSTER_TYPE=aks
+
+# If Google Cloud
+export CLUSTER_TYPE=gke
+
+kubectl apply --filename crossplane-config/config-k8s.yaml
+
+kubectl --namespace a-team apply \
+    --filename examples/k8s/$PROVIDER-$CLUSTER_TYPE.yaml
+```
+
+
+## Setup
+
+```bash
+kubectl --namespace a-team get clusterclaims
+
+# Wait until it is `READY`
+
+# If Google
+KUBECONFIG=$PWD/kubeconfig.yaml gcloud container clusters \
+    get-credentials a-team-gke --project $PROJECT_ID \
+    --region us-east1
+
+# If NOT Google
+./examples/k8s/get-kubeconfig-$CLUSTER_TYPE.sh
+```
+
+
 ## LB IP
 
 ```bash
@@ -15,6 +51,12 @@ export INGRESS_HOSTNAME=$(kubectl --kubeconfig kubeconfig.yaml \
 
 # If AWS
 export INGRESS_HOST=$(dig +short $INGRESS_HOSTNAME)
+
+# If Google or Azure
+export INGRESS_HOST=$(kubectl --kubeconfig kubeconfig.yaml \
+    --namespace ingress-nginx get service \
+    a-team-$CLUSTER_TYPE-ingress-ingress-nginx-controller \
+    --output jsonpath="{.status.loadBalancer.ingress[0].ip}")
 
 echo $INGRESS_HOST
 
@@ -103,14 +145,12 @@ kubectl --kubeconfig kubeconfig.yaml --namespace production \
 ## Credentials
 
 ```bash
-# If AWS
-kubectl --kubeconfig kubeconfig.yaml\
+kubectl --kubeconfig kubeconfig.yaml \
      --namespace crossplane-system create secret generic \
-    aws-creds --from-file creds=./aws-creds.conf
+    $PROVIDER-creds --from-file creds=./$PROVIDER-creds.conf
 
-# If AWS
 kubectl --kubeconfig kubeconfig.yaml apply \
-    --filename crossplane-config/provider-config-aws.yaml
+    --filename crossplane-config/provider-config-$PROVIDER.yaml
 ```
 
 
@@ -126,6 +166,7 @@ yq --inplace \
 ## Create A Stateful App
 
 ```bash
+# TODO: Change the port to hard-coded
 cat examples/app/backend-$PROVIDER-postgresql.yaml
 
 kubectl --kubeconfig kubeconfig.yaml --namespace production \
