@@ -1,6 +1,6 @@
 # What is GitOps
 # Process is not an issue
-# Manifests are the problem
+# Manifests are the problem
 # Infra and apps
 
 # TODO: Setup the management cluster with Argo CD
@@ -43,7 +43,7 @@ cat argocd/infra.yaml \
     | tee argocd/infra.yaml
 
 #############
-# Setup AWS #
+# Setup AWS #
 #############
 
 # Replace `[...]` with your access key ID`

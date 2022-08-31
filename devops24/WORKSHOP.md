@@ -8,7 +8,7 @@ Kubernetes adoption has grown in leaps and bounds, over the past few months and 
 
 This training is not your first contact with Kubernetes. You should already be proficient with Deployments, ReplicaSets, Pods, Ingress, Services, PersistentVolumes, PersistentVolumeClaims, Namespaces and a few other things. Certain level of Kubernetes knowledge and hands-on experience is needed. If that's not the case, what follows might be too confusing and advanced. If you’d still like to participate, please read [The DevOps 2.3 Toolkit: Kubernetes](https://amzn.to/2GvzDjy) first, or consult the Kubernetes documentation before you attend.
 
-## What you’ll learn—and how you can apply it
+## What you’ll learn—and how you can apply it
 
 * Build a solid continuous delivery pipeline using Kubernetes, Jenkins, Helm and other tools
 * Discover new features such as auto scaling, rolling updates, resource quotas, and cluster size

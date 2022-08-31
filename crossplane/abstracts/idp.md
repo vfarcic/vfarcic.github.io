@@ -6,6 +6,6 @@ This session will explore the architecture and the critical ingredients needed f
 
 We'll combine tools like Backstage, Argo CD, Crossplane, and quite a few others into a platform that everyone can use, no matter their experience level.
 
-## Benefit the ecosystem?
+## Benefit the ecosystem?
 
 This presentation covers a set of tools inside the CNCF ecosystem (Backstage, Argo CD, Crossplane, etc.) that can be used to build a custom Internal Developer Platform (IDP).

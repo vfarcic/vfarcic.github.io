@@ -17,7 +17,7 @@ kubectl create namespace crossplane-system
 kubectl create namespace a-team
 
 #############
-# Setup AWS #
+# Setup AWS #
 #############
 
 # Replace `[...]` with your access key ID`
@@ -160,7 +160,7 @@ helm delete civo --namespace a-team
 kubectl get managed
 
 ###########
-# Destroy #
+# Destroy #
 ###########
 
 # Replace `[...]` with the 

@@ -226,8 +226,8 @@ kubectl apply --filename apps.yaml
 #########
 
 # Events: Argo Events
-# Pipelines (CI/CD): Argo Workflows
-# GitOps: Argo CD
+# Pipelines (CI/CD): Argo Workflows
+# GitOps: Argo CD
 # Progressive delivery: Argo Rollouts
 # Service Mesh: Istio
 # Metrics: Prometheus

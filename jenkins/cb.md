@@ -5,7 +5,7 @@
 [ ] Integration with Jira (Katrin)
 [X] Combining Jenkins and Docker (Katrin)
 [X] Using Docker containers as Jenkins slaves (Katrin)
-[ ] Testability of pipeline scripts (Katrin)
+[ ] Testability of pipeline scripts (Katrin)
 [X] CI for branches (Katrin)
 [X] General best practices for using Jenkins (Katrin)
 [ ] Security (Daniel)

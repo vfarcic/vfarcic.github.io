@@ -15,5 +15,5 @@ kubectl get managed
 # If Google Cloud
 gcloud projects delete $PROJECT_ID
 
-# Destroy or reset the management cluster
+# Destroy or reset the management cluster
 ```

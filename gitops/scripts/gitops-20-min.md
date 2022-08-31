@@ -119,7 +119,7 @@ git commit -m "Initial commit"
 git push --set-upstream origin master
 ```
 
-## Do
+## Do
 
 ### The Objectives And The Principles Behind GitOps
 
@@ -182,7 +182,7 @@ watch 'kubectl --namespace production get \
 
 ### Diagram
 
-## Destroy
+## Destroy
 
 ```bash
 minikube delete

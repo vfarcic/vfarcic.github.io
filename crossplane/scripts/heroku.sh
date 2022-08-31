@@ -15,7 +15,7 @@ kubectl create namespace crossplane-system
 kubectl create namespace a-team
 
 #############
-# Setup AWS #
+# Setup AWS #
 #############
 
 # Replace `[...]` with your access key ID`

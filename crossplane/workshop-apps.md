@@ -52,21 +52,27 @@ export INGRESS_HOSTNAME=$(kubectl --kubeconfig kubeconfig.yaml \
 # If AWS
 export INGRESS_HOST=$(dig +short $INGRESS_HOSTNAME)
 
-# If Google or Azure
+# If Google
 export INGRESS_HOST=$(kubectl --kubeconfig kubeconfig.yaml \
     --namespace ingress-nginx get service \
-    a-team-$CLUSTER_TYPE-ingress-ingress-nginx-controller \
+    a-team-gke-ingress-ingress-nginx-controller \
     --output jsonpath="{.status.loadBalancer.ingress[0].ip}")
-
-echo $INGRESS_HOST
-
-# If there are multiple IPs, replace the value with only one of them
 ```
 
 
 ## LB IP
 
 ```bash
+# If Azure
+export INGRESS_HOST=$(kubectl --kubeconfig kubeconfig.yaml \
+    --namespace ingress-nginx get service \
+    ateamaks-ingress-ingress-nginx-controller \
+    --output jsonpath="{.status.loadBalancer.ingress[0].ip}")
+
+echo $INGRESS_HOST
+
+# If there are multiple IPs, replace the value with only one of them
+
 yq --inplace \
     ".spec.parameters.host = \"silly-demo.$INGRESS_HOST.nip.io\"" \
     examples/app/backend-prod.yaml
@@ -110,7 +116,8 @@ cat crossplane-config/config-app.yaml
 kubectl --kubeconfig kubeconfig.yaml get crds \
     | grep devopstoolkitseries.com
 
-kubectl --kubeconfig kubeconfig.yaml explain appclaim --recursive
+kubectl --kubeconfig kubeconfig.yaml explain appclaim \
+    --recursive
 ```
 
 
@@ -145,10 +152,17 @@ kubectl --kubeconfig kubeconfig.yaml --namespace production \
 ## Credentials
 
 ```bash
+# If AWS
 kubectl --kubeconfig kubeconfig.yaml \
      --namespace crossplane-system create secret generic \
     $PROVIDER-creds --from-file creds=./$PROVIDER-creds.conf
 
+# If Google or Azure
+kubectl --kubeconfig kubeconfig.yaml \
+     --namespace crossplane-system create secret generic \
+    $PROVIDER-creds --from-file creds=./$PROVIDER-creds.json
+
+# If Google
 kubectl --kubeconfig kubeconfig.yaml apply \
     --filename crossplane-config/provider-config-$PROVIDER.yaml
 ```
@@ -166,7 +180,11 @@ yq --inplace \
 ## Create A Stateful App
 
 ```bash
-# TODO: Change the port to hard-coded
+# If Azure
+kubectl --kubeconfig kubeconfig.yaml \
+    --namespace crossplane-system create secret generic \
+    silly-demo-creds --from-literal "password=9jPD02g#fjWZ"
+
 cat examples/app/backend-$PROVIDER-postgresql.yaml
 
 kubectl --kubeconfig kubeconfig.yaml --namespace production \

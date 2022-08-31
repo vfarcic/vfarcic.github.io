@@ -145,17 +145,17 @@ git push
 # Kubernetes API makes the difference
 
 ############
-# Problems #
+# Problems #
 ############
 
-# Tools might not be GitOps-friendly (e.g., canary deployments)
+# Tools might not be GitOps-friendly (e.g., canary deployments)
 # Approval flow (e.g., PR)
 
 ##################
-# Why Only Apps? #
+# Why Only Apps? #
 ##################
 
-# GitOps tools treat k8s as the actual state
+# GitOps tools treat k8s as the actual state
 # K8s is all about applications (containers)?
 # K8s main strength is its API, not containers
 # We need to convert Kube API into the universal API
@@ -169,7 +169,7 @@ git push
 # Needs to be vendor-neutral (everyone is multi-cloud)
 
 ##################################
-# Extending GitOps To Everything #
+# Extending GitOps To Everything #
 ##################################
 
 # If there is a universal control plane and it is based on k8s, GitOps becomes universal
@@ -260,7 +260,7 @@ kubectl \
     8080:443 &
 
 # If one of the commands that use `kubeconfig.yaml` return an
-#   error message `You must be logged in to the server`,
+#   error message `You must be logged in to the server`,
 #   the credentials expired and you'll need to retrieve it again
 #   with the previous command.
 

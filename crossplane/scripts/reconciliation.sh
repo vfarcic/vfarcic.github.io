@@ -15,7 +15,7 @@ kubectl create namespace a-team
 kubectl create namespace b-team
 
 #############
-# Setup AWS #
+# Setup AWS #
 #############
 
 # Replace `[...]` with your access key ID`

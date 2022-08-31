@@ -1,6 +1,6 @@
 # Crossplane: Using Kubernetes API To Manage Everything
 
-## Abstract
+## Abstract
 
 If we had to define the most significant benefit Kubernetes provides, that would not be the ability to run containers, fault-tolerance, or immutability. The main benefit is its API. It is well defined, versatile, and extensible. It might be the main culprit behind the "explosion" of the ecosystem created around Kubernetes.
 

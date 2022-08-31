@@ -62,7 +62,7 @@ argocd account update-password \
 echo http://argo-cd.$INGRESS_HOST.nip.io
 
 #############
-# Setup AWS #
+# Setup AWS #
 #############
 
 # Replace `[...]` with your access key ID`

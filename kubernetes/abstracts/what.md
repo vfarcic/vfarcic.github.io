@@ -8,6 +8,6 @@ This talk will try to demystify Kubernetes and show that it might not be (only) 
 
 I'll try to prove that Kubernetes is not what most of us think it is.
 
-## Benefit the ecosystem?
+## Benefit the ecosystem?
 
 This presentation covers a set of tools inside the CNCF ecosystem (Crossplane, KubeVirt, etc.) that can be used to extend Kubernetes beyond its core functions. As a result, attendees should have a better understanding of the Kubernetes "real" goals (e.g., extensibility, CRDs, controllers, etc.).

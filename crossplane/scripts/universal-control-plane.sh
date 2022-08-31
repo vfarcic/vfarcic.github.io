@@ -15,7 +15,7 @@ kubectl create namespace a-team
 kubectl create namespace production
 
 #############
-# Setup AWS #
+# Setup AWS #
 #############
 
 # Replace `[...]` with your access key ID`
@@ -158,10 +158,10 @@ kubectl --namespace production \
 
 # - It's not vendor-specific
 
-# - An API must have a control plane behind it
+# - An API must have a control plane behind it
 
 # None of the IaC tools do that
-# - `aws`, `gcloud`, `az`, etc. are imperative
+# - `aws`, `gcloud`, `az`, etc. are imperative
 # - CloudFormation, ARM, etc. is vendor-specific
 # - Terraform, Pulumi, Ansible, etc do not have an API nor they have a scheduler (drift detection and reconciliation)
 # - etc.
@@ -174,7 +174,7 @@ kubectl --namespace production \
 
 # We can certainly use the APIs with infrastructure and services
 # Azure has an API
-# AWS has an API
+# AWS has an API
 # Google Cloud has an API
 # Everyone has an API
 # Everyone's API is their API

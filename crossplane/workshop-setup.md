@@ -185,8 +185,8 @@ az ad app permission grant --id $AZURE_CLIENT_ID \
 
 az ad app permission admin-consent --id "${AZURE_CLIENT_ID}"
 
-kubectl --namespace crossplane-system create secret generic azure-creds \
-    --from-file creds=./azure-creds.json
+kubectl --namespace crossplane-system create secret generic \
+    azure-creds --from-file creds=./azure-creds.json
 ```
 
 
