@@ -29,7 +29,7 @@ export AWS_ACCESS_KEY_ID=[...]
 export AWS_SECRET_ACCESS_KEY=[...]
 
 eksctl create cluster --name management --region us-east-1 \
-    --node-type t2.large --nodes 3
+    --node-type t2.large --nodes 3 --version 1.23
 
 kubectl create namespace crossplane-system
 
@@ -166,6 +166,7 @@ spec:
   parameters:
     nodeSize: small
     minNodeCount: 3
+    version: 1.23
   writeConnectionSecretToRef:
     name: production-cluster" \
     | tee infra/clusters/production.yaml
