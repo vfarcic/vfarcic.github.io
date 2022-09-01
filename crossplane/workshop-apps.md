@@ -71,6 +71,7 @@ export INGRESS_HOST=$(kubectl --kubeconfig kubeconfig.yaml \
 
 echo $INGRESS_HOST
 
+# If the output is empty, repeat the `export` command.
 # If there are multiple IPs, replace the value with only one of them
 
 yq --inplace \
