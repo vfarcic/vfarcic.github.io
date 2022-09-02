@@ -146,6 +146,7 @@
 
 # Meetups / Webinars
 
+* What (Really) Is Kubernetes? at Humanitec Meetup (25th of August 2022)
 * [How to Build-up DevOps Toolstack?](https://www.eventbrite.co.uk/e/devopsx-talks-8-how-to-build-up-devops-toolstack-tickets-157589471351) at [DevOpsX Talks](https://continium.io/en/devops-events/devopsx-talks/) (23nd of June 2021)
 * [Developers do not need Kubernetes](https://www.meetup.com/Cloud-Native-London/events/274954127/) at [Cloud Native London](https://www.meetup.com/Cloud-Native-London) (2nd of June 2021)
 * How To Apply GitOps On Infrastructure (For Real) at [NADOG](https://nadog.com/) (19th of May 2021)
