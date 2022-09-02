@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Freedom Means That Kubernetes Needs To Disappear</title>
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+        <link rel="stylesheet" href="../dist/theme/moon.css">
+        <link rel="stylesheet" href="../css/theme/logos.css">
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section id="cover"
+                    data-markdown="cover-kuberentes-disappear.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+                </section>
+                <section id="about-me"
+                    data-markdown="../docs/about-me-new.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+                </section>
+                <section id="kubernetes-devs"
+                    data-markdown="kubernetes-devs.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+				</section>
+                <section id="setup"
+                    data-markdown="kubernetes-disappear-setup.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+                </section>
+                <section id="kubernetes-disappear-infra"
+                    data-markdown="kubernetes-disappear-infra.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+                </section>
+                <section id="kubernetes-disappear-apps"
+                    data-markdown="kubernetes-disappear-apps.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+                </section>
+                <section id="the-end"
+                    data-markdown="../docs/the-end.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+                </section>
+                <section id="the-end-cleanup"
+                    data-markdown="kubernetes-dissapear-cleanup.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+                </section>
+            </div>
+            <div class="sponsor"><img src="../img/upbound-small.png"></div>
+            <div class="twitter">@vfarcic</div>
+        </div>
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+        <script src="plugin/markdown/markdown.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMarkdown ]
+			});
+		</script>
+    </body>
+</html>

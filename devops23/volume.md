@@ -12,7 +12,7 @@
 Note:
 Most of the time, stateful applications store their state on disk. That leaves us with a problem. If a container crashes, `kubelet` will restart it. The problem is that it will create a new container based on the same image. All data accumulated inside a container that crashed will be lost.
 
-Kubernetes Volumes solve the need to preserve the state across container crashes. In essence, Volumes are references to files and directories made accessible to containers that form a Pod. The significant difference between different types of Kubernetes Volumes is in the way these files and directories are created.
+Kubernetes Volumes solve the need to preserve the state across container crashes. In essence, Volumes are references to files and directories made accessible to containers that form a Pod. The significant difference between different types of Kubernetes Volumes is in the way these files and directories are created.
 
 While the primary use-case for Volumes is the preservation of state, there are quite a few others. For example, we might use Volumes to access Docker's socket running on a host. Or we might use them to access configuration residing in a file on the host file system.
 

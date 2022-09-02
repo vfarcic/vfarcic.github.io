@@ -7,9 +7,18 @@
 ### [@vfarcic](https://twitter.com/vfarcic)
 
 
-## [TechnologyConversations.com](http://technologyconversations.com)
-
-![TechnologyConversations.com](../img/qr/technology-conversations.jpg)
+<figure style="width: 80%; margin-left:100px;float: left;">
+    <a href="https://upbound.io">
+        <img src="../img/products/upbound.png"/>
+    </a>
+    <a href="https://upbound.io">upbound.io</a>
+</figure>
+<figure style="width: 80%; margin-right:100px;float: right;">
+    <a href="https://crossplane.io">
+        <img src="../img/products/crossplane.png"/>
+    </a>
+    <a href="https://crossplane.io">crossplane.io</a>
+</figure>
 
 
 ## [DevOpsParadox.com Podcast](https://www.devopsparadox.com)
@@ -26,30 +35,15 @@
 </figure>
 
 
-## [DevOps Paradox Book](https://amzn.to/2myrYYA)
+## [DevOps Toolkit YouTube](https://youtube.com/c/devopstoolkit)
 
-<figure style="width: 40%; height: 40%; margin-left:100px;float: left;">
-    <a href="https://amzn.to/2myrYYA">
-        <img src="../img/products/devops-paradox-book.png"/>
+<figure style="width: 45%; margin-left:100px;float: left;">
+    <a href="https://www.youtube.com/c/devopstoolkit">
+        <img src="../img/dot.png"/>
     </a>
 </figure>
-<figure style="width: 30%; height: 30%; margin-right:100px;float: right;">
-    <a href="https://amzn.to/2myrYYA">
-        <img src="../img/qr/devops-paradox-book.png"/>
-    </a>
-</figure>
-
-
-## [DevOpsToolkitSeries.com](http://www.devopstoolkitseries.com/)
-
-<figure style="width: 40%; height: 40%; margin-left:100px;float: left;">
-    <a href="https://www.devopstoolkitseries.com/">
-        <img src="../img/devops-toolkit-series.png"/>
-    </a>
-    <h4>Mailing list: <a href="http://eepurl.com/bXonVj">http://eepurl.com/bXonVj</a></h4>
-</figure>
-<figure style="width: 30%; height: 30%; margin-right:100px;float: right;">
-    <a href="https://www.devopstoolkitseries.com/">
-        <img src="../img/qr/devops-toolkit-series.png"/>
+<figure style="width: 30%; margin-right:100px;float: right;">
+    <a href="https://www.youtube.com/c/devopstoolkit">
+        <img src="../img/qr/dot.png"/>
     </a>
 </figure>

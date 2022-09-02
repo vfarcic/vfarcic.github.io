@@ -28,12 +28,12 @@ Each topic is a mixture of theory, hands-on exercises and best practise expert i
 
 Viktor Farcic
 
-## Prerequisites
+## Prerequisites
 
 Familiarity with basic Linux operations.
 Internet connection favourably with WIFI.
 
-## Course Outline
+## Course Outline
 
 ### Day 1
 

@@ -12,6 +12,33 @@
 
 # Conferences
 
+* [What (Really) Is Kubernetes?](https://www.skilupdays.io/cloud-native-22/agenda/session/952548) at [SkilUp Day: Cloud Native](https://www.skilupdays.io/cloud-native-22) (21th of July 2022)
+* [Freedom Means That Kubernetes Needs To Disappear (in Spanish)](https://www.jbcnconf.com/2022/infoTalk.html?id=61f1a0e0c4c4120b9d29afa0) at [JBCNConf](https://www.jbcnconf.com/2022/) (19th of July 2022)
+* End-To-End GitOps at [KCD Berlin](https://community.cncf.io/events/details/cncf-kcd-berlin-presents-kubernetes-community-days-berlin-2022-1) (29th of June 2022)
+* [AMA (Ask Me Anything) Session: Kubernetes](https://devopscon.io/kubernetes-ecosystem/ama-ask-me-anything-session-kubernetes/) at [DevOpsCon](https://devopscon.io/berlin) (21th of June 2022)
+* [Freedom Means That Kubernetes Needs To Disappear](https://devopscon.io/kubernetes-ecosystem/freedom-means-that-kubernetes-needs-to-disappear/) at [DevOpsCon](https://devopscon.io/berlin) (21th of June 2022)
+* [Applying GitOps to Everything with Crossplane + Flux](https://www.gitopsdays.com/speaker/viktor-farcic/) at [GitOps Days](https://www.gitopsdays.com) (9th of June 2022)
+* [How to build an IDP with Backstage, Crossplane and Argo CD](https://platformcon.com/talk/how-to-build-an-idp-with-backstage-crossplane-and-argo-cd) at [PlatformCon](https://platformcon.com/) (9th of June 2022)
+* [The Only Thing That Matters In DevOps Is...](https://platformcon.com/talk/the-only-thing-that-matters-in-devops-is) at [PlatformCon](https://platformcon.com/) (9th of June 2022)
+* [The Future Is Above Clouds](https://www.devtalks.ro/agenda/1-day-1#devops-stage) at [DevTalks](https://www.devtalks.ro) (8th of June 2022)
+* [How To Build Your Own Heroku in 2022?](https://craft-conf.com/talks) at [Craft](https://craft-conf.com/) (2nd of June 2022)
+* The Future Is Above Clouds at [Spain Clouds Summit](https://www.eventbrite.es/e/entradas-spainclouds-summit-2022-332834024527) (1st of June 2022)
+* [The future of GitOps](https://devopspro.lt/the-future-of-gitops/) at [DevOps Pro Europe](https://devopspro.lt/) (25th of May 2022)
+* [The Future Is Above Clouds](https://devopspro.lt/Viktor-Farcic/) at [DevOps Pro Europe](https://devopspro.lt/) (25th of May 2022)
+* [Production-scale Containerized Game Platform Practice in Bytedance](https://sched.co/ytna) at [KubeCon](https://events.linuxfoundation.org/kubecon-cloudnativecon-europe/) (18th of May 2022)
+* [The Only Thing That Matters In DevOps Is...](https://www.conf42.com/Cloud_Native_2022_Viktor_Farcic_only_thing_that_matters_in_devops) at [Conf42](https://www.conf42.com/cloud2022) (28th of April 2022)
+* DevOps Roadmap 2022 at [Dawn Of Cloud](https://www.linkedin.com/events/technote-dawnofthecloud6894940524034564096/) (5th of March 2022)
+* Automated Drift Detection And Reconciliation Applied To Infrastructure at [SkilUp Days: SRE](https://sessionize.com/site-reliability-engineering-skilupday) (17th of February 2022)
+* [Automated Drift Detection And Reconciliation Applied To Infrastructure](https://www.developerweek.com/conference/speakers/) at [DeveloperWeek](https://www.developerweek.com) (7th of February 2022)
+* [Using Kubernetes API To Manage Everything](https://fosdem.org/2022/schedule/event/using_kubernetes_api_to_manage_everything/) at [Fosdem](https://fosdem.org/2022/) (6th of February 2022)
+* [Freedom Means That Kubernetes Needs To Disappear](https://fosdem.org/2022/schedule/event/container_k8s_disappear/) at [Fosdem](https://fosdem.org/2022/) (6th of February 2022)
+* How To Apply GitOps Without Making Developers Go Crazy at [DevOpStars'22](https://geekle.us/devops) (27th of January 2022)
+* [Crossplane: Compose Infrastructure and Services Into Custom Platform APIs](https://kccncosschn21.sched.com/event/pcci) at [KubeCon China](https://www.lfasiallc.com/kubecon-cloudnativecon-open-source-summit-china/) (9th of December 2021)
+* [How To Build Your Own Heroku in 2021?](https://www.eventbrite.es/e/entradas-spainclouds-kubernetes-day-190608604467) at [Spain Cloud](https://www.spainclouds.com/) (25th of November 2021)
+* Freedom Means That Kubernetes Needs To Disappear at [DevOps D-Day](https://www.2021-devops-dday.com/) (18th of November 2021)
+* [How To Apply GitOps Without Making Developers Go Crazy](https://events.codemotion.com/conferences/online/2021/online-tech-conference-italian-edition-autumn/agenda) at [Codemotion Online Tech Conference 2021 - Italian Edition](https://events.codemotion.com/conferences/online/2021/online-tech-conference-italian-edition-autumn) (10th of November 2021)
+* The Future Is Above Clouds at [DevOps Experience: The Roaring 2020s](https://www.techstrongevents.com/devopsexperience) (27th of October 2021)
+* Using Kubernetes API To Manage Everything at [API World](https://apiworld.co/) (26th of October 2021)
 * [Developers do not need Kubernetes (keynote)](https://testistanbul.org/viktor-farcic/) at [TestIstanbul Conference](https://testistanbul.org/) (7th of October 2021)
 * [How To Apply GitOps Without Making Developers Go Crazy](https://www.devopsworld.com/agenda/session/596734) at [DevOps World](https://www.devopsworld.com/) (30th of September 2021)
 * How To Apply GitOps On Infrastructure at [GitOps Evolution](https://www.mediaopsevents.com/gitopsevolution) (23rd of September 2021)
@@ -147,6 +174,14 @@
 # Meetups / Webinars
 
 * What (Really) Is Kubernetes? at Humanitec Meetup (25th of August 2022)
+* [Crossplane: Control Plane of Control Planes](https://tanzu.vmware.com/developer/tv/enlightning/15/) at [Enlightning](https://tanzu.vmware.com/developer/tv/enlightning/) (28th of July 2022)
+* The Future Is Above Clouds at [Docker Meetup Budapest](https://www.meetup.com/Docker-Budapest-Hungary/events/285965800/) (1st of June 2022)
+* [Introduction To Crossplane](https://youtu.be/m5_7M9Xe9cc) at [Cloud Native Islamabad](https://www.youtube.com/c/CloudNativeIslamabad) (26th of May 2022)
+* [DevOps: Building Internal Developer Platform (IDP)](https://app.livestorm.co/malt-community/devops-building-internal-developer-platform-idp) at Malt (22nd of March 2022)
+* [How to make Kubernetes clusters production-ready with Crossplane](https://youtu.be/cPVrCNhHo7Q) at [k6](https://www.youtube.com/channel/UC8ryLdIbmkVJq4Zt613oZPQ) (18th of March 2022)
+* [Load testing for DevOps](https://youtu.be/xUlNdsr6y_E) at [k6](https://www.youtube.com/channel/UC8ryLdIbmkVJq4Zt613oZPQ) (11th of March 2022)
+* Round table - Cloud security in 2022 at [CloudWize](https://hopin.com/events/round-table-cloud-security-in-2022/registration) (2nd of March 2022)
+* [Using GitOps for Infrastructure and Applications with Crossplane & Argo CD](https://youtu.be/pdECNa80pfk) at [Codefresh](https://www.youtube.com/channel/UC9r94SY6BqN05kXPIHsDXPg) (18th of January 2022)
 * [How to Build-up DevOps Toolstack?](https://www.eventbrite.co.uk/e/devopsx-talks-8-how-to-build-up-devops-toolstack-tickets-157589471351) at [DevOpsX Talks](https://continium.io/en/devops-events/devopsx-talks/) (23nd of June 2021)
 * [Developers do not need Kubernetes](https://www.meetup.com/Cloud-Native-London/events/274954127/) at [Cloud Native London](https://www.meetup.com/Cloud-Native-London) (2nd of June 2021)
 * How To Apply GitOps On Infrastructure (For Real) at [NADOG](https://nadog.com/) (19th of May 2021)
@@ -191,6 +226,10 @@
 * Specification by Example at Universitat Politecnica de Barcelona (UPC) (28th of April 2014)
 * BDD Workshop at Barcelona Software Craftsmanship (4th of March 2014)
 * Specification by Example at Barcelona Software Craftsmanship (4th of February 2014)
+
+## Articles
+
+* [The Dev-X Project: Featuring Viktor Farcic](https://livecycle.io/blogs/the-dev-x-project-viktor-farcic/) at [Livecycle](https://livecycle.io) (10th of March 2022)
 
 ## Slides
 

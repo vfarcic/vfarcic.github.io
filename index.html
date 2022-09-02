@@ -3,35 +3,15 @@
 
 	<head>
 		<meta charset="utf-8">
-
 		<title>Presentations & Workshops</title>
-
 		<meta name="author" content="Viktor Farcic">
-
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/night.css" id="theme">
-		<link rel="stylesheet" href="css/theme/vfarcic.css">
+        <link rel="stylesheet" href="../dist/reset.css">
+        <link rel="stylesheet" href="../dist/reveal.css">
+        <link rel="stylesheet" href="../dist/theme/moon.css">
 
 		<!-- Code syntax highlighting -->
-		<!--<link rel="stylesheet" href="lib/css/zenburn.css">-->
-
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-
-		<!--[if lt IE 9]>
-		<script src="../lib/js/html5shiv.js"></script>
-		<![endif]-->
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
 	</head>
 
 	<body>
@@ -46,19 +26,15 @@
 						<a href="http://technologyconversations.com/about/">Viktor Farcic</a> (<a href="https://twitter.com/vfarcic">@vfarcic</a>)
                     </h3>
                     <p>
-						<a href="http://technologyconversations.com">TechnologyConversations.com</a>
+						<a href="https://www.devopstoolkitseries.com/">DevOps Toolkit</a>
                     </p>
-                    <p>
-                        <a href="https://www.cloudbees.com">CloudBees.com</a>
-					</p>
 				</section>
 				<section id="about-me"
-                    data-markdown="../docs/about-me.md"
+                    data-markdown="../docs/about-me-new.md"
                     data-separator="^\n\n\n"
                     data-separator-vertical="^\n\n"
                     data-separator-notes="^Note:"
-                    data-charset="iso-8859-15"
-                    data-background="../img/background/about-me.jpg">
+                    data-charset="iso-8859-15">
 				</section>
 				<section id="talks"
 					data-markdown="talks.md"
@@ -76,30 +52,21 @@
 				</section>
 			</div>
 		</div>
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+        <script src="plugin/markdown/markdown.js"></script>
 		<script>
-			// Full list of configuration options available at:
-			// https://github.com/hakimel/reveal.js#configuration
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
 			Reveal.initialize({
-				controls: true,
-				progress: true,
-				history: true,
-				center: true,
+				hash: true,
 
-				transition: 'slide', // none/fade/slide/convex/concave/zoom
-
-				// Optional reveal.js plugins
-				dependencies: [
-					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-//					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: 'plugin/zoom-js/zoom.js', async: true },
-					{ src: 'plugin/notes/notes.js', async: true }
-				]
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMarkdown ]
 			});
-
 		</script>
 
 	</body>

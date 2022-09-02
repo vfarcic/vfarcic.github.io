@@ -145,7 +145,7 @@ open "https://console.cloud.google.com/kubernetes/list?project=$PROJECT_ID"
 
 cat cluster.yaml
 
-# Change `spec.compositionRef.name` to `cluster-aws`
+# Change `spec.compositionRef.name` to `cluster-aws`
 
 kubectl apply --filename cluster.yaml
 

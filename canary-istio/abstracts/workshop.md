@@ -19,7 +19,7 @@ The end result will be a set of instructions and hans-on exercises aimed at prov
 * What Is Service Mesh?
 * Why Istio?
 
-### Installing Istio And Injecting Sidecar Proxies
+### Installing Istio And Injecting Sidecar Proxies
 
 * Introduction
 * Installing Istio CLI

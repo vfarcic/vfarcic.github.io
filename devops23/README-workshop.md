@@ -67,7 +67,7 @@ The timeframes are only estimates and may vary according to how the class is pro
 
 Create a Dockerfile with Multi-Stage builds that envelops the whole CI process from running unit tests, through building binaries, all the way until a Docker image is created and pushed to a registry. We'll build one Docker image based on https://github.com/vfarcic/go-demo-3/blob/master/Dockerfile. Later on, we'll use mongo, jenkins, golang, and a few other images
 
-### Section 2: What Is A Container Scheduler?
+### Section 2: What Is A Container Scheduler?
 
 Learn the short history of software and infrastructure development, why we need containers and container schedulers, and what is Kubernetes.
 
@@ -90,7 +90,7 @@ ReplicaSet's primary, and pretty much only function, is to ensure that a specifi
 
 We need a stable, never-to-be-changed address that will forward requests to whichever Pod is currently running. Kubernetes Services provide addresses through which associated Pods can be accessed.
 
-### Section 7: Deploying Releases With Zero-Downtime
+### Section 7: Deploying Releases With Zero-Downtime
 
 While we might never be able to reach 100% availability, we should certainly not cause downtime ourselves and must minimise other factors that could cause downtime. We'll try to accomplish zero-downtime deployment of new releases through Kubernetes Deployments.
 

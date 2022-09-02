@@ -8,7 +8,7 @@
 
 # Create a Kubernetes cluster with Ingress (e.g., https://gist.github.com/925653c9fbf8cce23c35eedcd57de86e)
 
-# Replace `[...]` with the Ingress Service external IP
+# Replace `[...]` with the Ingress Service external IP
 export INGRESS_HOST=[...]
 
 cd crossplane-kubevela-argocd-demo
@@ -93,7 +93,7 @@ watch kubectl get managed,releases
 ./config-cluster-aws.sh team-a
 
 # Open a second terminal
-# Enter the same directory as the one used in the first terminal
+# Enter the same directory as the one used in the first terminal
 
 # In the second terminal
 # Replace `[...]` with your access key ID`
@@ -116,7 +116,7 @@ cat team-a-infra/cluster.yaml
 # In the second terminal
 gh repo view --web
 
-# Show Argo CD
+# Show Argo CD
 
 # In the first terminal
 kubectl get managed,releases
@@ -124,7 +124,7 @@ kubectl get managed,releases
 # Wait until all the resources are ready and synced
 
 ################
-# Applications #
+# Applications #
 ################
 
 # In the second terminal
@@ -177,7 +177,7 @@ cat team-a-app-reqs/kubevela.yaml
 # In the second terminal
 cat team-a-apps/my-app.yaml
 
-# Show Argo CD
+# Show Argo CD
 
 ###########################
 # Deleting infrastructure #
