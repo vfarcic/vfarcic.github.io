@@ -166,7 +166,7 @@ spec:
   parameters:
     nodeSize: small
     minNodeCount: 3
-    version: 1.23
+    version: \"1.23\"
   writeConnectionSecretToRef:
     name: production-cluster" \
     | tee infra/clusters/production.yaml
