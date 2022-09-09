@@ -118,12 +118,14 @@ kubectl get cluster.eks.aws.crossplane.io
 
 kubectl --namespace crossplane-system \
     get secret a-team-eks-no-claim-cluster \
-    --output jsonpath="{.data.kubeconfig}" | base64 -d >kubeconfig-eks.yaml
+    --output jsonpath="{.data.kubeconfig}" \
+    | base64 -d >kubeconfig-eks.yaml
 
 # EKS creds are temporary!
 
-kubectl --kubeconfig kubeconfig-eks.yaml --namespace crossplane-system \
-    create secret generic aws-creds --from-file creds=./aws-creds.conf
+kubectl --kubeconfig kubeconfig-eks.yaml \
+    --namespace crossplane-system create secret generic \
+    aws-creds --from-file creds=./aws-creds.conf
 ```
 
 
@@ -177,7 +179,8 @@ kubectl --kubeconfig kubeconfig-eks.yaml get apps,sqls
 ## Ops
 
 ```bash
-kubectl --kubeconfig kubeconfig-eks.yaml --namespace dev get all,ingresses
+kubectl --kubeconfig kubeconfig-eks.yaml --namespace dev get \
+    all,ingresses
 
 kubectl --kubeconfig kubeconfig-eks.yaml --namespace production \
     get all,ingresses

@@ -1,20 +1,20 @@
 # DevOps Categories
 
-### Application Management
-### Infrastructure & Services
-### GitOps
-### Progressive Delivery
-### Security
-### Development
+* Application Management
+* Infrastructure & Services
+* GitOps
+* Progressive Delivery
+* Security
+* Development
 
 
 # DevOps Categories
 
-### CI/CD Pipelines
-### Logging, Monitoring, And Troubleshooting
-### Kubernetes Dashboards
-### Containers
-### Kubernetes
+* CI/CD Pipelines
+* Logging, Monitoring, And Troubleshooting
+* Kubernetes Dashboards
+* Containers
+* Kubernetes
 
 
 # Self-Managed Apps

@@ -14,8 +14,6 @@ cd devops-toolkit-crossplane
 # If not using Rancher Desktop, replace `127.0.0.1`
 #   with the base host accessible through NGINX Ingress
 export INGRESS_HOST=127.0.0.1
-
-cp examples/namespaces.yaml infra/.
 ```
 
 
@@ -97,38 +95,6 @@ kubectl --namespace crossplane-system create secret \
 ```
 
 
-## Setup Providers
-
-```bash
-cp crossplane-config/config-k8s.yaml \
-    crossplane-config/config-gitops.yaml \
-    crossplane-config/provider-aws.yaml \
-    crossplane-config/provider-civo.yaml \
-    crossplane-definitions/.
-
-cp crossplane-config/provider-config-aws.yaml \
-    crossplane-config/provider-config-civo.yaml \
-    crossplane-provider-configs/.
-
-cp examples/crossplane.yaml \
-    examples/crossplane-definitions.yaml \
-    examples/crossplane-provider-configs.yaml infra/.
-
-cp examples/k8s/aws-eks-gitops-no-claim.yaml infra/aws-eks.yaml
-```
-
-
-## To Git!
-
-```bash
-git add .
-
-git commit -m "Infra"
-
-git push
-```
-
-
 ## Setup Argo CD
 
 ```bash
@@ -144,4 +110,60 @@ helm upgrade --install argocd argo/argo-cd \
 kubectl apply --filename argocd/project.yaml
 
 kubectl apply --filename argocd/infra.yaml
+```
+
+
+## Setup Infra
+
+```bash
+cp examples/namespaces.yaml \
+    examples/crossplane.yaml infra/.
+
+git add .
+
+git commit -m "Infra"
+
+git push
+```
+
+
+## Setup Providers
+
+```bash
+cp crossplane-config/config-k8s.yaml \
+    crossplane-config/config-gitops.yaml \
+    crossplane-config/provider-aws.yaml \
+    crossplane-config/provider-civo.yaml \
+    crossplane-definitions/.
+
+cp crossplane-config/provider-config-aws.yaml \
+    crossplane-config/provider-config-civo.yaml \
+    crossplane-provider-configs/.
+
+cp examples/crossplane-definitions.yaml \
+    examples/crossplane-provider-configs.yaml infra/.
+```
+
+
+## Setup Providers
+
+```bash
+git add .
+
+git commit -m "Infra"
+
+git push
+```
+
+
+## Setup Cluster
+
+```bash
+cp examples/k8s/aws-eks-gitops-no-claim.yaml infra/aws-eks.yaml
+
+git add .
+
+git commit -m "Infra"
+
+git push
 ```
