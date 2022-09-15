@@ -117,7 +117,7 @@ kubectl get cluster.eks.aws.crossplane.io
 # Wait until the cluster is `READY`
 
 kubectl --namespace crossplane-system \
-    get secret a-team-eks-no-claim-cluster \
+    get secret a-team-eks-cluster \
     --output jsonpath="{.data.kubeconfig}" \
     | base64 -d >kubeconfig-eks.yaml
 

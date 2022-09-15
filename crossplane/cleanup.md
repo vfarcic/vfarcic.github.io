@@ -21,7 +21,7 @@ kubectl --kubeconfig kubeconfig-eks.yaml get managed
 ```bash
 kubectl --kubeconfig kubeconfig-eks.yaml \
     --namespace ingress-nginx delete service \
-    a-team-eks-no-claim-ingress-ingress-nginx-controller
+    a-team-eks-ingress-ingress-nginx-controller
 
 rm infra/civo.yaml infra/aws-eks.yaml
 
