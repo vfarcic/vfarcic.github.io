@@ -1,4 +1,3 @@
-<!-- .slide: class="center" -->
 # What Matters In DevOps Is...
 
 ## [Viktor Farcic](http://technologyconversations.com/about/)

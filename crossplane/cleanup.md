@@ -19,9 +19,14 @@ kubectl --kubeconfig kubeconfig-eks.yaml get managed
 ## Cleanup
 
 ```bash
+kubectl --namespace crossplane-system \
+    get secret a-team-eks-cluster \
+    --output jsonpath="{.data.kubeconfig}" \
+    | base64 -d >kubeconfig-eks.yaml
+
 kubectl --kubeconfig kubeconfig-eks.yaml \
     --namespace ingress-nginx delete service \
-    a-team-eks-no-claim-ingress-ingress-nginx-controller
+    a-team-eks-ingress-ingress-nginx-controller
 
 rm infra/civo.yaml infra/aws-eks.yaml
 
