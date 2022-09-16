@@ -136,9 +136,13 @@ helm repo add argo https://argoproj.github.io/argo-helm
 
 helm repo update
 
+# Replace `nginx` with the Ingress class
+export INGRESS_CLASS=nginx
+
 helm upgrade --install argocd argo/argo-cd \
     --namespace argocd --create-namespace \
     --set server.ingress.hosts="{argo-cd.$INGRESS_HOST.nip.io}" \
+    --set server.ingress.ingressClassName=$INGRESS_CLASS \
     --values argocd/helm-values.yaml --wait
 
 kubectl apply --filename argocd/project.yaml
