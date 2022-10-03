@@ -12,6 +12,9 @@
 
 # Conferences
 
+* What (Really) Is Kubernetes? at [Innovative Tech Talks](https://www.maxcode.net/innovative-tech-talks/) (17th of September 2022)
+* The Only Thing That Matters In DevOps Is... at [Innovative Tech Talks](https://www.maxcode.net/innovative-tech-talks/) (17th of September 2022)
+* [End-To-End GitOps](https://www.containerdays.io/agenda/conferenceday1/#end-to-end-gitops) at [ContainerDays](https://www.containerdays.io/) (5th of September 2022)
 * [What (Really) Is Kubernetes?](https://www.skilupdays.io/cloud-native-22/agenda/session/952548) at [SkilUp Day: Cloud Native](https://www.skilupdays.io/cloud-native-22) (21th of July 2022)
 * [Freedom Means That Kubernetes Needs To Disappear (in Spanish)](https://www.jbcnconf.com/2022/infoTalk.html?id=61f1a0e0c4c4120b9d29afa0) at [JBCNConf](https://www.jbcnconf.com/2022/) (19th of July 2022)
 * End-To-End GitOps at [KCD Berlin](https://community.cncf.io/events/details/cncf-kcd-berlin-presents-kubernetes-community-days-berlin-2022-1) (29th of June 2022)
@@ -173,6 +176,7 @@
 
 # Meetups / Webinars
 
+* [The Only Thing That Matters In DevOps Is...](https://geekstone.org/sr/po%c4%8detna/doga%c4%91aji/the-only-thing-that-matters-in-devops-is/) at [Geekstone](https://geekstone.org/sr/po%c4%8detna/)
 * What (Really) Is Kubernetes? at Humanitec Meetup (25th of August 2022)
 * [Crossplane: Control Plane of Control Planes](https://tanzu.vmware.com/developer/tv/enlightning/15/) at [Enlightning](https://tanzu.vmware.com/developer/tv/enlightning/) (28th of July 2022)
 * The Future Is Above Clouds at [Docker Meetup Budapest](https://www.meetup.com/Docker-Budapest-Hungary/events/285965800/) (1st of June 2022)
