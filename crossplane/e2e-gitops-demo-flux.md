@@ -158,7 +158,7 @@ flux create kustomization prod-apps \
     --prune true --interval 1m --export \
     | tee tmp/prod-apps.yaml
 
-# Edit the file and set `spec.kubeConfig.secretRef.name` 
+# Edit the file and set `spec.kubeConfig.secretRef.name`
 #   to `production-cluster`
 ```
 
