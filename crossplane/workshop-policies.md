@@ -56,10 +56,6 @@ kubectl apply --filename examples/k8s/kyverno.yaml
 
 kubectl --namespace b-team apply \
     --filename examples/k8s/kyverno-b-team.yaml
-
-# TODO: Write a policy that does NOT allow creation of ClusterClaim XRs
-kubectl --namespace c-team apply \
-    --filename examples/k8s/kyverno-c-team.yaml
 ```
 
 
@@ -74,9 +70,6 @@ kubectl --namespace a-team apply \
 
 kubectl --namespace b-team apply \
     --filename examples/k8s/$PROVIDER-$CLUSTER_TYPE.yaml
-
-kubectl --namespace c-team apply \
-    --filename examples/k8s/$PROVIDER-$CLUSTER_TYPE.yaml
 ```
 
 
@@ -86,6 +79,4 @@ kubectl --namespace c-team apply \
 cat examples/k8s/kyverno.yaml
 
 cat examples/k8s/kyverno-b-team.yaml
-
-cat examples/k8s/kyverno-c-team.yaml
 ```

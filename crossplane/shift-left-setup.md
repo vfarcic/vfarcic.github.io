@@ -63,7 +63,7 @@ aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
 ## Crossplane
 
 ```bash
-kubectl --namespace crossplane-system create secret generic
+kubectl --namespace crossplane-system create secret generic \
     aws-creds --from-file creds=./aws-creds.conf
 
 kubectl apply \
@@ -81,7 +81,7 @@ kubectl get pkgrev
 ```
 
 
-## Crossplane
+## Cluster
 
 ```bash
 kubectl apply \
@@ -102,7 +102,7 @@ kubectl --namespace a-team get clusterclaims
 ```
 
 
-## Crossplane
+## Cluster
 
 ```bash
 export KUBECONFIG=$PWD/kubeconfig.yaml
