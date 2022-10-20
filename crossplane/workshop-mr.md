@@ -38,10 +38,10 @@ kubectl explain server --recursive
 
 ```bash
 # If AWS
-# Open https://marketplace.upbound.io/providers/crossplane/provider-aws
+# Open https://marketplace.upbound.io/providers/crossplane-contrib/provider-aws
 
 # If Google Cloud
-# Open https://marketplace.upbound.io/providers/crossplane/provider-gcp
+# Open https://marketplace.upbound.io/providers/crossplane-contrib/provider-gcp
 
 # If Azure
 # Open https://doc.crds.dev/github.com/crossplane-contrib/provider-jet-azure

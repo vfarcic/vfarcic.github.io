@@ -211,4 +211,8 @@ kubectl apply \
 
 ```bash
 kubectl create namespace a-team
+
+kubectl create namespace b-team
+
+kubectl create namespace c-team
 ```

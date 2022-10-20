@@ -99,7 +99,7 @@ cat packages/app/definition.yaml
 
 ls -1 packages/app/
 
-cat packages/app/backend-prod.yaml
+cat packages/app/backend.yaml
 
 cat packages/app/crossplane.yaml
 
