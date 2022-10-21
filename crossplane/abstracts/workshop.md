@@ -13,6 +13,8 @@ In this hands-on workshop, we'll explore the principles behind the **universal c
 
 * How to manage infrastructure and services through Kubernetes using Crossplane.
 * How to compose individual resources so that they can be used as services
+* How to combine applications and infrastructure into a single unit
+* How to apply policies on the services
 * How to enable GitOps so that any type of resource can be managed through Git, no matter whether it is an application running in Kubernetes, infrastructure, or a SaaS service.
 * How to combine it all together into an internal developer platform (IDP) and enable anyone in an organization to be self-sufficient
 
