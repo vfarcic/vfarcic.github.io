@@ -12,6 +12,17 @@ kubectl --namespace crossplane-system \
     create secret generic my-db-creds \
     --from-literal password=ComplexPassword123@
 
+# If Azure
+# Open examples/sql/azure-mrs.yaml in an editor and change
+#   `.metadata.name` and
+#   `.spec.forProvider.resourceGroupNameRef.name`
+#    to a unique value.
+```
+
+
+## Create A Database
+
+```bash
 cat examples/sql/$PROVIDER-mrs.yaml
 
 kubectl apply --filename examples/sql/$PROVIDER-mrs.yaml
@@ -44,7 +55,7 @@ kubectl explain server --recursive
 # Open https://marketplace.upbound.io/providers/crossplane-contrib/provider-gcp
 
 # If Azure
-# Open https://doc.crds.dev/github.com/crossplane-contrib/provider-jet-azure
+# Open https://marketplace.upbound.io/providers/upbound/provider-azure
 ```
 
 
