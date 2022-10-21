@@ -159,13 +159,18 @@ kubectl apply --filename \
 
 export PROVIDER=azure
 
-az ad sp create-for-rbac --sdk-auth --role Owner \
+export AZURE_ACCOUNT=$(az account show --query id --output tsv)
+
+az ad sp create-for-rbac --role Owner \
+    --scopes /subscriptions/$AZURE_ACCOUNT \
     | tee azure-creds.json
 
-export AZURE_CLIENT_ID=$(cat azure-creds.json | grep clientId \
-    | cut -c 16-51)
+# TODO: Remove
+# export AZURE_CLIENT_ID=$(cat azure-creds.json | grep clientId \
+#     | cut -c 16-51)
 
-export AAD_GRAPH_API=00000003-0000-0000-c000-000000000000
+# TODO: Remove
+# export AAD_GRAPH_API=00000003-0000-0000-c000-000000000000
 ```
 
 
@@ -174,16 +179,17 @@ export AAD_GRAPH_API=00000003-0000-0000-c000-000000000000
 ```bash
 # Run the commands in this section only if you are using Azure
 
-az ad app permission add --id "${AZURE_CLIENT_ID}" \
-    --api ${AAD_GRAPH_API} --api-permissions \
-    e1fe6dd8-ba31-4d61-89e7-88639da4683d=Scope \
-    06da0dbc-49e2-44d2-8312-53f166ab848a=Scope \
-    7ab1d382-f21e-4acd-a863-ba3e13f7da61=Role
+# TODO: Remove
+# az ad app permission add --id "${AZURE_CLIENT_ID}" \
+#     --api ${AAD_GRAPH_API} --api-permissions \
+#     e1fe6dd8-ba31-4d61-89e7-88639da4683d=Scope \
+#     06da0dbc-49e2-44d2-8312-53f166ab848a=Scope \
+#     7ab1d382-f21e-4acd-a863-ba3e13f7da61=Role
 
-az ad app permission grant --id $AZURE_CLIENT_ID \
-    --api $AAD_GRAPH_API --expires never
+# az ad app permission grant --id $AZURE_CLIENT_ID \
+#     --api $AAD_GRAPH_API --expires never
 
-az ad app permission admin-consent --id "${AZURE_CLIENT_ID}"
+# az ad app permission admin-consent --id "${AZURE_CLIENT_ID}"
 
 kubectl --namespace crossplane-system create secret generic \
     azure-creds --from-file creds=./azure-creds.json
@@ -213,6 +219,4 @@ kubectl apply \
 kubectl create namespace a-team
 
 kubectl create namespace b-team
-
-kubectl create namespace c-team
 ```
