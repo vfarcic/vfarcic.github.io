@@ -9,7 +9,12 @@ rm apps-dev/*.yaml
 
 git add . && git commit -m "Destroy apps" && git push
 
-kubectl --kubeconfig kubeconfig-eks.yaml get managed
+kubectl --namespace crossplane-system  \
+    get secret a-team-eks-cluster \
+    --output jsonpath="{.data.kubeconfig}" \
+    | base64 -d >kubeconfig.yaml
+
+kubectl --kubeconfig kubeconfig.yaml get managed
 
 # Repeat the previous command until all the managed resources
 #   are removed (except `object` and `release` resources)
@@ -19,12 +24,7 @@ kubectl --kubeconfig kubeconfig-eks.yaml get managed
 ## Cleanup
 
 ```bash
-kubectl --namespace crossplane-system \
-    get secret a-team-eks-cluster \
-    --output jsonpath="{.data.kubeconfig}" \
-    | base64 -d >kubeconfig-eks.yaml
-
-kubectl --kubeconfig kubeconfig-eks.yaml \
+kubectl --kubeconfig kubeconfig.yaml \
     --namespace ingress-nginx delete service \
     a-team-eks-ingress-ingress-nginx-controller
 

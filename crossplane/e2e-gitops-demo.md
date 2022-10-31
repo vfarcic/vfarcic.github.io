@@ -46,14 +46,14 @@ kubectl get managed
 ## Use
 
 ```bash
-kubectl get civokubernetes
+kubectl get compositeclusters
 
 kubectl --namespace crossplane-system  \
-    get secret cluster-civo-a-team-ck \
+    get secret a-team-eks-cluster \
     --output jsonpath="{.data.kubeconfig}" \
-    | base64 -d >kubeconfig-civo.yaml
+    | base64 -d >kubeconfig.yaml
 
-kubectl --kubeconfig kubeconfig-civo.yaml get nodes
+kubectl --kubeconfig kubeconfig.yaml get nodes
 ```
 
 
@@ -105,7 +105,7 @@ git commit -m "My cluster"
 
 git push
 
-kubectl --kubeconfig kubeconfig-civo.yaml get nodes
+# Show the number of nodes in Civo console
 ```
 
 
@@ -114,16 +114,7 @@ kubectl --kubeconfig kubeconfig-civo.yaml get nodes
 ```bash
 kubectl get cluster.eks.aws.crossplane.io
 
-# Wait until the cluster is `READY`
-
-kubectl --namespace crossplane-system \
-    get secret a-team-eks-cluster \
-    --output jsonpath="{.data.kubeconfig}" \
-    | base64 -d >kubeconfig-eks.yaml
-
-# EKS creds are temporary!
-
-kubectl --kubeconfig kubeconfig-eks.yaml \
+kubectl --kubeconfig kubeconfig.yaml \
     --namespace crossplane-system create secret generic \
     aws-creds --from-file creds=./aws-creds.conf
 ```
@@ -132,9 +123,9 @@ kubectl --kubeconfig kubeconfig-eks.yaml \
 ## Production-Ready
 
 ```bash
-kubectl --kubeconfig kubeconfig-eks.yaml get namespaces
+kubectl --kubeconfig kubeconfig.yaml get namespaces
 
-kubectl --kubeconfig kubeconfig-eks.yaml --namespace argocd \
+kubectl --kubeconfig kubeconfig.yaml --namespace argocd \
     get applications
 ```
 
@@ -142,8 +133,9 @@ kubectl --kubeconfig kubeconfig-eks.yaml --namespace argocd \
 ## Pretty Colors
 
 ```bash
-kubectl --kubeconfig kubeconfig-eks.yaml --namespace argocd port-forward \
-    svc/a-team-gitops-no-claim-argocd-server 8080:443 &
+kubectl --kubeconfig kubeconfig.yaml --namespace argocd \
+    port-forward \
+    svc/a-team-gitops-argocd-server 8080:443 &
 
 # Open http://localhost:8080 in a browser
 # User `admin`, password `admin123`
@@ -155,11 +147,12 @@ kubectl --kubeconfig kubeconfig-eks.yaml --namespace argocd port-forward \
 ```bash
 cat examples/app/backend-local-k8s-postgresql-no-claim.yaml
 
-cp examples/app/backend-local-k8s-postgresql-no-claim.yaml apps-dev/.
+cp examples/app/backend-local-k8s-postgresql-no-claim.yaml \
+    apps-dev/.
 
 git add . && git commit -m "Adding apps to dev" && git push
 
-kubectl --kubeconfig kubeconfig-eks.yaml get apps,sqls
+kubectl --kubeconfig kubeconfig.yaml get apps,sqls
 ```
 
 
@@ -172,20 +165,20 @@ cp examples/app/backend-aws-postgresql-no-claim.yaml apps/.
 
 git add . && git commit -m "Adding dot" && git push
 
-kubectl --kubeconfig kubeconfig-eks.yaml get apps,sqls
+kubectl --kubeconfig kubeconfig.yaml get apps,sqls
 ```
 
 
 ## Ops
 
 ```bash
-kubectl --kubeconfig kubeconfig-eks.yaml --namespace dev get \
+kubectl --kubeconfig kubeconfig.yaml --namespace dev get \
     all,ingresses
 
-kubectl --kubeconfig kubeconfig-eks.yaml --namespace production \
+kubectl --kubeconfig kubeconfig.yaml --namespace production \
     get all,ingresses
 
-kubectl --kubeconfig kubeconfig-eks.yaml get managed
+kubectl --kubeconfig kubeconfig.yaml get managed
 ```
 
 
