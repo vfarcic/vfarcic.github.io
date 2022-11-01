@@ -12,6 +12,8 @@
 
 # Conferences
 
+* Applying GitOps To Everything at [KubeHuddle](https://kubehuddle.com/2022) (3rd of October 2022)
+* [Applying GitOps To Everything](https://levi9conference.com/events/applying-gitops-to-everything) at [Inspiration](https://www.levi9.com/inspiration-conference) (1st of October 2022)
 * What (Really) Is Kubernetes? at [Innovative Tech Talks](https://www.maxcode.net/innovative-tech-talks/) (17th of September 2022)
 * The Only Thing That Matters In DevOps Is... at [Innovative Tech Talks](https://www.maxcode.net/innovative-tech-talks/) (17th of September 2022)
 * [End-To-End GitOps](https://www.containerdays.io/agenda/conferenceday1/#end-to-end-gitops) at [ContainerDays](https://www.containerdays.io/) (5th of September 2022)
