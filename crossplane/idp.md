@@ -127,19 +127,6 @@
 <!-- .slide: data-background="img/diag-02.png" data-background-size="contain" -->
 
 
-## What Do We Do In
-# IDP?
-
-
-<!-- .slide: data-background="img/diag-03.png" data-background-size="contain" -->
-
-
-## What Do We Do In
-# IDP?
-
-* Everything is tailor-made to match dev needs
-
-
 # Build vs. Buy
 
 * **Buy**: Small company starting now
