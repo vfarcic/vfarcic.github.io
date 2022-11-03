@@ -171,3 +171,19 @@ git commit -m "Infra"
 
 git push
 ```
+
+
+## Setup AWS
+
+```bash
+kubectl get cluster.eks.aws.crossplane.io
+
+# Wait until it's `READY`
+
+./examples/k8s/get-kubeconfig-eks.sh \
+    crossplane-system a-team-eks-cluster
+
+kubectl --kubeconfig kubeconfig.yaml \
+    --namespace crossplane-system create secret generic \
+    aws-creds --from-file creds=./aws-creds.conf
+```
