@@ -12,6 +12,8 @@
 
 # Conferences
 
+* Using Kubernetes and Crossplane Together To Helm Developers Code Cloud Native Apps at [KCD Mena](https://community.cncf.io/events/details/cncf-kcd-mena-presents-kcd-mena-2022/) (13th of October 2022)
+* Applying GitOps To Everything at [DevOps Global Summit](https://events.geekle.us/devops/) (5th of October 2022)
 * Applying GitOps To Everything at [KubeHuddle](https://kubehuddle.com/2022) (3rd of October 2022)
 * [Applying GitOps To Everything](https://levi9conference.com/events/applying-gitops-to-everything) at [Inspiration](https://www.levi9.com/inspiration-conference) (1st of October 2022)
 * What (Really) Is Kubernetes? at [Innovative Tech Talks](https://www.maxcode.net/innovative-tech-talks/) (17th of September 2022)
