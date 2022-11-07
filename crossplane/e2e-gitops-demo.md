@@ -48,10 +48,8 @@ kubectl get managed
 ```bash
 kubectl get compositeclusters
 
-kubectl --namespace crossplane-system  \
-    get secret a-team-eks-cluster \
-    --output jsonpath="{.data.kubeconfig}" \
-    | base64 -d >kubeconfig.yaml
+./examples/k8s/get-kubeconfig-eks.sh \
+    crossplane-system a-team-eks-cluster
 
 kubectl --kubeconfig kubeconfig.yaml get nodes
 ```
@@ -113,10 +111,6 @@ git push
 
 ```bash
 kubectl get cluster.eks.aws.crossplane.io
-
-kubectl --kubeconfig kubeconfig.yaml \
-    --namespace crossplane-system create secret generic \
-    aws-creds --from-file creds=./aws-creds.conf
 ```
 
 
