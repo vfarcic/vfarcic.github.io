@@ -12,6 +12,10 @@
 
 # Conferences
 
+* [Like Peas And Carrots: Argo CD And Crossplane For Infrastructure Management](https://sched.co/182Hj) at [KubeCon](https://events.linuxfoundation.org/kubecon-cloudnativecon-north-america/) (26th of October 2022)
+* [Shifting Left Stateful Applications In Kubernetes](https://dok.community/dok-day-north-america-2022/) at [DoK Day North America 2022 @ KubeCon](https://dok.community/dok-day-north-america-2022/) (2th of October 2022)
+* [Building a FaaS platform using CNCF OSS projects (Knative, Crossplane, Tekton, ArgoCD)](https://sched.co/1AGb2) at [KnativeCon](https://events.linuxfoundation.org/knativecon-north-america/) (24th of October 2022)
+* [Using Kubernetes and Crossplane Together To Help Developers Code Cloud Native Applications](https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-na-detroit-2022/talk/EQVJEG/) at [Cloud_NAtive Rejekts](https://cloud-native.rejekts.io/) (23rd of October 2022)
 * Applying GitOps To Everything at [KubeHuddle](https://kubehuddle.com/2022) (3rd of October 2022)
 * [Applying GitOps To Everything](https://levi9conference.com/events/applying-gitops-to-everything) at [Inspiration](https://www.levi9.com/inspiration-conference) (1st of October 2022)
 * What (Really) Is Kubernetes? at [Innovative Tech Talks](https://www.maxcode.net/innovative-tech-talks/) (17th of September 2022)
