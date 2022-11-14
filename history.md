@@ -12,6 +12,8 @@
 
 # Conferences
 
+* [DevOps Is All About Building Internal Developer Platform (IDP)](https://devops.barcelona/talks) at [DevOps Barcelona](https://devops.barcelona/) (3rd of November 2022)
+* [Devs and Ops: Can This Marriage Be Saved?](https://youtu.be/laqo-cjiL74) at [KubeCon / The New Stack](https://events.linuxfoundation.org/kubecon-cloudnativecon-north-america/) (27th of October 2022)
 * [Like Peas And Carrots: Argo CD And Crossplane For Infrastructure Management](https://sched.co/182Hj) at [KubeCon](https://events.linuxfoundation.org/kubecon-cloudnativecon-north-america/) (26th of October 2022)
 * [Shifting Left Stateful Applications In Kubernetes](https://dok.community/dok-day-north-america-2022/) at [DoK Day North America 2022 @ KubeCon](https://dok.community/dok-day-north-america-2022/) (2th of October 2022)
 * [Building a FaaS platform using CNCF OSS projects (Knative, Crossplane, Tekton, ArgoCD)](https://sched.co/1AGb2) at [KnativeCon](https://events.linuxfoundation.org/knativecon-north-america/) (24th of October 2022)
