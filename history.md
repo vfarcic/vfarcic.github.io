@@ -12,6 +12,7 @@
 
 # Conferences
 
+* [The Only Thing That Matters In DevOps Is...](https://heapcon.io/the-only-thing-that-matters-in-devops-is.../) at [HEapCon](https://heapcon.io) (4th of November 2022)
 * [DevOps Is All About Building Internal Developer Platform (IDP)](https://devops.barcelona/talks) at [DevOps Barcelona](https://devops.barcelona/) (3rd of November 2022)
 * [Devs and Ops: Can This Marriage Be Saved?](https://youtu.be/laqo-cjiL74) at [KubeCon / The New Stack](https://events.linuxfoundation.org/kubecon-cloudnativecon-north-america/) (27th of October 2022)
 * [Like Peas And Carrots: Argo CD And Crossplane For Infrastructure Management](https://sched.co/182Hj) at [KubeCon](https://events.linuxfoundation.org/kubecon-cloudnativecon-north-america/) (26th of October 2022)
