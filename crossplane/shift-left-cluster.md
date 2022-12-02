@@ -13,7 +13,7 @@ cat examples/k8s/aws-eks.yaml
 # Open https://marketplace.upbound.io/configurations/devops-toolkit/dot-kubernetes
 
 kubectl --namespace a-team apply \
-    --filename examples/k8s/aws-eks.yaml
+    --filename examples/k8s/aws-eks-1-22.yaml
 
 kubectl --namespace a-team get clusterclaims
 ```

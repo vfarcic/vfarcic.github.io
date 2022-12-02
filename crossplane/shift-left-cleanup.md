@@ -23,7 +23,7 @@ kubectl get managed
 unset KUBECONFIG
 
 kubectl --namespace a-team delete \
-    --filename examples/k8s/aws-eks.yaml
+    --filename examples/k8s/aws-eks-1-22.yaml
 
 kubectl get managed
 
