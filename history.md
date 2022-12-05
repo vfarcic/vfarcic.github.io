@@ -13,6 +13,7 @@
 
 # Conferences
 
+* [Shifting Left Stateful Applications In Kubernetes](https://www.open-conf.gr/etn-speaker/viktor-farcic) at [Open Conf](https://www.open-conf.gr/) (3rd of December 2022)
 * The Only Thing That Matters In DevOps Is... at [DevOps Experience](https://www.techstrongevents.com/devopsexperience22) (16th of November 2022)
 * What (Really) Is Kubernetes? at [Worldwide Software Architecture Summit](https://events.geekle.us/wsas4) (15th of November 2022)
 * [The Only Thing That Matters In DevOps Is...](https://heapcon.io/the-only-thing-that-matters-in-devops-is.../) at [HeapCon](https://heapcon.io) (4th of November 2022)
@@ -190,6 +191,7 @@
 
 # Meetups / Webinars
 
+* [What (Really) Is Kubernetes?](https://www.meetup.com/athens-kubernetes-meetup/events/289887587/) at [Athens Kubernetes](https://www.meetup.com/athens-kubernetes-meetup) (1st of December 2022)
 * [The Only Thing That Matters In DevOps Is...](https://geekstone.org/sr/po%c4%8detna/doga%c4%91aji/the-only-thing-that-matters-in-devops-is/) at [Geekstone](https://geekstone.org/sr/po%c4%8detna/)
 * What (Really) Is Kubernetes? at Humanitec Meetup (25th of August 2022)
 * [Crossplane: Control Plane of Control Planes](https://tanzu.vmware.com/developer/tv/enlightning/15/) at [Enlightning](https://tanzu.vmware.com/developer/tv/enlightning/) (28th of July 2022)
