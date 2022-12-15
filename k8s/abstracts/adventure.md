@@ -12,5 +12,4 @@ When working with cloud native technologies, it is easy to get deep into one par
 
 This talk will discuss one opinionated path to production (chosen by the audience!) while playfully acknowledging that this particular route is one of an infinite number of possible paths. It will give the audience a broader sense of what types of technologies are out there, and what factors to consider when making system design choices.  
 
-
 The session will be engaging, relatable, and accessible to beginners because it will give human emotion to our application who is traversing the path to production. It will also be interactive and evoke the nostalgia that many folks feel from reading ‘Choose Your Own Adventure’ books as a kid.
