@@ -1,5 +1,11 @@
 # Talks
 
+* Choose Your Own Adventure: The Treacherous Trek to Production ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/cloud/abstracts/adventure.md))
+
+
+# Talks
+
+* DevOps Is Dead! Long Live Platform Engineering! Did We Get Confused? ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/devops/abstracts/dead.md))
 * Forget About Apps. It's All About Resource Abstractions. ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/resources.md))
 * [Shifting Left Stateful Applications In Kubernetes](crossplane/shift-left.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/stateful-apps.md))
 * [What (Really) Is Kubernetes?](kubernetes/what.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/kubernetes/abstracts/what.md))

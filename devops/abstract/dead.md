@@ -1,0 +1,9 @@
+# DevOps Is Dead! Long Live Platform Engineering! Did We Get Confused?
+
+"DevOps is dead!" That's a commonly repeated sentence these days. Some might say that Platform Engineering is replacing DevOps. But is DevOps really dead? Is it being replaced by Platform Engineering? Or maybe, we are just confused.
+
+Let's explore what DevOps is in theory, how it was implemented in practice, whether it failed, whether plaform engineering is the replacement, and what we can learn from the past.
+
+## Benefits to the Ecosystem
+
+N/A
