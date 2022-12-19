@@ -191,6 +191,9 @@
 
 # Meetups / Webinars
 
+* [The Only Thing That Matters In DevOps Is…](https://gdg.community.dev/events/details/google-gdg-cloud-bydgoszcz-presents-end-of-the-year-celebration-with-gdg-cloud-bydgoszcz/) at [GDG Cloud Bydgoszcz](https://gdg.community.dev/gdg-cloud-bydgoszcz/) (15th of December 2022)
+* [Is DevOps Dead?](https://youtu.be/RRdTV5NdrXQ) at [Uptime Community](https://www.youtube.com/@upt1me) (13th of December 2022)
+* [What (Really) Is Kubernetes?](https://www.meetup.com/athens-kubernetes-meetup/events/289887587/) at [Athens Kubernetes](https://www.meetup.com/athens-kubernetes-meetup) (1st of December 2022)
 * [What (Really) Is Kubernetes?](https://www.meetup.com/athens-kubernetes-meetup/events/289887587/) at [Athens Kubernetes](https://www.meetup.com/athens-kubernetes-meetup) (1st of December 2022)
 * [The Only Thing That Matters In DevOps Is...](https://geekstone.org/sr/po%c4%8detna/doga%c4%91aji/the-only-thing-that-matters-in-devops-is/) at [Geekstone](https://geekstone.org/sr/po%c4%8detna/)
 * What (Really) Is Kubernetes? at Humanitec Meetup (25th of August 2022)
