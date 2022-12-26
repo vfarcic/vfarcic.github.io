@@ -6,7 +6,7 @@ In this talk, we'll build an Internal Developer Platform (IDP) and combine it wi
 
 We'll use Crossplane to build an IDP that will allow developers to define their infrastructure and applications. We'll also use Datree to define policies that will guide them to define the resources they need, help them avoid making mistakes, and ensure that even malicious actors won't be able to exploit the system.
 
-## Benefits To The Ecosystem
+## Benefits To The Ecosystem
 
 * Platform Engineers will be able to design the platform in a way that will allow developers to define their infrastructure and applications in a simple and consistent way.
 * Developers will be able to define their infrastructure and applications in a simple and consistent way.
