@@ -4,7 +4,7 @@ Sometimes we make mistakes unintentionally while, at other times, bad actors try
 
 In this talk, we'll build an Internal Developer Platform (IDP) and combine it with policies. As a result, we will not only enable developers to define and manage their applications and infrastructure, but we will also ensure that they are "doing the right thing" by guiding them with policies.
 
-We'll use Crossplane to build an IDP that will allow developers to define their infrastructure and applications. We'll also use Datree to define policies that will guide them to define the resources they need, help them avoid making mistakes, and ensure that even malicious actors won't be able to exploit the system.
+We'll use Crossplane to build an IDP that will allow developers to define their infrastructure and applications. We'll also use Kyverno to define policies that will guide them to define the resources they need, help them avoid making mistakes, and ensure that even malicious actors won't be able to exploit the system.
 
 ## Benefits To The Ecosystem
 
