@@ -1,6 +1,7 @@
 # Talks
 
 * [The Future Of Declarative Infrastructure](crossplane/declarative.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/declarative.md))
+* How To Fight Misconfiguration And Bad Intentions ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/datree.md))
 * Choose Your Own Adventure: The Treacherous Trek to Production ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/cloud/abstracts/adventure.md))
 
 
