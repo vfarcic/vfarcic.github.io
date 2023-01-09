@@ -19,6 +19,7 @@
 
 
 <a href="https://www.devopstoolkitseries.com"><img src="../img/devops-toolkit-series.png" style="width: 70%; height: 70%;"></a>
+
 devopstoolkitseries.com
 
 
@@ -28,4 +29,5 @@ devopsparadox.com
 
 
 [![DevOps Toolkit YouTube](../img/dot.png)](https://www.youtube.com/c/devopstoolkit)
-youtube.com/c/devopstoolkit
+
+youtube.com/@DevOpsToolkit
