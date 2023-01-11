@@ -4,10 +4,12 @@
 ## Desired State
 
 ```bash
-cat examples/vm/aws.yaml
+cd ../../../devops-toolkit-crossplane
 
 kubectl --namespace a-team apply \
     --filename examples/vm/aws.yaml
+
+cat examples/vm/aws.yaml
 ```
 
 * It's declarative
@@ -22,17 +24,17 @@ kubectl --namespace a-team apply \
 ```bash
 kubectl get crds
 
-kubectl explain instances.ec2.aws.upbound.io --recursive
+kubectl explain instances.ec2.aws.crossplane.io --recursive
 ```
 
 
 # Shift-left
 
 ```bash
-cat examples/k8s/aws-eks.yaml
-
 kubectl --namespace a-team apply \
     --filename examples/k8s/aws-eks.yaml
+
+cat examples/k8s/aws-eks.yaml
 
 kubectl --namespace a-team get clusterclaims
 ```

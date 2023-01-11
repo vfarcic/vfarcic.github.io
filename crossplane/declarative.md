@@ -4,6 +4,8 @@
 ## Desired State
 
 ```bash
+cd devops-catalog-code/terraform-eks/simple
+
 cat main.tf
 ```
 
@@ -14,8 +16,6 @@ cat main.tf
 ## Drift-Detection
 
 ```bash
-devops-catalog-code/terraform-eks/simple
-
 terraform apply --var min_node_count=4
 ```
 

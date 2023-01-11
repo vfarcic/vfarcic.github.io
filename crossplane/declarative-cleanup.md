@@ -12,7 +12,12 @@ kubectl --namespace a-team delete \
 
 kubectl --namespace a-team delete \
     --filename examples/vm/aws.yaml
+```
 
+
+## Cleanup
+
+```bash
 cd ../devops-catalog-code/terraform-eks/simple
 
 terraform destroy
