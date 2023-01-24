@@ -1,8 +1,10 @@
-# Choose Your Own Adventure: The Treacherous Trek to Production
+# Choose Your Own Adventure: The Treacherous Trek to Development
 
 From the moment of their inception as source code on the developer’s laptop, our hero knows that they are destined for great things. They long to be a real, running application, living in production, serving end users! But the epic journey to production is an arduous one, filled with cascading choices — choices concerning app design, testing, security, container image building, deployment strategy, and observability, to name a few. And who knows what other unseen forces lurk in the shadows! One wrong step could be catastrophic.
 
-It is up to us, the audience, to guide our hero; and to help them grow from source code to container image, to their final form as a running application in production. In this ‘Choose Your Own Adventure’-style talk, Whitney and Viktor will present a linear view of all of the choices that an anthropomorphized application must make as they try to find their way to the fabled land of production. Throughout the presentation, the audience will use a voting app to choose which path our hero application will take. Can we navigate CNCF projects and avoid pitfalls and dead-ends to get our application to production before the session time elapses?
+It is up to us, the audience, to guide our hero; and to help them grow from source code to container image, to their final form as a running application in production. In this ‘Choose Your Own Adventure’-style talk, Whitney and Viktor will present a linear view of all of the choices that an anthropomorphized application must make as they try to find their way to the fabled land of production.
+
+There are many paths to production, and we will only be able to cover a few of them in this talk. So, we'll limit the journey to the development phase of the application lifecycle. Throughout the presentation, the audience will use a voting app to choose which path our hero application will take. Can we navigate CNCF projects and avoid pitfalls and dead-ends to get our application to the development environment before the session time elapses?
 
 ## Benefits to the Ecosystem
 
