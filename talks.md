@@ -1,5 +1,6 @@
 # Talks
 
+* How To Fight Misconfiguration And Bad Intentions With Kubernetes Validating Admission Policy And Crossplane ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/vac.md))
 * Choose Your Own Adventure: The Treacherous Trek to Development ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/cloud/abstracts/adventure-dev.md))
 * Choose Your Own Adventure: The Treacherous Trek to Production ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/cloud/abstracts/adventure.md))
 * [The Future Of Declarative Infrastructure](crossplane/declarative.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/declarative.md))
