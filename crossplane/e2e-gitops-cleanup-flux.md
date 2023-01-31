@@ -51,7 +51,7 @@ kubectl get managed
 ## Cleanup
 
 ```bash
-eksctl delete cluster --name management --region us-east-1
+# Destroy or reset the management cluster
 
 gh repo view --web
 
