@@ -16,21 +16,21 @@ export GITHUB_TOKEN=[...]
 # Replace `[...]` with `true` if it is a personal account,
 #   or with `false` if it is an GitHub organization
 export GITHUB_PERSONAL=[...]
-```
 
-
-# Setup MGMNT Cluster
-
-```bash
 # Replace `[...]` with your access key ID`
 export AWS_ACCESS_KEY_ID=[...]
 
 # Replace `[...]` with your secret access key
 export AWS_SECRET_ACCESS_KEY=[...]
+```
 
-eksctl create cluster --name management --region us-east-1 \
-    --node-type t2.large --nodes 3 --version 1.23
 
+# Setup MGMNT Cluster
+
+* The demo is using Rancher Desktop with 8 GB RAM and 4 CPUs as the management cluster.
+* Any other cluster should do.
+
+```bash
 kubectl create namespace crossplane-system
 
 kubectl create namespace dev
@@ -102,7 +102,7 @@ kubectl --namespace flux-system get helmreleases,kustomizations
 # Wait for a few moments for everything to sync
 
 curl -o infra/crossplane-system/providers.yaml \
-    https://gist.githubusercontent.com/vfarcic/477536cd79893a06cf805427fa6d6b7c/raw
+    https://gist.githubusercontent.com/vfarcic/477536cd79893a06cf805427fa6d6b7c/raw/2c3d9445f29d921ade72e5437cef43e87c9c453c/providers.yaml
 ```
 
 
@@ -122,7 +122,7 @@ kubectl get pkgrev
 # Wait until all the packages are healthy
 
 curl -o infra/crossplane-system/provider-config-aws.yaml \
-    https://raw.githubusercontent.com/vfarcic/devops-toolkit-crossplane/master/crossplane-config/provider-config-aws.yaml
+    https://raw.githubusercontent.com/vfarcic/devops-toolkit-crossplane/master/crossplane-config/provider-config-aws-official.yaml
 ```
 
 
@@ -161,12 +161,12 @@ spec:
   id: production
   compositionSelector:
     matchLabels:
-      provider: aws
+      provider: aws-official
       cluster: eks
   parameters:
     nodeSize: small
     minNodeCount: 3
-    version: \"1.23\"
+    version: \"1.24\"
   writeConnectionSecretToRef:
     name: production-cluster" \
     | tee infra/clusters/production.yaml
@@ -191,8 +191,7 @@ kubectl --namespace flux-system get clusterclaims
 # Setup Prod Cluster
 
 ```bash
-kubectl --namespace crossplane-system \
-    get secret production-cluster \
+kubectl --namespace flux-system get secret production-cluster \
     --output jsonpath="{.data.kubeconfig}" \
     | base64 -d >kubeconfig.yaml
 

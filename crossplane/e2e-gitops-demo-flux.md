@@ -55,7 +55,6 @@ spec:
   parameters:
     version: \"13.4\"
     size: small
-    namespace: dev
   writeConnectionSecretToRef:
     name: silly-demo-dev" \
     | tee dev-apps/backend.yaml
@@ -84,10 +83,9 @@ kubectl --namespace dev get all,ingresses,secrets
 # Prod Cluster
 
 ```bash
-kubectl get clusters
+kubectl get cluster.eks.aws.upbound.io
 
-kubectl --namespace crossplane-system \
-    get secret production-cluster \
+kubectl --namespace flux-system get secret production-cluster \
     --output jsonpath="{.data.kubeconfig}" \
     | base64 -d >kubeconfig.yaml
 
@@ -130,12 +128,11 @@ spec:
   id: silly-demo
   compositionSelector:
     matchLabels:
-      provider: aws
+      provider: aws-official
       db: postgresql
   parameters:
     version: \"13.4\"
     size: small
-    namespace: production
   writeConnectionSecretToRef:
     name: silly-demo" \
     | tee prod-apps/backend.yaml

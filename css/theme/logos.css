@@ -3,7 +3,7 @@
     bottom: 35px;
     right: 120px;
     color: white;
-    font-size: 40px;
+    font-size: 30px;
     font-weight: 800;
     z-index: 2; 
 }
@@ -14,10 +14,10 @@
 .reveal .sponsor {
     position: absolute;
     bottom: 0px;
-    left: 0px;
+    left: 30px;
     z-index: 1; 
 }
 .reveal .sponsor img {
-    width: 30%;
-    height: 30%; 
+    width: 25%;
+    height: 25%; 
 }
