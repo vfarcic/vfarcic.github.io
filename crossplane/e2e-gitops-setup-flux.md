@@ -164,7 +164,7 @@ spec:
       provider: aws-official
       cluster: eks
   parameters:
-    nodeSize: small
+    nodeSize: medium
     minNodeCount: 3
     version: \"1.24\"
   writeConnectionSecretToRef:
