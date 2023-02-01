@@ -102,7 +102,7 @@ kubectl --namespace flux-system get helmreleases,kustomizations
 # Wait for a few moments for everything to sync
 
 curl -o infra/crossplane-system/providers.yaml \
-    https://gist.githubusercontent.com/vfarcic/477536cd79893a06cf805427fa6d6b7c/raw/2c3d9445f29d921ade72e5437cef43e87c9c453c/providers.yaml
+    https://gist.githubusercontent.com/vfarcic/477536cd79893a06cf805427fa6d6b7c/raw/9e9e6bd524c65f3108e9d8c87d7ef7e0208e807d/providers.yaml
 ```
 
 
