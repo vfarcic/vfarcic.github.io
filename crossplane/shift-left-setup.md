@@ -67,7 +67,7 @@ kubectl --namespace crossplane-system create secret generic \
     aws-creds --from-file creds=./aws-creds.conf
 
 kubectl apply \
-    --filename crossplane-config/provider-aws.yaml
+    --filename crossplane-config/provider-aws-official.yaml
 
 kubectl apply \
     --filename crossplane-config/config-k8s.yaml
@@ -85,33 +85,46 @@ kubectl get pkgrev
 
 ```bash
 kubectl apply \
-    --filename crossplane-config/provider-config-aws.yaml
+    --filename crossplane-config/provider-config-aws-official.yaml
 
 kubectl create namespace a-team
 
 kubectl --namespace a-team apply \
-    --filename examples/k8s/aws-eks-1-22.yaml
+    --filename examples/k8s/aws-eks-official.yaml
 
 kubectl --namespace a-team get clusterclaims
 
-./examples/k8s/get-kubeconfig-eks.sh a-team a-team-eks
+./examples/k8s/get-kubeconfig-aws.sh a-team-eks
 
-# It's temporary.
-# You might want to get a permanent kubeconfig from your
-#   Kubernetes provider
+export KUBECONFIG=$PWD/kubeconfig.yaml
 ```
 
 
 ## Cluster
 
 ```bash
-export KUBECONFIG=$PWD/kubeconfig.yaml
-
 ./examples/k8s/create-secret-aws.sh
 
-kubectl --namespace dev apply --filename examples/sql/aws.yaml
+kubectl --namespace dev apply \
+    --filename examples/sql/aws-official.yaml
+
+# kubectl get vpc.ec2.aws.upbound.io,subnet.ec2.aws.upbound.io,subnetgroup.rds.aws.upbound.io,internetgateway.ec2.aws.upbound.io,routetable.ec2.aws.upbound.io,route.ec2.aws.upbound.io,mainroutetableassociation.ec2.aws.upbound.io,routetableassociation.ec2.aws.upbound.io,securitygroup.ec2.aws.upbound.io,securitygrouprule.ec2.aws.upbound.io,instance.rds.aws.upbound.io,database.postgresql.sql.crossplane.io,object.kubernetes.crossplane.io
 
 kubectl --namespace dev get sqlclaims
+```
 
+## SchemaHero
+
+```bash
+kubectl krew install schemahero
+
+export PATH="${PATH}:${HOME}/.krew/bin"
+
+kubectl schemahero install
+```
+
+## Almost Done
+
+```
 unset KUBECONFIG
 ```

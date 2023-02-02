@@ -8,12 +8,12 @@
 ## Apps Need A Cluster
 
 ```bash
-cat examples/k8s/aws-eks.yaml
+cat examples/k8s/aws-eks-official.yaml
 
 # Open https://marketplace.upbound.io/configurations/devops-toolkit/dot-kubernetes
 
 kubectl --namespace a-team apply \
-    --filename examples/k8s/aws-eks-1-22.yaml
+    --filename examples/k8s/aws-eks-official.yaml
 
 kubectl --namespace a-team get clusterclaims
 ```
@@ -23,8 +23,6 @@ kubectl --namespace a-team get clusterclaims
 
 ```bash
 kubectl --namespace a-team get secrets
-
-./examples/k8s/get-kubeconfig-eks.sh a-team a-team-eks
 
 export KUBECONFIG=$PWD/kubeconfig.yaml
 
