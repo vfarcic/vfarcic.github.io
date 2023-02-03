@@ -14,7 +14,7 @@ cat okteto.yaml
 
 okteto context use
 
-# Choose `a-team-eks`
+# Choose `a-team-gke`
 
 okteto up --namespace dev
 

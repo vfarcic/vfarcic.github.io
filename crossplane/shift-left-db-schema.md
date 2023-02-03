@@ -16,7 +16,7 @@ kubectl get databases.postgresql.sql.crossplane.io
 cat examples/sql/schemahero-postgresql-params.yaml
 
 kubectl --namespace dev apply \
-    --filename examples/sql/schemahero-postgresql-params.yaml
+    --filename examples/sql/schemahero-postgresql-google.yaml
 
 kubectl --namespace dev get tables.schemas.schemahero.io
 ```

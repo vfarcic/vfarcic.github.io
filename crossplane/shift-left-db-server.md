@@ -10,10 +10,10 @@
 ```bash
 cat examples/sql/kubernetes.yaml
 
-cat examples/sql/aws-official.yaml
+cat examples/sql/gcp-official.yaml
 
 kubectl --namespace dev apply \
-    --filename examples/sql/aws-official.yaml
+    --filename examples/sql/gcp-official.yaml
 
 kubectl --namespace dev get sqlclaims
 ```

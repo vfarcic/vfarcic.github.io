@@ -40,40 +40,56 @@ helm upgrade --install \
 ```
 
 
-## Crossplane
+## Google Cloud
 
 ```bash
-# The demo is using AWS.
+# The demo is using Google Cloud.
 # Using a different provider might require changes to some
 #   of the commands and manifests.
 
-# Replace `[...]` with your access key ID`
-export AWS_ACCESS_KEY_ID=[...]
+export PROJECT_ID=dot-$(date +%Y%m%d%H%M%S)
 
-# Replace `[...]` with your secret access key
-export AWS_SECRET_ACCESS_KEY=[...]
+gcloud projects create $PROJECT_ID
 
-echo "[default]
-aws_access_key_id = $AWS_ACCESS_KEY_ID
-aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
-" >aws-creds.conf
+echo "https://console.cloud.google.com/marketplace/product/google/container.googleapis.com?project=$PROJECT_ID"
+
+# Open the URL and *ENABLE* the API
+```
+
+
+## Google Cloud
+
+```bash
+export SA_NAME=devops-toolkit
+
+export SA="${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
+
+gcloud iam service-accounts create $SA_NAME \
+    --project $PROJECT_ID
+
+export ROLE=roles/admin
+
+gcloud projects add-iam-policy-binding \
+    --role $ROLE $PROJECT_ID --member serviceAccount:$SA
+
+gcloud iam service-accounts keys create gcp-creds.json \
+    --project $PROJECT_ID --iam-account $SA
 ```
 
 
 ## Crossplane
 
 ```bash
-kubectl --namespace crossplane-system create secret generic \
-    aws-creds --from-file creds=./aws-creds.conf
+kubectl --namespace crossplane-system \
+    create secret generic gcp-creds \
+    --from-file creds=./gcp-creds.json
 
 kubectl apply \
-    --filename crossplane-config/provider-aws-official.yaml
+    --filename crossplane-config/provider-gcp-official.yaml
 
-kubectl apply \
-    --filename crossplane-config/config-k8s.yaml
+kubectl apply --filename crossplane-config/config-k8s.yaml
 
-kubectl apply \
-    --filename crossplane-config/config-sql.yaml
+kubectl apply --filename crossplane-config/config-sql.yaml
 
 kubectl get pkgrev
 
@@ -84,34 +100,58 @@ kubectl get pkgrev
 ## Cluster
 
 ```bash
-kubectl apply \
-    --filename crossplane-config/provider-config-aws-official.yaml
-
-kubectl create namespace a-team
-
-kubectl --namespace a-team apply \
-    --filename examples/k8s/aws-eks-official.yaml
-
-kubectl --namespace a-team get clusterclaims
-
-./examples/k8s/get-kubeconfig-aws.sh a-team-eks
-
-export KUBECONFIG=$PWD/kubeconfig.yaml
+echo "apiVersion: gcp.upbound.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: default
+spec:
+  projectID: $PROJECT_ID
+  credentials:
+    source: Secret
+    secretRef:
+      namespace: crossplane-system
+      name: gcp-creds
+      key: creds" \
+    | kubectl apply --filename -
 ```
 
 
 ## Cluster
 
 ```bash
-./examples/k8s/create-secret-aws.sh
+kubectl create namespace a-team
+
+kubectl --namespace a-team apply \
+    --filename examples/k8s/gcp-gke-official.yaml
+
+# kubectl get cluster.container.gcp.upbound.io,nodepool.container.gcp.upbound.io,release.helm.crossplane.io,object.kubernetes.crossplane.io
+
+kubectl --namespace a-team get clusterclaim
+
+./examples/k8s/get-kubeconfig-google.sh \
+    a-team-gke kubeconfig.yaml $PROJECT_ID
+
+export KUBECONFIG=$PWD/kubeconfig.yaml
+```
+
+
+## PostgreSQL
+
+```bash
+echo "https://console.cloud.google.com/apis/library/sqladmin.googleapis.com?project=$PROJECT_ID"
+
+# Open the URL and *ENABLE* the API
+
+./examples/k8s/create-secret-google.sh $PROJECT_ID
 
 kubectl --namespace dev apply \
-    --filename examples/sql/aws-official.yaml
+    --filename examples/sql/gcp-official.yaml
 
-# kubectl get vpc.ec2.aws.upbound.io,subnet.ec2.aws.upbound.io,subnetgroup.rds.aws.upbound.io,internetgateway.ec2.aws.upbound.io,routetable.ec2.aws.upbound.io,route.ec2.aws.upbound.io,mainroutetableassociation.ec2.aws.upbound.io,routetableassociation.ec2.aws.upbound.io,securitygroup.ec2.aws.upbound.io,securitygrouprule.ec2.aws.upbound.io,instance.rds.aws.upbound.io,database.postgresql.sql.crossplane.io,object.kubernetes.crossplane.io
+# kubectl get databaseinstance.sql.gcp.upbound.io,user.sql.gcp.upbound.io,database.postgresql.sql.crossplane.io,object.kubernetes.crossplane.io
 
 kubectl --namespace dev get sqlclaims
 ```
+
 
 ## SchemaHero
 
@@ -122,6 +162,7 @@ export PATH="${PATH}:${HOME}/.krew/bin"
 
 kubectl schemahero install
 ```
+
 
 ## Almost Done
 
