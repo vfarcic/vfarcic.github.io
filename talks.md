@@ -1,5 +1,6 @@
 # Talks
 
+* From Kubernetes Out Of Kubernetes Observability ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/crossplane-observability.md))
 * Choose Your Own Adventure: The Treacherous Trek from Source Code to Production With GitOps ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/cloud/abstracts/adventure-gitops.md))
 
 
