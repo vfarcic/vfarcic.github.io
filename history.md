@@ -13,6 +13,7 @@
 
 # Conferences
 
+* [Shifting Left Stateful Applications In Kubernetes](https://www.civo.com/navigate) (7th of February 2023)
 * [Shifting Left Stateful Applications In Kubernetes](https://www.open-conf.gr/etn-speaker/viktor-farcic) at [Open Conf](https://www.open-conf.gr/) (3rd of December 2022)
 * The Only Thing That Matters In DevOps Is... at [DevOps Experience](https://www.techstrongevents.com/devopsexperience22) (16th of November 2022)
 * What (Really) Is Kubernetes? at [Worldwide Software Architecture Summit](https://events.geekle.us/wsas4) (15th of November 2022)
