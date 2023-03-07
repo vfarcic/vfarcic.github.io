@@ -59,7 +59,7 @@ kubectl --namespace b-team apply \
 ```
 
 
-## Policies In Action
+## Policies In Action
 
 ```bash
 diff examples/k8s/$PROVIDER-$CLUSTER_TYPE.yaml \
@@ -73,7 +73,7 @@ kubectl --namespace b-team apply \
 ```
 
 
-## Policies Explained
+## Policies Explained
 
 ```bash
 cat examples/k8s/kyverno.yaml

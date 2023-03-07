@@ -29,7 +29,7 @@ cd ../../../
 
 ```bash
 # Create a management Kubernetes cluster
-# A local cluster like Rancher Desktop should do
+# A local cluster like Rancher Desktop should do
 
 git clone https://github.com/vfarcic/devops-toolkit-crossplane
 
