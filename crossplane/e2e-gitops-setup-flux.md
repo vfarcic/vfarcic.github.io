@@ -82,7 +82,7 @@ flux create helmrelease crossplane --interval 1h \
     --target-namespace crossplane-system \
     --create-target-namespace \
     --source HelmRepository/crossplane \
-    --chart crossplane --chart-version 1.8.0 \
+    --chart crossplane --chart-version 1.11.2 \
     --crds CreateReplace --export \
     | tee infra/crossplane-system/release.yaml
 ```
