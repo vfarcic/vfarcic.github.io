@@ -13,6 +13,9 @@
 
 # Conferences
 
+* [Shifting Left Stateful Applications In Kubernetes](https://community.cncf.io/events/details/cncf-kcd-israel-presents-kcd-israel-2023/) at [KCD Israel](https://community.cncf.io/kcd-israel/) (23rd of March 2023)
+* DevOps Is Dead! Long Live Platform Engineering! Did We Get Confused? at [Kubernetes Community Days Ukraine](https://community.cncf.io/events/details/cncf-kcd-ukraine-presents-kcd-ukraine-2023-fundraiser/) (16th of March 2023)
+* [DevOps Is Dead! Long Live Platform Engineering! Did We Get Confused?](https://cloudfest.pl/sessions/15) at [GDG CloudFest Poland](https://cloudfest.pl/) (15th of March 2023)
 * [Shifting Left Stateful Applications In Kubernetes](https://www.civo.com/navigate) at [KCD Amsterdam](https://community.cncf.io/events/details/cncf-kcd-netherlands-presents-kubernetes-community-days-amsterdam-2023/
 ) (23rd of February 2023)
 * [Shifting Left Stateful Applications In Kubernetes](https://civo.com/navigate/schedule) at [Civo Navigate](https://civo.com/navigate) (7th of February 2023)
@@ -194,6 +197,9 @@
 
 # Meetups / Webinars
 
+* [From Kubernetes Out Of Kubernetes Observability](https://www.meetup.com/techspot/events/291959013) at [TechSpot | System architecture meetups](https://www.meetup.com/techspot/) (16th of March 2023)
+* [Building Internal Developer Platforms (IDPs) with Crossplane and Flux](https://www.youtube.com/live/jIVMJ0NbqtE) at [Containers from the Couch](https://www.youtube.com/@ContainersfromtheCouch) (9th of March 2023)
+* [From Kubernetes Out Of Kubernetes Observability](https://www.meetup.com/grafana-and-friends-barcelona/events/291490640) at [Grafana & Friends Barcelona](https://www.meetup.com/grafana-and-friends-barcelona/) (1st of March 2023)
 * [The Only Thing That Matters In DevOps Is…](https://gdg.community.dev/events/details/google-gdg-cloud-bydgoszcz-presents-end-of-the-year-celebration-with-gdg-cloud-bydgoszcz/) at [GDG Cloud Bydgoszcz](https://gdg.community.dev/gdg-cloud-bydgoszcz/) (15th of December 2022)
 * [Is DevOps Dead?](https://youtu.be/RRdTV5NdrXQ) at [Uptime Community](https://www.youtube.com/@upt1me) (13th of December 2022)
 * [What (Really) Is Kubernetes?](https://www.meetup.com/athens-kubernetes-meetup/events/289887587/) at [Athens Kubernetes](https://www.meetup.com/athens-kubernetes-meetup) (1st of December 2022)
