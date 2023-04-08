@@ -29,8 +29,6 @@ spec:
 
 
 ```bash
-cat examples/sql/aws-official.yaml
-
 kubectl --namespace production apply \
     --filename examples/sql/aws-official.yaml
 
