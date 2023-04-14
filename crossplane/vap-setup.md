@@ -12,9 +12,15 @@
 #   or use the command that follows to create a cluster with
 #   Minikube
 minikube start --kubernetes-version v1.26.0 \
+    --memory max --cpus max \
     --feature-gates ValidatingAdmissionPolicy=true \
     --extra-config apiserver.runtime-config=admissionregistration.k8s.io/v1alpha1
+```
 
+
+## Setup Kubernetes
+
+```bash
 kubectl create namespace production
 
 echo "apiVersion: v1
@@ -29,9 +35,6 @@ metadata:
 ## Setup Crossplane
 
 ```bash
-# Create a management Kubernetes cluster
-# A local cluster like Rancher Desktop should do
-
 git clone https://github.com/vfarcic/devops-toolkit-crossplane
 
 cd devops-toolkit-crossplane
