@@ -10,9 +10,9 @@ To answer those questions, we'll have to answer the following:
 5. How do you know that there are no known vulnerabilities in what you're running?
 6. How do you store and retrieve confidential information?
 
-Now, you probably heard those questions before, but the answers might be different than what you think.
+Now, you probably heard those questions before, but the answers might be different than what you think. 
 
-In this talk, we'll design a system from scratch in a way that it is secured without sacrificing productivity of the people using it.
+In this talk, we'll design a system from scratch in a way that it is secured without sacrificing productivity of the people using it. We'll try to look at security from a different angle, and we'll try to answer the above questions in a way that will make you think differently about security.
 
 ## Benefit the ecosystem?
 
