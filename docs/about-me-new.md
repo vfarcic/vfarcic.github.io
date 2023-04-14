@@ -11,6 +11,7 @@
 
 <!-- .slide: class="center" -->
 
+![](../img/github-star.png)
 <p style="display:inline-block"><img src="../img/github-star.png" style="width:300px;height:300px;"></p> <!-- .element: class="fragment" -->
 
 <p style="display:inline-block"><img src="../img/gde.png" style="width:300px;height:300px;"></p>
