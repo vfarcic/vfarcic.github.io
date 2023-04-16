@@ -1,6 +1,8 @@
 ## Cleanup
 
 ```bash
+kubectl delete --filename examples/sql/aws-official-vap.yaml
+
 kubectl --namespace production delete \
     --filename examples/sql/aws-official.yaml
 
