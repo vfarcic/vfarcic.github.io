@@ -1,5 +1,6 @@
 # Talks
 
+* How To Build An Internal Developer Platform In 30 Minutes (Cheating Is Allowed)? ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/kubernetes/abstracts/idp.md))
 * How To Secure Everything Without Making Everyone Suffer? ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/kubernetes/abstracts/secure-everything.md))
 * [From Kubernetes Out Of Kubernetes Observability](crossplane/observability.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/crossplane-observability.md))
 * Choose Your Own Adventure: The Treacherous Trek from Source Code to Production With GitOps ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/cloud/abstracts/adventure-gitops.md))
