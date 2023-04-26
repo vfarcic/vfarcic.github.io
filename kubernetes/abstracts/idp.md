@@ -1,4 +1,4 @@
-# How To Build An Internal Developer Platform In 30 Minutes And A Bit Of Cheating?
+# How To Build An Internal Developer Platform (IDP) In 30 Minutes And A Bit Of Cheating?
 
 Today we are going to build a fully operational internal developer platform or IDP that will be built in a way that it can meet almost anyone's needs. To make it more challenging, we'll do that in 30 minutes or less.
 
