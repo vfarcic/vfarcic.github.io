@@ -13,6 +13,9 @@
 
 # Conferences
 
+* [DevOps Is Dead! Long Live Platform Engineering! Did We Get Confused?](https://devopsdays.org/events/2023-caceres/program/platform-engineering) at [DevOps Days Caceres](https://devopsdays.org/events/2023-caceres) (28th of April 2023)
+* [Choose Your Own Adventure: The Treacherous Trek to Development](https://sched.co/1HyWm) at [KubeCon](https://events.linuxfoundation.org/kubecon-cloudnativecon-europe) (19th of April 2023)
+* [How To Fight Misconfiguration And Bad Intentions With Kubernetes Validating Admission Policy And Crossplane](https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-eu-amsterdam-2023/talk/Y8EVRR/) at [Cloud Native Rejekts](https://cloud-native.rejekts.io/) (16th of April 2023)
 * [Shifting Left Stateful Applications In Kubernetes](https://community.cncf.io/events/details/cncf-kcd-israel-presents-kcd-israel-2023/) at [KCD Israel](https://community.cncf.io/kcd-israel/) (23rd of March 2023)
 * DevOps Is Dead! Long Live Platform Engineering! Did We Get Confused? at [Kubernetes Community Days Ukraine](https://community.cncf.io/events/details/cncf-kcd-ukraine-presents-kcd-ukraine-2023-fundraiser/) (16th of March 2023)
 * [DevOps Is Dead! Long Live Platform Engineering! Did We Get Confused?](https://cloudfest.pl/sessions/15) at [GDG CloudFest Poland](https://cloudfest.pl/) (15th of March 2023)
