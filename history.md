@@ -13,6 +13,9 @@
 
 # Conferences
 
+* [Choose Your Own Adventure: The Treacherous Trek to Development](https://gotoaarhus.com/2023/sessions/2504/choose-your-own-adventure-the-treacherous-trek-to-development) at [goto;](https://gotoaarhus.com/2023) (22nd of May 2023)
+* [How To Fight Misconfiguration And Bad Intentions With Kubernetes Validating Admission Policy And Crossplane](https://craft-conf.com/2023/talk/how-to-fight-misconfiguration-and-bad-intentions-with-kubernetes-validating-admission-policy-and-crossplane) at [Craft](https://craft-conf.com/2023) (19th of May 2023)
+* [How To Build An Internal Developer Platform (IDP) In 30 Minutes?](https://craft-conf.com/2023/talk/how-to-build-an-internal-developer-platform-idp-in-30-minutes) at [Craft](https://craft-conf.com/2023) (18th of May 2023)
 * [DevOps Is Dead! Long Live Platform Engineering! Did We Get Confused?](https://devopsdays.org/events/2023-caceres/program/platform-engineering) at [DevOps Days Caceres](https://devopsdays.org/events/2023-caceres) (28th of April 2023)
 * [Choose Your Own Adventure: The Treacherous Trek to Development](https://sched.co/1HyWm) at [KubeCon](https://events.linuxfoundation.org/kubecon-cloudnativecon-europe) (19th of April 2023)
 * [How To Fight Misconfiguration And Bad Intentions With Kubernetes Validating Admission Policy And Crossplane](https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-eu-amsterdam-2023/talk/Y8EVRR/) at [Cloud Native Rejekts](https://cloud-native.rejekts.io/) (16th of April 2023)
@@ -200,6 +203,9 @@
 
 # Meetups / Webinars
 
+* [Choose Your Own Adventure: The Treacherous Trek to Development](https://www.meetup.com/kubernetes-atlanta-meetup/events/293650631) at [Kubernetes Atlanta Meetup](https://www.meetup.com/kubernetes-atlanta-meetup) (1st of June 2023)
+* [The Future Of Declarative Infrastructure](https://www.meetup.com/svqjug/events/292683053) at [Sevilla Java User Group (SVQJUG)](https://www.meetup.com/svqjug) (11th of May 2023)
+* [How To Fight Misconfiguration And Bad Intentions](https://www.meetup.com/es/svqjug/events/292683015) at [Sevilla Java User Group (SVQJUG)](https://www.meetup.com/svqjug) (10th of May 2023)
 * [From Kubernetes Out Of Kubernetes Observability](https://www.meetup.com/techspot/events/291959013) at [TechSpot | System architecture meetups](https://www.meetup.com/techspot/) (16th of March 2023)
 * [Building Internal Developer Platforms (IDPs) with Crossplane and Flux](https://www.youtube.com/live/jIVMJ0NbqtE) at [Containers from the Couch](https://www.youtube.com/@ContainersfromtheCouch) (9th of March 2023)
 * [From Kubernetes Out Of Kubernetes Observability](https://www.meetup.com/grafana-and-friends-barcelona/events/291490640) at [Grafana & Friends Barcelona](https://www.meetup.com/grafana-and-friends-barcelona/) (1st of March 2023)
