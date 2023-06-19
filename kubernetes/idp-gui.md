@@ -39,13 +39,13 @@ cat port/backend-app-blueprint.json
 #   "Credentials".
 
 # Replace `[...]` with the "Client ID"
-export CLIENT_ID=[...]
+export PORT_CLIENT_ID=[...]
 
 # Replace `[...]` with the "Client Secret"
-export CLIENT_SECRET=[...]
+export PORT_CLIENT_SECRET=[...]
 
-cat argocd/port.yaml | sed -e "s@CLIENT_ID@$CLIENT_ID@g" \
-    | sed -e "s@CLIENT_SECRET@$CLIENT_SECRET@g" \
+cat argocd/port.yaml | sed -e "s@CLIENT_ID@$PORT_CLIENT_ID@g" \
+    | sed -e "s@CLIENT_SECRET@$PORT_CLIENT_SECRET@g" \
     | tee infra/port.yaml
 ```
 
