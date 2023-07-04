@@ -18,6 +18,14 @@
     z-index: 1; 
 }
 .reveal .sponsor img {
-    width: 25%;
-    height: 25%; 
+    width: 7%;
+    height: 7%; 
+}
+.reveal .sponsorRight img {
+    position: absolute;
+    bottom: 0px;
+    right: 150px;
+    z-index: 2;
+    width: 7%;
+    height: 12%;
 }
