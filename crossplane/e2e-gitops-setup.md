@@ -7,12 +7,16 @@
 ## Setup Cluster
 
 ```bash
+# Create a cluster with an Ingress controller
+
 gh repo fork vfarcic/devops-toolkit-crossplane --clone
 
 cd devops-toolkit-crossplane
 
+gh repo set-default
+
 # If not using Rancher Desktop, replace `127.0.0.1`
-#   with the base host accessible through NGINX Ingress
+#   with the base host accessible Ingress Service external IP
 export INGRESS_HOST=127.0.0.1
 ```
 
@@ -134,13 +138,11 @@ git push
 ## Setup Providers
 
 ```bash
-cp crossplane-config/config-k8s.yaml \
+cp crossplane-config/config-k8s-family.yaml \
     crossplane-config/config-gitops.yaml \
-    crossplane-config/provider-aws.yaml \
-    crossplane-config/provider-civo.yaml \
     crossplane-definitions/.
 
-cp crossplane-config/provider-config-aws.yaml \
+cp crossplane-config/provider-config-aws-official.yaml \
     crossplane-config/provider-config-civo.yaml \
     crossplane-provider-configs/.
 
@@ -163,7 +165,7 @@ git push
 ## Setup Cluster
 
 ```bash
-cp examples/k8s/aws-eks-gitops-no-claim.yaml infra/aws-eks.yaml
+cp examples/k8s/aws-eks-gitops.yaml infra/aws-eks.yaml
 
 git add .
 
@@ -176,12 +178,12 @@ git push
 ## Setup AWS
 
 ```bash
-kubectl get cluster.eks.aws.crossplane.io
+kubectl get managed
 
-# Wait until it's `READY`
+# Wait until all resources are `READY`
 
 ./examples/k8s/get-kubeconfig-eks.sh \
-    crossplane-system a-team-eks-cluster
+    production a-team-eks-cluster
 
 kubectl --kubeconfig kubeconfig.yaml \
     --namespace crossplane-system create secret generic \

@@ -18,11 +18,7 @@ echo http://argo-cd.$INGRESS_HOST.nip.io
 ## Create Clusters
 
 ```bash
-cp examples/k8s/civo-no-claim.yaml infra/civo.yaml
-
-cp examples/k8s/aws-eks-gitops-no-claim.yaml infra/aws-eks.yaml
-
-# Modify `spec.parameters.gitOpsRepo` in `infra/aws-eks.yaml`
+cp examples/k8s/civo.yaml infra/civo.yaml
 
 git add .
 
@@ -35,21 +31,23 @@ git push
 ## Create Clusters
 
 ```bash
-cat examples/k8s/civo-no-claim.yaml
+cat examples/k8s/civo.yaml
 
-cat examples/k8s/aws-eks-gitops-no-claim.yaml
+cat examples/k8s/aws-eks-gitops.yaml
 
-kubectl get managed
+kubectl --namespace production get clusterclaims
 ```
 
 
 ## Use
 
 ```bash
-kubectl get compositeclusters
+kubectl get managed
+
+kubectl --namespace production get clusterclaims
 
 ./examples/k8s/get-kubeconfig-eks.sh \
-    crossplane-system a-team-eks-cluster
+    production a-team-eks-cluster
 
 kubectl --kubeconfig kubeconfig.yaml get nodes
 ```
@@ -60,7 +58,7 @@ kubectl --kubeconfig kubeconfig.yaml get nodes
 ```bash
 cat packages/k8s/definition.yaml
 
-cat packages/k8s/eks.yaml
+more packages/k8s/eks.yaml
 
 ls -1 packages/k8s
 
@@ -93,24 +91,15 @@ kubectl get managed
 ## Update
 
 ```bash
-cat infra/civo.yaml \
-    | sed -e "s@minNodeCount: .*@minNodeCount: 3@g" \
-    | tee infra/civo.yaml
+cat infra/aws-eks.yaml \
+    | sed -e "s@minNodeCount: .*@minNodeCount: 4@g" \
+    | tee infra/aws-eks.yaml
 
 git add .
 
 git commit -m "My cluster"
 
 git push
-
-# Show the number of nodes in Civo console
-```
-
-
-## Secrets
-
-```bash
-kubectl get cluster.eks.aws.crossplane.io
 ```
 
 
@@ -129,9 +118,9 @@ kubectl --kubeconfig kubeconfig.yaml --namespace argocd \
 ```bash
 kubectl --kubeconfig kubeconfig.yaml --namespace argocd \
     port-forward \
-    svc/a-team-gitops-argocd-server 8080:443 &
+    svc/a-team-gitops-argocd-server 8081:80 &
 
-# Open http://localhost:8080 in a browser
+# Open http://localhost:8081 in a browser
 # User `admin`, password `admin123`
 ```
 
