@@ -53,12 +53,9 @@ helm upgrade --install crossplane crossplane-stable/crossplane \
 
 ```bash
 kubectl apply \
-    --filename crossplane-config/provider-aws-official.yaml
-
-kubectl apply \
     --filename crossplane-config/provider-kubernetes-incluster.yaml
 
-kubectl apply --filename crossplane-config/config-sql.yaml
+kubectl apply --filename crossplane-config/config-sql-family.yaml
 
 # Replace `[...]` with your access key ID`
 export AWS_ACCESS_KEY_ID=[...]
