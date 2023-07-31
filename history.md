@@ -13,6 +13,9 @@
 
 # Conferences
 
+* [Choose Your Own Adventure: The Treacherous Trek to Production](https://devopsdays.org/events/2023-amsterdam/program/ws-viktor-farcic-whitney-lee) at [DevOps Days Amsterdam](https://devopsdays.org/events/2023-amsterdam) (21th of June 2023)
+* How To Build An Internal Developer Platform (IDP) In 30 Minutes? at [Adeo Dev Summit](https://devxproductmanagementsummit.sched.com/) (20th of June 2023)
+* [DevOps Is Dead! Long Live Platform Engineering! Did We Get Confused?](https://devopsdays.org/events/2023-birmingham-uk/program/viktor-farcic/) at [DevOps Days Birmingham](https://devopsdays.org/events/2023-birmingham-uk) (15th of June 2023)
 * [Choose Your Own Adventure: The Treacherous Trek to Development](https://gotoaarhus.com/2023/sessions/2504/choose-your-own-adventure-the-treacherous-trek-to-development) at [goto;](https://gotoaarhus.com/2023) (22nd of May 2023)
 * [How To Fight Misconfiguration And Bad Intentions With Kubernetes Validating Admission Policy And Crossplane](https://craft-conf.com/2023/talk/how-to-fight-misconfiguration-and-bad-intentions-with-kubernetes-validating-admission-policy-and-crossplane) at [Craft](https://craft-conf.com/2023) (19th of May 2023)
 * [How To Build An Internal Developer Platform (IDP) In 30 Minutes?](https://craft-conf.com/2023/talk/how-to-build-an-internal-developer-platform-idp-in-30-minutes) at [Craft](https://craft-conf.com/2023) (18th of May 2023)
@@ -203,6 +206,7 @@
 
 # Meetups / Webinars
 
+* [How To Build An Internal Developer Platform (IDP) In 30 Minutes?](https://www.meetup.com/meetup-group-ziwnrlfj/events/293463627) at [Vienna DevOps Meetup](https://www.meetup.com/meetup-group-ziwnrlfj) (13th of June 2023)
 * [Choose Your Own Adventure: The Treacherous Trek to Development](https://www.meetup.com/kubernetes-atlanta-meetup/events/293650631) at [Kubernetes Atlanta Meetup](https://www.meetup.com/kubernetes-atlanta-meetup) (1st of June 2023)
 * [The Future Of Declarative Infrastructure](https://www.meetup.com/svqjug/events/292683053) at [Sevilla Java User Group (SVQJUG)](https://www.meetup.com/svqjug) (11th of May 2023)
 * [How To Fight Misconfiguration And Bad Intentions](https://www.meetup.com/es/svqjug/events/292683015) at [Sevilla Java User Group (SVQJUG)](https://www.meetup.com/svqjug) (10th of May 2023)
