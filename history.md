@@ -13,6 +13,8 @@
 
 # Conferences
 
+* [How To Fight Misconfiguration And Bad Intentions With Kubernetes Validating Admission Policy And Crossplane](https://community.cncf.io/kcd-guatemala) at [KCD Guatemala](https://community.cncf.io/kcd-guatemala) (18th of July 2023)
+* [How To Fight Misconfiguration And Bad Intentions With Kubernetes Validating Admission Policy And Crossplane](https://kcdmunich.com/schedule) at [KCD Munich](https://kcdmunich.com/) (18th of July 2023)
 * [Choose Your Own Adventure: The Treacherous Trek to Production](https://devopsdays.org/events/2023-amsterdam/program/ws-viktor-farcic-whitney-lee) at [DevOps Days Amsterdam](https://devopsdays.org/events/2023-amsterdam) (21th of June 2023)
 * How To Build An Internal Developer Platform (IDP) In 30 Minutes? at [Adeo Dev Summit](https://devxproductmanagementsummit.sched.com/) (20th of June 2023)
 * [DevOps Is Dead! Long Live Platform Engineering! Did We Get Confused?](https://devopsdays.org/events/2023-birmingham-uk/program/viktor-farcic/) at [DevOps Days Birmingham](https://devopsdays.org/events/2023-birmingham-uk) (15th of June 2023)
