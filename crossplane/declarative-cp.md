@@ -7,9 +7,9 @@
 cd ../../../devops-toolkit-crossplane
 
 kubectl --namespace a-team apply \
-    --filename examples/vm/aws.yaml
+    --filename examples/vm/aws-official.yaml
 
-cat examples/vm/aws.yaml
+cat examples/vm/aws-official.yaml
 ```
 
 * It's declarative
@@ -24,7 +24,7 @@ cat examples/vm/aws.yaml
 ```bash
 kubectl get crds
 
-kubectl explain instances.ec2.aws.crossplane.io --recursive
+kubectl explain instances.ec2.aws.upbound.io --recursive
 ```
 
 
@@ -32,9 +32,9 @@ kubectl explain instances.ec2.aws.crossplane.io --recursive
 
 ```bash
 kubectl --namespace a-team apply \
-    --filename examples/k8s/aws-eks.yaml
+    --filename examples/k8s/aws-eks-official.yaml
 
-cat examples/k8s/aws-eks.yaml
+cat examples/k8s/aws-eks-official.yaml
 
 kubectl --namespace a-team get clusterclaims
 ```
