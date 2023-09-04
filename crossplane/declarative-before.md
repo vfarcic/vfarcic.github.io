@@ -19,6 +19,7 @@
 # CLI?
 
 ```bash
+# Do NOT run this
 eksctl create cluster --name dot --region us-east1 \
     --nodes-min 1 --nodes-max 10 --nodes 1
 ```

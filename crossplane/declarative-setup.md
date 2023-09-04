@@ -55,9 +55,6 @@ aws_secret_access_key = $AWS_SECRET_ACCESS_KEY" >aws-creds.conf
 kubectl --namespace crossplane-system create secret generic \
     aws-creds --from-file creds=./aws-creds.conf
 
-kubectl apply \
-    --filename crossplane-config/provider-aws.yaml
-
 kubectl apply --filename crossplane-config/config-k8s.yaml
 
 kubectl get pkgrev
@@ -70,7 +67,7 @@ kubectl get pkgrev
 
 ```bash
 kubectl apply \
-    --filename crossplane-config/provider-config-aws.yaml
+    --filename crossplane-config/provider-config-aws-official.yaml
 
 kubectl create namespace a-team
 
