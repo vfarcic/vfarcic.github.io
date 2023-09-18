@@ -66,6 +66,14 @@ cat variables.tf
 
 ## What Do We Need?
 
-* Continuous drift-detection and reconciliation
-* API for discovery
-* API extensions for shift-left
+* Discovery
+* On-demand
+* Managed
+* Self-service
+
+
+## What Do We Need?
+
+* API (Discovery, On-demand)
+* Continuous drift-detection and reconciliation (Managed)
+* API extensions (Self-service)
