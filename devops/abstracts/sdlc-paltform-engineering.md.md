@@ -1,9 +1,5 @@
 # Elevating SDLC through Platform Engineering
 
-Title: "Elevating Software Development through Platform Engineering: Navigating the Lifecycle"
-
-Abstract:
-
 In the ever-evolving landscape of software development, the synergy between the Software Development Lifecycle (SDLC) and Platform Engineering has emerged as a critical determinant of success. This talk explores the intricate relationship between these two domains, shedding light on how their collaboration can revolutionize the way we conceive, build, and maintain software systems.
 
 We begin by delving into the fundamental principles of SDLC, emphasizing its stages, methodologies, and best practices. We unravel the nuances of Agile, Waterfall, and DevOps methodologies, highlighting their respective strengths and weaknesses in different contexts.
