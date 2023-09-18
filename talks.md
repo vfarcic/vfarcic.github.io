@@ -1,5 +1,10 @@
 # Talks
 
+* Elevating Software Development through Platform Engineering: Navigating the Lifecycle ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/devops/abstracts/sdlc-paltform-engineering.md))
+
+
+# Talks
+
 * Databases Belong to Apps and Apps Belong to Git ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/db.md))
 * [How To Build An Internal Developer Platform (IDP) In 30 Minutes?](kubernetes/idp.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/kubernetes/abstracts/idp.md))
 * How To Secure Everything Without Making Everyone Suffer? ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/kubernetes/abstracts/secure-everything.md))
