@@ -13,6 +13,7 @@
 
 # Conferences
 
+* How To Build An Internal Developer Platform (IDP) In 30 Minutes? at [Civo Navigate](https://civo.com/navigate/europe) (5th of September 2023)
 * [How To Fight Misconfiguration And Bad Intentions With Kubernetes Validating Admission Policy And Crossplane](https://community.cncf.io/kcd-guatemala) at [KCD Guatemala](https://community.cncf.io/kcd-guatemala) (18th of July 2023)
 * [How To Fight Misconfiguration And Bad Intentions With Kubernetes Validating Admission Policy And Crossplane](https://kcdmunich.com/schedule) at [KCD Munich](https://kcdmunich.com/) (18th of July 2023)
 * [Choose Your Own Adventure: The Treacherous Trek to Production](https://devopsdays.org/events/2023-amsterdam/program/ws-viktor-farcic-whitney-lee) at [DevOps Days Amsterdam](https://devopsdays.org/events/2023-amsterdam) (21th of June 2023)
@@ -208,6 +209,7 @@
 
 # Meetups / Webinars
 
+* The Future Of Declarative Infrastructure at [DevOps Day](https://devopsday.splashthat.com) (4th of September 2023)
 * [How To Build An Internal Developer Platform (IDP) In 30 Minutes?](https://www.meetup.com/meetup-group-ziwnrlfj/events/293463627) at [Vienna DevOps Meetup](https://www.meetup.com/meetup-group-ziwnrlfj) (13th of June 2023)
 * [Choose Your Own Adventure: The Treacherous Trek to Development](https://www.meetup.com/kubernetes-atlanta-meetup/events/293650631) at [Kubernetes Atlanta Meetup](https://www.meetup.com/kubernetes-atlanta-meetup) (1st of June 2023)
 * [The Future Of Declarative Infrastructure](https://www.meetup.com/svqjug/events/292683053) at [Sevilla Java User Group (SVQJUG)](https://www.meetup.com/svqjug) (11th of May 2023)
