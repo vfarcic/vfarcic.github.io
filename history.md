@@ -13,6 +13,7 @@
 
 # Conferences
 
+* How To Fight Misconfiguration And Bad Intentions With Kubernetes Validating Admission Policy And Crossplane at [ContainerDays Hamburg](https://containerdays.io) (11th of September 2023)
 * How To Build An Internal Developer Platform (IDP) In 30 Minutes? at [Civo Navigate](https://civo.com/navigate/europe) (5th of September 2023)
 * [How To Fight Misconfiguration And Bad Intentions With Kubernetes Validating Admission Policy And Crossplane](https://community.cncf.io/kcd-guatemala) at [KCD Guatemala](https://community.cncf.io/kcd-guatemala) (18th of July 2023)
 * [How To Fight Misconfiguration And Bad Intentions With Kubernetes Validating Admission Policy And Crossplane](https://kcdmunich.com/schedule) at [KCD Munich](https://kcdmunich.com/) (18th of July 2023)
