@@ -17,6 +17,8 @@
 
 <p style="display:inline-block"><img src="../img/products/cdf.png" style="width:300px;height:300px;"></p> <!-- .element: class="fragment" -->
 
+<p style="display:inline-block"><img src="../img/products/cncf-ambassador.png" style="width:300px;height:300px;"></p> <!-- .element: class="fragment" -->
+
 
 <a href="https://www.devopstoolkitseries.com"><img src="../img/devops-toolkit-series.png" style="width: 70%; height: 70%;"></a>
 

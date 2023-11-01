@@ -11,7 +11,7 @@
 
 <!-- .slide: class="center" -->
 
-<p style="display:inline-block"><img src="../img/cncf-ambassador.png" style="width:300px;height:300px;"></p> <!-- .element: class="fragment" -->
+<p style="display:inline-block"><img src="../img/products/cncf-ambassador.png" style="width:300px;height:300px;"></p> <!-- .element: class="fragment" -->
 
 <p style="display:inline-block"><img src="../img/kcna.png" style="width:300px;height:300px;"></p>
 
