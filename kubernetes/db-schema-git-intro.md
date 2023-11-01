@@ -92,6 +92,7 @@ We need a group of people, each playing a different instrument.
 Note:
 None of those instruments sound particularly good in isolation.
 
+
 # ... but wonderful when played together
 
 Note:
