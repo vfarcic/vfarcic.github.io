@@ -3,7 +3,7 @@
 * [Harmony in Code: How Software Development Mirrors a Symphony Orchestra](kubernetes/db-schema-git.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/kubernetes/abstracts/db-schema-git.md))
 * What The Heck Are Kubernetes Resources, CRs, CRDs, Operators, etc.? ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/kubernetes/abstracts/crds-vs-building-blocks.md))
 * Dive into Kubernetes Testing Techniques with KUTTL and Crossplane ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/kuttl.md))
-* [Elevating Software Development through Platform Engineering: Navigating the Lifecycle](devops/abstracts/sdlc-paltform-engineering.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/devops/abstracts/sdlc-paltform-engineering.md))
+* [Elevating Software Development through Platform Engineering: Navigating the Lifecyclexxx](devops/sdlc-paltform-engineering.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/devops/abstracts/sdlc-paltform-engineering.md))
 
 
 # Talks
