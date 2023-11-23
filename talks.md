@@ -1,10 +1,6 @@
 # Talks
 
 * Platform Engineering and Crossplane: A New Era of Cloud Management ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/idp-crossplane.md))
-
-# Talks
-
-* [Harmony in Code: How Software Development Mirrors a Symphony Orchestra](kubernetes/db-schema-git.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/kubernetes/abstracts/db-schema-git.md))
 * [Harmony in Code: How Software Development Mirrors a Symphony Orchestra](kubernetes/db-schema-git.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/kubernetes/abstracts/db-schema-git.md))
 * What The Heck Are Kubernetes Resources, CRs, CRDs, Operators, etc.? ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/kubernetes/abstracts/crds-vs-building-blocks.md))
 * Dive into Kubernetes Testing Techniques with KUTTL and Crossplane ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/kuttl.md))
