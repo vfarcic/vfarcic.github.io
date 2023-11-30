@@ -6,42 +6,52 @@
 
 ## Cluster
 
-* Create a management Kubernetes cluster with an Ingress controller.
-* This demo is using Rancher Desktop but any other Kubernetes cluster should work as well.
-* If you're using a local Kubernetes cluster (e.g., Rancher Desktop, Minikube, etc.), make sure that it has at least 8GB of RAM and 4 CPU of memory.
+```bash
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
+export PROJECT_ID=dot-$(date +%Y%m%d%H%M%S)
+
+gcloud projects create $PROJECT_ID
+
+echo "https://console.cloud.google.com/marketplace/product/google/container.googleapis.com?project=$PROJECT_ID"
+
+# Open the URL from the output and enable the Kubernetes API
+```
+
+
+## Cluster
+
+```bash
+export KUBECONFIG=$PWD/kubeconfig.yaml
+
+gcloud container clusters create dot --project $PROJECT_ID \
+    --region us-east1 --machine-type e2-standard-4 \
+    --num-nodes 1 --enable-network-policy \
+    --no-enable-autoupgrade
+```
 
 
 ## Ingress
 
 ```bash
-# If not using Rancher Desktop, please replace `traefik` with
-#   the Ingress class name
-export INGRESS_CLASS=traefik
+helm upgrade --install traefik traefik \
+    --repo https://helm.traefik.io/traefik \
+    --namespace traefik --create-namespace --wait
 
-# If not using Rancher Desktop, please replace `127.0.0.1` with
-#   the external IP of the Ingress service
-export INGRESS_IP=127.0.0.1
+export INGRESS_HOST=$(kubectl --namespace traefik \
+    get service traefik \
+    --output jsonpath="{.status.loadBalancer.ingress[0].ip}")
 
-git clone https://github.com/vfarcic/devops-toolkit-crossplane
-
-cd devops-toolkit-crossplane
+echo $INGRESS_HOST
 ```
 
 
 ## Observability
 
 ```bash
-helm repo add prometheus-community \
-    https://prometheus-community.github.io/helm-charts
-
-helm repo add deliveryhero https://charts.deliveryhero.io/
-
-helm repo add crossplane-stable
-
-helm repo update
-
 helm upgrade --install \
-    k8s-event-logger deliveryhero/k8s-event-logger \
+    k8s-event-logger k8s-event-logger \
+    --repo https://charts.deliveryhero.io \
     --namespace observability --create-namespace --wait
 ```
 
@@ -49,41 +59,54 @@ helm upgrade --install \
 ## Crossplane
 
 ```bash
-helm upgrade --install crossplane crossplane-stable/crossplane \
+helm upgrade --install crossplane crossplane \
+    --repo https://charts.crossplane.io/stable \
     --namespace crossplane-system --create-namespace --wait
+```
+
+
+## Kubernetes Composition
+
+```bash
+git clone https://github.com/vfarcic/crossplane-kubernetes
+
+cd crossplane-kubernetes
 
 kubectl apply \
-    --filename crossplane-config/provider-kubernetes-incluster.yaml
+    --filename providers/provider-kubernetes-incluster.yaml
 
-kubectl apply --filename crossplane-config/config-sql.yaml
+kubectl apply \
+    --filename providers/provider-helm-incluster.yaml
 
-kubectl apply --filename crossplane-config/config-k8s.yaml
+kubectl apply --filename config.yaml
+```
+
+
+## SQL Composition
+
+```bash
+cd ..
+
+git clone https://github.com/vfarcic/crossplane-sql
+
+cd crossplane-sql
+
+kubectl apply --filename config.yaml
+
+# Wait for an hour approx. for the cluster to "stabilize".
+
+kubectl wait --for=condition=healthy provider.pkg.crossplane.io \
+    --all --timeout=5m
 ```
 
 
 ## Crossplane In Google Cloud
-
-* The demo uses Google Cloud Platform (GCP) but any other cloud provider should work as well.
-* If you are NOT using GCP you might need to modify the commands and the manifests
 
 ```bash
 kubectl apply \
     --filename crossplane-config/provider-gcp-official.yaml
 
-export PROJECT_ID=dot-$(date +%Y%m%d%H%M%S)
-
-gcloud projects create $PROJECT_ID
-```
-
-
-## Crossplane In Google Cloud
-
-```bash
 echo "https://console.cloud.google.com/marketplace/product/google/container.googleapis.com?project=$PROJECT_ID"
-
-# Open the URL and *ENABLE API*
-
-echo "https://console.cloud.google.com/apis/library/sqladmin.googleapis.com?project=$PROJECT_ID"
 
 # Open the URL and *ENABLE API*
 
@@ -91,7 +114,8 @@ export SA_NAME=devops-toolkit
 
 export SA="${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
 
-gcloud iam service-accounts create $SA_NAME --project $PROJECT_ID
+gcloud iam service-accounts create $SA_NAME \
+    --project $PROJECT_ID
 ```
 
 
@@ -109,15 +133,6 @@ gcloud iam service-accounts keys create gcp-creds.json \
 kubectl --namespace crossplane-system \
     create secret generic gcp-creds \
     --from-file creds=./gcp-creds.json
-```
-
-
-## Crossplane In Google Cloud
-
-```bash
-kubectl get pkgrev
-
-# Wait until all the packages are healthy
 ```
 
 
@@ -143,19 +158,13 @@ spec:
 ## Prometheus
 
 ```bash
+cd ..
+
+git clone https://github.com/vfarcic/devops-toolkit-crossplane
+
+cd devops-toolkit-crossplane
+
 kubectl create namespace a-team
-
-yq --inplace \
-    ".grafana.ingress.hosts[0] = \"grafana.$INGRESS_IP.nip.io\"" \
-    examples/observability/prometheus-stack-values-google.yaml
-
-yq --inplace \
-    ".grafana.ingress.ingressClassName = \"$INGRESS_CLASS\"" \
-    examples/observability/prometheus-stack-values-google.yaml
-
-yq --inplace \
-    ".prometheus.ingress.hosts[0] = \"prometheus.$INGRESS_IP.nip.io\"" \
-    examples/observability/prometheus-stack-values-google.yaml
 ```
 
 
@@ -163,14 +172,31 @@ yq --inplace \
 
 ```bash
 yq --inplace \
-    ".prometheus.ingress.ingressClassName = \"$INGRESS_CLASS\"" \
+    ".grafana.ingress.hosts[0] = \"grafana.$INGRESS_HOST.nip.io\"" \
     examples/observability/prometheus-stack-values-google.yaml
 
+yq --inplace \
+    ".grafana.ingress.ingressClassName = \"$INGRESS_CLASS\"" \
+    examples/observability/prometheus-stack-values-google.yaml
+
+yq --inplace \
+    ".prometheus.ingress.hosts[0] = \"prometheus.$INGRESS_HOST.nip.io\"" \
+    examples/observability/prometheus-stack-values-google.yaml
+
+yq --inplace \
+    ".prometheus.ingress.ingressClassName = \"$INGRESS_CLASS\"" \
+    examples/observability/prometheus-stack-values-google.yaml
+```
+
+
+## Prometheus
+
+```bash
 kubectl --namespace observability apply \
     --filename examples/observability/ksm-cm-google.yaml
 
-helm upgrade --install \
-    prometheus-stack prometheus-community/kube-prometheus-stack \
+helm upgrade --install prometheus-stack kube-prometheus-stack \
+    --repo https://prometheus-community.github.io/helm-charts \
     --namespace observability --create-namespace \
     --values examples/observability/prometheus-stack-values-google.yaml \
     --wait
