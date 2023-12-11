@@ -13,6 +13,7 @@
 
 # Conferences
 
+* Choose Your Own Adventure: The Perilous Passage to Production at [Cloud Native Rejekts](https://cloud-native.rejekts.io) (3rd of November 2023)
 * [How To Build An Internal Developer Platform (IDP) In 30 Minutes?](https://devoxx.ma/talk/?id=6803) at [DevOxx Morocco](https://devoxx.ma) (12th of October 2023)
 * How To Build An Internal Developer Platform (IDP) In 30 Minutes? at [DevOps Days Madrid](https://koliseo.com/devopsdaysmad/devopsdays-madrid-2023) (6th of October 2023)
 * [Keynote: Choose Your Own Adventure: The Perilous Passage to Production](https://kccncosschn2023.sched.com/event/1PTLF?iframe=no) at [KubeCon China](https://www.lfasiallc.com/kubecon-cloudnativecon-open-source-summit-china) (26th of September 2023)
