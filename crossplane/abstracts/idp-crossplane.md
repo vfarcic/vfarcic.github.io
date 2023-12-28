@@ -13,6 +13,6 @@ This is a hands-on demo session.
 * How can Crossplane help to address the challenges of cloud management?
 * Demo of Crossplane
 
-## Target audience:
+## Target audience:
 
 This talk is for platform engineers, cloud architects, and developers who are interested in learning more about Crossplane.
