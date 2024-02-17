@@ -1,4 +1,4 @@
-# Unleashing the Power of Serverless on Kubernetes with Knative, Crossplane, Dapr, KEDA, Shipwright, and Friends
+# Unleashing the Power of Serverless Computing in Kubernetes with Knative, Crossplane, Dapr, KEDA, Shipwright, and Friends
 
 ## Description
 
