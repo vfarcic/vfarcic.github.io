@@ -20,9 +20,6 @@ kubectl --namespace a-team delete --filename cluster/aws-2.yaml
 crossplane beta trace clusterclaim cluster --namespace a-team
 
 export KUBECONFIG=$PWD/kubeconfig.yaml
-
-aws eks update-kubeconfig --region us-east-1 \
-    --name a-team-cluster --kubeconfig $KUBECONFIG
 ```
 
 

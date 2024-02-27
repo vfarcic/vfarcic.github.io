@@ -11,24 +11,24 @@ kubectl --namespace production get functions
 
 export APP_URL="http://openfunction-demo.production.$INGRESS_IP.nip.io"
 
-curl "$APP_URL"
-
 curl -X POST \
     "$APP_URL/video?id=1&title=An%20Amazing%20Video"
+
+curl "$APP_URL/videos" | jq .
 ```
 
 
 ## Kubernetes Functions With OpenFunction
 
 ```sh
-curl "$APP_URL/videos" | jq .
+echo "$APP_URL"
 
 kubectl --namespace production get pods
+```
 
-kubectl --namespace production get pods
+* Generate load on https://app.ddosify.com
 
-curl "$APP_URL/videos" | jq .
-
+```sh
 kubectl --namespace production get pods
 
 cat video.go
