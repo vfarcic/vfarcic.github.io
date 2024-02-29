@@ -2,12 +2,12 @@
 
 ## Description
 
-What is required to make a Database-as-a-Service (DBaaS)? One might think that creating a user-friendly interface that exposes a service that creates, manages, and deletes database servers like, for example, PostgreSQL, is all it takes. That's far from the truth. We need much more than that.                  
-                                                                                                                                                             
-We need to manage users and databases inside the server. We need a way to apply database schema. We need to generate secrets with authentication data and propagate those secrets to clusters with applications that should use those databases. We need to enable applications to connect to those databases transparently and frictionlessly. Finally, we need a way to wrap all of those together and expose them through an easy-to-understand and use interface. 
-                                                                                                                                                             
+What is required to make a Database-as-a-Service (DBaaS)? One might think that creating a user-friendly interface that exposes a service that creates, manages, and deletes database servers like, for example, PostgreSQL, is all it takes. That's far from the truth. We need much more than that.
+
+We need to manage users and databases inside the server. We need a way to apply database schema. We need to generate secrets with authentication data and propagate those secrets to clusters with applications that should use those databases. We need to enable applications to connect to those databases transparently and frictionlessly. Finally, we need a way to wrap all of those together and expose them through an easy-to-understand and use interface.
+
 How can we accomplish all that? How can we create a Database-as-a-Service solution?
-                                                                                                                                                             
+
 Today we'll explore one possible solution that combines Crossplane, External Secrets Operator (ESO), Atlas Operator, Dapr, and a few other tools.
 
 ## Benefits to the ecosystem
