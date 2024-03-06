@@ -12,7 +12,7 @@
 * TODO:
 
 
-<!-- .slide: data-background="../img/products/dynatrace.png" data-background-size="contain" -->
+<!-- .slide: data-background="../img/products/dynatrace.svg" data-background-size="contain" -->
 
 
 * TODO:

@@ -1,6 +1,6 @@
 # Observability
 
-![](../img/products/dynatrace.png)
+![](../img/products/dynatrace.svg)
 
 
 # Observability
