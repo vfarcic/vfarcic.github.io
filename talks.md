@@ -1,5 +1,6 @@
 # Talks
 
+* Developer Platform Consoles Should Be Dumb ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/kubernetes/abstracts/console.md))
 * [Crossplane Observability and Traceability for Effective Multi-Cloud Management](observability/crossplane.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/observability/abstracts/crossplane.md))
 * [Database-as-a-Service (DBaaS) with Crossplane, External Secrets, Dapr, and Atlas Operator](kubernetes/dbaas.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/kubernetes/abstracts/database-as-a-service.md))
 * [Unleashing the Power of Serverless Computing in Kubernetes with Knative, Crossplane, Dapr, KEDA, Shipwright, and Friends](kubernetes/openfunction-crossplane-dapr.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/kubernetes/abstracts/openfunction-crossplane-dapr.md))

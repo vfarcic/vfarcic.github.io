@@ -46,26 +46,6 @@ aws eks update-kubeconfig --region us-east-1 \
 ## Setup
 
 ```sh
-helm upgrade --install dynatrace-operator \
-    oci://docker.io/dynatrace/dynatrace-operator \
-    --set installCRD=true --set csidriver.enabled=true \
-    --atomic --create-namespace --namespace dynatrace --wait
-
-kubectl --namespace dynatrace \
-    create secret generic app \
-    --from-literal=apiToken=$DYNATRACE_OPERATOR_TOKEN \
-    --from-literal=dataIngestToken=$DYNATRACE_DATA_INGEST_TOKEN
-
-kubectl --namespace dynatrace apply \
-    --filename observability/dynatrace/dynakube-app.yaml
-
-unset KUBECONFIG
-```
-
-
-## Setup
-
-```sh
 export INGRESS_HOSTNAME=$(kubectl --namespace traefik \
     get service traefik \
     --output jsonpath="{.status.loadBalancer.ingress[0].hostname}")
@@ -76,4 +56,6 @@ export INGRESS_IP=$(dig +short $INGRESS_HOSTNAME \
 yq --inplace \
     ".spec.rules[0].host = \"sillydemo.$INGRESS_IP.nip.io\"" \
     app/ingress.yaml
+
+unset KUBECONFIG
 ```
