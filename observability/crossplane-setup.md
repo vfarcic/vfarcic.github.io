@@ -12,10 +12,7 @@ git clone \
 
 cd crossplane-observability-demo
 
-# Watch https://youtu.be/0ulldVwZiKA if you are not familiar
-#   with Nix
-
-nix-shell --run $SHELL
+devbox shell
 
 chmod +x setup.sh
 
@@ -36,23 +33,32 @@ crossplane beta trace clusterclaim cluster --namespace a-team
 
 # Wait until all the resources are available
 
-export KUBECONFIG=$PWD/kubeconfig.yaml
+crossplane beta trace sqlclaim my-db --namespace a-team
 
-aws eks update-kubeconfig --region us-east-1 \
-    --name a-team-cluster --kubeconfig $KUBECONFIG
+# Wait until all the resources are available
 ```
 
 
 ## Setup
 
 ```sh
+export KUBECONFIG=$PWD/kubeconfig.yaml
+
+aws eks update-kubeconfig --region us-east-1 \
+    --name a-team-cluster --kubeconfig $KUBECONFIG
+
 export INGRESS_HOSTNAME=$(kubectl --namespace traefik \
     get service traefik \
     --output jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
 export INGRESS_IP=$(dig +short $INGRESS_HOSTNAME \
     | awk '{print $1;}' | head -n 1)
+```
 
+
+## Setup
+
+```sh
 yq --inplace \
     ".spec.rules[0].host = \"sillydemo.$INGRESS_IP.nip.io\"" \
     app/ingress.yaml
