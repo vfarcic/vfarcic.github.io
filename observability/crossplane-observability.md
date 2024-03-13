@@ -1,4 +1,5 @@
-# Observability
+<!-- .slide: data-background="img/restaurant-blind-folds.png" data-background-size="contain" -->
+
 
 ![](../img/products/dynatrace.svg)
 
