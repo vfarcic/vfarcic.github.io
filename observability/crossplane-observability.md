@@ -1,4 +1,4 @@
-<!-- .slide: data-background="img/restaurant-blind-folds.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/restaurant-blind-folds.png" -->
 
 
 ![](../img/products/dynatrace.svg)
