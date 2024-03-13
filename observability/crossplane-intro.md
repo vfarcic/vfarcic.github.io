@@ -1,11 +1,7 @@
 <!-- .slide: data-background="img/ingredients.png" data-background-size="contain" -->
 
 
-<figure>
-    <img src="../img/products/aws.png" style="width: 30%; background-color: white;"/>
-    <img src="../img/products/google-cloud-platform.png" style="width: 30%; background-color: white;"/>
-    <img src="../img/products/azure.png" style="width: 30%; background-color: white;"/>
-</figure>
+<!-- .slide: data-background="img/cloud.png" data-background-size="contain" -->
 
 
 <!-- .slide: data-background="img/ingredients-menu.png" data-background-size="contain" -->
