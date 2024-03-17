@@ -14,5 +14,3 @@ curl "http://sillydemo.$INGRESS_IP.nip.io/videos" | jq .
 
 echo "http://sillydemo.$INGRESS_IP.nip.io"
 ```
-
-* Generate load on https://app.ddosify.com
