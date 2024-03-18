@@ -75,9 +75,9 @@ crossplane beta trace appclaim silly-demo --namespace a-team
 https://app.ddosify.com
 
 
+## App Traces
+<img style="margin: 0" src="./img/app-traces.png">
+
+
 ## Automatic problem notification
 <img style="margin: 0" src="./img/notification.png">
-
-
-<!-- .slide: data-background="img/restaurant-happy.webp" -->
-
