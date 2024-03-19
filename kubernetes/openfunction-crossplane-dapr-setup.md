@@ -57,12 +57,14 @@ export KUBECONFIG=$PWD/kubeconfig.yaml
 aws eks update-kubeconfig --region us-east-1 \
     --name a-team-cluster --kubeconfig $KUBECONFIG
 
-export INGRESS_HOSTNAME=$(kubectl --namespace traefik \
-    get service traefik \
+export INGRESS_HOSTNAME=$(kubectl --namespace projectcontour \
+    get service contour-envoy \
     --output jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
 export INGRESS_IP=$(dig +short $INGRESS_HOSTNAME \
     | awk '{print $1;}' | head -n 1)
+
+echo $INGRESS_IP
 ```
 
 
