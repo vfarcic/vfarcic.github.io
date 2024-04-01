@@ -1,4 +1,4 @@
-# Database-as-a-Service (DBaaS) with Crossplane, External Secrets, Dapr, and Atlas Operator
+# Developer Platform Consoles Should Be Dumb
 
 ## Description
 
