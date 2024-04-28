@@ -13,6 +13,8 @@
 
 # Conferences
 
+* Elevating SDLC through Platform Engineering at [Continuous Lifecycle](https://continuouslifecycle.de) (13th of November 2023)
+* Databases Belong to Apps and Apps Belong to Git at [Data Community Conference](https://data-community.ch/) (26th of November 2023)
 * Choose Your Own Adventure: The Perilous Passage to Production at [Cloud Native Rejekts](https://cloud-native.rejekts.io) (3rd of November 2023)
 * [How To Build An Internal Developer Platform (IDP) In 30 Minutes?](https://devoxx.ma/talk/?id=6803) at [DevOxx Morocco](https://devoxx.ma) (12th of October 2023)
 * How To Build An Internal Developer Platform (IDP) In 30 Minutes? at [DevOps Days Madrid](https://koliseo.com/devopsdaysmad/devopsdays-madrid-2023) (6th of October 2023)
