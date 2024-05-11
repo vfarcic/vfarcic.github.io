@@ -1,6 +1,6 @@
 ## What Do We Want?
 
-# Serverless experience
+## Serverless experience
 
 * Here's source code, build it and run it
 * Scale it up and down
@@ -8,7 +8,7 @@
 * Make it simple
 
 
-# This experience is not available out-of-the-box in Kubernetes
+### This experience is not available out-of-the-box in Kubernetes
 
 * We need autoscalers
 * We need a way to build from source to container
@@ -16,7 +16,7 @@
 * We need a way to connect functions and infrastructure
 
 
-# OpenFunction
+## OpenFunction
 
 * We looked at OpenFunctions (https://openfunction.dev)
 
@@ -27,14 +27,14 @@ cat function.yaml
 ```
 
 
-# Questions
+### Questions
 
 * Does this experience work for you? 
 * Are the projects used by OpenFunction glued in a way that works for your use case?
 * What about application infrastructure that your functions will need? 
 
 
-# Our findings
+### Our findings
 
 * OpenFunctions is great but:
   * It is quite complex for someone who doesn't know all the tools
@@ -46,8 +46,7 @@ cat function.yaml
   * Maybe you want to use ArgoCD to manage environments using GitOps
 
 
-
-# If you want to build your own experience, what do you need?
+## If you want to build your own experience, what do you need?
 
 * Knative Serving
   * From Container to URL
