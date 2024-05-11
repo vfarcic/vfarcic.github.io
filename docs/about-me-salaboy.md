@@ -11,18 +11,16 @@
 
 <!-- .slide: class="center" -->
 
-<p style="display:inline-block"><img src="../img/salaboy-book.png" style="width:300px;height:300px;"></p> <!-- .element: class="fragment" -->
-
-<p style="display:inline-block"><img src="../img/products/cncf-ambassador.png" style="width:300px;height:300px;"></p> <!-- .element: class="fragment" -->
+https://diagrid.io
 
 <a href="https://diagrid.io"><img src="../img/salaboy-diagrid.png" style="width: 70%; height: 70%;"></a>
 
-diagrid.io
+
+### Platform Engineering on Kubernetes
+
+<!-- .slide: class="center" -->
+
+<p style="display:inline-block"><img src="../img/salaboy-book.png" style="width:300px;height:300px;"></p> <!-- .element: class="fragment" -->
 
 <a href="https://"><img src="../img/salaboy-qr.jpg" style="width: 50%; height: 60%;"></a>
 
-Platform Engineering on Kubernetes
-
-[![Salaboy Blog](../img/dot.png)](https://salaboy.com)
-
-salaboy.com
