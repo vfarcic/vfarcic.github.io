@@ -7,12 +7,14 @@
 * Don't ask me unnecessary questions
 * Make it simple
 
+
 # This experience is not available out-of-the-box in Kubernetes
 
 * We need autoscalers
 * We need a way to build from source to container
 * We need to define the kind of Serverless experience we want
 * We need a way to connect functions and infrastructure
+
 
 # OpenFunction
 
@@ -24,11 +26,13 @@
 cat function.yaml
 ```
 
+
 # Questions
 
 * Does this experience work for you? 
 * Are the projects used by OpenFunction glued in a way that works for your use case?
 * What about application infrastructure that your functions will need? 
+
 
 # Our findings
 
@@ -41,6 +45,8 @@ cat function.yaml
   * Maybe you want to use GitHub actions to build containers and deploy to environments
   * Maybe you want to use ArgoCD to manage environments using GitOps
 
+
+
 # If you want to build your own experience, what do you need?
 
 * Knative Serving
@@ -52,4 +58,5 @@ cat function.yaml
     * Connect to infrastructure and service that are available in the environment
 * Crossplane 
   * Provision and wire multi-cloud provider infrastructure
+
 
