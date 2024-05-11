@@ -34,28 +34,40 @@ cat function.yaml
 * What about application infrastructure that your functions will need? 
 
 
-### Our findings
+### Our findings 1/2
 
+* Use OpenFunctions as an inspiration
 * OpenFunctions is great but:
   * It is quite complex for someone who doesn't know all the tools
   * It is hard to debug when things go wrong
-* Use OpenFunctions as an inspiration
-* Companies want to build their own experiences
-  * Maybe you want to have full control on your `functions` interfaces
-  * Maybe you want to use GitHub actions to build containers and deploy to environments
-  * Maybe you want to use ArgoCD to manage environments using GitOps
 
 
-## If you want to build your own experience, what do you need?
+### Our findings 2/2
+
+* Companies want to build their own experiences, for example:
+  * Full control on your `functions` interfaces
+  * Use GitHub actions to build containers and deploy to environments
+  * Use ArgoCD to manage environments using GitOps
+
+
+## What do you need to build your own experience? 1/3
 
 * Knative Serving
   * From Container to URL
   * Check Knative Functions (CLI / Developer Experience)
+
+
+## What do you need to build your own experience? 2/3
+
 * Dapr
   * APIs for developers to
     * Connect functions together
     * Connect to infrastructure and service that are available in the environment
+
+
+## What do you need to build your own experience? 3/3
+
 * Crossplane 
   * Provision and wire multi-cloud provider infrastructure
-
+  * Wire components together so they can talk to each other
 
