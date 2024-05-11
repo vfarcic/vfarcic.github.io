@@ -18,9 +18,10 @@
 
 ## OpenFunction
 
-* We looked at OpenFunctions (https://openfunction.dev)
+* We looked at OpenFunctions 
+* https://openfunction.dev
 
-<a href="https://openfunction.dev"><img src="img/openfunctions-architecture.png" style="width: 70%; height: 70%;"></a>
+<a href="https://openfunction.dev"><img src="img/openfunctions-architecture.png" style="width: 60%; height: 60%;"></a>
 
 ```sh
 cat function.yaml
