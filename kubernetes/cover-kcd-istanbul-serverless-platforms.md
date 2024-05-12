@@ -7,4 +7,4 @@
 
 #### [@vfarcic](https://twitter.com/vfarcic) | [DevOps Toolkit YouTube](https://youtube.com/c/devopstoolkit) | [Upbound](https://upbound.io)
 
-#### [@salaboy](https://twitter.com/salaboy) | [Blog](https://salaboy.com) | [Diagrid](https://diagrid.io)
+#### [@salaboy](https://twitter.com/salaboy) | [salaboy.com](https://salaboy.com) | [Diagrid](https://diagrid.io)

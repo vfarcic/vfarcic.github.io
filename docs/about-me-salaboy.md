@@ -13,8 +13,7 @@
 
 <!-- .slide: class="center" -->
 
-<p style="display:inline-block"><img src="../docs/img/salaboy-book.jpg" style="width:70%;height:70%;"></p> 
+<p style="display:inline-block"><img src="../docs/img/salaboy-book.jpg" style="width:35%;height:35%;"></p> 
 
-<!-- .element: class="fragment" -->
-<a href="https://"><img src="../docs/img/salaboy-qr.png" style="width: 50%; height: 50%;"></a>
+<a href="https://"><img src="../docs/img/salaboy-qr.png" style="width: 100%; height: 100%;"></a>
 
