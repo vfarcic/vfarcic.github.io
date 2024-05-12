@@ -57,7 +57,8 @@ cat function.yaml
   * From Container to URL
   * Check Knative Functions (CLI / Developer Experience)
 
-<a href="https://knative.dev"><img src="../img/products/knative.png" style="width: 60%; height: 60%;"></a>  
+<a href="https://knative.dev"><img src="../img/products/knative.png" style="width: 20%; height: 20%;"></a>  
+
 
 ## What do you need to build your own experience? 2/3
 
@@ -66,7 +67,8 @@ cat function.yaml
     * Connect functions together
     * Connect to infrastructure and service that are available in the environment
 
-<a href="https://dapr.io"><img src="../img/products/dapr.png" style="width: 60%; height: 60%;"></a>
+<a href="https://dapr.io"><img src="../img/products/dapr.png" style="width: 30%; height: 30%;"></a>
+
 
 ## What do you need to build your own experience? 3/3
 
@@ -74,5 +76,5 @@ cat function.yaml
   * Provision and wire multi-cloud provider infrastructure
   * Wire components together so they can talk to each other
 
-<a href="https://crossplane.io"><img src="../img/products/crossplane.png" style="width: 60%; height: 60%;"></a>  
+<a href="https://crossplane.io"><img src="../img/products/crossplane.png" style="width: 30%; height: 30%;"></a>  
 
