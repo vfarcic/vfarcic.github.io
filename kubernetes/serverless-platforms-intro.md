@@ -67,7 +67,7 @@ cat function.yaml
     * Connect functions together
     * Connect to infrastructure and service that are available in the environment
 
-<a href="https://dapr.io"><img src="../img/products/dapr.png" style="width: 30%; height: 30%;"></a>
+<a href="https://dapr.io"><img src="../img/products/dapr-white.png" style="width: 30%; height: 30%;"></a>
 
 
 ## What do you need to build your own experience? 3/3
