@@ -53,7 +53,7 @@ cat function.yaml
 
 ## What do you need to build your own experience? 1/3
 
-* Knative Serving
+* [Knative Serving](https://knative.dev/docs/concepts/)
   * From Container to URL
   * Check Knative Functions (CLI / Developer Experience)
 
@@ -62,7 +62,7 @@ cat function.yaml
 
 ## What do you need to build your own experience? 2/3
 
-* Dapr
+* [Dapr](https://docs.dapr.io/concepts/overview/)
   * APIs for developers to
     * Connect functions together
     * Connect to infrastructure and service that are available in the environment
@@ -72,7 +72,7 @@ cat function.yaml
 
 ## What do you need to build your own experience? 3/3
 
-* Crossplane 
+* [Crossplane](https://crossplane.io)
   * Provision and wire multi-cloud provider infrastructure
   * Wire components together so they can talk to each other
 
