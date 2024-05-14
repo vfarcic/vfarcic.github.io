@@ -60,6 +60,21 @@ cat function.yaml
 <a href="https://knative.dev"><img src="../img/products/knative.png" style="width: 20%; height: 20%;"></a>  
 
 
+## What do you need to build your own experience? 1/3
+
+```
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  template:
+    spec:
+      containers:
+      - image: <YOUR CONTAINER>
+```
+
+
 ## What do you need to build your own experience? 2/3
 
 * [Dapr](https://docs.dapr.io/concepts/overview/) - version **1.13.2**
@@ -68,6 +83,10 @@ cat function.yaml
     * Connect to infrastructure and service that are available in the environment  
 
 <a href="https://dapr.io"><img src="../img/products/dapr-white.png" style="width: 30%; height: 30%;"></a>
+
+## What do you need to build your own experience? 2/3
+
+<a href="https://dapr.io"><img src="../img/products/dapr-overview.png" style="width: 70%; height: 70%;"></a>
 
 
 ## What do you need to build your own experience? 3/3
