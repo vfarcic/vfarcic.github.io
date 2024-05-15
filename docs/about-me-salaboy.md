@@ -11,12 +11,5 @@
 
 ### Platform Engineering on Kubernetes
 
-<figure style="width: 60%; height: 60%; margin-left:100px;float: left;">
-    <p style="display:inline-block"><img src="../docs/img/salaboy-book.jpg" style="width:100%;height:100%;"></p> 
-</figure>
-
-<figure style="width: 60%; height: 60%; margin-right:100px;float: right;">
-    <a href="https://"><img src="../docs/img/salaboy-qr.png" style="width: 100%; height: 100%;"></a>
-</figure>
-
-
+<p style="display:inline-block"><img src="../docs/img/salaboy-book.jpg" style="width:400px;"></p>
+<p style="display:inline-block"><img src="../docs/img/salaboy-qr.png" style="width:400px;"></p>
