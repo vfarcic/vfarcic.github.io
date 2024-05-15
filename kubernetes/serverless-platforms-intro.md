@@ -77,12 +77,13 @@ spec:
 
 ## What do you need to build your own experience? 2/3
 
-* [Dapr](https://docs.dapr.io/concepts/overview/) - version **1.13.2**
+* [Dapr](https://docs.dapr.io/concepts/overview/) 
   * APIs for developers to
     * Connect functions together
     * Connect to infrastructure and service that are available in the environment  
 
 <a href="https://dapr.io"><img src="../img/products/dapr-white.png" style="width: 30%; height: 30%;"></a>
+
 
 ## What do you need to build your own experience? 2/3
 
