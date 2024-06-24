@@ -38,7 +38,8 @@ gh repo view --web
 ## Setup
 
 ```sh
-kubectl --namespace argocd port-forward svc/argocd-server 8080:80 &
+kubectl --namespace argocd port-forward svc/argocd-server \
+    8080:80 &
 
 devbox shell
 
