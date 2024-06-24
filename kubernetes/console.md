@@ -79,6 +79,14 @@ Note:
 ### Empowering Developers with Self-Service
 
 
+* Click the `Create` button in `Create Sqlclaim`
+* Pick a composition.
+* Use `silly-demo` as both the `id` and the `sqlclaim Name`
+* Set `a-team` as the `Namespace`
+* Specify the version of the database (set `15` if using Google Cloud, `16.2` if using AWS, `11` if using Azure, or any value if not using any hyperscaler)
+* Click the `Execute` button.
+
+
 <!-- .slide: data-background-image="img/console/behind-the-scene.png" data-background-opacity="0.5" -->
 ### Unveiling the Magic Behind the Scenes
 
