@@ -21,15 +21,7 @@ curl "$APP_URL/videos" | jq .
 ## Kubernetes Functions With OpenFunction
 
 ```sh
-echo "$APP_URL"
-
-kubectl --namespace production get pods
-```
-
-* Generate load on https://app.ddosify.com
-
-```sh
-kubectl --namespace production get pods
-
 cat video.go
+
+kubectl --namespace production get pods
 ```

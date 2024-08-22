@@ -11,7 +11,7 @@ cat db/aws-2.yaml
 ## Database-as-a-Service
 
 ```sh
-unset KUBECONFIG
+export KUBECONFIG=$PWD/kubeconfig-cp.yaml
 
 kubectl --namespace a-team apply --filename db/aws-2.yaml
 

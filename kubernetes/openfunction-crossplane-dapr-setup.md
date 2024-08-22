@@ -76,5 +76,5 @@ kubectl --namespace openfunction \
     --type merge \
     --patch "{\"spec\": {\"domain\": \"$INGRESS_IP.nip.io\"}}"
 
-unset KUBECONFIG
+export KUBECONFIG=$PWD/kubeconfig-cp.yaml
 ```
