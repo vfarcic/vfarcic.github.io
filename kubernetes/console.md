@@ -16,6 +16,16 @@ Note:
 * Time-consuming tasks
 
 
+<!-- .slide: data-background-image="img/console/manual-configuration.png" data-background-opacity="0.5" -->
+```sh
+cat backstage/crossplane-definition.yaml
+
+cat backstage/crossplane-kubernetes.yaml
+
+cat backstage/crossplane-kubernetes-manifest-template.yaml
+```
+
+
 <!-- .slide: data-background-image="img/console/api-discovery.png" data-background-opacity="0.5" -->
 ### Embracing Schema Discovery
 
@@ -23,6 +33,16 @@ Note:
 * APIs expose schemas
 * Consoles should "discover" not "dictate"
 * Focus on API creation, not configuration
+
+
+<!-- .slide: data-background-image="img/console/manual-configuration.png" data-background-opacity="0.5" -->
+```sh
+kubectl api-resources
+
+kubectl api-resources | grep sqlclaims
+
+kubectl get crd sqlclaims.devopstoolkitseries.com --output yaml
+```
 
 
 <!-- .slide: data-background="../img/background/hands-on.jpg" -->
@@ -128,12 +148,6 @@ Note:
 ### Unveiling the Magic Behind the Scenes
 
 ```sh
-kubectl get crds
-
-kubectl get crds | grep devops
-
-kubectl explain appclaims.devopstoolkitseries.com --recursive
-
 cat .github/workflows/gitops.yaml
 
 git pull

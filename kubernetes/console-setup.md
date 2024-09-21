@@ -45,7 +45,4 @@ chmod +x setup.sh
 ./setup.sh
 
 source .env
-
-kubectl --namespace argocd port-forward svc/argocd-server \
-    8080:80 &
 ```
