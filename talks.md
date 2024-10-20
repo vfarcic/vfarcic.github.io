@@ -1,5 +1,10 @@
 # Talks
 
+* Internal Developer Platform Day 2 Operations Solved with Kubernetes and Crossplane ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/crossplane-status-transformer.md))
+
+
+# Talks
+
 * Terraform vs. Crossplane vs. Ansible - Rivals or Allies? ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/crossplane-vs-terraform-vs-ansible.md))
 * [Developer Platform Consoles Should Be Dumb](kubernetes/console.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/kubernetes/abstracts/console.md))
 * [Crossplane Observability and Traceability for Effective Multi-Cloud Management](observability/crossplane.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/observability/abstracts/crossplane.md))
