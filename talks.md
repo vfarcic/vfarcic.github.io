@@ -1,5 +1,6 @@
 # Talks
 
+* From Zero to Fully Operational Developer Platform in 5 Steps! ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/full-idp.md))
 * Internal Developer Platform Day 2 Operations Solved with Kubernetes and Crossplane ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/crossplane-status-transformer.md))
 
 
