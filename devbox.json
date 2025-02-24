@@ -1,8 +1,0 @@
-{
-  "$schema":  "https://raw.githubusercontent.com/jetify-com/devbox/0.13.0/.schema/devbox.schema.json",
-  "packages": ["zellij@0.40.1"],
-  "shell": {
-    "init_hook": [],
-    "scripts":   {}
-  }
-}
