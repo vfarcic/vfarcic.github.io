@@ -69,4 +69,4 @@ Crossplane short demo
 ### Mauricio & Viktor
 
 Note:
-Dapr and Crossplane combined short demo
+Dapr and Crossplane combined short demo (demonstrate how Kubernetes components can work together)
