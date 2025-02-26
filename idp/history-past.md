@@ -20,7 +20,9 @@ Note:
 Creating "stuff" that help us and others work less.
 Mauricio: TODO:
 Viktor: Eventually I realized that I'm lazy. I did not want to test my stuff manually. I did not want to work on issues detected by QA. I did not want to build binaries, and I did not want to spend my weekends deploying to production. The good news is that being lazy was easy since most of my time was spent waiting for someone to do something that might allow me to continue working on whatever I was working. That's when I started working on tools that will help me work less and for others to perform tasks that are outside their core competency.
+Is that a developer platform? Can we call a set of tools that help developer be more productive a developer platform?
 That's where Mauricio and I diverged!
+Is this a platform?
 
 
 # The Beginning

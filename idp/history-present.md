@@ -2,6 +2,14 @@
 
 ### Mauricio & Viktor
 
+Note:
+Diagram: APIs (CRD), state controllers, ...
+
+
+# The Present (Third-Party)
+
+### Mauricio & Viktor
+
 [background image: Backstage, Cilium, OpenTelemetry]
 
 Note:
@@ -36,6 +44,7 @@ We went to work on different components that extend Kubernetes
 
 Note:
 We went to work on different components that extend Kubernetes
+Not a platform (alone)
 
 
 # The Present (Tailor-Made)
@@ -46,22 +55,7 @@ We went to work on different components that extend Kubernetes
 
 Note:
 We went to work on different components that extend Kubernetes
-
-
-# The Present (Tailor-Made)
-
-### Mauricio
-
-Note:
-Dapr short demo
-
-
-# The Present (Tailor-Made)
-
-### Viktor
-
-Note:
-Crossplane short demo
+Not a platform (alone)
 
 
 # The Present (Tailor-Made)
@@ -69,4 +63,7 @@ Crossplane short demo
 ### Mauricio & Viktor
 
 Note:
-A short demo with Backstage, Argo CD, Crossplane, Dapr, etc. that a) demonstrate how Kubernetes components can work together and b) showcases one possible IDP.
+A diagram with Backstage, Argo CD, Crossplane, Dapr, etc. that a) demonstrate how Kubernetes components can work together and b) showcases one possible IDP.
+Kubernetes is too complicated for anyone to be exposed to it directly (unless SME)
+Neither Dapr, Crossplane, Knative, Argo CD, Backstage or AI will make Kubernetes transparent.
+But we, as platform engineers, are getting really comfortable at combining these tools.
