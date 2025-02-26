@@ -69,4 +69,4 @@ Crossplane short demo
 ### Mauricio & Viktor
 
 Note:
-Dapr and Crossplane combined short demo (demonstrate how Kubernetes components can work together)
+A short demo with Backstage, Argo CD, Crossplane, Dapr, etc. that a) demonstrate how Kubernetes components can work together and b) showcases one possible IDP.
