@@ -27,9 +27,6 @@ Note:
 Mauricio: In 2018, I jumped to work with the Knative team at VMware, after almost 3 years of working full time helping developers and teams to adopt Kubernetes-based projects I realized that working with Go for this ecosystem made a lot of sense, but at the same time by 2020, the cloud native community was much more than Go. Communities like Java, dotnet, Python, and Node were getting closer to the Kubernetes ecosystem. 
 
 
-
-
-
 # The Present (Third-Party)
 
 ### Viktor
