@@ -65,11 +65,7 @@ Note:
 Viktor: TODO:
 
 
-# The Present (Tailor-Made)
-
-### Mauricio & Viktor
-
-[background image: Book + Diagram with tools together]
+<!-- .slide: data-background="img/book-cover.jpg" data-background-size="contain" -->
 
 Note:
 A diagram with Backstage, Argo CD, Crossplane, Dapr, etc. that a) demonstrate how Kubernetes components can work together and b) showcases one possible IDP.
@@ -104,16 +100,17 @@ In Feb of 2020, I started writing the book published in Oct 2023 titled Platform
 <!-- .slide: data-background="img/idp-present-17.png" data-background-size="contain" -->
 
 
-# The Present (Blueprints)
+# Blueprints
 
-### Mauricio & Viktor
 
-[background image: BACK Stack, CNOE, Kusion Stack]
+# BACK Stack
 
 Note:
-
 We have seen a lot of consolidation happening in the space, with tools blueprints like CNOE, BACK Stack and Kusion stack building combinations of tools.
+This shows maturity around projects that are now integrated with one another and presented in common use cases.
 
-This shows maturity around projects that are now integrated with one another and presented in common use cases. 
 
-https://www.cncf.io/projects/kusionstack/
+<!-- .slide: data-background="/img/products/cnoe.png" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="/img/products/kusion-stack.png" data-background-size="contain" -->
