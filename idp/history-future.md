@@ -1,6 +1,9 @@
 # The Future
 
 ### Mauricio & Viktor
+- More consolidation / blue prints
+- Cetifications made the industry grow
+- AI is here to stay, let's ambrace it with our platforms
 
 [background image: Kubernetes hidden]
 
@@ -16,22 +19,13 @@ Emergence of distributions that solve specific problems (e.g., batch processing 
 
 # The Future
 
-### Mauricio
+### Salaboy
 
-[background image: Kubernetes hidden]
-
-Note:
-How will Dapr make Kubernetes invisible?
-
-
-# The Future
-
-### Mauricio
-
-[background image: Kubernetes hidden]
+[background image: Isolate developers from the complexities of Kubernetes]
 
 Note:
-How will Crossplane make Kubernetes invisible?
+Mauricio: we are not going to hide Kubernetes, but the main responsability for platform engineers should be to isolate developers from the complexities of Kubernetes
+
 
 
 # The Future
