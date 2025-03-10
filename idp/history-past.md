@@ -56,7 +56,6 @@ Docker emerged as a force that unifies us all (in dev)
 Viktor: The first time I was introduced to Docker I immediately thought that it is going to change the world. We got a universal packaging model, container images, and a universal way to run those packages anywhere (except Windows servers but, by that time, no one cared about it any more). More importantly, I saw the emergence of an ecosystem. In no time, we were able to run anything as containers. You need a database, no problem. There are hundreds of images you can choose from. Do you need to run workflows, or queues, or anything else? Docker has you covered. We could see the beginning of something amazing but, at that time, it was still a toy. Using containers in development and testing is great, but we needed more if we would want to run it in production. More importantly, for this story, Docker did not enable us to build platforms. It changed the way we package and, sometimes, how we run stuff. Platforms are much more than that. Developer platforms are about creating services and exposing those services to users. If felt like Docker might help, but it was unclear how. We knew that we needed more.
 
 
-
 <!-- .slide: data-background="/img/products/mesos.jpg" data-background-size="cover" data-background-opacity="0.2" -->
 
 Note:
