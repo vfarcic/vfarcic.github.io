@@ -30,6 +30,10 @@
 
 <!-- .slide: data-background="img/landscape.png" data-background-size="contain" -->
 
+Note:
+
+Kubernetes eventually built the biggest ecosystem ever seen and we could choose among an infinite number of solutions for any problem we could face. Most of that was enabled through CRDs and controllers. Most of use started by either building of using those third-party services, and we were not an exception.
+
 
 # Third-Party
 
@@ -37,14 +41,22 @@
 <!-- .slide: data-background="/img/products/knative.png" data-background-size="contain" -->
 
 Note:
+
 Mauricio:
+
 In 2018, I jumped to work with the Knative team at VMware, after almost 3 years of working full time helping developers and teams to adopt Kubernetes-based projects I realized that working with Go for this ecosystem made a lot of sense, but at the same time by 2020, the cloud native community was much more than Go. Communities like Java, dotnet, Python, and Node were getting closer to the Kubernetes ecosystem.
 
 
 <!-- .slide: data-background="/img/products/argo.png" data-background-size="contain" -->
 
 Note:
-Viktor: TODO:
+Viktor:
+
+I got interested into ways how to manage "stuff" running inside Kubernetes clusters and that, inevitably, led me to GitOps and, through it to Flux and, in my case, to Argo CD.
+
+All of a sudden, people started writing YAML and pushing it to Git. From there on, "GitOps magic" did the rest.
+
+Nevertheless, the beauty of Kubernetes is that we are not limited only to third-party services. We eventually understood that we could build our own, and that led both of us in that direction.
 
 
 # Yours
@@ -54,15 +66,16 @@ Viktor: TODO:
 
 Note:
 Mauricio:
-This journey led me back to developers, when in Nov 2022 I joind Diagrid a company working on the Dapr project. Same story again, cloud native project, written in Go but aiming to provide developers using any language APIs to abstract away the complexities of creating and running distributed applications. 
 
-Not a platform (alone)
+This journey led me back to developers, when in Nov 2022 I joined Diagrid a company working on the Dapr project. Same story again, cloud native project, written in Go but aiming to provide developers using any language APIs to abstract away the complexities of creating and running distributed applications. 
 
 
 <!-- .slide: data-background="/img/products/crossplane.png" data-background-size="contain" -->
 
 Note:
-Viktor: TODO:
+Viktor:
+
+Crossplane, KubeVela, Kratix, and a few other projects showed us that building our own APIs (CRDs) and services (controllers) with relative ease. A new type of tools emerged, with a tentative name control planes, that enabled us to convert both third-party and our own services into a platform with custom APIs and controllers that, when combined enabled us to build developer platforms in the same way as general purpose platforms like AWS, Azure, and Google Cloud. Those are based on the same principles, but with modern tech, that allow us to build platforms that meet the specific needs of an organization as opposed to being general-purpose. All those are based on the principles we discussed earlier.
 
 
 <!-- .slide: data-background="img/book-cover.jpg" data-background-size="contain" -->
@@ -73,7 +86,7 @@ Kubernetes is too complicated for anyone to be exposed to it directly (unless SM
 Neither Dapr, Crossplane, Knative, Argo CD, Backstage or AI will make Kubernetes transparent.
 But we, as platform engineers, are getting really comfortable at combining these tools.
 Mauricio:
-In Feb of 2020, I started writing the book published in Oct 2023 titled Platform Engineering on Kubernetes, this book was all about Kubernetes-based projects and the natural adoption journey for all these tools. I had a very ambitious goal, I wanted to make this book about software delivery, hence I needed a complex application (not a hello world) to show how the cloud native ecosystem can help companies to deliver software, but let’s be clear, if you are in KubeCon you are closer to DevOps and infrastructure, not application development. 
+In Feb of 2020, I started writing the book published in Oct 2023 titled Platform Engineering on Kubernetes, this book was all about Kubernetes-based projects and the natural adoption journey for all these tools. I had a very ambitious goal, I wanted to make this book about software delivery, hence I needed a complex application (not a hello world) to show how the cloud native ecosystem can help companies to deliver software, but let's be clear, if you are in KubeCon you are closer to DevOps and infrastructure, not application development. 
 
 
 <!-- .slide: data-background="img/idp-present-10.png" data-background-size="contain" -->
