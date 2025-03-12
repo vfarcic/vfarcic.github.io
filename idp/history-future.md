@@ -1,11 +1,20 @@
 # The Future
 
-### Mauricio & Viktor
-- More consolidation / blue prints
-- Cetifications made the industry grow
-- AI is here to stay, let's ambrace it with our platforms
 
-[background image: Kubernetes hidden]
+
+
+<!-- .slide: data-background="./img/certifications.png" data-background-size="contain" data-background-opacity="1" -->
+
+
+<!-- .slide: data-background="./img/app-dev-working-group.png" data-background-size="contain" data-background-opacity="1" -->
+
+
+<!-- .slide: data-background="./img/app-dev-track.png" data-background-size="contain" data-background-opacity="1" -->
+
+
+<!-- .slide: data-background="./img/TAG-new-structure.png" data-background-size="contain" data-background-opacity="1" -->
+
+
 
 Note:
 It starts on your laptop ends in production.
@@ -17,15 +26,8 @@ Major difference is that there will be no single developer-friendly Kubernetes. 
 Emergence of distributions that solve specific problems (e.g., batch processing with Kueue, CPs with KCP, multi-cluster something, etc.)
 
 
-# The Future
-
-### Salaboy
-
-[background image: Isolate developers from the complexities of Kubernetes]
-
 Note:
 Mauricio: we are not going to hide Kubernetes, but the main responsability for platform engineers should be to isolate developers from the complexities of Kubernetes
-
 
 
 # The Future
