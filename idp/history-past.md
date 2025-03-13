@@ -88,20 +88,12 @@ We could see the beginning of something amazing but, at that time, it was still 
 So, the question was the same. Is Docker the platform or a model of a platform we should use?
 
 
-<!-- .slide: data-background="/img/products/mesos.jpg" data-background-size="cover" data-background-opacity="0.2" -->
-
-Note:
-Orchestrators emerged
-
-Viktor:
-
-Then we got orchestrators. We got Mesos that was not only the only one, but proved itself at large scale. Docker Swarm, Nomad, Tupperware (does anyone remember that one), Kubernetes, and others emerged. It seemed that everyone was building an orchestrator.
-
-
 <!-- .slide: data-background="/img/products/kubernetes.png" data-background-size="cover" data-background-opacity="0.2" -->
 
 Note:
 Viktor:
+
+Then we got orchestrators. We got Mesos that was not only the only one, but proved itself at large scale. Docker Swarm, Nomad, Tupperware (does anyone remember that one), Kubernetes, and others emerged. It seemed that everyone was building an orchestrator.
 
 Kubernetes became the "standard" orchestrator and surfaced the issue with Docker design. Docker was not extensible. It was adopted by users, but not by vendors. Kubernetes, on the other hand, was extensible from the start, but only if we contributed directly to its codebase. Kubernetes truly became the base platform with the introduction of CRDs (extensible API). It showed us the importance of HTTP APIs and the high level architecture of platforms started to emerge.
 
