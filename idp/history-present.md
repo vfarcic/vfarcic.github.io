@@ -35,7 +35,7 @@ Note:
 Kubernetes eventually built the biggest ecosystem ever seen and we could choose among an infinite number of solutions for any problem we could face. Most of that was enabled through CRDs and controllers. Most of use started by either building of using those third-party services, and we were not an exception.
 
 
-# Third-Party
+# Core Capabilities
 
 
 <!-- .slide: data-background="/img/products/knative.png" data-background-size="contain" -->

@@ -72,7 +72,11 @@ AI is here to stay, how does this affect our platform initiatives.
 ### Agentic Frameworks
 
 
+<!-- .slide: data-background="./img/ai-agents.jpg" data-background-size="contain" data-background-opacity="1" -->
+
+
 <!-- .slide: data-background="./img/dapr-agents.jpg" data-background-size="contain" data-background-opacity="1" -->
+
 
 
 ### Wish list
