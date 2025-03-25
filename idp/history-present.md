@@ -59,7 +59,7 @@ All of a sudden, people started writing YAML and pushing it to Git. From there o
 Nevertheless, the beauty of Kubernetes is that we are not limited only to third-party services. We eventually understood that we could build our own, and that led both of us in that direction.
 
 
-# Yours
+# Make it your platform
 
 
 <!-- .slide: data-background="/img/products/dapr.png" data-background-size="contain" -->
