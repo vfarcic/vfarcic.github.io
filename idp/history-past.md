@@ -1,4 +1,4 @@
-<!-- .slide: data-background="img/coder.png" data-background-size="cover" data-background-opacity="0.2" -->
+<!-- .slide: data-background="img/coder.png" data-background-size="cover" -->
 
 Note:
 The Beginning: Coders like anyone else
@@ -12,7 +12,7 @@ Mauricio:
 I started my career Java, building apps and doing consulting with banks and healthcare providers. That road took me to work with Application Servers where I quickly realized that I like helping developers to be more efficient when coding so I transitioned to build Java libraries (middleware as it was called long time ago), when I joined Red Hat / JBoss to work on that 24/7. 
 
 
-<!-- .slide: data-background="img/help-others.png" data-background-size="cover" data-background-opacity="0.2" -->
+<!-- .slide: data-background="img/help-others.png" data-background-size="cover" -->
 
 Note:
 
@@ -25,7 +25,7 @@ Eventually I realized that I'm lazy. I did not want to test my stuff manually. I
 Is that a developer platform? Can we call a set of tools that help developer be more productive a developer platform?
 
 
-<!-- .slide: data-background="/img/products/java.png" data-background-size="contain" data-background-opacity="0.2" -->
+<!-- .slide: data-background="/img/products/java.png" data-background-size="contain" -->
 
 Note:
 
@@ -42,7 +42,7 @@ The problem with libraries is that they are very language and community-focused.
 Is that a platform?
 
 
-<!-- .slide: data-background="/img/products/hudson.png" data-background-size="contain" data-background-opacity="0.2" -->
+<!-- .slide: data-background="/img/products/hudson.png" data-background-size="contain" -->
 
 Note:
 
@@ -74,7 +74,7 @@ That extensibility that resulted in, at that time, unprecedented ecosystem that 
 So, the question is whether Jenkins is the platform or a model of a platform we should use?
 
 
-<!-- .slide: data-background="/img/products/docker.png" data-background-size="contain" data-background-opacity="0.2" -->
+<!-- .slide: data-background="/img/products/docker.png" data-background-size="contain" -->
 
 Note:
 Docker emerged as a force that unifies us all (in dev)
@@ -88,7 +88,7 @@ We could see the beginning of something amazing but, at that time, it was still 
 So, the question was the same. Is Docker the platform or a model of a platform we should use?
 
 
-<!-- .slide: data-background="/img/products/kubernetes.png" data-background-size="cover" data-background-opacity="0.2" -->
+<!-- .slide: data-background="/img/products/kubernetes.png" data-background-size="cover" -->
 
 Note:
 Viktor:
@@ -106,3 +106,7 @@ After working with Java, containers and Kubernetes for about a year inside Red H
 The Java community, with frameworks like Spring Cloud and Java EE provided mechanisms for service discovery and resilience aiming to solve distributed application challenges, but these aligned quite well with Kubernetes. So I thought, there is an opportunity here to help developers and organizations to jump on the Kubernetes / Containers train. 
 
 It was clear to me than more and more topics related to scalability, resilience and even more the application architectures that we were creating were about to change. As a developer I could understand how to interact with Kubernetes and even how to extend it
+
+
+<!-- .slide: data-background="/img/products/kubernetes.png" data-background-size="cover" data-background-opacity="0.2" -->
+## We've been building platforms for a long time, but now we all finally agree what the base of a platform is

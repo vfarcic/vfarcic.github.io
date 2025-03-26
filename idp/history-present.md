@@ -127,3 +127,7 @@ This shows maturity around projects that are now integrated with one another and
 
 
 <!-- .slide: data-background="/img/products/kusion-stack.png" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="img/idp-present-17.png" data-background-size="contain" data-background-opacity="0.2" -->
+## High-level architecture of internal platforms is the same as architecture of public platforms (e.g. AWS, Azure, Google, etc.) but on top Kubernetes

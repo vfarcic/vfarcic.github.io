@@ -1,7 +1,7 @@
 # The Future
 
 
-<!-- .slide: data-background="./img/certifications.png" data-background-size="contain" data-background-opacity="1" -->
+<!-- .slide: data-background="./img/certifications.png" data-background-size="contain" -->
 
 Note: 
 I am super hyped about these two certifications, as this highlights that we are maturing as an industry. Companies adopting Platform as a Product mindset are experiencing improvements on IT operational efficiency, developer productivity and ... 
@@ -18,16 +18,16 @@ Kubernetes started from low-level and extensibility which sucks at user-experien
 Major difference is that there will be no single developer-friendly Kubernetes. There will be a way to create or choose a distribution that makes it dev-friendly (CNOE / BACK stack / OpenShift).
 
 
-<!-- .slide: data-background="./img/from-laptop-to-prod.png" data-background-size="contain" data-background-opacity="1" -->
+<!-- .slide: data-background="./img/from-laptop-to-prod.png" data-background-size="contain" -->
 
 
-<!-- .slide: data-background="./img/app-dev-working-group.png" data-background-size="contain" data-background-opacity="1" -->
+<!-- .slide: data-background="./img/app-dev-working-group.png" data-background-size="contain" -->
 
 
-<!-- .slide: data-background="./img/app-dev-track.png" data-background-size="contain" data-background-opacity="1" -->
+<!-- .slide: data-background="./img/app-dev-track.png" data-background-size="contain" -->
 
 
-<!-- .slide: data-background="./img/TAG-new-structure.png" data-background-size="contain" data-background-opacity="1" -->
+<!-- .slide: data-background="./img/TAG-new-structure.png" data-background-size="contain" -->
 
 Note:
 Mauricio: we are not going to hide Kubernetes, but the main responsability for platform engineers should be to isolate developers from the complexities of Kubernetes
@@ -40,13 +40,13 @@ Mauricio: we are not going to hide Kubernetes, but the main responsability for p
 - Karpor
 
 
-<!-- .slide: data-background="./img/kueue.png" data-background-size="contain" data-background-opacity="1" -->
+<!-- .slide: data-background="./img/kueue.png" data-background-size="contain" -->
 
 
-<!-- .slide: data-background="./img/kcp.png" data-background-size="contain" data-background-opacity="1" -->
+<!-- .slide: data-background="./img/kcp.png" data-background-size="contain" -->
 
 
-<!-- .slide: data-background="./img/karpor.png" data-background-size="contain" data-background-opacity="1" -->
+<!-- .slide: data-background="./img/karpor.png" data-background-size="contain" -->
 
 Note: 
 We expect to see more of these tools
@@ -54,7 +54,7 @@ Emergence of distributions that solve specific problems (e.g., batch processing 
 KCP from: https://faun.pub/a-new-paradigm-for-kubernetes-platform-engineering-193966ea681d
 
 
-<!-- .slide: data-background="./img/ai.png" data-background-size="contain" data-background-opacity="1" -->
+<!-- .slide: data-background="./img/ai.png" data-background-size="contain" -->
 
 Note: 
 AI is here to stay, how does this affect our platform initiatives. 
@@ -63,20 +63,19 @@ AI is here to stay, how does this affect our platform initiatives.
 ### AI as a platform capability
 
 
-<!-- .slide: data-background="./img/dapr-conversation-api.png" data-background-size="contain" data-background-opacity="1" -->
+<!-- .slide: data-background="./img/dapr-conversation-api.png" data-background-size="contain" -->
 
 
-<!-- .slide: data-background="./img/envoy-ai-gateway.png" data-background-size="contain" data-background-opacity="1" -->
+<!-- .slide: data-background="./img/envoy-ai-gateway.png" data-background-size="contain" -->
 
 
 ### Agentic Frameworks
 
 
-<!-- .slide: data-background="./img/ai-agents.jpg" data-background-size="contain" data-background-opacity="1" -->
+<!-- .slide: data-background="./img/ai-agents.png" data-background-size="contain" -->
 
 
-<!-- .slide: data-background="./img/dapr-agents.jpg" data-background-size="contain" data-background-opacity="1" -->
-
+<!-- .slide: data-background="./img/dapr-agents.jpg" data-background-size="contain" -->
 
 
 ### Wish list
@@ -84,7 +83,6 @@ AI is here to stay, how does this affect our platform initiatives.
 - More open source blueprints & reference architectures
 - Developers and Platform Engineers talk to each other
 - We use AI to improve our platform engineering skills
-
 
 Note: 
 - Companies and open source projects create join efforts and blueprints
