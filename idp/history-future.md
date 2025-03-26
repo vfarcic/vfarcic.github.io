@@ -18,7 +18,7 @@ Kubernetes started from low-level and extensibility which sucks at user-experien
 Major difference is that there will be no single developer-friendly Kubernetes. There will be a way to create or choose a distribution that makes it dev-friendly (CNOE / BACK stack / OpenShift).
 
 
-<!-- .slide: data-background="./img/from-laptop-to-prod.png" data-background-size="contain" -->
+<!-- .slide: data-background="./img/from-laptop-to-prod.png" data-background-size="contain" data-background-color="black" -->
 
 
 <!-- .slide: data-background="./img/app-dev-working-group.png" data-background-size="contain" -->

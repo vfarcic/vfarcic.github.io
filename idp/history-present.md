@@ -1,31 +1,31 @@
 # The Present
 
 
-<!-- .slide: data-background="img/idp-present-01.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/idp-present-01.png" data-background-size="contain" data-background-color="black" -->
 
 
-<!-- .slide: data-background="img/idp-present-02.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/idp-present-02.png" data-background-size="contain" data-background-color="black" -->
 
 
-<!-- .slide: data-background="img/idp-present-03.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/idp-present-03.png" data-background-size="contain" data-background-color="black" -->
 
 
-<!-- .slide: data-background="img/idp-present-04.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/idp-present-04.png" data-background-size="contain" data-background-color="black" -->
 
 
-<!-- .slide: data-background="img/idp-present-05.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/idp-present-05.png" data-background-size="contain" data-background-color="black" -->
 
 
-<!-- .slide: data-background="img/idp-present-06.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/idp-present-06.png" data-background-size="contain" data-background-color="black" -->
 
 
-<!-- .slide: data-background="img/idp-present-07.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/idp-present-07.png" data-background-size="contain" data-background-color="black" -->
 
 
-<!-- .slide: data-background="img/idp-present-08.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/idp-present-08.png" data-background-size="contain" data-background-color="black" -->
 
 
-<!-- .slide: data-background="img/idp-present-09.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/idp-present-09.png" data-background-size="contain" data-background-color="black" -->
 
 
 <!-- .slide: data-background="img/landscape.png" data-background-size="contain" -->
@@ -78,28 +78,28 @@ Viktor:
 Crossplane, KubeVela, Kratix, and a few other projects showed us that building our own APIs (CRDs) and services (controllers) with relative ease. A new type of tools emerged, with a tentative name control planes, that enabled us to convert both third-party and our own services into a platform with custom APIs and controllers that, when combined enabled us to build developer platforms in the same way as general purpose platforms like AWS, Azure, and Google Cloud. Those are based on the same principles, but with modern tech, that allow us to build platforms that meet the specific needs of an organization as opposed to being general-purpose. All those are based on the principles we discussed earlier.
 
 
-<!-- .slide: data-background="img/idp-present-10.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/idp-present-10.png" data-background-size="contain" data-background-color="black" -->
 
 
-<!-- .slide: data-background="img/idp-present-11.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/idp-present-11.png" data-background-size="contain" data-background-color="black" -->
 
 
-<!-- .slide: data-background="img/idp-present-12.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/idp-present-12.png" data-background-size="contain" data-background-color="black" -->
 
 
-<!-- .slide: data-background="img/idp-present-13.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/idp-present-13.png" data-background-size="contain" data-background-color="black" -->
 
 
-<!-- .slide: data-background="img/idp-present-14.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/idp-present-14.png" data-background-size="contain" data-background-color="black" -->
 
 
-<!-- .slide: data-background="img/idp-present-15.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/idp-present-15.png" data-background-size="contain" data-background-color="black" -->
 
 
-<!-- .slide: data-background="img/idp-present-16.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/idp-present-16.png" data-background-size="contain" data-background-color="black" -->
 
 
-<!-- .slide: data-background="img/idp-present-17.png" data-background-size="contain" -->
+<!-- .slide: data-background="img/idp-present-17.png" data-background-size="contain" data-background-color="black" -->
 
 
 # Blueprints
