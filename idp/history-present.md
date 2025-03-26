@@ -113,7 +113,6 @@ Mauricio:
 In Feb of 2020, I started writing the book published in Oct 2023 titled Platform Engineering on Kubernetes, this book was all about Kubernetes-based projects and the natural adoption journey for all these tools. I had a very ambitious goal, I wanted to make this book about software delivery, hence I needed a complex application (not a hello world) to show how the cloud native ecosystem can help companies to deliver software, but let's be clear, if you are in KubeCon you are closer to DevOps and infrastructure, not application development. 
 
 
-## [BACKstack](https://backstack.dev/)
 <!-- .slide: data-background="img/backstack.png" data-background-size="contain" -->
 
 Note:
@@ -121,11 +120,9 @@ We have seen a lot of consolidation happening in the space, with tools blueprint
 This shows maturity around projects that are now integrated with one another and presented in common use cases.
 
 
-## [CNOE](https://cnoe.io/)
 <!-- .slide: data-background="img/cnoe-diagram.png" data-background-size="contain" -->
 
 
-## [KusionStack](https://www.kusionstack.io/)
 <!-- .slide: data-background="img/kusion-stack-diagram.png" data-background-size="contain" -->
 
 
