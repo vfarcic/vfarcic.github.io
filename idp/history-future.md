@@ -18,6 +18,9 @@ Kubernetes started from low-level and extensibility which sucks at user-experien
 Major difference is that there will be no single developer-friendly Kubernetes. There will be a way to create or choose a distribution that makes it dev-friendly (CNOE / BACK stack / OpenShift).
 
 
+<!-- .slide: data-background="./img/from-laptop-to-prod.png" data-background-size="contain" data-background-opacity="1" -->
+
+
 <!-- .slide: data-background="./img/app-dev-working-group.png" data-background-size="contain" data-background-opacity="1" -->
 
 
@@ -32,12 +35,23 @@ Mauricio: we are not going to hide Kubernetes, but the main responsability for p
 
 ### Multi cluster specialized tools
 
-- KCP
 - Kueue
-- 
+- KCP
+- Karpor
+
+
+<!-- .slide: data-background="./img/kueue.png" data-background-size="contain" data-background-opacity="1" -->
+
+
+<!-- .slide: data-background="./img/kcp.png" data-background-size="contain" data-background-opacity="1" -->
+
+
+<!-- .slide: data-background="./img/karpor.png" data-background-size="contain" data-background-opacity="1" -->
 
 Note: 
+We expect to see more of these tools
 Emergence of distributions that solve specific problems (e.g., batch processing with Kueue, CPs with KCP, multi-cluster something, etc.)
+KCP from: https://faun.pub/a-new-paradigm-for-kubernetes-platform-engineering-193966ea681d
 
 
 <!-- .slide: data-background="./img/ai.png" data-background-size="contain" data-background-opacity="1" -->
@@ -52,17 +66,27 @@ AI is here to stay, how does this affect our platform initiatives.
 <!-- .slide: data-background="./img/dapr-conversation-api.png" data-background-size="contain" data-background-opacity="1" -->
 
 
-<!-- .slide: data-background="./img/envoy-ai-gateway.jpeg" data-background-size="contain" data-background-opacity="1" -->
+<!-- .slide: data-background="./img/envoy-ai-gateway.png" data-background-size="contain" data-background-opacity="1" -->
 
 
 ### Agentic Frameworks
 
 
+<!-- .slide: data-background="./img/ai-agents.jpg" data-background-size="contain" data-background-opacity="1" -->
+
+
 <!-- .slide: data-background="./img/dapr-agents.jpg" data-background-size="contain" data-background-opacity="1" -->
+
 
 
 ### Wish list
 
-- I wish that we can bring developer communities close to learn more about the challanges that they face and how platform teams can help them to do better
-- I wish that we use AI to improve our platform engineering skills, leveraging unification of platform cross-cutting concerns to enhance our AI initiatives
-- I wish to see more companies building and maturing blueprints to people starting with their paltform engineering journeys can get up to speed 
+- More open source blueprints & reference architectures
+- Developers and Platform Engineers talk to each other
+- We use AI to improve our platform engineering skills
+
+
+Note: 
+- Companies and open source projects create join efforts and blueprints
+- As an industry we build the right channels and groups for developers to talk to platform engineers. 
+- AI helps us to leverage and unify platform cross-cutting concerns to enhance our AI initiatives
