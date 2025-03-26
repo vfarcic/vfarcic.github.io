@@ -78,17 +78,6 @@ Viktor:
 Crossplane, KubeVela, Kratix, and a few other projects showed us that building our own APIs (CRDs) and services (controllers) with relative ease. A new type of tools emerged, with a tentative name control planes, that enabled us to convert both third-party and our own services into a platform with custom APIs and controllers that, when combined enabled us to build developer platforms in the same way as general purpose platforms like AWS, Azure, and Google Cloud. Those are based on the same principles, but with modern tech, that allow us to build platforms that meet the specific needs of an organization as opposed to being general-purpose. All those are based on the principles we discussed earlier.
 
 
-<!-- .slide: data-background="img/book-cover.jpg" data-background-size="contain" -->
-
-Note:
-A diagram with Backstage, Argo CD, Crossplane, Dapr, etc. that a) demonstrate how Kubernetes components can work together and b) showcases one possible IDP.
-Kubernetes is too complicated for anyone to be exposed to it directly (unless SME)
-Neither Dapr, Crossplane, Knative, Argo CD, Backstage or AI will make Kubernetes transparent.
-But we, as platform engineers, are getting really comfortable at combining these tools.
-Mauricio:
-In Feb of 2020, I started writing the book published in Oct 2023 titled Platform Engineering on Kubernetes, this book was all about Kubernetes-based projects and the natural adoption journey for all these tools. I had a very ambitious goal, I wanted to make this book about software delivery, hence I needed a complex application (not a hello world) to show how the cloud native ecosystem can help companies to deliver software, but let's be clear, if you are in KubeCon you are closer to DevOps and infrastructure, not application development. 
-
-
 <!-- .slide: data-background="img/idp-present-10.png" data-background-size="contain" -->
 
 
@@ -116,17 +105,28 @@ In Feb of 2020, I started writing the book published in Oct 2023 titled Platform
 # Blueprints
 
 
-# BACK Stack
+<!-- .slide: data-background="img/book-cover.jpg" data-background-size="contain" -->
+
+Note:
+We, as platform engineers, are getting really comfortable at combining these tools.
+Mauricio:
+In Feb of 2020, I started writing the book published in Oct 2023 titled Platform Engineering on Kubernetes, this book was all about Kubernetes-based projects and the natural adoption journey for all these tools. I had a very ambitious goal, I wanted to make this book about software delivery, hence I needed a complex application (not a hello world) to show how the cloud native ecosystem can help companies to deliver software, but let's be clear, if you are in KubeCon you are closer to DevOps and infrastructure, not application development. 
+
+
+## [BACKstack](https://backstack.dev/)
+<!-- .slide: data-background="img/backstack.png" data-background-size="contain" -->
 
 Note:
 We have seen a lot of consolidation happening in the space, with tools blueprints like CNOE, BACK Stack and Kusion stack building combinations of tools.
 This shows maturity around projects that are now integrated with one another and presented in common use cases.
 
 
-<!-- .slide: data-background="/img/products/cnoe.png" data-background-size="contain" -->
+## [CNOE](https://cnoe.io/)
+<!-- .slide: data-background="img/cnoe-diagram.png" data-background-size="contain" -->
 
 
-<!-- .slide: data-background="/img/products/kusion-stack.png" data-background-size="contain" -->
+## [KusionStack](https://www.kusionstack.io/)
+<!-- .slide: data-background="img/kusion-stack-diagram.png" data-background-size="contain" -->
 
 
 <!-- .slide: data-background="img/idp-present-17.png" data-background-size="contain" data-background-opacity="0.2" -->

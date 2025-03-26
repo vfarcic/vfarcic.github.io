@@ -78,13 +78,10 @@ AI is here to stay, how does this affect our platform initiatives.
 <!-- .slide: data-background="./img/dapr-agents.jpg" data-background-size="contain" -->
 
 
-### Wish list
+## Cloud native platforms are not built in isolation. We need to help each other to mature our Platform Engineering practices.
 
+Note: 
+And that includes
 - More open source blueprints & reference architectures
 - Developers and Platform Engineers talk to each other
 - We use AI to improve our platform engineering skills
-
-Note: 
-- Companies and open source projects create join efforts and blueprints
-- As an industry we build the right channels and groups for developers to talk to platform engineers. 
-- AI helps us to leverage and unify platform cross-cutting concerns to enhance our AI initiatives
