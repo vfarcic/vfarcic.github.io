@@ -21,13 +21,10 @@ Major difference is that there will be no single developer-friendly Kubernetes. 
 <!-- .slide: data-background="./img/from-laptop-to-prod.png" data-background-size="contain" data-background-color="black" -->
 
 
-<!-- .slide: data-background="./img/app-dev-working-group.png" data-background-size="contain" -->
-
-
-<!-- .slide: data-background="./img/app-dev-track.png" data-background-size="contain" -->
-
-
 <!-- .slide: data-background="./img/TAG-new-structure.png" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="./img/devex-book.png" data-background-size="contain" -->
 
 Note:
 Mauricio: we are not going to hide Kubernetes, but the main responsability for platform engineers should be to isolate developers from the complexities of Kubernetes
@@ -64,9 +61,6 @@ AI is here to stay, how does this affect our platform initiatives.
 
 
 <!-- .slide: data-background="./img/dapr-conversation-api.png" data-background-size="contain" -->
-
-
-<!-- .slide: data-background="./img/envoy-ai-gateway.png" data-background-size="contain" -->
 
 
 ### Agentic Frameworks
