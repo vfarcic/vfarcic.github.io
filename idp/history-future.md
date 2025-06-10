@@ -7,27 +7,25 @@ Note:
 I am super hyped about these two certifications, as this highlights that we are maturing as an industry. Companies adopting Platform as a Product mindset are experiencing improvements on IT operational efficiency, developer productivity and ... 
 
 
-### Do we need to hide Kubernetes from Developers?
-
-Note:
-It starts on your laptop ends in production.
-Implementation detail (for those not specialized in Kubernetes)
-It's not about teaching people Kubernetes as-is but about making Kubernetes developer friendly (through higher-level abstractions).
-Docker was designed to be developer friendly, but failed at low-level (TODO: Diagram).
-Kubernetes started from low-level and extensibility which sucks at user-experience (TODO: Diagram).
-Major difference is that there will be no single developer-friendly Kubernetes. There will be a way to create or choose a distribution that makes it dev-friendly (CNOE / BACK stack / OpenShift).
+<!-- .slide: data-background="./img/ai.png" data-background-size="contain" -->
 
 
-<!-- .slide: data-background="./img/from-laptop-to-prod.png" data-background-size="contain" data-background-color="black" -->
+<!-- .slide: data-background="./img/ai-01.png" data-background-size="contain" data-background-color="black" -->
 
 
-<!-- .slide: data-background="./img/TAG-new-structure.png" data-background-size="contain" -->
+<!-- .slide: data-background="./img/ai-02.png" data-background-size="contain" data-background-color="black" -->
 
 
-<!-- .slide: data-background="./img/devex-book.png" data-background-size="contain" -->
+<!-- .slide: data-background="./img/ai-03.png" data-background-size="contain" data-background-color="black" -->
 
-Note:
-Mauricio: we are not going to hide Kubernetes, but the main responsability for platform engineers should be to isolate developers from the complexities of Kubernetes
+
+<!-- .slide: data-background="./img/ai-04.png" data-background-size="contain" data-background-color="black" -->
+
+
+<!-- .slide: data-background="./img/ai-05.png" data-background-size="contain" data-background-color="black" -->
+
+
+<!-- .slide: data-background="./img/ai-06.png" data-background-size="contain" data-background-color="black" -->
 
 
 ### Multi cluster specialized tools
@@ -51,12 +49,6 @@ Emergence of distributions that solve specific problems (e.g., batch processing 
 KCP from: https://faun.pub/a-new-paradigm-for-kubernetes-platform-engineering-193966ea681d
 
 
-<!-- .slide: data-background="./img/ai.png" data-background-size="contain" -->
-
-Note: 
-AI is here to stay, how does this affect our platform initiatives. 
-
-
 ### AI as a platform capability
 
 
@@ -67,6 +59,9 @@ AI is here to stay, how does this affect our platform initiatives.
 
 
 <!-- .slide: data-background="./img/ai-agents.png" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="./img/kagent.png" data-background-size="contain" -->
 
 
 <!-- .slide: data-background="./img/dapr-agents.jpg" data-background-size="contain" -->

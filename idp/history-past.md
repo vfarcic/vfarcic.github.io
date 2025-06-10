@@ -25,23 +25,6 @@ Eventually I realized that I'm lazy. I did not want to test my stuff manually. I
 Is that a developer platform? Can we call a set of tools that help developer be more productive a developer platform?
 
 
-<!-- .slide: data-background="/img/products/java.png" data-background-size="contain" -->
-
-Note:
-
-Java libraries
-
-Mauricio:
-
-The beautiful thing about libraries is that, they save you time, a lot of time, not only when you are coding your applications, but when you are learning how to code something complex, libraries can make the whole process simple. 
-
-At this point, my view of a "platform" was a mechanism to enable teams to share these libraries and use them. If we can quickly distribute libraries across teams we can solve hard problems once and then reuse.
-
-The problem with libraries is that they are very language and community-focused. If you write libraries in Java, people using dotnet cannot reuse them, hence they will create their own libraries. Personally, I got to know the Java community deeply, but I have zero contacts or experience with other programming languages. 
-
-Is that a platform?
-
-
 <!-- .slide: data-background="/img/products/hudson.png" data-background-size="contain" -->
 
 Note:
