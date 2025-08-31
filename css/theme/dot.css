@@ -1,0 +1,5 @@
+/* Custom CSS to make code blocks wider */
+.reveal pre {
+  width: 98% !important;
+  font-size: 0.5em !important;
+}

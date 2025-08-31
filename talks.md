@@ -1,7 +1,7 @@
 # Talks
 
 * Your AI is a Toddler with Root Access: Why Kubernetes Policies Are Your Last Line of Defense ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/policies.md))
-* Using AI as a Dynamic Interface for Internal Developer Platforms ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/idp.md))
+* [Using AI as a Dynamic Interface for Internal Developer Platforms](ai/idp.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/idp.md))
 * [The Past, the Present, and the Future of Platform Engineering](idp/history.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/idp/abstracts/history.md))
 * From Zero to Fully Operational Developer Platform in 5 Steps! ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/full-idp.md))
 * [Internal Developer Platform Day 2 Operations Solved with Kubernetes and Crossplane](crossplane/crossplane-status-transformer.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/crossplane/abstracts/crossplane-status-transformer.md))

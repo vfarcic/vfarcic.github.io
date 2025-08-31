@@ -1,51 +1,50 @@
 /**
- * Solarized Light theme for reveal.js.
- * Author: Achim Staebler
+ * Black compact & high contrast reveal.js theme, with headers not in capitals.
+ *
+ * By Peter Kehl. Based on black.(s)css by Hakim El Hattab, http://hakim.se
+ *
+ * - Keep the source similar to black.css - for easy comparison.
+ * - $mainFontSize controls code blocks, too (although under some ratio).
  */
-@import url(./fonts/league-gothic/league-gothic.css);
-@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
-/**
- * Solarized colors by Ethan Schoonover
- */
-html * {
-  color-profile: sRGB;
-  rendering-intent: auto;
+@import url(./fonts/source-sans-pro/source-sans-pro.css);
+section.has-light-background, section.has-light-background h1, section.has-light-background h2, section.has-light-background h3, section.has-light-background h4, section.has-light-background h5, section.has-light-background h6 {
+  color: #000;
 }
 
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
 :root {
-  --r-background-color: #fdf6e3;
-  --r-main-font: Lato, sans-serif;
-  --r-main-font-size: 40px;
-  --r-main-color: #657b83;
+  --r-background-color: #000000;
+  --r-main-font: Source Sans Pro, Helvetica, sans-serif;
+  --r-main-font-size: 42px;
+  --r-main-color: #fff;
   --r-block-margin: 20px;
   --r-heading-margin: 0 0 20px 0;
-  --r-heading-font: League Gothic, Impact, sans-serif;
-  --r-heading-color: #586e75;
+  --r-heading-font: Source Sans Pro, Helvetica, sans-serif;
+  --r-heading-color: #fff;
   --r-heading-line-height: 1.2;
   --r-heading-letter-spacing: normal;
   --r-heading-text-transform: uppercase;
   --r-heading-text-shadow: none;
-  --r-heading-font-weight: normal;
+  --r-heading-font-weight: 600;
   --r-heading1-text-shadow: none;
-  --r-heading1-size: 3.77em;
-  --r-heading2-size: 2.11em;
-  --r-heading3-size: 1.55em;
+  --r-heading1-size: 2.5em;
+  --r-heading2-size: 1.6em;
+  --r-heading3-size: 1.3em;
   --r-heading4-size: 1em;
   --r-code-font: monospace;
-  --r-link-color: #268bd2;
-  --r-link-color-dark: rgb(32.3, 118.15, 178.5);
-  --r-link-color-hover: rgb(77.5161290323, 162.8774193548, 222.8838709677);
-  --r-selection-background-color: #d33682;
+  --r-link-color: #42affa;
+  --r-link-color-dark: rgb(19.8216494845, 155.4536082474, 248.7783505155);
+  --r-link-color-hover: rgb(94.35, 187, 250.75);
+  --r-selection-background-color: rgb(113.25, 195, 251.25);
   --r-selection-color: #fff;
-  --r-overlay-element-bg-color: 0, 0, 0;
-  --r-overlay-element-fg-color: 240, 240, 240;
+  --r-overlay-element-bg-color: 240, 240, 240;
+  --r-overlay-element-fg-color: 0, 0, 0;
 }
 
 .reveal-viewport {
-  background: #fdf6e3;
+  background: #000000;
   background-color: var(--r-background-color);
 }
 
