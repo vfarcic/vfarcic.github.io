@@ -14,15 +14,13 @@ use the dot-ai recommendation tool to get the best approach for deploying
 PostgreSQL.
 ...
 I can help you create a PostgreSQL database in AWS! To provide the best
-recommendations, I need to clarify a few key details about your requirements:
+recommendations, I need to clarify a few key details about your requirements
 
 Primary Questions:
 1. Deployment Type: Are you looking for a managed AWS service like RDS?
 2. Environment: What environment is this for - development, staging, ...
 3. Performance: What are your expected performance requirements ...
 4. Availability: Do you need high availability with automatic failover, ...
-
-Additional Considerations:
 ...
 Could you provide details on these key points so I can give you the most
 appropriate solution for your PostgreSQL database setup in AWS?
@@ -109,12 +107,10 @@ advanced configuration.
 
 [agent]
 ```md
-Perfect! Now for the advanced configuration options:
-
 Advanced Configuration (Optional):
 
-1. Crossplane Composition: Do you want to use a specific composition for your
-database? Leave empty for default composition
+1. Crossplane Composition: Do you want to use a specific composition for
+your database? Leave empty for default composition
 2. Composition Updates: How should composition updates be handled?
 Options: Automatic, Manual
 3. External Secret Store: Which external secret store should be used for
@@ -210,9 +206,8 @@ Sample Schemas Included:
 - db-01: app schema with users and products tables
 - db-02: analytics schema with events table
 
-The manifests are ready for deployment. Would you like me to
-deploy them to your cluster now, or would you prefer to review
-them first?
+The manifests are ready for deployment. Would you like me to deploy them
+to your cluster now, or would you prefer to review them first?
 
 To deploy, I can run: kubectl apply with the generated manifests.
 ```
