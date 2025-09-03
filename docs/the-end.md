@@ -35,18 +35,6 @@
 </figure>
 
 
-<figure style="width: 40%; height: 40%; margin-left:100px;float: left;">
-    <a href="https://leanpub.com/crossplane">
-        <img src="../img/products/crossplane-book.png"/>
-    </a>
-</figure>
-<figure style="width: 30%; height: 30%; margin-right:100px;float: right;">
-    <a href="https://leanpub.com/crossplane">
-        <img src="../img/qr/crossplane-book.png"/>
-    </a>
-</figure>
-
-
 ## [DevOps Toolkit YouTube](https://youtube.com/c/devopstoolkit)
 
 <figure style="width: 45%; margin-left:100px;float: left;">
