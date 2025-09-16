@@ -21,7 +21,7 @@
 </figure>
 
 
-## [DevOpsParadox.com Podcast](https://www.devopsparadox.com)
+## [DevOpsParadox.com (Podcast)](https://www.devopsparadox.com)
 
 <figure style="width: 40%; height: 40%; margin-left:100px;float: left;">
     <a href="https://www.devopsparadox.com">
@@ -35,7 +35,7 @@
 </figure>
 
 
-## [DevOps Toolkit YouTube](https://youtube.com/c/devopstoolkit)
+## [DevOps Toolkit (YouTube)](https://youtube.com/c/devopstoolkit)
 
 <figure style="width: 45%; margin-left:100px;float: left;">
     <a href="https://www.youtube.com/c/devopstoolkit">
@@ -45,5 +45,19 @@
 <figure style="width: 30%; margin-right:100px;float: right;">
     <a href="https://www.youtube.com/c/devopstoolkit">
         <img src="../img/qr/dot.png"/>
+    </a>
+</figure>
+
+
+## [DevOps AI Toolkit (project)](https://github.com/vfarcic/dot-ai)
+
+<figure style="width: 55%; margin-left:100px;float: left;">
+    <a href="https://github.com/vfarcic/dot-ai">
+        <img src="../img/dot-ai.png"/>
+    </a>
+</figure>
+<figure style="width: 20%; margin-right:100px;float: right;">
+    <a href="https://www.youtube.com/c/devopstoolkit">
+        <img src="../img/qr/dot-ai.png"/>
     </a>
 </figure>

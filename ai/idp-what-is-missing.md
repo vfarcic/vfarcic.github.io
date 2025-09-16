@@ -57,25 +57,13 @@ sudo apt install postgresql postgresql-contrib
 <!-- .slide: data-background="img/idp-problem-capabilities.jpeg" data-background-size="contain" data-background-color="black" -->
 
 
-<!-- .slide: data-background="img/idp-solution-capabilities.jpeg" data-background-size="contain" data-background-color="black" -->
-
-
 <!-- .slide: data-background="img/idp-problem-patterns.jpeg" data-background-size="contain" data-background-color="black" -->
-
-
-<!-- .slide: data-background="img/idp-solution-patterns.jpeg" data-background-size="contain" data-background-color="black" -->
 
 
 <!-- .slide: data-background="img/idp-problem-policies.jpeg" data-background-size="contain" data-background-color="black" -->
 
 
-<!-- .slide: data-background="img/idp-solution-policies.jpeg" data-background-size="contain" data-background-color="black" -->
-
-
 <!-- .slide: data-background="img/idp-problem-context.jpeg" data-background-size="contain" data-background-color="black" -->
-
-
-<!-- .slide: data-background="img/idp-solution-context.jpeg" data-background-size="contain" data-background-color="black" -->
 
 
 <!-- .slide: data-background="img/idp-solution-context-workflows-learning.jpeg" data-background-size="contain" data-background-color="black" -->
