@@ -1,6 +1,3 @@
-# Capabilities
-
-
 <!-- .slide: data-background="img/idp-problem-capabilities.jpeg" data-background-size="contain" data-background-color="black" -->
 
 

@@ -1,6 +1,3 @@
-# Patterns
-
-
 <!-- .slide: data-background="img/idp-problem-patterns.jpeg" data-background-size="contain" data-background-color="black" -->
 
 

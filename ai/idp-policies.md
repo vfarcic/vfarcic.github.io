@@ -1,6 +1,3 @@
-# Policies
-
-
 <!-- .slide: data-background="img/idp-problem-policies.jpeg" data-background-size="contain" data-background-color="black" -->
 
 
