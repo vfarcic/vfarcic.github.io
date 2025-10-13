@@ -39,11 +39,10 @@ Note:
 ```sh
 kubectl api-resources
 
-kubectl api-resources | grep sqlclaims
+kubectl api-resources | grep devopstoolkit
 
-kubectl get crd sqlclaims.devopstoolkitseries.com --output yaml
+kubectl get crd sqls.devopstoolkit.live --output yaml
 ```
-
 
 <!-- .slide: data-background="../img/background/hands-on.jpg" -->
 ### Discovery In Action
@@ -77,12 +76,26 @@ Note:
 
 ### Crafting Self-Service Actions
 
-* `Edit property` of `compositionRef__name`, set the `Title` to `Composition`, change the `Type` to `Select`, add options `aws-postgresql`, `azure-postgresql`, and `google-postgresql`, and click the `Save` button.
+* `Edit property` of `compositionRef__name`, and set it to:
+
+```json
+        "crossplane__compositionRef__name": {
+          "type": "string",
+          "default": "aws-postgresql",
+          "description": "Composition",
+          "enum": [
+            "aws-postgresql",
+            "azure-postgresql",
+            "google-postgresql"
+          ],
+          "visible": true
+        },
+```
 
 
 ### Crafting Self-Service Actions
 
-* `Edit property` of `parameters__size`. Set the `Title` to `Size`, change the `Type` to `Select`, add options `small`, `medium`, and `large`, and click the `Save` button.
+* `Edit property` of `databases`, `region`, `schemas`,  and `version`. Set `visible` to `true`.
 
 
 ### Crafting Self-Service Actions
@@ -170,5 +183,5 @@ echo "http://argocd.127.0.0.1.nip.io"
 * Show the `a-team` Application.
 
 ```sh
-crossplane beta trace sqlclaim silly-demo --namespace a-team
+kubectl --namespace a-team get sqls,managed
 ```
