@@ -44,6 +44,7 @@ kubectl api-resources | grep devopstoolkit
 kubectl get crd sqls.devopstoolkit.live --output yaml
 ```
 
+
 <!-- .slide: data-background="../img/background/hands-on.jpg" -->
 ### Discovery In Action
 
