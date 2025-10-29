@@ -1,7 +1,7 @@
 <!-- .slide: data-background="img/ai-useless.png" data-background-size="cover" data-background-color="black" -->
 
 Note:
-Here's the harsh reality: your AI agent is **completely useless** for infrastructure management, and you probably don't even realize it yet.
+Here's the harsh reality: your AI agent is **completely useless** for infrastructure management, enabling development teams, and increase software delivery speed and you probably don't even realize it yet.
 
 You've probably tried throwing ChatGPT or Claude at your DevOps problems, thinking AI will magically solve your infrastructure challenges. Maybe you got some generic responses that looked helpful on the surface. But when you actually tried to implement those suggestions, you discovered the painful truth - the AI has no clue about your environment, your standards, or your constraints.
 
@@ -16,7 +16,43 @@ Today we're exploring the essential components you need to build when integratin
 So let me start with a simple question: what happens when you give an AI agent a vague request without proper context or guidance?
 
 
-# What's Missing?
+# Let's create a Platform Agent
+
+<!-- .slide: data-background="img/agents-to-platforms.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+At the end of the day we want to automate our platform tasks, so let's add a platform agent to do this. 
+The next section should look into what happens if you agent just send the prompts to OpenAI, or any other LLM.
+
+
+# But wait a minute, where is that LLM hosted?
+
+```md
+
+- Public LLM: $$$$$$
+
+- Private LLM: :( :(
+
+```
+
+
+# Hosting Private LLMs
+
+<!-- .slide: data-background="img/vllm.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+With VLLM you can not only host your models inside Kubernetes clusters, but also scaled them up for production and train and fine tune models. 100% recomended for you to check this.
+
+
+# Public LLMs, but under control
+
+<!-- .slide: data-background="img/envoy-ai-gateway.png" data-background-size="contain" data-background-color="black" -->
+
+Note: 
+If you work for a company where calling external services and sending data outside of your company is not a problem, calling public LLM services is ok. But I strongly recommend you to check the Envoy AI Gateway project as having a proxy between your applications and public services can help you not only to route traffic to different services, but also filter and apply quotas for cost or SLO related reasons.
+
+
+# Let's give a try
 
 ```md
 Create a PostgreSQL database in AWS.
