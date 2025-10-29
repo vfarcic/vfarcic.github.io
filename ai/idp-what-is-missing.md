@@ -9,6 +9,7 @@ Most organizations are making the same critical mistake: they're treating AI lik
 
 But here's what changes everything: when you build AI into your Internal Developer Platform the right way, with proper context management, organizational learning, and intelligent workflows, you get something completely different. You get an AI system that actually understands your infrastructure, follows your patterns, enforces your policies, and delivers solutions that work in your specific environment.
 
+
 In this talk, I'm going to show you the **five fundamental problems** that make most AI implementations worthless, and then walk you through building the essential components that solve every single one of them. By the end, you'll have a complete blueprint for an AI-powered IDP that actually works.
 
 Today we're exploring the essential components you need to build when integrating AI into Internal Developer Platforms. We're not just talking about throwing ChatGPT at your infrastructure problems and hoping for the best. We're talking about creating a proper AI-powered system that actually understands your organization, follows your patterns, and enforces your policies.
@@ -47,6 +48,8 @@ With VLLM you can not only host your models inside Kubernetes clusters, but also
 # Public LLMs, but under control
 
 <!-- .slide: data-background="img/envoy-ai-gateway.png" data-background-size="contain" data-background-color="black" -->
+
+<!-- .slide: data-background="img/dapr-conversation.png" data-background-size="contain" data-background-color="black" -->
 
 Note: 
 If you work for a company where calling external services and sending data outside of your company is not a problem, calling public LLM services is ok. But I strongly recommend you to check the Envoy AI Gateway project as having a proxy between your applications and public services can help you not only to route traffic to different services, but also filter and apply quotas for cost or SLO related reasons.
