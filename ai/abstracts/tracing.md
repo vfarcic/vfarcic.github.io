@@ -23,3 +23,23 @@ Whether you're building autonomous agents, RAG pipelines, or LLM-powered applica
 **Target Audience:** Platform engineers, SREs, and developers building or operating AI-powered applications in cloud-native environments.
 
 **Takeaway:** Attendees will understand how to apply OpenTelemetry tracing to AI agents and gain practical knowledge for implementing observability in their AI systems.
+
+## Short Abstract
+
+Building AI agents means taming uncertainty. You can't predict what users will ask, which context gets sent to LLMs, which tools execute, or what responses emerge. How can we debug what we can't see?
+
+We solved this using OpenTelemetry tracing for distributed systems. When requests bounce between microservices, functions, and APIs, tracking their journey is critical. AI agents present the same challenge—interactions flow between users, agents, LLMs, and tools in unpredictable sequences.
+
+OpenTelemetry is becoming the standard for AI observability, with GenAI semantic conventions and native support in major AI frameworks.
+
+You'll learn how OpenTelemetry captures AI agent interactions, the GenAI semantic conventions, practical implementation patterns, and debugging multi-agent systems with distributed traces. Plus, how to integrate AI observability into your Kubernetes monitoring stack with real-world examples of troubleshooting autonomous agents and RAG pipelines in production.
+
+## Benefits to the Ecosystem
+
+This talk directly benefits the CNCF community by bridging cloud-native observability practices with the rapidly growing AI workload landscape. As organizations deploy AI agents on Kubernetes, they need observability solutions that integrate seamlessly with their existing monitoring infrastructure. By demonstrating how OpenTelemetry (CNCF graduated project) extends naturally to AI observability, this session helps platform engineers and SREs leverage their existing expertise and tools for emerging AI use cases. It promotes standardization in AI observability through CNCF projects, preventing fragmentation and proprietary lock-in. Additionally, it strengthens OpenTelemetry's position as the universal observability standard by showcasing its applicability beyond traditional distributed systems to modern AI architectures running on Kubernetes.
+
+## Open Source Projects Used
+
+- OpenTelemetry (CNCF Graduated)
+- Kubernetes (CNCF Graduated)
+- Jaeger (CNCF Graduated)
