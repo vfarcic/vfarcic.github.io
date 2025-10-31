@@ -14,31 +14,31 @@ Workflows are structured, semi-predictable sequences of steps designed to accomp
 In our example, a workflow is a combination of fetching information from various sources and analyzing that information with AI. Each step in the workflow can involve data gathering, AI analysis, or both. We might fetch information from users to enhance their intent, pull relevant patterns and policies from the Vector database, get current schemas from Kubernetes clusters, gather operational data, and source information from anywhere else that's relevant. Then AI analyzes all this collected data to make intelligent decisions about the next step.
 
 
-# Workflow in practice
+## Workflow in practice
 
-<!-- .slide: data-background="img/workflows.png" data-background-size="contain" data-background-color="black" -->
-
-
-# Reducing scope to perform a specific action
-
-<!-- .slide: data-background="img/workflows-with-rag.png" data-background-size="contain" data-background-color="black" -->
+![](img/workflows.png)
 
 
-# Summarizing Context to clean up garbage
+### Reducing scope to perform a specific action
 
-<!-- .slide: data-background="img/workflows-context.png" data-background-size="contain" data-background-color="black" -->
-
-
-# Resilliency and durable executions to save costs
-
-<!-- .slide: data-background="img/workflows-resilliency.png" data-background-size="contain" data-background-color="black" -->
+![](img/workflows-with-rag.png)
 
 
-# Dapr Workflows (workflows-as-code) 
+### Summarizing Context to clean up garbage
 
-<!-- .slide: data-background="img/dapr-workflows.png" data-background-size="contain" data-background-color="black" -->
+![](img/workflows-context.png)
 
 
-# Dapr Agents (Python)
+### Resilliency and durable executions to save costs
 
-<!-- .slide: data-background="img/dapr-agents.png" data-background-size="contain" data-background-color="black" -->
+![](img/workflows-resilliency.png)
+
+
+### Dapr Workflows (workflows-as-code) 
+
+![](img/dapr-workflows.png)
+
+
+### Dapr Agents (Python)
+
+![](img/dapr-agents.png)

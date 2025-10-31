@@ -119,6 +119,12 @@ Note:
 Then we need to know the patterns. If we have no clue about our naming conventions, our preferred architectures, our deployment strategies, or any of the tribal knowledge that lives in our documentation, wiki pages, code repositories, and Slack conversations, we will surely fail to assemble the correct components.
 
 
+<!-- .slide: data-background="img/idp-problem-policies.jpeg" data-background-size="contain" data-background-color="black" -->
+
+Note:
+Similarly, we need to know company patterns. Do we use a specific region? Can we use latest images?
+
+
 <!-- .slide: data-background="img/idp-problem-context.jpeg" data-background-size="contain" data-background-color="black" -->
 
 Note:

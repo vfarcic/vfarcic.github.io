@@ -192,7 +192,7 @@ Primary Resource: SQL Database
 ...
 
 
-[agnnt]
+[agent]
 ```md
 Database Configuration:
 
