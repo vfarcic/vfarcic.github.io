@@ -4,16 +4,16 @@
 
 [user]
 ```md
-Create a PostgreSQL database in AWS.
+Create a database in AWS.
 ```
 
 [agent]
 ```md
-I'll help you create a PostgreSQL database in AWS using Kubernetes. Let me
+I'll help you create a database in AWS using Kubernetes. Let me
 use the dot-ai recommendation tool to get the best approach for deploying
-PostgreSQL.
+database.
 ...
-I can help you create a PostgreSQL database in AWS! To provide the best
+I can help you create a database in AWS! To provide the best
 recommendations, I need to clarify a few key details about your requirements
 
 Primary Questions:
@@ -23,20 +23,19 @@ Primary Questions:
 4. Availability: Do you need high availability with automatic failover, ...
 ...
 Could you provide details on these key points so I can give you the most
-appropriate solution for your PostgreSQL database setup in AWS?
+appropriate solution for your database setup in AWS?
 ```
 
 
 [user]
 ```md
-It should be managed PostgreSQL DB in AWS (RDS), there should be DB schema
-management, and it should be publicly accessible.
+It should be publicly accessible managed PostgreSQL DB in AWS (RDS).
 ```
 
 [agent]
 ```md
 I found 4 solutions for creating a managed PostgreSQL RDS database in AWS
-with schema management and public accessibility. Here are your options:
+with public accessibility. Here are your options:
 
 Solution Options:
 

@@ -16,50 +16,12 @@ Today we're exploring the essential components you need to build when integratin
 So let me start with a simple question: what happens when you give an AI agent a vague request without proper context or guidance?
 
 
-### Let's create a Platform Agent
-
-![](img/agents-to-platforms.png)
-
-Note:
-At the end of the day we want to automate our platform tasks, so let's add a platform agent to do this. 
-The next section should look into what happens if you agent just send the prompts to OpenAI, or any other LLM.
-
-
-## But wait a minute, where is that LLM hosted?
-
 ```md
-
-- Public LLM: $$$$$$
-
-- Private LLM: :( :(
-
-```
-
-
-## Hosting Private LLMs
-
-![](img/vllm.png)
-
-Note:
-With VLLM you can not only host your models inside Kubernetes clusters, but also scaled them up for production and train and fine tune models. 100% recomended for you to check this.
-
-
-## Public LLMs, but under control
-
-![](img/envoy-ai-gateway.png)
-
-Note: 
-If you work for a company where calling external services and sending data outside of your company is not a problem, calling public LLM services is ok. But I strongly recommend you to check the Envoy AI Gateway project as having a proxy between your applications and public services can help you not only to route traffic to different services, but also filter and apply quotas for cost or SLO related reasons.
-
-
-## Let's give a try
-
-```md
-Create a PostgreSQL database in AWS.
+Create a database in AWS.
 ```
 
 ```md
-I'll help you create a PostgreSQL database in AWS. Let me
+I'll help you create a database in AWS. Let me
   create a todo list to track this task and then provide you
    with the steps.
 ...
@@ -69,13 +31,13 @@ I'll help you create a PostgreSQL database in AWS. Let me
 ```md
 Option 1: Amazon RDS (Recommended)
 
-Amazon RDS for PostgreSQL is a managed service that handles
+Amazon RDS for MySQL is a managed service that handles
 maintenance, backups, and scaling.
 
 Steps:
 1. AWS Console: Go to RDS in AWS Console
 2. Create Database: Click "Create database"
-3. Engine: Select PostgreSQL
+3. Engine: Select MySQL
 4. Template: Choose production, dev/test, or free tier
 5. Settings:
   - DB instance identifier (e.g., my-postgres-db)
@@ -88,15 +50,15 @@ Steps:
 ```md
 Option 2: EC2 Self-Managed
 
-Install PostgreSQL on an EC2 instance for full control.
+Install MySQL on an EC2 instance for full control.
 
 Steps:
 1. Launch EC2 instance (Ubuntu/Amazon Linux)
 2. SSH into instance
-3. Install PostgreSQL:
+3. Install MySQL:
 sudo apt update
 sudo apt install postgresql postgresql-contrib
-4. Configure PostgreSQL
+4. Configure MySQL
 5. Set up security groups for port 5432
 ```
 
@@ -117,6 +79,12 @@ Next, we need to know what can and what cannot be done. Do we run on-prem or do 
 
 Note:
 Then we need to know the patterns. If we have no clue about our naming conventions, our preferred architectures, our deployment strategies, or any of the tribal knowledge that lives in our documentation, wiki pages, code repositories, and Slack conversations, we will surely fail to assemble the correct components.
+
+
+<!-- .slide: data-background="img/idp-problem-policies.jpeg" data-background-size="contain" data-background-color="black" -->
+
+Note:
+Similarly, we need to know company patterns. Do we use a specific region? Can we use latest images?
 
 
 <!-- .slide: data-background="img/idp-problem-context.jpeg" data-background-size="contain" data-background-color="black" -->

@@ -4,23 +4,22 @@ Note:
 AI has no idea which services are actually available in my environment. Sure, it mentioned RDS and EC2, but what if I'm running everything on Kubernetes? What if I have custom operators or Crossplane providers already deployed?
 
 
-## Tools and Agents
-
-![](img/agents-and-tools.png)
+<!-- .slide: data-background="img/idp-solution-capabilities.jpeg" data-background-size="contain" data-background-color="black" -->
 
 
-## But do you want to build all this stuff?
-
-- Each service integration will require to use the MCP protocol
-- If your agent needs to know about all the capabilities/integrations, your agent will be very complex
-- Why not using existing agents?
+<!-- .slide: data-background="img/capabilities-01.png" data-background-size="contain" data-background-color="black" -->
 
 
-## More Specialized Agents
-
-![](img/more-specialized-agents.png)
+<!-- .slide: data-background="img/capabilities-02.png" data-background-size="contain" data-background-color="black" -->
 
 
-## Kagent
+<!-- .slide: data-background="img/capabilities-03.png" data-background-size="contain" data-background-color="black" -->
 
-![](img/kagent.png)
+
+<!-- .slide: data-background="img/capabilities-04.png" data-background-size="contain" data-background-color="black" -->
+
+
+<!-- .slide: data-background="img/capabilities-05.png" data-background-size="contain" data-background-color="black" -->
+
+
+<!-- .slide: data-background="img/capabilities-06.png" data-background-size="contain" data-background-color="black" -->

@@ -16,10 +16,6 @@ git clone https://github.com/vfarcic/dot-ai-demo
 cd dot-ai-demo
 
 git pull
-
-git fetch
-
-git switch components
 ```
 
 
@@ -35,8 +31,7 @@ git switch components
 ```sh
 devbox shell
 
-./dot.nu setup --dot-ai-tag 0.79.0 \
-    --qdrant-run false --qdrant-tag 0.5.0
+./dot.nu setup --dot-ai-tag 0.139.0 --qdrant-run false --qdrant-tag 0.9.0
 
 source .env
 
