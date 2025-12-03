@@ -1,5 +1,10 @@
 # Talks
 
+* It's 3 AM and Your Kubernetes Cluster is Down: Why AI Should Be On-Call Instead of You ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/kubernetes/abstracts/ai-remediation.md))
+
+
+# Talks
+
 * [Your AI is a Toddler with Root Access: Why Kubernetes Policies Are Your Last Line of Defense](idp/policies-ai.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/policies.md))
 * [Using AI as a Dynamic Interface for Internal Developer Platforms](ai/idp.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/idp.md))
 * [The Past, the Present, and the Future of Platform Engineering](idp/history.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/idp/abstracts/history.md))
