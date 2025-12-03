@@ -25,7 +25,7 @@ git pull
 ```sh
 devbox shell
 
-./dot.nu setup --dot-ai-tag 0.139.0 --qdrant-run false --qdrant-tag 0.9.0
+./dot.nu setup --dot-ai-tag 0.149.0 --qdrant-run false --qdrant-tag 0.9.0
 
 source .env
 
