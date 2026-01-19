@@ -17,3 +17,8 @@ devopsparadox.com
 [![DevOps Toolkit YouTube](../img/dot.png)](https://www.youtube.com/c/devopstoolkit)
 
 youtube.com/@DevOpsToolkit
+
+
+[![DevOps AI Toolkit](../img/dot-ai.jpeg)](https://devopstoolkit.ai)
+
+devopstoolkit.ai

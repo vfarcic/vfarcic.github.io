@@ -53,7 +53,7 @@
 
 <figure style="width: 55%; margin-left:100px;float: left;">
     <a href="https://github.com/vfarcic/dot-ai">
-        <img src="../img/dot-ai.png"/>
+        <img src="../img/dot-ai.jpeg"/>
     </a>
 </figure>
 <figure style="width: 20%; margin-right:100px;float: right;">

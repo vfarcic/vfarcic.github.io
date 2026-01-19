@@ -1,5 +1,6 @@
 # Talks
 
+* [Why IDPs Need Kubernetes and Crossplane](crossplane/why-crossplane.html)
 * It's 3 AM and Your Kubernetes Cluster is Down: Why AI Should Be On-Call Instead of You ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/kubernetes/abstracts/ai-remediation.md))
 
 
