@@ -1,5 +1,7 @@
 # Talks
 
+* How To Build Your Own AI Agent: The Complete Architecture for Engineering Teams ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/build-agent.md))
+* kubectl get all Is a Lie: Fixing Kubernetes' Broken Query Story with Vector Databases and Semantic Search ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/kubernetes/abstracts/kubernetes-query.md))
 * [Why IDPs Need Kubernetes and Crossplane](crossplane/why-crossplane.html)
 * It's 3 AM and Your Kubernetes Cluster is Down: Why AI Should Be On-Call Instead of You ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/kubernetes/abstracts/ai-remediation.md))
 

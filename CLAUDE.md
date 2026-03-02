@@ -62,3 +62,9 @@ docker build -t vfarcic/presentations .
 - Demo scripts should include setup, execution, and cleanup phases
 - Abstract files should be concise and conference-ready
 - Images should be placed in topic-specific `img/` directories
+
+## talks.md Rules
+
+- New talks are always added to the **top** of the first `# Talks` section (as the first list item)
+- Each `# Talks` section (page) holds a maximum of **5** talks
+- If the top section already has 5 talks, create a new `# Talks` section above it and add the new talk there
