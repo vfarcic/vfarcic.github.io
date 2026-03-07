@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Using AI as a Dynamic Interface for Internal Developer Platforms</title>
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+        <link rel="stylesheet" href="../dist/theme/moon.css">
+        <link rel="stylesheet" href="../css/theme/logos.css">
+        <link rel="stylesheet" href="../css/theme/dot.css">
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+                <section id="cover"
+                    data-markdown="cover-build-agent.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+                </section>
+                <section id="build-agent-why"
+                    data-markdown="build-agent-why.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+				</section>
+                <section id="build-agent-architecture"
+                    data-markdown="build-agent-architecture.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+				</section>
+                <section id="build-agent-multi"
+                    data-markdown="build-agent-multi.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+				</section>
+                <section id="build-agent-security-observability"
+                    data-markdown="build-agent-security-observability.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+				</section>
+                <section id="the-end"
+                    data-markdown="../docs/the-end.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+                </section>
+                <!-- <section id="cleanup"
+                    data-markdown="console-cleanup.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+                </section> -->
+			</div>
+            <div class="sponsor"><img src="../img/dot-qr.png"></div>
+            <!-- <div class="twitter">@vfarcic</div> -->
+		</div>
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+        <script src="plugin/markdown/markdown.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMarkdown ]
+			}).then(() => {
+				mermaid.initialize({ startOnLoad: false, theme: 'dark' });
+				document.querySelectorAll('code.language-mermaid, code.mermaid').forEach(async (el, i) => {
+					const pre = el.parentElement;
+					const container = document.createElement('div');
+					container.classList.add('mermaid');
+					const { svg } = await mermaid.render(`mermaid-${i}`, el.textContent.trim());
+					container.innerHTML = svg;
+					pre.parentElement.replaceChild(container, pre);
+				});
+			});
+            Reveal.configure({
+                keyboard: {
+                    39: 'next',
+                    37: 'prev',
+                }
+            });
+		</script>
+	</body>
+</html>
