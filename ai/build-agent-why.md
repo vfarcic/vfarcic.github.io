@@ -39,4 +39,4 @@
 ## Your Knowledge
 ## Company Knowledge
 ## Access to Your system
-## Observaility
+## Observability
