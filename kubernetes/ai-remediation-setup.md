@@ -34,6 +34,6 @@ devbox shell
 
 source .env
 
-# kubectl --namespace a-team apply \
-#     --filename examples/deployment-no-pvc.yaml
+kubectl --namespace a-team apply \
+    --filename examples/deployment-no-pvc.yaml
 ```
