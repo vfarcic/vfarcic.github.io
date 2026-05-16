@@ -12,10 +12,6 @@ git clone https://github.com/vfarcic/dot-ai-demo
 cd dot-ai-demo
 
 git pull
-
-git fetch
-
-git switch remediation
 ```
 
 
@@ -27,7 +23,7 @@ git switch remediation
 ```sh
 devbox shell
 
-./dot.nu setup --dot-ai-tag 1.16.2 --qdrant-run false \
+./dot.nu setup --dot-ai-tag 1.19.1 --qdrant-run false \
     --dot-ai-kubernetes-enabled true \
     --kyverno-enabled false --atlas-enabled false \
     --toolhive-enabled false --crossplane-enabled false

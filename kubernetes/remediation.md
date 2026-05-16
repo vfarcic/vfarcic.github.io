@@ -172,48 +172,138 @@ That's pretty damn impressive when you think about it. But you're probably wonde
 
 ## MCP Architecture and Controller Design
 
-TODO: Diagram: diag-01
-
 Note:
 We just saw it in action, but how does this actually work under the hood? Let's break down both the MCP and the controller.
 
-**How does the MCP work?**
+**How does it all work?**
 
-Let's start with detection. (1) A user figures out, through whatever means, that something's wrong and provides information about the problem to their coding agent, like Claude Code, Cursor, or whatever they're using. (2) The coding agent then sends that to the MCP. This is manual detection where the user initiates the process. The alternative, as we just saw, is automated detection through the controller, which we'll get to in a moment.
 
-Next is analysis. The MCP has its own internal agent that works with an LLM to gather information and analyze issues. (3) The MCP agent takes the user's intent and enhances it with additional context. This includes a list of tools the LLM can use to gather more information, and instructions for the LLM to perform a loop until it analyzes the issue and figures out the root cause and recommended remediation. Once that's done, it also performs a dry run to validate the solution.
+<!-- .slide: data-background-image="img/remediation/diag-01-01.png" data-background-size="contain" data-background-color="black" -->
 
-The gathering of data and the dry run happen through a loop. (4) The LLM requests tool execution, (5) the MCP agent executes those tools like `kubectl get`, `kubectl describe`, `kubectl events` against (6) Kubernetes, which returns data. (7) The agent adds the outputs to the context and sends it back to the LLM. This continues looping between steps 4 and 7 until the LLM responds with "I'm done." Importantly, those tools are all read-only. The LLM never requests changes to the Kubernetes cluster. That's a critical security constraint.
+Note:
+Let's start with detection. (1) A user figures out, through whatever means, that something's wrong and provides information about the problem to their coding agent, like Claude Code, Cursor, or whatever they're using.
 
+
+<!-- .slide: data-background-image="img/remediation/diag-01-02.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+(2) The coding agent then sends that to the MCP. This is manual detection where the user initiates the process. The alternative, as we just saw, is automated detection through the controller, which we'll get to in a moment.
+
+Next is analysis. The MCP has its own internal agent that works with an LLM to gather information and analyze issues.
+
+
+<!-- .slide: data-background-image="img/remediation/diag-01-03.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+(3) The MCP agent takes the user's intent and enhances it with additional context. This includes a list of tools the LLM can use to gather more information, and instructions for the LLM to perform a loop until it analyzes the issue and figures out the root cause and recommended remediation. Once that's done, it also performs a dry run to validate the solution.
+
+The gathering of data and the dry run happen through a loop. (4) The LLM requests tool execution
+
+
+<!-- .slide: data-background-image="img/remediation/diag-01-04.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+(5) The MCP agent executes those tools like `kubectl get`, `kubectl describe`, `kubectl events` against (6) Kubernetes, which returns data.
+
+
+<!-- .slide: data-background-image="img/remediation/diag-01-05.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+(7) The agent adds the outputs to the context and sends it back to the LLM. This continues looping between steps 4 and 7 until the LLM responds with "I'm done." Importantly, those tools are all read-only. The LLM never requests changes to the Kubernetes cluster. That's a critical security constraint.
+
+
+<!-- .slide: data-background-image="img/remediation/diag-01-06.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
 (8) Once the LLM finishes the loop, it responds back to the MCP agent with the analysis and suggested remediation. The MCP agent then sends this back to the coding agent, which (9) presents it to the user.
 
 
-## MCP Architecture and Controller Design
-
-TODO: Diagram: diag-02
+<!-- .slide: data-background-image="img/remediation/diag-02-01.png" data-background-size="contain" data-background-color="black" -->
 
 Note:
-Now for remediation. (1) The coding agent presents the analysis and suggested remediation to the user. (2) The user has choices. (3) They can apply the remediation manually by executing `kubectl apply`, making changes to files in Git and letting GitOps sync them, or using whatever other process they prefer. (4) Alternatively, the user can tell the coding agent that the remediation should be done by the MCP.
+Now for remediation. (1) The coding agent presents the analysis and suggested remediation to the user. (2) The user has choices.
 
-When the MCP handles remediation, (5) the MCP applies the suggested commands directly to (6) Kubernetes. This is an important security model. The user reviews the suggested remediation first, then the MCP's code executes it. The LLM and MCP agent never execute remediation themselves. Remember, they only have access to read-only tools. Write operations are always done by the MCP's code, and only after user approval.
 
-Finally, validation. (7-10) If the user delegated remediation to the MCP, once it's done, the MCP performs validation to confirm the remediation worked. This uses essentially the same analysis process we discussed earlier, with the MCP and LLM looping to get data from Kubernetes, except this time the goal isn't to find the root cause. It's to confirm the issue was resolved. (11) Once validation is complete, the MCP sends the validation results back to the coding agent, which (12) presents them to the user.
+<!-- .slide: data-background-image="img/remediation/diag-02-02.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+(3) They can apply the remediation manually by executing `kubectl apply`, making changes to files in Git and letting GitOps sync them, or using whatever other process they prefer. (4) Alternatively, the user can tell the coding agent that the remediation should be done by the MCP.
+
+
+<!-- .slide: data-background-image="img/remediation/diag-02-03.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+When the MCP handles remediation,...
+
+
+<!-- .slide: data-background-image="img/remediation/diag-02-04.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+(5) the MCP applies the suggested commands directly to (6) Kubernetes. This is an important security model. The user reviews the suggested remediation first, then the MCP's code executes it. The LLM and MCP agent never execute remediation themselves. Remember, they only have access to read-only tools. Write operations are always done by the MCP's code, and only after user approval.
+
+
+<!-- .slide: data-background-image="img/remediation/diag-02-05.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+Finally, validation. (7-10) If the user delegated remediation to the MCP, once it's done, the MCP performs validation to confirm the remediation worked. This uses essentially the same analysis process we discussed earlier, with the MCP and LLM looping to get data from Kubernetes, except this time the goal isn't to find the root cause. It's to confirm the issue was resolved.
+
+
+<!-- .slide: data-background-image="img/remediation/diag-02-06.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+(11) Once validation is complete, the MCP sends the validation results back to the coding agent, which (12) presents them to the user.
 
 **How does the controller work?**
 
 
-## MCP Architecture and Controller Design
-
-TODO: Diagram: diag-03
+<!-- .slide: data-background-image="img/remediation/diag-03-01.png" data-background-size="contain" data-background-color="black" -->
 
 Note:
-The controller monitors specific events defined in the RemediationPolicy resource, like the one we saw earlier. (1) When an event matching the filters is fired, (2) the controller sends a request to the MCP server with information about the potential issue, along with the remediation mode, confidence threshold, maximum risk level, and other configuration.
+The controller monitors specific events defined in the RemediationPolicy resource, like the one we saw earlier. (1) When an event matching the filters is fired,...
+
+
+<!-- .slide: data-background-image="img/remediation/diag-03-03.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+(2) the controller sends a request to the MCP server with information about the potential issue, along with the remediation mode, confidence threshold, maximum risk level, and other configuration.
 
 (3) At the same time, if Slack notifications are enabled, a notification is sent indicating that a potential issue was discovered and that analysis is in progress.
 
-(4) The MCP performs analysis. Now, there are two paths depending on the configuration and the MCP's assessment. (5) The **manual remediation path** kicks in when the MCP decides NOT to auto-remediate. This happens for three reasons: one, the confidence is below the threshold; two, the risk is above the threshold; or three, that event type is configured for manual mode. When manual remediation is required, the MCP responds back to the controller with just the analysis and suggested remediation. (6) The controller sends this to Slack, and now (7) it's up to the user to apply the remediation.
 
-(8) The **automatic remediation path** happens when the confidence is high enough, the risk is acceptable, and the event type allows automatic mode. In this case, (9) the MCP applies the remediation and validates it against (10) Kubernetes. (11) When that's done, the MCP responds back to the controller with not just the analysis, but also which remediation commands were executed and the validation results. (12) The controller sends all of this to Slack.
+<!-- .slide: data-background-image="img/remediation/diag-03-04.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+(4) The MCP performs analysis. Now, there are two paths depending on the configuration and the MCP's assessment.
+
+
+<!-- .slide: data-background-image="img/remediation/diag-03-05.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+(5) The **manual remediation path** kicks in when the MCP decides NOT to auto-remediate. This happens for three reasons: one, the confidence is below the threshold; two, the risk is above the threshold; or three, that event type is configured for manual mode. When manual remediation is required, the MCP responds back to the controller with just the analysis and suggested remediation. (6) The controller sends this to Slack,...
+
+
+<!-- .slide: data-background-image="img/remediation/diag-03-06.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+...and now (7) it's up to the user to apply the remediation.
+
+
+<!-- .slide: data-background-image="img/remediation/diag-03-07.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+(8) The **automatic remediation path** happens when the confidence is high enough, the risk is acceptable, and the event type allows automatic mode. In this case, (9) the MCP applies the remediation and validates it against (10) Kubernetes.
+
+
+<!-- .slide: data-background-image="img/remediation/diag-03-08.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+(11) When that's done, the MCP responds back to the controller with not just the analysis, but also which remediation commands were executed and the validation results.
+
+
+<!-- .slide: data-background-image="img/remediation/diag-03-09.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+(12) The controller sends all of this to Slack.
 
 In both cases, you get full visibility through Slack about what was discovered and what actions were taken or recommended.
 
