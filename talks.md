@@ -1,5 +1,10 @@
 # Talks
 
+* [Infrastructure with AI Agents for Dummies](ai/infra-ai-dummies.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/infra-ai-dummies.md))
+
+
+# Talks
+
 * From GPUs to Endpoints: A Crossplane Control Plane for Self-Hosted Inference ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/modelplane.md))
 * [How To Build Your Own AI Agent: The Complete Architecture for Engineering Teams](ai/build-agent.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/build-agent.md))
 * kubectl get all Is a Lie: Fixing Kubernetes' Broken Query Story with Vector Databases and Semantic Search ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/kubernetes/abstracts/kubernetes-query.md))
