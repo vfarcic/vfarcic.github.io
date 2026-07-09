@@ -1,5 +1,6 @@
 # Talks
 
+* I Haven't Read My Code in Months: Test-Driven Development in the Age of Agents ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/tdd-with-ai.md))
 * [Infrastructure with AI Agents for Dummies](ai/infra-ai-dummies.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/infra-ai-dummies.md))
 
 
