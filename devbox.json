@@ -1,0 +1,20 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
+  "packages": [
+    "vals@0.43.7",
+    "path:gcloud#google-cloud-sdk",
+    "jq@1.8.1",
+    "curl@8.17.0"
+  ],
+  "shell": {
+    "init_hook": [
+      "export PATH=\"$HOME/.local/bin:$PATH\"",
+      "eval \"$(vals env -export -f .env.vals.yaml)\" 2>/dev/null || true",
+      "[ -f .env ] && source .env || true"
+    ],
+    "scripts": {
+      "agent": ["claude --continue"],
+      "agent-new": ["claude"]
+    }
+  }
+}

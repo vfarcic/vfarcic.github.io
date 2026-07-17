@@ -1,0 +1,4 @@
+<!-- .slide: data-background="img/agents-on-a-leash/03-06.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+One last thing. Everything so far governs your infrastructure. But your agents depend on something else - a model. And if you're sending your prompts and your data off to somebody else's API, that's the one part of this whole loop you don't control. So we put inference on the same control plane. This is Modelplane - and it's essentially Crossplane compositions. "Serve this model on my GPU fleet" becomes just another declarative resource, sitting right next to your database, going through the exact same Git, the exact same policy, the exact same reconcile. Same leash. Now the whole loop - what the agents do, and the models they run on - lives on infrastructure you own.

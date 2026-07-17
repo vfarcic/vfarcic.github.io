@@ -1,0 +1,4 @@
+<!-- .slide: data-background="img/agents-on-a-leash/03-04.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+So we take that access away - from everyone and everything. Nobody applies to the cluster directly anymore: not the agents, not you. The only way in is to commit to Git, and Argo CD - or Flux - pulls from Git and reconciles the cluster to match. The swarm can't touch production even if it wanted to; there's no door except Git. And now you have a choice. You can require a review on every change - and the reviewer doesn't even have to be human, an AI can review another agent's pull request. Or, if you trust the swarm more, you let it merge to main and apply automatically. Either way you still get the thing that matters: a full audit trail - the complete history of desired state - and "git revert" as your undo button.

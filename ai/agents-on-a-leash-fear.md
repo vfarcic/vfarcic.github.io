@@ -1,0 +1,4 @@
+<!-- .slide: data-background="img/agents-on-a-leash/01-01.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+And that promise is a good one - it's not just hype, it's genuinely what you want. The agent does the work - provisions the clusters, wires up the databases, fixes the pipeline - and you get back to the controller. But here's the catch, and it's the whole reason we get nervous: that agent working for you is non-deterministic. Give it the same task twice and you can get two different answers, and it'll do risky things with total confidence, whether it's right or wrong. Sound familiar? That's you. Give the same task to two engineers, or the same engineer on two different days, and you get two different answers, delivered with the same confidence. The only real difference is that you are so annoyingly slow. You make the occasional mistake; an agent makes a thousand an hour, and it never gets tired.

@@ -1,0 +1,4 @@
+<!-- .slide: data-background="img/agents-on-a-leash/04-01.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+So look where we ended up. That swarm of agents is still doing all the work - still non-deterministic, still tireless, still a thousand actions an hour. Nothing about that changed. What changed is that every single thing they do now runs through a leash you built: desired state instead of commands, Git so nothing reaches production without a trace, policy so the rules hold whether anyone's watching or not - and the same control plane running your models too. And here's the kicker: you didn't buy a new AI platform to get any of this. It's Crossplane, Argo CD, Kyverno. All CNCF. All things you already run. Agents don't need a new platform. They need yours. And that green check on the wall? That's what lets you actually keep the controller in your hands.

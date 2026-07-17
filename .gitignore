@@ -8,6 +8,17 @@ ms-lifecycle
 *.secret
 /secrets
 *.pem
+/.env
 /cluster
 /customers
 /tmp
+# diagram skill: the symlink IS committed (portable across machines when
+# devops-catalog is checked out as a sibling). Only its generated scaffold and
+# dependencies are ignored — the skill's bootstrap regenerates them per machine.
+/node_modules
+/output
+/package.json
+/package-lock.json
+/vite.config.ts
+/tsconfig.json
+/render-animation.js

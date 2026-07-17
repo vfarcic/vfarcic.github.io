@@ -1,0 +1,4 @@
+<!-- .slide: data-background="img/agents-on-a-leash/03-05.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+Now, whether you reviewed every change or let the swarm merge on its own, you want one more layer - one that doesn't depend on anyone catching anything. Policy. Kyverno. This isn't "should we?" - it's "this is never allowed," full stop. It runs automatically on every single change, whether it came from an agent, a pull request, or you at three in the morning. It doesn't get tired, and it can't be talked into it. Whether a bad change got reviewed and missed, or was never reviewed at all, policy stops it - deterministically. Accidents and bad actors, both. This is the leash. And notice what we built it out of: GitOps, policy, a control plane. All things you already had.
