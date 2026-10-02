@@ -1,6 +1,6 @@
 ---
 name: "slides"
-description: "Create a Reveal.js talk in this repo following the established pattern: copy the HTML loader template, build slides ONE AT A TIME with confirmation, prefer image-only slides with everything in speaker notes, render diagrams as image sequences via the `diagram` skill, link the talk in talks.md, and finish with an abstract."
+description: "Create or revise Reveal.js conference talks and presentations in this repository from manuscripts, outlines, or approved abstracts. Use for actual deck creation and slide-by-slide work: reuse HTML templates, build slides ONE AT A TIME with confirmation, prefer image-only slides with speaker notes, and render diagrams via the diagram skill. Update talks.md using shared repository rules. Standalone titles, abstracts, and CFP submissions belong to the abstracts skill."
 ---
 
 # Create Slides (Reveal.js talk)
@@ -13,6 +13,13 @@ Build a presentation the way this repo already does it. Slides are markdown load
 - **slug**: short kebab-case name; drives filenames (`<slug>.html`, `cover-<slug>.md`, `img/<slug>/…`).
 - **topic**: the topic directory the talk belongs in (`ai`, `kubernetes`, `crossplane`, `idp`, …). Talks live one level deep, so asset paths are `../…`.
 - **source**: the outline / bullets / notes the talk is built from. If it's already in the conversation, use it.
+- **approved abstract** (optional): use its title, audience, and takeaways to guide the deck, reading the source for detail. A completed abstract is not a prerequisite for creating slides.
+
+## Workflow and existing work
+
+Read the repository root's `CLAUDE.md` for the shared `talks.md` rules. Check for an existing deck, abstract, and catalog entry; reuse their topic and slug and preserve user edits. For an existing deck, inspect its loader and content and continue at the requested slide rather than recreating the scaffold.
+
+Support either order: build slides when the user asks for a presentation; use the `abstracts` skill when the user asks for an abstract first or redirects the current work to an abstract. Pause slide creation during that review and resume when requested. An abstract-only request belongs to `abstracts` and does not need a deck scaffold.
 
 ## Step 0 — Analyze existing slides FIRST
 
@@ -25,7 +32,7 @@ Templates live in this skill's `templates/` directory. Copy, don't regenerate.
 1. **HTML loader**: copy `templates/talk.html` → `<topic>/<slug>.html`. Replace `{{TITLE}}` with the title and `{{SLUG}}` with the slug. The cover section and `the-end` section are pre-wired; content sections get inserted at the `<!-- CONTENT-SECTIONS -->` marker as you add them.
 2. **Cover**: copy `templates/cover.md` → `<topic>/cover-<slug>.md` and fill in the title lines (headings only — no body text).
 3. **Image dir**: `mkdir -p <topic>/img/<slug>`.
-4. **talks.md entry**: add the talk now so the link exists (see "talks.md rules"). Use the abstract path `<topic>/abstracts/<slug>.md` even though the abstract is written last.
+4. **talks.md entry**: add or update the matching talk using the shared rules in the repository root's `CLAUDE.md`. Link the new loader; include an abstract link only if its file already exists. If an abstract-only entry exists, add the slide link to it in place.
 5. **Pause** and show the user the cover before moving on.
 
 ## Step 2 — Build slides ONE AT A TIME (the core rule)
@@ -70,18 +77,14 @@ For **non-diagram images**:
 - **Generated illustrations**: use the **`image`** skill (Gemini / "Nano Banana" by default). First **discuss with the user what the image should depict and its style, and agree before generating** — don't generate blind. Then write a detailed prompt (16:9, projection-quality, consistent with the deck) and generate into `<topic>/img/<slug>/`. Place it as a full-bleed background slide, then **pause for the user to confirm**; iterate on the prompt and regenerate if needed.
 - **If the user is the subject** of the image, ask them to provide photo(s) of themselves and pass those to the `image` skill as references so their likeness is preserved.
 
-## Step 3 — Abstract (after slides are confirmed done)
+## Step 3 — Finish and synchronize
 
-Write `<topic>/abstracts/<slug>.md` following the pattern of recent abstracts in that topic (read one or two first). Include at least a full abstract and a short abstract; for CNCF/KCD submissions also add "Benefits to the CNCF Ecosystem", "Key takeaways", and "Open Source Projects Used" (see `ai/abstracts/modelplane.md`). Ensure the talks.md entry's `[Abstract]` link points to this file. Pause for the user to review.
+Once the slides are confirmed done, check that the deck delivers the approved abstract's promise, if there is one. Flag any mismatch for review rather than silently changing the proposal. Synchronize approved title changes across the cover, HTML title, abstract heading, and catalog entry while preserving their layout.
 
-## talks.md rules (mirror the repo's CLAUDE.md)
-
-- New talks go to the **top** of the **first** `# Talks` section, as the first list item.
-- Each `# Talks` section holds a maximum of **5** talks. If the top section already has 5, create a **new `# Talks` section above it** and add the talk there.
-- Entry format (talk with slides + abstract):
-  `* [<Title>](<topic>/<slug>.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/<topic>/abstracts/<slug>.md))`
-- If a talk has an abstract but no slides yet, use just the title text (no `.html` link), matching existing entries.
+If the user requested both a deck and an abstract and no abstract exists yet, use the `abstracts` skill now and pause for its review. For a deck-only request, offer an abstract as a next step rather than automatically writing one.
 
 ## Verify
+
+Check that referenced content files and assets exist, slide text and notes use ASCII punctuation, and the matching catalog entry follows `CLAUDE.md`. Run `git diff --check` for file edits.
 
 Optionally serve locally (`docker-compose up`, http://localhost:8080) and open `<topic>/<slug>.html` to confirm slides render, images load, and notes (press `s`) show. Diagram stills should advance like an animation.
