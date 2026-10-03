@@ -62,6 +62,10 @@ docker build -t vfarcic/presentations .
 - Demo scripts should include setup, execution, and cleanup phases
 - Abstract files should be concise and conference-ready
 - Images should be placed in topic-specific `img/` directories
+- Talks based on hands-on source material are hands-on as well, unless the user explicitly requests otherwise. Replace manuscript screenshot/recording cues with live demo instructions and prompts.
+- Use a source manuscript as the backbone of speaker notes, preserving its wording and voice while adapting it to the presentation.
+- Keep prose demo instructions (open, pause, switch, inspect) in speaker notes. Visible demo slides show executable commands, agent prompts, and only essential conceptual headings.
+- Generated illustrations default to photorealistic imagery unless the user requests another visual style.
 
 ## talks.md Rules
 
@@ -82,7 +86,7 @@ These are the shared catalog rules for both the `abstracts` and `slides` skills.
 ## Talk Authoring Skills
 
 - `.claude/skills/abstracts/SKILL.md`: Conference titles, full and short abstracts, takeaways, and submission-specific fields. Supports abstract-only proposals without creating a deck.
-- `.claude/skills/slides/SKILL.md`: Reveal.js presentations, built one slide at a time with approval, using image-first slides and speaker notes.
+- `.claude/skills/slides/SKILL.md`: Reveal.js presentations with manuscript-based speaker notes and hands-on demos. Defaults to slide-by-slide approval; supports full-draft review when requested.
 - `.claude/skills/image/SKILL.md` and `.claude/skills/diagram/SKILL.md`: Visual assets used by presentations.
 
 Abstracts and slides can be created in either order. Follow the user's requested deliverable and review sequence; use an approved abstract to guide a later deck and an existing deck to inform a later abstract.

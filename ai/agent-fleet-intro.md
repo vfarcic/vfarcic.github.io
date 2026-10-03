@@ -1,0 +1,6 @@
+<!-- .slide: data-background="img/agent-fleet/manager-whiteboard-02.png" data-background-size="contain" data-background-color="black" -->
+
+Note:
+Because that's what I am these days. A manager. And a good manager's work comes down to delegating work, resolving conflicts, and removing obstacles so the team can keep going. To do that well, a manager needs a team that can work on its own most of the time, and a way to see what that team is doing when it can't.
+With AI, that team is made of agents. They're already very good at almost everything, and if I did my part, they know how I like to work, what the rules are, and what they should and shouldn't do. That's what AGENTS.md and skills are for. I'll assume those are in place, since that's a whole different topic. What I want to show you is how that team grows. From a single agent I have to babysit, to teams of agents spread across machines I don't even need to be near. And what happens to the manager along the way, because the agents scale much better than I do. The beginning is often the best place to start, so let's go back to where it started.
+**Presenter cue:** Switch to the terminal for the first demo. The repository, agents, review pipeline, and remote hosts are prepared in advance; this is not an installation walkthrough.

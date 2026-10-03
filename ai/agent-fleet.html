@@ -10,6 +10,52 @@
         <link rel="stylesheet" href="../css/theme/logos.css">
         <link rel="stylesheet" href="../css/theme/dot.css">
 		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+        <style>
+            .reveal #cover {
+                top: 0 !important;
+                padding: 0;
+                text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+            }
+            .reveal #cover h2 {
+                font-size: 2.2em;
+                line-height: 1;
+                margin-bottom: 0.05em;
+            }
+            .reveal #cover h3 {
+                font-size: 1.2em;
+                line-height: 1.05;
+                margin-bottom: 0.05em;
+            }
+            .reveal .sponsor {
+                display: flex;
+                gap: 12px;
+                left: 24px;
+                bottom: 16px;
+                z-index: 3;
+            }
+            .reveal .sponsor a {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 5px;
+                padding: 6px;
+                border-radius: 5px;
+                background: rgba(0, 0, 0, 0.7);
+                color: white;
+                font-family: sans-serif;
+                font-size: 14px;
+                line-height: 1.2;
+            }
+            .reveal .sponsor img {
+                display: block;
+                width: 100px;
+                height: 100px;
+                max-width: none;
+                max-height: none;
+                margin: 0;
+                background: white;
+            }
+        </style>
 	</head>
 	<body>
 		<div class="reveal">
@@ -22,6 +68,48 @@
                     data-charset="iso-8859-15">
                 </section>
                 <!-- CONTENT-SECTIONS: the `slides` skill inserts one <section> per content markdown file here, in order -->
+                <section id="intro"
+                    data-markdown="agent-fleet-intro.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+                </section>
+                <section id="trust"
+                    data-markdown="agent-fleet-trust.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+                </section>
+                <section id="dispatch"
+                    data-markdown="agent-fleet-dispatch.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+                </section>
+                <section id="scale"
+                    data-markdown="agent-fleet-scale.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+                </section>
+                <section id="fleet"
+                    data-markdown="agent-fleet-visibility.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+                </section>
+                <section id="bottlenecks"
+                    data-markdown="agent-fleet-bottlenecks.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+                </section>
                 <section id="the-end"
                     data-markdown="../docs/the-end.md"
                     data-separator="^\n\n\n"
@@ -30,7 +118,16 @@
                     data-charset="iso-8859-15">
                 </section>
 			</div>
-            <div class="sponsor"><img src="../img/dot-qr.png"></div>
+            <div class="sponsor">
+                <a href="https://youtube.com/@DevOpsToolkit" target="_blank" rel="noopener noreferrer" aria-label="DevOps Toolkit on YouTube">
+                    <img src="../img/dot-qr.png" alt="QR code for DevOps Toolkit on YouTube">
+                    <span>DevOps Toolkit</span>
+                </a>
+                <a href="https://agent-deck.devopstoolkit.ai" target="_blank" rel="noopener noreferrer" aria-label="Visit Agent Deck">
+                    <img src="../img/qr/agent-deck.svg" alt="QR code for Agent Deck with the Agent Deck logo">
+                    <span>Agent Deck</span>
+                </a>
+            </div>
 		</div>
 		<script src="../dist/reveal.js"></script>
 		<script src="../plugin/notes/notes.js"></script>

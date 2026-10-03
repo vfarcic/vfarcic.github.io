@@ -4,7 +4,9 @@
     "vals@0.43.7",
     "path:gcloud#google-cloud-sdk",
     "jq@1.8.1",
-    "curl@8.17.0"
+    "curl@8.17.0",
+    "qrencode@4.1.1",
+    "imagemagick@7.1.2-27"
   ],
   "shell": {
     "init_hook": [
@@ -14,7 +16,10 @@
     ],
     "scripts": {
       "agent": ["claude --continue"],
-      "agent-new": ["claude"]
+      "agent-new": ["claude"],
+      "slides-browser": [
+        "PLAYWRIGHT_BROWSERS_PATH=\"$PWD/node_modules/.cache/ms-playwright\" npx --yes playwright@1.61.1 install chromium"
+      ]
     }
   }
 }

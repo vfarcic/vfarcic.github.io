@@ -33,6 +33,7 @@ Extract the central audience problem, the narrative progression, concrete eviden
 - Use specific examples and numbers only when supported by the source. Frame personal results as personal results, not general guarantees.
 - Distinguish working capabilities from unresolved problems and future plans. Do not present a planned feature as implemented.
 - Mention tools when they make the approach concrete, without turning the proposal into a product pitch.
+- If the source contains hands-on demonstrations, treat the talk as hands-on unless the user asks otherwise. Carry that format into the proposal using only demonstrations supported by the source; screenshots in a manuscript are often recording cues, not the planned conference format.
 - Do not invent live demos, benchmarks, production deployments, or technologies to make the submission sound stronger.
 - For a title discussion, offer a small number of distinct options with a recommendation. An approved title does not need another approval round before drafting.
 

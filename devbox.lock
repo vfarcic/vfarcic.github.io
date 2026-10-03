@@ -129,6 +129,68 @@
       "last_modified": "2026-07-16T14:07:54Z",
       "resolved": "github:NixOS/nixpkgs/59682e0069f0ed0a452e2179a7f4c1f247027b9e?lastModified=1784210874"
     },
+    "imagemagick@7.1.2-27": {
+      "last_modified": "2026-07-23T21:30:14Z",
+      "resolved": "github:NixOS/nixpkgs/91cc1fdf6831e29b6c98768e721a72241f3d0797#imagemagick",
+      "source": "devbox-search",
+      "version": "7.1.2-27",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/q5fb9w710h66wfd50lvxvzh0w7qimjlz-imagemagick-7.1.2-27",
+              "default": true
+            },
+            {
+              "name": "dev",
+              "path": "/nix/store/nwjmv8wdxwapw8n65kpx1zaal1l7l052-imagemagick-7.1.2-27-dev"
+            },
+            {
+              "name": "doc",
+              "path": "/nix/store/hsd2iahkikz6jc1j75pxvbpps7hpsxwh-imagemagick-7.1.2-27-doc"
+            }
+          ],
+          "store_path": "/nix/store/q5fb9w710h66wfd50lvxvzh0w7qimjlz-imagemagick-7.1.2-27"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/v1s83ahw97c1x648a4va893anxgvr22r-imagemagick-7.1.2-27",
+              "default": true
+            },
+            {
+              "name": "dev",
+              "path": "/nix/store/qlhwgmzjrsi5r7ls3njsh43262sr9sw2-imagemagick-7.1.2-27-dev"
+            },
+            {
+              "name": "doc",
+              "path": "/nix/store/zxnl1m83fkp6c2m7zmdmmz2jd305hspl-imagemagick-7.1.2-27-doc"
+            }
+          ],
+          "store_path": "/nix/store/v1s83ahw97c1x648a4va893anxgvr22r-imagemagick-7.1.2-27"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/clx4xcbrg16dhzyzm2faxjddfk9rz979-imagemagick-7.1.2-27",
+              "default": true
+            },
+            {
+              "name": "dev",
+              "path": "/nix/store/3imck80pky696456qagxxqrkjw6j32nz-imagemagick-7.1.2-27-dev"
+            },
+            {
+              "name": "doc",
+              "path": "/nix/store/2bma4k0958q4s040pcbi2ak6rn1xvllg-imagemagick-7.1.2-27-doc"
+            }
+          ],
+          "store_path": "/nix/store/clx4xcbrg16dhzyzm2faxjddfk9rz979-imagemagick-7.1.2-27"
+        }
+      }
+    },
     "jq@1.8.1": {
       "last_modified": "2026-07-05T19:27:47Z",
       "resolved": "github:NixOS/nixpkgs/f205b5574fd0cb7da5b702a2da51507b7f4fdd1b#jq",
@@ -242,6 +304,106 @@
             }
           ],
           "store_path": "/nix/store/q0pj1dw2nr57y6b4pqljklf0hy20alfj-jq-1.8.1-bin"
+        }
+      }
+    },
+    "qrencode@4.1.1": {
+      "last_modified": "2026-09-29T03:29:29Z",
+      "resolved": "github:NixOS/nixpkgs/b6c8664de9b6cc07fe5666a29f91884ba81197c4#qrencode",
+      "source": "devbox-search",
+      "version": "4.1.1",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "bin",
+              "path": "/nix/store/56dc7x0c1amm8qjh1305wz62ab2kd0r7-qrencode-4.1.1-bin",
+              "default": true
+            },
+            {
+              "name": "man",
+              "path": "/nix/store/riq5kdaydfcaxdg613zkxr9vqd1lm6i1-qrencode-4.1.1-man",
+              "default": true
+            },
+            {
+              "name": "dev",
+              "path": "/nix/store/8z8w8ak4v9cnqra74vn4yz5ji7ngrb40-qrencode-4.1.1-dev"
+            },
+            {
+              "name": "out",
+              "path": "/nix/store/pvfv04mx6z7bnn74l2x9na57apj4mpsc-qrencode-4.1.1"
+            }
+          ],
+          "store_path": "/nix/store/56dc7x0c1amm8qjh1305wz62ab2kd0r7-qrencode-4.1.1-bin"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "bin",
+              "path": "/nix/store/ij69npsfzw9zwm0vmsmycg12nskd5zyp-qrencode-4.1.1-bin",
+              "default": true
+            },
+            {
+              "name": "man",
+              "path": "/nix/store/08f332f1cbx88pq9wm9fbhmrxj4pf7x4-qrencode-4.1.1-man",
+              "default": true
+            },
+            {
+              "name": "dev",
+              "path": "/nix/store/p6xhzpfah7sl4xb5nfld9l2am5pj3nqq-qrencode-4.1.1-dev"
+            },
+            {
+              "name": "out",
+              "path": "/nix/store/222cbsq222qs0f9dx027izxyj3cs60wz-qrencode-4.1.1"
+            }
+          ],
+          "store_path": "/nix/store/ij69npsfzw9zwm0vmsmycg12nskd5zyp-qrencode-4.1.1-bin"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "bin",
+              "path": "/nix/store/irpryqzb46z8nfrzrm8vvaf7cwycajin-qrencode-4.1.1-bin",
+              "default": true
+            },
+            {
+              "name": "man",
+              "path": "/nix/store/isih4g6vmvk5pxfy37nyz03hiwakzflb-qrencode-4.1.1-man",
+              "default": true
+            },
+            {
+              "name": "dev",
+              "path": "/nix/store/anwigvmwwm6g01cy8hhxj76l6f9fqhal-qrencode-4.1.1-dev"
+            },
+            {
+              "name": "out",
+              "path": "/nix/store/0ssjz4x4akh0czk5qdiimbbd65immd2x-qrencode-4.1.1"
+            }
+          ],
+          "store_path": "/nix/store/irpryqzb46z8nfrzrm8vvaf7cwycajin-qrencode-4.1.1-bin"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "bin",
+              "path": "/nix/store/9xr2iac1ds1aq7if1bh9f7xvvjzfpz0r-qrencode-4.1.1-bin",
+              "default": true
+            },
+            {
+              "name": "man",
+              "path": "/nix/store/7csvpqk3baghvsmr8xyr212562q5w4ks-qrencode-4.1.1-man",
+              "default": true
+            },
+            {
+              "name": "dev",
+              "path": "/nix/store/kgk9pc8yqxfrg96622crsm2zxpdhqgx4-qrencode-4.1.1-dev"
+            },
+            {
+              "name": "out",
+              "path": "/nix/store/gckp2y92mdfny4cydahvgghxxm968l1n-qrencode-4.1.1"
+            }
+          ],
+          "store_path": "/nix/store/9xr2iac1ds1aq7if1bh9f7xvvjzfpz0r-qrencode-4.1.1-bin"
         }
       }
     },

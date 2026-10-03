@@ -1,6 +1,6 @@
 # Your Agents Scale. You Don't. From Babysitting One Agent to Managing a Fleet
 
-Running one coding agent is easy. Running forty-five across a laptop, a mini PC, and a cloud server changes your job. You're no longer the person writing the code. You're the manager delegating work, resolving conflicts, and removing obstacles. The agents can produce weeks of work in hours. But can you keep up?
+Running one coding agent is easy. Running a bunch across a laptop, a mini PC, and a cloud server changes your job. You're no longer the person writing the code. You're the manager delegating work, resolving conflicts, and removing obstacles. The agents can produce weeks of work in hours. But can you keep up?
 
 This talk follows the evolution of my own agent fleet, starting with a single agent that needed permission for every command. Better instructions, automated tests, and independent code reviews made it possible to stop supervising every action and start judging outcomes. That opened the door to dispatchers assigning issues to agents in isolated Git worktrees, specialist teams tackling larger changes, and queues keeping the workers busy without overwhelming their machines. When one machine ran out of room, the fleet spread to another.
 
@@ -10,7 +10,7 @@ Attendees will leave with a practical progression for growing beyond a single ag
 
 ## Short Abstract
 
-What changes when one coding agent becomes forty-five across three machines? Your job. This talk follows the evolution from approving every command to delegating work through dispatchers, isolated Git worktrees, specialist teams, and continuously replenished queues. Using the open-source Agent Deck, we'll explore fleet-wide visibility without replacing the agents' native interfaces, then confront the bottlenecks that remain: review capacity, merge conflicts, and coordination between machines. Agents can produce weeks of work in hours. Managing that output is a different problem. Learn what enables each stage of growth, and why your attention becomes the next scaling limit.
+What changes when one coding agent becomes a whole bunch spread across several machines? Your job. This talk follows the evolution from approving every command to delegating work through dispatchers, isolated Git worktrees, specialist teams, and continuously replenished queues. Using the open-source Agent Deck, we'll explore fleet-wide visibility without replacing the agents' native interfaces, then confront the bottlenecks that remain: review capacity, merge conflicts, and coordination between machines. Agents can produce weeks of work in hours. Managing that output is a different problem. Learn what enables each stage of growth, and why your attention becomes the next scaling limit.
 
 ## Key takeaways:
 

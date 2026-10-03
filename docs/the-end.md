@@ -49,15 +49,15 @@
 </figure>
 
 
-## [DevOps AI Toolkit (project)](https://github.com/vfarcic/dot-ai)
+## [Agent Deck](https://agent-deck.devopstoolkit.ai)
 
 <figure style="width: 55%; margin-left:100px;float: left;">
-    <a href="https://github.com/vfarcic/dot-ai">
-        <img src="../img/dot-ai.jpeg"/>
+    <a href="https://agent-deck.devopstoolkit.ai">
+        <img src="../img/agent-deck-logo.svg" alt="Agent Deck" style="width: 60%;"/>
     </a>
 </figure>
 <figure style="width: 20%; margin-right:100px;float: right;">
-    <a href="https://www.youtube.com/c/devopstoolkit">
-        <img src="../img/qr/dot-ai.png"/>
+    <a href="https://agent-deck.devopstoolkit.ai">
+        <img src="../img/qr/agent-deck.svg" alt="QR code for Agent Deck"/>
     </a>
 </figure>

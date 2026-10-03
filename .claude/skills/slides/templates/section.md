@@ -36,3 +36,13 @@ DIAGRAM SEQUENCE (final). Fully built diagram, nodes (1)-(3). This is the still 
 
 Note:
 BULLETS SLIDE — use ONLY when there are genuinely important things the audience must remember. Two to four short bullets, never sentences. Anything explanatory goes in the notes, not on the slide.
+
+
+## Pick an issue
+
+```text
+Pick an issue to work on.
+```
+
+Note:
+DEMO CUE — use a short context title and an executable prompt. Preserve the source narration here. **Presenter cue:** open the dispatcher on the demo machine and identify the repository before typing the prompt. Let its existing skills supply selection and execution. Keep routine prose actions like opening, pausing, or inspecting in notes; explicitly requested copy/paste instructions can appear on the slide.
