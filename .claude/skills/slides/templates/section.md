@@ -45,4 +45,5 @@ Pick an issue to work on.
 ```
 
 Note:
-DEMO CUE — use a short context title and an executable prompt. Preserve the source narration here. **Presenter cue:** open the dispatcher on the demo machine and identify the repository before typing the prompt. Let its existing skills supply selection and execution. Keep routine prose actions like opening, pausing, or inspecting in notes; explicitly requested copy/paste instructions can appear on the slide.
+Use the manuscript's actual spoken narration here, adapted to the command or prompt on the slide.
+*Open the dispatcher on the demo machine and identify the repository before typing the prompt. Let its existing skills supply selection and execution.*

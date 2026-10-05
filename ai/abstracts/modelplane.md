@@ -1,49 +1,42 @@
 # From GPUs to Endpoints: A Crossplane Control Plane for Self-Hosted Inference
 
-Running your own models instead of paying for a SaaS API sounds simple until you actually have to do it. You have a fleet of GPU clusters spread across regions, providers, and hardware generations. Someone has to decide which model lands on which hardware, how capacity is shared, and what happens when a cluster fills up. Application developers, AI product engineers, and ML teams alike just want a single endpoint they can point their app at. The platform team wants to manage the fleet without becoming an on-call inference helpdesk for the rest of the company. The result is usually a pile of bespoke scripts, hand-rolled operators, and a lot of Slack messages asking "who owns this cluster again?"
+Getting a model to answer a request is one thing. Making self-hosted inference a service the rest of your company can rely on is another. GPUs are scarce, expensive, and scattered across clusters, regions, and providers. Every new model becomes a negotiation about where it fits, who has capacity, and which endpoint an application should call. Before long, the platform team is an inference helpdesk, and developers are learning infrastructure they never wanted to manage.
 
-In this session, we'll explore Modelplane, an open source control plane that extends Crossplane to manage AI model inference across a fleet of GPU clusters. The pitch comes down to three things.
+The problem is that two different jobs have been tangled together: providing GPU capacity and consuming it. What if platform teams could manage the fleet without knowing every model, and application and ML teams could deploy models without knowing every cluster? That requires more than automating installation. It requires a control plane that continuously connects what a workload needs to what the fleet can provide, while keeping the service applications consume independent of where its replicas happen to run.
 
-First, **a unified inference endpoint across a heterogeneous fleet.** OpenAI-compatible APIs are already a de facto standard; what's missing is one endpoint that sits in front of many clusters and many hardware classes, with traffic routed to the right replicas automatically through Envoy Gateway. Consumers don't care which cluster their request lands on, and they don't have to.
+This talk builds that idea from the GPU fleet to the application endpoint. We'll explore the boundary between platform ownership and self-service, the difference between placing workloads and routing requests, and why deploying a model is only the beginning. Capacity changes, replicas come and go, and callers should not have to follow those changes around the fleet.
 
-Second, **platform teams as internal service providers.** Platform engineers describe their GPU fleet through `InferenceClusters` and define hardware recipes (GPU type, count, topology) as `InferenceClasses`. They set the rules of the road — what hardware exists, where, in which tier — without becoming the bottleneck for every model deployment.
+Then we'll make it concrete with Modelplane, an open source inference control plane built on Crossplane. Live demos follow the two sides of the platform: publishing GPU capacity, declaring what a model needs, watching it land on compatible hardware, and calling it through an OpenAI-compatible endpoint. We'll use that working path to examine how the platform adapts as the fleet changes, and where its responsibilities end and the serving engine's begin.
 
-Third, **self-service self-hosted inference for anyone who needs it.** Anyone in the org can create a `ModelDeployment` and get back a working endpoint: ML teams, AI product engineers, backend developers building AI features, internal tooling teams, research groups — anyone who wants the model running on the company's infrastructure instead of someone else's. They don't need to know the difference between an H100 and an A100, which cluster has capacity, or how to wire Envoy. Modelplane's scheduler picks where each replica lands based on capacity and topology and composes the resources underneath.
-
-Modelplane doesn't try to reinvent the per-cluster serving layer. On each workload cluster it composes a KServe `LLMInferenceService`, which in turn runs an inference engine like vLLM (and LeaderWorkerSet for multi-node topologies). The fleet, scheduling, and unified endpoint are what Modelplane adds on top.
-
-Through live demos, we'll provision a multi-cluster GPU fleet, deploy a model across it with a few lines of YAML, and watch traffic land on the right hardware automatically. We'll cover the design decisions behind the API, how Crossplane composition makes the architecture extensible, and how Modelplane relates to projects like KServe, vLLM, and Dynamo — composing the per-cluster stack rather than replacing it, and adding the fleet-level layer that nobody else ships today.
+Attendees will leave with an architectural approach to turning GPU infrastructure into a self-service inference platform, plus an honest view of what an early, evolving implementation can do today.
 
 ## Short Abstract
 
-Running your own models instead of paying for a SaaS API sounds simple until you have to do it across a fleet of GPU clusters. Modelplane is an open source control plane built on Crossplane that makes self-hosted inference work like an internal service.
-
-Platform teams describe their GPU fleet and hardware classes once, as `InferenceClusters` and `InferenceClasses`. Anyone who needs self-hosted inference — ML teams, AI product engineers, backend developers, internal tooling teams — creates a `ModelDeployment` and gets back a unified, OpenAI-compatible endpoint. Modelplane handles multi-cluster scheduling, composition, and routing through Envoy Gateway, composing KServe and vLLM per cluster rather than replacing them.
-
-In this session, we'll provision a fleet, deploy models across it live, and show how Crossplane composition makes the whole thing extensible.
+Self-hosted inference becomes a platform problem when every model deployment needs the platform team and every infrastructure change reaches the developers. This talk explores how to separate providing GPU capacity from consuming it, connect workload requirements to a heterogeneous fleet, and keep application endpoints independent of replica placement. We'll make those ideas concrete through live demos with Modelplane, an open source control plane built on Crossplane, following a model from declared requirements to a working OpenAI-compatible request. Leave with an architectural approach to inference as an internal service, grounded in a working implementation and its limits.
 
 ## Benefits to the CNCF Ecosystem
 
-This session demonstrates how existing CNCF projects compose into a coherent answer for one of the most pressing infrastructure problems in the industry today: serving AI models at scale, on infrastructure you own. Crossplane (Graduated) provides the composition and API extension layer, KServe (Incubating) handles per-cluster model serving, Envoy (Graduated) — via Envoy Gateway — handles unified traffic routing, and Kubernetes (Graduated) remains the substrate. Rather than introducing yet another standalone AI platform, Modelplane shows that the cloud-native ecosystem already has the primitives to build a fleet-level inference control plane, if you compose them well.
+The session applies a familiar cloud-native principle to inference: teams declare the outcome they need, and a continuously reconciling platform manages the infrastructure behind it. It shows how platform engineers can extend their existing control-plane expertise to GPU fleets while giving application and ML teams a service they can consume independently.
 
-The talk also reinforces a pattern the CNCF community has long advocated: clear separation between platform teams and the rest of the organization, expressed through declarative APIs. By making this pattern concrete for GPU and inference workloads, the session helps platform engineers extend their existing Crossplane and Kubernetes expertise into AI infrastructure without reaching for proprietary tooling.
+Modelplane provides a concrete example of composing that platform from Crossplane, Kubernetes, Envoy, and OpenTelemetry, alongside inference-specific serving components. The emphasis is on architectural boundaries, reusable platform contracts, and operational visibility, so the lessons apply beyond this particular project. Attendees will understand both how the ecosystem's building blocks fit together and which decisions still belong to the teams operating them.
 
 ## Key takeaways:
 
-* How a unified, OpenAI-compatible endpoint can sit in front of a heterogeneous, multi-cluster GPU fleet, with traffic routed through Envoy Gateway
-* How platform teams use `InferenceCluster` and `InferenceClass` to expose GPU capacity as an internal service without becoming a bottleneck
-* How anyone who needs self-hosted inference — not just ML teams — can self-serve by creating a `ModelDeployment`, without knowing anything about the underlying hardware
-* How Modelplane's scheduler picks which cluster each replica lands on based on capacity and topology, and how Crossplane composition assembles the per-cluster resources
-* Where Modelplane fits next to inference engines (vLLM, Dynamo) and serving frameworks (KServe), and what it deliberately does not try to do
-* Practical patterns for extending Modelplane to new cluster sources, hardware classes, and serving engines
+* Why self-hosted inference becomes a fleet and platform problem beyond the first working model
+* How to separate responsibility for GPU capacity from responsibility for deploying and consuming models
+* Why workload placement and request routing are different problems, and how a stable service connects them
+* How continuous reconciliation lets the platform respond to changes without making callers track the infrastructure
+* Where an inference control plane's responsibilities end, how it builds on serving engines, and what Modelplane demonstrates today
 
 ## Open Source Projects Used
 
 - Modelplane
-- Crossplane (CNCF Graduated)
-- KServe (CNCF Incubating)
-- Envoy Gateway, part of Envoy (CNCF Graduated)
-- Kubernetes (CNCF Graduated)
-- vLLM (community-governed, not CNCF)
-- LeaderWorkerSet (Kubernetes SIG)
-- NVIDIA Dynamo (not CNCF)
+- Crossplane
+- Kubernetes
+- Envoy Gateway
+- Envoy AI Gateway
+- OpenTelemetry
+- vLLM
+- llm-d
+- LeaderWorkerSet
+- NVIDIA Dynamo, including Grove, KAI Scheduler, and ModelExpress

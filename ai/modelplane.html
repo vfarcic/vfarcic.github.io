@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>From GPUs to Endpoints: A Crossplane Control Plane for Self-Hosted Inference</title>
+		<link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+        <link rel="stylesheet" href="../dist/theme/moon.css">
+        <link rel="stylesheet" href="../css/theme/logos.css">
+        <link rel="stylesheet" href="../css/theme/dot.css">
+		<link rel="stylesheet" href="../plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+                <section id="cover"
+                    data-markdown="cover-modelplane.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+                </section>
+                <section id="preparation"
+                    data-markdown="modelplane-setup.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+                </section>
+                <!-- CONTENT-SECTIONS: the `slides` skill inserts one <section> per content markdown file here, in order -->
+                <section id="demo-section"
+                    data-markdown="modelplane-demo.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+                </section>
+                <section id="outro"
+                    data-markdown="modelplane-outro.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+                </section>
+                <section id="the-end"
+                    data-markdown="../docs/the-end.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+                </section>
+                <section id="cleanup"
+                    data-markdown="modelplane-cleanup.md"
+                    data-separator="^\n\n\n"
+                    data-separator-vertical="^\n\n"
+                    data-separator-notes="^Note:"
+                    data-charset="iso-8859-15">
+                </section>
+			</div>
+            <div class="sponsor"><img src="../img/dot-qr.png"></div>
+		</div>
+		<script src="../dist/reveal.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+		<script src="../plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+            Reveal.configure({
+                keyboard: {
+                    39: 'next',
+                    37: 'prev',
+                }
+            });
+		</script>
+	</body>
+</html>

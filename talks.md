@@ -1,5 +1,10 @@
 # Talks
 
+* [From GPUs to Endpoints: A Crossplane Control Plane for Self-Hosted Inference](ai/modelplane.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/modelplane.md))
+
+
+# Talks
+
 * [Your Agents Scale. You Don't. From Babysitting One Agent to Managing a Fleet](ai/agent-fleet.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/agent-fleet.md))
 * LLM Fits, But It Still Can't Serve More Then Four People: The VRAM Math Behind Self-Hosted Inference ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/inference-deep-dive.md))
 * [A Thousand Mistakes an Hour: Keeping Agents on a Leash with GitOps, Policy, and Crossplane](ai/agents-on-a-leash.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/agents-on-a-leash.md))
@@ -9,7 +14,6 @@
 
 # Talks
 
-* From GPUs to Endpoints: A Crossplane Control Plane for Self-Hosted Inference ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/modelplane.md))
 * [How To Build Your Own AI Agent: The Complete Architecture for Engineering Teams](ai/build-agent.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/build-agent.md))
 * kubectl get all Is a Lie: Fixing Kubernetes' Broken Query Story with Vector Databases and Semantic Search ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/kubernetes/abstracts/kubernetes-query.md))
 * [Why IDPs Need Kubernetes and Crossplane](crossplane/why-crossplane.html)
