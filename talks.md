@@ -1,5 +1,6 @@
 # Talks
 
+* Your Agents Scale. Your Laptop Doesn't. Running an Agent Fleet on Kubernetes ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/agent-fleet-kubernetes.md))
 * [From GPUs to Endpoints: A Crossplane Control Plane for Self-Hosted Inference](ai/modelplane.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/modelplane.md))
 
 
