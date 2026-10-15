@@ -17,9 +17,8 @@ Set `DEMO_REPO` in the laptop terminal used for the preparation commands to the 
 | `$DEMO_REPO` | GitHub `owner/repository` with the demonstrated issue-to-PR pipeline |
 | `mini-pc` | Registered remote name for the dedicated office machine |
 | `inmotion` | Registered remote name for the cloud machine |
-| `<single-issue>` | Small reproducible bug for the manual-to-auto agent |
 
-The mini PC dispatcher chooses its own issue, PRD, and further issues through the existing skills. Ensure the repository has eligible work and that the selection and execution skills are available. Its queue prompt picks 20 issues with concurrency 3. The InMotion dispatcher uses the copied handoff prompt with concurrency 6; rehearse each cap on its host. Before submitting the handoff, compare its issue list with the mini PC's active work so the assignments do not overlap. Narrate the scale in relative terms rather than quoting fixed headcounts; the displayed numbers set the demo's batch size and concurrency.
+The manual-to-auto agent on the laptop picks its own issue, so keep at least one small, reproducible bug open and unassigned; nothing reserves it, so rehearse close to the talk. The mini PC dispatcher chooses its own issue, PRD, and further issues through the existing skills. Ensure the repository has eligible work and that the selection and execution skills are available. Its queue prompt picks 20 issues with concurrency 3. The InMotion dispatcher uses the copied handoff prompt with concurrency 6; rehearse each cap on its host. Before submitting the handoff, compare its issue list with the mini PC's active work so the assignments do not overlap. Narrate the scale in relative terms rather than quoting fixed headcounts; the displayed numbers set the demo's batch size and concurrency.
 
 At the end of the mini PC segment, ask that dispatcher to pick another 20 issues without dispatching them and return a prompt for a different deck. Copy its output for the next environment; this handoff is manual, while the already-dispatched mini PC work continues.
 
@@ -47,11 +46,11 @@ Keep these real, inspectable checkpoints open or easy to reach:
 
 1. A manual-mode session whose first useful command asks for permission. Existing allow rules can suppress the request; rehearse the actual installed permission controls.
 2. An auto-mode session showing the reproduction skill and isolated worktree, in case live setup is slow.
-3. A completed agent session whose output includes the PR URL, with the demonstrated platform tests, security checks, review findings, fixes, and resolved threads. Copy that URL directly into the browser during the trust demo. If the PR does not have Greptile, Qodo, and repeated review rounds, adjust those specific notes.
+3. [PR #1702](https://github.com/vfarcic/dot-agent-deck/pull/1702), linked from the trust slide instead of waiting for the live agent's PR. It closes an issue and shows the Linux, macOS, and Windows builds, security checks, Greptile and four Qodo review rounds, the agent's fixes, and resolved threads. If you replace it, pick a PR with the same pipeline or adjust the narration.
 4. An earlier dispatcher with completed units and their PRs, including a report showing the delay before the next assignment.
 5. A queue dispatcher whose transcript shows completion, PR inspection, and the next unit starting. This demonstrates slot refill without waiting for a long task.
 6. The laptop agent's completed setup of the cloud host. Inspect its actions and result rather than provisioning a new server during the talk.
-7. A PR with the approval-agent GitHub Actions run and all required checks passing.
+7. The approval agent on [PR #1702](https://github.com/vfarcic/dot-agent-deck/pull/1702), reopened from the scale slide. It requested changes once before approving, with all required checks passing.
 8. A remote agent genuinely waiting for an answer, and a different completed agent waiting for review. These should be distinguishable in the desktop app.
 
 Use the fleet's current status labels and describe its scale in relative terms: a bunch of agents, several machines, some working, and others waiting. Do not tie the narration to a snapshot's exact totals. Distinguish completed work from an agent blocked on a question.
@@ -62,15 +61,15 @@ Keep the native Claude Code terminal available for the `/help` demo and a famili
 
 | Section | Execute live | Inspect earlier work when necessary |
 |---|---|---|
-| Trust | Start the reserved issue, approve a command, switch to the configured auto mode, and open the PR URL from the agent's output | Reproduction/worktree milestone and completed validation PR |
+| Trust | Let the agent pick an issue and create its worktree, approve a command, switch to the configured auto mode, and open [PR #1702](https://github.com/vfarcic/dot-agent-deck/pull/1702) | Reproduction/worktree milestone |
 | Dispatch | Let the dispatcher pick an issue and a PRD; detach and reconnect; start its capped batch; request an undispatched batch and copyable prompt for another deck | Completed batch, idle interval, and refill transcript |
-| Scale | Connect to the prepared cloud host; paste the handoff prompt with concurrency 6; open PR URLs from agent output | Completed host setup, earlier PR list, approval-agent run |
+| Scale | Connect to the prepared cloud host; paste the handoff prompt with concurrency 6; open the PR list and [PR #1702](https://github.com/vfarcic/dot-agent-deck/pull/1702) again | Completed host setup |
 | Visibility | Switch terminal tabs, open Desktop, distinguish completed work from requests for input, answer a remote question, use `/help` | Existing fleet sessions are the demonstration itself |
 | Bottlenecks | Spoken wrap-up on the single illustrated closing slide | Recap the earlier demo, integration bottlenecks, and manual cross-machine handoff |
 
 Commands are executed in a shell on the named machine. Fenced `text` blocks are typed into the indicated agent. The detach key sequence controls Agent Deck and is not an agent prompt. `gh` commands can run on the laptop with `$DEMO_REPO` set. Keep the prompts short: the installed skills already encode selection, isolated worktrees, specialist teams, PR checks, and queue replenishment.
 
-Prose actions such as opening a session, pausing at a permission request, switching windows, and inspecting a result are in the speaker notes with a bold **Presenter cue:** label. Every command or prompt slide has a short context title. The handoff slides also explicitly show what to copy from the mini PC dispatcher and where to paste it on InMotion, alongside the requested detach key sequence.
+Demo actions such as opening a session, switching modes or windows, and inspecting a result are on the slides as short `>` lines, so the speaker notes carry only the narration. Fallbacks and rehearsal advice live in this guide. Every command or prompt slide has a short context title. The handoff slides also explicitly show what to copy from the mini PC dispatcher and where to paste it on InMotion, alongside the requested detach key sequence.
 
 The closing section combines the recap, remaining bottlenecks, coordination gap, and Agent Deck invitation into one image-only slide. Its monitor contains the real `site/static/img/orchestration-desktop-home.png` from the Agent Deck repository, showing a larger fleet, perspective-composited into a generated photograph. Use it as the closing illustration rather than another product walkthrough, and avoid narrating its screenshot counts as live results.
 

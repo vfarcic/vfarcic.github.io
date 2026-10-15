@@ -64,7 +64,7 @@ docker build -t vfarcic/presentations .
 - Images should be placed in topic-specific `img/` directories
 - Talks based on hands-on source material are hands-on as well, unless the user explicitly requests otherwise. Replace manuscript screenshot/recording cues with live demo instructions and prompts.
 - Use a source manuscript as the backbone of speaker notes, preserving its wording and voice while adapting it to the presentation.
-- Keep prose demo instructions (open, pause, switch, inspect) in speaker notes. Visible demo slides show executable commands, agent prompts, and only essential conceptual headings.
+- Demo slides are self-evident: they show executable commands, agent prompts, and short `>` lines for the actions in between (open, switch, approve, inspect), with links to anything to open. Speaker notes carry the narration; add a single `<br>**Presenter cue:**` only for what the slide can't show. Don't wait on stage for slow results such as a new PR; link an existing one from the slide instead.
 - Generated illustrations default to photorealistic imagery unless the user requests another visual style.
 
 ## talks.md Rules
