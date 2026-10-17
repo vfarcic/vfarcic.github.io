@@ -1,5 +1,7 @@
 # Talks
 
+* [Everything You Wanted to Know About Inference But Were Afraid to Ask](ai/inference-concepts.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/inference-concepts.md))
+* [Choose Your Own Adventure: Inference](ai/inference-vote.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/inference-vote.md))
 * Your Agents Scale. Your Laptop Doesn't. Running an Agent Fleet on Kubernetes ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/agent-fleet-kubernetes.md))
 * [From GPUs to Endpoints: A Crossplane Control Plane for Self-Hosted Inference](ai/modelplane.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/modelplane.md))
 
@@ -7,7 +9,6 @@
 # Talks
 
 * [Your Agents Scale. You Don't. From Babysitting One Agent to Managing a Fleet](ai/agent-fleet.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/agent-fleet.md))
-* LLM Fits, But It Still Can't Serve More Then Four People: The VRAM Math Behind Self-Hosted Inference ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/inference-deep-dive.md))
 * [A Thousand Mistakes an Hour: Keeping Agents on a Leash with GitOps, Policy, and Crossplane](ai/agents-on-a-leash.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/agents-on-a-leash.md))
 * I Haven't Read My Code in Months: Test-Driven Development in the Age of Agents ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/tdd-with-ai.md))
 * [Infrastructure with AI Agents for Dummies](ai/infra-ai-dummies.html) ([Abstract](https://github.com/vfarcic/vfarcic.github.io/blob/master/ai/abstracts/infra-ai-dummies.md))

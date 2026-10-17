@@ -14,19 +14,19 @@ IMAGE SLIDE — the whole slide is one full-bleed image and nothing else. Everyt
 <!-- .slide: data-background="img/{{SLUG}}/02-01.png" data-background-size="contain" data-background-color="black" -->
 
 Note:
-DIAGRAM SEQUENCE (beat 1). These are stills from the `diagram` skill (mode=stills). One still per build beat, shown as consecutive slides so advancing = animation. This first still shows node (1). Refer to nodes by the numbers baked into the still.
+DIAGRAM SEQUENCE (beat 1). These are stills from the `diagram` skill (mode=stills). One still per build beat, shown as consecutive slides so advancing = animation. This first still shows the first beat. No numbers are drawn on the stills, so name elements by their captions.
 
 
 <!-- .slide: data-background="img/{{SLUG}}/02-02.png" data-background-size="contain" data-background-color="black" -->
 
 Note:
-DIAGRAM SEQUENCE (beat 2). Same diagram, now with node (2) added. Keep the notes for each beat to what changed.
+DIAGRAM SEQUENCE (beat 2). Same diagram, now with the second beat added. Keep the notes for each beat to what changed.
 
 
 <!-- .slide: data-background="img/{{SLUG}}/02-03.png" data-background-size="contain" data-background-color="black" -->
 
 Note:
-DIAGRAM SEQUENCE (final). Fully built diagram, nodes (1)-(3). This is the still you'd reuse elsewhere.
+DIAGRAM SEQUENCE (final). Fully built diagram, every beat shown. This is the still you'd reuse elsewhere.
 
 
 ## The one thing to remember

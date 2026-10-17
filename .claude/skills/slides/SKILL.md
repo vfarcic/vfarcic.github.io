@@ -94,15 +94,22 @@ Use the repository's compact, executable setup format, even when the presenter r
 - **Do not mention talk duration** (e.g. "in the next fifteen minutes") — the same deck may be given at different lengths.
 - **Default to no text on the slide.** Prefer image + notes.
 - **Speaker notes carry the talk.** For a manuscript-based talk, use the manuscript's prose as the backbone: preserve wording, voice, and order wherever possible. Split it into slide-sized beats; remove video production cues and adapt only transitions, medium-specific references, and claims that depend on the live state. Do not rewrite it into a new script by default. Notes should contain the actual narration, not merely instructions to explain a topic. Demo actions go on the slide; use a presenter cue block only for what the slide can't show.
-- Group slides into content `.md` files by section (`<slug>-<section>.md`). When you start a new section file, add its `<section data-markdown="<slug>-<section>.md" …>` block at the `<!-- CONTENT-SECTIONS -->` marker in the HTML (copy the attribute set from the cover section). Register the section file the first time you write to it.
-- Separators inside a `.md`: two blank lines (`\n\n\n`) between horizontal slides; one blank line for vertical; `Note:` begins the notes for the current slide.
+- Group slides into content `.md` files by section (`<slug>-<section>.md`). When you start a new section file, add its `<section id="<section>" data-markdown="<slug>-<section>.md" …>` block at the `<!-- CONTENT-SECTIONS -->` marker in the HTML. **Copy the cover section's full attribute set** (`data-separator`, `data-separator-vertical`, `data-separator-notes`, `data-charset`). With only `data-separator-notes`, a multi-slide file renders as ONE slide, with every image, bullet and note piled on top of each other. Register the section file the first time you write to it.
+- Separators inside a `.md` (with those attributes): **two** blank lines start the next vertical slide, which is the normal step within a section. **Three** blank lines start a new horizontal column. One blank line stays inside the slide (e.g. before `Note:`). `Note:` begins the notes for the current slide.
 
 ### Diagrams (image sequences via the `diagram` skill)
-When a slide needs a diagram, invoke the **`diagram`** skill with:
-- **mode**: `stills` (pass explicitly so it doesn't ask).
-- **mermaid**: describe the diagram in Mermaid with numbered flow `(1)`,`(2)`,… — this is internal notation only; Mermaid never appears on a slide.
-- **beats**: one still per build step (cumulative state), so the sequence animates as slides advance.
-- **out**: `<topic>/img/<slug>/` — name the stills `NN-01.png`, `NN-02.png`, … for section `NN`.
+When a slide needs a diagram, invoke the **`diagram`** skill (HyperFrames: a data-only `window.DIAGRAM` config, a shared engine, a layout lint). It is a symlink into `../devops-catalog`, so always follow its current SKILL.md. Pass it:
+- **mode**: `stills` (pass explicitly so it doesn't ask). Background `#000000`, matching the slides' `data-background-color="black"`.
+- **mermaid**: describe the diagram in Mermaid with numbered flow `(1)`,`(2)`,… — internal notation only. Each number becomes one entry in `beats`; **no numbers and no title are drawn**, so neither Mermaid nor `(1)` markers ever appear on a slide.
+- **beats**: capture **every** beat, not the default final frame only, so the sequence animates as slides advance.
+- **out**: `<topic>/img/<slug>/`.
+
+Running it from this repo (differences from devops-catalog):
+- Put the project in `tmp/hyperframes/<slug>-NN/` (`/tmp` is gitignored here). Keep it after rendering so corrections are a config edit plus a re-render.
+- `lint.mjs` imports `node_modules/playwright` from the **current directory**, and this repo has none. Install `playwright` in the scratchpad and run the lint from there with an absolute project path. If Playwright's own Chromium isn't downloaded (that download can hang for many minutes; don't wait on it), use a scratch copy of `lint.mjs` with `chromium.launch({ channel: "chrome" })` to drive the installed Chrome.
+- Snapshot the beat timestamps the lint prints: `npx -y hyperframes@0.8.150 snapshot --at <t1>,<t2>,... --no-end --describe false -o stills`. The `[StaticGuard] ... zero duration` warning it prints is harmless for snapshots.
+- Rename `stills/frame-NN-at-<t>s.png` to `<topic>/img/<slug>/NN-01.png`, `NN-02.png`, … for section `NN`. Don't copy the contact sheet.
+- Look at the final still before using it; the lint checks geometry, not meaning.
 
 Then add one **image-only slide per still**, in order, each with a `Note:` describing what that beat adds. Follow the selected review mode. Describe nodes by their visible labels; the Mermaid numbers indicate reveal order and are not rendered on the stills.
 
