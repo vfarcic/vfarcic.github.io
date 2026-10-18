@@ -43,7 +43,7 @@ source .env
 ./dot.nu measure
 ```
 
-> It deploys each of the eight configurations in turn and writes how long each took to `timings.md`. The slowest one is how long the audience may wait. Pick `--optimized` for the real setup from the results.
+> It deploys each of the eight configurations in turn and writes how long each took to `timings.md`. The slowest one is how long the audience may wait. The default `--optimized`, B, A, A, came out best in rehearsal.
 
 
 ## Right Before the Talk
