@@ -28,6 +28,9 @@ export DD_API_KEY=[...]
 source .env
 ```
 
+> Replace `google` with `aws` to run on AWS. Setup asks for the AWS keys unless `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` are set.
+
+
 > The voting app is served at `https://<load balancer IP>.nip.io`, with a Let's Encrypt certificate, so there is no DNS to set.
 
 
