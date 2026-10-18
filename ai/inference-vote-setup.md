@@ -30,11 +30,13 @@ source .env
 
 > Replace `google` with `aws` to run on AWS. Setup asks for the AWS keys unless `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` are set.
 
+> Start the shell with `USE_VALS=1 devbox shell` instead to load the Datadog and AWS keys from Google Cloud Secret Manager, as listed in `.env.vals.yaml`.
+
 
 > The voting app is served at `https://<load balancer IP>.nip.io`, with a Let's Encrypt certificate, so there is no DNS to set.
 
 
-> If the GPU nodes stay stuck provisioning, the zone is out of GPUs. Destroy and set up again with `--zone us-central1-b` or `--zone us-central1-c`.
+> GPUs run out one zone at a time, so setup reserves them in the first zone that has them, and the cluster waits for nothing. Add `--zone` to pick one yourself.
 
 
 ## Rehearsal Only
@@ -67,3 +69,6 @@ echo $PRESENTER_TOKEN
 
 
 > **Next** (or the right arrow, or a clicker) opens a question, closes it and opens the next, and after the third applies the result. Once it is deploying, **Next** starts the race, whether or not the audience's deployment serves yet. **Reset** needs two clicks.
+
+
+> During the race, **Next** shows the results so far, explained by the optimized model, and refreshes them when pressed again. The tests keep running, and the results also come on their own when they finish, after 12 minutes.
