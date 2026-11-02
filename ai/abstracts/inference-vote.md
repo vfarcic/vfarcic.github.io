@@ -27,7 +27,7 @@ It also shows CNCF projects composing into a complete inference stack: Kubernete
 ## Key takeaways:
 
 * Why the KV cache, not the size of the model, decides how many people a GPU can serve, and why quantization is mostly a way to buy room for it
-* What precision you give up with FP8 weights and an FP8 KV cache, and where it shows up
+* What precision you give up with FP8 weights, and where it shows up
 * The difference between splitting one engine across GPUs (tensor parallelism) and running more copies, and when each one wins
 * How speculative decoding speeds up answers, and why it can stop paying off under load
 * How Kubernetes routes inference traffic with the Gateway API Inference Extension, and why model-aware routing differs from a plain load balancer
