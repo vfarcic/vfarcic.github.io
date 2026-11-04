@@ -1,8 +1,4 @@
-## Prefix Caching
-
-* Keep the work already done on the opening tokens
-* Skip ahead to the part that's genuinely new
-* Matters: if you're running agents - every request
+<!-- .slide: data-background="img/inference-concepts/concept-prefix-caching.png" data-background-size="cover" data-background-color="black" -->
 
 Note:
 Before a model can answer anything, it has to read the question. All of it. And the question is usually a great deal bigger than whatever the person actually typed. There's a system prompt. There are tool definitions. In a chat, there's the entire conversation so far, resent from the beginning on every single turn. When does it matter? The moment your requests have something in common at the front. Which, if you're building anything agentic, is every request you will ever send.

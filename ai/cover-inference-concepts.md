@@ -1,8 +1,4 @@
-## Everything You Wanted
-### to Know About
-## Inference
-### But Were Afraid
-## to Ask
+<!-- .slide: data-background="img/inference-concepts/cover-03.png" data-background-size="cover" data-background-color="black" -->
 
 Note:
-Continuous batching. Paged attention. Prefix caching. Speculative decoding. Prefill-decode disaggregation. If you've been anywhere near a conversation about running your own models lately, you've heard every one of those. Probably in the same sentence. Probably from somebody saying them very quickly. And there's a decent chance you nodded. So this is everything you wanted to know about inference but were afraid to ask. We're going through the whole machine in one pass. What an engine actually is, what it's holding on that GPU, and every bit of jargon stacked on top of it. Twelve ideas, give or take. And one thing to listen for as we go: these ideas don't all arrive at once. Some bite the moment you deploy anything at all. Some wait until fifty people are talking to it. Some you may genuinely never need.
+Welcome. Today is a lesson I should have gotten a long time ago and you probably should too. The one where somebody finally sits you down and explains how it actually works. Where models come from, what happens on that GPU, and why everyone around you seems to know words you only pretend to. No questions are too embarrassing. Let's start with the ones you've been nodding along to.

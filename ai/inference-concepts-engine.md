@@ -1,8 +1,4 @@
-## Inference Engine
-
-* Between a model on disk and whoever is asking
-* Load, remember, schedule, compute, serve
-* Matters: the moment you deploy anything
+<!-- .slide: data-background="img/inference-concepts/concept-engine.png" data-background-size="cover" data-background-color="black" -->
 
 Note:
 You've used one, whether or not you've ever run one. If you've started Ollama on your laptop, that was an engine. If you've deployed vLLM, same. And if you've never touched either, every request you've ever sent to Anthropic or OpenAI still landed on an engine at the far end. Somebody is running it. It just isn't you.

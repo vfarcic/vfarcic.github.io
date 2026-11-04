@@ -1,8 +1,4 @@
-## Sharding
-
-* One model split across several GPUs
-* Tensor parallelism or pipeline parallelism
-* Matters: when the model won't fit
+<!-- .slide: data-background="img/inference-concepts/concept-sharding.png" data-background-size="cover" data-background-color="black" -->
 
 Note:
 Two more, and then we're done. The first is what happens when the model doesn't fit on one card at all. We've been talking about 8 billion parameters on a 23 gigabyte GPU. The models people actually want are a great deal larger than that - large enough to need a rack, not a card. When does it matter? When your model won't fit, which is something you work out before you deploy rather than after.
@@ -43,11 +39,7 @@ Note:
 In vLLM, tensor parallelism is one argument, and it has to match the number of GPUs you ask Kubernetes for. Four cards, one model, one engine.
 
 
-## Autoscaling
-
-* Scale on queue depth and KV cache usage, not CPU
-* A new GPU node starts empty: the cold-start wall
-* Matters: the first time you look at a GPU bill
+<!-- .slide: data-background="img/inference-concepts/concept-autoscaling.png" data-background-size="cover" data-background-color="black" -->
 
 Note:
 The second is that your traffic isn't constant. Nobody's is. And a GPU is far too expensive to leave sitting idle all night on the off chance.
@@ -99,11 +91,7 @@ Note:
 This is KEDA scaling a vLLM Deployment. The interesting part is the query. Not CPU. The number of requests vLLM itself says are waiting in its queue. When that goes past five, add a replica.
 
 
-## Disaggregation
-
-* Prefill and decode on different machines
-* Each matched to what its phase needs
-* Matters: possibly never
+<!-- .slide: data-background="img/inference-concepts/concept-disaggregation.png" data-background-size="cover" data-background-color="black" -->
 
 Note:
 One last word to leave you with: disaggregation. It's the most interesting idea in inference at the moment, and it needs just about everything in this talk to make sense.
@@ -124,4 +112,4 @@ Writing the answer is limited by memory bandwidth, so run that on different mach
 <!-- .slide: data-background="img/inference-concepts/09-10.png" data-background-size="contain" data-background-color="black" -->
 
 Note:
-Each phase gets hardware matched to what it actually needs, and neither one is stuck waiting behind the other. It's also a lot of moving parts, which is why it lives at the top of most people's list of things they may never need.
+Each phase gets hardware matched to what it actually needs, and neither one is stuck waiting behind the other. It's also a lot of moving parts, so it's not where you start. But at scale it's not theoretical. With large models and long, shared prompts, prefill becomes the bottleneck, and splitting it from decode onto two sets of machines, one tuned for compute and one for memory, is a measured, proven win. Teams running models like GLM 5.3 at scale are doing exactly that today.

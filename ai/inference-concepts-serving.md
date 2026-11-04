@@ -1,8 +1,4 @@
-## Continuous Batching
-
-* Many requests in the same pass
-* A finished request leaves, a waiting one takes its seat
-* Matters: at your second concurrent user
+<!-- .slide: data-background="img/inference-concepts/concept-batching-03.png" data-background-size="cover" data-background-color="black" -->
 
 Note:
 A GPU is very good at doing many things at once, and fairly ordinary at doing one thing quickly. So the way to get value out of one is to work on several requests in the same pass. That's batching, and it comes in two flavours that behave nothing alike. When does it start to matter? At your second concurrent user. Literally the second one.
@@ -26,11 +22,7 @@ Note:
 But a request that finishes leaves straight away, and a waiting one takes its place. The batch turns over constantly, no seat sits empty, and nobody is waiting on a stranger's essay. That's the difference between a queue that drains and a queue that only grows.
 
 
-## Paging
-
-* KV cache handed out in small, fixed-size blocks
-* No more reserving the maximum per request
-* Matters: as soon as requests vary in length
+<!-- .slide: data-background="img/inference-concepts/concept-paging-02.png" data-background-size="cover" data-background-color="black" -->
 
 Note:
 The other half of serving many people is fitting them. Every conversation needs room in that KV cache, and you don't know up front how much. When does this one matter? As soon as requests vary much in length, which in practice means immediately.

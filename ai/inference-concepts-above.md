@@ -1,8 +1,4 @@
-## Control Plane
-
-* Decides what runs where, and keeps it running
-* Deploys, updates, and replaces engines
-* Matters: at your second model or replica
+<!-- .slide: data-background="img/inference-concepts/concept-control-plane-03.png" data-background-size="cover" data-background-color="black" -->
 
 Note:
 Everything so far has been inside one engine, serving one model, on one GPU. Which is a perfectly fine place to be, right up until it isn't. When do the next two start to matter? Later than most of this talk, and then all at once. One model and one replica, and you need neither of them. The moment there's a second of anything, you need both.
@@ -40,11 +36,7 @@ Note:
 This is KServe, one of several. You stop describing containers and arguments, and start describing a model: what it is, where it comes from, what it needs. The control plane picks the engine, wires up the rest, and keeps it running.
 
 
-## Gateway
-
-* Routes each request across models and replicas
-* Round-robin is wrong for language models
-* Matters: at your second replica
+<!-- .slide: data-background="img/inference-concepts/concept-gateway.png" data-background-size="cover" data-background-color="black" -->
 
 Note:
 And once more than one engine is running, something has to decide which of them any given request goes to. That's a gateway.

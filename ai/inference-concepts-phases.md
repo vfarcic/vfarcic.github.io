@@ -1,8 +1,4 @@
-## Prefill And Decode
-
-* Prefill: read the whole input at once - limited by compute
-* Decode: one token at a time - limited by memory bandwidth
-* Matters: as soon as inputs get long or vary in size
+<!-- .slide: data-background="img/inference-concepts/concept-prefill-decode.png" data-background-size="cover" data-background-color="black" -->
 
 Note:
 When a model answers a question, it's really doing two separate jobs, and they stress the hardware in completely different ways. Same request, two completely different constraints. Which is why a long input and a long answer make your GPU struggle in different places, and why nearly everything clever in inference is aimed at one or the other.
@@ -38,11 +34,7 @@ Note:
 And again, for the next one. The GPU spends most of that time waiting on memory rather than calculating. So one phase is limited by compute and the other by memory bandwidth.
 
 
-## Speculative Decoding
-
-* A small model guesses the next few tokens
-* The big model checks them all in one pass
-* Matters: when a single request feels slow
+<!-- .slide: data-background="img/inference-concepts/concept-speculative-03.png" data-background-size="cover" data-background-color="black" -->
 
 Note:
 Speculative decoding is aimed squarely at decode. When does it matter? When a single request feels slow - which, notice, is a different question from everything else in this talk. It's the one thing here that helps one person rather than fifty.

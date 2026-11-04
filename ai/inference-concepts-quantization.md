@@ -1,8 +1,4 @@
-## Quantization
-
-* Fewer bits per weight
-* The room goes to the KV cache
-* Matters: once you pay for the card
+<!-- .slide: data-background="img/inference-concepts/concept-quantization.png" data-background-size="cover" data-background-color="black" -->
 
 Note:
 If the weights are the fixed cost, the obvious question is whether they have to be that big. They don't. Every weight is a number, stored at some precision. Quantization stores it at less. Think of it as rounding - a value kept to a lot of decimal places gets kept to fewer, and takes less room as a result. When does it start to matter to you? Roughly as soon as you're serving anybody at all on hardware you'd actually want to pay for.

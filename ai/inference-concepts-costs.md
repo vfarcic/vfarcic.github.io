@@ -1,18 +1,10 @@
-## Weights
-
-* Parameters x bytes per parameter
-* 8 billion x 2 bytes = 16 GB, on the card
-* Matters: immediately - no fit, no service
+<!-- .slide: data-background="img/inference-concepts/concept-weights.png" data-background-size="cover" data-background-color="black" -->
 
 Note:
 Everything the engine holds on that card is one of two things, and the two behave nothing alike. The first is the weights. A weight is a number that came out of training. There are billions of them, and a number takes up room. At the precision most models ship at, two bytes each. So the arithmetic isn't complicated. 8 billion parameters, 2 bytes apiece, 16 gigabytes. And those 16 gigabytes have to sit on the card itself, right next to the thing doing the maths. Not in the machine's ordinary RAM. On the card.
 
 
-## KV Cache
-
-* The running record of every conversation
-* Grows with length, and with every extra person
-* Matters: later - how much later depends on your users
+<!-- .slide: data-background="img/inference-concepts/concept-kv-cache.png" data-background-size="cover" data-background-color="black" -->
 
 Note:
 The second cost is not like that at all. When a model writes a sentence, it looks back at everything that came before it. Every token, every time. Recomputing all of that for every new word would be ridiculous, so the engine keeps those intermediate values and reuses them. That's the KV cache. Same card, same memory, sitting right next to the weights and competing with them for room.

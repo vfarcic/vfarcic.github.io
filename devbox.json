@@ -6,7 +6,8 @@
     "jq@1.8.1",
     "curl@8.17.0",
     "qrencode@4.1.1",
-    "imagemagick@7.1.2-27"
+    "imagemagick@7.1.2-27",
+    "git@2.56.0"
   ],
   "shell": {
     "init_hook": [
